@@ -1,6 +1,7 @@
 use ::std::ptr;
 use ::std::clone;
 use ::std::fmt;
+use ::std::cmp;
 
 use ::winapi::*;
 use ::runtimeobject::*;
@@ -56,12 +57,28 @@ impl HString {
 	}
 	
 	#[inline(always)]
+	pub fn is_empty(&self) -> bool {
+		unsafe { WindowsIsStringEmpty(self.0) != 0 }
+	}
+	
+	#[inline(always)]
 	fn internal_to_string(&self) -> String {
 		unsafe {
 			let mut len = 0;
 			let buf = WindowsGetStringRawBuffer(self.0, &mut len);
 			let slice: &[u16] = ::std::slice::from_raw_parts(buf, len as usize);
 			String::from_utf16_lossy(slice)
+		}
+	}
+	
+	fn internal_cmp(&self, other: &HString) -> cmp::Ordering {
+		let mut result = 0;
+		assert!(unsafe { WindowsCompareStringOrdinal(self.0, other.0, &mut result) } == S_OK);
+		match result {
+			-1 => cmp::Ordering::Less,
+			0 => cmp::Ordering::Equal,
+			1 => cmp::Ordering::Greater,
+			_ => unreachable!()
 		}
 	}
 }
@@ -72,6 +89,29 @@ impl ToString for HString {
 		self.internal_to_string()
 	}
 }
+
+impl cmp::PartialOrd for HString {
+	#[inline(always)]
+	fn partial_cmp(&self, other: &Self) -> Option<cmp::Ordering> {
+		Some(self.internal_cmp(other))
+	}
+}
+
+impl cmp::Ord for HString {
+	#[inline(always)]
+	fn cmp(&self, other: &Self) -> cmp::Ordering {
+		self.internal_cmp(other)
+	}
+}
+
+impl cmp::PartialEq<HString> for HString {
+	#[inline(always)]
+	fn eq(&self, other: &Self) -> bool {
+		self.internal_cmp(other) == cmp::Ordering::Equal
+	}
+}
+
+impl cmp::Eq for HString {}
 
 impl clone::Clone for HString {
     fn clone(&self) -> Self {
@@ -119,6 +159,16 @@ mod tests {
 	}
 	
 	#[test]
+    fn is_empty() {
+		let hstr = HString::empty();
+		assert!(hstr.is_empty());
+		let hstr: HString = "".into();
+		assert!(hstr.is_empty());
+		let hstr: HString = "\0".into();
+		assert!(!hstr.is_empty());
+	}
+	
+	#[test]
     fn clone() {
 		let s = "123456789";
 		let hstr: HString = s.into();
@@ -126,6 +176,17 @@ mod tests {
 		assert!(clone.to_string() == s);
 		drop(clone);
 		assert!(hstr.to_string() == s);
+	}
+	
+	#[test]
+    fn cmp() {
+		let s1: HString = "AAA".into();
+		let s2: HString = "BBB".into();
+		let s3: HString = "AAA".into();
+		
+		assert!(s2 > s1);
+		assert!(s2 != s3);
+		assert!(s1 == s3);
 	}
 
     #[bench]
