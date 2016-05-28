@@ -6,6 +6,3 @@ authors = ["Patrick Reisert"]
 [dependencies]
 winapi = "0.2.7"
 runtimeobject-sys = "0.0.1"
-
-[features]
-nightly = []
