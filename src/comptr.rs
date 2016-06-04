@@ -2,7 +2,7 @@ use winapi as w;
 use std::ops::{Deref, DerefMut};
 use std::fmt;
 use std::{ptr, mem};
-use super::ComInterface;
+use super::ComInterfaceIid;
 
 #[derive(Debug)]
 pub struct ComPtr<T>(*mut T); // TODO: use NonZero?
@@ -34,7 +34,7 @@ impl<T> ComPtr<T> {
         &mut self.0
     }
     
-    pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComInterface {
+    pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComInterfaceIid {
         let iid: ::winapi::REFIID = Target::IID;
         let mut result: ComPtr<Target> = unsafe { ComPtr::new(ptr::null_mut()) };
         match unsafe { self.as_unknown().QueryInterface(iid, result.get_address() as *mut _ as *mut *mut ::winapi::VOID) } {

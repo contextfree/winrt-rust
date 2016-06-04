@@ -15,6 +15,8 @@ use ::winapi::{
     S_OK,
     ULONG,
     BOOL,
+    TRUE,
+    FALSE,
     UINT,
     RO_INIT_MULTITHREADED
 };
@@ -28,8 +30,10 @@ use hstring::HString;
 pub mod comptr;
 use comptr::ComPtr;
  
-pub trait ComInterface {
+pub trait ComInterfaceIid {
     const IID: REFIID;
+}
+pub trait ComInterfaceVtbl {
     type Vtbl: 'static + Sized;
 }
 
@@ -56,8 +60,10 @@ macro_rules! RIDL {
                 ((*self.lpVtbl).$method)(self $(,$p)*)
             })+
         }
-        impl ComInterface for $interface {
+        impl ComInterfaceIid for $interface {
             const IID: REFIID = &$iid;
+        }
+        impl ComInterfaceVtbl for $interface {
             type Vtbl = $vtbl;
         }
     };
@@ -71,8 +77,10 @@ macro_rules! RIDL {
         pub struct $interface {
             pub lpVtbl: *const $vtbl
         }
-        impl ComInterface for $interface {
-            const IID: REFIID = &$iid; 
+        impl ComInterfaceIid for $interface {
+            const IID: REFIID = &$iid;
+        }
+        impl ComInterfaceVtbl for $interface {
             type Vtbl = $vtbl;
         }
         impl ::std::ops::Deref for $interface {
@@ -112,8 +120,10 @@ macro_rules! RIDL {
                 ((*self.lpVtbl).$method)(self $(,$p)*)
             })+
         }
-        impl ComInterface for $interface {
-            const IID: REFIID = &$iid; 
+        impl ComInterfaceIid for $interface {
+            const IID: REFIID = &$iid;
+        }
+        impl ComInterfaceVtbl for $interface {
             type Vtbl = $vtbl;
         }
         impl ::std::ops::Deref for $interface {
@@ -124,6 +134,49 @@ macro_rules! RIDL {
             }
         }
         impl ::std::ops::DerefMut for $interface {
+            #[inline]
+            fn deref_mut(&mut self) -> &mut $crate::$pinterface {
+                unsafe { ::std::mem::transmute(self) }
+            }
+        }
+    };
+    // The $iid is actually not necessary, because it refers to the uninstantiated version of the interface,
+    // which is irrelevant at runtime (it is used to generate the IIDs of the parameterized interfaces). 
+    (interface $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
+        {$(
+            fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+        ),+}
+    ) => {
+        #[repr(C)] #[allow(missing_copy_implementations)]
+        pub struct $vtbl<$t1> {
+            pub parent: $crate::$pvtbl
+            $(,pub $method: unsafe extern "system" fn(
+                This: *mut $interface<$t1>
+                $(,$p: $t)*
+            ) -> $rtr)+
+        }
+        #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
+        pub struct $interface<$t1> {
+            pub lpVtbl: *const $vtbl<$t1>,
+            t: ::std::marker::PhantomData<$t1>
+        }
+        impl<$t1> $interface<$t1> {
+            #[inline]
+            $(pub unsafe fn $method(&mut self $(,$p: $t)*) -> $rtr {
+                ((*self.lpVtbl).$method)(self $(,$p)*)
+            })+
+        }
+        impl<$t1: 'static> ComInterfaceVtbl for $interface<$t1> { 
+            type Vtbl = $vtbl<$t1>;
+        }
+        impl<$t1> ::std::ops::Deref for $interface<$t1> {
+            type Target = $crate::$pinterface;
+            #[inline]
+            fn deref(&self) -> &$crate::$pinterface {
+                unsafe { ::std::mem::transmute(self) }
+            }
+        }
+        impl<$t1> ::std::ops::DerefMut for $interface<$t1> {
             #[inline]
             fn deref_mut(&mut self) -> &mut $crate::$pinterface {
                 unsafe { ::std::mem::transmute(self) }
@@ -142,8 +195,10 @@ DEFINE_GUID!(IID_IUnknown, 0x00000000, 0x0000, 0x0000, 0xC0, 0x00, 0x00, 0x00, 0
 DEFINE_GUID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);
 DEFINE_GUID!(IID_IAgileObject, 0x94EA2B94, 0xE9CC, 0x49E0, 0xC0, 0xFF, 0xEE, 0x64, 0xCA, 0x8F, 0x5B, 0x90);
 
-impl ComInterface for IUnknown { const IID: REFIID = &IID_IUnknown; type Vtbl = IUnknownVtbl; }
-impl ComInterface for IInspectable { const IID: REFIID = &IID_IInspectable; type Vtbl = IInspectableVtbl; }
+impl ComInterfaceIid for IUnknown { const IID: REFIID = &IID_IUnknown; }
+impl ComInterfaceVtbl for IUnknown { type Vtbl = IUnknownVtbl; }
+impl ComInterfaceIid for IInspectable { const IID: REFIID = &IID_IInspectable; }
+impl ComInterfaceVtbl for IInspectable { type Vtbl = IInspectableVtbl; }
 
 
 fn main() {
@@ -158,7 +213,7 @@ fn main() {
 unsafe fn run() {
     use std::sync::{Arc, Mutex, Condvar};
     
-    let Windows_Devices_Midi_MidiOutPort: HString = "Windows.Devices.Midi.MidiOutPort".into();    
+    let Windows_Devices_Midi_MidiOutPort: HString = "Windows.Devices.Midi.MidiOutPort".into();
     let mut outPortStatics: ComPtr<IMidiOutPortStatics> = ComPtr::new(ptr::null_mut());
     let hres = RoGetActivationFactory(Windows_Devices_Midi_MidiOutPort.get(), &IID_IMidiOutPortStatics, outPortStatics.get_address() as *mut *mut _ as *mut *mut VOID);
     assert_eq!(hres, S_OK);
@@ -174,8 +229,9 @@ unsafe fn run() {
     let mut deviceInformationStatics: ComPtr<IDeviceInformationStatics> = ComPtr::new(ptr::null_mut());
     let hres = RoGetActivationFactory(Windows_Devices_Enumeration_DeviceInformation.get(), &IID_IDeviceInformationStatics, deviceInformationStatics.get_address() as *mut *mut _ as *mut *mut VOID);
     println!("HRESULT (deviceInformationStatics) = {}", hres);
-    let mut asyncOp: ComPtr<IAsyncOperation> = ComPtr::new(ptr::null_mut());
-    let hres = deviceInformationStatics.FindAllAsyncAqsFilter(deviceSelector.get(), asyncOp.get_address());
+    let mut asyncOp: ComPtr<IAsyncOperation<IVectorView<IDeviceInformation>>> = ComPtr::new(ptr::null_mut());
+    //let hres = deviceInformationStatics.FindAllAsyncAqsFilter(deviceSelector.get(), asyncOp.get_address());
+    let hres = deviceInformationStatics.FindAllAsync(asyncOp.get_address());
     println!("HRESULT (FindAllAsync) = {}", hres);
     
     let mut className = HString::empty();
@@ -214,9 +270,11 @@ unsafe fn run() {
             cvar.notify_one();
             S_OK
         }).into_interface();
-        assert!(asyncOp.put_Completed(myHandler.as_mut() as *mut _ as *mut IAsyncOperationCompletedHandler) == S_OK);
+        assert!(asyncOp.put_Completed(myHandler.as_mut()) == S_OK);
         // local reference to myHandler is dropped here -> Release() is called
     }
+    
+    println!("Waiting for results of async call ...");
     
     // use condvar to wait until handler has been called
     let &(ref lock, ref cvar) = &*pair;
@@ -225,8 +283,8 @@ unsafe fn run() {
         started = cvar.wait(started).unwrap();
     }
 
-    let mut deviceInformationCollection: ComPtr<IVectorView> = ComPtr::new(ptr::null_mut());
-    assert!(asyncOp.GetResults(deviceInformationCollection.get_address() as *mut _ as *mut *mut IInspectable) == S_OK);
+    let mut deviceInformationCollection: ComPtr<IVectorView<IDeviceInformation>> = ComPtr::new(ptr::null_mut());
+    assert!(asyncOp.GetResults(deviceInformationCollection.get_address()) == S_OK);
     let mut className = HString::empty();
     assert!(deviceInformationCollection.GetRuntimeClassName(className.get_address()) == S_OK);
     println!("CLS: {}", className.to_string());
@@ -234,19 +292,17 @@ unsafe fn run() {
     assert!(deviceInformationCollection.get_Size(&mut count) == S_OK);
     println!("Device Count: {}", count);
     
-    assert!(deviceInformationCollection.query_interface::<IIterable>() == None);
+    let mut iterable = deviceInformationCollection.query_interface::<IIterable<IDeviceInformation>>().unwrap();
     
-    let mut deviceInformation: ComPtr<IDeviceInformation> = ComPtr::new(ptr::null_mut());
-    let hres = deviceInformationCollection.GetAt(0, deviceInformation.get_address() as *mut _ as *mut *mut IInspectable);
-    println!("HRESULT (GetAt) = {:x}", hres);
+    let mut i = 0;
+    for mut current in &mut iterable { // without the `&mut` it would consume the iterable
+        let mut deviceName = HString::empty();
+        current.get_Name(deviceName.get_address());
+        println!("Device Name ({}): {}", i, deviceName.to_string());
+        i += 1;
+    }
     
-    let mut className = HString::empty();
-    deviceInformation.GetRuntimeClassName(className.get_address());
-    println!("CLS: {}", className.to_string());
-    
-    let mut deviceName = HString::empty();
-    deviceInformation.get_Name(deviceName.get_address());
-    println!("Device Name (0): {}", deviceName.to_string());
+    assert_eq!(i, count);
     
     let hres = asi.get_Status(&mut status);
     println!("HRESULT (get_Status) = {:x}", hres);
@@ -254,6 +310,54 @@ unsafe fn run() {
     
     let hres = asi.Close();
     println!("HRESULT (Close AsyncInfo) = {:x}", hres);
+}
+
+impl<T> IntoIterator for ComPtr<IIterable<T>> {
+    type Item = ComPtr<T>;
+    type IntoIter = ComPtr<IIterator<T>>;
+    fn into_iter(mut self) -> Self::IntoIter {
+        unsafe {
+            let mut iterator = ComPtr::<IIterator<T>>::new(ptr::null_mut());
+            assert!(self.First(iterator.get_address()) == S_OK);
+            iterator
+        }
+    }
+}
+
+impl<'a, T> IntoIterator for &'a mut ComPtr<IIterable<T>> {
+    type Item = ComPtr<T>;
+    type IntoIter = ComPtr<IIterator<T>>;
+    fn into_iter(mut self) -> Self::IntoIter {
+        unsafe {
+            let mut iterator = ComPtr::<IIterator<T>>::new(ptr::null_mut());
+            assert!(self.First(iterator.get_address()) == S_OK);
+            iterator
+        }
+    }
+}
+
+impl<T> Iterator for ComPtr<IIterator<T>> {
+    // TODO: This could potentially be made faster by using the output of MoveNext instead of calling HasCurrent in every iteration
+    type Item = ComPtr<T>;
+    
+    fn next(&mut self) -> Option<ComPtr<T>> {
+        let has_next = unsafe {
+            let mut hasCurrent: BOOL = FALSE;
+            self.get_HasCurrent(&mut hasCurrent);
+            hasCurrent == TRUE
+        };
+        if has_next {
+            unsafe {
+                let mut current = ComPtr::<T>::new(ptr::null_mut());
+                assert!(self.get_Current(current.get_address()) == S_OK);
+                let mut hasCurrent: BOOL = FALSE;
+                assert!(self.MoveNext(&mut hasCurrent) == S_OK);
+                Some(current)
+            }
+        } else {
+            None
+        }
+    }
 }
 
 use std::{ptr, mem};
@@ -268,36 +372,36 @@ pub struct ComRepr<T, Vtbl> {
 }
 
 /// This is a reusable implementation of AddRef that works for any ComRepr-based type
-    unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut IUnknown) -> ULONG
-    {
-        let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
-        
-        // Increment the reference count (count member).
-        let old_size = (*this).refcount.fetch_add(1, Ordering::Relaxed);
-        println!("AddRef: {} -> {}", old_size, old_size  + 1);
+unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut IUnknown) -> ULONG
+{
+    let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
+    
+    // Increment the reference count (count member).
+    let old_size = (*this).refcount.fetch_add(1, Ordering::Relaxed);
+    println!("AddRef: {} -> {}", old_size, old_size  + 1);
 
-        // We're supposed to return the updated count.
-        return (old_size + 1) as ULONG;
+    // We're supposed to return the updated count.
+    return (old_size + 1) as ULONG;
+}
+
+/// This is a reusable implementation of Com_Release that works for any ComRepr-based type
+unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG
+{
+    let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
+    
+    let old_size = (*this).refcount.fetch_sub(1, Ordering::Release);
+    println!("Release: {} -> {}", old_size, old_size - 1);
+    if old_size != 1 {
+        return (old_size - 1) as ULONG; // return the updated count
     }
+    
+    std::sync::atomic::fence(Ordering::Acquire);
+    //MyHandler::destroy(this as *mut IUnknown); // Arc uses a trick to call this in an inline(never) function
+    Box::from_raw(this); // creates a Box which is then dropped
+    return 0;
+}
 
-    /// This is a reusable implementation of Com_Release that works for any ComRepr-based type
-    unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG
-    {
-        let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
-        
-        let old_size = (*this).refcount.fetch_sub(1, Ordering::Release);
-        println!("Release: {} -> {}", old_size, old_size - 1);
-        if old_size != 1 {
-            return (old_size - 1) as ULONG; // return the updated count
-        }
-        
-        std::sync::atomic::fence(Ordering::Acquire);
-        //MyHandler::destroy(this as *mut IUnknown); // Arc uses a trick to call this in an inline(never) function
-        Box::from_raw(this); // creates a Box which is then dropped
-        return 0;
-    }
-
-pub trait ComComponent<Interface: ComInterface> where Self: Sized {
+pub trait ComComponent<Interface: ComInterfaceVtbl> where Self: Sized {
     fn get_vtbl() -> &'static Interface::Vtbl;
     fn vtbl(&self) -> &'static Interface::Vtbl {
         Self::get_vtbl()
@@ -322,17 +426,17 @@ pub trait ComComponent<Interface: ComInterface> where Self: Sized {
 }
 
 struct MyHandler {
-    invoke: fn(*mut IAsyncOperation, AsyncStatus) -> HRESULT
+    invoke: fn(*mut IAsyncOperation<IVectorView<IDeviceInformation>>, AsyncStatus) -> HRESULT
 }
 
-const MyHandlerVtbl: &'static IAsyncOperationCompletedHandlerVtbl = &IAsyncOperationCompletedHandlerVtbl {
+const MyHandlerVtbl: &'static IAsyncOperationCompletedHandlerVtbl<IVectorView<IDeviceInformation>> = &IAsyncOperationCompletedHandlerVtbl::<IVectorView<IDeviceInformation>> {
     parent: IUnknownVtbl {
         QueryInterface: My_QueryInterface,
         AddRef: ComRepr_AddRef::<MyHandler>,
         Release: ComRepr_Release::<MyHandler>,
     },
     Invoke: {
-        unsafe extern "system" fn My_Invoke(this_: *mut IAsyncOperationCompletedHandler, asyncOperation: *mut IAsyncOperation, status: AsyncStatus) -> HRESULT {
+        unsafe extern "system" fn My_Invoke(this_: *mut IAsyncOperationCompletedHandler<IVectorView<IDeviceInformation>>, asyncOperation: *mut IAsyncOperation<IVectorView<IDeviceInformation>>, status: AsyncStatus) -> HRESULT {
             let this: &mut MyHandler = MyHandler::from_interface(this_);
             (this.invoke)(asyncOperation, status)
         }
@@ -340,8 +444,8 @@ const MyHandlerVtbl: &'static IAsyncOperationCompletedHandlerVtbl = &IAsyncOpera
     }
 };
 
-impl ComComponent<IAsyncOperationCompletedHandler> for MyHandler {
-    fn get_vtbl() -> &'static IAsyncOperationCompletedHandlerVtbl { &MyHandlerVtbl }
+impl ComComponent<IAsyncOperationCompletedHandler<IVectorView<IDeviceInformation>>> for MyHandler {
+    fn get_vtbl() -> &'static IAsyncOperationCompletedHandlerVtbl<IVectorView<IDeviceInformation>> { &MyHandlerVtbl }
 }
 
 impl Drop for MyHandler {
@@ -351,25 +455,25 @@ impl Drop for MyHandler {
 }
 
 struct MyBoxHandler {
-    invoke: Box<FnMut(*mut IAsyncOperation, AsyncStatus) -> HRESULT>
+    invoke: Box<FnMut(*mut IAsyncOperation<IVectorView<IDeviceInformation>>, AsyncStatus) -> HRESULT>
 }
 
 impl MyBoxHandler {
-    pub fn new<F>(f: F) -> MyBoxHandler where F: 'static + Send + FnMut(*mut IAsyncOperation, AsyncStatus) -> HRESULT {
+    pub fn new<F>(f: F) -> MyBoxHandler where F: 'static + Send + FnMut(*mut IAsyncOperation<IVectorView<IDeviceInformation>>, AsyncStatus) -> HRESULT {
         MyBoxHandler {
             invoke: Box::new(f)
         }
     }
 }
 
-const MyBoxHandlerVtbl: &'static IAsyncOperationCompletedHandlerVtbl = &IAsyncOperationCompletedHandlerVtbl {
+const MyBoxHandlerVtbl: &'static IAsyncOperationCompletedHandlerVtbl<IVectorView<IDeviceInformation>> = &IAsyncOperationCompletedHandlerVtbl::<IVectorView<IDeviceInformation>> {
     parent: IUnknownVtbl {
         QueryInterface: My_QueryInterface,
         AddRef: ComRepr_AddRef::<MyBoxHandler>,
         Release: ComRepr_Release::<MyBoxHandler>,
     },
     Invoke: {
-        unsafe extern "system" fn My_Invoke(this_: *mut IAsyncOperationCompletedHandler, asyncOperation: *mut IAsyncOperation, status: AsyncStatus) -> HRESULT {
+        unsafe extern "system" fn My_Invoke(this_: *mut IAsyncOperationCompletedHandler<IVectorView<IDeviceInformation>>, asyncOperation: *mut IAsyncOperation<IVectorView<IDeviceInformation>>, status: AsyncStatus) -> HRESULT {
             let this: &mut MyBoxHandler = MyBoxHandler::from_interface(this_);
             (this.invoke)(asyncOperation, status)
         }
@@ -377,8 +481,8 @@ const MyBoxHandlerVtbl: &'static IAsyncOperationCompletedHandlerVtbl = &IAsyncOp
     }
 };
 
-impl ComComponent<IAsyncOperationCompletedHandler> for MyBoxHandler {
-    fn get_vtbl() -> &'static IAsyncOperationCompletedHandlerVtbl { &MyBoxHandlerVtbl }
+impl ComComponent<IAsyncOperationCompletedHandler<IVectorView<IDeviceInformation>>> for MyBoxHandler {
+    fn get_vtbl() -> &'static IAsyncOperationCompletedHandlerVtbl<IVectorView<IDeviceInformation>> { &MyBoxHandlerVtbl }
 }
 
 impl Drop for MyBoxHandler {
@@ -456,17 +560,17 @@ RIDL!{interface IAsyncActionCompletedHandler(IAsyncActionCompletedHandlerVtbl): 
 
 // These parametrized GUIDs can be automatically generated
 DEFINE_GUID!(IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection, 0x4A458732, 0x527E, 0x5C73, 0x9A, 0x68, 0xA7, 0x3D, 0xA3, 0x70, 0xF7, 0x82);
-//DEFINE_GUID!(IID_IAsyncOperationCompletedHandler, ...);
-RIDL!{interface IAsyncOperationCompletedHandler(IAsyncOperationCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_IAsyncActionCompletedHandler] {
-    fn Invoke(&mut self, asyncOperation: *mut IAsyncOperation, status: AsyncStatus) -> HRESULT
+DEFINE_GUID!(IID_IAsyncOperationCompletedHandler, 4242337836, 58840, 17528, 145, 90, 77, 144, 183, 75, 131, 165);
+RIDL!{interface IAsyncOperationCompletedHandler<TResult>(IAsyncOperationCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_IAsyncOperationCompletedHandler] {
+    fn Invoke(&mut self, asyncOperation: *mut IAsyncOperation<TResult>, status: AsyncStatus) -> HRESULT
 }}
 
 // TODO: this should be generic in the result type
 DEFINE_GUID!(IID_IAsyncOperation, 0x9fc2b0bb, 0xe446, 0x44e2, 0xaa,0x61,0x9c,0xab,0x8f,0x63,0x6a,0xf2);
-RIDL!{interface IAsyncOperation(IAsyncOperationVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncOperation] {
-    fn put_Completed(&mut self, handler: *mut IAsyncOperationCompletedHandler/*<TResult>*/) -> HRESULT,
-    fn get_Completed(&mut self, handler: *mut *mut IAsyncOperationCompletedHandler/*<TResult>*/) -> HRESULT,
-    fn GetResults(&mut self, results: *mut *mut /*TResult*/IInspectable) -> HRESULT
+RIDL!{interface IAsyncOperation<TResult>(IAsyncOperationVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncOperation] {
+    fn put_Completed(&mut self, handler: *mut IAsyncOperationCompletedHandler<TResult>) -> HRESULT,
+    fn get_Completed(&mut self, handler: *mut *mut IAsyncOperationCompletedHandler<TResult>) -> HRESULT,
+    fn GetResults(&mut self, results: *mut *mut TResult) -> HRESULT
 }}
 
 #[repr(C)]
@@ -481,7 +585,7 @@ pub enum AsyncStatus {
 
 DEFINE_GUID!(IID_IMidiOutPortStatics, 106742761, 3976, 17547, 155, 100, 169, 88, 38, 198, 91, 143);
 RIDL!{interface IMidiOutPortStatics(IMidiOutPortStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiOutPortStatics] {
-    fn FromIdAsync(&mut self, deviceId: HSTRING, asyncOp: *mut *mut IAsyncOperation/*<IMidiOutPort>*/) -> HRESULT,
+    fn FromIdAsync(&mut self, deviceId: HSTRING, asyncOp: *mut *mut IAsyncOperation<IMidiOutPort>) -> HRESULT,
     fn GetDeviceSelector(&mut self, value: *const HSTRING) -> HRESULT
 }}
 
@@ -489,9 +593,9 @@ DEFINE_GUID!(IID_IDeviceInformationStatics, 3246329870, 14918, 19064, 128, 19, 1
 RIDL!{interface IDeviceInformationStatics(IDeviceInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationStatics] {
     fn __CreateFromIdAsync(&mut self) -> HRESULT,
     fn __CreateFromIdAsyncAdditionalProperties(&mut self) -> HRESULT,
-    fn __FindAllAsync(&mut self) -> HRESULT,
+    fn FindAllAsync(&mut self, asyncOp: *mut *mut IAsyncOperation<IVectorView<IDeviceInformation>>) -> HRESULT,
     fn __FindAllAsyncDeviceClass(&mut self) -> HRESULT,
-    fn FindAllAsyncAqsFilter(&mut self, aqsFilter: HSTRING, asyncOp: *mut *mut IAsyncOperation/*<DeviceInformationCollection>*/) -> HRESULT,
+    fn FindAllAsyncAqsFilter(&mut self, aqsFilter: HSTRING, asyncOp: *mut *mut IAsyncOperation<IVectorView<IDeviceInformation>>) -> HRESULT,
     fn __FindAllAsyncAqsFilterAndAdditionalProperties(&mut self) -> HRESULT,
     fn __CreateWatcher(&mut self) -> HRESULT,
     fn __CreateWatcherDeviceClass(&mut self) -> HRESULT,
@@ -500,13 +604,29 @@ RIDL!{interface IDeviceInformationStatics(IDeviceInformationStaticsVtbl): IInspe
 }}
 
 DEFINE_GUID!(IID_IIterable, 4205151722, 25108, 16919, 175, 218, 127, 70, 222, 88, 105, 179);
-RIDL!{interface IIterable(IIterableVtbl): IInspectable(IInspectableVtbl) [IID_IIterable] {
-    fn First(&mut self, first: *mut *mut IIterator/*<T>*/) -> HRESULT
+RIDL!{interface IIterable<T>(IIterableVtbl): IInspectable(IInspectableVtbl) [IID_IIterable] {
+    fn First(&mut self, first: *mut *mut IIterator<T>) -> HRESULT
 }}
 
+DEFINE_GUID!(IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation, 0xdd9f8a5d, 0xec98, 0x5f4b, 0xa3, 0xea, 0x9c, 0x8b, 0x5a, 0xd5, 0x3c, 0x4b);
+
+// TODO: Provide some mapping between logical type `DeviceInformation` and ABI type `IDeviceInformation`.
+//       See `AggregateType` in windows.foundation.collections.h
+//       Here we just use the ABI type.
+
+// Use specialization to set the IID of this parameterized interface
+impl ComInterfaceIid for IIterable<IDeviceInformation> {
+    const IID: REFIID = &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation;
+}
+
+// This should be the logical type IAsyncOperationCompletedHandler<DeviceInformationCollection>
+impl ComInterfaceIid for IAsyncOperationCompletedHandler<IVectorView<IDeviceInformation>> {
+    const IID: REFIID = &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection;
+}
+
 DEFINE_GUID!(IID_IIterator, 1786374243, 17152, 17818, 153, 102, 203, 182, 96, 150, 62, 225);
-RIDL!{interface IIterator(IIteratorVtbl): IInspectable(IInspectableVtbl) [IID_IIterator] {
-    fn get_Current(&mut self, current: *mut VOID /*T*/) -> HRESULT,
+RIDL!{interface IIterator<T>(IIteratorVtbl): IInspectable(IInspectableVtbl) [IID_IIterator] {
+    fn get_Current(&mut self, current: *mut *mut T) -> HRESULT,
     fn get_HasCurrent(&mut self, hasCurrent: *mut BOOL) -> HRESULT,
     fn MoveNext(&mut self, hasCurrent: *mut BOOL) -> HRESULT
     // fn GetMany...
@@ -514,10 +634,10 @@ RIDL!{interface IIterator(IIteratorVtbl): IInspectable(IInspectableVtbl) [IID_II
 
 DEFINE_GUID!(IID_IVectorView, 3152149068, 45283, 17795, 186, 239, 31, 27, 46, 72, 62, 86);
 // NOTE: For some reason this does NOT actually inherit from IIterable as the metadata would suggest
-RIDL!{interface IVectorView(IVectorViewVtbl): IInspectable(IInspectableVtbl) [IID_IVectorView] {
-    fn GetAt(&mut self, index: UINT, item: *mut *mut IInspectable /*T*/) -> HRESULT,
+RIDL!{interface IVectorView<T>(IVectorViewVtbl): IInspectable(IInspectableVtbl) [IID_IVectorView] {
+    fn GetAt(&mut self, index: UINT, item: *mut *mut T) -> HRESULT,
     fn get_Size(&mut self, size: *mut UINT) -> HRESULT,
-    fn IndexOf(&mut self, value: VOID /*T*/, index: *mut UINT, found: *mut BOOL) -> HRESULT
+    fn IndexOf(&mut self, value: *mut T, index: *mut UINT, found: *mut BOOL) -> HRESULT
     // fn GetMany...
 }}
 
@@ -525,5 +645,10 @@ DEFINE_GUID!(IID_IDeviceInformation, 2879454101, 17304, 18589, 142, 68, 230, 19,
 RIDL!{interface IDeviceInformation(IDeviceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformation] {
     fn get_Id(&mut self, value: *mut HSTRING) -> HRESULT,
     fn get_Name(&mut self, value: *mut HSTRING) -> HRESULT
+    // ...
+}}
+
+DEFINE_GUID!(IID_IMidiOutPort, 2468179359, 22434, 19002, 173, 184, 70, 64, 136, 111, 102, 147);
+RIDL!{interface IMidiOutPort(IMidiOutPortVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformation] {
     // ...
 }}
