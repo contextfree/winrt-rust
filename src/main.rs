@@ -268,9 +268,9 @@ pub struct ComRepr<T, Vtbl> {
 }
 
 /// This is a reusable implementation of AddRef that works for any ComRepr-based type
-    unsafe extern "system" fn ComRepr_AddRef(this: *mut IUnknown) -> ULONG
+    unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut IUnknown) -> ULONG
     {
-        let this = this as *mut _ as *mut ComRepr<(), IUnknownVtbl>;
+        let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
         
         // Increment the reference count (count member).
         let old_size = (*this).refcount.fetch_add(1, Ordering::Relaxed);
@@ -281,9 +281,9 @@ pub struct ComRepr<T, Vtbl> {
     }
 
     /// This is a reusable implementation of Com_Release that works for any ComRepr-based type
-    unsafe extern "system" fn ComRepr_Release(this: *mut IUnknown) -> ULONG
+    unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG
     {
-        let this = this as *mut _ as *mut ComRepr<(), IUnknownVtbl>;
+        let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
         
         let old_size = (*this).refcount.fetch_sub(1, Ordering::Release);
         println!("Release: {} -> {}", old_size, old_size - 1);
@@ -328,8 +328,8 @@ struct MyHandler {
 const MyHandlerVtbl: &'static IAsyncOperationCompletedHandlerVtbl = &IAsyncOperationCompletedHandlerVtbl {
     parent: IUnknownVtbl {
         QueryInterface: My_QueryInterface,
-        AddRef: ComRepr_AddRef,
-        Release: ComRepr_Release,
+        AddRef: ComRepr_AddRef::<MyHandler>,
+        Release: ComRepr_Release::<MyHandler>,
     },
     Invoke: {
         unsafe extern "system" fn My_Invoke(this_: *mut IAsyncOperationCompletedHandler, asyncOperation: *mut IAsyncOperation, status: AsyncStatus) -> HRESULT {
@@ -365,8 +365,8 @@ impl MyBoxHandler {
 const MyBoxHandlerVtbl: &'static IAsyncOperationCompletedHandlerVtbl = &IAsyncOperationCompletedHandlerVtbl {
     parent: IUnknownVtbl {
         QueryInterface: My_QueryInterface,
-        AddRef: ComRepr_AddRef,
-        Release: ComRepr_Release,
+        AddRef: ComRepr_AddRef::<MyBoxHandler>,
+        Release: ComRepr_Release::<MyBoxHandler>,
     },
     Invoke: {
         unsafe extern "system" fn My_Invoke(this_: *mut IAsyncOperationCompletedHandler, asyncOperation: *mut IAsyncOperation, status: AsyncStatus) -> HRESULT {
@@ -389,6 +389,10 @@ impl Drop for MyBoxHandler {
 
 unsafe extern "system" fn My_QueryInterface(this_: *mut IUnknown, vTableGuid: REFIID, ppv: *mut *mut VOID) -> HRESULT
 {
+    fn guid_eq(guid1: &::winapi::GUID, guid2: &::winapi::GUID) -> bool {
+        guid1.Data1 == guid2.Data1 && guid1.Data2 == guid2.Data2 && guid1.Data3 == guid2.Data3 && guid1.Data4 == guid2.Data4
+    }
+    
     fn print_guid(guid: &::winapi::GUID) {
         println!("{:08X}-{:04X}-{:04X}-{:02X}{:02X}-{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}",
             guid.Data1, guid.Data2, guid.Data3,
@@ -398,12 +402,11 @@ unsafe extern "system" fn My_QueryInterface(this_: *mut IUnknown, vTableGuid: RE
 
     print!("QueryInterface called with GUID ");
     print_guid(&*vTableGuid);
-    //let this: &mut MyHandler = MyHandler::from_unknown(this_);
     
-    // There is no IID for the actual derived (anonymous) class, so we can only check for IID_Unknown
-    if *vTableGuid != IID_IUnknown &&
-        *vTableGuid != IID_IAgileObject && // IAgileObject is only supported for Send objects
-        *vTableGuid != IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection { 
+    // TODO: How to determine which IIDs are allowed here?
+    if !guid_eq(&*vTableGuid, &IID_IUnknown) &&
+        !guid_eq(&*vTableGuid, &IID_IAgileObject) && // IAgileObject is only supported for Send objects
+        !guid_eq(&*vTableGuid, &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection) { 
         // We don't recognize the GUID passed to us. Let the caller know this,
         // by clearing his handle, and returning E_NOINTERFACE.
         *ppv = ptr::null_mut();
