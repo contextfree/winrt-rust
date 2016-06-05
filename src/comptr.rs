@@ -35,7 +35,8 @@ impl<T> ComPtr<T> {
     }
     
     pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComInterfaceIid {
-        let iid: ::winapi::REFIID = Target::IID;
+        //let iid: ::winapi::REFIID = Target::IID;
+        let iid: ::winapi::REFIID = Target::get_iid();
         let mut result: ComPtr<Target> = unsafe { ComPtr::new(ptr::null_mut()) };
         match unsafe { self.as_unknown().QueryInterface(iid, result.get_address() as *mut _ as *mut *mut ::winapi::VOID) } {
             ::winapi::S_OK => Some(result),

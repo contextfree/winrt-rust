@@ -1,6 +1,6 @@
 #![cfg_attr(test,feature(test))]
 
-#![feature(specialization, associated_consts)]
+#![cfg_attr(feature = "nightly",feature(specialization))]
 
 #![allow(dead_code,non_upper_case_globals,non_snake_case)]
 
@@ -32,7 +32,9 @@ pub mod comptr;
 use comptr::ComPtr;
  
 pub trait ComInterfaceIid {
-    const IID: REFIID;
+    // TODO: use associated constant once that is stable
+    //const IID: REFIID;
+    fn get_iid() -> REFIID;
 }
 pub trait ComInterface {
     type Vtbl: 'static + Sized;
@@ -63,6 +65,11 @@ impl<T> ComCreateUninitialized for T where T: ComValueType {
         // could also use mem::uninitialized() here ...
         mem::zeroed()
     }
+}
+
+// This is just syntax sugar
+pub unsafe fn uninitialized<T>() -> <T as ComCreateUninitialized>::Out where T: ComCreateUninitialized {
+    <T as ComCreateUninitialized>::uninitialized()
 }
 
 pub trait ComGetPtr {
@@ -128,7 +135,8 @@ macro_rules! RIDL {
             })+
         }
         impl ComInterfaceIid for $interface {
-            const IID: REFIID = &$iid;
+            //const IID: REFIID = &$iid;
+            fn get_iid() -> REFIID { &$iid }
         }
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
@@ -145,7 +153,8 @@ macro_rules! RIDL {
             pub lpVtbl: *const $vtbl
         }
         impl ComInterfaceIid for $interface {
-            const IID: REFIID = &$iid;
+            //const IID: REFIID = &$iid;
+            fn get_iid() -> REFIID { &$iid }
         }
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
@@ -188,7 +197,8 @@ macro_rules! RIDL {
             })+
         }
         impl ComInterfaceIid for $interface {
-            const IID: REFIID = &$iid;
+            //const IID: REFIID = &$iid;
+            fn get_iid() -> REFIID { &$iid }
         }
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
@@ -262,9 +272,9 @@ DEFINE_GUID!(IID_IUnknown, 0x00000000, 0x0000, 0x0000, 0xC0, 0x00, 0x00, 0x00, 0
 DEFINE_GUID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);
 DEFINE_GUID!(IID_IAgileObject, 0x94EA2B94, 0xE9CC, 0x49E0, 0xC0, 0xFF, 0xEE, 0x64, 0xCA, 0x8F, 0x5B, 0x90);
 
-impl ComInterfaceIid for IUnknown { const IID: REFIID = &IID_IUnknown; }
+impl ComInterfaceIid for IUnknown { /*const IID: REFIID = &IID_IUnknown;*/ fn get_iid() -> REFIID { &IID_IUnknown } }
 impl ComInterface for IUnknown { type Vtbl = IUnknownVtbl; }
-impl ComInterfaceIid for IInspectable { const IID: REFIID = &IID_IInspectable; }
+impl ComInterfaceIid for IInspectable { /*const IID: REFIID = &IID_IInspectable;*/ fn get_iid() -> REFIID { &IID_IInspectable } }
 impl ComInterface for IInspectable { type Vtbl = IInspectableVtbl; }
 
 
@@ -296,12 +306,12 @@ unsafe fn run() {
     let mut deviceInformationStatics: ComPtr<IDeviceInformationStatics> = ComPtr::new(ptr::null_mut());
     let hres = RoGetActivationFactory(Windows_Devices_Enumeration_DeviceInformation.get(), &IID_IDeviceInformationStatics, deviceInformationStatics.get_ptr() as *mut *mut _ as *mut *mut VOID);
     println!("HRESULT (deviceInformationStatics) = {}", hres);
-    let mut asyncOp = <*mut IAsyncOperation<*mut IVectorView<*mut IDeviceInformation>> as ComCreateUninitialized>::uninitialized();
+    let mut asyncOp = uninitialized::<*mut IAsyncOperation<*mut IVectorView<*mut IDeviceInformation>>>();
     //let hres = deviceInformationStatics.FindAllAsyncAqsFilter(deviceSelector.get(), asyncOp.get_ptr());
     let hres = deviceInformationStatics.FindAllAsync(asyncOp.get_ptr());
     println!("HRESULT (FindAllAsync) = {}", hres);
     
-    let mut className = <HSTRING as ComCreateUninitialized>::uninitialized();
+    let mut className = uninitialized::<HSTRING>();
     let hres = asyncOp.GetRuntimeClassName(className.get_ptr());
     println!("HRESULT (GetRuntimeClassName) = {:x}", hres);
     println!("CLS: {}", className.to_string());
@@ -315,12 +325,12 @@ unsafe fn run() {
     let unknown = asi.query_interface::<IUnknown>().unwrap();
     println!("IAsyncInfo: {:p}, IAsyncOperation: {:p}, IUnknown: {:p}", asi, asyncOp, unknown);
     
-    let mut id = <UINT as ComCreateUninitialized>::uninitialized();
+    let mut id = uninitialized::<UINT>();
     assert!(asi.get_Id(&mut id) == S_OK);
     println!("HRESULT (get_Id) = {:x}", hres);
     println!("id: {:?}", id);
     
-    let mut status = <AsyncStatus as ComCreateUninitialized>::uninitialized();
+    let mut status = uninitialized::<AsyncStatus>();
     let hres = asi.get_Status(&mut status);
     println!("HRESULT (get_Status) = {:x}", hres);
     println!("status: {:?}", status);
@@ -349,7 +359,7 @@ unsafe fn run() {
         started = cvar.wait(started).unwrap();
     }
 
-    let mut deviceInformationCollection = <*mut IVectorView<*mut IDeviceInformation> as ComCreateUninitialized>::uninitialized();
+    let mut deviceInformationCollection = uninitialized::<*mut IVectorView<*mut IDeviceInformation>>();
     assert!(asyncOp.GetResults(deviceInformationCollection.get_ptr()) == S_OK);
     let mut className = HString::empty();
     assert!(deviceInformationCollection.GetRuntimeClassName(className.get_ptr()) == S_OK);
@@ -438,7 +448,7 @@ impl<T> Iterator for ComPtr<IIterator<T>> where T: ComCreateUninitialized {
         };
         if has_next {
             unsafe {
-                let mut current = <T as ComCreateUninitialized>::uninitialized();
+                let mut current = uninitialized::<T>();
                 assert!(self.get_Current(current.get_ptr()) == S_OK);
                 let mut hasCurrent: BOOL = FALSE;
                 assert!(self.MoveNext(&mut hasCurrent) == S_OK);
@@ -706,12 +716,14 @@ DEFINE_GUID!(IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation, 0xd
 
 // Use specialization to set the IID of this parameterized interface
 impl ComInterfaceIid for IIterable<*mut IDeviceInformation> {
-    const IID: REFIID = &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation;
+    //const IID: REFIID = &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation;
+    fn get_iid() -> REFIID { &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation }
 }
 
 // This should be the logical type IAsyncOperationCompletedHandler<DeviceInformationCollection>, maybe it's enough to just use a type alias?
 impl ComInterfaceIid for IAsyncOperationCompletedHandler<*mut IVectorView<*mut IDeviceInformation>> {
-    const IID: REFIID = &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection;
+    //const IID: REFIID = &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection;
+    fn get_iid() -> REFIID { &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection }
 }
 
 DEFINE_GUID!(IID_IIterator, 1786374243, 17152, 17818, 153, 102, 203, 182, 96, 150, 62, 225);
