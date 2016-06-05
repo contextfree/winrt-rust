@@ -48,7 +48,7 @@ pub trait RtGetUninitialized where Self: Sized {
 impl<T> RtGetUninitialized for *mut T where T: ComInterface {
     type Out = ComPtr<T>;
     unsafe fn uninitialized() -> Self::Out {
-        ComPtr::<T>::new(ptr::null_mut())
+        ComPtr::<T>::uninitialized()
     }
 }
 
@@ -63,7 +63,7 @@ impl<T> RtGetUninitialized for T where T: RtValueType {
     type Out = T;
     unsafe fn uninitialized() -> Self::Out {
         // could also use mem::uninitialized() here ...
-        mem::zeroed()
+        ::std::mem::zeroed()
     }
 }
 
@@ -330,7 +330,7 @@ unsafe fn run() {
     use std::sync::{Arc, Mutex, Condvar};
     
     let Windows_Devices_Midi_MidiOutPort: HString = "Windows.Devices.Midi.MidiOutPort".into();
-    let mut outPortStatics: ComPtr<IMidiOutPortStatics> = ComPtr::new(ptr::null_mut());
+    let mut outPortStatics = ComPtr::<IMidiOutPortStatics>::uninitialized();
     let hres = RoGetActivationFactory(Windows_Devices_Midi_MidiOutPort.get(), &IID_IMidiOutPortStatics, outPortStatics.get_ptr() as *mut *mut _ as *mut *mut VOID);
     assert_eq!(hres, S_OK);
     println!("outPortStatics: {:p}", outPortStatics);
@@ -438,7 +438,7 @@ impl<T> IntoIterator for ComPtr<IIterable<T>> where T: RtType, <T as RtType>::Ab
     type IntoIter = ComPtr<IIterator<T>>;
     fn into_iter(mut self) -> Self::IntoIter {
         unsafe {
-            let mut iterator = ComPtr::<IIterator<T>>::new(ptr::null_mut());
+            let mut iterator = ComPtr::<IIterator<T>>::uninitialized();
             assert!(self.First(iterator.get_ptr()) == S_OK);
             iterator
         }
@@ -450,7 +450,7 @@ impl<'a, T> IntoIterator for &'a mut ComPtr<IIterable<T>> where T: RtType, <T as
     type IntoIter = ComPtr<IIterator<T>>;
     fn into_iter(mut self) -> Self::IntoIter {
         unsafe {
-            let mut iterator = ComPtr::<IIterator<T>>::new(ptr::null_mut());
+            let mut iterator = ComPtr::<IIterator<T>>::uninitialized();
             assert!(self.First(iterator.get_ptr()) == S_OK);
             iterator
         }
@@ -499,7 +499,6 @@ impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType, <T as RtType>::Abi: R
     }
 }
 
-use std::{ptr, mem};
 use std::sync::atomic::Ordering;
 
 // Custom COM component
@@ -608,7 +607,7 @@ const AsyncOperationCompletedHandlerVtbl: &'static IAsyncOperationCompletedHandl
                     !guid_eq(&*vTableGuid, &*this.target_iid) { 
                     // We don't recognize the GUID passed to us. Let the caller know this,
                     // by clearing his handle, and returning E_NOINTERFACE.
-                    *ppv = ptr::null_mut();
+                    *ppv = ::std::ptr::null_mut();
                     return ::winapi::E_NOINTERFACE;
                 }
 
@@ -734,11 +733,8 @@ impl ComInterfaceIid for IIterable<*mut IDeviceInformation> {
 }
 
 // This maps the logical type `DeviceInformationCollection` to its correct ABI type.
-// Does this work okay? (Also see `AggregateType` in windows.foundation.collections.h)
-enum DeviceInformationCollection {}
-impl RtType for DeviceInformationCollection {
-    type Abi = *mut IVectorView<*mut IDeviceInformation>;
-}
+// TODO: Is a type alias sufficient? (Also see `AggregateType` in windows.foundation.collections.h)
+pub type DeviceInformationCollection = IVectorView<*mut IDeviceInformation>;
 
 // TODO: This GUID const should be private and only accessible via the ComInterfaceIid impl below
 DEFINE_GUID!(IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation, 0xdd9f8a5d, 0xec98, 0x5f4b, 0xa3, 0xea, 0x9c, 0x8b, 0x5a, 0xd5, 0x3c, 0x4b);

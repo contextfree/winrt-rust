@@ -18,6 +18,11 @@ impl<T> ComPtr<T> {
     /// It takes ownership over the pointer which means it does __not__ call `AddRef`.
     /// `T` __must__ be a COM interface that inherits from `IUnknown`.
     pub unsafe fn new(ptr: *mut T) -> ComPtr<T> { ComPtr(ptr) }
+    
+    /// Creates an uninitialized `ComPtr`. Unsafe because it needs to be initialized
+    /// or else `Drop` will try to call `Release` on a null pointer.
+    pub unsafe fn uninitialized() -> ComPtr<T> { ComPtr(::std::ptr::null_mut()) }
+    
     /// Casts up the inheritance chain
     pub fn up<U>(&self) -> ComPtr<U> where T: Deref<Target=U> {
         unimplemented!() // TODO
