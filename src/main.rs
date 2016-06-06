@@ -6,6 +6,7 @@
 
 #[macro_use(DEFINE_GUID)] extern crate winapi;
 extern crate runtimeobject;
+extern crate oleaut32;
 
 use ::winapi::{
     HRESULT,
@@ -27,6 +28,8 @@ use ::runtimeobject::*;
 
 pub mod hstring;
 use hstring::HString;
+pub mod bstr;
+use bstr::BStr;
 
 pub mod comptr;
 use comptr::ComPtr;
@@ -306,21 +309,28 @@ pub type IUnknown = ::winapi::IUnknown;
 pub type IUnknownVtbl = ::winapi::IUnknownVtbl;
 pub type IInspectable = ::winapi::IInspectable;
 pub type IInspectableVtbl = ::winapi::IInspectableVtbl;
+pub type IRestrictedErrorInfo = ::winapi::IRestrictedErrorInfo;
+pub type IRestrictedErrorInfoVtbl = ::winapi::IRestrictedErrorInfoVtbl;
 
 DEFINE_GUID!(IID_IUnknown, 0x00000000, 0x0000, 0x0000, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
 DEFINE_GUID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);
 DEFINE_GUID!(IID_IAgileObject, 0x94EA2B94, 0xE9CC, 0x49E0, 0xC0, 0xFF, 0xEE, 0x64, 0xCA, 0x8F, 0x5B, 0x90);
+DEFINE_GUID!(IID_IRestrictedErrorInfo, 0x82BA7092, 0x4C88, 0x427D, 0xA7, 0xBC, 0x16, 0xDD, 0x93, 0xFE, 0xB6, 0x7E);
 
 impl ComInterfaceIid for IUnknown { /*const IID: REFIID = &IID_IUnknown;*/ fn get_iid() -> REFIID { &IID_IUnknown } }
 impl ComInterface for IUnknown { type Vtbl = IUnknownVtbl; }
 impl ComInterfaceIid for IInspectable { /*const IID: REFIID = &IID_IInspectable;*/ fn get_iid() -> REFIID { &IID_IInspectable } }
 impl ComInterface for IInspectable { type Vtbl = IInspectableVtbl; }
-
+impl ComInterfaceIid for IRestrictedErrorInfo { /*const IID: REFIID = &IID_IInspectable;*/ fn get_iid() -> REFIID { &IID_IRestrictedErrorInfo } }
+impl ComInterface for IRestrictedErrorInfo { type Vtbl = IRestrictedErrorInfoVtbl; }
 
 fn main() {
     unsafe {
         let hres = RoInitialize(RO_INIT_MULTITHREADED);
         println!("HRESULT (RoInitialize) = {}", hres);
+        let mut f: ::winapi::UINT32 = 0;
+        assert!(RoGetErrorReportingFlags(&mut f) == S_OK);
+        println!("ErrorReportingFlags: {:?}", f);
         run();
         RoUninitialize();
     }
@@ -346,9 +356,27 @@ unsafe fn run() {
     let hres = RoGetActivationFactory(Windows_Devices_Enumeration_DeviceInformation.get(), &IID_IDeviceInformationStatics, deviceInformationStatics.get_ptr() as *mut *mut _ as *mut *mut VOID);
     println!("HRESULT (deviceInformationStatics) = {}", hres);
     let mut asyncOp = uninitialized::<IAsyncOperation<IVectorView<IDeviceInformation>>>();
-    //let hres = deviceInformationStatics.FindAllAsyncAqsFilter(deviceSelector.get(), asyncOp.get_ptr());
-    let hres = deviceInformationStatics.FindAllAsync(asyncOp.get_ptr());
+    
+    // Test some error reporting by using an invalid device selector
+    let wrongDeviceSelector: HString = "Foobar".into();
+    let hres = deviceInformationStatics.FindAllAsyncAqsFilter(wrongDeviceSelector.get(), asyncOp.get_ptr());
     println!("HRESULT (FindAllAsync) = {}", hres);
+    {
+        let mut errorInfo = ComPtr::<IRestrictedErrorInfo>::uninitialized();
+        assert_eq!(GetRestrictedErrorInfo(errorInfo.get_ptr()), S_OK);
+        let mut description = BStr::empty();
+        let mut error: HRESULT = 0;
+        let mut restrictedDescription = BStr::empty();
+        let mut capabilitySid = BStr::empty();
+        assert_eq!(errorInfo.GetErrorDetails(description.get_address(), &mut error, restrictedDescription.get_address(), capabilitySid.get_address()), S_OK);
+        println!("Got Error Info: {} ({})", description, restrictedDescription);
+        assert_eq!(error, hres); // the returned HRESULT within IRestrictedErrorInfo is the same as the original HRESULT
+        assert!(asyncOp.get_address().is_null()); // asyncOp is still null pointer
+    }
+    
+    //let hres = deviceInformationStatics.FindAllAsyncAqsFilter(deviceSelector.get(), asyncOp.get_ptr());
+    assert_eq!(deviceInformationStatics.FindAllAsync(asyncOp.get_ptr()), S_OK);
+    
     
     let mut className = uninitialized::<HSTRING>();
     let hres = asyncOp.GetRuntimeClassName(className.get_ptr());
@@ -424,6 +452,13 @@ unsafe fn run() {
     let mut found = FALSE;
     assert!(deviceInformationCollection.IndexOf(remember.unwrap().as_mut(), &mut index, &mut found) == S_OK);
     println!("Found remembered value: {} (index: {})", found == TRUE, index);
+    
+    let mut get_at_result = ComPtr::<IDeviceInformation>::uninitialized();
+    let hres = deviceInformationCollection.GetAt(2000, get_at_result.get_ptr());
+    println!("HRESULT (GetAt) = {:x}", hres); // will be E_BOUNDS (out of bounds)
+    if hres != S_OK {
+        std::mem::forget(get_at_result);
+    }
     
     let hres = asi.get_Status(&mut status);
     println!("HRESULT (get_Status) = {:x}", hres);

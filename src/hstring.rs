@@ -1,5 +1,4 @@
 use ::std::ptr;
-use ::std::clone;
 use ::std::fmt;
 use ::std::cmp;
 
@@ -113,7 +112,7 @@ impl cmp::PartialEq<HString> for HString {
 
 impl cmp::Eq for HString {}
 
-impl clone::Clone for HString {
+impl ::std::clone::Clone for HString {
     fn clone(&self) -> Self {
         let mut clone = HString::empty();
         let hres = unsafe { WindowsDuplicateString(self.0, clone.get_address()) };
