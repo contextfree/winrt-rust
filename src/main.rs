@@ -33,14 +33,61 @@ use bstr::BStr;
 
 pub mod comptr;
 use comptr::ComPtr;
- 
+
+// This is a helper which also helps us to make type inference work ...
+fn out<T>(ptr: &mut T) -> &mut <T as ComGetPtr>::Abi where T: ComGetPtr {
+    ptr.get_address()
+}
+
 pub trait ComInterfaceIid {
     // TODO: use associated constant once that is stable
     //const IID: REFIID;
     fn get_iid() -> REFIID;
 }
+
 pub trait ComInterface {
     type Vtbl: 'static + Sized;
+}
+
+pub trait ComGetPtr {
+    type Abi;
+    fn get_address(&mut self) -> &mut Self::Abi;
+}
+
+// TODO: remove the get_address methods from the inherent impls and only use the trait?
+impl<T> ComGetPtr for ComPtr<T> {
+    type Abi = *mut T;
+    fn get_address(&mut self) -> &mut Self::Abi {
+        self.get_address()
+    }
+}
+
+impl ComGetPtr for HString {
+    type Abi = ::winapi::HSTRING;
+    fn get_address(&mut self) -> &mut Self::Abi {
+        self.get_address()
+    }
+}
+
+impl ComGetPtr for BStr {
+    type Abi = ::winapi::BSTR;
+    fn get_address(&mut self) -> &mut Self::Abi {
+        self.get_address()
+    }
+}
+
+impl<T> ComGetPtr for *mut T where T: ComInterface {
+    type Abi = *mut T;
+    fn get_address(&mut self) -> &mut Self::Abi {
+        self
+    }
+}
+
+impl<T> ComGetPtr for T where T: RtValueType {
+    type Abi = T;
+    fn get_address(&mut self) -> &mut Self::Abi {
+        self
+    }
 }
 
 pub trait RtGetUninitialized where Self: Sized {
@@ -70,53 +117,11 @@ impl<T> RtGetUninitialized for T where T: RtValueType {
     }
 }
 
-// This is just syntax sugar
-pub unsafe fn uninitialized<T>() -> <<T as RtType>::Abi as RtGetUninitialized>::Out where T: RtType, <T as RtType>::Abi: RtGetUninitialized {
-    <<T as RtType>::Abi as RtGetUninitialized>::uninitialized()
-}
-
-pub trait ComGetPtr {
-    type Abi;
-    unsafe fn get_ptr(&mut self) -> &mut Self::Abi;
-}
-
-impl<T> ComGetPtr for ComPtr<T> {
-    type Abi = *mut T;
-    unsafe fn get_ptr(&mut self) -> &mut Self::Abi {
-        self.get_address()
-    }
-}
-
-impl ComGetPtr for HString {
-    type Abi = ::winapi::HSTRING;
-    unsafe fn get_ptr(&mut self) -> &mut Self::Abi {
-        self.get_address()
-    }
-}
-
-impl<T> ComGetPtr for *mut T where T: ComInterface {
-    type Abi = *mut T;
-    unsafe fn get_ptr(&mut self) -> &mut Self::Abi {
-        self
-    }
-}
-
-impl<T> ComGetPtr for T where T: RtValueType {
-    type Abi = T;
-    unsafe fn get_ptr(&mut self) -> &mut Self::Abi {
-        self
-    }
-}
-
 pub trait RtType {
-    type Abi: RtType;
+    type Abi;
 }
 
 impl RtType for HString {
-    type Abi = ::winapi::HSTRING;
-}
-
-impl RtType for HSTRING {
     type Abi = ::winapi::HSTRING;
 }
 
@@ -160,10 +165,7 @@ macro_rules! RIDL {
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
         }
-        impl RtType for $interface {
-            type Abi = *mut $interface;
-        }
-        impl RtType for *mut $interface {
+        impl<'a> RtType for &'a $interface {
             type Abi = *mut $interface;
         }
     };
@@ -184,10 +186,7 @@ macro_rules! RIDL {
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
         }
-        impl RtType for $interface {
-            type Abi = *mut $interface;
-        }
-        impl RtType for *mut $interface {
+        impl<'a> RtType for &'a $interface {
             type Abi = *mut $interface;
         }
         impl ::std::ops::Deref for $interface {
@@ -234,10 +233,7 @@ macro_rules! RIDL {
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
         }
-        impl RtType for $interface {
-            type Abi = *mut $interface;
-        }
-        impl RtType for *mut $interface {
+        impl<'a> RtType for &'a $interface {
             type Abi = *mut $interface;
         }
         impl ::std::ops::Deref for $interface {
@@ -282,11 +278,8 @@ macro_rules! RIDL {
         impl<$t1: 'static> ComInterface for $interface<$t1> where $t1: RtType { 
             type Vtbl = $vtbl<$t1>;
         }
-        impl<$t1> RtType for $interface<$t1> where $t1: RtType{
-            type Abi = *mut $interface<<$t1 as RtType>::Abi>;
-        }
-        impl<$t1> RtType for *mut $interface<$t1> where $t1: RtType {
-            type Abi = *mut $interface<<$t1 as RtType>::Abi>;
+        impl<'a, $t1> RtType for &'a $interface<$t1> where $t1: RtType{
+            type Abi = *mut $interface<$t1>;
         }
         impl<$t1> ::std::ops::Deref for $interface<$t1> where $t1: RtType {
             type Target = $crate::$pinterface;
@@ -341,45 +334,44 @@ unsafe fn run() {
     
     let Windows_Devices_Midi_MidiOutPort: HString = "Windows.Devices.Midi.MidiOutPort".into();
     let mut outPortStatics = ComPtr::<IMidiOutPortStatics>::uninitialized();
-    let hres = RoGetActivationFactory(Windows_Devices_Midi_MidiOutPort.get(), &IID_IMidiOutPortStatics, outPortStatics.get_ptr() as *mut *mut _ as *mut *mut VOID);
+    let hres = RoGetActivationFactory(Windows_Devices_Midi_MidiOutPort.get(), &IID_IMidiOutPortStatics, out(&mut outPortStatics) as *mut *mut _ as *mut *mut VOID);
     assert_eq!(hres, S_OK);
     println!("outPortStatics: {:p}", outPortStatics);
     
-    //let mut hstring: HSTRING = ptr::null_mut();
-    let mut deviceSelector = uninitialized::<HString>();
-    let hres = outPortStatics.GetDeviceSelector(deviceSelector.get_ptr());
+    let mut deviceSelector = HString::empty();
+    let hres = outPortStatics.GetDeviceSelector(out(&mut deviceSelector));
     println!("HRESULT (GetDeviceSelector) = {}", hres);
     println!("{}", deviceSelector.to_string());
     
     let Windows_Devices_Enumeration_DeviceInformation: HString = "Windows.Devices.Enumeration.DeviceInformation".into();
-    let mut deviceInformationStatics = uninitialized::<IDeviceInformationStatics>();
-    let hres = RoGetActivationFactory(Windows_Devices_Enumeration_DeviceInformation.get(), &IID_IDeviceInformationStatics, deviceInformationStatics.get_ptr() as *mut *mut _ as *mut *mut VOID);
+    let mut deviceInformationStatics = ComPtr::<IDeviceInformationStatics>::uninitialized();
+    let hres = RoGetActivationFactory(Windows_Devices_Enumeration_DeviceInformation.get(), &IID_IDeviceInformationStatics, out(&mut deviceInformationStatics) as *mut *mut _ as *mut *mut VOID);
     println!("HRESULT (deviceInformationStatics) = {}", hres);
-    let mut asyncOp = uninitialized::<IAsyncOperation<IVectorView<IDeviceInformation>>>();
     
+    let mut asyncOp = ComPtr::uninitialized();
     // Test some error reporting by using an invalid device selector
     let wrongDeviceSelector: HString = "Foobar".into();
-    let hres = deviceInformationStatics.FindAllAsyncAqsFilter(wrongDeviceSelector.get(), asyncOp.get_ptr());
+    let hres = deviceInformationStatics.FindAllAsyncAqsFilter(wrongDeviceSelector.get(), out(&mut asyncOp));
     println!("HRESULT (FindAllAsync) = {}", hres);
     {
         let mut errorInfo = ComPtr::<IRestrictedErrorInfo>::uninitialized();
-        assert_eq!(GetRestrictedErrorInfo(errorInfo.get_ptr()), S_OK);
+        assert_eq!(GetRestrictedErrorInfo(out(&mut errorInfo)), S_OK);
         let mut description = BStr::empty();
         let mut error: HRESULT = 0;
         let mut restrictedDescription = BStr::empty();
         let mut capabilitySid = BStr::empty();
-        assert_eq!(errorInfo.GetErrorDetails(description.get_address(), &mut error, restrictedDescription.get_address(), capabilitySid.get_address()), S_OK);
+        assert_eq!(errorInfo.GetErrorDetails(out(&mut description), &mut error, out(&mut restrictedDescription), out(&mut capabilitySid)), S_OK);
         println!("Got Error Info: {} ({})", description, restrictedDescription);
         assert_eq!(error, hres); // the returned HRESULT within IRestrictedErrorInfo is the same as the original HRESULT
         assert!(asyncOp.get_address().is_null()); // asyncOp is still null pointer
     }
     
-    //let hres = deviceInformationStatics.FindAllAsyncAqsFilter(deviceSelector.get(), asyncOp.get_ptr());
-    assert_eq!(deviceInformationStatics.FindAllAsync(asyncOp.get_ptr()), S_OK);
+    //let hres = deviceInformationStatics.FindAllAsyncAqsFilter(deviceSelector.get(), out(&mut asyncOp));
+    assert_eq!(deviceInformationStatics.FindAllAsync(out(&mut asyncOp)), S_OK);
     
     
-    let mut className = uninitialized::<HSTRING>();
-    let hres = asyncOp.GetRuntimeClassName(className.get_ptr());
+    let mut className = HString::empty();
+    let hres = asyncOp.GetRuntimeClassName(out(&mut className));
     println!("HRESULT (GetRuntimeClassName) = {:x}", hres);
     println!("CLS: {}", className.to_string());
     
@@ -392,12 +384,12 @@ unsafe fn run() {
     let unknown = asi.query_interface::<IUnknown>().unwrap();
     println!("IAsyncInfo: {:p}, IAsyncOperation: {:p}, IUnknown: {:p}", asi, asyncOp, unknown);
     
-    let mut id = uninitialized::<UINT>();
+    let mut id = 0;
     assert!(asi.get_Id(&mut id) == S_OK);
     println!("HRESULT (get_Id) = {:x}", hres);
     println!("id: {:?}", id);
     
-    let mut status = uninitialized::<AsyncStatus>();
+    let mut status = std::mem::uninitialized();
     let hres = asi.get_Status(&mut status);
     println!("HRESULT (get_Status) = {:x}", hres);
     println!("status: {:?}", status);
@@ -405,7 +397,7 @@ unsafe fn run() {
     let pair = Arc::new((Mutex::new(false), Condvar::new()));
     {
         let pair2 = pair.clone();
-        let myHandler = AsyncOperationCompletedHandler::new(move |_op, status| {
+        let mut myHandler = AsyncOperationCompletedHandler::new(move |_op, status| {
             println!("Result handler invoked! Status: {:?}", status);
             let &(ref lock, ref cvar) = &*pair2;
             let mut started = lock.lock().unwrap();
@@ -413,7 +405,7 @@ unsafe fn run() {
             cvar.notify_one();
             S_OK
         }).into_interface();
-        assert!(asyncOp.put_Completed(myHandler.as_mut()) == S_OK);
+        assert!(asyncOp.put_Completed(&mut *myHandler) == S_OK);
         // local reference to myHandler is dropped here -> Release() is called
     }
     
@@ -426,11 +418,11 @@ unsafe fn run() {
         started = cvar.wait(started).unwrap();
     }
 
-    let mut deviceInformationCollection = uninitialized::<IVectorView<IDeviceInformation>>();
-    assert!(asyncOp.GetResults(deviceInformationCollection.get_ptr()) == S_OK);
+    let mut deviceInformationCollection = ComPtr::uninitialized();
+    assert!(asyncOp.GetResults(out(&mut deviceInformationCollection)) == S_OK);
     let mut className = HString::empty();
-    assert!(deviceInformationCollection.GetRuntimeClassName(className.get_ptr()) == S_OK);
-    println!("CLS: {}", className.to_string());
+    assert!(deviceInformationCollection.GetRuntimeClassName(out(&mut className)) == S_OK);
+    println!("CLS: {}", className);
     let mut count = 0;
     assert!(deviceInformationCollection.get_Size(&mut count) == S_OK);
     println!("Device Count: {}", count);
@@ -439,8 +431,8 @@ unsafe fn run() {
     let mut i = 0;
     for mut current in &mut deviceInformationCollection { // without the `&mut` it would consume the ComPtr
         let mut deviceName = HString::empty();
-        current.get_Name(deviceName.get_ptr());
-        println!("Device Name ({}): {}", i, deviceName.to_string());
+        current.get_Name(out(&mut deviceName));
+        println!("Device Name ({}): {}", i, deviceName);
         if i == 100 {
             // remember the 100th value and try to find it later using IndexOf
             remember = Some(current);
@@ -450,11 +442,11 @@ unsafe fn run() {
     assert_eq!(i, count);
     let mut index = 0;
     let mut found = FALSE;
-    assert!(deviceInformationCollection.IndexOf(remember.unwrap().as_mut(), &mut index, &mut found) == S_OK);
+    assert!(deviceInformationCollection.IndexOf(&mut *remember.unwrap(), &mut index, &mut found) == S_OK);
     println!("Found remembered value: {} (index: {})", found == TRUE, index);
     
-    let mut get_at_result = ComPtr::<IDeviceInformation>::uninitialized();
-    let hres = deviceInformationCollection.GetAt(2000, get_at_result.get_ptr());
+    let mut get_at_result = ComPtr::uninitialized();
+    let hres = deviceInformationCollection.GetAt(2000, out(&mut get_at_result));
     println!("HRESULT (GetAt) = {:x}", hres); // will be E_BOUNDS (out of bounds)
     if hres != S_OK {
         std::mem::forget(get_at_result);
@@ -468,13 +460,15 @@ unsafe fn run() {
     println!("HRESULT (Close AsyncInfo) = {:x}", hres);
 }
 
+// We can also implement IntoIterator for IIterable<T> and IVectorView<T> and references to those
+// TODO: This should be extended to more types (at least IVector, IMap, IMapView, IObservableVector, IObservableMap)
 impl<T> IntoIterator for ComPtr<IIterable<T>> where T: RtType, <T as RtType>::Abi: RtGetUninitialized {
     type Item = <<T as RtType>::Abi as RtGetUninitialized>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     fn into_iter(mut self) -> Self::IntoIter {
         unsafe {
             let mut iterator = ComPtr::<IIterator<T>>::uninitialized();
-            assert!(self.First(iterator.get_ptr()) == S_OK);
+            assert!(self.First(out(&mut iterator)) == S_OK);
             iterator
         }
     }
@@ -486,13 +480,12 @@ impl<'a, T> IntoIterator for &'a mut ComPtr<IIterable<T>> where T: RtType, <T as
     fn into_iter(mut self) -> Self::IntoIter {
         unsafe {
             let mut iterator = ComPtr::<IIterator<T>>::uninitialized();
-            assert!(self.First(iterator.get_ptr()) == S_OK);
+            assert!(self.First(out(&mut iterator)) == S_OK);
             iterator
         }
     }
 }
 
-// TODO: Extend the impl's below to more types like IVectorView (at least IVector, IMap, IMapView, IObservableVector, IObservableMap)
 impl<T> IntoIterator for ComPtr<IVectorView<T>> where T: RtType, <T as RtType>::Abi: RtGetUninitialized, IIterable<T>: ComInterfaceIid {
     type Item = <<T as RtType>::Abi as RtGetUninitialized>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
@@ -508,12 +501,14 @@ impl<'a, T> IntoIterator for &'a mut ComPtr<IVectorView<T>> where T: RtType, <T 
         self.query_interface::<IIterable<T>>().unwrap().into_iter()
     }
 }
+
 // TODO: also implement IndexMove for IVectorView etc once that exists (Index or IndexMut won't work since we can't return a reference)
 
 impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType, <T as RtType>::Abi: RtGetUninitialized {
-    // TODO: This could potentially be made faster by using the output of MoveNext instead of calling HasCurrent in every iteration
     type Item = <<T as RtType>::Abi as RtGetUninitialized>::Out;
     
+    // TODO: This could potentially be made faster by using the output of MoveNext instead of calling HasCurrent
+    //       in every iteration. That would require a wrapper struct with a boolean flag.
     fn next(&mut self) -> Option<Self::Item> {
         let has_next = unsafe {
             let mut hasCurrent: BOOL = FALSE;
@@ -523,9 +518,9 @@ impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType, <T as RtType>::Abi: R
         if has_next {
             unsafe {
                 let mut current: Self::Item = <<T as RtType>::Abi as RtGetUninitialized>::uninitialized();
-                assert!(self.get_Current(current.get_ptr()) == S_OK);
+                assert_eq!(self.get_Current(out(&mut current)), S_OK);
                 let mut hasCurrent: BOOL = FALSE;
-                assert!(self.MoveNext(&mut hasCurrent) == S_OK);
+                assert_eq!(self.MoveNext(&mut hasCurrent), S_OK);
                 Some(current)
             }
         } else {
@@ -600,11 +595,11 @@ pub trait ComClass<Interface: ComInterface> where Self: Sized {
 
 struct AsyncOperationCompletedHandler<TResult> where TResult: RtType {
     target_iid: REFIID,
-    invoke: Box<FnMut(*mut IAsyncOperation<TResult::Abi>, AsyncStatus) -> HRESULT>
+    invoke: Box<FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT>
 }
 
 impl<TResult> AsyncOperationCompletedHandler<TResult> where TResult: RtType, IAsyncOperationCompletedHandler<TResult>: ComInterfaceIid {
-    pub fn new<F>(f: F) -> AsyncOperationCompletedHandler<TResult> where F: 'static + Send + FnMut(*mut IAsyncOperation<TResult::Abi>, AsyncStatus) -> HRESULT {
+    pub fn new<F>(f: F) -> AsyncOperationCompletedHandler<TResult> where F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT {
         AsyncOperationCompletedHandler::<TResult> {
             target_iid: <IAsyncOperationCompletedHandler<TResult> as ComInterfaceIid>::get_iid(),
             invoke: Box::new(f)
@@ -738,7 +733,7 @@ pub enum AsyncStatus {
 
 DEFINE_GUID!(IID_IMidiOutPortStatics, 106742761, 3976, 17547, 155, 100, 169, 88, 38, 198, 91, 143);
 RIDL!{interface IMidiOutPortStatics(IMidiOutPortStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiOutPortStatics] {
-    fn FromIdAsync(&mut self, deviceId: HSTRING, asyncOp: *mut *mut IAsyncOperation<*mut IMidiOutPort>) -> HRESULT,
+    fn FromIdAsync(&mut self, deviceId: HSTRING, asyncOp: *mut *mut IAsyncOperation<&IMidiOutPort>) -> HRESULT,
     fn GetDeviceSelector(&mut self, value: *const HSTRING) -> HRESULT
 }}
 
@@ -746,9 +741,9 @@ DEFINE_GUID!(IID_IDeviceInformationStatics, 3246329870, 14918, 19064, 128, 19, 1
 RIDL!{interface IDeviceInformationStatics(IDeviceInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationStatics] {
     fn __CreateFromIdAsync(&mut self) -> HRESULT,
     fn __CreateFromIdAsyncAdditionalProperties(&mut self) -> HRESULT,
-    fn FindAllAsync(&mut self, asyncOp: *mut *mut IAsyncOperation<*mut IVectorView<*mut IDeviceInformation>>) -> HRESULT,
+    fn FindAllAsync(&mut self, asyncOp: *mut *mut IAsyncOperation<&IVectorView<&IDeviceInformation>>) -> HRESULT,
     fn __FindAllAsyncDeviceClass(&mut self) -> HRESULT,
-    fn FindAllAsyncAqsFilter(&mut self, aqsFilter: HSTRING, asyncOp: *mut *mut IAsyncOperation<*mut IVectorView<*mut IDeviceInformation>>) -> HRESULT,
+    fn FindAllAsyncAqsFilter(&mut self, aqsFilter: HSTRING, asyncOp: *mut *mut IAsyncOperation<&IVectorView<&IDeviceInformation>>) -> HRESULT,
     fn __FindAllAsyncAqsFilterAndAdditionalProperties(&mut self) -> HRESULT,
     fn __CreateWatcher(&mut self) -> HRESULT,
     fn __CreateWatcherDeviceClass(&mut self) -> HRESULT,
@@ -762,19 +757,19 @@ RIDL!{interface IIterable<T>(IIterableVtbl): IInspectable(IInspectableVtbl) [IID
 }}
 
 // "Specialize" the IID of IIterable for a given parameter type
-impl ComInterfaceIid for IIterable<*mut IDeviceInformation> {
+impl<'a> ComInterfaceIid for IIterable<&'a IDeviceInformation> {
     //const IID: REFIID = &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation;
     fn get_iid() -> REFIID { &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation }
 }
 
 // This maps the logical type `DeviceInformationCollection` to its correct ABI type.
 // TODO: Is a type alias sufficient? (Also see `AggregateType` in windows.foundation.collections.h)
-pub type DeviceInformationCollection = IVectorView<*mut IDeviceInformation>;
+pub type DeviceInformationCollection<'a> = IVectorView<&'a IDeviceInformation>;
 
 // TODO: This GUID const should be private and only accessible via the ComInterfaceIid impl below
 DEFINE_GUID!(IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation, 0xdd9f8a5d, 0xec98, 0x5f4b, 0xa3, 0xea, 0x9c, 0x8b, 0x5a, 0xd5, 0x3c, 0x4b);
 
-impl ComInterfaceIid for IAsyncOperationCompletedHandler<<DeviceInformationCollection as RtType>::Abi> {
+impl<'a> ComInterfaceIid for IAsyncOperationCompletedHandler<&'a DeviceInformationCollection<'a>> {
     //const IID: REFIID = &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection;
     fn get_iid() -> REFIID { &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection }
 }

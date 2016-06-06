@@ -8,7 +8,6 @@ use ::runtimeobject::*;
 pub struct HString(HSTRING);
 
 impl<'a> From<&'a str> for HString {
-    
     fn from(s: &'a str) -> Self {
         // Every UTF-8 byte results in either 1 or 2 UTF-16 bytes and we need one
         // more for the null terminator. This size expectation is correct in most cases,

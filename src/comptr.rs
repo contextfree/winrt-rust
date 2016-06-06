@@ -1,7 +1,7 @@
 use winapi as w;
 use std::ops::{Deref, DerefMut};
 use std::fmt;
-use std::{ptr, mem};
+use std::mem;
 use super::ComInterfaceIid;
 
 #[derive(Debug)]
@@ -27,22 +27,19 @@ impl<T> ComPtr<T> {
     pub fn up<U>(&self) -> ComPtr<U> where T: Deref<Target=U> {
         unimplemented!() // TODO
     }
-    /// Make sure you know what you're doing with this function
-    pub unsafe fn as_mut(&self) -> &mut T {
-        &mut*self.0
-    }
+    
     fn as_unknown(&self) -> &mut w::IUnknown {
         unsafe { &mut *(self.0 as *mut w::IUnknown) }
     }
     
-    pub unsafe fn get_address(&mut self) -> &mut *mut T {
+    pub fn get_address(&mut self) -> &mut *mut T {
         &mut self.0
     }
     
     pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComInterfaceIid {
         //let iid: ::winapi::REFIID = Target::IID;
         let iid: ::winapi::REFIID = Target::get_iid();
-        let mut result: ComPtr<Target> = unsafe { ComPtr::new(ptr::null_mut()) };
+        let mut result: ComPtr<Target> = unsafe { ComPtr::uninitialized() };
         match unsafe { self.as_unknown().QueryInterface(iid, result.get_address() as *mut _ as *mut *mut ::winapi::VOID) } {
             ::winapi::S_OK => Some(result),
             _ => {
