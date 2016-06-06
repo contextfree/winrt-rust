@@ -2,7 +2,7 @@ use ::std::ptr;
 use ::std::fmt;
 use ::std::cmp;
 
-use ::winapi::*;
+use ::w::*;
 use ::runtimeobject::*;
 
 pub struct HString(HSTRING);

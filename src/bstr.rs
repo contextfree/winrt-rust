@@ -1,7 +1,7 @@
 use ::std::ptr;
 use ::std::fmt;
 
-use ::winapi::*;
+use ::w::*;
 use ::oleaut32::*;
 
 pub struct BStr(BSTR);
