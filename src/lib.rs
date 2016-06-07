@@ -9,7 +9,7 @@ extern crate runtimeobject;
 extern crate oleaut32;
 
 mod hstring;
-pub use hstring::HString;
+pub use hstring::{HString, FastHString, HStringRef};
 mod bstr;
 pub use bstr::BStr;
 

@@ -36,9 +36,11 @@ fn main() {
 unsafe fn run() {
     use std::sync::{Arc, Mutex, Condvar};
     
-    let Windows_Devices_Midi_MidiOutPort: HString = "Windows.Devices.Midi.MidiOutPort".into();
+    let Windows_Devices_Midi_MidiOutPort: FastHString = "Windows.Devices.Midi.MidiOutPort".into();
     let mut outPortStatics = ComPtr::<IMidiOutPortStatics>::uninitialized();
-    let hres = RoGetActivationFactory(Windows_Devices_Midi_MidiOutPort.get(), &IID_IMidiOutPortStatics, out(&mut outPortStatics) as *mut *mut _ as *mut *mut VOID);
+    let hres = RoGetActivationFactory(Windows_Devices_Midi_MidiOutPort.get_ref().get(), &IID_IMidiOutPortStatics, out(&mut outPortStatics) as *mut *mut _ as *mut *mut VOID);
+    assert_eq!(hres, S_OK);
+    let hres = RoGetActivationFactory(Windows_Devices_Midi_MidiOutPort.get_ref().get(), &IID_IMidiOutPortStatics, out(&mut outPortStatics) as *mut *mut _ as *mut *mut VOID);
     assert_eq!(hres, S_OK);
     println!("outPortStatics: {:p}", outPortStatics);
     
@@ -47,15 +49,15 @@ unsafe fn run() {
     println!("HRESULT (GetDeviceSelector) = {}", hres);
     println!("{}", deviceSelector.to_string());
     
-    let Windows_Devices_Enumeration_DeviceInformation: HString = "Windows.Devices.Enumeration.DeviceInformation".into();
+    let Windows_Devices_Enumeration_DeviceInformation: FastHString = "Windows.Devices.Enumeration.DeviceInformation".into();
     let mut deviceInformationStatics = ComPtr::<IDeviceInformationStatics>::uninitialized();
-    let hres = RoGetActivationFactory(Windows_Devices_Enumeration_DeviceInformation.get(), &IID_IDeviceInformationStatics, out(&mut deviceInformationStatics) as *mut *mut _ as *mut *mut VOID);
+    let hres = RoGetActivationFactory(Windows_Devices_Enumeration_DeviceInformation.get_ref().get(), &IID_IDeviceInformationStatics, out(&mut deviceInformationStatics) as *mut *mut _ as *mut *mut VOID);
     println!("HRESULT (deviceInformationStatics) = {}", hres);
     
     let mut asyncOp = ComPtr::uninitialized();
     // Test some error reporting by using an invalid device selector
-    let wrongDeviceSelector: HString = "Foobar".into();
-    let hres = deviceInformationStatics.FindAllAsyncAqsFilter(wrongDeviceSelector.get(), out(&mut asyncOp));
+    let wrongDeviceSelector: FastHString = "Foobar".into();
+    let hres = deviceInformationStatics.FindAllAsyncAqsFilter(wrongDeviceSelector.get_ref().get(), out(&mut asyncOp));
     println!("HRESULT (FindAllAsync) = {}", hres);
     {
         let mut errorInfo = ComPtr::<IRestrictedErrorInfo>::uninitialized();
