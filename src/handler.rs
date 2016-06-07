@@ -58,18 +58,10 @@ unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG
     return 0;
 }
 
-trait ComClass<Interface: ComInterface> where Self: Sized {
+pub trait ComClass<Interface: ComInterface> where Self: Sized {
     fn get_vtbl() -> &'static Interface::Vtbl;
     fn vtbl(&self) -> &'static Interface::Vtbl {
         Self::get_vtbl()
-    }
-    fn into_interface(self) -> ComPtr<Interface> {
-        let com = Box::new(ComRepr {
-            vtbl: Self::get_vtbl(),
-            refcount: ::std::sync::atomic::AtomicUsize::new(1),
-            data: self
-        });
-        unsafe { ComPtr::new(Box::into_raw(com) as *mut Interface) }
     }
     unsafe fn from_interface<'a>(thing: *mut Interface) -> &'a mut Self {
         &mut (*(thing as *mut _ as *mut ComRepr<Self, Interface::Vtbl>)).data
@@ -82,17 +74,32 @@ trait ComClass<Interface: ComInterface> where Self: Sized {
     }
 }
 
+pub trait IntoInterface<Interface: ComInterface> {
+    fn into_interface(self) -> ComPtr<Interface>;
+}
+
+impl<T, Interface: ComInterface> IntoInterface<Interface> for T where T: ComClass<Interface> + Sized {
+    fn into_interface(self) -> ComPtr<Interface> {
+        let com = Box::new(ComRepr {
+            vtbl: Self::get_vtbl(),
+            refcount: ::std::sync::atomic::AtomicUsize::new(1),
+            data: self
+        });
+        unsafe { ComPtr::new(Box::into_raw(com) as *mut Interface) }
+    }
+}
+
 pub struct AsyncOperationCompletedHandler<TResult> where TResult: RtType {
     target_iid: REFIID,
     invoke: Box<FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT>
 }
 
 impl<TResult: 'static> AsyncOperationCompletedHandler<TResult> where TResult: RtType, IAsyncOperationCompletedHandler<TResult>: ComIid {
-    pub fn new<F>(f: F) -> ComPtr<IAsyncOperationCompletedHandler<TResult>> where F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT {
+    pub fn new<F>(f: F) -> AsyncOperationCompletedHandler<TResult> where F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT {
         AsyncOperationCompletedHandler::<TResult> {
             target_iid: <IAsyncOperationCompletedHandler<TResult> as ComIid>::get_iid(),
             invoke: Box::new(f)
-        }.into_interface()
+        }
     }
 }
 

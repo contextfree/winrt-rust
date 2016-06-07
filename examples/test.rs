@@ -1,11 +1,11 @@
 #![allow(non_snake_case)]
 
 extern crate winapi as w;
-extern crate winrt as windows;
+extern crate winrt as wrt;
 // TODO: don't use functions from runtimeobject directly 
 extern crate runtimeobject;
 
-use windows::{out, ComPtr, BStr, HString, IRestrictedErrorInfo, IUnknown};
+use wrt::*;
 use runtimeobject::*;
 
 // TODO: re-export necessary types from winapi
@@ -18,8 +18,8 @@ use ::w::{
     RO_INIT_MULTITHREADED,
 };
 
-use windows::foundation::*;
-use windows::devices::enumeration::*;
+use wrt::windows::foundation::*;
+use wrt::windows::devices::enumeration::*;
 
 fn main() {
     unsafe {
@@ -104,7 +104,7 @@ unsafe fn run() {
             *started = true;
             cvar.notify_one();
             S_OK
-        });
+        }).into_interface();
         assert!(asyncOp.put_Completed(&mut *myHandler) == S_OK);
         // local reference to myHandler is dropped here -> Release() is called
     }

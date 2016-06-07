@@ -23,6 +23,7 @@ mod rt;
 pub use rt::{RtInterface, RtValueType, RtType, RtGetUninitialized, IInspectable, IInspectableVtbl};
 
 mod handler;
+pub use handler::IntoInterface;
 
 // This is a helper which also helps us to make type inference work ...
 pub fn out<T>(ptr: &mut T) -> &mut <T as ComGetPtr>::Abi where T: ComGetPtr {
@@ -30,14 +31,16 @@ pub fn out<T>(ptr: &mut T) -> &mut <T as ComGetPtr>::Abi where T: ComGetPtr {
 }
 
 // TODO: use lower-case (Rust style) or upper-case (WinRT style) module names?
-pub mod foundation {
-    pub use rt::{IIterable, IIterator, IVectorView, IStringable, IAsyncInfo, IAsyncAction, IAsyncActionCompletedHandler, IAsyncOperation, IAsyncOperationCompletedHandler, AsyncStatus};
-    pub use handler::{AsyncOperationCompletedHandler};
-}
-pub mod devices {
-    pub mod enumeration {
-        pub use rt::{IDeviceInformationStatics, IMidiOutPortStatics, IMidiOutPort};
-        // TODO: What about IIDs and statics?
-        pub use rt::{IID_IMidiOutPortStatics, IID_IDeviceInformationStatics};
+pub mod windows {
+    pub mod foundation {
+        pub use rt::{IIterable, IIterator, IVectorView, IStringable, IAsyncInfo, IAsyncAction, IAsyncActionCompletedHandler, IAsyncOperation, IAsyncOperationCompletedHandler, AsyncStatus};
+        pub use handler::{AsyncOperationCompletedHandler};
+    }
+    pub mod devices {
+        pub mod enumeration {
+            pub use rt::{IDeviceInformationStatics, IMidiOutPortStatics, IMidiOutPort};
+            // TODO: What about IIDs and statics?
+            pub use rt::{IID_IMidiOutPortStatics, IID_IDeviceInformationStatics};
+        }
     }
 }
