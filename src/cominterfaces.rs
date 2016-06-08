@@ -1,5 +1,4 @@
 use ::w::REFIID;
-use super::{HString, BStr};
 
 pub trait ComInterface {
     type Vtbl: 'static + Sized;
@@ -9,32 +8,6 @@ pub trait ComIid {
     // TODO: use associated constant once that is stable
     //const IID: REFIID;
     fn get_iid() -> REFIID;
-}
-
-pub trait ComGetPtr {
-    type Abi;
-    fn get_address(&mut self) -> &mut Self::Abi;
-}
-
-impl ComGetPtr for HString {
-    type Abi = ::w::HSTRING;
-    fn get_address(&mut self) -> &mut Self::Abi {
-        self.get_address()
-    }
-}
-
-impl ComGetPtr for BStr {
-    type Abi = ::w::BSTR;
-    fn get_address(&mut self) -> &mut Self::Abi {
-        self.get_address()
-    }
-}
-
-impl<T> ComGetPtr for *mut T where T: ComInterface {
-    type Abi = *mut T;
-    fn get_address(&mut self) -> &mut Self::Abi {
-        self
-    }
 }
 
 // extend some definitions from winapi (re-export existing types where possible!)

@@ -18,9 +18,9 @@ use ::rt::{
     AsyncStatus
 };
 
-use ::w::{BOOL, S_OK, HRESULT, VOID, REFIID, ULONG, GUID};
+use ::w::{S_OK, HRESULT, VOID, REFIID, ULONG, GUID};
 
-// Custom COM component and implement IAsyncOperationCompletedHandler
+// Define custom COM component and implement IAsyncOperationCompletedHandler
 #[repr(C)]
 pub struct ComRepr<T, Vtbl> {
     vtbl: *const Vtbl,
@@ -41,7 +41,7 @@ unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut IUnknown) -> ULONG
     return (old_size + 1) as ULONG;
 }
 
-/// This is a reusable implementation of Com_Release that works for any ComRepr-based type
+/// This is a reusable implementation of Release that works for any ComRepr-based type
 unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG
 {
     let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
@@ -85,7 +85,7 @@ impl<T, Interface: ComInterface> IntoInterface<Interface> for T where T: ComClas
             refcount: ::std::sync::atomic::AtomicUsize::new(1),
             data: self
         });
-        unsafe { ComPtr::new(Box::into_raw(com) as *mut Interface) }
+        unsafe { ComPtr::wrap(Box::into_raw(com) as *mut Interface) }
     }
 }
 
@@ -103,14 +103,16 @@ impl<TResult: 'static> AsyncOperationCompletedHandler<TResult> where TResult: Rt
     }
 }
 
+type __Any = bool;
+
 // IAsyncOperationCompletedHandlerVtbl only references TResult in type parameter position, so the implementation
-// should be the same regardless of TResult, which means that we can just use a dummy `BOOL` here.
-const AsyncOperationCompletedHandlerVtbl: &'static IAsyncOperationCompletedHandlerVtbl<BOOL> = &IAsyncOperationCompletedHandlerVtbl::<BOOL> {
+// should be the same regardless of TResult, which means that we can just use a dummy `bool` here.
+const AsyncOperationCompletedHandlerVtbl: &'static IAsyncOperationCompletedHandlerVtbl<__Any> = &IAsyncOperationCompletedHandlerVtbl::<__Any> {
     parent: IUnknownVtbl {
         QueryInterface: {
             unsafe extern "system" fn QueryInterface(this_: *mut IUnknown, vTableGuid: REFIID, ppv: *mut *mut VOID) -> HRESULT
             {
-                let this_ = this_ as *mut IAsyncOperationCompletedHandler<BOOL>;
+                let this_ = this_ as *mut IAsyncOperationCompletedHandler<__Any>;
                 fn guid_eq(guid1: &GUID, guid2: &GUID) -> bool {
                     guid1.Data1 == guid2.Data1 && guid1.Data2 == guid2.Data2 && guid1.Data3 == guid2.Data3 && guid1.Data4 == guid2.Data4
                 }
@@ -125,7 +127,7 @@ const AsyncOperationCompletedHandlerVtbl: &'static IAsyncOperationCompletedHandl
                 print!("QueryInterface called with GUID ");
                 print_guid(&*vTableGuid);
                 
-                let this: &mut AsyncOperationCompletedHandler<BOOL> = AsyncOperationCompletedHandler::<BOOL>::from_interface(this_);
+                let this: &mut AsyncOperationCompletedHandler<__Any> = AsyncOperationCompletedHandler::<__Any>::from_interface(this_);
                 
                 // TODO: How to determine which IIDs are allowed here?
                 if !guid_eq(&*vTableGuid, &IID_IUnknown) &&
@@ -144,19 +146,19 @@ const AsyncOperationCompletedHandlerVtbl: &'static IAsyncOperationCompletedHandl
 
                 // Now we call our own AddRef function, which we can do without vtable lookup
                 // Alternatively could call: (&mut *this_).AddRef();
-                ComRepr_AddRef::<AsyncOperationCompletedHandler<BOOL>>(this_ as *mut IUnknown);
+                ComRepr_AddRef::<AsyncOperationCompletedHandler<__Any>>(this_ as *mut IUnknown);
 
                 // Let the caller know that he indeed has an object of the requested interface.
                 return S_OK;
             }
             QueryInterface
         },
-        AddRef: ComRepr_AddRef::<AsyncOperationCompletedHandler<BOOL>>,
-        Release: ComRepr_Release::<AsyncOperationCompletedHandler<BOOL>>,
+        AddRef: ComRepr_AddRef::<AsyncOperationCompletedHandler<__Any>>,
+        Release: ComRepr_Release::<AsyncOperationCompletedHandler<__Any>>,
     },
     Invoke: {
-        unsafe extern "system" fn Invoke(this_: *mut IAsyncOperationCompletedHandler<BOOL>, asyncOperation: *mut IAsyncOperation<BOOL>, status: AsyncStatus) -> HRESULT {
-            let this: &mut AsyncOperationCompletedHandler<BOOL> = AsyncOperationCompletedHandler::<BOOL>::from_interface(this_);
+        unsafe extern "system" fn Invoke(this_: *mut IAsyncOperationCompletedHandler<__Any>, asyncOperation: *mut IAsyncOperation<__Any>, status: AsyncStatus) -> HRESULT {
+            let this: &mut AsyncOperationCompletedHandler<__Any> = AsyncOperationCompletedHandler::<__Any>::from_interface(this_);
             (this.invoke)(asyncOperation, status)
         }
         Invoke

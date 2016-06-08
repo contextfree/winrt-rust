@@ -38,6 +38,7 @@ fn zero_header() -> HSTRING_HEADER {
     }
 }
 
+#[derive(Copy, Clone)]
 pub struct HStringRef<'a>(HSTRING_HEADER, PhantomData<&'a ()>);
 
 impl<'a> HStringRef<'a> {

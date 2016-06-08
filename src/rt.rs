@@ -1,4 +1,6 @@
-use super::{ComInterface, ComGetPtr, HString, ComPtr, ComIid, out};
+use std::ptr;
+
+use super::{ComInterface, HString, HStringRef, ComPtr, ComIid};
 
 use ::w::{
     HRESULT,
@@ -9,7 +11,6 @@ use ::w::{
     BOOL,
     TRUE,
     FALSE,
-    INT,
     UINT,
     TrustLevel,
     IID
@@ -19,94 +20,106 @@ use ::w::{
 pub unsafe trait RtInterface: ComInterface {}
 
 pub unsafe trait RtValueType {}
-unsafe impl RtValueType for INT {} // this the same type as BOOL and LONG
-unsafe impl RtValueType for UINT {}
 unsafe impl RtValueType for AsyncStatus {}
 // TODO ...
 
-impl<T> ComGetPtr for T where T: RtValueType {
-    type Abi = T;
-    fn get_address(&mut self) -> &mut Self::Abi {
-        self
-    }
-}
-
 /// This is a trait implemented by all types that can be used as generic parameters of parameterized interfaces
 pub trait RtType {
+    type In;
     type Abi;
+    type Out;
+
+    unsafe fn unwrap(input: Self::In) -> Self::Abi;
+    unsafe fn uninitialized() -> Self::Abi;
+    unsafe fn wrap(abi: Self::Abi) -> Self::Out;
 }
 
-impl RtType for HString {
+impl<'a> RtType for &'a str {
+    type In = HStringRef<'a>;
     type Abi = ::w::HSTRING;
+    type Out = HString;
+    
+    unsafe fn unwrap(v: Self::In) -> Self::Abi { v.get() }
+    unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+    unsafe fn wrap(v: Self::Abi) -> Self::Out { HString::wrap(v) }
+}
+
+impl<'a> RtType for bool {
+    type In = bool;
+    type Abi = ::w::BOOL;
+    type Out = bool;
+    
+    unsafe fn unwrap(v: Self::In) -> Self::Abi { if v { ::w::TRUE } else { ::w::FALSE } }
+    unsafe fn uninitialized() -> Self::Abi { ::w::FALSE }
+    unsafe fn wrap(v: Self::Abi) -> Self::Out { v == ::w::TRUE }
+}
+
+impl<'a> RtType for i32 {
+    type In = i32;
+    type Abi = ::w::INT;
+    type Out = i32;
+    
+    unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+    unsafe fn uninitialized() -> Self::Abi { 0 }
+    unsafe fn wrap(v: Self::Abi) -> Self::Out { v }
+}
+
+impl<'a> RtType for u32 {
+    type In = u32;
+    type Abi = ::w::UINT;
+    type Out = u32;
+    
+    unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+    unsafe fn uninitialized() -> Self::Abi { 0 }
+    unsafe fn wrap(v: Self::Abi) -> Self::Out { v }
 }
 
 impl<T> RtType for T where T: RtValueType {
+    type In = T;
     type Abi = T;
-}
-
-pub trait RtGetUninitialized where Self: Sized {
-    type Out: ComGetPtr<Abi = Self>;
-    unsafe fn uninitialized() -> Self::Out;
-}
-
-impl<T> RtGetUninitialized for *mut T where T: ComInterface {
-    type Out = ComPtr<T>;
-    unsafe fn uninitialized() -> Self::Out {
-        ComPtr::<T>::uninitialized()
-    }
-}
-
-impl RtGetUninitialized for HSTRING {
-    type Out = HString;
-    unsafe fn uninitialized() -> Self::Out {
-        HString::empty()
-    }
-}
-
-impl<T> RtGetUninitialized for T where T: RtValueType {
     type Out = T;
-    unsafe fn uninitialized() -> Self::Out {
-        // could also use mem::uninitialized() here ...
-        ::std::mem::zeroed()
-    }
+    
+    unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+    unsafe fn uninitialized() -> Self::Abi { ::std::mem::zeroed() }
+    unsafe fn wrap(v: Self::Abi) -> Self::Out { v }
 }
 
 // We can also implement IntoIterator for IIterable<T> and IVectorView<T> and references to those
 // TODO: This should be extended to more types (at least IVector, IMap, IMapView, IObservableVector, IObservableMap)
-impl<T> IntoIterator for ComPtr<IIterable<T>> where T: RtType, <T as RtType>::Abi: RtGetUninitialized {
-    type Item = <<T as RtType>::Abi as RtGetUninitialized>::Out;
+impl<T> IntoIterator for ComPtr<IIterable<T>> where T: RtType {
+    type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     fn into_iter(mut self) -> Self::IntoIter {
         unsafe {
-            let mut iterator = ComPtr::<IIterator<T>>::uninitialized();
-            assert!(self.First(out(&mut iterator)) == S_OK);
-            iterator
+            let mut iterator = ptr::null_mut();
+            assert_eq!(self.First(&mut iterator), S_OK);
+            ComPtr::wrap(iterator)
         }
     }
 }
 
-impl<'a, T> IntoIterator for &'a mut ComPtr<IIterable<T>> where T: RtType, <T as RtType>::Abi: RtGetUninitialized {
-    type Item = <<T as RtType>::Abi as RtGetUninitialized>::Out;
+impl<'a, T> IntoIterator for &'a mut ComPtr<IIterable<T>> where T: RtType {
+    type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     fn into_iter(mut self) -> Self::IntoIter {
         unsafe {
-            let mut iterator = ComPtr::<IIterator<T>>::uninitialized();
-            assert!(self.First(out(&mut iterator)) == S_OK);
-            iterator
+            let mut iterator = ptr::null_mut();
+            assert_eq!(self.First(&mut iterator), S_OK);
+            ComPtr::wrap(iterator)
         }
     }
 }
 
-impl<T> IntoIterator for ComPtr<IVectorView<T>> where T: RtType, <T as RtType>::Abi: RtGetUninitialized, IIterable<T>: ComIid {
-    type Item = <<T as RtType>::Abi as RtGetUninitialized>::Out;
+impl<T> IntoIterator for ComPtr<IVectorView<T>> where T: RtType, IIterable<T>: ComIid {
+    type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     fn into_iter(self) -> Self::IntoIter {
         self.query_interface::<IIterable<T>>().unwrap().into_iter()
     }
 }
 
-impl<'a, T> IntoIterator for &'a mut ComPtr<IVectorView<T>> where T: RtType, <T as RtType>::Abi: RtGetUninitialized, IIterable<T>: ComIid {
-    type Item = <<T as RtType>::Abi as RtGetUninitialized>::Out;
+impl<'a, T> IntoIterator for &'a mut ComPtr<IVectorView<T>> where T: RtType, IIterable<T>: ComIid {
+    type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     fn into_iter(self) -> Self::IntoIter {
         self.query_interface::<IIterable<T>>().unwrap().into_iter()
@@ -115,8 +128,8 @@ impl<'a, T> IntoIterator for &'a mut ComPtr<IVectorView<T>> where T: RtType, <T 
 
 // TODO: also implement IndexMove for IVectorView etc once that exists (Index or IndexMut won't work since we can't return a reference)
 
-impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType, <T as RtType>::Abi: RtGetUninitialized {
-    type Item = <<T as RtType>::Abi as RtGetUninitialized>::Out;
+impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType {
+    type Item = <T as RtType>::Out;
     
     // TODO: This could potentially be made faster by using the output of MoveNext instead of calling HasCurrent
     //       in every iteration. That would require a wrapper struct with a boolean flag.
@@ -128,11 +141,11 @@ impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType, <T as RtType>::Abi: R
         };
         if has_next {
             unsafe {
-                let mut current: Self::Item = <<T as RtType>::Abi as RtGetUninitialized>::uninitialized();
-                assert_eq!(self.get_Current(out(&mut current)), S_OK);
+                let mut current: <T as RtType>::Abi = <T as RtType>::uninitialized();
+                assert_eq!(self.get_Current(&mut current), S_OK);
                 let mut hasCurrent: BOOL = FALSE;
                 assert_eq!(self.MoveNext(&mut hasCurrent), S_OK);
-                Some(current)
+                Some(<T as RtType>::wrap(current))
             }
         } else {
             None
@@ -173,8 +186,15 @@ macro_rules! RT_INTERFACE {
             type Vtbl = $vtbl;
         }
         impl<'a> RtType for &'a $interface {
+            type In = &'a mut $interface;
             type Abi = *mut $interface;
+            type Out = ComPtr<$interface>;
+            
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+            unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
+        
         impl ::std::ops::Deref for $interface {
             type Target = $crate::IUnknown;
             #[inline]
@@ -217,7 +237,13 @@ macro_rules! RT_INTERFACE {
             type Vtbl = $vtbl<$t1>;
         }
         impl<'a, $t1> RtType for &'a $interface<$t1> where $t1: RtType{
+            type In = &'a mut $interface<$t1>;
             type Abi = *mut $interface<$t1>;
+            type Out = ComPtr<$interface<$t1>>;
+            
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+            unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
         impl<$t1> ::std::ops::Deref for $interface<$t1> where $t1: RtType {
             type Target = $crate::IUnknown;
@@ -266,7 +292,13 @@ macro_rules! RT_INTERFACE {
         }
         unsafe impl RtInterface for $interface {}
         impl<'a> RtType for &'a $interface {
+            type In = &'a mut $interface;
             type Abi = *mut $interface;
+            type Out = ComPtr<$interface>;
+            
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+            unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
         impl ::std::ops::Deref for $interface {
             type Target = $crate::$pinterface;
@@ -312,7 +344,13 @@ macro_rules! RT_INTERFACE {
         }
         unsafe impl<$t1: 'static> RtInterface for $interface<$t1> where $t1: RtType {}
         impl<'a, $t1> RtType for &'a $interface<$t1> where $t1: RtType{
+            type In = &'a mut $interface<$t1>;
             type Abi = *mut $interface<$t1>;
+            type Out = ComPtr<$interface<$t1>>;
+            
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+            unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
         impl<$t1> ::std::ops::Deref for $interface<$t1> where $t1: RtType {
             type Target = $pinterface;

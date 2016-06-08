@@ -20,15 +20,10 @@ mod cominterfaces;
 pub use cominterfaces::*;
 
 mod rt;
-pub use rt::{RtInterface, RtValueType, RtType, RtGetUninitialized, IInspectable, IInspectableVtbl};
+pub use rt::{RtInterface, RtValueType, RtType, IInspectable, IInspectableVtbl};
 
 mod handler;
 pub use handler::IntoInterface;
-
-// This is a helper which also helps us to make type inference work ...
-pub fn out<T>(ptr: &mut T) -> &mut <T as ComGetPtr>::Abi where T: ComGetPtr {
-    ptr.get_address()
-}
 
 // TODO: use lower-case (Rust style) or upper-case (WinRT style) module names?
 pub mod windows {
