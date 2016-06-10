@@ -160,7 +160,7 @@ macro_rules! RT_INTERFACE {
             fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
-        #[repr(C)] #[allow(missing_copy_implementations)]
+        #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl {
             pub parent: $crate::IUnknownVtbl
             $(,pub $method: unsafe extern "system" fn(
@@ -170,7 +170,7 @@ macro_rules! RT_INTERFACE {
         }
         #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
         pub struct $interface {
-            pub lpVtbl: *const $vtbl
+            lpVtbl: *const $vtbl
         }
         impl $interface {
             #[inline]
@@ -180,7 +180,7 @@ macro_rules! RT_INTERFACE {
         }
         impl ComIid for $interface {
             //const IID: REFIID = &$iid;
-            fn get_iid() -> REFIID { &$iid }
+            fn iid() -> REFIID { &$iid }
         }
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
@@ -215,7 +215,7 @@ macro_rules! RT_INTERFACE {
             fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
-        #[repr(C)] #[allow(missing_copy_implementations)]
+        #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl<$t1> where $t1: RtType {
             pub parent: $crate::IUnknownVtbl
             $(,pub $method: unsafe extern "system" fn(
@@ -225,7 +225,7 @@ macro_rules! RT_INTERFACE {
         }
         #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
         pub struct $interface<$t1> where $t1: RtType {
-            pub lpVtbl: *const $vtbl<$t1>,
+            lpVtbl: *const $vtbl<$t1>,
         }
         impl<$t1> $interface<$t1> where $t1: RtType {
             #[inline]
@@ -265,7 +265,7 @@ macro_rules! RT_INTERFACE {
             fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
-        #[repr(C)] #[allow(missing_copy_implementations)]
+        #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl {
             pub parent: $crate::$pvtbl
             $(,pub $method: unsafe extern "system" fn(
@@ -275,7 +275,7 @@ macro_rules! RT_INTERFACE {
         }
         #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
         pub struct $interface {
-            pub lpVtbl: *const $vtbl
+            lpVtbl: *const $vtbl
         }
         impl $interface {
             #[inline]
@@ -285,7 +285,7 @@ macro_rules! RT_INTERFACE {
         }
         impl ComIid for $interface {
             //const IID: REFIID = &$iid;
-            fn get_iid() -> ::w::REFIID { &$iid }
+            fn iid() -> ::w::REFIID { &$iid }
         }
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
@@ -321,7 +321,7 @@ macro_rules! RT_INTERFACE {
             fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
-        #[repr(C)] #[allow(missing_copy_implementations)]
+        #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl<$t1> where $t1: RtType {
             pub parent: $crate::$pvtbl
             $(,pub $method: unsafe extern "system" fn(
@@ -331,7 +331,7 @@ macro_rules! RT_INTERFACE {
         }
         #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
         pub struct $interface<$t1> where $t1: RtType {
-            pub lpVtbl: *const $vtbl<$t1>,
+            lpVtbl: *const $vtbl<$t1>,
         }
         impl<$t1> $interface<$t1> where $t1: RtType {
             #[inline]
@@ -460,7 +460,7 @@ RT_INTERFACE!{interface IIterable<T>(IIterableVtbl): IInspectable(IInspectableVt
 // "Specialize" the IID of IIterable for a given parameter type
 impl<'a> ComIid for IIterable<&'a IDeviceInformation> {
     //const IID: REFIID = &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation;
-    fn get_iid() -> REFIID { &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation }
+    fn iid() -> REFIID { &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation }
 }
 
 // This maps the logical type `DeviceInformationCollection` to its correct ABI type.
@@ -472,7 +472,7 @@ DEFINE_GUID!(IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation, 0xd
 
 impl<'a> ComIid for IAsyncOperationCompletedHandler<&'a DeviceInformationCollection<'a>> {
     //const IID: REFIID = &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection;
-    fn get_iid() -> REFIID { &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection }
+    fn iid() -> REFIID { &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection }
 }
 
 DEFINE_GUID!(IID_IIterator, 1786374243, 17152, 17818, 153, 102, 203, 182, 96, 150, 62, 225);

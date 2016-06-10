@@ -97,7 +97,7 @@ pub struct AsyncOperationCompletedHandler<TResult> where TResult: RtType {
 impl<TResult: 'static> AsyncOperationCompletedHandler<TResult> where TResult: RtType, IAsyncOperationCompletedHandler<TResult>: ComIid {
     pub fn new<F>(f: F) -> AsyncOperationCompletedHandler<TResult> where F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT {
         AsyncOperationCompletedHandler::<TResult> {
-            target_iid: <IAsyncOperationCompletedHandler<TResult> as ComIid>::get_iid(),
+            target_iid: <IAsyncOperationCompletedHandler<TResult> as ComIid>::iid(),
             invoke: Box::new(f)
         }
     }

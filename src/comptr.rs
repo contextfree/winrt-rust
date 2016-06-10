@@ -25,8 +25,9 @@ impl<T> ComPtr<T> {
         unsafe { &mut *(self.0 as *mut IInspectable) }
     }
 
-    // TODO: it seems to be disallowed to call this on "...Statics" objects (E_ILLEGAL_METHOD_CALL)
+    // TODO: It seems to be disallowed to call this on "...Statics" objects (E_ILLEGAL_METHOD_CALL)
     //       -> can we prevent that at compile time?
+    // FIXME: This method should not be available on ComPtr, but instead directly on IInspectable, callable through Deref
     pub fn get_runtime_class_name(&self) -> HString where T: RtInterface {
         let mut result = ptr::null_mut();
         let hres = unsafe { self.as_inspectable().GetRuntimeClassName(&mut result) };
@@ -40,7 +41,7 @@ impl<T> ComPtr<T> {
     
     pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComIid {
         //let iid: ::w::REFIID = Target::IID;
-        let iid: ::w::REFIID = Target::get_iid();
+        let iid: ::w::REFIID = Target::iid();
         let mut res = ptr::null_mut();
         unsafe {
             match self.as_unknown().QueryInterface(iid, &mut res as *mut _ as *mut *mut ::w::VOID) {

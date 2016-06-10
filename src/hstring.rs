@@ -38,12 +38,14 @@ fn zero_header() -> HSTRING_HEADER {
     }
 }
 
+/// A reference to either an `HString`, a `FastHString`, or a raw null-terminated UTF-16 buffer.
+/// This is the type that WinRT methods accept as input.
 #[derive(Copy, Clone)]
 pub struct HStringRef<'a>(HSTRING_HEADER, PhantomData<&'a ()>);
 
 impl<'a> HStringRef<'a> {
     #[inline]
-    /// Creates a new HStringRef from a UTF-16 encoded slice, which must be null terminated.
+    /// Creates a new `HStringRef` from a UTF-16 encoded slice, which must be null-terminated.
     /// This function does not allocate.
     pub fn from_utf16(slice: &'a [u16]) -> HStringRef<'a> {
         assert!(slice[slice.len() - 1] == 0, "input must be null-terminated");
@@ -74,10 +76,12 @@ impl<'a> HStringRef<'a> {
 
     // Since HSTRING is just a pointer to HSTRING_HEADER in disguise, we can just return
     // a pointer to our wrapper header and cast it accordingly.
+    #[inline]
     unsafe fn as_hstring(&self) -> HSTRING {
         &self.0 as *const HSTRING_HEADER as *mut HSTRING_HEADER as *mut HSTRING__
     }
 
+    #[inline]
     pub unsafe fn get(&self) -> HSTRING {
         self.as_hstring()
     }
@@ -121,13 +125,14 @@ impl<'a, 'b> cmp::PartialEq<HStringRef<'a>> for HStringRef<'b> {
 impl<'a> cmp::Eq for HStringRef<'a> {}
 
 /// An HSTRING wrapper with several benefits
+///
 /// - Faster allocation
-/// - Faster creation of references
+/// - Faster (basically free) creation of references
 /// - Manages its own memory and won't be freed by calls into the Windows Runtime
 pub struct FastHString(HSTRING_HEADER);
 
 impl FastHString {
-    pub fn new<'a>(s: &'a str) -> FastHString {
+    pub fn new(s: &str) -> FastHString {
         let mut hstrref: FastHString = FastHString(zero_header());
         if s.is_empty() {
             return hstrref;
@@ -156,12 +161,14 @@ impl FastHString {
         hstrref
     }
 
+    #[inline]
     pub fn empty() -> FastHString {
         FastHString(zero_header())
     }
 
     // Since HSTRING is just a pointer to HSTRING_HEADER in disguise, we can just return
-    // a pointer to our wrapper header and cast it accordingly.
+    // a pointer to our wrapped header and cast it accordingly.
+    #[inline]
     unsafe fn as_hstring(&self) -> HSTRING {
         &self.0 as *const HSTRING_HEADER as *mut HSTRING_HEADER as *mut HSTRING__
     }
@@ -177,7 +184,8 @@ impl FastHString {
         unsafe { WindowsIsStringEmpty(self.as_hstring()) != 0 }
     }
 
-    pub fn get_ref<'a>(&'a self) -> HStringRef<'a> {
+    #[inline]
+    pub fn get_ref(&self) -> HStringRef {
         // Creating another reference is basically free,
         // since we're already managing our own memory.
         HStringRef(self.0, PhantomData)
@@ -195,6 +203,7 @@ impl Drop for FastHString {
 
 
 impl<'a> From<&'a str> for FastHString {
+    #[inline]
     fn from(s: &'a str) -> Self {
         FastHString::new(s)
     }
@@ -237,10 +246,14 @@ impl cmp::PartialEq<FastHString> for FastHString {
 
 impl cmp::Eq for FastHString {}
 
+/// A wrapper over an HSTRING whose memory is managed by the Windows Runtime.
+/// This is what you get as return values from WinRT methods.
 pub struct HString(HSTRING);
 
 impl HString {
-    /// You should not use this, use FastHString::new() instead
+    /// Creates a new HString whose memory is managed by the Windows Runtime.
+    /// This allocates twice (once for the conversion to UTF-16, and again within `WindowsCreateString`),
+    /// therefore this should not be used. Use `FastHString::new()` instead.
     pub fn new<'a>(s: &'a str) -> HString {
         // Every UTF-8 byte results in either 1 or 2 UTF-16 bytes and we need one
         // more for the null terminator. This size expectation is correct in most cases,
@@ -269,11 +282,6 @@ impl HString {
     }
     
     #[inline]
-    pub fn get_address(&mut self) -> &mut HSTRING {
-        &mut self.0
-    }
-    
-    #[inline]
     pub fn len(&self) -> u32 {
         // This is okay even if pointer is null (returns 0)
         unsafe { WindowsGetStringLen(self.0) }
@@ -289,6 +297,7 @@ impl HString {
         self.0
     }
 
+    #[inline]
     pub fn get_ref<'a>(&'a self) -> HStringRef<'a> {
         let mut len = 0;
         let buf = unsafe { WindowsGetStringRawBuffer(self.0, &mut len) };
@@ -305,9 +314,10 @@ impl Drop for HString {
 }
 
 impl ::std::clone::Clone for HString {
+    #[inline]
     fn clone(&self) -> Self {
         let mut clone = HString::empty();
-        let hres = unsafe { WindowsDuplicateString(self.0, clone.get_address()) };
+        let hres = unsafe { WindowsDuplicateString(self.0, &mut clone.0) };
         assert!(hres == S_OK);
         clone
     }
