@@ -33,7 +33,7 @@ pub mod windows {
     }
     pub mod devices {
         pub mod enumeration {
-            pub use rt::{IDeviceInformationStatics, IMidiOutPortStatics, IMidiOutPort};
+            pub use rt::{IDeviceInformationStatics, IDeviceInformation, DeviceInformationCollection, IMidiOutPortStatics, IMidiOutPort};
             // TODO: What about IIDs and statics?
             pub use rt::{IID_IMidiOutPortStatics, IID_IDeviceInformationStatics};
         }

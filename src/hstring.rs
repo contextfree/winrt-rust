@@ -31,10 +31,20 @@ fn internal_cmp(left: HSTRING, right: HSTRING) -> cmp::Ordering {
 }
 
 #[inline]
+#[cfg(target_arch = "x86_64")]
 fn zero_header() -> HSTRING_HEADER {
     HSTRING_HEADER {
         Reserved: [ptr::null_mut(); 0],
         Reserved2: [0; 24]
+    }
+}
+
+#[inline]
+#[cfg(target_arch = "x86")]
+fn zero_header() -> HSTRING_HEADER {
+    HSTRING_HEADER {
+        Reserved: [ptr::null_mut(); 0],
+        Reserved2: [0; 20]
     }
 }
 
