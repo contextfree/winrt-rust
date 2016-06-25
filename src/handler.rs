@@ -13,14 +13,14 @@ use super::{
 
 use ::rt::{
     IAsyncOperation,
-    IAsyncOperationCompletedHandler,
-    IAsyncOperationCompletedHandlerVtbl,
+    AsyncOperationCompletedHandler,
+    AsyncOperationCompletedHandlerVtbl,
     AsyncStatus
 };
 
 use ::w::{S_OK, HRESULT, VOID, REFIID, ULONG, GUID};
 
-// Define custom COM component and implement IAsyncOperationCompletedHandler
+// Define custom COM component and implement AsyncOperationCompletedHandler
 #[repr(C)]
 pub struct ComRepr<T, Vtbl> {
     vtbl: *const Vtbl,
@@ -89,15 +89,15 @@ impl<T, Interface: ComInterface> IntoInterface<Interface> for T where T: ComClas
     }
 }
 
-pub struct AsyncOperationCompletedHandler<TResult> where TResult: RtType {
+pub struct AsyncOperationCompletedHandlerImpl<TResult> where TResult: RtType {
     target_iid: REFIID,
     invoke: Box<FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT>
 }
 
-impl<TResult: 'static> AsyncOperationCompletedHandler<TResult> where TResult: RtType, IAsyncOperationCompletedHandler<TResult>: ComIid {
-    pub fn new<F>(f: F) -> AsyncOperationCompletedHandler<TResult> where F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT {
-        AsyncOperationCompletedHandler::<TResult> {
-            target_iid: <IAsyncOperationCompletedHandler<TResult> as ComIid>::iid(),
+impl<TResult: 'static> AsyncOperationCompletedHandlerImpl<TResult> where TResult: RtType, AsyncOperationCompletedHandler<TResult>: ComIid {
+    pub fn new<F>(f: F) -> AsyncOperationCompletedHandlerImpl<TResult> where F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT {
+        AsyncOperationCompletedHandlerImpl::<TResult> {
+            target_iid: <AsyncOperationCompletedHandler<TResult> as ComIid>::iid(),
             invoke: Box::new(f)
         }
     }
@@ -105,14 +105,14 @@ impl<TResult: 'static> AsyncOperationCompletedHandler<TResult> where TResult: Rt
 
 type __Any = bool;
 
-// IAsyncOperationCompletedHandlerVtbl only references TResult in type parameter position, so the implementation
+// AsyncOperationCompletedHandlerVtbl only references TResult in type parameter position, so the implementation
 // should be the same regardless of TResult, which means that we can just use a dummy `bool` here.
-const AsyncOperationCompletedHandlerVtbl: &'static IAsyncOperationCompletedHandlerVtbl<__Any> = &IAsyncOperationCompletedHandlerVtbl::<__Any> {
+const AsyncOperationCompletedHandlerImplVtbl: &'static AsyncOperationCompletedHandlerVtbl<__Any> = &AsyncOperationCompletedHandlerVtbl::<__Any> {
     parent: IUnknownVtbl {
         QueryInterface: {
             unsafe extern "system" fn QueryInterface(this_: *mut IUnknown, vTableGuid: REFIID, ppv: *mut *mut VOID) -> HRESULT
             {
-                let this_ = this_ as *mut IAsyncOperationCompletedHandler<__Any>;
+                let this_ = this_ as *mut AsyncOperationCompletedHandler<__Any>;
                 fn guid_eq(guid1: &GUID, guid2: &GUID) -> bool {
                     guid1.Data1 == guid2.Data1 && guid1.Data2 == guid2.Data2 && guid1.Data3 == guid2.Data3 && guid1.Data4 == guid2.Data4
                 }
@@ -127,7 +127,7 @@ const AsyncOperationCompletedHandlerVtbl: &'static IAsyncOperationCompletedHandl
                 print!("QueryInterface called with GUID ");
                 print_guid(&*vTableGuid);
                 
-                let this: &mut AsyncOperationCompletedHandler<__Any> = AsyncOperationCompletedHandler::<__Any>::from_interface(this_);
+                let this: &mut AsyncOperationCompletedHandlerImpl<__Any> = AsyncOperationCompletedHandlerImpl::<__Any>::from_interface(this_);
                 
                 // TODO: How to determine which IIDs are allowed here?
                 if !guid_eq(&*vTableGuid, &IID_IUnknown) &&
@@ -146,33 +146,33 @@ const AsyncOperationCompletedHandlerVtbl: &'static IAsyncOperationCompletedHandl
 
                 // Now we call our own AddRef function, which we can do without vtable lookup
                 // Alternatively could call: (&mut *this_).AddRef();
-                ComRepr_AddRef::<AsyncOperationCompletedHandler<__Any>>(this_ as *mut IUnknown);
+                ComRepr_AddRef::<AsyncOperationCompletedHandlerImpl<__Any>>(this_ as *mut IUnknown);
 
                 // Let the caller know that he indeed has an object of the requested interface.
                 return S_OK;
             }
             QueryInterface
         },
-        AddRef: ComRepr_AddRef::<AsyncOperationCompletedHandler<__Any>>,
-        Release: ComRepr_Release::<AsyncOperationCompletedHandler<__Any>>,
+        AddRef: ComRepr_AddRef::<AsyncOperationCompletedHandlerImpl<__Any>>,
+        Release: ComRepr_Release::<AsyncOperationCompletedHandlerImpl<__Any>>,
     },
     Invoke: {
-        unsafe extern "system" fn Invoke(this_: *mut IAsyncOperationCompletedHandler<__Any>, asyncOperation: *mut IAsyncOperation<__Any>, status: AsyncStatus) -> HRESULT {
-            let this: &mut AsyncOperationCompletedHandler<__Any> = AsyncOperationCompletedHandler::<__Any>::from_interface(this_);
+        unsafe extern "system" fn Invoke(this_: *mut AsyncOperationCompletedHandler<__Any>, asyncOperation: *mut IAsyncOperation<__Any>, status: AsyncStatus) -> HRESULT {
+            let this: &mut AsyncOperationCompletedHandlerImpl<__Any> = AsyncOperationCompletedHandlerImpl::<__Any>::from_interface(this_);
             (this.invoke)(asyncOperation, status)
         }
         Invoke
     }
 };
 
-impl<TResult: 'static> ComClass<IAsyncOperationCompletedHandler<TResult>> for AsyncOperationCompletedHandler<TResult> where TResult: RtType {
-    fn get_vtbl() -> &'static IAsyncOperationCompletedHandlerVtbl<TResult> {
-        unsafe { ::std::mem::transmute(AsyncOperationCompletedHandlerVtbl) }
+impl<TResult: 'static> ComClass<AsyncOperationCompletedHandler<TResult>> for AsyncOperationCompletedHandlerImpl<TResult> where TResult: RtType {
+    fn get_vtbl() -> &'static AsyncOperationCompletedHandlerVtbl<TResult> {
+        unsafe { ::std::mem::transmute(AsyncOperationCompletedHandlerImplVtbl) }
     }
 }
 
-impl<TResult> Drop for AsyncOperationCompletedHandler<TResult> where TResult: RtType {
+impl<TResult> Drop for AsyncOperationCompletedHandlerImpl<TResult> where TResult: RtType {
     fn drop(&mut self) {
-        println!("Dropped AsyncOperationCompletedHandler<...>!");
+        println!("Dropped AsyncOperationCompletedHandlerImpl<...>!");
     }
 }

@@ -5,13 +5,11 @@ use super::{ComInterface, HString, HStringRef, ComPtr, ComIid};
 use ::w::{
     HRESULT,
     HSTRING,
-    REFIID,
     S_OK,
     ULONG,
     BOOL,
     TRUE,
     FALSE,
-    UINT,
     TrustLevel,
     IID
 };
@@ -179,8 +177,8 @@ macro_rules! RT_INTERFACE {
             })+
         }
         impl ComIid for $interface {
-            //const IID: REFIID = &$iid;
-            fn iid() -> REFIID { &$iid }
+            //const IID: ::w::REFIID = &$iid;
+            fn iid() -> ::w::REFIID { &$iid }
         }
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
@@ -272,7 +270,7 @@ macro_rules! RT_INTERFACE {
             lpVtbl: *const $vtbl
         }
         impl ComIid for $interface {
-            //const IID: REFIID = &$iid;
+            //const IID: ::w::REFIID = &$iid;
             fn iid() -> ::w::REFIID { &$iid }
         }
         impl ComInterface for $interface {
@@ -327,7 +325,7 @@ macro_rules! RT_INTERFACE {
             })+
         }
         impl ComIid for $interface {
-            //const IID: REFIID = &$iid;
+            //const IID: ::w::REFIID = &$iid;
             fn iid() -> ::w::REFIID { &$iid }
         }
         impl ComInterface for $interface {
@@ -462,19 +460,18 @@ macro_rules! RT_INTERFACE {
     };
 }
 
-// ================================================ //
-// Everything below will be automatically generated //
-// ================================================ //
-
 pub mod generated;
 
-DEFINE_GUID!(IID_NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-RT_INTERFACE!{
-interface Windows_Storage_StorageFile(Windows_Storage_StorageFileVtbl): IInspectable(IInspectableVtbl) [IID_NULL]  {
-}}
-RT_INTERFACE!{
-interface Windows_Storage_IStorageFolder(Windows_Storage_IStorageFolderVtbl): IInspectable(IInspectableVtbl) [IID_NULL]  {
-}}
+pub use self::generated::{
+    Windows_Foundation_Collections_IIterable as IIterable,
+    Windows_Foundation_Collections_IIterator as IIterator,
+    Windows_Foundation_Collections_IVectorView as IVectorView,
+    Windows_Foundation_IAsyncAction as IAsyncAction,
+    Windows_Foundation_IAsyncOperation as IAsyncOperation,
+    Windows_Foundation_AsyncStatus as AsyncStatus,
+    Windows_Foundation_AsyncOperationCompletedHandler as AsyncOperationCompletedHandler,
+    Windows_Foundation_AsyncOperationCompletedHandlerVtbl as AsyncOperationCompletedHandlerVtbl,
+};
 
 // FIXME: maybe better reexport from winapi?
 DEFINE_GUID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);
@@ -485,56 +482,18 @@ interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectab
     fn GetTrustLevel(&mut self, trustLevel: *mut TrustLevel) -> HRESULT
 }}
 
-DEFINE_GUID!(IID_IStringable, 2520162132, 36534, 18672, 171, 206, 193, 178, 17, 230, 39, 195);
-RT_INTERFACE!{interface IStringable(IStringableVtbl): IInspectable(IInspectableVtbl) [IID_IStringable] {
-    fn ToString(&mut self, value: *mut ::w::HSTRING) -> ::w::HRESULT
-}}
+// =========================================== //
+// Everything below will eventually be deleted //
+// =========================================== //
 
-DEFINE_GUID!(IID_IAsyncInfo, 0x00000036,0x0000,0x0000,0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x46);
-RT_INTERFACE!{interface IAsyncInfo(IAsyncInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncInfo] {
-    fn get_Id(&mut self, id: *mut u32) -> ::w::HRESULT,
-    fn get_Status(&mut self, status: *mut AsyncStatus) -> ::w::HRESULT,
-    fn get_ErrorCode(&mut self, errorCode: *mut ::w::HRESULT) -> ::w::HRESULT,
-    fn Cancel(&mut self) -> ::w::HRESULT,
-    fn Close(&mut self) -> ::w::HRESULT
+// We define those here, so that we can codegen Windows.Foundation without depending on Windows.Storage
+DEFINE_GUID!(IID_NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+RT_INTERFACE!{
+interface Windows_Storage_StorageFile(Windows_Storage_StorageFileVtbl): IInspectable(IInspectableVtbl) [IID_NULL]  {
 }}
-
-DEFINE_GUID!(IID_IAsyncAction, 0x5A648006,0x843A,0x4DA9,0x86,0x5B,0x9D,0x26,0xE5,0xDF,0xAD,0x7B);
-RT_INTERFACE!{interface IAsyncAction(IAsyncActionVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncAction] {
-    fn put_Completed(&mut self, handler: *mut IAsyncActionCompletedHandler) -> HRESULT,
-    fn get_Completed(&mut self, handler: *mut *mut IAsyncActionCompletedHandler) -> HRESULT,
-    fn GetResults(&mut self) -> HRESULT
+RT_INTERFACE!{
+interface Windows_Storage_IStorageFolder(Windows_Storage_IStorageFolderVtbl): IInspectable(IInspectableVtbl) [IID_NULL]  {
 }}
-
-// see winrt/windows.foundation.h
-DEFINE_GUID!(IID_IAsyncActionCompletedHandler, 0xA4ED5C81,0x76C9,0x40BD,0x8B,0xE6,0xB1,0xD9,0x0F,0xB2,0x0A,0xE7);
-RT_INTERFACE!{interface IAsyncActionCompletedHandler(IAsyncActionCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_IAsyncActionCompletedHandler] {
-    fn Invoke(&mut self, asyncAction: *mut IAsyncAction, status: AsyncStatus) -> HRESULT
-}}
-
-DEFINE_GUID!(IID_IAsyncOperation, 0x9fc2b0bb, 0xe446, 0x44e2, 0xaa,0x61,0x9c,0xab,0x8f,0x63,0x6a,0xf2);
-RT_INTERFACE!{interface IAsyncOperation<TResult>(IAsyncOperationVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncOperation] {
-    fn put_Completed(&mut self, handler: *mut IAsyncOperationCompletedHandler<TResult>) -> HRESULT,
-    fn get_Completed(&mut self, handler: *mut *mut IAsyncOperationCompletedHandler<TResult>) -> HRESULT,
-    fn GetResults(&mut self, results: *mut TResult::Abi) -> HRESULT
-}}
-
-// These parametrized GUIDs can be automatically generated
-DEFINE_GUID!(IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection, 0x4A458732, 0x527E, 0x5C73, 0x9A, 0x68, 0xA7, 0x3D, 0xA3, 0x70, 0xF7, 0x82);
-DEFINE_GUID!(IID_IAsyncOperationCompletedHandler, 4242337836, 58840, 17528, 145, 90, 77, 144, 183, 75, 131, 165);
-RT_INTERFACE!{interface IAsyncOperationCompletedHandler<TResult>(IAsyncOperationCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_IAsyncOperationCompletedHandler] {
-    fn Invoke(&mut self, asyncOperation: *mut IAsyncOperation<TResult>, status: AsyncStatus) -> HRESULT
-}}
-
-#[repr(C)]
-#[derive(Debug,PartialEq,Eq)]
-pub enum AsyncStatus {
-    //Created    = -1,
-    Started    = 0, 
-    Completed  = 1, 
-    Cancelled  = 2, 
-    Error      = 3 
-}
 
 DEFINE_GUID!(IID_IMidiOutPortStatics, 106742761, 3976, 17547, 155, 100, 169, 88, 38, 198, 91, 143);
 RT_INTERFACE!{interface IMidiOutPortStatics(IMidiOutPortStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiOutPortStatics] {
@@ -556,45 +515,25 @@ RT_INTERFACE!{interface IDeviceInformationStatics(IDeviceInformationStaticsVtbl)
     fn __CreateWatcherAqsFilterAndAdditionalProperties(&mut self) -> HRESULT
 }}
 
-DEFINE_GUID!(IID_IIterable, 4205151722, 25108, 16919, 175, 218, 127, 70, 222, 88, 105, 179);
-RT_INTERFACE!{interface IIterable<T>(IIterableVtbl): IInspectable(IInspectableVtbl) [IID_IIterable] {
-    fn First(&mut self, first: *mut *mut IIterator<T>) -> HRESULT
-}}
-
 // "Specialize" the IID of IIterable for a given parameter type
 impl<'a> ComIid for IIterable<&'a IDeviceInformation> {
-    //const IID: REFIID = &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation;
-    fn iid() -> REFIID { &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation }
+    //const IID: ::w::REFIID = &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation;
+    fn iid() -> ::w::REFIID { &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation }
 }
 
 // This maps the logical type `DeviceInformationCollection` to its correct ABI type.
 // TODO: Is a type alias sufficient? (Also see `AggregateType` in windows.foundation.collections.h)
 pub type DeviceInformationCollection<'a> = IVectorView<&'a IDeviceInformation>;
 
-// TODO: This GUID const should be private and only accessible via the ComIid impl below
 DEFINE_GUID!(IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation, 0xdd9f8a5d, 0xec98, 0x5f4b, 0xa3, 0xea, 0x9c, 0x8b, 0x5a, 0xd5, 0x3c, 0x4b);
 
-impl<'a> ComIid for IAsyncOperationCompletedHandler<&'a DeviceInformationCollection<'a>> {
-    //const IID: REFIID = &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection;
-    fn iid() -> REFIID { &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection }
+// These parametrized GUIDs can be automatically generated
+DEFINE_GUID!(IID_AsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection, 0x4A458732, 0x527E, 0x5C73, 0x9A, 0x68, 0xA7, 0x3D, 0xA3, 0x70, 0xF7, 0x82);
+
+impl<'a> ComIid for AsyncOperationCompletedHandler<&'a DeviceInformationCollection<'a>> {
+    //const IID: ::w::REFIID = &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection;
+    fn iid() -> ::w::REFIID { &IID_AsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection }
 }
-
-DEFINE_GUID!(IID_IIterator, 1786374243, 17152, 17818, 153, 102, 203, 182, 96, 150, 62, 225);
-RT_INTERFACE!{interface IIterator<T>(IIteratorVtbl): IInspectable(IInspectableVtbl) [IID_IIterator] {
-    fn get_Current(&mut self, current: *mut T::Abi) -> HRESULT,
-    fn get_HasCurrent(&mut self, hasCurrent: *mut BOOL) -> HRESULT,
-    fn MoveNext(&mut self, hasCurrent: *mut BOOL) -> HRESULT
-    // fn GetMany...
-}}
-
-DEFINE_GUID!(IID_IVectorView, 3152149068, 45283, 17795, 186, 239, 31, 27, 46, 72, 62, 86);
-// NOTE: For some reason this does NOT actually inherit from IIterable as the metadata would suggest
-RT_INTERFACE!{interface IVectorView<T>(IVectorViewVtbl): IInspectable(IInspectableVtbl) [IID_IVectorView] {
-    fn GetAt(&mut self, index: UINT, item: *mut T::Abi) -> HRESULT,
-    fn get_Size(&mut self, size: *mut UINT) -> HRESULT,
-    fn IndexOf(&mut self, value: T::Abi, index: *mut UINT, found: *mut BOOL) -> HRESULT
-    // fn GetMany...
-}}
 
 DEFINE_GUID!(IID_IDeviceInformation, 2879454101, 17304, 18589, 142, 68, 230, 19, 9, 39, 1, 31);
 RT_INTERFACE!{interface IDeviceInformation(IDeviceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformation] {

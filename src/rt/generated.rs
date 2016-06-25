@@ -1,6 +1,5 @@
 #![allow(non_camel_case_types)]
 use std::ptr;
-use ::w::REFIID;
 use super::super::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
 use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Windows_Storage_IStorageFolder};
 
@@ -12,7 +11,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		}
 		DEFINE_GUID!(IID_Windows_Foundation_Collections_IVectorChangedEventArgs, 1465463775, 13566, 17536, 175, 21, 7, 105, 31, 61, 93, 155);
 		RT_INTERFACE!{interface Windows_Foundation_Collections_IVectorChangedEventArgs(Windows_Foundation_Collections_IVectorChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Collections_IVectorChangedEventArgs] {
-			fn get_CollectionChange(&mut self, out: *mut *mut Windows_Foundation_Collections_CollectionChange) -> ::w::HRESULT,
+			fn get_CollectionChange(&mut self, out: *mut Windows_Foundation_Collections_CollectionChange) -> ::w::HRESULT,
 			fn get_Index(&mut self, out: *mut u32) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_IClosable, 819308585, 32676, 16422, 131, 187, 215, 91, 174, 78, 169, 158);
@@ -63,7 +62,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		}
 		DEFINE_GUID!(IID_Windows_Foundation_IPropertyValue, 1272349405, 30036, 16617, 154, 155, 130, 101, 78, 222, 126, 98);
 		RT_INTERFACE!{interface Windows_Foundation_IPropertyValue(Windows_Foundation_IPropertyValueVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IPropertyValue] {
-			fn get_Type(&mut self, out: *mut *mut Windows_Foundation_PropertyType) -> ::w::HRESULT,
+			fn get_Type(&mut self, out: *mut Windows_Foundation_PropertyType) -> ::w::HRESULT,
 			fn get_IsNumericScalar(&mut self, out: *mut ::w::BOOL) -> ::w::HRESULT,
 			fn GetUInt8(&mut self, out: *mut u8) -> ::w::HRESULT,
 			fn GetInt16(&mut self, out: *mut i16) -> ::w::HRESULT,
@@ -78,11 +77,11 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			fn GetBoolean(&mut self, out: *mut ::w::BOOL) -> ::w::HRESULT,
 			fn GetString(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetGuid(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn GetDateTime(&mut self, out: *mut *mut Windows_Foundation_DateTime) -> ::w::HRESULT,
-			fn GetTimeSpan(&mut self, out: *mut *mut Windows_Foundation_TimeSpan) -> ::w::HRESULT,
-			fn GetPoint(&mut self, out: *mut *mut Windows_Foundation_Point) -> ::w::HRESULT,
-			fn GetSize(&mut self, out: *mut *mut Windows_Foundation_Size) -> ::w::HRESULT,
-			fn GetRect(&mut self, out: *mut *mut Windows_Foundation_Rect) -> ::w::HRESULT,
+			fn GetDateTime(&mut self, out: *mut Windows_Foundation_DateTime) -> ::w::HRESULT,
+			fn GetTimeSpan(&mut self, out: *mut Windows_Foundation_TimeSpan) -> ::w::HRESULT,
+			fn GetPoint(&mut self, out: *mut Windows_Foundation_Point) -> ::w::HRESULT,
+			fn GetSize(&mut self, out: *mut Windows_Foundation_Size) -> ::w::HRESULT,
+			fn GetRect(&mut self, out: *mut Windows_Foundation_Rect) -> ::w::HRESULT,
 			fn GetUInt8Array(&mut self, value: *mut *mut u8) -> ::w::HRESULT,
 			fn GetInt16Array(&mut self, value: *mut *mut i16) -> ::w::HRESULT,
 			fn GetUInt16Array(&mut self, value: *mut *mut u16) -> ::w::HRESULT,
@@ -97,11 +96,11 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			fn GetStringArray(&mut self, value: *mut *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetInspectableArray(&mut self, value: *mut *mut *mut IInspectable) -> ::w::HRESULT,
 			fn GetGuidArray(&mut self, value: *mut *mut ::w::GUID) -> ::w::HRESULT,
-			fn GetDateTimeArray(&mut self, value: *mut *mut *mut Windows_Foundation_DateTime) -> ::w::HRESULT,
-			fn GetTimeSpanArray(&mut self, value: *mut *mut *mut Windows_Foundation_TimeSpan) -> ::w::HRESULT,
-			fn GetPointArray(&mut self, value: *mut *mut *mut Windows_Foundation_Point) -> ::w::HRESULT,
-			fn GetSizeArray(&mut self, value: *mut *mut *mut Windows_Foundation_Size) -> ::w::HRESULT,
-			fn GetRectArray(&mut self, value: *mut *mut *mut Windows_Foundation_Rect) -> ::w::HRESULT
+			fn GetDateTimeArray(&mut self, value: *mut *mut Windows_Foundation_DateTime) -> ::w::HRESULT,
+			fn GetTimeSpanArray(&mut self, value: *mut *mut Windows_Foundation_TimeSpan) -> ::w::HRESULT,
+			fn GetPointArray(&mut self, value: *mut *mut Windows_Foundation_Point) -> ::w::HRESULT,
+			fn GetSizeArray(&mut self, value: *mut *mut Windows_Foundation_Size) -> ::w::HRESULT,
+			fn GetRectArray(&mut self, value: *mut *mut Windows_Foundation_Rect) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_IPropertyValueStatics, 1654381512, 55602, 20468, 150, 185, 141, 150, 197, 193, 232, 88);
 		RT_INTERFACE!{interface Windows_Foundation_IPropertyValueStatics(Windows_Foundation_IPropertyValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IPropertyValueStatics] {
@@ -120,11 +119,11 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			fn CreateString(&mut self, value: ::w::HSTRING, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateInspectable(&mut self, value: *mut IInspectable, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateGuid(&mut self, value: ::w::GUID, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreateDateTime(&mut self, value: *mut Windows_Foundation_DateTime, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreateTimeSpan(&mut self, value: *mut Windows_Foundation_TimeSpan, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreatePoint(&mut self, value: *mut Windows_Foundation_Point, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreateSize(&mut self, value: *mut Windows_Foundation_Size, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreateRect(&mut self, value: *mut Windows_Foundation_Rect, out: *mut *mut IInspectable) -> ::w::HRESULT,
+			fn CreateDateTime(&mut self, value: Windows_Foundation_DateTime, out: *mut *mut IInspectable) -> ::w::HRESULT,
+			fn CreateTimeSpan(&mut self, value: Windows_Foundation_TimeSpan, out: *mut *mut IInspectable) -> ::w::HRESULT,
+			fn CreatePoint(&mut self, value: Windows_Foundation_Point, out: *mut *mut IInspectable) -> ::w::HRESULT,
+			fn CreateSize(&mut self, value: Windows_Foundation_Size, out: *mut *mut IInspectable) -> ::w::HRESULT,
+			fn CreateRect(&mut self, value: Windows_Foundation_Rect, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateUInt8Array(&mut self, value: *mut u8, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateInt16Array(&mut self, value: *mut i16, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateUInt16Array(&mut self, value: *mut u16, out: *mut *mut IInspectable) -> ::w::HRESULT,
@@ -139,11 +138,11 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			fn CreateStringArray(&mut self, value: *mut ::w::HSTRING, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateInspectableArray(&mut self, value: *mut *mut IInspectable, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateGuidArray(&mut self, value: *mut ::w::GUID, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreateDateTimeArray(&mut self, value: *mut *mut Windows_Foundation_DateTime, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreateTimeSpanArray(&mut self, value: *mut *mut Windows_Foundation_TimeSpan, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreatePointArray(&mut self, value: *mut *mut Windows_Foundation_Point, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreateSizeArray(&mut self, value: *mut *mut Windows_Foundation_Size, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreateRectArray(&mut self, value: *mut *mut Windows_Foundation_Rect, out: *mut *mut IInspectable) -> ::w::HRESULT
+			fn CreateDateTimeArray(&mut self, value: *mut Windows_Foundation_DateTime, out: *mut *mut IInspectable) -> ::w::HRESULT,
+			fn CreateTimeSpanArray(&mut self, value: *mut Windows_Foundation_TimeSpan, out: *mut *mut IInspectable) -> ::w::HRESULT,
+			fn CreatePointArray(&mut self, value: *mut Windows_Foundation_Point, out: *mut *mut IInspectable) -> ::w::HRESULT,
+			fn CreateSizeArray(&mut self, value: *mut Windows_Foundation_Size, out: *mut *mut IInspectable) -> ::w::HRESULT,
+			fn CreateRectArray(&mut self, value: *mut Windows_Foundation_Rect, out: *mut *mut IInspectable) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_IStringable, 2520162132, 36534, 18672, 171, 206, 193, 178, 17, 230, 39, 195);
 		RT_INTERFACE!{interface Windows_Foundation_IStringable(Windows_Foundation_IStringableVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IStringable] {
@@ -158,7 +157,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		pub type Windows_Foundation_Collections_StringMap<'a> = Windows_Foundation_Collections_IMap<&'a str, &'a str>;
 		DEFINE_GUID!(IID_Windows_Foundation_AsyncActionCompletedHandler, 2767019137, 30409, 16573, 139, 230, 177, 217, 15, 178, 10, 231);
 		RT_INTERFACE!{interface Windows_Foundation_AsyncActionCompletedHandler(Windows_Foundation_AsyncActionCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_Windows_Foundation_AsyncActionCompletedHandler] {
-			fn Invoke(&mut self, asyncInfo: *mut Windows_Foundation_IAsyncAction, asyncStatus: *mut Windows_Foundation_AsyncStatus) -> ::w::HRESULT
+			fn Invoke(&mut self, asyncInfo: *mut Windows_Foundation_IAsyncAction, asyncStatus: Windows_Foundation_AsyncStatus) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_IDeferral, 3592853298, 15231, 18087, 180, 11, 79, 220, 162, 162, 198, 147);
 		RT_INTERFACE!{interface Windows_Foundation_IDeferral(Windows_Foundation_IDeferralVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IDeferral] {
@@ -243,8 +242,8 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		DEFINE_GUID!(IID_Windows_Foundation_IAsyncInfo, 54, 0, 0, 192, 0, 0, 0, 0, 0, 0, 70);
 		RT_INTERFACE!{interface Windows_Foundation_IAsyncInfo(Windows_Foundation_IAsyncInfoVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IAsyncInfo] {
 			fn get_Id(&mut self, out: *mut u32) -> ::w::HRESULT,
-			fn get_Status(&mut self, out: *mut *mut Windows_Foundation_AsyncStatus) -> ::w::HRESULT,
-			fn get_ErrorCode(&mut self, out: *mut *mut Windows_Foundation_HResult) -> ::w::HRESULT,
+			fn get_Status(&mut self, out: *mut Windows_Foundation_AsyncStatus) -> ::w::HRESULT,
+			fn get_ErrorCode(&mut self, out: *mut Windows_Foundation_HResult) -> ::w::HRESULT,
 			fn Cancel(&mut self) -> ::w::HRESULT,
 			fn Close(&mut self) -> ::w::HRESULT
 		}}
@@ -315,12 +314,12 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Collections_IObservableVector, 1494739795, 20660, 18957, 179, 9, 101, 134, 43, 63, 29, 188);
 		RT_INTERFACE!{interface Windows_Foundation_Collections_IObservableVector<T>(Windows_Foundation_Collections_IObservableVectorVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Collections_IObservableVector] {
-			fn add_VectorChanged(&mut self, vhnd: *mut Windows_Foundation_Collections_VectorChangedEventHandler<T>, out: *mut *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT,
-			fn remove_VectorChanged(&mut self, token: *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT
+			fn add_VectorChanged(&mut self, vhnd: *mut Windows_Foundation_Collections_VectorChangedEventHandler<T>, out: *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT,
+			fn remove_VectorChanged(&mut self, token: Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Collections_IMapChangedEventArgs, 2570712287, 1290, 19471, 170, 96, 119, 7, 95, 156, 71, 119);
 		RT_INTERFACE!{interface Windows_Foundation_Collections_IMapChangedEventArgs<K>(Windows_Foundation_Collections_IMapChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Collections_IMapChangedEventArgs] {
-			fn get_CollectionChange(&mut self, out: *mut *mut Windows_Foundation_Collections_CollectionChange) -> ::w::HRESULT,
+			fn get_CollectionChange(&mut self, out: *mut Windows_Foundation_Collections_CollectionChange) -> ::w::HRESULT,
 			fn get_Key(&mut self, out: *mut K::Abi) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Collections_MapChangedEventHandler, 395646963, 38126, 16888, 189, 220, 118, 138, 137, 85, 68, 243);
@@ -329,12 +328,12 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Collections_IObservableMap, 1709124597, 48953, 16821, 174, 188, 90, 157, 134, 94, 71, 43);
 		RT_INTERFACE!{interface Windows_Foundation_Collections_IObservableMap<K, V>(Windows_Foundation_Collections_IObservableMapVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Collections_IObservableMap] {
-			fn add_MapChanged(&mut self, vhnd: *mut Windows_Foundation_Collections_MapChangedEventHandler<K, V>, out: *mut *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT,
-			fn remove_MapChanged(&mut self, token: *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT
+			fn add_MapChanged(&mut self, vhnd: *mut Windows_Foundation_Collections_MapChangedEventHandler<K, V>, out: *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT,
+			fn remove_MapChanged(&mut self, token: Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_AsyncOperationWithProgressCompletedHandler, 3898471453, 27303, 18147, 168, 226, 240, 9, 216, 64, 198, 39);
 		RT_INTERFACE!{interface Windows_Foundation_AsyncOperationWithProgressCompletedHandler<TResult, TProgress>(Windows_Foundation_AsyncOperationWithProgressCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_Windows_Foundation_AsyncOperationWithProgressCompletedHandler] {
-			fn Invoke(&mut self, asyncInfo: *mut Windows_Foundation_IAsyncOperationWithProgress<TResult, TProgress>, asyncStatus: *mut Windows_Foundation_AsyncStatus) -> ::w::HRESULT
+			fn Invoke(&mut self, asyncInfo: *mut Windows_Foundation_IAsyncOperationWithProgress<TResult, TProgress>, asyncStatus: Windows_Foundation_AsyncStatus) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperationWithProgress, 3050321623, 58007, 18831, 186, 96, 2, 137, 231, 110, 35, 221);
 		RT_INTERFACE!{interface Windows_Foundation_IAsyncOperationWithProgress<TResult, TProgress>(Windows_Foundation_IAsyncOperationWithProgressVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IAsyncOperationWithProgress] {
@@ -346,7 +345,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_AsyncOperationCompletedHandler, 4242337836, 58840, 17528, 145, 90, 77, 144, 183, 75, 131, 165);
 		RT_INTERFACE!{interface Windows_Foundation_AsyncOperationCompletedHandler<TResult>(Windows_Foundation_AsyncOperationCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_Windows_Foundation_AsyncOperationCompletedHandler] {
-			fn Invoke(&mut self, asyncInfo: *mut Windows_Foundation_IAsyncOperation<TResult>, asyncStatus: *mut Windows_Foundation_AsyncStatus) -> ::w::HRESULT
+			fn Invoke(&mut self, asyncInfo: *mut Windows_Foundation_IAsyncOperation<TResult>, asyncStatus: Windows_Foundation_AsyncStatus) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperation, 2680336571, 58438, 17634, 170, 97, 156, 171, 143, 99, 106, 242);
 		RT_INTERFACE!{interface Windows_Foundation_IAsyncOperation<TResult>(Windows_Foundation_IAsyncOperationVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IAsyncOperation] {
@@ -356,7 +355,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_AsyncActionWithProgressCompletedHandler, 2617417617, 52356, 17661, 172, 38, 10, 108, 78, 85, 82, 129);
 		RT_INTERFACE!{interface Windows_Foundation_AsyncActionWithProgressCompletedHandler<TProgress>(Windows_Foundation_AsyncActionWithProgressCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_Windows_Foundation_AsyncActionWithProgressCompletedHandler] {
-			fn Invoke(&mut self, asyncInfo: *mut Windows_Foundation_IAsyncActionWithProgress<TProgress>, asyncStatus: *mut Windows_Foundation_AsyncStatus) -> ::w::HRESULT
+			fn Invoke(&mut self, asyncInfo: *mut Windows_Foundation_IAsyncActionWithProgress<TProgress>, asyncStatus: Windows_Foundation_AsyncStatus) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_IAsyncActionWithProgress, 527282776, 59395, 18593, 149, 70, 235, 115, 83, 57, 136, 132);
 		RT_INTERFACE!{interface Windows_Foundation_IAsyncActionWithProgress<TProgress>(Windows_Foundation_IAsyncActionWithProgressVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IAsyncActionWithProgress] {
@@ -423,17 +422,17 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ITracingStatusChangedEventArgs, 1091270417, 65339, 18303, 156, 154, 210, 239, 218, 48, 45, 195);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ITracingStatusChangedEventArgs(Windows_Foundation_Diagnostics_ITracingStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ITracingStatusChangedEventArgs] {
 			fn get_Enabled(&mut self, out: *mut ::w::BOOL) -> ::w::HRESULT,
-			fn get_TraceLevel(&mut self, out: *mut *mut Windows_Foundation_Diagnostics_CausalityTraceLevel) -> ::w::HRESULT
+			fn get_TraceLevel(&mut self, out: *mut Windows_Foundation_Diagnostics_CausalityTraceLevel) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_IAsyncCausalityTracerStatics, 1350896422, 9854, 17691, 168, 144, 171, 106, 55, 2, 69, 238);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_IAsyncCausalityTracerStatics(Windows_Foundation_Diagnostics_IAsyncCausalityTracerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_IAsyncCausalityTracerStatics] {
-			fn TraceOperationCreation(&mut self, traceLevel: *mut Windows_Foundation_Diagnostics_CausalityTraceLevel, source: *mut Windows_Foundation_Diagnostics_CausalitySource, platformId: ::w::GUID, operationId: u64, operationName: ::w::HSTRING, relatedContext: u64) -> ::w::HRESULT,
-			fn TraceOperationCompletion(&mut self, traceLevel: *mut Windows_Foundation_Diagnostics_CausalityTraceLevel, source: *mut Windows_Foundation_Diagnostics_CausalitySource, platformId: ::w::GUID, operationId: u64, status: *mut Windows_Foundation_AsyncStatus) -> ::w::HRESULT,
-			fn TraceOperationRelation(&mut self, traceLevel: *mut Windows_Foundation_Diagnostics_CausalityTraceLevel, source: *mut Windows_Foundation_Diagnostics_CausalitySource, platformId: ::w::GUID, operationId: u64, relation: *mut Windows_Foundation_Diagnostics_CausalityRelation) -> ::w::HRESULT,
-			fn TraceSynchronousWorkStart(&mut self, traceLevel: *mut Windows_Foundation_Diagnostics_CausalityTraceLevel, source: *mut Windows_Foundation_Diagnostics_CausalitySource, platformId: ::w::GUID, operationId: u64, work: *mut Windows_Foundation_Diagnostics_CausalitySynchronousWork) -> ::w::HRESULT,
-			fn TraceSynchronousWorkCompletion(&mut self, traceLevel: *mut Windows_Foundation_Diagnostics_CausalityTraceLevel, source: *mut Windows_Foundation_Diagnostics_CausalitySource, work: *mut Windows_Foundation_Diagnostics_CausalitySynchronousWork) -> ::w::HRESULT,
-			fn add_TracingStatusChanged(&mut self, handler: *mut Windows_Foundation_EventHandler<&Windows_Foundation_Diagnostics_TracingStatusChangedEventArgs>, out: *mut *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT,
-			fn remove_TracingStatusChanged(&mut self, cookie: *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT
+			fn TraceOperationCreation(&mut self, traceLevel: Windows_Foundation_Diagnostics_CausalityTraceLevel, source: Windows_Foundation_Diagnostics_CausalitySource, platformId: ::w::GUID, operationId: u64, operationName: ::w::HSTRING, relatedContext: u64) -> ::w::HRESULT,
+			fn TraceOperationCompletion(&mut self, traceLevel: Windows_Foundation_Diagnostics_CausalityTraceLevel, source: Windows_Foundation_Diagnostics_CausalitySource, platformId: ::w::GUID, operationId: u64, status: Windows_Foundation_AsyncStatus) -> ::w::HRESULT,
+			fn TraceOperationRelation(&mut self, traceLevel: Windows_Foundation_Diagnostics_CausalityTraceLevel, source: Windows_Foundation_Diagnostics_CausalitySource, platformId: ::w::GUID, operationId: u64, relation: Windows_Foundation_Diagnostics_CausalityRelation) -> ::w::HRESULT,
+			fn TraceSynchronousWorkStart(&mut self, traceLevel: Windows_Foundation_Diagnostics_CausalityTraceLevel, source: Windows_Foundation_Diagnostics_CausalitySource, platformId: ::w::GUID, operationId: u64, work: Windows_Foundation_Diagnostics_CausalitySynchronousWork) -> ::w::HRESULT,
+			fn TraceSynchronousWorkCompletion(&mut self, traceLevel: Windows_Foundation_Diagnostics_CausalityTraceLevel, source: Windows_Foundation_Diagnostics_CausalitySource, work: Windows_Foundation_Diagnostics_CausalitySynchronousWork) -> ::w::HRESULT,
+			fn add_TracingStatusChanged(&mut self, handler: *mut Windows_Foundation_EventHandler<&Windows_Foundation_Diagnostics_TracingStatusChangedEventArgs>, out: *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT,
+			fn remove_TracingStatusChanged(&mut self, cookie: Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT
 		}}
 		pub type Windows_Foundation_Diagnostics_TracingStatusChangedEventArgs = Windows_Foundation_Diagnostics_ITracingStatusChangedEventArgs;
 		DEFINE_GUID!(IID_Windows_Foundation_IUriRuntimeClass, 2654363223, 18610, 16736, 149, 111, 199, 56, 81, 32, 187, 252);
@@ -494,8 +493,8 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		DEFINE_GUID!(IID_Windows_Foundation_IMemoryBufferReference, 4223982889, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
 		RT_INTERFACE!{interface Windows_Foundation_IMemoryBufferReference(Windows_Foundation_IMemoryBufferReferenceVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IMemoryBufferReference] {
 			fn get_Capacity(&mut self, out: *mut u32) -> ::w::HRESULT,
-			fn add_Closed(&mut self, handler: *mut Windows_Foundation_TypedEventHandler<&Windows_Foundation_IMemoryBufferReference, &IInspectable>, out: *mut *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT,
-			fn remove_Closed(&mut self, cookie: *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT
+			fn add_Closed(&mut self, handler: *mut Windows_Foundation_TypedEventHandler<&Windows_Foundation_IMemoryBufferReference, &IInspectable>, out: *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT,
+			fn remove_Closed(&mut self, cookie: Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_IMemoryBuffer, 4223982890, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
 		RT_INTERFACE!{interface Windows_Foundation_IMemoryBuffer(Windows_Foundation_IMemoryBufferVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IMemoryBuffer] {
@@ -514,8 +513,8 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		}
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_IErrorReportingSettings, 372676498, 45118, 19361, 139, 184, 210, 143, 74, 180, 210, 192);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_IErrorReportingSettings(Windows_Foundation_Diagnostics_IErrorReportingSettingsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_IErrorReportingSettings] {
-			fn SetErrorOptions(&mut self, value: *mut Windows_Foundation_Diagnostics_ErrorOptions) -> ::w::HRESULT,
-			fn GetErrorOptions(&mut self, out: *mut *mut Windows_Foundation_Diagnostics_ErrorOptions) -> ::w::HRESULT
+			fn SetErrorOptions(&mut self, value: Windows_Foundation_Diagnostics_ErrorOptions) -> ::w::HRESULT,
+			fn GetErrorOptions(&mut self, out: *mut Windows_Foundation_Diagnostics_ErrorOptions) -> ::w::HRESULT
 		}}
 		pub type Windows_Foundation_Diagnostics_RuntimeBrokerErrorSettings = Windows_Foundation_Diagnostics_IErrorReportingSettings;
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_IErrorDetailsStatics, 3077584720, 2845, 18120, 170, 14, 75, 129, 120, 228, 252, 233);
@@ -563,7 +562,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		#[derive(Debug,PartialEq)]
 		pub struct Windows_Foundation_Numerics_Plane
 		{
-			Normal: *mut Windows_Foundation_Numerics_Vector3, D: f32
+			Normal: Windows_Foundation_Numerics_Vector3, D: f32
 		}
 		#[repr(C)]
 		#[derive(Debug,PartialEq)]
@@ -603,8 +602,8 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			fn put_Tags(&mut self, value: i32) -> ::w::HRESULT,
 			fn get_Task(&mut self, out: *mut i16) -> ::w::HRESULT,
 			fn put_Task(&mut self, value: i16) -> ::w::HRESULT,
-			fn get_Opcode(&mut self, out: *mut *mut Windows_Foundation_Diagnostics_LoggingOpcode) -> ::w::HRESULT,
-			fn put_Opcode(&mut self, value: *mut Windows_Foundation_Diagnostics_LoggingOpcode) -> ::w::HRESULT,
+			fn get_Opcode(&mut self, out: *mut Windows_Foundation_Diagnostics_LoggingOpcode) -> ::w::HRESULT,
+			fn put_Opcode(&mut self, value: Windows_Foundation_Diagnostics_LoggingOpcode) -> ::w::HRESULT,
 			fn get_ActivityId(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
 			fn put_ActivityId(&mut self, value: ::w::GUID) -> ::w::HRESULT,
 			fn get_RelatedActivityId(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
@@ -632,144 +631,144 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			fn BeginStructWithTags(&mut self, name: ::w::HSTRING, tags: i32) -> ::w::HRESULT,
 			fn EndStruct(&mut self) -> ::w::HRESULT,
 			fn AddEmpty(&mut self, name: ::w::HSTRING) -> ::w::HRESULT,
-			fn AddEmptyWithFormat(&mut self, name: ::w::HSTRING, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddEmptyWithFormatAndTags(&mut self, name: ::w::HSTRING, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddEmptyWithFormat(&mut self, name: ::w::HSTRING, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddEmptyWithFormatAndTags(&mut self, name: ::w::HSTRING, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddUInt8(&mut self, name: ::w::HSTRING, value: u8) -> ::w::HRESULT,
-			fn AddUInt8WithFormat(&mut self, name: ::w::HSTRING, value: u8, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddUInt8WithFormatAndTags(&mut self, name: ::w::HSTRING, value: u8, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddUInt8WithFormat(&mut self, name: ::w::HSTRING, value: u8, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddUInt8WithFormatAndTags(&mut self, name: ::w::HSTRING, value: u8, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddUInt8Array(&mut self, name: ::w::HSTRING, value: *mut u8) -> ::w::HRESULT,
-			fn AddUInt8ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut u8, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddUInt8ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut u8, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddUInt8ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut u8, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddUInt8ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut u8, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddInt16(&mut self, name: ::w::HSTRING, value: i16) -> ::w::HRESULT,
-			fn AddInt16WithFormat(&mut self, name: ::w::HSTRING, value: i16, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddInt16WithFormatAndTags(&mut self, name: ::w::HSTRING, value: i16, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddInt16WithFormat(&mut self, name: ::w::HSTRING, value: i16, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddInt16WithFormatAndTags(&mut self, name: ::w::HSTRING, value: i16, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddInt16Array(&mut self, name: ::w::HSTRING, value: *mut i16) -> ::w::HRESULT,
-			fn AddInt16ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut i16, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddInt16ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut i16, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddInt16ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut i16, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddInt16ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut i16, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddUInt16(&mut self, name: ::w::HSTRING, value: u16) -> ::w::HRESULT,
-			fn AddUInt16WithFormat(&mut self, name: ::w::HSTRING, value: u16, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddUInt16WithFormatAndTags(&mut self, name: ::w::HSTRING, value: u16, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddUInt16WithFormat(&mut self, name: ::w::HSTRING, value: u16, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddUInt16WithFormatAndTags(&mut self, name: ::w::HSTRING, value: u16, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddUInt16Array(&mut self, name: ::w::HSTRING, value: *mut u16) -> ::w::HRESULT,
-			fn AddUInt16ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut u16, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddUInt16ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut u16, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddUInt16ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut u16, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddUInt16ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut u16, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddInt32(&mut self, name: ::w::HSTRING, value: i32) -> ::w::HRESULT,
-			fn AddInt32WithFormat(&mut self, name: ::w::HSTRING, value: i32, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddInt32WithFormatAndTags(&mut self, name: ::w::HSTRING, value: i32, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddInt32WithFormat(&mut self, name: ::w::HSTRING, value: i32, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddInt32WithFormatAndTags(&mut self, name: ::w::HSTRING, value: i32, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddInt32Array(&mut self, name: ::w::HSTRING, value: *mut i32) -> ::w::HRESULT,
-			fn AddInt32ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut i32, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddInt32ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut i32, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddInt32ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut i32, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddInt32ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut i32, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddUInt32(&mut self, name: ::w::HSTRING, value: u32) -> ::w::HRESULT,
-			fn AddUInt32WithFormat(&mut self, name: ::w::HSTRING, value: u32, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddUInt32WithFormatAndTags(&mut self, name: ::w::HSTRING, value: u32, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddUInt32WithFormat(&mut self, name: ::w::HSTRING, value: u32, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddUInt32WithFormatAndTags(&mut self, name: ::w::HSTRING, value: u32, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddUInt32Array(&mut self, name: ::w::HSTRING, value: *mut u32) -> ::w::HRESULT,
-			fn AddUInt32ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut u32, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddUInt32ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut u32, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddUInt32ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut u32, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddUInt32ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut u32, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddInt64(&mut self, name: ::w::HSTRING, value: i64) -> ::w::HRESULT,
-			fn AddInt64WithFormat(&mut self, name: ::w::HSTRING, value: i64, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddInt64WithFormatAndTags(&mut self, name: ::w::HSTRING, value: i64, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddInt64WithFormat(&mut self, name: ::w::HSTRING, value: i64, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddInt64WithFormatAndTags(&mut self, name: ::w::HSTRING, value: i64, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddInt64Array(&mut self, name: ::w::HSTRING, value: *mut i64) -> ::w::HRESULT,
-			fn AddInt64ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut i64, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddInt64ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut i64, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddInt64ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut i64, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddInt64ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut i64, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddUInt64(&mut self, name: ::w::HSTRING, value: u64) -> ::w::HRESULT,
-			fn AddUInt64WithFormat(&mut self, name: ::w::HSTRING, value: u64, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddUInt64WithFormatAndTags(&mut self, name: ::w::HSTRING, value: u64, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddUInt64WithFormat(&mut self, name: ::w::HSTRING, value: u64, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddUInt64WithFormatAndTags(&mut self, name: ::w::HSTRING, value: u64, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddUInt64Array(&mut self, name: ::w::HSTRING, value: *mut u64) -> ::w::HRESULT,
-			fn AddUInt64ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut u64, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddUInt64ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut u64, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddUInt64ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut u64, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddUInt64ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut u64, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddSingle(&mut self, name: ::w::HSTRING, value: f32) -> ::w::HRESULT,
-			fn AddSingleWithFormat(&mut self, name: ::w::HSTRING, value: f32, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddSingleWithFormatAndTags(&mut self, name: ::w::HSTRING, value: f32, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddSingleWithFormat(&mut self, name: ::w::HSTRING, value: f32, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddSingleWithFormatAndTags(&mut self, name: ::w::HSTRING, value: f32, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddSingleArray(&mut self, name: ::w::HSTRING, value: *mut f32) -> ::w::HRESULT,
-			fn AddSingleArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut f32, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddSingleArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut f32, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddSingleArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut f32, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddSingleArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut f32, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddDouble(&mut self, name: ::w::HSTRING, value: f64) -> ::w::HRESULT,
-			fn AddDoubleWithFormat(&mut self, name: ::w::HSTRING, value: f64, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddDoubleWithFormatAndTags(&mut self, name: ::w::HSTRING, value: f64, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddDoubleWithFormat(&mut self, name: ::w::HSTRING, value: f64, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddDoubleWithFormatAndTags(&mut self, name: ::w::HSTRING, value: f64, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddDoubleArray(&mut self, name: ::w::HSTRING, value: *mut f64) -> ::w::HRESULT,
-			fn AddDoubleArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut f64, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddDoubleArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut f64, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddDoubleArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut f64, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddDoubleArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut f64, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddChar16(&mut self, name: ::w::HSTRING, value: ::w::wchar_t) -> ::w::HRESULT,
-			fn AddChar16WithFormat(&mut self, name: ::w::HSTRING, value: ::w::wchar_t, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddChar16WithFormatAndTags(&mut self, name: ::w::HSTRING, value: ::w::wchar_t, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddChar16WithFormat(&mut self, name: ::w::HSTRING, value: ::w::wchar_t, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddChar16WithFormatAndTags(&mut self, name: ::w::HSTRING, value: ::w::wchar_t, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddChar16Array(&mut self, name: ::w::HSTRING, value: *mut ::w::wchar_t) -> ::w::HRESULT,
-			fn AddChar16ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut ::w::wchar_t, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddChar16ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut ::w::wchar_t, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddChar16ArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut ::w::wchar_t, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddChar16ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut ::w::wchar_t, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddBoolean(&mut self, name: ::w::HSTRING, value: ::w::BOOL) -> ::w::HRESULT,
-			fn AddBooleanWithFormat(&mut self, name: ::w::HSTRING, value: ::w::BOOL, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddBooleanWithFormatAndTags(&mut self, name: ::w::HSTRING, value: ::w::BOOL, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddBooleanWithFormat(&mut self, name: ::w::HSTRING, value: ::w::BOOL, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddBooleanWithFormatAndTags(&mut self, name: ::w::HSTRING, value: ::w::BOOL, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddBooleanArray(&mut self, name: ::w::HSTRING, value: *mut ::w::BOOL) -> ::w::HRESULT,
-			fn AddBooleanArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut ::w::BOOL, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddBooleanArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut ::w::BOOL, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddBooleanArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut ::w::BOOL, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddBooleanArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut ::w::BOOL, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddString(&mut self, name: ::w::HSTRING, value: ::w::HSTRING) -> ::w::HRESULT,
-			fn AddStringWithFormat(&mut self, name: ::w::HSTRING, value: ::w::HSTRING, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddStringWithFormatAndTags(&mut self, name: ::w::HSTRING, value: ::w::HSTRING, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddStringWithFormat(&mut self, name: ::w::HSTRING, value: ::w::HSTRING, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddStringWithFormatAndTags(&mut self, name: ::w::HSTRING, value: ::w::HSTRING, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddStringArray(&mut self, name: ::w::HSTRING, value: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn AddStringArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut ::w::HSTRING, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddStringArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut ::w::HSTRING, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddStringArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut ::w::HSTRING, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddStringArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut ::w::HSTRING, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddGuid(&mut self, name: ::w::HSTRING, value: ::w::GUID) -> ::w::HRESULT,
-			fn AddGuidWithFormat(&mut self, name: ::w::HSTRING, value: ::w::GUID, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddGuidWithFormatAndTags(&mut self, name: ::w::HSTRING, value: ::w::GUID, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddGuidWithFormat(&mut self, name: ::w::HSTRING, value: ::w::GUID, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddGuidWithFormatAndTags(&mut self, name: ::w::HSTRING, value: ::w::GUID, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddGuidArray(&mut self, name: ::w::HSTRING, value: *mut ::w::GUID) -> ::w::HRESULT,
-			fn AddGuidArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut ::w::GUID, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddGuidArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut ::w::GUID, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddDateTime(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_DateTime) -> ::w::HRESULT,
-			fn AddDateTimeWithFormat(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_DateTime, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddDateTimeWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_DateTime, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddDateTimeArray(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_DateTime) -> ::w::HRESULT,
-			fn AddDateTimeArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_DateTime, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddDateTimeArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_DateTime, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddTimeSpan(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_TimeSpan) -> ::w::HRESULT,
-			fn AddTimeSpanWithFormat(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_TimeSpan, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddTimeSpanWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_TimeSpan, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddTimeSpanArray(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_TimeSpan) -> ::w::HRESULT,
-			fn AddTimeSpanArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_TimeSpan, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddTimeSpanArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_TimeSpan, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddPoint(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Point) -> ::w::HRESULT,
-			fn AddPointWithFormat(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Point, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddPointWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Point, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddPointArray(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_Point) -> ::w::HRESULT,
-			fn AddPointArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_Point, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddPointArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_Point, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddSize(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Size) -> ::w::HRESULT,
-			fn AddSizeWithFormat(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Size, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddSizeWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Size, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddSizeArray(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_Size) -> ::w::HRESULT,
-			fn AddSizeArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_Size, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddSizeArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_Size, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddRect(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Rect) -> ::w::HRESULT,
-			fn AddRectWithFormat(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Rect, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddRectWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Rect, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddRectArray(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_Rect) -> ::w::HRESULT,
-			fn AddRectArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_Rect, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddRectArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut *mut Windows_Foundation_Rect, format: *mut Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT
+			fn AddGuidArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut ::w::GUID, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddGuidArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut ::w::GUID, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddDateTime(&mut self, name: ::w::HSTRING, value: Windows_Foundation_DateTime) -> ::w::HRESULT,
+			fn AddDateTimeWithFormat(&mut self, name: ::w::HSTRING, value: Windows_Foundation_DateTime, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddDateTimeWithFormatAndTags(&mut self, name: ::w::HSTRING, value: Windows_Foundation_DateTime, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddDateTimeArray(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_DateTime) -> ::w::HRESULT,
+			fn AddDateTimeArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_DateTime, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddDateTimeArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_DateTime, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddTimeSpan(&mut self, name: ::w::HSTRING, value: Windows_Foundation_TimeSpan) -> ::w::HRESULT,
+			fn AddTimeSpanWithFormat(&mut self, name: ::w::HSTRING, value: Windows_Foundation_TimeSpan, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddTimeSpanWithFormatAndTags(&mut self, name: ::w::HSTRING, value: Windows_Foundation_TimeSpan, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddTimeSpanArray(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_TimeSpan) -> ::w::HRESULT,
+			fn AddTimeSpanArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_TimeSpan, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddTimeSpanArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_TimeSpan, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddPoint(&mut self, name: ::w::HSTRING, value: Windows_Foundation_Point) -> ::w::HRESULT,
+			fn AddPointWithFormat(&mut self, name: ::w::HSTRING, value: Windows_Foundation_Point, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddPointWithFormatAndTags(&mut self, name: ::w::HSTRING, value: Windows_Foundation_Point, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddPointArray(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Point) -> ::w::HRESULT,
+			fn AddPointArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Point, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddPointArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Point, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddSize(&mut self, name: ::w::HSTRING, value: Windows_Foundation_Size) -> ::w::HRESULT,
+			fn AddSizeWithFormat(&mut self, name: ::w::HSTRING, value: Windows_Foundation_Size, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddSizeWithFormatAndTags(&mut self, name: ::w::HSTRING, value: Windows_Foundation_Size, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddSizeArray(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Size) -> ::w::HRESULT,
+			fn AddSizeArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Size, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddSizeArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Size, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddRect(&mut self, name: ::w::HSTRING, value: Windows_Foundation_Rect) -> ::w::HRESULT,
+			fn AddRectWithFormat(&mut self, name: ::w::HSTRING, value: Windows_Foundation_Rect, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddRectWithFormatAndTags(&mut self, name: ::w::HSTRING, value: Windows_Foundation_Rect, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddRectArray(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Rect) -> ::w::HRESULT,
+			fn AddRectArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Rect, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddRectArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Rect, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT
 		}}
 		pub type Windows_Foundation_Diagnostics_LoggingFields = Windows_Foundation_Diagnostics_ILoggingFields;
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILoggingTarget, 1710320693, 58248, 20006, 177, 122, 245, 28, 211, 168, 57, 22);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingTarget(Windows_Foundation_Diagnostics_ILoggingTargetVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingTarget] {
 			fn IsEnabled(&mut self, out: *mut ::w::BOOL) -> ::w::HRESULT,
-			fn IsEnabledWithLevel(&mut self, level: *mut Windows_Foundation_Diagnostics_LoggingLevel, out: *mut ::w::BOOL) -> ::w::HRESULT,
-			fn IsEnabledWithLevelAndKeywords(&mut self, level: *mut Windows_Foundation_Diagnostics_LoggingLevel, keywords: i64, out: *mut ::w::BOOL) -> ::w::HRESULT,
+			fn IsEnabledWithLevel(&mut self, level: Windows_Foundation_Diagnostics_LoggingLevel, out: *mut ::w::BOOL) -> ::w::HRESULT,
+			fn IsEnabledWithLevelAndKeywords(&mut self, level: Windows_Foundation_Diagnostics_LoggingLevel, keywords: i64, out: *mut ::w::BOOL) -> ::w::HRESULT,
 			fn LogEvent(&mut self, eventName: ::w::HSTRING) -> ::w::HRESULT,
 			fn LogEventWithFields(&mut self, eventName: ::w::HSTRING, fields: *mut Windows_Foundation_Diagnostics_LoggingFields) -> ::w::HRESULT,
-			fn LogEventWithFieldsAndLevel(&mut self, eventName: ::w::HSTRING, fields: *mut Windows_Foundation_Diagnostics_LoggingFields, level: *mut Windows_Foundation_Diagnostics_LoggingLevel) -> ::w::HRESULT,
-			fn LogEventWithFieldsAndOptions(&mut self, eventName: ::w::HSTRING, fields: *mut Windows_Foundation_Diagnostics_LoggingFields, level: *mut Windows_Foundation_Diagnostics_LoggingLevel, options: *mut Windows_Foundation_Diagnostics_LoggingOptions) -> ::w::HRESULT,
+			fn LogEventWithFieldsAndLevel(&mut self, eventName: ::w::HSTRING, fields: *mut Windows_Foundation_Diagnostics_LoggingFields, level: Windows_Foundation_Diagnostics_LoggingLevel) -> ::w::HRESULT,
+			fn LogEventWithFieldsAndOptions(&mut self, eventName: ::w::HSTRING, fields: *mut Windows_Foundation_Diagnostics_LoggingFields, level: Windows_Foundation_Diagnostics_LoggingLevel, options: *mut Windows_Foundation_Diagnostics_LoggingOptions) -> ::w::HRESULT,
 			fn StartActivity(&mut self, startEventName: ::w::HSTRING, out: *mut *mut Windows_Foundation_Diagnostics_LoggingActivity) -> ::w::HRESULT,
 			fn StartActivityWithFields(&mut self, startEventName: ::w::HSTRING, fields: *mut Windows_Foundation_Diagnostics_LoggingFields, out: *mut *mut Windows_Foundation_Diagnostics_LoggingActivity) -> ::w::HRESULT,
-			fn StartActivityWithFieldsAndLevel(&mut self, startEventName: ::w::HSTRING, fields: *mut Windows_Foundation_Diagnostics_LoggingFields, level: *mut Windows_Foundation_Diagnostics_LoggingLevel, out: *mut *mut Windows_Foundation_Diagnostics_LoggingActivity) -> ::w::HRESULT,
-			fn StartActivityWithFieldsAndOptions(&mut self, startEventName: ::w::HSTRING, fields: *mut Windows_Foundation_Diagnostics_LoggingFields, level: *mut Windows_Foundation_Diagnostics_LoggingLevel, options: *mut Windows_Foundation_Diagnostics_LoggingOptions, out: *mut *mut Windows_Foundation_Diagnostics_LoggingActivity) -> ::w::HRESULT
+			fn StartActivityWithFieldsAndLevel(&mut self, startEventName: ::w::HSTRING, fields: *mut Windows_Foundation_Diagnostics_LoggingFields, level: Windows_Foundation_Diagnostics_LoggingLevel, out: *mut *mut Windows_Foundation_Diagnostics_LoggingActivity) -> ::w::HRESULT,
+			fn StartActivityWithFieldsAndOptions(&mut self, startEventName: ::w::HSTRING, fields: *mut Windows_Foundation_Diagnostics_LoggingFields, level: Windows_Foundation_Diagnostics_LoggingLevel, options: *mut Windows_Foundation_Diagnostics_LoggingOptions, out: *mut *mut Windows_Foundation_Diagnostics_LoggingActivity) -> ::w::HRESULT
 		}}
 		pub type Windows_Foundation_Diagnostics_LoggingActivity = Windows_Foundation_Diagnostics_ILoggingActivity;
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILoggingChannel, 3919905603, 4567, 20225, 181, 202, 207, 73, 82, 120, 192, 168);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingChannel(Windows_Foundation_Diagnostics_ILoggingChannelVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingChannel] {
 			fn get_Name(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_Enabled(&mut self, out: *mut ::w::BOOL) -> ::w::HRESULT,
-			fn get_Level(&mut self, out: *mut *mut Windows_Foundation_Diagnostics_LoggingLevel) -> ::w::HRESULT,
+			fn get_Level(&mut self, out: *mut Windows_Foundation_Diagnostics_LoggingLevel) -> ::w::HRESULT,
 			fn LogMessage(&mut self, eventString: ::w::HSTRING) -> ::w::HRESULT,
-			fn LogMessageWithLevel(&mut self, eventString: ::w::HSTRING, level: *mut Windows_Foundation_Diagnostics_LoggingLevel) -> ::w::HRESULT,
+			fn LogMessageWithLevel(&mut self, eventString: ::w::HSTRING, level: Windows_Foundation_Diagnostics_LoggingLevel) -> ::w::HRESULT,
 			fn LogValuePair(&mut self, value1: ::w::HSTRING, value2: i32) -> ::w::HRESULT,
-			fn LogValuePairWithLevel(&mut self, value1: ::w::HSTRING, value2: i32, level: *mut Windows_Foundation_Diagnostics_LoggingLevel) -> ::w::HRESULT,
-			fn add_LoggingEnabled(&mut self, handler: *mut Windows_Foundation_TypedEventHandler<&Windows_Foundation_Diagnostics_ILoggingChannel, &IInspectable>, out: *mut *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT,
-			fn remove_LoggingEnabled(&mut self, token: *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT
+			fn LogValuePairWithLevel(&mut self, value1: ::w::HSTRING, value2: i32, level: Windows_Foundation_Diagnostics_LoggingLevel) -> ::w::HRESULT,
+			fn add_LoggingEnabled(&mut self, handler: *mut Windows_Foundation_TypedEventHandler<&Windows_Foundation_Diagnostics_ILoggingChannel, &IInspectable>, out: *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT,
+			fn remove_LoggingEnabled(&mut self, token: Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILoggingChannel2, 2672573683, 2988, 17829, 158, 51, 186, 243, 243, 162, 70, 165);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingChannel2(Windows_Foundation_Diagnostics_ILoggingChannel2Vtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingChannel2] {
@@ -800,14 +799,14 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILoggingActivityFactory, 1798550659, 57610, 19544, 151, 213, 16, 251, 69, 16, 116, 251);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingActivityFactory(Windows_Foundation_Diagnostics_ILoggingActivityFactoryVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingActivityFactory] {
 			fn CreateLoggingActivity(&mut self, activityName: ::w::HSTRING, loggingChannel: *mut Windows_Foundation_Diagnostics_ILoggingChannel, out: *mut *mut Windows_Foundation_Diagnostics_LoggingActivity) -> ::w::HRESULT,
-			fn CreateLoggingActivityWithLevel(&mut self, activityName: ::w::HSTRING, loggingChannel: *mut Windows_Foundation_Diagnostics_ILoggingChannel, level: *mut Windows_Foundation_Diagnostics_LoggingLevel, out: *mut *mut Windows_Foundation_Diagnostics_LoggingActivity) -> ::w::HRESULT
+			fn CreateLoggingActivityWithLevel(&mut self, activityName: ::w::HSTRING, loggingChannel: *mut Windows_Foundation_Diagnostics_ILoggingChannel, level: Windows_Foundation_Diagnostics_LoggingLevel, out: *mut *mut Windows_Foundation_Diagnostics_LoggingActivity) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILoggingSession, 1646392070, 37760, 19159, 186, 245, 65, 234, 147, 16, 215, 104);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingSession(Windows_Foundation_Diagnostics_ILoggingSessionVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingSession] {
 			fn get_Name(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn SaveToFileAsync(&mut self, folder: *mut Windows_Storage_IStorageFolder, fileName: ::w::HSTRING, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_StorageFile>) -> ::w::HRESULT,
 			fn AddLoggingChannel(&mut self, loggingChannel: *mut Windows_Foundation_Diagnostics_ILoggingChannel) -> ::w::HRESULT,
-			fn AddLoggingChannelWithLevel(&mut self, loggingChannel: *mut Windows_Foundation_Diagnostics_ILoggingChannel, maxLevel: *mut Windows_Foundation_Diagnostics_LoggingLevel) -> ::w::HRESULT,
+			fn AddLoggingChannelWithLevel(&mut self, loggingChannel: *mut Windows_Foundation_Diagnostics_ILoggingChannel, maxLevel: Windows_Foundation_Diagnostics_LoggingLevel) -> ::w::HRESULT,
 			fn RemoveLoggingChannel(&mut self, loggingChannel: *mut Windows_Foundation_Diagnostics_ILoggingChannel) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILoggingSessionFactory, 1318289125, 22781, 17888, 140, 47, 161, 50, 239, 249, 92, 30);
@@ -824,14 +823,42 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_IFileLoggingSession(Windows_Foundation_Diagnostics_IFileLoggingSessionVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_IFileLoggingSession] {
 			fn get_Name(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn AddLoggingChannel(&mut self, loggingChannel: *mut Windows_Foundation_Diagnostics_ILoggingChannel) -> ::w::HRESULT,
-			fn AddLoggingChannelWithLevel(&mut self, loggingChannel: *mut Windows_Foundation_Diagnostics_ILoggingChannel, maxLevel: *mut Windows_Foundation_Diagnostics_LoggingLevel) -> ::w::HRESULT,
+			fn AddLoggingChannelWithLevel(&mut self, loggingChannel: *mut Windows_Foundation_Diagnostics_ILoggingChannel, maxLevel: Windows_Foundation_Diagnostics_LoggingLevel) -> ::w::HRESULT,
 			fn RemoveLoggingChannel(&mut self, loggingChannel: *mut Windows_Foundation_Diagnostics_ILoggingChannel) -> ::w::HRESULT,
 			fn CloseAndSaveToFileAsync(&mut self, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_StorageFile>) -> ::w::HRESULT,
-			fn add_LogFileGenerated(&mut self, handler: *mut Windows_Foundation_TypedEventHandler<&Windows_Foundation_Diagnostics_IFileLoggingSession, &Windows_Foundation_Diagnostics_LogFileGeneratedEventArgs>, out: *mut *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT,
-			fn remove_LogFileGenerated(&mut self, token: *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT
+			fn add_LogFileGenerated(&mut self, handler: *mut Windows_Foundation_TypedEventHandler<&Windows_Foundation_Diagnostics_IFileLoggingSession, &Windows_Foundation_Diagnostics_LogFileGeneratedEventArgs>, out: *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT,
+			fn remove_LogFileGenerated(&mut self, token: Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT
 		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_IFileLoggingSessionFactory, 4003499470, 33863, 19882, 145, 51, 18, 235, 70, 246, 151, 212);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_IFileLoggingSessionFactory(Windows_Foundation_Diagnostics_IFileLoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_IFileLoggingSessionFactory] {
 			fn Create(&mut self, name: ::w::HSTRING, out: *mut *mut Windows_Foundation_Diagnostics_FileLoggingSession) -> ::w::HRESULT
 		}}
 		pub type Windows_Foundation_Diagnostics_FileLoggingSession = Windows_Foundation_Diagnostics_IFileLoggingSession;
+		DEFINE_GUID!(IID_Windows_Foundation_Collections_IMap_2_System_String_System_String, 0xf6d1f700,0x49c2,0x52ae,0x81,0x54,0x82,0x6f,0x99,0x08,0x77,0x3c);
+		impl<'a> ComIid for Windows_Foundation_Collections_IMap<&'a str, &'a str> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_Collections_IMap_2_System_String_System_String }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_EventHandler_1_Windows_Foundation_Diagnostics_TracingStatusChangedEventArgs, 0x2bf27008,0x2eb4,0x5675,0xb1,0xcd,0xe9,0x90,0x6c,0xc5,0xce,0x64);
+		impl<'a> ComIid for Windows_Foundation_EventHandler<&'a Windows_Foundation_Diagnostics_TracingStatusChangedEventArgs> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_EventHandler_1_Windows_Foundation_Diagnostics_TracingStatusChangedEventArgs }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_TypedEventHandler_2_Windows_Foundation_IMemoryBufferReference_System_Object, 0xf4637d4a,0x0760,0x5431,0xbf,0xc0,0x24,0xeb,0x1d,0x4f,0x6c,0x4f);
+		impl<'a> ComIid for Windows_Foundation_TypedEventHandler<&'a Windows_Foundation_IMemoryBufferReference, &'a IInspectable> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_TypedEventHandler_2_Windows_Foundation_IMemoryBufferReference_System_Object }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperation_1_Windows_Foundation_Diagnostics_ErrorDetails, 0x9b05106d,0x77e0,0x5c24,0x82,0xb0,0x9b,0x2d,0xc8,0xf7,0x96,0x71);
+		impl<'a> ComIid for Windows_Foundation_IAsyncOperation<&'a Windows_Foundation_Diagnostics_ErrorDetails> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperation_1_Windows_Foundation_Diagnostics_ErrorDetails }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_TypedEventHandler_2_Windows_Foundation_Diagnostics_ILoggingChannel_System_Object, 0x52c9c2a1,0x54a3,0x5ef9,0x9a,0xff,0x01,0x4e,0x7c,0x45,0x46,0x55);
+		impl<'a> ComIid for Windows_Foundation_TypedEventHandler<&'a Windows_Foundation_Diagnostics_ILoggingChannel, &'a IInspectable> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_TypedEventHandler_2_Windows_Foundation_Diagnostics_ILoggingChannel_System_Object }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_StorageFile, 0x5e52f8ce,0xaced,0x5a42,0x95,0xb4,0xf6,0x74,0xdd,0x84,0x88,0x5e);
+		impl<'a> ComIid for Windows_Foundation_IAsyncOperation<&'a Windows_Storage_StorageFile> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_StorageFile }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_TypedEventHandler_2_Windows_Foundation_Diagnostics_IFileLoggingSession_Windows_Foundation_Diagnostics_LogFileGeneratedEventArgs, 0x0c6563b0,0x9d8b,0x5b60,0x99,0x4b,0xde,0xe1,0x17,0x4d,0x1e,0xfb);
+		impl<'a> ComIid for Windows_Foundation_TypedEventHandler<&'a Windows_Foundation_Diagnostics_IFileLoggingSession, &'a Windows_Foundation_Diagnostics_LogFileGeneratedEventArgs> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_TypedEventHandler_2_Windows_Foundation_Diagnostics_IFileLoggingSession_Windows_Foundation_Diagnostics_LogFileGeneratedEventArgs }
+		}

@@ -120,7 +120,7 @@ fn run() {
     let pair = Arc::new((Mutex::new(false), Condvar::new()));
     {
         let pair2 = pair.clone();
-        let mut myHandler = AsyncOperationCompletedHandler::new(move |_op, status| {
+        let mut myHandler = AsyncOperationCompletedHandlerImpl::new(move |_op, status| {
             println!("Result handler invoked! Status: {:?}", status);
             let &(ref lock, ref cvar) = &*pair2;
             let mut started = lock.lock().unwrap();
