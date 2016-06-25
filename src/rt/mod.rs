@@ -154,7 +154,7 @@ impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType {
 }
 
 macro_rules! RT_INTERFACE {
-    // Specialized version for IUnknown (does not impl RtInterface)
+    // Specialized version for IUnknown (does not impl RtInterface) -> TODO: get rid of this
     (interface $interface:ident ($vtbl:ident) : IUnknown(IUnknownVtbl) [$iid:ident]
         {$(
             fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
@@ -255,6 +255,49 @@ macro_rules! RT_INTERFACE {
         impl<$t1> ::std::ops::DerefMut for $interface<$t1> where $t1: RtType {
             #[inline]
             fn deref_mut(&mut self) -> &mut $crate::IUnknown {
+                unsafe { ::std::mem::transmute(self) }
+            }
+        }
+    };
+
+    (interface $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
+        {}
+    ) => {
+        #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
+        pub struct $vtbl {
+            pub parent: $crate::$pvtbl
+        }
+        #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
+        pub struct $interface {
+            lpVtbl: *const $vtbl
+        }
+        impl ComIid for $interface {
+            //const IID: REFIID = &$iid;
+            fn iid() -> ::w::REFIID { &$iid }
+        }
+        impl ComInterface for $interface {
+            type Vtbl = $vtbl;
+        }
+        unsafe impl RtInterface for $interface {}
+        impl<'a> RtType for &'a $interface {
+            type In = &'a mut $interface;
+            type Abi = *mut $interface;
+            type Out = ComPtr<$interface>;
+            
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+            unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+        }
+        impl ::std::ops::Deref for $interface {
+            type Target = $crate::$pinterface;
+            #[inline]
+            fn deref(&self) -> &$crate::$pinterface {
+                unsafe { ::std::mem::transmute(self) }
+            }
+        }
+        impl ::std::ops::DerefMut for $interface {
+            #[inline]
+            fn deref_mut(&mut self) -> &mut $crate::$pinterface {
                 unsafe { ::std::mem::transmute(self) }
             }
         }
@@ -366,11 +409,72 @@ macro_rules! RT_INTERFACE {
             }
         }
     };
+
+    (interface $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
+        {$(
+            fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+        ),+}
+    ) => {
+        #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
+        pub struct $vtbl<$t1, $t2> where $t1: RtType, $t2: RtType {
+            pub parent: $crate::$pvtbl
+            $(,pub $method: unsafe extern "system" fn(
+                This: *mut $interface<$t1, $t2>
+                $(,$p: $t)*
+            ) -> $rtr)+
+        }
+        #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
+        pub struct $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
+            lpVtbl: *const $vtbl<$t1, $t2>,
+        }
+        impl<$t1, $t2> $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
+            #[inline]
+            $(pub unsafe fn $method(&mut self $(,$p: $t)*) -> $rtr {
+                ((*self.lpVtbl).$method)(self $(,$p)*)
+            })+
+        }
+        impl<$t1: 'static, $t2: 'static> ComInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType{ 
+            type Vtbl = $vtbl<$t1, $t2>;
+        }
+        unsafe impl<$t1: 'static, $t2: 'static> RtInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {}
+        impl<'a, $t1, $t2> RtType for &'a $interface<$t1, $t2> where $t1: RtType, $t2: RtType{
+            type In = &'a mut $interface<$t1, $t2>;
+            type Abi = *mut $interface<$t1, $t2>;
+            type Out = ComPtr<$interface<$t1, $t2>>;
+            
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+            unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+        }
+        impl<$t1, $t2> ::std::ops::Deref for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
+            type Target = $pinterface;
+            #[inline]
+            fn deref(&self) -> &$pinterface {
+                unsafe { ::std::mem::transmute(self) }
+            }
+        }
+        impl<$t1, $t2> ::std::ops::DerefMut for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
+            #[inline]
+            fn deref_mut(&mut self) -> &mut $pinterface {
+                unsafe { ::std::mem::transmute(self) }
+            }
+        }
+    };
 }
 
 // ================================================ //
 // Everything below will be automatically generated //
 // ================================================ //
+
+pub mod generated;
+
+DEFINE_GUID!(IID_NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+RT_INTERFACE!{
+interface Windows_Storage_StorageFile(Windows_Storage_StorageFileVtbl): IInspectable(IInspectableVtbl) [IID_NULL]  {
+}}
+RT_INTERFACE!{
+interface Windows_Storage_IStorageFolder(Windows_Storage_IStorageFolderVtbl): IInspectable(IInspectableVtbl) [IID_NULL]  {
+}}
 
 // FIXME: maybe better reexport from winapi?
 DEFINE_GUID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);

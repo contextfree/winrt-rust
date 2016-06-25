@@ -1,3 +1,10 @@
 target
 .cargo
 Cargo.lock
+
+# C#, Visual Studio, NuGet, etc.
+packages/
+*.user
+obj/
+bin/
+.suo

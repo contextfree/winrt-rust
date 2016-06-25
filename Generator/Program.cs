@@ -1,0 +1,337 @@
+﻿using System;
+using System.Linq;
+using System.Text;
+using static System.Diagnostics.Debug;
+
+using Mono.Cecil;
+using System.IO;
+using System.Collections.Generic;
+
+namespace Generator
+{
+	class Program
+	{
+		struct TypeCounter
+		{
+			public int Enums;
+			public int Interfaces;
+			public int Classes;
+			public int Structs;
+			public int Delegates;
+
+			public int Sum()
+			{
+				return Enums + Interfaces + Classes + Structs + Delegates;
+			}
+		}
+
+		static void Main(string[] args)
+		{
+			var lib = AssemblyDefinition.ReadAssembly(@"C:\Windows\System32\WinMetadata\Windows.Foundation.winmd");
+			Console.WriteLine("Writing to " + new FileInfo(args[0]).FullName + " ...");
+			TypeCounter counter = new TypeCounter { Enums = 0, Interfaces = 0, Classes = 0, Structs = 0 };
+			using (var file = new StreamWriter(args[0]))
+			{	
+				file.WriteLine(@"#![allow(non_camel_case_types)]
+use std::ptr;
+use ::w::REFIID;
+use super::super::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Windows_Storage_IStorageFolder};");
+
+				foreach (var type in lib.MainModule.Types)
+				{
+					if (type.FullName == "<Module>") continue;
+
+					Assert(type.Attributes.HasFlag(TypeAttributes.WindowsRuntime));
+
+					if (type.IsEnum)
+					{
+						counter.Enums++;
+						WriteEnum(file, type);
+					}
+					else if (type.IsInterface)
+					{
+						counter.Interfaces++;
+						WriteInterface(file, type);
+					}
+					else if (type.IsValueType)
+					{
+						counter.Structs++;
+						WriteStruct(file, type);
+					}
+					else if (type.IsClass && type.BaseType.FullName == "System.MulticastDelegate")
+					{
+						counter.Delegates++;
+						WriteDelegate(file, type);
+					}
+					else if (type.IsClass)
+					{
+						counter.Classes++;
+						WriteClass(file, type);
+					}
+					else
+					{
+						throw new NotImplementedException();
+					}
+				}
+			}
+			Console.WriteLine("Done writing {0} type definitions ({1} enums, {2} interfaces, {3} structs, {4} classes, {5} delegates)", counter.Sum(), counter.Enums, counter.Interfaces, counter.Structs, counter.Classes, counter.Delegates);
+			Console.ReadLine();
+		}
+
+		static void WriteEnum(StreamWriter file, TypeDefinition t)
+		{
+			file.Write(@"
+		#[repr(C)]
+		#[derive(Debug,PartialEq,Eq)]
+		pub enum " + GetTypeName(t, TypeUsage.Define) + @"
+		{
+			" + String.Join(", ", t.Fields.Where(f => f.Name != "value__").Select(f => f.Name + " = " + f.Constant)) + @"
+		}");
+		}
+
+		static void WriteStruct(StreamWriter file, TypeDefinition t)
+		{
+			// TODO: derive(Eq) whenever possible?
+			file.Write(@"
+		#[repr(C)]
+		#[derive(Debug,PartialEq)]
+		pub struct " + GetTypeName(t, TypeUsage.Define) + @"
+		{
+			" + String.Join(", ", t.Fields.Select(f => f.Name + ": " + GetTypeName(f.FieldType, TypeUsage.Raw))) + @"
+		}");
+		}
+
+		static void WriteInterface(StreamWriter file, TypeDefinition t)
+		{
+			var guid = t.CustomAttributes.First(a => a.AttributeType.Name == "GuidAttribute");
+			var name = GetTypeName(t, TypeUsage.Define);
+
+			file.Write(@"
+		DEFINE_GUID!(IID_" + name + ", " + String.Join(", ", guid.ConstructorArguments.Select(a => a.Value)) + ");");
+
+			string generic = "";
+			if (t.HasGenericParameters)
+			{
+				generic = "<" + String.Join(", ", t.GenericParameters.Select(p => p.Name)) + ">";
+			}
+
+			file.Write(@"
+		RT_INTERFACE!{interface " + name + generic + "(" + name + "Vtbl): IInspectable(IInspectableVtbl) [IID_" + name + @"] {
+			" + String.Join(",\r\n			", t.Methods.Select(m => GetRawMethodDeclaration(m))) + @"
+		}}");
+		}
+
+		static string GetRawMethodDeclaration(MethodDefinition m)
+		{
+			var name = m.Name;
+			var overload = m.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "OverloadAttribute");
+			if (overload != null)
+			{
+				name = (string)overload.ConstructorArguments[0].Value;
+			}
+
+			return "fn " + name + "(" + String.Join(", ", GetMethodParameterDeclarations(m)) + ") -> ::w::HRESULT";
+		}
+
+		static IEnumerable<string> GetMethodParameterDeclarations(MethodDefinition m)
+		{
+			yield return "&mut self";
+			foreach (var p in m.Parameters)
+			{
+				Assert(!p.IsReturnValue);
+				yield return p.Name + ": " + GetTypeName(p.ParameterType, TypeUsage.Raw);
+			}
+			if (m.ReturnType.FullName != "System.Void")
+			{
+				yield return "out: *mut " + GetTypeName(m.ReturnType, TypeUsage.Raw);
+			}
+		}
+
+		static void WriteDelegate(StreamWriter file, TypeDefinition t)
+		{
+			var guid = t.CustomAttributes.First(a => a.AttributeType.Name == "GuidAttribute");
+			var name = GetTypeName(t, TypeUsage.Define);
+
+			file.Write(@"
+		DEFINE_GUID!(IID_" + name + ", " + String.Join(", ", guid.ConstructorArguments.Select(a => a.Value)) + ");");
+
+			string generic = "";
+			if (t.HasGenericParameters)
+			{
+				generic = "<" + String.Join(", ", t.GenericParameters.Select(p => p.Name)) + ">";
+			}
+
+			file.Write(@"
+		RT_INTERFACE!{interface " + name + generic + "(" + name + "Vtbl): IUnknown(IUnknownVtbl) [IID_" + name + @"] {
+			" + String.Join(",\r\n			", t.Methods.Where(m => m.Name != ".ctor").Select(m => GetRawMethodDeclaration(m))) + @"
+		}}");
+		}
+
+		static void WriteClass(StreamWriter file, TypeDefinition t)
+		{
+			var activatable = t.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "ActivatableAttribute");
+			string factory = null;
+			if (activatable != null && activatable.ConstructorArguments[0].Type.FullName == "System.Type")
+			{
+				factory = (activatable.ConstructorArguments[0].Value as TypeDefinition).ToString();
+			}
+
+			if (t.Interfaces.Count == 0)
+			{
+				Console.WriteLine("WARNING: Skipping class " + t + ", since it does not implement any interface.");
+				return;
+			}
+			var mainInterface = t.Interfaces[0];
+			Console.WriteLine(t.FullName + " => " + mainInterface.FullName + ", " + (factory ?? "(no factory)"));
+			var aliasedType = GetTypeName(mainInterface, TypeUsage.Define);
+			var classType = GetTypeName(t, TypeUsage.Define);
+			if (aliasedType.Contains("'a")) // if we had to introduce a lifetime parameter ...
+			{
+				classType += "<'a>";
+			}
+			file.Write(@"
+		pub type " + classType + " = " + aliasedType + ";");
+		}
+
+		enum TypeUsage
+		{
+			In,
+			Out,
+			Raw,
+			Define,
+			GenericArg,
+			GenericArgWithLifetime
+		}
+
+		static string GetTypeName(TypeReference t, TypeUsage usage)
+		{
+			if (t.IsGenericParameter)
+			{
+				switch (usage)
+				{
+					case TypeUsage.Raw: return t.Name + "::Abi";
+					case TypeUsage.In: return t.Name + "::In";
+					case TypeUsage.Out: return t.Name + "::Out";
+					case TypeUsage.GenericArg:
+					case TypeUsage.GenericArgWithLifetime:
+						return t.Name;
+					default: throw new NotSupportedException();
+				}
+			}
+			if (t.IsByReference)
+			{
+				var ty = (ByReferenceType)t;
+				return "*mut " + GetTypeName(ty.ElementType, usage);
+			}
+			else if (t.IsArray)
+			{
+				var ty = (ArrayType)t;
+				return "*mut " + GetTypeName(ty.ElementType, usage);
+			}
+			else
+			{
+				return GetElementTypeName(t, usage);
+			}
+		}
+
+		static string GetElementTypeName(TypeReference t, TypeUsage usage)
+		{
+			if (t.FullName == "System.String")
+			{
+				switch (usage)
+				{
+					case TypeUsage.Raw: return "::w::HSTRING";
+					case TypeUsage.In: return "HStringRef";
+					case TypeUsage.Out: return "HString";
+					case TypeUsage.GenericArg: return "&str";
+					case TypeUsage.GenericArgWithLifetime: return "&'a str";
+					default: throw new NotSupportedException();
+				}
+			}
+			else if (t.FullName == "System.Object")
+			{
+				switch (usage)
+				{
+					case TypeUsage.Raw: return "*mut IInspectable";
+					case TypeUsage.GenericArg: return "&IInspectable";
+					case TypeUsage.GenericArgWithLifetime: return "&'a IInspectable";
+					case TypeUsage.Define: throw new NotSupportedException();
+					default: throw new NotImplementedException(); // TODO
+				}
+			}
+			else if (t.FullName == "System.Guid")
+			{
+				Assert(usage != TypeUsage.Define);
+				return "::w::GUID"; // TODO?
+			}
+			else if (t.IsPrimitive)
+			{
+				Assert(usage != TypeUsage.Define);
+				switch (t.FullName)
+				{
+					case "System.Boolean":
+						return usage == TypeUsage.Raw ? "::w::BOOL" : "bool";
+					case "System.Byte":
+						return "u8";
+					case "System.Int16":
+						return "i16";
+					case "System.Int32":
+						return "i32";
+					case "System.Int64":
+						return "i64";
+					case "System.UInt16":
+						return "u16";
+					case "System.UInt32":
+						return "u32";
+					case "System.UInt64":
+						return "u64";
+					case "System.Single":
+						return "f32";
+					case "System.Double":
+						return "f64";
+					case "System.Char":
+						if (usage != TypeUsage.Raw) throw new NotImplementedException(); // TODO
+						return "::w::wchar_t";
+					default:
+						throw new NotImplementedException("Primitive type: " + t.FullName);
+				}
+			}
+			else
+			{
+				var name = t.FullName;
+
+				int i = name.IndexOf('`');
+				if (i >= 0) {
+					name = name.Substring(0, i);
+				}
+
+				if (t.IsGenericInstance)
+				{
+					var ty = (GenericInstanceType)t;
+					var argUsage = usage == TypeUsage.Define ? TypeUsage.GenericArgWithLifetime : TypeUsage.GenericArg;
+					name += "<" + String.Join(", ", ty.GenericArguments.Select(a => GetTypeName(a, argUsage))) + ">";
+				}
+
+				if (usage == TypeUsage.GenericArg)
+				{
+					name = "&" + name;
+				}
+				else if (usage == TypeUsage.GenericArgWithLifetime)
+				{
+					name = "&'a " + name;
+				}
+				else if (usage == TypeUsage.Raw)
+				{
+					name = "*mut " + name;
+				}
+				else if (usage == TypeUsage.In || usage == TypeUsage.Out)
+				{
+					throw new NotImplementedException(); // TODO
+				}
+
+				return name.Replace(".", "_");
+			}
+		}
+	}
+}
