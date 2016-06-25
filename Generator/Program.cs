@@ -26,6 +26,8 @@ namespace Generator
 		}
 
 		static Dictionary<string, GenericInstanceType> genericInstantiations = new Dictionary<string, GenericInstanceType>();
+		static Dictionary<string, TypeDefinition> definitionsWorklist = new Dictionary<string, TypeDefinition>();
+		static Dictionary<string, bool> definitionsDone = new Dictionary<string, bool>();
 
 		static void Main(string[] args)
 		{
@@ -37,15 +39,57 @@ namespace Generator
 				file.WriteLine(@"#![allow(non_camel_case_types)]
 use std::ptr;
 use super::super::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Windows_Storage_IStorageFolder};");
+use super::{RtInterface, RtType, RtValueType, IInspectable};");
 
 				var files = Directory.GetFiles(@"C:\Windows\System32\WinMetadata\");
 				var collection = new AssemblyCollection(files);
 
 				// TODO: enable all modules, not just "Foundation" (currently leads to parse error in Rust)
-				foreach (var asm in collection.Assemblies.Where(a => a.Name.Name == "Windows.Foundation"))
+				foreach (var asm in collection.Assemblies.Where(a => a.Name.Name == "Windows.Foundation" /*|| a.Name.Name == "Windows.Storage" || a.Name.Name == "Windows.Devices"*/))
 				{
-					WriteMetadataForModule(file, asm.MainModule, ref counter);
+					foreach (var t in asm.MainModule.Types.Where(t => t.FullName != "<Module>"))
+					{
+						definitionsWorklist.Add(t.FullName, t);
+					}
+				}
+
+				while (definitionsWorklist.Count > 0)
+				{
+					var type = definitionsWorklist.First().Value;
+					definitionsWorklist.Remove(type.FullName);
+					definitionsDone.Add(type.FullName, false);
+
+					Assert(type.Attributes.HasFlag(TypeAttributes.WindowsRuntime));
+
+					if (type.IsEnum)
+					{
+						counter.Enums++;
+						WriteEnum(file, type);
+					}
+					else if (type.IsInterface)
+					{
+						counter.Interfaces++;
+						WriteInterface(file, type, false);
+					}
+					else if (type.IsValueType)
+					{
+						counter.Structs++;
+						WriteStruct(file, type);
+					}
+					else if (IsDelegate(type))
+					{
+						counter.Delegates++;
+						WriteInterface(file, type, true);
+					}
+					else if (type.IsClass)
+					{
+						counter.Classes++;
+						WriteClass(file, type);
+					}
+					else
+					{
+						throw new NotImplementedException();
+					}
 				}
 
 				Console.WriteLine("Done writing {0} type definitions ({1} enums, {2} interfaces, {3} structs, {4} classes, {5} delegates)", counter.Sum(), counter.Enums, counter.Interfaces, counter.Structs, counter.Classes, counter.Delegates);
@@ -56,46 +100,6 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			Console.ReadLine();
 		}
 
-		static void WriteMetadataForModule(StreamWriter file, ModuleDefinition mod, ref TypeCounter counter)
-		{
-			foreach (var type in mod.Types)
-			{
-				if (type.FullName == "<Module>") continue;
-
-				Assert(type.Attributes.HasFlag(TypeAttributes.WindowsRuntime));
-
-				if (type.IsEnum)
-				{
-					counter.Enums++;
-					WriteEnum(file, type);
-				}
-				else if (type.IsInterface)
-				{
-					counter.Interfaces++;
-					WriteInterface(file, type, false);
-				}
-				else if (type.IsValueType)
-				{
-					counter.Structs++;
-					WriteStruct(file, type);
-				}
-				else if (IsDelegate(type))
-				{
-					counter.Delegates++;
-					WriteInterface(file, type, true);
-				}
-				else if (type.IsClass)
-				{
-					counter.Classes++;
-					WriteClass(file, type);
-				}
-				else
-				{
-					throw new NotImplementedException();
-				}
-			}
-		}
-
 		static bool IsDelegate(TypeDefinition t)
 		{
 			return t.IsClass && t.BaseType.FullName == "System.MulticastDelegate";
@@ -103,25 +107,23 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 
 		static void WriteEnum(StreamWriter file, TypeDefinition t)
 		{
+			var isFlags = t.CustomAttributes.Any(a => a.AttributeType.Name == "FlagsAttribute");
+			var underlyingType = t.Fields.Single(f => f.Name == "value__").FieldType;
+			string name = GetTypeName(t, TypeUsage.Define);
 			file.Write(@"
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum " + GetTypeName(t, TypeUsage.Define) + @"
-		{
-			" + String.Join(", ", t.Fields.Where(f => f.Name != "value__").Select(f => PreventKeywords(f.Name) + " = " + f.Constant)) + @"
-		}");
+		RT_ENUM! { enum " + name + ": " + GetTypeName(underlyingType, TypeUsage.Raw) + @" {
+			" + String.Join(", ", t.Fields.Where(f => f.Name != "value__").Select(f => PreventKeywords(f.Name) + " = " + f.Constant)) + @",
+		}}");
 		}
 
 		static void WriteStruct(StreamWriter file, TypeDefinition t)
 		{
+			string name = GetTypeName(t, TypeUsage.Define);
 			// TODO: derive(Eq) whenever possible?
 			file.Write(@"
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct " + GetTypeName(t, TypeUsage.Define) + @"
-		{
-			" + String.Join(", ", t.Fields.Select(f => PreventKeywords(f.Name) + ": " + GetTypeName(f.FieldType, TypeUsage.Raw))) + @"
-		}");
+		RT_STRUCT! { struct " + name + @" {
+			" + String.Join(", ", t.Fields.Select(f => PreventKeywords(f.Name) + ": " + GetTypeName(f.FieldType, TypeUsage.Raw))) + (t.Fields.Any() ? "," : "") +  @"
+		}}");
 		}
 
 		static void WriteInterface(StreamWriter file, TypeDefinition t, bool isDelegate)
@@ -204,9 +206,11 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			if (aliasedType.Contains("'a")) // if we had to introduce a lifetime parameter ...
 			{
 				classType += "<'a>";
+				Assert(definitionsDone.ContainsKey(t.FullName));
+				definitionsDone[t.FullName] = true;
 			}
 			file.Write(@"
-		pub type " + classType + " = " + aliasedType + ";");
+		RT_CLASS!(" + classType + ": " + aliasedType + ");");
 		}
 
 		enum TypeUsage
@@ -314,6 +318,12 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			}
 			else
 			{
+				var def = t.Resolve();
+				if (!definitionsWorklist.ContainsKey(def.FullName) && !definitionsDone.ContainsKey(def.FullName))
+				{
+					definitionsWorklist.Add(def.FullName, def);
+				}
+
 				var name = t.FullName;
 
 				int i = name.IndexOf('`');
@@ -328,7 +338,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 					{
 						genericInstantiations[ty.FullName] = ty;
 					}
-					var argUsage = usage == TypeUsage.Define ? TypeUsage.GenericArgWithLifetime : TypeUsage.GenericArg;
+					var argUsage = (usage == TypeUsage.Define || usage == TypeUsage.GenericArgWithLifetime) ? TypeUsage.GenericArgWithLifetime : TypeUsage.GenericArg;
 					name += "<" + String.Join(", ", ty.GenericArguments.Select(a => GetTypeName(a, argUsage))) + ">";
 				}
 
@@ -341,6 +351,12 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 					}
 					else if (usage == TypeUsage.GenericArgWithLifetime)
 					{
+						bool value;
+						if (definitionsDone.TryGetValue(t.FullName, out value) && value)
+						{
+							// we need a lifetime parameter for this type
+							name += "<'a>";
+						}
 						name = "&'a " + name;
 					}
 					else if (usage == TypeUsage.Raw)

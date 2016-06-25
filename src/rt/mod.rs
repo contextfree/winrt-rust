@@ -2,24 +2,23 @@ use std::ptr;
 
 use super::{ComInterface, HString, HStringRef, ComPtr, ComIid};
 
-use ::w::{
-    HRESULT,
-    HSTRING,
-    S_OK,
-    ULONG,
-    BOOL,
-    TRUE,
-    FALSE,
-    TrustLevel,
-    IID
-};
+use w::{HRESULT, HSTRING, S_OK, ULONG, BOOL, TRUE, FALSE, TrustLevel, IID};
 
 /// This means that the interfaced is based on IInspectable
 pub unsafe trait RtInterface: ComInterface {}
 
 pub unsafe trait RtValueType {}
-unsafe impl RtValueType for AsyncStatus {}
-// TODO ...
+
+unsafe impl RtValueType for f32 {}
+unsafe impl RtValueType for f64 {}
+unsafe impl RtValueType for i16 {}
+unsafe impl RtValueType for i32 {}
+unsafe impl RtValueType for i64 {}
+unsafe impl RtValueType for u8 {}
+unsafe impl RtValueType for u16 {}
+unsafe impl RtValueType for u32 {}
+unsafe impl RtValueType for u64 {}
+unsafe impl RtValueType for ::w::GUID {}
 
 /// This is a trait implemented by all types that can be used as generic parameters of parameterized interfaces
 pub trait RtType {
@@ -36,55 +35,61 @@ impl<'a> RtType for &'a str {
     type In = HStringRef<'a>;
     type Abi = ::w::HSTRING;
     type Out = HString;
-    
-    unsafe fn unwrap(v: Self::In) -> Self::Abi { v.get() }
-    unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-    unsafe fn wrap(v: Self::Abi) -> Self::Out { HString::wrap(v) }
+
+    unsafe fn unwrap(v: Self::In) -> Self::Abi {
+        v.get()
+    }
+    unsafe fn uninitialized() -> Self::Abi {
+        ::std::ptr::null_mut()
+    }
+    unsafe fn wrap(v: Self::Abi) -> Self::Out {
+        HString::wrap(v)
+    }
 }
 
 impl<'a> RtType for bool {
     type In = bool;
     type Abi = ::w::BOOL;
     type Out = bool;
-    
-    unsafe fn unwrap(v: Self::In) -> Self::Abi { if v { ::w::TRUE } else { ::w::FALSE } }
-    unsafe fn uninitialized() -> Self::Abi { ::w::FALSE }
-    unsafe fn wrap(v: Self::Abi) -> Self::Out { v == ::w::TRUE }
+
+    unsafe fn unwrap(v: Self::In) -> Self::Abi {
+        if v {
+            ::w::TRUE
+        } else {
+            ::w::FALSE
+        }
+    }
+    unsafe fn uninitialized() -> Self::Abi {
+        ::w::FALSE
+    }
+    unsafe fn wrap(v: Self::Abi) -> Self::Out {
+        v == ::w::TRUE
+    }
 }
 
-impl<'a> RtType for i32 {
-    type In = i32;
-    type Abi = ::w::INT;
-    type Out = i32;
-    
-    unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
-    unsafe fn uninitialized() -> Self::Abi { 0 }
-    unsafe fn wrap(v: Self::Abi) -> Self::Out { v }
-}
-
-impl<'a> RtType for u32 {
-    type In = u32;
-    type Abi = ::w::UINT;
-    type Out = u32;
-    
-    unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
-    unsafe fn uninitialized() -> Self::Abi { 0 }
-    unsafe fn wrap(v: Self::Abi) -> Self::Out { v }
-}
-
-impl<T> RtType for T where T: RtValueType {
+impl<T> RtType for T
+    where T: RtValueType
+{
     type In = T;
     type Abi = T;
     type Out = T;
-    
-    unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
-    unsafe fn uninitialized() -> Self::Abi { ::std::mem::zeroed() }
-    unsafe fn wrap(v: Self::Abi) -> Self::Out { v }
+
+    unsafe fn unwrap(v: Self::In) -> Self::Abi {
+        v
+    }
+    unsafe fn uninitialized() -> Self::Abi {
+        ::std::mem::zeroed()
+    }
+    unsafe fn wrap(v: Self::Abi) -> Self::Out {
+        v
+    }
 }
 
 // We can also implement IntoIterator for IIterable<T> and IVectorView<T> and references to those
 // TODO: This should be extended to more types (at least IVector, IMap, IMapView, IObservableVector, IObservableMap)
-impl<T> IntoIterator for ComPtr<IIterable<T>> where T: RtType {
+impl<T> IntoIterator for ComPtr<IIterable<T>>
+    where T: RtType
+{
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     fn into_iter(mut self) -> Self::IntoIter {
@@ -96,7 +101,9 @@ impl<T> IntoIterator for ComPtr<IIterable<T>> where T: RtType {
     }
 }
 
-impl<'a, T> IntoIterator for &'a mut ComPtr<IIterable<T>> where T: RtType {
+impl<'a, T> IntoIterator for &'a mut ComPtr<IIterable<T>>
+    where T: RtType
+{
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     fn into_iter(mut self) -> Self::IntoIter {
@@ -108,7 +115,10 @@ impl<'a, T> IntoIterator for &'a mut ComPtr<IIterable<T>> where T: RtType {
     }
 }
 
-impl<T> IntoIterator for ComPtr<IVectorView<T>> where T: RtType, IIterable<T>: ComIid {
+impl<T> IntoIterator for ComPtr<IVectorView<T>>
+    where T: RtType,
+          IIterable<T>: ComIid
+{
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     fn into_iter(self) -> Self::IntoIter {
@@ -116,7 +126,10 @@ impl<T> IntoIterator for ComPtr<IVectorView<T>> where T: RtType, IIterable<T>: C
     }
 }
 
-impl<'a, T> IntoIterator for &'a mut ComPtr<IVectorView<T>> where T: RtType, IIterable<T>: ComIid {
+impl<'a, T> IntoIterator for &'a mut ComPtr<IVectorView<T>>
+    where T: RtType,
+          IIterable<T>: ComIid
+{
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     fn into_iter(self) -> Self::IntoIter {
@@ -126,9 +139,11 @@ impl<'a, T> IntoIterator for &'a mut ComPtr<IVectorView<T>> where T: RtType, IIt
 
 // TODO: also implement IndexMove for IVectorView etc once that exists (Index or IndexMut won't work since we can't return a reference)
 
-impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType {
+impl<T> Iterator for ComPtr<IIterator<T>>
+    where T: RtType
+{
     type Item = <T as RtType>::Out;
-    
+
     // TODO: This could potentially be made faster by using the output of MoveNext instead of calling HasCurrent
     //       in every iteration. That would require a wrapper struct with a boolean flag.
     fn next(&mut self) -> Option<Self::Item> {
@@ -152,7 +167,7 @@ impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType {
 }
 
 macro_rules! RT_INTERFACE {
-    // Specialized version for IUnknown (does not impl RtInterface) -> TODO: get rid of this
+// Specialized version for IUnknown (does not impl RtInterface) -> TODO: get rid of this
     (interface $interface:ident ($vtbl:ident) : IUnknown(IUnknownVtbl) [$iid:ident]
         {$(
             fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
@@ -177,7 +192,7 @@ macro_rules! RT_INTERFACE {
             })+
         }
         impl ComIid for $interface {
-            //const IID: ::w::REFIID = &$iid;
+// const IID: ::w::REFIID = &$iid;
             fn iid() -> ::w::REFIID { &$iid }
         }
         impl ComInterface for $interface {
@@ -187,12 +202,12 @@ macro_rules! RT_INTERFACE {
             type In = &'a mut $interface;
             type Abi = *mut $interface;
             type Out = ComPtr<$interface>;
-            
+
             unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
-        
+
         impl ::std::ops::Deref for $interface {
             type Target = $crate::IUnknown;
             #[inline]
@@ -231,14 +246,14 @@ macro_rules! RT_INTERFACE {
                 ((*self.lpVtbl).$method)(self $(,$p)*)
             })+
         }
-        impl<$t1: 'static> ComInterface for $interface<$t1> where $t1: RtType { 
+        impl<$t1: 'static> ComInterface for $interface<$t1> where $t1: RtType {
             type Vtbl = $vtbl<$t1>;
         }
         impl<'a, $t1> RtType for &'a $interface<$t1> where $t1: RtType{
             type In = &'a mut $interface<$t1>;
             type Abi = *mut $interface<$t1>;
             type Out = ComPtr<$interface<$t1>>;
-            
+
             unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
@@ -281,7 +296,7 @@ macro_rules! RT_INTERFACE {
             type In = &'a mut $interface;
             type Abi = *mut $interface;
             type Out = ComPtr<$interface>;
-            
+
             unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
@@ -300,7 +315,7 @@ macro_rules! RT_INTERFACE {
             }
         }
     };
-    
+
     (interface $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
         {$(
             fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
@@ -325,7 +340,7 @@ macro_rules! RT_INTERFACE {
             })+
         }
         impl ComIid for $interface {
-            //const IID: ::w::REFIID = &$iid;
+// const IID: ::w::REFIID = &$iid;
             fn iid() -> ::w::REFIID { &$iid }
         }
         impl ComInterface for $interface {
@@ -336,7 +351,7 @@ macro_rules! RT_INTERFACE {
             type In = &'a mut $interface;
             type Abi = *mut $interface;
             type Out = ComPtr<$interface>;
-            
+
             unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
@@ -356,7 +371,7 @@ macro_rules! RT_INTERFACE {
         }
     };
     // The $iid is actually not necessary, because it refers to the uninstantiated version of the interface,
-    // which is irrelevant at runtime (it is used to generate the IIDs of the parameterized interfaces). 
+    // which is irrelevant at runtime (it is used to generate the IIDs of the parameterized interfaces).
     (interface $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
         {$(
             fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
@@ -380,7 +395,7 @@ macro_rules! RT_INTERFACE {
                 ((*self.lpVtbl).$method)(self $(,$p)*)
             })+
         }
-        impl<$t1: 'static> ComInterface for $interface<$t1> where $t1: RtType { 
+        impl<$t1: 'static> ComInterface for $interface<$t1> where $t1: RtType {
             type Vtbl = $vtbl<$t1>;
         }
         unsafe impl<$t1: 'static> RtInterface for $interface<$t1> where $t1: RtType {}
@@ -388,7 +403,7 @@ macro_rules! RT_INTERFACE {
             type In = &'a mut $interface<$t1>;
             type Abi = *mut $interface<$t1>;
             type Out = ComPtr<$interface<$t1>>;
-            
+
             unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
@@ -431,7 +446,7 @@ macro_rules! RT_INTERFACE {
                 ((*self.lpVtbl).$method)(self $(,$p)*)
             })+
         }
-        impl<$t1: 'static, $t2: 'static> ComInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType{ 
+        impl<$t1: 'static, $t2: 'static> ComInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType{
             type Vtbl = $vtbl<$t1, $t2>;
         }
         unsafe impl<$t1: 'static, $t2: 'static> RtInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {}
@@ -439,7 +454,7 @@ macro_rules! RT_INTERFACE {
             type In = &'a mut $interface<$t1, $t2>;
             type Abi = *mut $interface<$t1, $t2>;
             type Out = ComPtr<$interface<$t1, $t2>>;
-            
+
             unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
@@ -460,21 +475,97 @@ macro_rules! RT_INTERFACE {
     };
 }
 
+macro_rules! RT_CLASS {
+    ($cls:ident : $interface:ty) => {
+        pub struct $cls($interface);
+        impl<'a> RtType for &'a $cls {
+            type In = &'a mut $cls;
+            type Abi = *mut $cls;
+            type Out = ComPtr<$cls>;
+            
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+            unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+        }
+    };
+    ($cls:ident<'a> : $interface:ty) => {
+        pub struct $cls<'a>($interface);
+        impl<'a,'b> RtType for &'b $cls<'a> {
+            type In = &'b mut $cls<'a>;
+            type Abi = *mut $cls<'a>;
+            type Out = ComPtr<$cls<'a>>;
+            
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+            unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+        }
+    };
+}
+
+#[cfg(feature = "nightly")]
+macro_rules! RT_ENUM {
+    {enum $name:ident : $t:ty { $($variant:ident = $value:expr,)+ }} => {
+        #[repr(C)] #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+        #[allow(non_upper_case_globals)]
+        pub struct $name(pub $t);
+        impl $name {
+        $(pub const $variant: $name = $name($value);)+
+        }
+        unsafe impl RtValueType for $name {}
+    };
+}
+
+// FIXME: This version of the macro works on stable, but fails for some enums (where multiple variants
+// have the same value) and leads to undefined behavior whenever an undefined variant appears.
+// Find a better way to do this ...
+#[cfg(not(feature = "nightly"))]
+macro_rules! RT_ENUM {
+    {enum $name:ident : $t:ident { $($variant:ident = $value:expr,)+ }} => {
+        #[repr($t)] #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+        pub enum $name {
+        $($variant = $value),+
+        }
+        unsafe impl RtValueType for $name {}
+    };
+}
+
+macro_rules! RT_STRUCT {
+    {$(#[$attrs:meta])* struct $name:ident { $($field:ident: $ftype:ty,)* }} => {
+        #[repr(C)] #[derive(Debug)] $(#[$attrs])*
+        pub struct $name {
+            $(pub $field: $ftype,)*
+        }
+        impl Copy for $name {}
+        impl Clone for $name { fn clone(&self) -> $name { *self } }
+        unsafe impl RtValueType for $name {}
+    };
+}
+
+
 pub mod generated;
 
-pub use self::generated::{
-    Windows_Foundation_Collections_IIterable as IIterable,
-    Windows_Foundation_Collections_IIterator as IIterator,
-    Windows_Foundation_Collections_IVectorView as IVectorView,
-    Windows_Foundation_IAsyncAction as IAsyncAction,
-    Windows_Foundation_IAsyncOperation as IAsyncOperation,
-    Windows_Foundation_AsyncStatus as AsyncStatus,
-    Windows_Foundation_AsyncOperationCompletedHandler as AsyncOperationCompletedHandler,
-    Windows_Foundation_AsyncOperationCompletedHandlerVtbl as AsyncOperationCompletedHandlerVtbl,
-};
+pub use self::generated::{Windows_Foundation_Collections_IIterable as IIterable,
+                          Windows_Foundation_Collections_IIterator as IIterator,
+                          Windows_Foundation_Collections_IVectorView as IVectorView,
+                          Windows_Foundation_IAsyncAction as IAsyncAction,
+                          Windows_Foundation_IAsyncOperation as IAsyncOperation,
+                          Windows_Foundation_AsyncStatus as AsyncStatus,
+                          Windows_Foundation_AsyncOperationCompletedHandler as AsyncOperationCompletedHandler,
+                          Windows_Foundation_AsyncOperationCompletedHandlerVtbl as AsyncOperationCompletedHandlerVtbl};
 
 // FIXME: maybe better reexport from winapi?
-DEFINE_GUID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);
+DEFINE_GUID!(IID_IInspectable,
+             0xAF86E2E0,
+             0xB12D,
+             0x4c6a,
+             0x9C,
+             0x5A,
+             0xD7,
+             0xAA,
+             0x65,
+             0x10,
+             0x1E,
+             0x90);
 RT_INTERFACE!{
 interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectable]  {
     fn GetIids(&mut self, iidCount: *mut ULONG, iids: *mut *mut IID) -> HRESULT,
@@ -486,22 +577,35 @@ interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectab
 // Everything below will eventually be deleted //
 // =========================================== //
 
-// We define those here, so that we can codegen Windows.Foundation without depending on Windows.Storage
-DEFINE_GUID!(IID_NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-RT_INTERFACE!{
-interface Windows_Storage_StorageFile(Windows_Storage_StorageFileVtbl): IInspectable(IInspectableVtbl) [IID_NULL]  {
-}}
-RT_INTERFACE!{
-interface Windows_Storage_IStorageFolder(Windows_Storage_IStorageFolderVtbl): IInspectable(IInspectableVtbl) [IID_NULL]  {
-}}
-
-DEFINE_GUID!(IID_IMidiOutPortStatics, 106742761, 3976, 17547, 155, 100, 169, 88, 38, 198, 91, 143);
+DEFINE_GUID!(IID_IMidiOutPortStatics,
+             106742761,
+             3976,
+             17547,
+             155,
+             100,
+             169,
+             88,
+             38,
+             198,
+             91,
+             143);
 RT_INTERFACE!{interface IMidiOutPortStatics(IMidiOutPortStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiOutPortStatics] {
     fn FromIdAsync(&mut self, deviceId: HSTRING, asyncOp: *mut *mut IAsyncOperation<&IMidiOutPort>) -> HRESULT,
     fn GetDeviceSelector(&mut self, value: *const HSTRING) -> HRESULT
 }}
 
-DEFINE_GUID!(IID_IDeviceInformationStatics, 3246329870, 14918, 19064, 128, 19, 118, 157, 201, 185, 115, 144);
+DEFINE_GUID!(IID_IDeviceInformationStatics,
+             3246329870,
+             14918,
+             19064,
+             128,
+             19,
+             118,
+             157,
+             201,
+             185,
+             115,
+             144);
 RT_INTERFACE!{interface IDeviceInformationStatics(IDeviceInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationStatics] {
     fn __CreateFromIdAsync(&mut self) -> HRESULT,
     fn __CreateFromIdAsyncAdditionalProperties(&mut self) -> HRESULT,
@@ -517,33 +621,70 @@ RT_INTERFACE!{interface IDeviceInformationStatics(IDeviceInformationStaticsVtbl)
 
 // "Specialize" the IID of IIterable for a given parameter type
 impl<'a> ComIid for IIterable<&'a IDeviceInformation> {
-    //const IID: ::w::REFIID = &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation;
-    fn iid() -> ::w::REFIID { &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation }
+    // const IID: ::w::REFIID = &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation;
+    fn iid() -> ::w::REFIID {
+        &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation
+    }
 }
 
 // This maps the logical type `DeviceInformationCollection` to its correct ABI type.
 // TODO: Is a type alias sufficient? (Also see `AggregateType` in windows.foundation.collections.h)
 pub type DeviceInformationCollection<'a> = IVectorView<&'a IDeviceInformation>;
 
-DEFINE_GUID!(IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation, 0xdd9f8a5d, 0xec98, 0x5f4b, 0xa3, 0xea, 0x9c, 0x8b, 0x5a, 0xd5, 0x3c, 0x4b);
+DEFINE_GUID!(IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation,
+             0xdd9f8a5d,
+             0xec98,
+             0x5f4b,
+             0xa3,
+             0xea,
+             0x9c,
+             0x8b,
+             0x5a,
+             0xd5,
+             0x3c,
+             0x4b);
 
 // These parametrized GUIDs can be automatically generated
 DEFINE_GUID!(IID_AsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection, 0x4A458732, 0x527E, 0x5C73, 0x9A, 0x68, 0xA7, 0x3D, 0xA3, 0x70, 0xF7, 0x82);
 
 impl<'a> ComIid for AsyncOperationCompletedHandler<&'a DeviceInformationCollection<'a>> {
-    //const IID: ::w::REFIID = &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection;
-    fn iid() -> ::w::REFIID { &IID_AsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection }
+    // const IID: ::w::REFIID = &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection;
+    fn iid() -> ::w::REFIID {
+        &IID_AsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection
+    }
 }
 
-DEFINE_GUID!(IID_IDeviceInformation, 2879454101, 17304, 18589, 142, 68, 230, 19, 9, 39, 1, 31);
+DEFINE_GUID!(IID_IDeviceInformation,
+             2879454101,
+             17304,
+             18589,
+             142,
+             68,
+             230,
+             19,
+             9,
+             39,
+             1,
+             31);
 RT_INTERFACE!{interface IDeviceInformation(IDeviceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformation] {
     fn get_Id(&mut self, value: *mut HSTRING) -> HRESULT,
     fn get_Name(&mut self, value: *mut HSTRING) -> HRESULT
-    // ...
+// ...
 }}
 
-DEFINE_GUID!(IID_IMidiOutPort, 2468179359, 22434, 19002, 173, 184, 70, 64, 136, 111, 102, 147);
+DEFINE_GUID!(IID_IMidiOutPort,
+             2468179359,
+             22434,
+             19002,
+             173,
+             184,
+             70,
+             64,
+             136,
+             111,
+             102,
+             147);
 RT_INTERFACE!{interface IMidiOutPort(IMidiOutPortVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformation] {
     fn __Dummy(&mut self) -> HRESULT
-    // ...
+// ...
 }}

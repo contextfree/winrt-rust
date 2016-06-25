@@ -1,6 +1,7 @@
 #![cfg_attr(test,feature(test))]
 
-#![cfg_attr(feature = "nightly",feature(specialization))]
+#![cfg_attr(feature = "nightly", feature(specialization))]
+#![cfg_attr(feature = "nightly", feature(associated_consts))]
 
 #![allow(dead_code,non_upper_case_globals,non_snake_case)]
 

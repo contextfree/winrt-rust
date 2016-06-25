@@ -1,14 +1,11 @@
 #![allow(non_camel_case_types)]
 use std::ptr;
 use super::super::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Windows_Storage_IStorageFolder};
+use super::{RtInterface, RtType, RtValueType, IInspectable};
 
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Collections_CollectionChange
-		{
-			Reset = 0, ItemInserted = 1, ItemRemoved = 2, ItemChanged = 3
-		}
+		RT_ENUM! { enum Windows_Foundation_Collections_CollectionChange: i32 {
+			Reset = 0, ItemInserted = 1, ItemRemoved = 2, ItemChanged = 3,
+		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Collections_IVectorChangedEventArgs, 1465463775, 13566, 17536, 175, 21, 7, 105, 31, 61, 93, 155);
 		RT_INTERFACE!{interface Windows_Foundation_Collections_IVectorChangedEventArgs(Windows_Foundation_Collections_IVectorChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Collections_IVectorChangedEventArgs] {
 			fn get_CollectionChange(&mut self, out: *mut Windows_Foundation_Collections_CollectionChange) -> ::w::HRESULT,
@@ -18,48 +15,27 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		RT_INTERFACE!{interface Windows_Foundation_IClosable(Windows_Foundation_IClosableVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IClosable] {
 			fn Close(&mut self) -> ::w::HRESULT
 		}}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Metadata_GCPressureAmount
-		{
-			Low = 0, Medium = 1, High = 2
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_PropertyType
-		{
-			Empty = 0, UInt8 = 1, Int16 = 2, UInt16 = 3, Int32 = 4, UInt32 = 5, Int64 = 6, UInt64 = 7, Single = 8, Double = 9, Char16 = 10, Boolean = 11, String = 12, Inspectable = 13, DateTime = 14, TimeSpan = 15, Guid = 16, Point = 17, Size = 18, Rect = 19, OtherType = 20, UInt8Array = 1025, Int16Array = 1026, UInt16Array = 1027, Int32Array = 1028, UInt32Array = 1029, Int64Array = 1030, UInt64Array = 1031, SingleArray = 1032, DoubleArray = 1033, Char16Array = 1034, BooleanArray = 1035, StringArray = 1036, InspectableArray = 1037, DateTimeArray = 1038, TimeSpanArray = 1039, GuidArray = 1040, PointArray = 1041, SizeArray = 1042, RectArray = 1043, OtherTypeArray = 1044
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_Point
-		{
-			X: f32, Y: f32
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_Size
-		{
-			Width: f32, Height: f32
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_Rect
-		{
-			X: f32, Y: f32, Width: f32, Height: f32
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_DateTime
-		{
-			UniversalTime: i64
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_TimeSpan
-		{
-			Duration: i64
-		}
+		RT_ENUM! { enum Windows_Foundation_Metadata_GCPressureAmount: i32 {
+			Low = 0, Medium = 1, High = 2,
+		}}
+		RT_ENUM! { enum Windows_Foundation_PropertyType: i32 {
+			Empty = 0, UInt8 = 1, Int16 = 2, UInt16 = 3, Int32 = 4, UInt32 = 5, Int64 = 6, UInt64 = 7, Single = 8, Double = 9, Char16 = 10, Boolean = 11, String = 12, Inspectable = 13, DateTime = 14, TimeSpan = 15, Guid = 16, Point = 17, Size = 18, Rect = 19, OtherType = 20, UInt8Array = 1025, Int16Array = 1026, UInt16Array = 1027, Int32Array = 1028, UInt32Array = 1029, Int64Array = 1030, UInt64Array = 1031, SingleArray = 1032, DoubleArray = 1033, Char16Array = 1034, BooleanArray = 1035, StringArray = 1036, InspectableArray = 1037, DateTimeArray = 1038, TimeSpanArray = 1039, GuidArray = 1040, PointArray = 1041, SizeArray = 1042, RectArray = 1043, OtherTypeArray = 1044,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_Point {
+			X: f32, Y: f32,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_Size {
+			Width: f32, Height: f32,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_Rect {
+			X: f32, Y: f32, Width: f32, Height: f32,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_DateTime {
+			UniversalTime: i64,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_TimeSpan {
+			Duration: i64,
+		}}
 		DEFINE_GUID!(IID_Windows_Foundation_IPropertyValue, 1272349405, 30036, 16617, 154, 155, 130, 101, 78, 222, 126, 98);
 		RT_INTERFACE!{interface Windows_Foundation_IPropertyValue(Windows_Foundation_IPropertyValueVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IPropertyValue] {
 			fn get_Type(&mut self, out: *mut Windows_Foundation_PropertyType) -> ::w::HRESULT,
@@ -152,9 +128,9 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		RT_INTERFACE!{interface Windows_Foundation_Collections_IPropertySet(Windows_Foundation_Collections_IPropertySetVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Collections_IPropertySet] {
 			
 		}}
-		pub type Windows_Foundation_Collections_PropertySet = Windows_Foundation_Collections_IPropertySet;
-		pub type Windows_Foundation_Collections_ValueSet = Windows_Foundation_Collections_IPropertySet;
-		pub type Windows_Foundation_Collections_StringMap<'a> = Windows_Foundation_Collections_IMap<&'a str, &'a str>;
+		RT_CLASS!(Windows_Foundation_Collections_PropertySet: Windows_Foundation_Collections_IPropertySet);
+		RT_CLASS!(Windows_Foundation_Collections_ValueSet: Windows_Foundation_Collections_IPropertySet);
+		RT_CLASS!(Windows_Foundation_Collections_StringMap<'a>: Windows_Foundation_Collections_IMap<&'a str, &'a str>);
 		DEFINE_GUID!(IID_Windows_Foundation_AsyncActionCompletedHandler, 2767019137, 30409, 16573, 139, 230, 177, 217, 15, 178, 10, 231);
 		RT_INTERFACE!{interface Windows_Foundation_AsyncActionCompletedHandler(Windows_Foundation_AsyncActionCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_Windows_Foundation_AsyncActionCompletedHandler] {
 			fn Invoke(&mut self, asyncInfo: *mut Windows_Foundation_IAsyncAction, asyncStatus: Windows_Foundation_AsyncStatus) -> ::w::HRESULT
@@ -171,7 +147,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		RT_INTERFACE!{interface Windows_Foundation_IDeferralFactory(Windows_Foundation_IDeferralFactoryVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IDeferralFactory] {
 			fn Create(&mut self, handler: *mut Windows_Foundation_DeferralCompletedHandler, out: *mut *mut Windows_Foundation_Deferral) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_Deferral = Windows_Foundation_IDeferral;
+		RT_CLASS!(Windows_Foundation_Deferral: Windows_Foundation_IDeferral);
 		DEFINE_GUID!(IID_Windows_Foundation_Metadata_IApiInformationStatics, 2574531070, 63105, 18961, 180, 22, 193, 58, 71, 232, 186, 54);
 		RT_INTERFACE!{interface Windows_Foundation_Metadata_IApiInformationStatics(Windows_Foundation_Metadata_IApiInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Metadata_IApiInformationStatics] {
 			fn IsTypePresent(&mut self, typeName: ::w::HSTRING, out: *mut ::w::BOOL) -> ::w::HRESULT,
@@ -185,60 +161,33 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			fn IsApiContractPresentByMajor(&mut self, contractName: ::w::HSTRING, majorVersion: u16, out: *mut ::w::BOOL) -> ::w::HRESULT,
 			fn IsApiContractPresentByMajorAndMinor(&mut self, contractName: ::w::HSTRING, majorVersion: u16, minorVersion: u16, out: *mut ::w::BOOL) -> ::w::HRESULT
 		}}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Metadata_Platform
-		{
-			Windows = 0, WindowsPhone = 1
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Metadata_AttributeTargets
-		{
-			All = 4294967295, Delegate = 1, Enum = 2, Event = 4, Field = 8, Interface = 16, Method = 64, Parameter = 128, Property = 256, RuntimeClass = 512, Struct = 1024, InterfaceImpl = 2048, ApiContract = 8192
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Metadata_CompositionType
-		{
-			Protected = 1, Public = 2
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Metadata_ThreadingModel
-		{
-			STA = 1, MTA = 2, Both = 3, InvalidThreading = 0
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Metadata_MarshalingType
-		{
-			None = 1, Agile = 2, Standard = 3, InvalidMarshaling = 0
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Metadata_DeprecationType
-		{
-			Deprecate = 0, Remove = 1
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_AsyncStatus
-		{
-			Canceled = 2, Completed = 1, Error = 3, Started = 0
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_EventRegistrationToken
-		{
-			Value: i64
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_HResult
-		{
-			Value: i32
-		}
+		RT_ENUM! { enum Windows_Foundation_Metadata_Platform: i32 {
+			Windows = 0, WindowsPhone = 1,
+		}}
+		RT_ENUM! { enum Windows_Foundation_Metadata_AttributeTargets: u32 {
+			All = 4294967295, Delegate = 1, Enum = 2, Event = 4, Field = 8, Interface = 16, Method = 64, Parameter = 128, Property = 256, RuntimeClass = 512, Struct = 1024, InterfaceImpl = 2048, ApiContract = 8192,
+		}}
+		RT_ENUM! { enum Windows_Foundation_Metadata_CompositionType: i32 {
+			Protected = 1, Public = 2,
+		}}
+		RT_ENUM! { enum Windows_Foundation_Metadata_ThreadingModel: i32 {
+			STA = 1, MTA = 2, Both = 3, InvalidThreading = 0,
+		}}
+		RT_ENUM! { enum Windows_Foundation_Metadata_MarshalingType: i32 {
+			None = 1, Agile = 2, Standard = 3, InvalidMarshaling = 0,
+		}}
+		RT_ENUM! { enum Windows_Foundation_Metadata_DeprecationType: i32 {
+			Deprecate = 0, Remove = 1,
+		}}
+		RT_ENUM! { enum Windows_Foundation_AsyncStatus: i32 {
+			Canceled = 2, Completed = 1, Error = 3, Started = 0,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_EventRegistrationToken {
+			Value: i64,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_HResult {
+			Value: i32,
+		}}
 		DEFINE_GUID!(IID_Windows_Foundation_IAsyncInfo, 54, 0, 0, 192, 0, 0, 0, 0, 0, 0, 70);
 		RT_INTERFACE!{interface Windows_Foundation_IAsyncInfo(Windows_Foundation_IAsyncInfoVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IAsyncInfo] {
 			fn get_Id(&mut self, out: *mut u32) -> ::w::HRESULT,
@@ -389,36 +338,21 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		RT_INTERFACE!{interface Windows_Foundation_EventHandler<T>(Windows_Foundation_EventHandlerVtbl): IUnknown(IUnknownVtbl) [IID_Windows_Foundation_EventHandler] {
 			fn Invoke(&mut self, sender: *mut IInspectable, args: T::Abi) -> ::w::HRESULT
 		}}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_FoundationContract
-		{
+		RT_STRUCT! { struct Windows_Foundation_FoundationContract {
 			
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Diagnostics_CausalityTraceLevel
-		{
-			Required = 0, Important = 1, Verbose = 2
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Diagnostics_CausalitySource
-		{
-			Application = 0, Library = 1, System = 2
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Diagnostics_CausalityRelation
-		{
-			AssignDelegate = 0, Join = 1, Choice = 2, Cancel = 3, Error = 4
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Diagnostics_CausalitySynchronousWork
-		{
-			CompletionNotification = 0, ProgressNotification = 1, Execution = 2
-		}
+		}}
+		RT_ENUM! { enum Windows_Foundation_Diagnostics_CausalityTraceLevel: i32 {
+			Required = 0, Important = 1, Verbose = 2,
+		}}
+		RT_ENUM! { enum Windows_Foundation_Diagnostics_CausalitySource: i32 {
+			Application = 0, Library = 1, System = 2,
+		}}
+		RT_ENUM! { enum Windows_Foundation_Diagnostics_CausalityRelation: i32 {
+			AssignDelegate = 0, Join = 1, Choice = 2, Cancel = 3, Error = 4,
+		}}
+		RT_ENUM! { enum Windows_Foundation_Diagnostics_CausalitySynchronousWork: i32 {
+			CompletionNotification = 0, ProgressNotification = 1, Execution = 2,
+		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ITracingStatusChangedEventArgs, 1091270417, 65339, 18303, 156, 154, 210, 239, 218, 48, 45, 195);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ITracingStatusChangedEventArgs(Windows_Foundation_Diagnostics_ITracingStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ITracingStatusChangedEventArgs] {
 			fn get_Enabled(&mut self, out: *mut ::w::BOOL) -> ::w::HRESULT,
@@ -434,7 +368,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			fn add_TracingStatusChanged(&mut self, handler: *mut Windows_Foundation_EventHandler<&Windows_Foundation_Diagnostics_TracingStatusChangedEventArgs>, out: *mut Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT,
 			fn remove_TracingStatusChanged(&mut self, cookie: Windows_Foundation_EventRegistrationToken) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_Diagnostics_TracingStatusChangedEventArgs = Windows_Foundation_Diagnostics_ITracingStatusChangedEventArgs;
+		RT_CLASS!(Windows_Foundation_Diagnostics_TracingStatusChangedEventArgs: Windows_Foundation_Diagnostics_ITracingStatusChangedEventArgs);
 		DEFINE_GUID!(IID_Windows_Foundation_IUriRuntimeClass, 2654363223, 18610, 16736, 149, 111, 199, 56, 81, 32, 187, 252);
 		RT_INTERFACE!{interface Windows_Foundation_IUriRuntimeClass(Windows_Foundation_IUriRuntimeClassVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IUriRuntimeClass] {
 			fn get_AbsoluteUri(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -455,8 +389,8 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			fn Equals(&mut self, pUri: *mut Windows_Foundation_Uri, out: *mut ::w::BOOL) -> ::w::HRESULT,
 			fn CombineUri(&mut self, relativeUri: ::w::HSTRING, out: *mut *mut Windows_Foundation_Uri) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_WwwFormUrlDecoder = Windows_Foundation_IWwwFormUrlDecoderRuntimeClass;
-		pub type Windows_Foundation_Uri = Windows_Foundation_IUriRuntimeClass;
+		RT_CLASS!(Windows_Foundation_WwwFormUrlDecoder: Windows_Foundation_IWwwFormUrlDecoderRuntimeClass);
+		RT_CLASS!(Windows_Foundation_Uri: Windows_Foundation_IUriRuntimeClass);
 		DEFINE_GUID!(IID_Windows_Foundation_IUriRuntimeClassWithAbsoluteCanonicalUri, 1972213345, 8732, 18447, 163, 57, 80, 101, 102, 115, 244, 111);
 		RT_INTERFACE!{interface Windows_Foundation_IUriRuntimeClassWithAbsoluteCanonicalUri(Windows_Foundation_IUriRuntimeClassWithAbsoluteCanonicalUriVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IUriRuntimeClassWithAbsoluteCanonicalUri] {
 			fn get_AbsoluteCanonicalUri(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -485,7 +419,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		RT_INTERFACE!{interface Windows_Foundation_IWwwFormUrlDecoderRuntimeClassFactory(Windows_Foundation_IWwwFormUrlDecoderRuntimeClassFactoryVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IWwwFormUrlDecoderRuntimeClassFactory] {
 			fn CreateWwwFormUrlDecoder(&mut self, query: ::w::HSTRING, out: *mut *mut Windows_Foundation_WwwFormUrlDecoder) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_WwwFormUrlDecoderEntry = Windows_Foundation_IWwwFormUrlDecoderEntry;
+		RT_CLASS!(Windows_Foundation_WwwFormUrlDecoderEntry: Windows_Foundation_IWwwFormUrlDecoderEntry);
 		DEFINE_GUID!(IID_Windows_Foundation_IGetActivationFactory, 1323011810, 38621, 18855, 148, 247, 70, 7, 221, 171, 142, 60);
 		RT_INTERFACE!{interface Windows_Foundation_IGetActivationFactory(Windows_Foundation_IGetActivationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IGetActivationFactory] {
 			fn GetActivationFactory(&mut self, activatableClassId: ::w::HSTRING, out: *mut *mut IInspectable) -> ::w::HRESULT
@@ -504,96 +438,60 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		RT_INTERFACE!{interface Windows_Foundation_IMemoryBufferFactory(Windows_Foundation_IMemoryBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_IMemoryBufferFactory] {
 			fn Create(&mut self, capacity: u32, out: *mut *mut Windows_Foundation_MemoryBuffer) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_MemoryBuffer = Windows_Foundation_IMemoryBuffer;
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Diagnostics_ErrorOptions
-		{
-			None = 0, SuppressExceptions = 1, ForceExceptions = 2, UseSetErrorInfo = 4, SuppressSetErrorInfo = 8
-		}
+		RT_CLASS!(Windows_Foundation_MemoryBuffer: Windows_Foundation_IMemoryBuffer);
+		RT_ENUM! { enum Windows_Foundation_Diagnostics_ErrorOptions: u32 {
+			None = 0, SuppressExceptions = 1, ForceExceptions = 2, UseSetErrorInfo = 4, SuppressSetErrorInfo = 8,
+		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_IErrorReportingSettings, 372676498, 45118, 19361, 139, 184, 210, 143, 74, 180, 210, 192);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_IErrorReportingSettings(Windows_Foundation_Diagnostics_IErrorReportingSettingsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_IErrorReportingSettings] {
 			fn SetErrorOptions(&mut self, value: Windows_Foundation_Diagnostics_ErrorOptions) -> ::w::HRESULT,
 			fn GetErrorOptions(&mut self, out: *mut Windows_Foundation_Diagnostics_ErrorOptions) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_Diagnostics_RuntimeBrokerErrorSettings = Windows_Foundation_Diagnostics_IErrorReportingSettings;
+		RT_CLASS!(Windows_Foundation_Diagnostics_RuntimeBrokerErrorSettings: Windows_Foundation_Diagnostics_IErrorReportingSettings);
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_IErrorDetailsStatics, 3077584720, 2845, 18120, 170, 14, 75, 129, 120, 228, 252, 233);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_IErrorDetailsStatics(Windows_Foundation_Diagnostics_IErrorDetailsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_IErrorDetailsStatics] {
 			fn CreateFromHResultAsync(&mut self, errorCode: i32, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Foundation_Diagnostics_ErrorDetails>) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_Diagnostics_ErrorDetails = Windows_Foundation_Diagnostics_IErrorDetails;
+		RT_CLASS!(Windows_Foundation_Diagnostics_ErrorDetails: Windows_Foundation_Diagnostics_IErrorDetails);
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_IErrorDetails, 931969793, 11465, 17039, 140, 85, 44, 153, 13, 70, 62, 143);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_IErrorDetails(Windows_Foundation_Diagnostics_IErrorDetailsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_IErrorDetails] {
 			fn get_Description(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_LongDescription(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_HelpUri(&mut self, out: *mut *mut Windows_Foundation_Uri) -> ::w::HRESULT
 		}}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_Numerics_Vector2
-		{
-			X: f32, Y: f32
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_Numerics_Vector3
-		{
-			X: f32, Y: f32, Z: f32
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_Numerics_Vector4
-		{
-			X: f32, Y: f32, Z: f32, W: f32
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_Numerics_Matrix3x2
-		{
-			M11: f32, M12: f32, M21: f32, M22: f32, M31: f32, M32: f32
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_Numerics_Matrix4x4
-		{
-			M11: f32, M12: f32, M13: f32, M14: f32, M21: f32, M22: f32, M23: f32, M24: f32, M31: f32, M32: f32, M33: f32, M34: f32, M41: f32, M42: f32, M43: f32, M44: f32
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_Numerics_Plane
-		{
-			Normal: Windows_Foundation_Numerics_Vector3, D: f32
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_Numerics_Quaternion
-		{
-			X: f32, Y: f32, Z: f32, W: f32
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq)]
-		pub struct Windows_Foundation_UniversalApiContract
-		{
+		RT_STRUCT! { struct Windows_Foundation_Numerics_Vector2 {
+			X: f32, Y: f32,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_Numerics_Vector3 {
+			X: f32, Y: f32, Z: f32,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_Numerics_Vector4 {
+			X: f32, Y: f32, Z: f32, W: f32,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_Numerics_Matrix3x2 {
+			M11: f32, M12: f32, M21: f32, M22: f32, M31: f32, M32: f32,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_Numerics_Matrix4x4 {
+			M11: f32, M12: f32, M13: f32, M14: f32, M21: f32, M22: f32, M23: f32, M24: f32, M31: f32, M32: f32, M33: f32, M34: f32, M41: f32, M42: f32, M43: f32, M44: f32,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_Numerics_Plane {
+			Normal: Windows_Foundation_Numerics_Vector3, D: f32,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_Numerics_Quaternion {
+			X: f32, Y: f32, Z: f32, W: f32,
+		}}
+		RT_STRUCT! { struct Windows_Foundation_UniversalApiContract {
 			
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Diagnostics_LoggingLevel
-		{
-			Verbose = 0, Information = 1, Warning = 2, Error = 3, Critical = 4
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Diagnostics_LoggingOpcode
-		{
-			Info = 0, Start = 1, Stop = 2, Reply = 6, Resume = 7, Suspend = 8, Send = 9
-		}
-		#[repr(C)]
-		#[derive(Debug,PartialEq,Eq)]
-		pub enum Windows_Foundation_Diagnostics_LoggingFieldFormat
-		{
-			Default = 0, Hidden = 1, String = 2, Boolean = 3, Hexadecimal = 4, ProcessId = 5, ThreadId = 6, Port = 7, Ipv4Address = 8, Ipv6Address = 9, SocketAddress = 10, Xml = 11, Json = 12, Win32Error = 13, NTStatus = 14, HResult = 15, FileTime = 16, Signed = 17, Unsigned = 18
-		}
+		}}
+		RT_ENUM! { enum Windows_Foundation_Diagnostics_LoggingLevel: i32 {
+			Verbose = 0, Information = 1, Warning = 2, Error = 3, Critical = 4,
+		}}
+		RT_ENUM! { enum Windows_Foundation_Diagnostics_LoggingOpcode: i32 {
+			Info = 0, Start = 1, Stop = 2, Reply = 6, Resume = 7, Suspend = 8, Send = 9,
+		}}
+		RT_ENUM! { enum Windows_Foundation_Diagnostics_LoggingFieldFormat: i32 {
+			Default = 0, Hidden = 1, String = 2, Boolean = 3, Hexadecimal = 4, ProcessId = 5, ThreadId = 6, Port = 7, Ipv4Address = 8, Ipv6Address = 9, SocketAddress = 10, Xml = 11, Json = 12, Win32Error = 13, NTStatus = 14, HResult = 15, FileTime = 16, Signed = 17, Unsigned = 18,
+		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILoggingOptions, 2428270672, 402, 20317, 172, 38, 0, 106, 218, 202, 18, 216);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingOptions(Windows_Foundation_Diagnostics_ILoggingOptionsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingOptions] {
 			fn get_Keywords(&mut self, out: *mut i64) -> ::w::HRESULT,
@@ -613,7 +511,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingOptionsFactory(Windows_Foundation_Diagnostics_ILoggingOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingOptionsFactory] {
 			fn CreateWithKeywords(&mut self, keywords: i64, out: *mut *mut Windows_Foundation_Diagnostics_LoggingOptions) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_Diagnostics_LoggingOptions = Windows_Foundation_Diagnostics_ILoggingOptions;
+		RT_CLASS!(Windows_Foundation_Diagnostics_LoggingOptions: Windows_Foundation_Diagnostics_ILoggingOptions);
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILoggingChannelOptions, 3286779903, 3771, 19027, 140, 84, 222, 194, 73, 38, 203, 44);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingChannelOptions(Windows_Foundation_Diagnostics_ILoggingChannelOptionsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingChannelOptions] {
 			fn get_Group(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
@@ -623,7 +521,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingChannelOptionsFactory(Windows_Foundation_Diagnostics_ILoggingChannelOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingChannelOptionsFactory] {
 			fn Create(&mut self, group: ::w::GUID, out: *mut *mut Windows_Foundation_Diagnostics_LoggingChannelOptions) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_Diagnostics_LoggingChannelOptions = Windows_Foundation_Diagnostics_ILoggingChannelOptions;
+		RT_CLASS!(Windows_Foundation_Diagnostics_LoggingChannelOptions: Windows_Foundation_Diagnostics_ILoggingChannelOptions);
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILoggingFields, 3623270319, 30253, 17785, 131, 189, 82, 194, 59, 195, 51, 188);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingFields(Windows_Foundation_Diagnostics_ILoggingFieldsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingFields] {
 			fn Clear(&mut self) -> ::w::HRESULT,
@@ -742,7 +640,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			fn AddRectArrayWithFormat(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Rect, format: Windows_Foundation_Diagnostics_LoggingFieldFormat) -> ::w::HRESULT,
 			fn AddRectArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, value: *mut Windows_Foundation_Rect, format: Windows_Foundation_Diagnostics_LoggingFieldFormat, tags: i32) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_Diagnostics_LoggingFields = Windows_Foundation_Diagnostics_ILoggingFields;
+		RT_CLASS!(Windows_Foundation_Diagnostics_LoggingFields: Windows_Foundation_Diagnostics_ILoggingFields);
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILoggingTarget, 1710320693, 58248, 20006, 177, 122, 245, 28, 211, 168, 57, 22);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingTarget(Windows_Foundation_Diagnostics_ILoggingTargetVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingTarget] {
 			fn IsEnabled(&mut self, out: *mut ::w::BOOL) -> ::w::HRESULT,
@@ -757,7 +655,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			fn StartActivityWithFieldsAndLevel(&mut self, startEventName: ::w::HSTRING, fields: *mut Windows_Foundation_Diagnostics_LoggingFields, level: Windows_Foundation_Diagnostics_LoggingLevel, out: *mut *mut Windows_Foundation_Diagnostics_LoggingActivity) -> ::w::HRESULT,
 			fn StartActivityWithFieldsAndOptions(&mut self, startEventName: ::w::HSTRING, fields: *mut Windows_Foundation_Diagnostics_LoggingFields, level: Windows_Foundation_Diagnostics_LoggingLevel, options: *mut Windows_Foundation_Diagnostics_LoggingOptions, out: *mut *mut Windows_Foundation_Diagnostics_LoggingActivity) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_Diagnostics_LoggingActivity = Windows_Foundation_Diagnostics_ILoggingActivity;
+		RT_CLASS!(Windows_Foundation_Diagnostics_LoggingActivity: Windows_Foundation_Diagnostics_ILoggingActivity);
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILoggingChannel, 3919905603, 4567, 20225, 181, 202, 207, 73, 82, 120, 192, 168);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingChannel(Windows_Foundation_Diagnostics_ILoggingChannelVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingChannel] {
 			fn get_Name(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -778,7 +676,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingChannelFactory(Windows_Foundation_Diagnostics_ILoggingChannelFactoryVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingChannelFactory] {
 			fn Create(&mut self, name: ::w::HSTRING, out: *mut *mut Windows_Foundation_Diagnostics_LoggingChannel) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_Diagnostics_LoggingChannel = Windows_Foundation_Diagnostics_ILoggingChannel;
+		RT_CLASS!(Windows_Foundation_Diagnostics_LoggingChannel: Windows_Foundation_Diagnostics_ILoggingChannel);
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILoggingChannelFactory2, 1282340317, 15143, 19913, 153, 240, 41, 156, 110, 70, 3, 161);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingChannelFactory2(Windows_Foundation_Diagnostics_ILoggingChannelFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingChannelFactory2] {
 			fn CreateWithOptions(&mut self, name: ::w::HSTRING, options: *mut Windows_Foundation_Diagnostics_LoggingChannelOptions, out: *mut *mut Windows_Foundation_Diagnostics_LoggingChannel) -> ::w::HRESULT,
@@ -809,16 +707,120 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 			fn AddLoggingChannelWithLevel(&mut self, loggingChannel: *mut Windows_Foundation_Diagnostics_ILoggingChannel, maxLevel: Windows_Foundation_Diagnostics_LoggingLevel) -> ::w::HRESULT,
 			fn RemoveLoggingChannel(&mut self, loggingChannel: *mut Windows_Foundation_Diagnostics_ILoggingChannel) -> ::w::HRESULT
 		}}
+		RT_CLASS!(Windows_Storage_StorageFile: Windows_Storage_IStorageFile);
+		DEFINE_GUID!(IID_Windows_Storage_IStorageFile, 4198457734, 16916, 17036, 166, 76, 20, 201, 172, 115, 21, 234);
+		RT_INTERFACE!{interface Windows_Storage_IStorageFile(Windows_Storage_IStorageFileVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Storage_IStorageFile] {
+			fn get_FileType(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn get_ContentType(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn OpenAsync(&mut self, accessMode: Windows_Storage_FileAccessMode, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_Streams_IRandomAccessStream>) -> ::w::HRESULT,
+			fn OpenTransactedWriteAsync(&mut self, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_StorageStreamTransaction>) -> ::w::HRESULT,
+			fn CopyOverloadDefaultNameAndOptions(&mut self, destinationFolder: *mut Windows_Storage_IStorageFolder, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_StorageFile>) -> ::w::HRESULT,
+			fn CopyOverloadDefaultOptions(&mut self, destinationFolder: *mut Windows_Storage_IStorageFolder, desiredNewName: ::w::HSTRING, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_StorageFile>) -> ::w::HRESULT,
+			fn CopyOverload(&mut self, destinationFolder: *mut Windows_Storage_IStorageFolder, desiredNewName: ::w::HSTRING, option: Windows_Storage_NameCollisionOption, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_StorageFile>) -> ::w::HRESULT,
+			fn CopyAndReplaceAsync(&mut self, fileToReplace: *mut Windows_Storage_IStorageFile, out: *mut *mut Windows_Foundation_IAsyncAction) -> ::w::HRESULT,
+			fn MoveOverloadDefaultNameAndOptions(&mut self, destinationFolder: *mut Windows_Storage_IStorageFolder, out: *mut *mut Windows_Foundation_IAsyncAction) -> ::w::HRESULT,
+			fn MoveOverloadDefaultOptions(&mut self, destinationFolder: *mut Windows_Storage_IStorageFolder, desiredNewName: ::w::HSTRING, out: *mut *mut Windows_Foundation_IAsyncAction) -> ::w::HRESULT,
+			fn MoveOverload(&mut self, destinationFolder: *mut Windows_Storage_IStorageFolder, desiredNewName: ::w::HSTRING, option: Windows_Storage_NameCollisionOption, out: *mut *mut Windows_Foundation_IAsyncAction) -> ::w::HRESULT,
+			fn MoveAndReplaceAsync(&mut self, fileToReplace: *mut Windows_Storage_IStorageFile, out: *mut *mut Windows_Foundation_IAsyncAction) -> ::w::HRESULT
+		}}
+		RT_ENUM! { enum Windows_Storage_NameCollisionOption: i32 {
+			GenerateUniqueName = 0, ReplaceExisting = 1, FailIfExists = 2,
+		}}
+		RT_CLASS!(Windows_Storage_StorageStreamTransaction: Windows_Storage_IStorageStreamTransaction);
+		DEFINE_GUID!(IID_Windows_Storage_IStorageStreamTransaction, 4135383907, 42301, 19860, 174, 44, 103, 35, 45, 147, 172, 221);
+		RT_INTERFACE!{interface Windows_Storage_IStorageStreamTransaction(Windows_Storage_IStorageStreamTransactionVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Storage_IStorageStreamTransaction] {
+			fn get_Stream(&mut self, out: *mut *mut Windows_Storage_Streams_IRandomAccessStream) -> ::w::HRESULT,
+			fn CommitAsync(&mut self, out: *mut *mut Windows_Foundation_IAsyncAction) -> ::w::HRESULT
+		}}
+		DEFINE_GUID!(IID_Windows_Storage_Streams_IRandomAccessStream, 2421821409, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
+		RT_INTERFACE!{interface Windows_Storage_Streams_IRandomAccessStream(Windows_Storage_Streams_IRandomAccessStreamVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Storage_Streams_IRandomAccessStream] {
+			fn get_Size(&mut self, out: *mut u64) -> ::w::HRESULT,
+			fn put_Size(&mut self, value: u64) -> ::w::HRESULT,
+			fn GetInputStreamAt(&mut self, position: u64, out: *mut *mut Windows_Storage_Streams_IInputStream) -> ::w::HRESULT,
+			fn GetOutputStreamAt(&mut self, position: u64, out: *mut *mut Windows_Storage_Streams_IOutputStream) -> ::w::HRESULT,
+			fn get_Position(&mut self, out: *mut u64) -> ::w::HRESULT,
+			fn Seek(&mut self, position: u64) -> ::w::HRESULT,
+			fn CloneStream(&mut self, out: *mut *mut Windows_Storage_Streams_IRandomAccessStream) -> ::w::HRESULT,
+			fn get_CanRead(&mut self, out: *mut ::w::BOOL) -> ::w::HRESULT,
+			fn get_CanWrite(&mut self, out: *mut ::w::BOOL) -> ::w::HRESULT
+		}}
+		DEFINE_GUID!(IID_Windows_Storage_Streams_IOutputStream, 2421821414, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
+		RT_INTERFACE!{interface Windows_Storage_Streams_IOutputStream(Windows_Storage_Streams_IOutputStreamVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Storage_Streams_IOutputStream] {
+			fn WriteAsync(&mut self, buffer: *mut Windows_Storage_Streams_IBuffer, out: *mut *mut Windows_Foundation_IAsyncOperationWithProgress<u32, u32>) -> ::w::HRESULT,
+			fn FlushAsync(&mut self, out: *mut *mut Windows_Foundation_IAsyncOperation<bool>) -> ::w::HRESULT
+		}}
+		DEFINE_GUID!(IID_Windows_Storage_Streams_IBuffer, 2421821408, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
+		RT_INTERFACE!{interface Windows_Storage_Streams_IBuffer(Windows_Storage_Streams_IBufferVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Storage_Streams_IBuffer] {
+			fn get_Capacity(&mut self, out: *mut u32) -> ::w::HRESULT,
+			fn get_Length(&mut self, out: *mut u32) -> ::w::HRESULT,
+			fn put_Length(&mut self, value: u32) -> ::w::HRESULT
+		}}
+		DEFINE_GUID!(IID_Windows_Storage_Streams_IInputStream, 2421821410, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
+		RT_INTERFACE!{interface Windows_Storage_Streams_IInputStream(Windows_Storage_Streams_IInputStreamVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Storage_Streams_IInputStream] {
+			fn ReadAsync(&mut self, buffer: *mut Windows_Storage_Streams_IBuffer, count: u32, options: Windows_Storage_Streams_InputStreamOptions, out: *mut *mut Windows_Foundation_IAsyncOperationWithProgress<&Windows_Storage_Streams_IBuffer, u32>) -> ::w::HRESULT
+		}}
+		RT_ENUM! { enum Windows_Storage_Streams_InputStreamOptions: u32 {
+			None = 0, Partial = 1, ReadAhead = 2,
+		}}
+		RT_ENUM! { enum Windows_Storage_FileAccessMode: i32 {
+			Read = 0, ReadWrite = 1,
+		}}
+		DEFINE_GUID!(IID_Windows_Storage_IStorageFolder, 1926351736, 46063, 20341, 168, 11, 111, 217, 218, 226, 148, 75);
+		RT_INTERFACE!{interface Windows_Storage_IStorageFolder(Windows_Storage_IStorageFolderVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Storage_IStorageFolder] {
+			fn CreateFileAsyncOverloadDefaultOptions(&mut self, desiredName: ::w::HSTRING, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_StorageFile>) -> ::w::HRESULT,
+			fn CreateFileAsync(&mut self, desiredName: ::w::HSTRING, options: Windows_Storage_CreationCollisionOption, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_StorageFile>) -> ::w::HRESULT,
+			fn CreateFolderAsyncOverloadDefaultOptions(&mut self, desiredName: ::w::HSTRING, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_StorageFolder>) -> ::w::HRESULT,
+			fn CreateFolderAsync(&mut self, desiredName: ::w::HSTRING, options: Windows_Storage_CreationCollisionOption, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_StorageFolder>) -> ::w::HRESULT,
+			fn GetFileAsync(&mut self, name: ::w::HSTRING, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_StorageFile>) -> ::w::HRESULT,
+			fn GetFolderAsync(&mut self, name: ::w::HSTRING, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_StorageFolder>) -> ::w::HRESULT,
+			fn GetItemAsync(&mut self, name: ::w::HSTRING, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_IStorageItem>) -> ::w::HRESULT,
+			fn GetFilesAsyncOverloadDefaultOptionsStartAndCount(&mut self, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Foundation_Collections_IVectorView<&Windows_Storage_StorageFile>>) -> ::w::HRESULT,
+			fn GetFoldersAsyncOverloadDefaultOptionsStartAndCount(&mut self, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Foundation_Collections_IVectorView<&Windows_Storage_StorageFolder>>) -> ::w::HRESULT,
+			fn GetItemsAsyncOverloadDefaultStartAndCount(&mut self, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Foundation_Collections_IVectorView<&Windows_Storage_IStorageItem>>) -> ::w::HRESULT
+		}}
+		DEFINE_GUID!(IID_Windows_Storage_IStorageItem, 1107798422, 51759, 17143, 189, 232, 139, 16, 69, 122, 127, 48);
+		RT_INTERFACE!{interface Windows_Storage_IStorageItem(Windows_Storage_IStorageItemVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Storage_IStorageItem] {
+			fn RenameAsyncOverloadDefaultOptions(&mut self, desiredName: ::w::HSTRING, out: *mut *mut Windows_Foundation_IAsyncAction) -> ::w::HRESULT,
+			fn RenameAsync(&mut self, desiredName: ::w::HSTRING, option: Windows_Storage_NameCollisionOption, out: *mut *mut Windows_Foundation_IAsyncAction) -> ::w::HRESULT,
+			fn DeleteAsyncOverloadDefaultOptions(&mut self, out: *mut *mut Windows_Foundation_IAsyncAction) -> ::w::HRESULT,
+			fn DeleteAsync(&mut self, option: Windows_Storage_StorageDeleteOption, out: *mut *mut Windows_Foundation_IAsyncAction) -> ::w::HRESULT,
+			fn GetBasicPropertiesAsync(&mut self, out: *mut *mut Windows_Foundation_IAsyncOperation<&Windows_Storage_FileProperties_BasicProperties>) -> ::w::HRESULT,
+			fn get_Name(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn get_Path(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn get_Attributes(&mut self, out: *mut Windows_Storage_FileAttributes) -> ::w::HRESULT,
+			fn get_DateCreated(&mut self, out: *mut Windows_Foundation_DateTime) -> ::w::HRESULT,
+			fn IsOfType(&mut self, type_: Windows_Storage_StorageItemTypes, out: *mut ::w::BOOL) -> ::w::HRESULT
+		}}
+		RT_ENUM! { enum Windows_Storage_StorageItemTypes: u32 {
+			None = 0, File = 1, Folder = 2,
+		}}
+		RT_ENUM! { enum Windows_Storage_FileAttributes: u32 {
+			Normal = 0, ReadOnly = 1, Directory = 16, Archive = 32, Temporary = 256, LocallyIncomplete = 512,
+		}}
+		RT_CLASS!(Windows_Storage_FileProperties_BasicProperties: Windows_Storage_FileProperties_IBasicProperties);
+		DEFINE_GUID!(IID_Windows_Storage_FileProperties_IBasicProperties, 3495777755, 30814, 19046, 190, 2, 155, 238, 197, 138, 234, 129);
+		RT_INTERFACE!{interface Windows_Storage_FileProperties_IBasicProperties(Windows_Storage_FileProperties_IBasicPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Storage_FileProperties_IBasicProperties] {
+			fn get_Size(&mut self, out: *mut u64) -> ::w::HRESULT,
+			fn get_DateModified(&mut self, out: *mut Windows_Foundation_DateTime) -> ::w::HRESULT,
+			fn get_ItemDate(&mut self, out: *mut Windows_Foundation_DateTime) -> ::w::HRESULT
+		}}
+		RT_ENUM! { enum Windows_Storage_StorageDeleteOption: i32 {
+			Default = 0, PermanentDelete = 1,
+		}}
+		RT_CLASS!(Windows_Storage_StorageFolder: Windows_Storage_IStorageFolder);
+		RT_ENUM! { enum Windows_Storage_CreationCollisionOption: i32 {
+			GenerateUniqueName = 0, ReplaceExisting = 1, FailIfExists = 2, OpenIfExists = 3,
+		}}
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILoggingSessionFactory, 1318289125, 22781, 17888, 140, 47, 161, 50, 239, 249, 92, 30);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILoggingSessionFactory(Windows_Foundation_Diagnostics_ILoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILoggingSessionFactory] {
 			fn Create(&mut self, name: ::w::HSTRING, out: *mut *mut Windows_Foundation_Diagnostics_LoggingSession) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_Diagnostics_LoggingSession = Windows_Foundation_Diagnostics_ILoggingSession;
+		RT_CLASS!(Windows_Foundation_Diagnostics_LoggingSession: Windows_Foundation_Diagnostics_ILoggingSession);
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_ILogFileGeneratedEventArgs, 647927663, 3384, 19482, 181, 63, 179, 149, 216, 129, 223, 132);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_ILogFileGeneratedEventArgs(Windows_Foundation_Diagnostics_ILogFileGeneratedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_ILogFileGeneratedEventArgs] {
 			fn get_File(&mut self, out: *mut *mut Windows_Storage_StorageFile) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_Diagnostics_LogFileGeneratedEventArgs = Windows_Foundation_Diagnostics_ILogFileGeneratedEventArgs;
+		RT_CLASS!(Windows_Foundation_Diagnostics_LogFileGeneratedEventArgs: Windows_Foundation_Diagnostics_ILogFileGeneratedEventArgs);
 		DEFINE_GUID!(IID_Windows_Foundation_Diagnostics_IFileLoggingSession, 617038358, 65234, 16460, 137, 95, 31, 150, 153, 203, 2, 247);
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_IFileLoggingSession(Windows_Foundation_Diagnostics_IFileLoggingSessionVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_IFileLoggingSession] {
 			fn get_Name(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -833,7 +835,7 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		RT_INTERFACE!{interface Windows_Foundation_Diagnostics_IFileLoggingSessionFactory(Windows_Foundation_Diagnostics_IFileLoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_Windows_Foundation_Diagnostics_IFileLoggingSessionFactory] {
 			fn Create(&mut self, name: ::w::HSTRING, out: *mut *mut Windows_Foundation_Diagnostics_FileLoggingSession) -> ::w::HRESULT
 		}}
-		pub type Windows_Foundation_Diagnostics_FileLoggingSession = Windows_Foundation_Diagnostics_IFileLoggingSession;
+		RT_CLASS!(Windows_Foundation_Diagnostics_FileLoggingSession: Windows_Foundation_Diagnostics_IFileLoggingSession);
 		DEFINE_GUID!(IID_Windows_Foundation_Collections_IMap_2_System_String_System_String, 0xf6d1f700,0x49c2,0x52ae,0x81,0x54,0x82,0x6f,0x99,0x08,0x77,0x3c);
 		impl<'a> ComIid for Windows_Foundation_Collections_IMap<&'a str, &'a str> {
 			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_Collections_IMap_2_System_String_System_String }
@@ -857,6 +859,62 @@ use super::{RtInterface, RtType, IInspectable, Windows_Storage_StorageFile, Wind
 		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_StorageFile, 0x5e52f8ce,0xaced,0x5a42,0x95,0xb4,0xf6,0x74,0xdd,0x84,0x88,0x5e);
 		impl<'a> ComIid for Windows_Foundation_IAsyncOperation<&'a Windows_Storage_StorageFile> {
 			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_StorageFile }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_Streams_IRandomAccessStream, 0x430ecece,0x1418,0x5d19,0x81,0xb2,0x5d,0xdb,0x38,0x16,0x03,0xcc);
+		impl<'a> ComIid for Windows_Foundation_IAsyncOperation<&'a Windows_Storage_Streams_IRandomAccessStream> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_Streams_IRandomAccessStream }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_StorageStreamTransaction, 0x0d81405a,0x9bd3,0x5e87,0x82,0xf4,0x9b,0x41,0x28,0xa8,0x87,0xeb);
+		impl<'a> ComIid for Windows_Foundation_IAsyncOperation<&'a Windows_Storage_StorageStreamTransaction> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_StorageStreamTransaction }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperationWithProgress_2_System_UInt32_System_UInt32, 0xeccb574a,0xc684,0x5572,0xa6,0x79,0x6b,0x08,0x42,0xcf,0xb5,0x7f);
+		impl ComIid for Windows_Foundation_IAsyncOperationWithProgress<u32, u32> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperationWithProgress_2_System_UInt32_System_UInt32 }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperation_1_System_Boolean, 0xcdb5efb3,0x5788,0x509d,0x9b,0xe1,0x71,0xcc,0xb8,0xa3,0x36,0x2a);
+		impl ComIid for Windows_Foundation_IAsyncOperation<bool> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperation_1_System_Boolean }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperationWithProgress_2_Windows_Storage_Streams_IBuffer_System_UInt32, 0xd26b2819,0x897f,0x5c7d,0x84,0xd6,0x56,0xd7,0x96,0x56,0x14,0x31);
+		impl<'a> ComIid for Windows_Foundation_IAsyncOperationWithProgress<&'a Windows_Storage_Streams_IBuffer, u32> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperationWithProgress_2_Windows_Storage_Streams_IBuffer_System_UInt32 }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_StorageFolder, 0x6be9e7d7,0xe83a,0x5cbc,0x80,0x2c,0x17,0x68,0x96,0x0b,0x52,0xc3);
+		impl<'a> ComIid for Windows_Foundation_IAsyncOperation<&'a Windows_Storage_StorageFolder> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_StorageFolder }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_IStorageItem, 0x5fc9c137,0xebb7,0x5e6c,0x9c,0xba,0x68,0x6f,0x2e,0xc2,0xb0,0xbb);
+		impl<'a> ComIid for Windows_Foundation_IAsyncOperation<&'a Windows_Storage_IStorageItem> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_IStorageItem }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFile, 0x03362e33,0xe413,0x5f29,0x97,0xd0,0x48,0xa4,0x78,0x09,0x35,0xf9);
+		impl<'a> ComIid for Windows_Foundation_IAsyncOperation<&'a Windows_Foundation_Collections_IVectorView<&'a Windows_Storage_StorageFile>> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFile }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFile, 0x80646519,0x5e2a,0x595d,0xa8,0xcd,0x2a,0x24,0xb4,0x06,0x7f,0x1b);
+		impl<'a> ComIid for Windows_Foundation_Collections_IVectorView<&'a Windows_Storage_StorageFile> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFile }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFolder, 0xca40b21b,0xaeb1,0x5a61,0x9e,0x08,0x3b,0xd5,0xd9,0x59,0x40,0x23);
+		impl<'a> ComIid for Windows_Foundation_IAsyncOperation<&'a Windows_Foundation_Collections_IVectorView<&'a Windows_Storage_StorageFolder>> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFolder }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFolder, 0xe20debc6,0xdc4e,0x542e,0xa2,0xe7,0xa2,0x4d,0x19,0xc8,0xdd,0x62);
+		impl<'a> ComIid for Windows_Foundation_Collections_IVectorView<&'a Windows_Storage_StorageFolder> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFolder }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_IStorageItem, 0x4b1c0fd7,0x7a01,0x5e7a,0xa6,0xfe,0xbe,0x45,0x00,0x28,0x3f,0x23);
+		impl<'a> ComIid for Windows_Foundation_IAsyncOperation<&'a Windows_Foundation_Collections_IVectorView<&'a Windows_Storage_IStorageItem>> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_IStorageItem }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_IStorageItem, 0x85575a41,0x06cb,0x58d0,0xb9,0x8a,0x7c,0x8f,0x06,0xe6,0xe9,0xd7);
+		impl<'a> ComIid for Windows_Foundation_Collections_IVectorView<&'a Windows_Storage_IStorageItem> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_IStorageItem }
+		}
+		DEFINE_GUID!(IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_FileProperties_BasicProperties, 0x5186131a,0x4467,0x504b,0x97,0x7a,0x07,0x85,0xa8,0x23,0x04,0x85);
+		impl<'a> ComIid for Windows_Foundation_IAsyncOperation<&'a Windows_Storage_FileProperties_BasicProperties> {
+			fn iid()-> ::w::REFIID { &IID_Windows_Foundation_IAsyncOperation_1_Windows_Storage_FileProperties_BasicProperties }
 		}
 		DEFINE_GUID!(IID_Windows_Foundation_TypedEventHandler_2_Windows_Foundation_Diagnostics_IFileLoggingSession_Windows_Foundation_Diagnostics_LogFileGeneratedEventArgs, 0x0c6563b0,0x9d8b,0x5b60,0x99,0x4b,0xde,0xe1,0x17,0x4d,0x1e,0xfb);
 		impl<'a> ComIid for Windows_Foundation_TypedEventHandler<&'a Windows_Foundation_Diagnostics_IFileLoggingSession, &'a Windows_Foundation_Diagnostics_LogFileGeneratedEventArgs> {
