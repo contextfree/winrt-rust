@@ -502,28 +502,16 @@ macro_rules! RT_CLASS {
     };
 }
 
-#[cfg(feature = "nightly")]
+
 macro_rules! RT_ENUM {
-    {enum $name:ident : $t:ty { $($variant:ident = $value:expr,)+ }} => {
+    {enum $name:ident : $t:ty { $($variant:ident ($longvariant:ident) = $value:expr,)+ }} => {
         #[repr(C)] #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
         #[allow(non_upper_case_globals)]
         pub struct $name(pub $t);
+        $(pub const $longvariant: $name = $name($value);)+
+        #[cfg(feature = "nightly")]
         impl $name {
-        $(pub const $variant: $name = $name($value);)+
-        }
-        unsafe impl RtValueType for $name {}
-    };
-}
-
-// FIXME: This version of the macro works on stable, but fails for some enums (where multiple variants
-// have the same value) and leads to undefined behavior whenever an undefined variant appears.
-// Find a better way to do this ...
-#[cfg(not(feature = "nightly"))]
-macro_rules! RT_ENUM {
-    {enum $name:ident : $t:ident { $($variant:ident = $value:expr,)+ }} => {
-        #[repr($t)] #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
-        pub enum $name {
-        $($variant = $value),+
+            $(pub const $variant: $name = $name($value);)+
         }
         unsafe impl RtValueType for $name {}
     };
@@ -541,31 +529,37 @@ macro_rules! RT_STRUCT {
     };
 }
 
+// Compared to the DEFINE_GUID macro from winapi, this one creates a private const 
+macro_rules! RT_IID {
+    (
+        $name:ident, $l:expr, $w1:expr, $w2:expr, $b1:expr, $b2:expr, $b3:expr, $b4:expr, $b5:expr,
+        $b6:expr, $b7:expr, $b8:expr
+    ) => {
+        const $name: ::w::GUID = ::w::GUID {
+            Data1: $l,
+            Data2: $w1,
+            Data3: $w2,
+            Data4: [$b1, $b2, $b3, $b4, $b5, $b6, $b7, $b8],
+        };
+    }
+}
 
-pub mod generated;
+pub mod gen; // import auto-generated definitions
 
-pub use self::generated::{Windows_Foundation_Collections_IIterable as IIterable,
-                          Windows_Foundation_Collections_IIterator as IIterator,
-                          Windows_Foundation_Collections_IVectorView as IVectorView,
-                          Windows_Foundation_IAsyncAction as IAsyncAction,
-                          Windows_Foundation_IAsyncOperation as IAsyncOperation,
-                          Windows_Foundation_AsyncStatus as AsyncStatus,
-                          Windows_Foundation_AsyncOperationCompletedHandler as AsyncOperationCompletedHandler,
-                          Windows_Foundation_AsyncOperationCompletedHandlerVtbl as AsyncOperationCompletedHandlerVtbl};
+pub use self::gen::windows::foundation::collections::{
+    IIterable,
+    IIterator,
+    IVectorView
+};
+pub use self::gen::windows::foundation::{
+    IAsyncAction,
+    IAsyncOperation,
+    AsyncStatus,
+    AsyncOperationCompletedHandler
+};
 
 // FIXME: maybe better reexport from winapi?
-DEFINE_GUID!(IID_IInspectable,
-             0xAF86E2E0,
-             0xB12D,
-             0x4c6a,
-             0x9C,
-             0x5A,
-             0xD7,
-             0xAA,
-             0x65,
-             0x10,
-             0x1E,
-             0x90);
+RT_IID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);
 RT_INTERFACE!{
 interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectable]  {
     fn GetIids(&mut self, iidCount: *mut ULONG, iids: *mut *mut IID) -> HRESULT,
@@ -577,35 +571,13 @@ interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectab
 // Everything below will eventually be deleted //
 // =========================================== //
 
-DEFINE_GUID!(IID_IMidiOutPortStatics,
-             106742761,
-             3976,
-             17547,
-             155,
-             100,
-             169,
-             88,
-             38,
-             198,
-             91,
-             143);
+DEFINE_GUID!(IID_IMidiOutPortStatics, 106742761, 3976, 17547, 155, 100, 169, 88, 38, 198, 91, 143);
 RT_INTERFACE!{interface IMidiOutPortStatics(IMidiOutPortStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiOutPortStatics] {
     fn FromIdAsync(&mut self, deviceId: HSTRING, asyncOp: *mut *mut IAsyncOperation<&IMidiOutPort>) -> HRESULT,
     fn GetDeviceSelector(&mut self, value: *const HSTRING) -> HRESULT
 }}
 
-DEFINE_GUID!(IID_IDeviceInformationStatics,
-             3246329870,
-             14918,
-             19064,
-             128,
-             19,
-             118,
-             157,
-             201,
-             185,
-             115,
-             144);
+DEFINE_GUID!(IID_IDeviceInformationStatics, 3246329870, 14918, 19064, 128, 19, 118, 157, 201, 185, 115, 144);
 RT_INTERFACE!{interface IDeviceInformationStatics(IDeviceInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationStatics] {
     fn __CreateFromIdAsync(&mut self) -> HRESULT,
     fn __CreateFromIdAsyncAdditionalProperties(&mut self) -> HRESULT,
@@ -631,21 +603,10 @@ impl<'a> ComIid for IIterable<&'a IDeviceInformation> {
 // TODO: Is a type alias sufficient? (Also see `AggregateType` in windows.foundation.collections.h)
 pub type DeviceInformationCollection<'a> = IVectorView<&'a IDeviceInformation>;
 
-DEFINE_GUID!(IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation,
-             0xdd9f8a5d,
-             0xec98,
-             0x5f4b,
-             0xa3,
-             0xea,
-             0x9c,
-             0x8b,
-             0x5a,
-             0xd5,
-             0x3c,
-             0x4b);
+RT_IID!(IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation, 0xdd9f8a5d, 0xec98, 0x5f4b, 0xa3, 0xea, 0x9c, 0x8b, 0x5a, 0xd5, 0x3c, 0x4b);
 
 // These parametrized GUIDs can be automatically generated
-DEFINE_GUID!(IID_AsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection, 0x4A458732, 0x527E, 0x5C73, 0x9A, 0x68, 0xA7, 0x3D, 0xA3, 0x70, 0xF7, 0x82);
+RT_IID!(IID_AsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection, 0x4A458732, 0x527E, 0x5C73, 0x9A, 0x68, 0xA7, 0x3D, 0xA3, 0x70, 0xF7, 0x82);
 
 impl<'a> ComIid for AsyncOperationCompletedHandler<&'a DeviceInformationCollection<'a>> {
     // const IID: ::w::REFIID = &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection;
@@ -654,36 +615,14 @@ impl<'a> ComIid for AsyncOperationCompletedHandler<&'a DeviceInformationCollecti
     }
 }
 
-DEFINE_GUID!(IID_IDeviceInformation,
-             2879454101,
-             17304,
-             18589,
-             142,
-             68,
-             230,
-             19,
-             9,
-             39,
-             1,
-             31);
+RT_IID!(IID_IDeviceInformation, 2879454101, 17304, 18589, 142, 68, 230, 19, 9, 39, 1, 31);
 RT_INTERFACE!{interface IDeviceInformation(IDeviceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformation] {
     fn get_Id(&mut self, value: *mut HSTRING) -> HRESULT,
     fn get_Name(&mut self, value: *mut HSTRING) -> HRESULT
 // ...
 }}
 
-DEFINE_GUID!(IID_IMidiOutPort,
-             2468179359,
-             22434,
-             19002,
-             173,
-             184,
-             70,
-             64,
-             136,
-             111,
-             102,
-             147);
+RT_IID!(IID_IMidiOutPort, 2468179359, 22434, 19002, 173, 184, 70, 64, 136, 111, 102, 147);
 RT_INTERFACE!{interface IMidiOutPort(IMidiOutPortVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformation] {
     fn __Dummy(&mut self) -> HRESULT
 // ...

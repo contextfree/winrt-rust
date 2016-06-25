@@ -11,7 +11,7 @@ use super::{
     ComPtr
 };
 
-use ::rt::{
+use ::rt::gen::windows::foundation::{
     IAsyncOperation,
     AsyncOperationCompletedHandler,
     AsyncOperationCompletedHandlerVtbl,

@@ -28,30 +28,32 @@ namespace Generator
 		static Dictionary<string, GenericInstanceType> genericInstantiations = new Dictionary<string, GenericInstanceType>();
 		static Dictionary<string, TypeDefinition> definitionsWorklist = new Dictionary<string, TypeDefinition>();
 		static Dictionary<string, bool> definitionsDone = new Dictionary<string, bool>();
+		static string Imports = @"use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 
-		static void Main(string[] args)
+	static void Main(string[] args)
 		{
-			
 			Console.WriteLine("Writing to " + new FileInfo(args[0]).FullName + " ...");
 			TypeCounter counter = new TypeCounter { Enums = 0, Interfaces = 0, Classes = 0, Structs = 0 };
 			using (var file = new StreamWriter(args[0]))
 			{
-				file.WriteLine(@"#![allow(non_camel_case_types)]
-use std::ptr;
-use super::super::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use super::{RtInterface, RtType, RtValueType, IInspectable};");
+				file.WriteLine("// DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED!");
+				file.WriteLine(@"#![allow(non_camel_case_types, unused_imports)]");
 
 				var files = Directory.GetFiles(@"C:\Windows\System32\WinMetadata\");
 				var collection = new AssemblyCollection(files);
 
 				// TODO: enable all modules, not just "Foundation" (currently leads to parse error in Rust)
-				foreach (var asm in collection.Assemblies.Where(a => a.Name.Name == "Windows.Foundation" /*|| a.Name.Name == "Windows.Storage" || a.Name.Name == "Windows.Devices"*/))
+				var names = new string[] { "Windows.Foundation"/*, "Windows.Storage", "Windows.Devices", "Windows.Media", "Windows.System", "Windows.Graphics"*/ };
+				foreach (var asm in collection.Assemblies.Where(a => names.Contains(a.Name.Name)))
 				{
 					foreach (var t in asm.MainModule.Types.Where(t => t.FullName != "<Module>"))
 					{
 						definitionsWorklist.Add(t.FullName, t);
 					}
 				}
+
+				var root = new Module("");
 
 				while (definitionsWorklist.Count > 0)
 				{
@@ -61,30 +63,32 @@ use super::{RtInterface, RtType, RtValueType, IInspectable};");
 
 					Assert(type.Attributes.HasFlag(TypeAttributes.WindowsRuntime));
 
+					var module = root.FindChild(type.Namespace);
+
 					if (type.IsEnum)
 					{
 						counter.Enums++;
-						WriteEnum(file, type);
+						WriteEnum(module, type);
 					}
 					else if (type.IsInterface)
 					{
 						counter.Interfaces++;
-						WriteInterface(file, type, false);
+						WriteInterface(module, type, false);
 					}
 					else if (type.IsValueType)
 					{
 						counter.Structs++;
-						WriteStruct(file, type);
+						WriteStruct(module, type);
 					}
 					else if (IsDelegate(type))
 					{
 						counter.Delegates++;
-						WriteInterface(file, type, true);
+						WriteInterface(module, type, true);
 					}
 					else if (type.IsClass)
 					{
 						counter.Classes++;
-						WriteClass(file, type);
+						WriteClass(module, type);
 					}
 					else
 					{
@@ -92,8 +96,13 @@ use super::{RtInterface, RtType, RtValueType, IInspectable};");
 					}
 				}
 
+				foreach (var child in root.Children.Values)
+				{
+					WriteModuleTree(child, file);
+				}
+
 				Console.WriteLine("Done writing {0} type definitions ({1} enums, {2} interfaces, {3} structs, {4} classes, {5} delegates)", counter.Sum(), counter.Enums, counter.Interfaces, counter.Structs, counter.Classes, counter.Delegates);
-				WriteParametricIIDs(file, new List<GenericInstanceType>(genericInstantiations.Values));
+				
 				Console.WriteLine("Found and generated IIDs for {0} distinct generic instantiations.", genericInstantiations.Count);
 			}
 			
@@ -105,34 +114,34 @@ use super::{RtInterface, RtType, RtValueType, IInspectable};");
 			return t.IsClass && t.BaseType.FullName == "System.MulticastDelegate";
 		}
 
-		static void WriteEnum(StreamWriter file, TypeDefinition t)
+		static void WriteEnum(Module module, TypeDefinition t)
 		{
 			var isFlags = t.CustomAttributes.Any(a => a.AttributeType.Name == "FlagsAttribute");
 			var underlyingType = t.Fields.Single(f => f.Name == "value__").FieldType;
 			string name = GetTypeName(t, TypeUsage.Define);
-			file.Write(@"
+			module.Append(@"
 		RT_ENUM! { enum " + name + ": " + GetTypeName(underlyingType, TypeUsage.Raw) + @" {
-			" + String.Join(", ", t.Fields.Where(f => f.Name != "value__").Select(f => PreventKeywords(f.Name) + " = " + f.Constant)) + @",
+			" + String.Join(", ", t.Fields.Where(f => f.Name != "value__").Select(f => PreventKeywords(f.Name) + " (" + t.Name + "_" + f.Name + ") = " + f.Constant)) + @",
 		}}");
 		}
 
-		static void WriteStruct(StreamWriter file, TypeDefinition t)
+		static void WriteStruct(Module module, TypeDefinition t)
 		{
 			string name = GetTypeName(t, TypeUsage.Define);
 			// TODO: derive(Eq) whenever possible?
-			file.Write(@"
+			module.Append(@"
 		RT_STRUCT! { struct " + name + @" {
 			" + String.Join(", ", t.Fields.Select(f => PreventKeywords(f.Name) + ": " + GetTypeName(f.FieldType, TypeUsage.Raw))) + (t.Fields.Any() ? "," : "") +  @"
 		}}");
 		}
 
-		static void WriteInterface(StreamWriter file, TypeDefinition t, bool isDelegate)
+		static void WriteInterface(Module module, TypeDefinition t, bool isDelegate)
 		{
 			var guid = t.CustomAttributes.First(a => a.AttributeType.Name == "GuidAttribute");
 			var name = GetTypeName(t, TypeUsage.Define);
 
-			file.Write(@"
-		DEFINE_GUID!(IID_" + name + ", " + String.Join(", ", guid.ConstructorArguments.Select(a => a.Value)) + ");");
+			module.Append(@"
+		RT_IID!(IID_" + name + ", " + String.Join(", ", guid.ConstructorArguments.Select(a => a.Value)) + ");");
 
 			string generic = "";
 			if (t.HasGenericParameters)
@@ -143,7 +152,7 @@ use super::{RtInterface, RtType, RtValueType, IInspectable};");
 			string baseInterface = isDelegate ? "IUnknown" : "IInspectable";
 			var methods = isDelegate ? t.Methods.Where(m => m.Name != ".ctor") : t.Methods;
 
-			file.Write(@"
+			module.Append(@"
 		RT_INTERFACE!{interface " + name + generic + "(" + name + "Vtbl): " + baseInterface + "(" + baseInterface  + "Vtbl) [IID_" + name + @"] {
 			" + String.Join(",\r\n			", methods.Select(m => GetRawMethodDeclaration(m))) + @"
 		}}");
@@ -167,7 +176,7 @@ use super::{RtInterface, RtType, RtValueType, IInspectable};");
 			foreach (var p in m.Parameters)
 			{
 				Assert(!p.IsReturnValue);
-				yield return PreventKeywords(p.Name) + ": " + GetTypeName(p.ParameterType, TypeUsage.Raw);
+				yield return PreventKeywords(FirstToLower(p.Name)) + ": " + GetTypeName(p.ParameterType, TypeUsage.Raw);
 			}
 			if (m.ReturnType.FullName != "System.Void")
 			{
@@ -185,7 +194,12 @@ use super::{RtInterface, RtType, RtValueType, IInspectable};");
 			return name;
 		}
 
-		static void WriteClass(StreamWriter file, TypeDefinition t)
+		static string FirstToLower(string name)
+		{
+			return name[0].ToString().ToLower() + name.Substring(1);
+		}
+
+		static void WriteClass(Module module, TypeDefinition t)
 		{
 			var activatable = t.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "ActivatableAttribute");
 			string factory = null;
@@ -201,7 +215,7 @@ use super::{RtInterface, RtType, RtValueType, IInspectable};");
 			}
 			var mainInterface = t.Interfaces[0];
 			//Console.WriteLine(t.FullName + " => " + mainInterface.FullName + ", " + (factory ?? "(no factory)"));
-			var aliasedType = GetTypeName(mainInterface, TypeUsage.Define);
+			var aliasedType = GetTypeName(mainInterface, TypeUsage.Alias);
 			var classType = GetTypeName(t, TypeUsage.Define);
 			if (aliasedType.Contains("'a")) // if we had to introduce a lifetime parameter ...
 			{
@@ -209,7 +223,7 @@ use super::{RtInterface, RtType, RtValueType, IInspectable};");
 				Assert(definitionsDone.ContainsKey(t.FullName));
 				definitionsDone[t.FullName] = true;
 			}
-			file.Write(@"
+			module.Append(@"
 		RT_CLASS!(" + classType + ": " + aliasedType + ");");
 		}
 
@@ -219,6 +233,7 @@ use super::{RtInterface, RtType, RtValueType, IInspectable};");
 			Out,
 			Raw,
 			Define,
+			Alias,
 			GenericArg,
 			GenericArgWithLifetime
 		}
@@ -324,7 +339,15 @@ use super::{RtInterface, RtType, RtValueType, IInspectable};");
 					definitionsWorklist.Add(def.FullName, def);
 				}
 
-				var name = t.FullName;
+				string name = null;
+				if (usage == TypeUsage.Define)
+				{
+					name = t.Name;
+				}
+				else
+				{
+					name = "::rt::gen::" + t.Namespace.ToLower().Replace(".", "::") + "::" + t.Name;
+				}
 
 				int i = name.IndexOf('`');
 				if (i >= 0) {
@@ -338,7 +361,7 @@ use super::{RtInterface, RtType, RtValueType, IInspectable};");
 					{
 						genericInstantiations[ty.FullName] = ty;
 					}
-					var argUsage = (usage == TypeUsage.Define || usage == TypeUsage.GenericArgWithLifetime) ? TypeUsage.GenericArgWithLifetime : TypeUsage.GenericArg;
+					var argUsage = (usage == TypeUsage.Define || usage == TypeUsage.Alias || usage == TypeUsage.GenericArgWithLifetime) ? TypeUsage.GenericArgWithLifetime : TypeUsage.GenericArg;
 					name += "<" + String.Join(", ", ty.GenericArguments.Select(a => GetTypeName(a, argUsage))) + ">";
 				}
 
@@ -369,13 +392,27 @@ use super::{RtInterface, RtType, RtValueType, IInspectable};");
 					}
 				}
 
-				return name.Replace(".", "_");
+				return name;
 			}
+		}
+
+		static void WriteModuleTree(Module mod, StreamWriter file, string path = null)
+		{
+			string name = mod.Name.ToLower();
+			string newPath = path == null ? mod.Name : (path + "." + mod.Name);
+			file.WriteLine("pub mod " + name + " { // " + newPath);
+			file.Write(Imports);
+			file.WriteLine(mod.Text.ToString());
+			foreach (var child in mod.Children.Values)
+			{
+				WriteModuleTree(child, file, newPath);
+			}
+			file.WriteLine("} // " + newPath);
 		}
 
 		static Guid PinterfaceNamespace = new Guid("11F47AD5-7B73-42C0-ABAE-878B1E16ADEE");
 
-		static void WriteParametricIIDs(StreamWriter file, IEnumerable<GenericInstanceType> genericInstantiation)
+		static void WriteParametricIIDs(Module module, IEnumerable<GenericInstanceType> genericInstantiation)
 		{
 			foreach (var t in genericInstantiation)
 			{
@@ -389,8 +426,8 @@ use super::{RtInterface, RtType, RtValueType, IInspectable};");
 				var iidName = "IID_" + Regex.Replace(t.FullName, @"[\.`<>,]", "_").TrimEnd('_');
 				var guid = Utility.GuidUtility.Create(PinterfaceNamespace, desc);
 				var guidStr = Regex.Replace(guid.ToString("X"), @"[\{\}]", "");
-				file.Write(@"
-		DEFINE_GUID!(" + iidName + ", " + guidStr + @");
+				module.Append(@"
+		RT_IID!(" + iidName + ", " + guidStr + @");
 		impl" + lifetime + " ComIid for " + name + @" {
 			fn iid()-> ::w::REFIID { &" + iidName + @" }
 		}");

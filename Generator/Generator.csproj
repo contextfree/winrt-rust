@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="GuidUtility.cs" />
     <Compile Include="AssemblyCollection.cs" />
+    <Compile Include="Module.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

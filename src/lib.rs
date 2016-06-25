@@ -26,26 +26,11 @@ pub use rt::{RtInterface, RtValueType, RtType, IInspectable, IInspectableVtbl};
 mod handler;
 pub use handler::IntoInterface;
 
-// TODO: use lower-case (Rust style) or upper-case (WinRT style) module names?
-// TODO: auto-generate these re-exports
+// TODO: get rid of manually listing re-exports (how to integrate handlers?)
 pub mod windows {
     pub mod foundation {
-        pub use handler::{AsyncOperationCompletedHandlerImpl}; // TODO: hide this type
-        pub use rt::generated::{
-            Windows_Foundation_IStringable as IStringable,
-            Windows_Foundation_IAsyncInfo as IAsyncInfo,
-            Windows_Foundation_IAsyncAction as IAsyncAction,
-            Windows_Foundation_IAsyncAction as IAsyncOperation,
-            Windows_Foundation_AsyncStatus as AsyncStatus,
-            Windows_Foundation_AsyncActionCompletedHandler as AsyncActionCompletedHandler,
-        };
-        pub mod collections {
-            pub use rt::generated::{
-                Windows_Foundation_Collections_IIterable as IIterable,
-                Windows_Foundation_Collections_IIterator as IIterator,
-                Windows_Foundation_Collections_IVectorView as IVectorView,
-            };
-        }
+        pub use handler::{AsyncOperationCompletedHandlerImpl};
+        pub use rt::gen::windows::foundation::*;
     }
     pub mod devices {
         pub mod enumeration {
