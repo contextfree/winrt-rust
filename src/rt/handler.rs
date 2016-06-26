@@ -1,14 +1,14 @@
 use std::sync::atomic;
 
-use super::{
+use ::{
     IUnknown,
     IUnknownVtbl,
-    IID_IUnknown,
-    IID_IAgileObject,
+    IAgileObject,
     RtType,
     ComInterface,
     ComIid,
-    ComPtr
+    ComPtr,
+    Guid
 };
 
 use ::rt::gen::windows::foundation::{
@@ -18,7 +18,7 @@ use ::rt::gen::windows::foundation::{
     AsyncStatus
 };
 
-use ::w::{S_OK, HRESULT, VOID, REFIID, ULONG, GUID};
+use ::w::{S_OK, HRESULT, VOID, REFIID, ULONG};
 
 // Define custom COM component and implement AsyncOperationCompletedHandler
 #[repr(C)]
@@ -90,7 +90,7 @@ impl<T, Interface: ComInterface> IntoInterface<Interface> for T where T: ComClas
 }
 
 pub struct AsyncOperationCompletedHandlerImpl<TResult> where TResult: RtType {
-    target_iid: REFIID,
+    target_iid: &'static Guid,
     invoke: Box<FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT>
 }
 
@@ -113,26 +113,15 @@ const AsyncOperationCompletedHandlerImplVtbl: &'static AsyncOperationCompletedHa
             unsafe extern "system" fn QueryInterface(this_: *mut IUnknown, vTableGuid: REFIID, ppv: *mut *mut VOID) -> HRESULT
             {
                 let this_ = this_ as *mut AsyncOperationCompletedHandler<__Any>;
-                fn guid_eq(guid1: &GUID, guid2: &GUID) -> bool {
-                    guid1.Data1 == guid2.Data1 && guid1.Data2 == guid2.Data2 && guid1.Data3 == guid2.Data3 && guid1.Data4 == guid2.Data4
-                }
-                
-                fn print_guid(guid: &GUID) {
-                    println!("{:08X}-{:04X}-{:04X}-{:02X}{:02X}-{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}",
-                        guid.Data1, guid.Data2, guid.Data3,
-                        guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3],
-                        guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7]);
-                }
+                let guid: Guid = (*vTableGuid).into();
+                println!("QueryInterface called with GUID {:?}", guid);
 
-                print!("QueryInterface called with GUID ");
-                print_guid(&*vTableGuid);
-                
                 let this: &mut AsyncOperationCompletedHandlerImpl<__Any> = AsyncOperationCompletedHandlerImpl::<__Any>::from_interface(this_);
                 
                 // TODO: How to determine which IIDs are allowed here?
-                if !guid_eq(&*vTableGuid, &IID_IUnknown) &&
-                    !guid_eq(&*vTableGuid, &IID_IAgileObject) && // IAgileObject is only supported for Send objects
-                    !guid_eq(&*vTableGuid, &*this.target_iid) { 
+                if guid != *IUnknown::iid() &&
+                    guid != *IAgileObject::iid() && // IAgileObject is only supported for Send objects
+                    guid != *this.target_iid { 
                     // We don't recognize the GUID passed to us. Let the caller know this,
                     // by clearing his handle, and returning E_NOINTERFACE.
                     *ppv = ::std::ptr::null_mut();

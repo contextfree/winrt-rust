@@ -1,7 +1,7 @@
 use std::ops::{Deref, DerefMut};
 use std::fmt;
 use std::ptr;
-use super::{ComIid, RtInterface, IInspectable, HString};
+use ::{ComIid, RtInterface, IInspectable, HString, Guid};
 
 #[derive(Debug)]
 pub struct ComPtr<T>(*mut T); // TODO: use NonZero?
@@ -40,11 +40,10 @@ impl<T> ComPtr<T> {
     }
     
     pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComIid {
-        //let iid: ::w::REFIID = Target::IID;
-        let iid: ::w::REFIID = Target::iid();
+        let iid: &'static Guid = Target::iid();
         let mut res = ptr::null_mut();
         unsafe {
-            match self.as_unknown().QueryInterface(iid, &mut res as *mut _ as *mut *mut ::w::VOID) {
+            match self.as_unknown().QueryInterface(&iid.as_iid(), &mut res as *mut _ as *mut *mut ::w::VOID) {
                 ::w::S_OK => Some(ComPtr::wrap(res)),
                 _ => None
             }

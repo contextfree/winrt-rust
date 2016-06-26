@@ -1,6 +1,6 @@
 use std::ptr;
 
-use super::{ComInterface, HString, HStringRef, ComPtr, ComIid};
+use super::{ComInterface, HString, HStringRef, ComPtr, ComIid, Guid};
 
 use w::{HRESULT, HSTRING, S_OK, ULONG, BOOL, TRUE, FALSE, TrustLevel, IID};
 
@@ -18,7 +18,6 @@ unsafe impl RtValueType for u8 {}
 unsafe impl RtValueType for u16 {}
 unsafe impl RtValueType for u32 {}
 unsafe impl RtValueType for u64 {}
-unsafe impl RtValueType for ::w::GUID {}
 
 /// This is a trait implemented by all types that can be used as generic parameters of parameterized interfaces
 pub trait RtType {
@@ -67,8 +66,23 @@ impl<'a> RtType for bool {
     }
 }
 
-impl<T> RtType for T
-    where T: RtValueType
+impl RtType for Guid {
+    type In = Guid;
+    type Abi = ::w::GUID; // could also directly use Guid, since they are binary-compatible
+    type Out = Guid;
+
+    unsafe fn unwrap(v: Self::In) -> Self::Abi {
+        v.as_iid()
+    }
+    unsafe fn uninitialized() -> Self::Abi {
+        ::std::mem::zeroed()
+    }
+    unsafe fn wrap(v: Self::Abi) -> Self::Out {
+        Guid::from(v)
+    }
+}
+
+impl<T> RtType for T where T: RtValueType
 {
     type In = T;
     type Abi = T;
@@ -87,8 +101,7 @@ impl<T> RtType for T
 
 // We can also implement IntoIterator for IIterable<T> and IVectorView<T> and references to those
 // TODO: This should be extended to more types (at least IVector, IMap, IMapView, IObservableVector, IObservableMap)
-impl<T> IntoIterator for ComPtr<IIterable<T>>
-    where T: RtType
+impl<T> IntoIterator for ComPtr<IIterable<T>> where T: RtType
 {
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
@@ -101,8 +114,7 @@ impl<T> IntoIterator for ComPtr<IIterable<T>>
     }
 }
 
-impl<'a, T> IntoIterator for &'a mut ComPtr<IIterable<T>>
-    where T: RtType
+impl<'a, T> IntoIterator for &'a mut ComPtr<IIterable<T>> where T: RtType
 {
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
@@ -115,9 +127,7 @@ impl<'a, T> IntoIterator for &'a mut ComPtr<IIterable<T>>
     }
 }
 
-impl<T> IntoIterator for ComPtr<IVectorView<T>>
-    where T: RtType,
-          IIterable<T>: ComIid
+impl<T> IntoIterator for ComPtr<IVectorView<T>> where T: RtType, IIterable<T>: ComIid
 {
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
@@ -126,9 +136,7 @@ impl<T> IntoIterator for ComPtr<IVectorView<T>>
     }
 }
 
-impl<'a, T> IntoIterator for &'a mut ComPtr<IVectorView<T>>
-    where T: RtType,
-          IIterable<T>: ComIid
+impl<'a, T> IntoIterator for &'a mut ComPtr<IVectorView<T>> where T: RtType, IIterable<T>: ComIid
 {
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
@@ -139,8 +147,7 @@ impl<'a, T> IntoIterator for &'a mut ComPtr<IVectorView<T>>
 
 // TODO: also implement IndexMove for IVectorView etc once that exists (Index or IndexMut won't work since we can't return a reference)
 
-impl<T> Iterator for ComPtr<IIterator<T>>
-    where T: RtType
+impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType
 {
     type Item = <T as RtType>::Out;
 
@@ -192,8 +199,7 @@ macro_rules! RT_INTERFACE {
             })+
         }
         impl ComIid for $interface {
-// const IID: ::w::REFIID = &$iid;
-            fn iid() -> ::w::REFIID { &$iid }
+            fn iid() -> &'static ::Guid { &$iid }
         }
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
@@ -285,8 +291,7 @@ macro_rules! RT_INTERFACE {
             lpVtbl: *const $vtbl
         }
         impl ComIid for $interface {
-            //const IID: ::w::REFIID = &$iid;
-            fn iid() -> ::w::REFIID { &$iid }
+            fn iid() -> &'static ::Guid { &$iid }
         }
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
@@ -340,8 +345,7 @@ macro_rules! RT_INTERFACE {
             })+
         }
         impl ComIid for $interface {
-// const IID: ::w::REFIID = &$iid;
-            fn iid() -> ::w::REFIID { &$iid }
+            fn iid() -> &'static ::Guid { &$iid }
         }
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
@@ -446,11 +450,11 @@ macro_rules! RT_INTERFACE {
                 ((*self.lpVtbl).$method)(self $(,$p)*)
             })+
         }
-        impl<$t1: 'static, $t2: 'static> ComInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType{
+        impl<$t1: 'static, $t2: 'static> ComInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type Vtbl = $vtbl<$t1, $t2>;
         }
         unsafe impl<$t1: 'static, $t2: 'static> RtInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {}
-        impl<'a, $t1, $t2> RtType for &'a $interface<$t1, $t2> where $t1: RtType, $t2: RtType{
+        impl<'a, $t1, $t2> RtType for &'a $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type In = &'a mut $interface<$t1, $t2>;
             type Abi = *mut $interface<$t1, $t2>;
             type Out = ComPtr<$interface<$t1, $t2>>;
@@ -529,42 +533,28 @@ macro_rules! RT_STRUCT {
     };
 }
 
-// Compared to the DEFINE_GUID macro from winapi, this one creates a private const 
-macro_rules! RT_IID {
-    (
-        $name:ident, $l:expr, $w1:expr, $w2:expr, $b1:expr, $b2:expr, $b3:expr, $b4:expr, $b5:expr,
-        $b6:expr, $b7:expr, $b8:expr
-    ) => {
-        const $name: ::w::GUID = ::w::GUID {
-            Data1: $l,
-            Data2: $w1,
-            Data3: $w2,
-            Data4: [$b1, $b2, $b3, $b4, $b5, $b6, $b7, $b8],
-        };
-    }
-}
-
 macro_rules! RT_PINTERFACE {
     (
         for<'a> $t:ty => [$l:expr, $w1:expr, $w2:expr, $b1:expr, $b2:expr, $b3:expr, $b4:expr, $b5:expr,
         $b6:expr, $b7:expr, $b8:expr] as $iid:ident
     ) => {
-        RT_IID!($iid, $l,$w1,$w2,$b1,$b2,$b3,$b4,$b5,$b6,$b7,$b8);
+        DEFINE_IID!($iid, $l,$w1,$w2,$b1,$b2,$b3,$b4,$b5,$b6,$b7,$b8);
 		impl<'a> ComIid for $t {
-			fn iid()-> ::w::REFIID { &$iid }
+			fn iid()-> &'static ::Guid { &$iid }
 		}
     };
     (
         for $t:ty => [$l:expr, $w1:expr, $w2:expr, $b1:expr, $b2:expr, $b3:expr, $b4:expr, $b5:expr,
         $b6:expr, $b7:expr, $b8:expr] as $iid:ident
     ) => {
-        RT_IID!($iid, $l,$w1,$w2,$b1,$b2,$b3,$b4,$b5,$b6,$b7,$b8);
+        DEFINE_IID!($iid, $l,$w1,$w2,$b1,$b2,$b3,$b4,$b5,$b6,$b7,$b8);
 		impl ComIid for $t {
-			fn iid()-> ::w::REFIID { &$iid }
+			fn iid()-> &'static ::Guid { &$iid }
 		}
     };
 }
 
+pub mod handler;
 pub mod gen; // import auto-generated definitions
 
 pub use self::gen::windows::foundation::collections::{
@@ -580,7 +570,7 @@ pub use self::gen::windows::foundation::{
 };
 
 // FIXME: maybe better reexport from winapi?
-RT_IID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);
+DEFINE_IID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);
 RT_INTERFACE!{
 interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectable]  {
     fn GetIids(&mut self, iidCount: *mut ULONG, iids: *mut *mut IID) -> HRESULT,
@@ -592,13 +582,13 @@ interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectab
 // Everything below will eventually be deleted //
 // =========================================== //
 
-DEFINE_GUID!(IID_IMidiOutPortStatics, 106742761, 3976, 17547, 155, 100, 169, 88, 38, 198, 91, 143);
+DEFINE_IID!(IID_IMidiOutPortStatics, 106742761, 3976, 17547, 155, 100, 169, 88, 38, 198, 91, 143);
 RT_INTERFACE!{interface IMidiOutPortStatics(IMidiOutPortStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiOutPortStatics] {
     fn FromIdAsync(&mut self, deviceId: HSTRING, asyncOp: *mut *mut IAsyncOperation<&IMidiOutPort>) -> HRESULT,
     fn GetDeviceSelector(&mut self, value: *const HSTRING) -> HRESULT
 }}
 
-DEFINE_GUID!(IID_IDeviceInformationStatics, 3246329870, 14918, 19064, 128, 19, 118, 157, 201, 185, 115, 144);
+DEFINE_IID!(IID_IDeviceInformationStatics, 3246329870, 14918, 19064, 128, 19, 118, 157, 201, 185, 115, 144);
 RT_INTERFACE!{interface IDeviceInformationStatics(IDeviceInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationStatics] {
     fn __CreateFromIdAsync(&mut self) -> HRESULT,
     fn __CreateFromIdAsyncAdditionalProperties(&mut self) -> HRESULT,
@@ -615,7 +605,7 @@ RT_INTERFACE!{interface IDeviceInformationStatics(IDeviceInformationStaticsVtbl)
 // "Specialize" the IID of IIterable for a given parameter type
 impl<'a> ComIid for IIterable<&'a IDeviceInformation> {
     // const IID: ::w::REFIID = &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation;
-    fn iid() -> ::w::REFIID {
+    fn iid() -> &'static ::Guid {
         &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation
     }
 }
@@ -624,26 +614,26 @@ impl<'a> ComIid for IIterable<&'a IDeviceInformation> {
 // TODO: Is a type alias sufficient? (Also see `AggregateType` in windows.foundation.collections.h)
 pub type DeviceInformationCollection<'a> = IVectorView<&'a IDeviceInformation>;
 
-RT_IID!(IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation, 0xdd9f8a5d, 0xec98, 0x5f4b, 0xa3, 0xea, 0x9c, 0x8b, 0x5a, 0xd5, 0x3c, 0x4b);
+DEFINE_IID!(IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation, 0xdd9f8a5d, 0xec98, 0x5f4b, 0xa3, 0xea, 0x9c, 0x8b, 0x5a, 0xd5, 0x3c, 0x4b);
 
 // These parametrized GUIDs can be automatically generated
-RT_IID!(IID_AsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection, 0x4A458732, 0x527E, 0x5C73, 0x9A, 0x68, 0xA7, 0x3D, 0xA3, 0x70, 0xF7, 0x82);
+DEFINE_IID!(IID_AsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection, 0x4A458732, 0x527E, 0x5C73, 0x9A, 0x68, 0xA7, 0x3D, 0xA3, 0x70, 0xF7, 0x82);
 
 impl<'a> ComIid for AsyncOperationCompletedHandler<&'a DeviceInformationCollection<'a>> {
     // const IID: ::w::REFIID = &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection;
-    fn iid() -> ::w::REFIID {
+    fn iid() -> &'static ::Guid {
         &IID_AsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection
     }
 }
 
-RT_IID!(IID_IDeviceInformation, 2879454101, 17304, 18589, 142, 68, 230, 19, 9, 39, 1, 31);
+DEFINE_IID!(IID_IDeviceInformation, 2879454101, 17304, 18589, 142, 68, 230, 19, 9, 39, 1, 31);
 RT_INTERFACE!{interface IDeviceInformation(IDeviceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformation] {
     fn get_Id(&mut self, value: *mut HSTRING) -> HRESULT,
     fn get_Name(&mut self, value: *mut HSTRING) -> HRESULT
 // ...
 }}
 
-RT_IID!(IID_IMidiOutPort, 2468179359, 22434, 19002, 173, 184, 70, 64, 136, 111, 102, 147);
+DEFINE_IID!(IID_IMidiOutPort, 2468179359, 22434, 19002, 173, 184, 70, 64, 136, 111, 102, 147);
 RT_INTERFACE!{interface IMidiOutPort(IMidiOutPortVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformation] {
     fn __Dummy(&mut self) -> HRESULT
 // ...

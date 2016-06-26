@@ -147,7 +147,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 			var name = GetTypeName(t, TypeUsage.Define);
 
 			module.Append(@"
-		RT_IID!(IID_" + name + ", " + String.Join(", ", guid.ConstructorArguments.Select(a => a.Value)) + ");");
+		DEFINE_IID!(IID_" + name + ", " + String.Join(", ", guid.ConstructorArguments.Select(a => a.Value)) + ");");
 
 			string generic = "";
 			if (t.HasGenericParameters)
@@ -303,7 +303,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 			else if (t.FullName == "System.Guid")
 			{
 				Assert(usage != TypeUsage.Define);
-				return "::w::GUID"; // TODO?
+				return usage == TypeUsage.Raw ? "::w::GUID" : "::Guid";
 			}
 			else if (t.IsPrimitive)
 			{
@@ -435,7 +435,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 			var module = root.FindChild(def.Namespace);
 
 			/*module.Append(@"
-		RT_IID!(" + iidName + ", " + guidStr + @");
+		DEFINE_IID!(" + iidName + ", " + guidStr + @");
 		impl" + lifetime + " ComIid for " + name + @" {
 			fn iid()-> ::w::REFIID { &" + iidName + @" }
 		}");*/

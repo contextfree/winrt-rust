@@ -41,7 +41,7 @@ fn run() {
     let Windows_Devices_Midi_MidiOutPort: FastHString = "Windows.Devices.Midi.MidiOutPort".into();
     let mut outPortStatics = unsafe {
         let mut res = ptr::null_mut();
-        let hres = RoGetActivationFactory(Windows_Devices_Midi_MidiOutPort.get_ref().get(), &IID_IMidiOutPortStatics, &mut res as *mut *mut _ as *mut *mut VOID);
+        let hres = RoGetActivationFactory(Windows_Devices_Midi_MidiOutPort.get_ref().get(), &IMidiOutPortStatics::iid().as_iid(), &mut res as *mut *mut _ as *mut *mut VOID);
         assert_eq!(hres, S_OK);
         ComPtr::<IMidiOutPortStatics>::wrap(res)
     };
@@ -57,7 +57,7 @@ fn run() {
     let Windows_Devices_Enumeration_DeviceInformation: FastHString = "Windows.Devices.Enumeration.DeviceInformation".into();
     let mut deviceInformationStatics = unsafe {
         let mut res = ptr::null_mut();
-        let hres = RoGetActivationFactory(Windows_Devices_Enumeration_DeviceInformation.get_ref().get(), &IID_IDeviceInformationStatics, &mut res as *mut *mut _ as *mut *mut VOID);
+        let hres = RoGetActivationFactory(Windows_Devices_Enumeration_DeviceInformation.get_ref().get(), &IDeviceInformationStatics::iid().as_iid(), &mut res as *mut *mut _ as *mut *mut VOID);
         println!("HRESULT (deviceInformationStatics) = {}", hres);
         ComPtr::<IDeviceInformationStatics>::wrap(res)
     };
