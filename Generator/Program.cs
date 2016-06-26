@@ -33,77 +33,83 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 
 	static void Main(string[] args)
 		{
-			Console.WriteLine("Writing to " + new FileInfo(args[0]).FullName + " ...");
+			if (args.Length < 1) throw new ArgumentException("Please specify result file path as first argument");
+
 			TypeCounter counter = new TypeCounter { Enums = 0, Interfaces = 0, Classes = 0, Structs = 0 };
+
+			var files = Directory.GetFiles(@"C:\Windows\System32\WinMetadata\");
+			var collection = new AssemblyCollection(files);
+
+			// TODO: enable all modules, not just "Foundation" (currently leads to parse error in Rust)
+			var names = new string[] { "Windows.Foundation", /*"Windows.Storage", "Windows.Devices", "Windows.Media", "Windows.System", "Windows.Graphics"*/ };
+			foreach (var asm in collection.Assemblies.Where(a => names.Contains(a.Name.Name)))
+			{
+				foreach (var t in asm.MainModule.Types.Where(t => t.FullName != "<Module>"))
+				{
+					definitionsWorklist.Add(t.FullName, t);
+				}
+			}
+
+			var root = new Module("");
+
+			while (definitionsWorklist.Count > 0)
+			{
+				var type = definitionsWorklist.First().Value;
+				definitionsWorklist.Remove(type.FullName);
+				definitionsDone.Add(type.FullName, false);
+
+				Assert(type.Attributes.HasFlag(TypeAttributes.WindowsRuntime));
+
+				var module = root.FindChild(type.Namespace);
+
+				if (type.IsEnum)
+				{
+					counter.Enums++;
+					WriteEnum(module, type);
+				}
+				else if (type.IsInterface)
+				{
+					counter.Interfaces++;
+					WriteInterface(module, type, false);
+				}
+				else if (type.IsValueType)
+				{
+					counter.Structs++;
+					WriteStruct(module, type);
+				}
+				else if (IsDelegate(type))
+				{
+					counter.Delegates++;
+					WriteInterface(module, type, true);
+				}
+				else if (type.IsClass)
+				{
+					counter.Classes++;
+					WriteClass(module, type);
+				}
+				else
+				{
+					throw new NotImplementedException();
+				}
+			}
+
+			Console.WriteLine("Generated {0} type definitions ({1} enums, {2} interfaces, {3} structs, {4} classes, {5} delegates)", counter.Sum(), counter.Enums, counter.Interfaces, counter.Structs, counter.Classes, counter.Delegates);
+			var instantiationsCopy = new List<GenericInstanceType>(genericInstantiations.Values);
+			foreach (var t in instantiationsCopy)
+			{
+				WriteParametricIID(root, t);
+			}
+			Console.WriteLine("Found and generated IIDs for {0} distinct generic instantiations.", genericInstantiations.Count);
+			Console.Write("Writing results to " + new FileInfo(args[0]).FullName + " ...");
 			using (var file = new StreamWriter(args[0]))
 			{
 				file.WriteLine("// DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED!");
 				file.WriteLine(@"#![allow(non_camel_case_types, unused_imports)]");
-
-				var files = Directory.GetFiles(@"C:\Windows\System32\WinMetadata\");
-				var collection = new AssemblyCollection(files);
-
-				// TODO: enable all modules, not just "Foundation" (currently leads to parse error in Rust)
-				var names = new string[] { "Windows.Foundation"/*, "Windows.Storage", "Windows.Devices", "Windows.Media", "Windows.System", "Windows.Graphics"*/ };
-				foreach (var asm in collection.Assemblies.Where(a => names.Contains(a.Name.Name)))
-				{
-					foreach (var t in asm.MainModule.Types.Where(t => t.FullName != "<Module>"))
-					{
-						definitionsWorklist.Add(t.FullName, t);
-					}
-				}
-
-				var root = new Module("");
-
-				while (definitionsWorklist.Count > 0)
-				{
-					var type = definitionsWorklist.First().Value;
-					definitionsWorklist.Remove(type.FullName);
-					definitionsDone.Add(type.FullName, false);
-
-					Assert(type.Attributes.HasFlag(TypeAttributes.WindowsRuntime));
-
-					var module = root.FindChild(type.Namespace);
-
-					if (type.IsEnum)
-					{
-						counter.Enums++;
-						WriteEnum(module, type);
-					}
-					else if (type.IsInterface)
-					{
-						counter.Interfaces++;
-						WriteInterface(module, type, false);
-					}
-					else if (type.IsValueType)
-					{
-						counter.Structs++;
-						WriteStruct(module, type);
-					}
-					else if (IsDelegate(type))
-					{
-						counter.Delegates++;
-						WriteInterface(module, type, true);
-					}
-					else if (type.IsClass)
-					{
-						counter.Classes++;
-						WriteClass(module, type);
-					}
-					else
-					{
-						throw new NotImplementedException();
-					}
-				}
-
 				foreach (var child in root.Children.Values)
 				{
 					WriteModuleTree(child, file);
 				}
-
-				Console.WriteLine("Done writing {0} type definitions ({1} enums, {2} interfaces, {3} structs, {4} classes, {5} delegates)", counter.Sum(), counter.Enums, counter.Interfaces, counter.Structs, counter.Classes, counter.Delegates);
-				
-				Console.WriteLine("Found and generated IIDs for {0} distinct generic instantiations.", genericInstantiations.Count);
+				Console.WriteLine(" done.");
 			}
 			
 			Console.ReadLine();
@@ -412,30 +418,35 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 
 		static Guid PinterfaceNamespace = new Guid("11F47AD5-7B73-42C0-ABAE-878B1E16ADEE");
 
-		static void WriteParametricIIDs(Module module, IEnumerable<GenericInstanceType> genericInstantiation)
+		static void WriteParametricIID(Module root, GenericInstanceType t)
 		{
-			foreach (var t in genericInstantiation)
+			TypeDefinition def;
+			var desc = GetTypeIIDDescriptor(t, out def);
+			Assert(def != null); // def is only null for primitive types
+			var name = GetTypeName(t, TypeUsage.Define);
+			string lifetime = "";
+			if (name.Contains("'a"))
 			{
-				var desc = GetTypeIIDDescriptor(t);
-				var name = GetTypeName(t, TypeUsage.Define);
-				string lifetime = "";
-				if (name.Contains("'a"))
-				{
-					lifetime = "<'a>";
-				}
-				var iidName = "IID_" + Regex.Replace(t.FullName, @"[\.`<>,]", "_").TrimEnd('_');
-				var guid = Utility.GuidUtility.Create(PinterfaceNamespace, desc);
-				var guidStr = Regex.Replace(guid.ToString("X"), @"[\{\}]", "");
-				module.Append(@"
+				lifetime = "<'a>";
+			}
+			var iidName = "IID_" + Regex.Replace(t.FullName.Substring(t.Namespace.Length + 1), @"[\.`<>,]", "_").TrimEnd('_');
+			var guid = Utility.GuidUtility.Create(PinterfaceNamespace, desc);
+			var guidStr = Regex.Replace(guid.ToString("X"), @"[\{\}]", "");
+			var module = root.FindChild(def.Namespace);
+
+			/*module.Append(@"
 		RT_IID!(" + iidName + ", " + guidStr + @");
 		impl" + lifetime + " ComIid for " + name + @" {
 			fn iid()-> ::w::REFIID { &" + iidName + @" }
-		}");
-			}
+		}");*/
+			module.Append(@"
+		RT_PINTERFACE!{ for" + lifetime + " " + name + " => [" + guidStr + "] as " + iidName + " }");
 		}
 
-		static string GetTypeIIDDescriptor(TypeReference t)
+		static string GetTypeIIDDescriptor(TypeReference t, out TypeDefinition def)
 		{
+			def = null;
+
 			if (t.FullName == "System.String")
 			{
 				return "string";
@@ -468,25 +479,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 				}
 			}
 
-			TypeDefinition def = null;
-
-			try
-			{
-				def = t.Resolve();
-			}
-			catch (AssemblyResolutionException)
-			{
-				return "NOTFOUND"; // TODO
-			}
+			def = t.Resolve();
 
 			var guid = GetGuidForType(def);
+			TypeDefinition def2;
 
 			if (def.IsInterface)
 			{
 				if (t.IsGenericInstance)
 				{
 					var ty = (GenericInstanceType)t;
-					return "pinterface({" + guid.Value.ToString() + "};" + String.Join(";", ty.GenericArguments.Select(p => GetTypeIIDDescriptor(p))) + ")";
+					return "pinterface({" + guid.Value.ToString() + "};" + String.Join(";", ty.GenericArguments.Select(p => GetTypeIIDDescriptor(p, out def2))) + ")";
 				}
 				else
 				{
@@ -498,7 +501,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 				if (t.IsGenericInstance)
 				{
 					var ty = (GenericInstanceType)t;
-					return "pinterface({" + guid.Value.ToString() + "};" + String.Join(";", ty.GenericArguments.Select(p => GetTypeIIDDescriptor(p))) + ")";
+					return "pinterface({" + guid.Value.ToString() + "};" + String.Join(";", ty.GenericArguments.Select(p => GetTypeIIDDescriptor(p, out def2))) + ")";
 				}
 				else
 				{
@@ -509,12 +512,13 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 			}
 			else if (def.IsEnum)
 			{
-				var underlyingType = GetTypeIIDDescriptor(def.Fields.Single(f => f.Name == "value__").FieldType);
+				
+				var underlyingType = GetTypeIIDDescriptor(def.Fields.Single(f => f.Name == "value__").FieldType, out def2);
 				return "enum(" + def.FullName + ";" + underlyingType + ")";
 			}
 			else if (def.IsValueType)
 			{
-				return "struct(" + def.FullName + ";" + String.Join(";", def.Fields.Select(f => GetTypeIIDDescriptor(f.FieldType))) + ")";
+				return "struct(" + def.FullName + ";" + String.Join(";", def.Fields.Select(f => GetTypeIIDDescriptor(f.FieldType, out def2))) + ")";
 			}
 			else if (def.IsClass)
 			{

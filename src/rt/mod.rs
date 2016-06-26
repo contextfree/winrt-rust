@@ -544,6 +544,27 @@ macro_rules! RT_IID {
     }
 }
 
+macro_rules! RT_PINTERFACE {
+    (
+        for<'a> $t:ty => [$l:expr, $w1:expr, $w2:expr, $b1:expr, $b2:expr, $b3:expr, $b4:expr, $b5:expr,
+        $b6:expr, $b7:expr, $b8:expr] as $iid:ident
+    ) => {
+        RT_IID!($iid, $l,$w1,$w2,$b1,$b2,$b3,$b4,$b5,$b6,$b7,$b8);
+		impl<'a> ComIid for $t {
+			fn iid()-> ::w::REFIID { &$iid }
+		}
+    };
+    (
+        for $t:ty => [$l:expr, $w1:expr, $w2:expr, $b1:expr, $b2:expr, $b3:expr, $b4:expr, $b5:expr,
+        $b6:expr, $b7:expr, $b8:expr] as $iid:ident
+    ) => {
+        RT_IID!($iid, $l,$w1,$w2,$b1,$b2,$b3,$b4,$b5,$b6,$b7,$b8);
+		impl ComIid for $t {
+			fn iid()-> ::w::REFIID { &$iid }
+		}
+    };
+}
+
 pub mod gen; // import auto-generated definitions
 
 pub use self::gen::windows::foundation::collections::{

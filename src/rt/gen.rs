@@ -290,6 +290,23 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 		RT_STRUCT! { struct UniversalApiContract {
 			
 		}}
+		RT_PINTERFACE!{ for<'a> EventHandler<&'a ::rt::gen::windows::foundation::diagnostics::TracingStatusChangedEventArgs> => [0x2bf27008,0x2eb4,0x5675,0xb1,0xcd,0xe9,0x90,0x6c,0xc5,0xce,0x64] as IID_EventHandler_1_Windows_Foundation_Diagnostics_TracingStatusChangedEventArgs }
+		RT_PINTERFACE!{ for<'a> TypedEventHandler<&'a ::rt::gen::windows::foundation::IMemoryBufferReference, &'a IInspectable> => [0xf4637d4a,0x0760,0x5431,0xbf,0xc0,0x24,0xeb,0x1d,0x4f,0x6c,0x4f] as IID_TypedEventHandler_2_Windows_Foundation_IMemoryBufferReference_System_Object }
+		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::foundation::diagnostics::ErrorDetails> => [0x9b05106d,0x77e0,0x5c24,0x82,0xb0,0x9b,0x2d,0xc8,0xf7,0x96,0x71] as IID_IAsyncOperation_1_Windows_Foundation_Diagnostics_ErrorDetails }
+		RT_PINTERFACE!{ for<'a> TypedEventHandler<&'a ::rt::gen::windows::foundation::diagnostics::ILoggingChannel, &'a IInspectable> => [0x52c9c2a1,0x54a3,0x5ef9,0x9a,0xff,0x01,0x4e,0x7c,0x45,0x46,0x55] as IID_TypedEventHandler_2_Windows_Foundation_Diagnostics_ILoggingChannel_System_Object }
+		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::storage::StorageFile> => [0x5e52f8ce,0xaced,0x5a42,0x95,0xb4,0xf6,0x74,0xdd,0x84,0x88,0x5e] as IID_IAsyncOperation_1_Windows_Storage_StorageFile }
+		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::storage::streams::IRandomAccessStream> => [0x430ecece,0x1418,0x5d19,0x81,0xb2,0x5d,0xdb,0x38,0x16,0x03,0xcc] as IID_IAsyncOperation_1_Windows_Storage_Streams_IRandomAccessStream }
+		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::storage::StorageStreamTransaction> => [0x0d81405a,0x9bd3,0x5e87,0x82,0xf4,0x9b,0x41,0x28,0xa8,0x87,0xeb] as IID_IAsyncOperation_1_Windows_Storage_StorageStreamTransaction }
+		RT_PINTERFACE!{ for IAsyncOperationWithProgress<u32, u32> => [0xeccb574a,0xc684,0x5572,0xa6,0x79,0x6b,0x08,0x42,0xcf,0xb5,0x7f] as IID_IAsyncOperationWithProgress_2_System_UInt32_System_UInt32 }
+		RT_PINTERFACE!{ for IAsyncOperation<bool> => [0xcdb5efb3,0x5788,0x509d,0x9b,0xe1,0x71,0xcc,0xb8,0xa3,0x36,0x2a] as IID_IAsyncOperation_1_System_Boolean }
+		RT_PINTERFACE!{ for<'a> IAsyncOperationWithProgress<&'a ::rt::gen::windows::storage::streams::IBuffer, u32> => [0xd26b2819,0x897f,0x5c7d,0x84,0xd6,0x56,0xd7,0x96,0x56,0x14,0x31] as IID_IAsyncOperationWithProgress_2_Windows_Storage_Streams_IBuffer_System_UInt32 }
+		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::storage::StorageFolder> => [0x6be9e7d7,0xe83a,0x5cbc,0x80,0x2c,0x17,0x68,0x96,0x0b,0x52,0xc3] as IID_IAsyncOperation_1_Windows_Storage_StorageFolder }
+		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::storage::IStorageItem> => [0x5fc9c137,0xebb7,0x5e6c,0x9c,0xba,0x68,0x6f,0x2e,0xc2,0xb0,0xbb] as IID_IAsyncOperation_1_Windows_Storage_IStorageItem }
+		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::foundation::collections::IVectorView<&'a ::rt::gen::windows::storage::StorageFile>> => [0x03362e33,0xe413,0x5f29,0x97,0xd0,0x48,0xa4,0x78,0x09,0x35,0xf9] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFile }
+		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::foundation::collections::IVectorView<&'a ::rt::gen::windows::storage::StorageFolder>> => [0xca40b21b,0xaeb1,0x5a61,0x9e,0x08,0x3b,0xd5,0xd9,0x59,0x40,0x23] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFolder }
+		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::foundation::collections::IVectorView<&'a ::rt::gen::windows::storage::IStorageItem>> => [0x4b1c0fd7,0x7a01,0x5e7a,0xa6,0xfe,0xbe,0x45,0x00,0x28,0x3f,0x23] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_IStorageItem }
+		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::storage::fileproperties::BasicProperties> => [0x5186131a,0x4467,0x504b,0x97,0x7a,0x07,0x85,0xa8,0x23,0x04,0x85] as IID_IAsyncOperation_1_Windows_Storage_FileProperties_BasicProperties }
+		RT_PINTERFACE!{ for<'a> TypedEventHandler<&'a ::rt::gen::windows::foundation::diagnostics::IFileLoggingSession, &'a ::rt::gen::windows::foundation::diagnostics::LogFileGeneratedEventArgs> => [0x0c6563b0,0x9d8b,0x5b60,0x99,0x4b,0xde,0xe1,0x17,0x4d,0x1e,0xfb] as IID_TypedEventHandler_2_Windows_Foundation_Diagnostics_IFileLoggingSession_Windows_Foundation_Diagnostics_LogFileGeneratedEventArgs }
 pub mod collections { // Windows.Foundation.Collections
 use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
@@ -386,6 +403,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 			fn add_MapChanged(&mut self, vhnd: *mut ::rt::gen::windows::foundation::collections::MapChangedEventHandler<K, V>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
 			fn remove_MapChanged(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT
 		}}
+		RT_PINTERFACE!{ for<'a> IMap<&'a str, &'a str> => [0xf6d1f700,0x49c2,0x52ae,0x81,0x54,0x82,0x6f,0x99,0x08,0x77,0x3c] as IID_IMap_2_System_String_System_String }
+		RT_PINTERFACE!{ for<'a> IVectorView<&'a ::rt::gen::windows::storage::StorageFile> => [0x80646519,0x5e2a,0x595d,0xa8,0xcd,0x2a,0x24,0xb4,0x06,0x7f,0x1b] as IID_IVectorView_1_Windows_Storage_StorageFile }
+		RT_PINTERFACE!{ for<'a> IVectorView<&'a ::rt::gen::windows::storage::StorageFolder> => [0xe20debc6,0xdc4e,0x542e,0xa2,0xe7,0xa2,0x4d,0x19,0xc8,0xdd,0x62] as IID_IVectorView_1_Windows_Storage_StorageFolder }
+		RT_PINTERFACE!{ for<'a> IVectorView<&'a ::rt::gen::windows::storage::IStorageItem> => [0x85575a41,0x06cb,0x58d0,0xb9,0x8a,0x7c,0x8f,0x06,0xe6,0xe9,0xd7] as IID_IVectorView_1_Windows_Storage_IStorageItem }
 } // Windows.Foundation.Collections
 pub mod metadata { // Windows.Foundation.Metadata
 use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
