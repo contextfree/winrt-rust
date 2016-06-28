@@ -101,40 +101,48 @@ impl<T, Interface: ComInterface> IntoInterface<Interface> for T where T: ComClas
     }
 }
 
-pub struct AsyncOperationCompletedHandlerImpl<TResult: RtType> {
-    invoke: Box<FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT>
+pub struct AsyncOperationCompletedHandlerImpl<TResult: RtType, F> where F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT {
+    invoke: F,
+    phantom: ::std::marker::PhantomData<TResult>
 }
 
-impl<TResult: RtType + 'static> AsyncOperationCompletedHandlerImpl<TResult> where AsyncOperationCompletedHandler<TResult>: ComIid {
-    pub fn new<F>(f: F) -> AsyncOperationCompletedHandlerImpl<TResult> where F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT {
-        AsyncOperationCompletedHandlerImpl::<TResult> {
-            invoke: Box::new(f)
+impl<TResult: RtType + 'static, F> AsyncOperationCompletedHandlerImpl<TResult, F>
+    where AsyncOperationCompletedHandler<TResult>: ComIid, F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT
+{
+    pub fn new(f: F) -> AsyncOperationCompletedHandlerImpl<TResult, F> {
+        AsyncOperationCompletedHandlerImpl {
+            invoke: f,
+            phantom: ::std::marker::PhantomData
         }
     }
 }
 
-impl<TResult: RtType + 'static> ComClass<AsyncOperationCompletedHandler<TResult>> for AsyncOperationCompletedHandlerImpl<TResult> where AsyncOperationCompletedHandler<TResult>: ComIid {
+impl<TResult: RtType + 'static, F> ComClass<AsyncOperationCompletedHandler<TResult>> for AsyncOperationCompletedHandlerImpl<TResult, F>
+    where AsyncOperationCompletedHandler<TResult>: ComIid, F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT
+{
     fn get_vtbl() -> AsyncOperationCompletedHandlerVtbl<TResult> {
         AsyncOperationCompletedHandlerVtbl::<TResult> {
             parent: IUnknownVtbl {
-                QueryInterface: ComReprHandler_QueryInterface::<AsyncOperationCompletedHandlerImpl<TResult>, _>,
-                AddRef: ComRepr_AddRef::<AsyncOperationCompletedHandlerImpl<TResult>>,
-                Release: ComRepr_Release::<AsyncOperationCompletedHandlerImpl<TResult>>,
+                QueryInterface: ComReprHandler_QueryInterface::<AsyncOperationCompletedHandlerImpl<TResult, F>, _>,
+                AddRef: ComRepr_AddRef::<AsyncOperationCompletedHandlerImpl<TResult, F>>,
+                Release: ComRepr_Release::<AsyncOperationCompletedHandlerImpl<TResult, F>>,
             },
             Invoke: {
-                unsafe extern "system" fn Invoke<TResult: RtType + 'static>(this_: *mut AsyncOperationCompletedHandler<TResult>, asyncOperation: *mut IAsyncOperation<TResult>, status: AsyncStatus) -> HRESULT
-                    where AsyncOperationCompletedHandler<TResult>: ComIid
+                unsafe extern "system" fn Invoke<TResult: RtType + 'static, F>(this_: *mut AsyncOperationCompletedHandler<TResult>, asyncOperation: *mut IAsyncOperation<TResult>, status: AsyncStatus) -> HRESULT
+                    where AsyncOperationCompletedHandler<TResult>: ComIid, F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT
                 {
-                    let this: &mut AsyncOperationCompletedHandlerImpl<TResult> = ComClass::from_interface(this_);
+                    let this: &mut AsyncOperationCompletedHandlerImpl<TResult, F> = ComClass::from_interface(this_);
                     (this.invoke)(asyncOperation, status)
                 }
-                Invoke::<TResult>
+                Invoke::<TResult, F>
             }
         }
     }
 }
 
-impl<TResult> Drop for AsyncOperationCompletedHandlerImpl<TResult> where TResult: RtType {
+impl<TResult, F> Drop for AsyncOperationCompletedHandlerImpl<TResult, F>
+    where TResult: RtType, F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT 
+{
     fn drop(&mut self) {
         println!("Dropped AsyncOperationCompletedHandlerImpl<...>!");
     }
