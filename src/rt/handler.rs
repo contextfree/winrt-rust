@@ -23,14 +23,13 @@ use ::w::{S_OK, HRESULT, VOID, REFIID, ULONG};
 // Define custom COM component and implement AsyncOperationCompletedHandler
 #[repr(C)]
 pub struct ComRepr<T, Vtbl> {
-    vtbl: *const Vtbl,
+    vtbl: Box<Vtbl>,
     refcount: atomic::AtomicUsize,
     data: T
 }
 
 /// This is a reusable implementation of AddRef that works for any ComRepr-based type
-unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut IUnknown) -> ULONG
-{
+unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut IUnknown) -> ULONG {
     let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
     
     // Increment the reference count (count member).
@@ -42,8 +41,7 @@ unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut IUnknown) -> ULONG
 }
 
 /// This is a reusable implementation of Release that works for any ComRepr-based type
-unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG
-{
+unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG {
     let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
     
     let old_size = (*this).refcount.fetch_sub(1, atomic::Ordering::Release);
@@ -58,11 +56,25 @@ unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG
     return 0;
 }
 
-pub trait ComClass<Interface: ComInterface> where Self: Sized {
-    fn get_vtbl() -> &'static Interface::Vtbl;
-    fn vtbl(&self) -> &'static Interface::Vtbl {
-        Self::get_vtbl()
+unsafe extern "system" fn ComReprHandler_QueryInterface<T, I>(this_: *mut IUnknown, vTableGuid: REFIID, ppv: *mut *mut VOID) -> HRESULT
+    where T: ComClass<I>, I: ComInterface + ComIid
+{
+    let this_ = this_ as *mut I;
+    let guid: Guid = (*vTableGuid).into();
+    println!("QueryInterface called with GUID {:?}", guid);
+
+    // IAgileObject is only supported for Send objects
+    if guid != *IUnknown::iid() && guid != *IAgileObject::iid() && guid != *<I as ComIid>::iid() { 
+        *ppv = ::std::ptr::null_mut();
+        return ::w::E_NOINTERFACE;
     }
+    *ppv = this_ as *mut _ as *mut VOID;
+    ComRepr_AddRef::<T>(this_ as *mut IUnknown);
+    S_OK
+}
+
+pub trait ComClass<Interface: ComInterface> where Self: Sized {
+    fn get_vtbl() -> Interface::Vtbl;
     unsafe fn from_interface<'a>(thing: *mut Interface) -> &'a mut Self {
         &mut (*(thing as *mut _ as *mut ComRepr<Self, Interface::Vtbl>)).data
     }
@@ -81,7 +93,7 @@ pub trait IntoInterface<Interface: ComInterface> {
 impl<T, Interface: ComInterface> IntoInterface<Interface> for T where T: ComClass<Interface> + Sized {
     fn into_interface(self) -> ComPtr<Interface> {
         let com = Box::new(ComRepr {
-            vtbl: Self::get_vtbl(),
+            vtbl: Box::new(Self::get_vtbl()),
             refcount: ::std::sync::atomic::AtomicUsize::new(1),
             data: self
         });
@@ -89,74 +101,36 @@ impl<T, Interface: ComInterface> IntoInterface<Interface> for T where T: ComClas
     }
 }
 
-pub struct AsyncOperationCompletedHandlerImpl<TResult> where TResult: RtType {
-    target_iid: &'static Guid,
+pub struct AsyncOperationCompletedHandlerImpl<TResult: RtType> {
     invoke: Box<FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT>
 }
 
-impl<TResult: 'static> AsyncOperationCompletedHandlerImpl<TResult> where TResult: RtType, AsyncOperationCompletedHandler<TResult>: ComIid {
+impl<TResult: RtType + 'static> AsyncOperationCompletedHandlerImpl<TResult> where AsyncOperationCompletedHandler<TResult>: ComIid {
     pub fn new<F>(f: F) -> AsyncOperationCompletedHandlerImpl<TResult> where F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT {
         AsyncOperationCompletedHandlerImpl::<TResult> {
-            target_iid: <AsyncOperationCompletedHandler<TResult> as ComIid>::iid(),
             invoke: Box::new(f)
         }
     }
 }
 
-type __Any = bool;
-
-// AsyncOperationCompletedHandlerVtbl only references TResult in type parameter position, so the implementation
-// should be the same regardless of TResult, which means that we can just use a dummy `bool` here.
-const AsyncOperationCompletedHandlerImplVtbl: &'static AsyncOperationCompletedHandlerVtbl<__Any> = &AsyncOperationCompletedHandlerVtbl::<__Any> {
-    parent: IUnknownVtbl {
-        QueryInterface: {
-            unsafe extern "system" fn QueryInterface(this_: *mut IUnknown, vTableGuid: REFIID, ppv: *mut *mut VOID) -> HRESULT
-            {
-                let this_ = this_ as *mut AsyncOperationCompletedHandler<__Any>;
-                let guid: Guid = (*vTableGuid).into();
-                println!("QueryInterface called with GUID {:?}", guid);
-
-                let this: &mut AsyncOperationCompletedHandlerImpl<__Any> = AsyncOperationCompletedHandlerImpl::<__Any>::from_interface(this_);
-                
-                // TODO: How to determine which IIDs are allowed here?
-                if guid != *IUnknown::iid() &&
-                    guid != *IAgileObject::iid() && // IAgileObject is only supported for Send objects
-                    guid != *this.target_iid { 
-                    // We don't recognize the GUID passed to us. Let the caller know this,
-                    // by clearing his handle, and returning E_NOINTERFACE.
-                    *ppv = ::std::ptr::null_mut();
-                    return ::w::E_NOINTERFACE;
+impl<TResult: RtType + 'static> ComClass<AsyncOperationCompletedHandler<TResult>> for AsyncOperationCompletedHandlerImpl<TResult> where AsyncOperationCompletedHandler<TResult>: ComIid {
+    fn get_vtbl() -> AsyncOperationCompletedHandlerVtbl<TResult> {
+        AsyncOperationCompletedHandlerVtbl::<TResult> {
+            parent: IUnknownVtbl {
+                QueryInterface: ComReprHandler_QueryInterface::<AsyncOperationCompletedHandlerImpl<TResult>, _>,
+                AddRef: ComRepr_AddRef::<AsyncOperationCompletedHandlerImpl<TResult>>,
+                Release: ComRepr_Release::<AsyncOperationCompletedHandlerImpl<TResult>>,
+            },
+            Invoke: {
+                unsafe extern "system" fn Invoke<TResult: RtType + 'static>(this_: *mut AsyncOperationCompletedHandler<TResult>, asyncOperation: *mut IAsyncOperation<TResult>, status: AsyncStatus) -> HRESULT
+                    where AsyncOperationCompletedHandler<TResult>: ComIid
+                {
+                    let this: &mut AsyncOperationCompletedHandlerImpl<TResult> = ComClass::from_interface(this_);
+                    (this.invoke)(asyncOperation, status)
                 }
-
-                // It's a match!
-
-                // First, we fill in his handle with the same object pointer he passed us.
-                *ppv = this_ as *mut _ as *mut VOID;
-
-                // Now we call our own AddRef function, which we can do without vtable lookup
-                // Alternatively could call: (&mut *this_).AddRef();
-                ComRepr_AddRef::<AsyncOperationCompletedHandlerImpl<__Any>>(this_ as *mut IUnknown);
-
-                // Let the caller know that he indeed has an object of the requested interface.
-                return S_OK;
+                Invoke::<TResult>
             }
-            QueryInterface
-        },
-        AddRef: ComRepr_AddRef::<AsyncOperationCompletedHandlerImpl<__Any>>,
-        Release: ComRepr_Release::<AsyncOperationCompletedHandlerImpl<__Any>>,
-    },
-    Invoke: {
-        unsafe extern "system" fn Invoke(this_: *mut AsyncOperationCompletedHandler<__Any>, asyncOperation: *mut IAsyncOperation<__Any>, status: AsyncStatus) -> HRESULT {
-            let this: &mut AsyncOperationCompletedHandlerImpl<__Any> = AsyncOperationCompletedHandlerImpl::<__Any>::from_interface(this_);
-            (this.invoke)(asyncOperation, status)
         }
-        Invoke
-    }
-};
-
-impl<TResult: 'static> ComClass<AsyncOperationCompletedHandler<TResult>> for AsyncOperationCompletedHandlerImpl<TResult> where TResult: RtType {
-    fn get_vtbl() -> &'static AsyncOperationCompletedHandlerVtbl<TResult> {
-        unsafe { ::std::mem::transmute(AsyncOperationCompletedHandlerImplVtbl) }
     }
 }
 

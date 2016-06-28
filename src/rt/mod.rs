@@ -523,12 +523,10 @@ macro_rules! RT_ENUM {
 
 macro_rules! RT_STRUCT {
     {$(#[$attrs:meta])* struct $name:ident { $($field:ident: $ftype:ty,)* }} => {
-        #[repr(C)] #[derive(Debug)] $(#[$attrs])*
+        #[repr(C)] #[derive(Debug,Copy,Clone)] $(#[$attrs])*
         pub struct $name {
             $(pub $field: $ftype,)*
         }
-        impl Copy for $name {}
-        impl Clone for $name { fn clone(&self) -> $name { *self } }
         unsafe impl RtValueType for $name {}
     };
 }

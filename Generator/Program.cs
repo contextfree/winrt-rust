@@ -434,11 +434,6 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 			var guidStr = Regex.Replace(guid.ToString("X"), @"[\{\}]", "");
 			var module = root.FindChild(def.Namespace);
 
-			/*module.Append(@"
-		DEFINE_IID!(" + iidName + ", " + guidStr + @");
-		impl" + lifetime + " ComIid for " + name + @" {
-			fn iid()-> ::w::REFIID { &" + iidName + @" }
-		}");*/
 			module.Append(@"
 		RT_PINTERFACE!{ for" + lifetime + " " + name + " => [" + guidStr + "] as " + iidName + " }");
 		}
