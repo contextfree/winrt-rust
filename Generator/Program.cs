@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using static System.Diagnostics.Debug;
 
 using Mono.Cecil;
+using Mono.Cecil.Rocks;
 
 namespace Generator
 {
@@ -29,7 +30,7 @@ namespace Generator
 		static Dictionary<string, TypeDefinition> definitionsWorklist = new Dictionary<string, TypeDefinition>();
 		static Dictionary<string, bool> definitionsDone = new Dictionary<string, bool>();
 		static string Imports = @"use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
+use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::IntoInterface;";
 
 	static void Main(string[] args)
 		{
@@ -41,7 +42,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 			var collection = new AssemblyCollection(files);
 
 			// TODO: enable all modules, not just "Foundation" (currently leads to parse error in Rust)
-			var names = new string[] { "Windows.Foundation", /*"Windows.Storage", "Windows.Devices", "Windows.Media", "Windows.System", "Windows.Graphics"*/ };
+			var names = new string[] { "Windows.Foundation", /*"Windows.Devices", "Windows.Storage", "Windows.Media", "Windows.System", "Windows.Graphics"*/ };
 			foreach (var asm in collection.Assemblies.Where(a => names.Contains(a.Name.Name)))
 			{
 				foreach (var t in asm.MainModule.Types.Where(t => t.FullName != "<Module>"))
@@ -155,13 +156,21 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 				generic = "<" + String.Join(", ", t.GenericParameters.Select(p => p.Name)) + ">";
 			}
 
-			string baseInterface = isDelegate ? "IUnknown" : "IInspectable";
-			var methods = isDelegate ? t.Methods.Where(m => m.Name != ".ctor") : t.Methods;
-
-			module.Append(@"
-		RT_INTERFACE!{interface " + name + generic + "(" + name + "Vtbl): " + baseInterface + "(" + baseInterface  + "Vtbl) [IID_" + name + @"] {
+			if (!isDelegate)
+			{
+				module.Append(@"
+		RT_INTERFACE!{interface " + name + generic + "(" + name + "Vtbl): IInspectable(IInspectableVtbl) [IID_" + name + @"] {
+			" + String.Join(",\r\n			", t.Methods.Select(m => GetRawMethodDeclaration(m))) + @"
+		}}");
+			}
+			else
+			{
+				var methods = t.Methods.Where(m => m.Name != ".ctor");
+				module.Append(@"
+		RT_DELEGATE!{delegate " + name + generic + "(" + name + "Vtbl, " + name + "Impl) [IID_" + name + @"] {
 			" + String.Join(",\r\n			", methods.Select(m => GetRawMethodDeclaration(m))) + @"
 		}}");
+			}
 		}
 
 		static string GetRawMethodDeclaration(MethodDefinition m)
@@ -225,7 +234,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 			var classType = GetTypeName(t, TypeUsage.Define);
 			if (aliasedType.Contains("'a")) // if we had to introduce a lifetime parameter ...
 			{
-				classType += "<'a>";
+				aliasedType = aliasedType.Replace("'a", "'static");
+				//classType += "<'a>";
 				Assert(definitionsDone.ContainsKey(t.FullName));
 				definitionsDone[t.FullName] = true;
 			}
@@ -365,7 +375,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 					var ty = (GenericInstanceType)t;
 					if (!ty.ContainsGenericParameter)
 					{
-						genericInstantiations[ty.FullName] = ty;
+						AddGenericInstantiation(ty);
 					}
 					var argUsage = (usage == TypeUsage.Define || usage == TypeUsage.Alias || usage == TypeUsage.GenericArgWithLifetime) ? TypeUsage.GenericArgWithLifetime : TypeUsage.GenericArg;
 					name += "<" + String.Join(", ", ty.GenericArguments.Select(a => GetTypeName(a, argUsage))) + ">";
@@ -384,7 +394,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 						if (definitionsDone.TryGetValue(t.FullName, out value) && value)
 						{
 							// we need a lifetime parameter for this type
-							name += "<'a>";
+							//name += "<'a>";
 						}
 						name = "&'a " + name;
 					}
@@ -414,6 +424,44 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};";
 				WriteModuleTree(child, file, newPath);
 			}
 			file.WriteLine("} // " + newPath);
+		}
+
+		static void AddGenericInstantiation(GenericInstanceType ty)
+		{
+			if (genericInstantiations.ContainsKey(ty.FullName)) return;
+
+			genericInstantiations.Add(ty.FullName, ty);
+			// recursively add generic arguments
+			foreach (var arg in ty.GenericArguments)
+			{
+				if (arg.IsGenericInstance)
+				{
+					AddGenericInstantiation((GenericInstanceType)arg);
+				}
+			}
+
+			// recursively add other instantiations introduced by function parameters
+			TypeDefinition def = ty.Resolve();
+			var genericParameterMap = new Dictionary<string, TypeReference>();
+			for (int i = 0; i < def.GenericParameters.Count; i++)
+			{
+				genericParameterMap.Add(def.GenericParameters[i].FullName, ty.GenericArguments[i]);
+			}
+
+			foreach (var m in def.Methods)
+			{
+				foreach (var p in m.Parameters)
+				{
+					var pty = p.ParameterType;
+					if (pty.ContainsGenericParameter && pty is GenericInstanceType)
+					{
+						var gpty = pty as GenericInstanceType;
+						var genericArguments = gpty.GenericArguments.Select(arg => genericParameterMap[arg.FullName]).ToArray();
+						var instantiated = gpty.ElementType.MakeGenericInstanceType(genericArguments);
+						AddGenericInstantiation(instantiated);
+					}
+				}
+			}
 		}
 
 		static Guid PinterfaceNamespace = new Guid("11F47AD5-7B73-42C0-ABAE-878B1E16ADEE");

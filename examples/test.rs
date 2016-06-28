@@ -120,14 +120,14 @@ fn run() {
     let pair = Arc::new((Mutex::new(false), Condvar::new()));
     {
         let pair2 = pair.clone();
-        let mut myHandler = AsyncOperationCompletedHandlerImpl::new(move |_op, status| {
+        let mut myHandler = AsyncOperationCompletedHandler::new(move |_op, status| {
             println!("Result handler invoked! Status: {:?}", status);
             let &(ref lock, ref cvar) = &*pair2;
             let mut started = lock.lock().unwrap();
             *started = true;
             cvar.notify_one();
             S_OK
-        }).into_interface();
+        });
         assert_eq!(unsafe { asyncOp.put_Completed(&mut *myHandler) }, S_OK);
         // local reference to myHandler is dropped here -> Release() is called
     }

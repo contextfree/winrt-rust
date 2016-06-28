@@ -2,10 +2,10 @@
 #![allow(non_camel_case_types, unused_imports)]
 pub mod windows { // Windows
 use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
+use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::IntoInterface;
 pub mod foundation { // Windows.Foundation
 use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
+use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IClosable, 819308585, 32676, 16422, 131, 187, 215, 91, 174, 78, 169, 158);
 		RT_INTERFACE!{interface IClosable(IClosableVtbl): IInspectable(IInspectableVtbl) [IID_IClosable] {
 			fn Close(&mut self) -> ::w::HRESULT
@@ -117,7 +117,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 			fn ToString(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_AsyncActionCompletedHandler, 2767019137, 30409, 16573, 139, 230, 177, 217, 15, 178, 10, 231);
-		RT_INTERFACE!{interface AsyncActionCompletedHandler(AsyncActionCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_AsyncActionCompletedHandler] {
+		RT_DELEGATE!{delegate AsyncActionCompletedHandler(AsyncActionCompletedHandlerVtbl, AsyncActionCompletedHandlerImpl) [IID_AsyncActionCompletedHandler] {
 			fn Invoke(&mut self, asyncInfo: *mut ::rt::gen::windows::foundation::IAsyncAction, asyncStatus: ::rt::gen::windows::foundation::AsyncStatus) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_IDeferral, 3592853298, 15231, 18087, 180, 11, 79, 220, 162, 162, 198, 147);
@@ -125,7 +125,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 			fn Complete(&mut self) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_DeferralCompletedHandler, 3979518834, 62408, 20394, 156, 251, 71, 1, 72, 218, 56, 136);
-		RT_INTERFACE!{interface DeferralCompletedHandler(DeferralCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_DeferralCompletedHandler] {
+		RT_DELEGATE!{delegate DeferralCompletedHandler(DeferralCompletedHandlerVtbl, DeferralCompletedHandlerImpl) [IID_DeferralCompletedHandler] {
 			fn Invoke(&mut self) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_IDeferralFactory, 1705110725, 16309, 18482, 140, 169, 240, 97, 178, 129, 209, 58);
@@ -157,7 +157,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 			fn GetResults(&mut self) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_AsyncOperationWithProgressCompletedHandler, 3898471453, 27303, 18147, 168, 226, 240, 9, 216, 64, 198, 39);
-		RT_INTERFACE!{interface AsyncOperationWithProgressCompletedHandler<TResult, TProgress>(AsyncOperationWithProgressCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_AsyncOperationWithProgressCompletedHandler] {
+		RT_DELEGATE!{delegate AsyncOperationWithProgressCompletedHandler<TResult, TProgress>(AsyncOperationWithProgressCompletedHandlerVtbl, AsyncOperationWithProgressCompletedHandlerImpl) [IID_AsyncOperationWithProgressCompletedHandler] {
 			fn Invoke(&mut self, asyncInfo: *mut ::rt::gen::windows::foundation::IAsyncOperationWithProgress<TResult, TProgress>, asyncStatus: ::rt::gen::windows::foundation::AsyncStatus) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_IAsyncOperationWithProgress, 3050321623, 58007, 18831, 186, 96, 2, 137, 231, 110, 35, 221);
@@ -169,7 +169,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 			fn GetResults(&mut self, out: *mut TResult::Abi) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_AsyncOperationCompletedHandler, 4242337836, 58840, 17528, 145, 90, 77, 144, 183, 75, 131, 165);
-		RT_INTERFACE!{interface AsyncOperationCompletedHandler<TResult>(AsyncOperationCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_AsyncOperationCompletedHandler] {
+		RT_DELEGATE!{delegate AsyncOperationCompletedHandler<TResult>(AsyncOperationCompletedHandlerVtbl, AsyncOperationCompletedHandlerImpl) [IID_AsyncOperationCompletedHandler] {
 			fn Invoke(&mut self, asyncInfo: *mut ::rt::gen::windows::foundation::IAsyncOperation<TResult>, asyncStatus: ::rt::gen::windows::foundation::AsyncStatus) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_IAsyncOperation, 2680336571, 58438, 17634, 170, 97, 156, 171, 143, 99, 106, 242);
@@ -179,7 +179,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 			fn GetResults(&mut self, out: *mut TResult::Abi) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_AsyncActionWithProgressCompletedHandler, 2617417617, 52356, 17661, 172, 38, 10, 108, 78, 85, 82, 129);
-		RT_INTERFACE!{interface AsyncActionWithProgressCompletedHandler<TProgress>(AsyncActionWithProgressCompletedHandlerVtbl): IUnknown(IUnknownVtbl) [IID_AsyncActionWithProgressCompletedHandler] {
+		RT_DELEGATE!{delegate AsyncActionWithProgressCompletedHandler<TProgress>(AsyncActionWithProgressCompletedHandlerVtbl, AsyncActionWithProgressCompletedHandlerImpl) [IID_AsyncActionWithProgressCompletedHandler] {
 			fn Invoke(&mut self, asyncInfo: *mut ::rt::gen::windows::foundation::IAsyncActionWithProgress<TProgress>, asyncStatus: ::rt::gen::windows::foundation::AsyncStatus) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_IAsyncActionWithProgress, 527282776, 59395, 18593, 149, 70, 235, 115, 83, 57, 136, 132);
@@ -191,11 +191,11 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 			fn GetResults(&mut self) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_AsyncOperationProgressHandler, 1432946946, 2731, 16922, 135, 120, 248, 206, 80, 38, 215, 88);
-		RT_INTERFACE!{interface AsyncOperationProgressHandler<TResult, TProgress>(AsyncOperationProgressHandlerVtbl): IUnknown(IUnknownVtbl) [IID_AsyncOperationProgressHandler] {
+		RT_DELEGATE!{delegate AsyncOperationProgressHandler<TResult, TProgress>(AsyncOperationProgressHandlerVtbl, AsyncOperationProgressHandlerImpl) [IID_AsyncOperationProgressHandler] {
 			fn Invoke(&mut self, asyncInfo: *mut ::rt::gen::windows::foundation::IAsyncOperationWithProgress<TResult, TProgress>, progressInfo: TProgress::Abi) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_AsyncActionProgressHandler, 1837385816, 3327, 17808, 174, 137, 149, 165, 165, 200, 180, 184);
-		RT_INTERFACE!{interface AsyncActionProgressHandler<TProgress>(AsyncActionProgressHandlerVtbl): IUnknown(IUnknownVtbl) [IID_AsyncActionProgressHandler] {
+		RT_DELEGATE!{delegate AsyncActionProgressHandler<TProgress>(AsyncActionProgressHandlerVtbl, AsyncActionProgressHandlerImpl) [IID_AsyncActionProgressHandler] {
 			fn Invoke(&mut self, asyncInfo: *mut ::rt::gen::windows::foundation::IAsyncActionWithProgress<TProgress>, progressInfo: TProgress::Abi) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_IReference, 1640068870, 11621, 4576, 154, 232, 212, 133, 100, 1, 84, 114);
@@ -207,11 +207,11 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 			fn get_Value(&mut self, out: *mut *mut T::Abi) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_TypedEventHandler, 2648818996, 27361, 4576, 132, 225, 24, 169, 5, 188, 197, 63);
-		RT_INTERFACE!{interface TypedEventHandler<TSender, TResult>(TypedEventHandlerVtbl): IUnknown(IUnknownVtbl) [IID_TypedEventHandler] {
+		RT_DELEGATE!{delegate TypedEventHandler<TSender, TResult>(TypedEventHandlerVtbl, TypedEventHandlerImpl) [IID_TypedEventHandler] {
 			fn Invoke(&mut self, sender: TSender::Abi, args: TResult::Abi) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_EventHandler, 2648818997, 27361, 4576, 132, 225, 24, 169, 5, 188, 197, 63);
-		RT_INTERFACE!{interface EventHandler<T>(EventHandlerVtbl): IUnknown(IUnknownVtbl) [IID_EventHandler] {
+		RT_DELEGATE!{delegate EventHandler<T>(EventHandlerVtbl, EventHandlerImpl) [IID_EventHandler] {
 			fn Invoke(&mut self, sender: *mut IInspectable, args: T::Abi) -> ::w::HRESULT
 		}}
 		RT_STRUCT! { struct FoundationContract {
@@ -293,23 +293,38 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 		RT_PINTERFACE!{ for<'a> EventHandler<&'a ::rt::gen::windows::foundation::diagnostics::TracingStatusChangedEventArgs> => [0x2bf27008,0x2eb4,0x5675,0xb1,0xcd,0xe9,0x90,0x6c,0xc5,0xce,0x64] as IID_EventHandler_1_Windows_Foundation_Diagnostics_TracingStatusChangedEventArgs }
 		RT_PINTERFACE!{ for<'a> TypedEventHandler<&'a ::rt::gen::windows::foundation::IMemoryBufferReference, &'a IInspectable> => [0xf4637d4a,0x0760,0x5431,0xbf,0xc0,0x24,0xeb,0x1d,0x4f,0x6c,0x4f] as IID_TypedEventHandler_2_Windows_Foundation_IMemoryBufferReference_System_Object }
 		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::foundation::diagnostics::ErrorDetails> => [0x9b05106d,0x77e0,0x5c24,0x82,0xb0,0x9b,0x2d,0xc8,0xf7,0x96,0x71] as IID_IAsyncOperation_1_Windows_Foundation_Diagnostics_ErrorDetails }
+		RT_PINTERFACE!{ for<'a> AsyncOperationCompletedHandler<&'a ::rt::gen::windows::foundation::diagnostics::ErrorDetails> => [0xa6997f9d,0x7195,0x5972,0x8e,0xcd,0x1c,0x73,0xaa,0x5c,0xb3,0x12] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Diagnostics_ErrorDetails }
 		RT_PINTERFACE!{ for<'a> TypedEventHandler<&'a ::rt::gen::windows::foundation::diagnostics::ILoggingChannel, &'a IInspectable> => [0x52c9c2a1,0x54a3,0x5ef9,0x9a,0xff,0x01,0x4e,0x7c,0x45,0x46,0x55] as IID_TypedEventHandler_2_Windows_Foundation_Diagnostics_ILoggingChannel_System_Object }
 		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::storage::StorageFile> => [0x5e52f8ce,0xaced,0x5a42,0x95,0xb4,0xf6,0x74,0xdd,0x84,0x88,0x5e] as IID_IAsyncOperation_1_Windows_Storage_StorageFile }
+		RT_PINTERFACE!{ for<'a> AsyncOperationCompletedHandler<&'a ::rt::gen::windows::storage::StorageFile> => [0xe521c894,0x2c26,0x5946,0x9e,0x61,0x2b,0x5e,0x18,0x8d,0x01,0xed] as IID_AsyncOperationCompletedHandler_1_Windows_Storage_StorageFile }
 		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::storage::streams::IRandomAccessStream> => [0x430ecece,0x1418,0x5d19,0x81,0xb2,0x5d,0xdb,0x38,0x16,0x03,0xcc] as IID_IAsyncOperation_1_Windows_Storage_Streams_IRandomAccessStream }
+		RT_PINTERFACE!{ for<'a> AsyncOperationCompletedHandler<&'a ::rt::gen::windows::storage::streams::IRandomAccessStream> => [0x398c4183,0x793d,0x5b00,0x81,0x9b,0x4a,0xef,0x92,0x48,0x5e,0x94] as IID_AsyncOperationCompletedHandler_1_Windows_Storage_Streams_IRandomAccessStream }
 		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::storage::StorageStreamTransaction> => [0x0d81405a,0x9bd3,0x5e87,0x82,0xf4,0x9b,0x41,0x28,0xa8,0x87,0xeb] as IID_IAsyncOperation_1_Windows_Storage_StorageStreamTransaction }
+		RT_PINTERFACE!{ for<'a> AsyncOperationCompletedHandler<&'a ::rt::gen::windows::storage::StorageStreamTransaction> => [0xd11739e6,0x2995,0x5d33,0xbf,0xff,0x51,0xb6,0x04,0x1f,0x68,0xc1] as IID_AsyncOperationCompletedHandler_1_Windows_Storage_StorageStreamTransaction }
 		RT_PINTERFACE!{ for IAsyncOperationWithProgress<u32, u32> => [0xeccb574a,0xc684,0x5572,0xa6,0x79,0x6b,0x08,0x42,0xcf,0xb5,0x7f] as IID_IAsyncOperationWithProgress_2_System_UInt32_System_UInt32 }
+		RT_PINTERFACE!{ for AsyncOperationProgressHandler<u32, u32> => [0xea0fe405,0xd432,0x5ac7,0x9e,0xf8,0x5a,0x65,0xe1,0xf9,0x7d,0x7e] as IID_AsyncOperationProgressHandler_2_System_UInt32_System_UInt32 }
+		RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<u32, u32> => [0x1e466dc5,0x840f,0x54f9,0xb8,0x77,0x5e,0x3a,0x9f,0x4b,0x6c,0x74] as IID_AsyncOperationWithProgressCompletedHandler_2_System_UInt32_System_UInt32 }
 		RT_PINTERFACE!{ for IAsyncOperation<bool> => [0xcdb5efb3,0x5788,0x509d,0x9b,0xe1,0x71,0xcc,0xb8,0xa3,0x36,0x2a] as IID_IAsyncOperation_1_System_Boolean }
+		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<bool> => [0xc1d3d1a2,0xae17,0x5a5f,0xb5,0xa2,0xbd,0xcc,0x88,0x44,0x88,0x9a] as IID_AsyncOperationCompletedHandler_1_System_Boolean }
 		RT_PINTERFACE!{ for<'a> IAsyncOperationWithProgress<&'a ::rt::gen::windows::storage::streams::IBuffer, u32> => [0xd26b2819,0x897f,0x5c7d,0x84,0xd6,0x56,0xd7,0x96,0x56,0x14,0x31] as IID_IAsyncOperationWithProgress_2_Windows_Storage_Streams_IBuffer_System_UInt32 }
+		RT_PINTERFACE!{ for<'a> AsyncOperationProgressHandler<&'a ::rt::gen::windows::storage::streams::IBuffer, u32> => [0xbf666554,0x7605,0x5d9a,0xb1,0x4e,0x18,0xd8,0xc8,0x47,0x2a,0xfe] as IID_AsyncOperationProgressHandler_2_Windows_Storage_Streams_IBuffer_System_UInt32 }
+		RT_PINTERFACE!{ for<'a> AsyncOperationWithProgressCompletedHandler<&'a ::rt::gen::windows::storage::streams::IBuffer, u32> => [0x06386a7a,0xe009,0x5b0b,0xab,0x68,0xa8,0xe4,0x8b,0x51,0x66,0x47] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Storage_Streams_IBuffer_System_UInt32 }
 		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::storage::StorageFolder> => [0x6be9e7d7,0xe83a,0x5cbc,0x80,0x2c,0x17,0x68,0x96,0x0b,0x52,0xc3] as IID_IAsyncOperation_1_Windows_Storage_StorageFolder }
+		RT_PINTERFACE!{ for<'a> AsyncOperationCompletedHandler<&'a ::rt::gen::windows::storage::StorageFolder> => [0xc211026e,0x9e63,0x5452,0xba,0x54,0x3a,0x07,0xd6,0xa9,0x68,0x74] as IID_AsyncOperationCompletedHandler_1_Windows_Storage_StorageFolder }
 		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::storage::IStorageItem> => [0x5fc9c137,0xebb7,0x5e6c,0x9c,0xba,0x68,0x6f,0x2e,0xc2,0xb0,0xbb] as IID_IAsyncOperation_1_Windows_Storage_IStorageItem }
+		RT_PINTERFACE!{ for<'a> AsyncOperationCompletedHandler<&'a ::rt::gen::windows::storage::IStorageItem> => [0x92c3102f,0xa327,0x5318,0xa6,0xc1,0x76,0xf6,0xb2,0xa0,0xab,0xfb] as IID_AsyncOperationCompletedHandler_1_Windows_Storage_IStorageItem }
 		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::foundation::collections::IVectorView<&'a ::rt::gen::windows::storage::StorageFile>> => [0x03362e33,0xe413,0x5f29,0x97,0xd0,0x48,0xa4,0x78,0x09,0x35,0xf9] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFile }
+		RT_PINTERFACE!{ for<'a> AsyncOperationCompletedHandler<&'a ::rt::gen::windows::foundation::collections::IVectorView<&'a ::rt::gen::windows::storage::StorageFile>> => [0xcb4206c5,0x0988,0x5104,0xaf,0xa9,0x25,0x3c,0x29,0x8f,0x86,0xfd] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFile }
 		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::foundation::collections::IVectorView<&'a ::rt::gen::windows::storage::StorageFolder>> => [0xca40b21b,0xaeb1,0x5a61,0x9e,0x08,0x3b,0xd5,0xd9,0x59,0x40,0x23] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFolder }
+		RT_PINTERFACE!{ for<'a> AsyncOperationCompletedHandler<&'a ::rt::gen::windows::foundation::collections::IVectorView<&'a ::rt::gen::windows::storage::StorageFolder>> => [0xed2d1d9b,0x26ec,0x5be7,0xa8,0xa3,0x56,0x45,0x89,0x33,0xd2,0x5f] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_StorageFolder }
 		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::foundation::collections::IVectorView<&'a ::rt::gen::windows::storage::IStorageItem>> => [0x4b1c0fd7,0x7a01,0x5e7a,0xa6,0xfe,0xbe,0x45,0x00,0x28,0x3f,0x23] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_IStorageItem }
+		RT_PINTERFACE!{ for<'a> AsyncOperationCompletedHandler<&'a ::rt::gen::windows::foundation::collections::IVectorView<&'a ::rt::gen::windows::storage::IStorageItem>> => [0x51436e75,0xace1,0x5a68,0xb2,0x60,0xf8,0x43,0xb8,0x46,0xf0,0xdb] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Storage_IStorageItem }
 		RT_PINTERFACE!{ for<'a> IAsyncOperation<&'a ::rt::gen::windows::storage::fileproperties::BasicProperties> => [0x5186131a,0x4467,0x504b,0x97,0x7a,0x07,0x85,0xa8,0x23,0x04,0x85] as IID_IAsyncOperation_1_Windows_Storage_FileProperties_BasicProperties }
+		RT_PINTERFACE!{ for<'a> AsyncOperationCompletedHandler<&'a ::rt::gen::windows::storage::fileproperties::BasicProperties> => [0xc8659aae,0x4926,0x52ad,0x8f,0x60,0xd8,0x9f,0xe5,0xa8,0xdf,0x5f] as IID_AsyncOperationCompletedHandler_1_Windows_Storage_FileProperties_BasicProperties }
 		RT_PINTERFACE!{ for<'a> TypedEventHandler<&'a ::rt::gen::windows::foundation::diagnostics::IFileLoggingSession, &'a ::rt::gen::windows::foundation::diagnostics::LogFileGeneratedEventArgs> => [0x0c6563b0,0x9d8b,0x5b60,0x99,0x4b,0xde,0xe1,0x17,0x4d,0x1e,0xfb] as IID_TypedEventHandler_2_Windows_Foundation_Diagnostics_IFileLoggingSession_Windows_Foundation_Diagnostics_LogFileGeneratedEventArgs }
 pub mod collections { // Windows.Foundation.Collections
 use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
+use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum CollectionChange: i32 {
 			Reset (CollectionChange_Reset) = 0, ItemInserted (CollectionChange_ItemInserted) = 1, ItemRemoved (CollectionChange_ItemRemoved) = 2, ItemChanged (CollectionChange_ItemChanged) = 3,
 		}}
@@ -324,7 +339,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 		}}
 		RT_CLASS!(PropertySet: ::rt::gen::windows::foundation::collections::IPropertySet);
 		RT_CLASS!(ValueSet: ::rt::gen::windows::foundation::collections::IPropertySet);
-		RT_CLASS!(StringMap<'a>: ::rt::gen::windows::foundation::collections::IMap<&'a str, &'a str>);
+		RT_CLASS!(StringMap: ::rt::gen::windows::foundation::collections::IMap<&'static str, &'static str>);
 		DEFINE_IID!(IID_IIterable, 4205151722, 25108, 16919, 175, 218, 127, 70, 222, 88, 105, 179);
 		RT_INTERFACE!{interface IIterable<T>(IIterableVtbl): IInspectable(IInspectableVtbl) [IID_IIterable] {
 			fn First(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IIterator<T>) -> ::w::HRESULT
@@ -381,7 +396,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 			fn Split(&mut self, first: *mut *mut ::rt::gen::windows::foundation::collections::IMapView<K, V>, second: *mut *mut ::rt::gen::windows::foundation::collections::IMapView<K, V>) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_VectorChangedEventHandler, 201660242, 40895, 19568, 170, 12, 14, 76, 130, 217, 167, 97);
-		RT_INTERFACE!{interface VectorChangedEventHandler<T>(VectorChangedEventHandlerVtbl): IUnknown(IUnknownVtbl) [IID_VectorChangedEventHandler] {
+		RT_DELEGATE!{delegate VectorChangedEventHandler<T>(VectorChangedEventHandlerVtbl, VectorChangedEventHandlerImpl) [IID_VectorChangedEventHandler] {
 			fn Invoke(&mut self, sender: *mut ::rt::gen::windows::foundation::collections::IObservableVector<T>, event: *mut ::rt::gen::windows::foundation::collections::IVectorChangedEventArgs) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_IObservableVector, 1494739795, 20660, 18957, 179, 9, 101, 134, 43, 63, 29, 188);
@@ -395,7 +410,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 			fn get_Key(&mut self, out: *mut K::Abi) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_MapChangedEventHandler, 395646963, 38126, 16888, 189, 220, 118, 138, 137, 85, 68, 243);
-		RT_INTERFACE!{interface MapChangedEventHandler<K, V>(MapChangedEventHandlerVtbl): IUnknown(IUnknownVtbl) [IID_MapChangedEventHandler] {
+		RT_DELEGATE!{delegate MapChangedEventHandler<K, V>(MapChangedEventHandlerVtbl, MapChangedEventHandlerImpl) [IID_MapChangedEventHandler] {
 			fn Invoke(&mut self, sender: *mut ::rt::gen::windows::foundation::collections::IObservableMap<K, V>, event: *mut ::rt::gen::windows::foundation::collections::IMapChangedEventArgs<K>) -> ::w::HRESULT
 		}}
 		DEFINE_IID!(IID_IObservableMap, 1709124597, 48953, 16821, 174, 188, 90, 157, 134, 94, 71, 43);
@@ -410,7 +425,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 } // Windows.Foundation.Collections
 pub mod metadata { // Windows.Foundation.Metadata
 use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
+use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum GCPressureAmount: i32 {
 			Low (GCPressureAmount_Low) = 0, Medium (GCPressureAmount_Medium) = 1, High (GCPressureAmount_High) = 2,
 		}}
@@ -448,7 +463,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 } // Windows.Foundation.Metadata
 pub mod diagnostics { // Windows.Foundation.Diagnostics
 use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
+use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum CausalityTraceLevel: i32 {
 			Required (CausalityTraceLevel_Required) = 0, Important (CausalityTraceLevel_Important) = 1, Verbose (CausalityTraceLevel_Verbose) = 2,
 		}}
@@ -749,7 +764,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 } // Windows.Foundation.Diagnostics
 pub mod numerics { // Windows.Foundation.Numerics
 use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
+use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct Vector2 {
 			X: f32, Y: f32,
 		}}
@@ -775,7 +790,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 } // Windows.Foundation
 pub mod storage { // Windows.Storage
 use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
+use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::IntoInterface;
 		RT_CLASS!(StorageFile: ::rt::gen::windows::storage::IStorageFile);
 		DEFINE_IID!(IID_IStorageFile, 4198457734, 16916, 17036, 166, 76, 20, 201, 172, 115, 21, 234);
 		RT_INTERFACE!{interface IStorageFile(IStorageFileVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFile] {
@@ -845,7 +860,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 		}}
 pub mod streams { // Windows.Storage.Streams
 use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
+use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IRandomAccessStream, 2421821409, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
 		RT_INTERFACE!{interface IRandomAccessStream(IRandomAccessStreamVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStream] {
 			fn get_Size(&mut self, out: *mut u64) -> ::w::HRESULT,
@@ -879,7 +894,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
 } // Windows.Storage.Streams
 pub mod fileproperties { // Windows.Storage.FileProperties
 use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable};
+use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::IntoInterface;
 		RT_CLASS!(BasicProperties: ::rt::gen::windows::storage::fileproperties::IBasicProperties);
 		DEFINE_IID!(IID_IBasicProperties, 3495777755, 30814, 19046, 190, 2, 155, 238, 197, 138, 234, 129);
 		RT_INTERFACE!{interface IBasicProperties(IBasicPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IBasicProperties] {

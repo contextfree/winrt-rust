@@ -43,16 +43,13 @@ pub use rt::{RtInterface, RtValueType, RtType, IInspectable, IInspectableVtbl};
 
 pub use rt::handler::IntoInterface;
 
-// TODO: get rid of manually listing re-exports (how to integrate handlers?)
+// TODO: What about statics?
 pub mod windows {
-    pub mod foundation {
-        pub use rt::handler::{AsyncOperationCompletedHandlerImpl};
-        pub use rt::gen::windows::foundation::*;
-    }
+    pub use rt::gen::windows::*;
+    
     pub mod devices {
         pub mod enumeration {
             pub use rt::{IDeviceInformationStatics, IDeviceInformation, DeviceInformationCollection, IMidiOutPortStatics, IMidiOutPort};
-            // TODO: What about IIDs and statics?
         }
     }
 }

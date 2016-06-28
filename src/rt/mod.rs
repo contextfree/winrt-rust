@@ -479,25 +479,146 @@ macro_rules! RT_INTERFACE {
     };
 }
 
+macro_rules! RT_DELEGATE {
+    // without generic parameters
+    (delegate $interface:ident ($vtbl:ident, $imp:ident) [$iid:ident] {
+        fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+    }) => {
+        RT_INTERFACE!{interface $interface($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
+            fn Invoke(&mut self $(,$p : $t)*) -> $rtr
+        }}
+
+        impl $interface {
+			#[inline] pub fn new<_F_>(f: _F_) -> ComPtr<$interface>
+				where _F_: 'static + Send + FnMut($($t),*) -> $rtr, $interface: ComIid {
+				$imp::new(f).into_interface()
+    		}
+		}
+
+        struct $imp<_F_> where _F_: 'static + Send + FnMut($($t),*) -> $rtr {
+            invoke: _F_
+        }
+
+        impl<_F_> $imp<_F_>
+            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+        {
+            pub fn new(f: _F_) -> $imp<_F_> {
+                $imp {
+                    invoke: f,
+                }
+            }
+        }
+
+        impl<_F_> ::rt::handler::ComClass<$interface> for $imp<_F_>
+            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+        {
+            fn get_vtbl() -> $vtbl {
+                $vtbl {
+                    parent: ::IUnknownVtbl {
+                        QueryInterface: ::rt::handler::ComReprHandler_QueryInterface::<$imp<_F_>, _>,
+                        AddRef: ::rt::handler::ComRepr_AddRef::<$imp<_F_>>,
+                        Release: ::rt::handler::ComRepr_Release::<$imp<_F_>>,
+                    },
+                    Invoke: {
+                        unsafe extern "system" fn Invoke<_F_>(this_: *mut $interface $(,$p : $t)*) -> $rtr
+                            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+                        {
+                            let this: &mut $imp<_F_> = ::rt::handler::ComClass::from_interface(this_);
+                            (this.invoke)($($p),*)
+                        }
+                        Invoke::<_F_>
+                    }
+                }
+            }
+        }
+
+        /*impl<_F_> Drop for $imp<_F_>
+            where _F_: 'static + Send + FnMut($($t),*) -> $rtr
+        {
+            fn drop(&mut self) {
+                println!("DROPPED {}<...>!", stringify!($imp));
+            }
+        }*/
+    };
+
+    // with generic parameters
+    (delegate $interface:ident<$($ht:ident),+> ($vtbl:ident, $imp:ident) [$iid:ident] {
+        fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+    }) => {
+        RT_INTERFACE!{interface $interface<$($ht),+>($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
+            fn Invoke(&mut self $(,$p : $t)*) -> $rtr
+        }}
+
+        impl<$($ht: RtType + 'static),+> $interface<$($ht),+> {
+			#[inline] pub fn new<_F_>(f: _F_) -> ComPtr<$interface<$($ht),+>>
+				where _F_: 'static + Send + FnMut($($t),*) -> $rtr, $interface<$($ht),+>: ComIid {
+				$imp::new(f).into_interface()
+    		}
+		}
+
+        struct $imp<$($ht: RtType),+ , _F_> where _F_: 'static + Send + FnMut($($t),*) -> $rtr {
+            invoke: _F_,
+            phantom: ::std::marker::PhantomData<($($ht),+)>
+        }
+
+        impl<$($ht: RtType + 'static),+ , _F_> $imp<$($ht),+ , _F_>
+            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+        {
+            pub fn new(f: _F_) -> $imp<$($ht),+ , _F_> {
+                $imp {
+                    invoke: f,
+                    phantom: ::std::marker::PhantomData
+                }
+            }
+        }
+
+        impl<$($ht: RtType + 'static),+ , _F_> ::rt::handler::ComClass<$interface<$($ht),+>> for $imp<$($ht),+ , _F_>
+            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+        {
+            fn get_vtbl() -> $vtbl<$($ht),+> {
+                $vtbl::<$($ht),+> {
+                    parent: ::IUnknownVtbl {
+                        QueryInterface: ::rt::handler::ComReprHandler_QueryInterface::<$imp<$($ht),+ , _F_>, _>,
+                        AddRef: ::rt::handler::ComRepr_AddRef::<$imp<$($ht),+ , _F_>>,
+                        Release: ::rt::handler::ComRepr_Release::<$imp<$($ht),+ , _F_>>,
+                    },
+                    Invoke: {
+                        unsafe extern "system" fn Invoke<$($ht: RtType + 'static),+ , _F_>(this_: *mut $interface<$($ht),+> $(,$p : $t)*) -> $rtr
+                            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+                        {
+                            let this: &mut $imp<$($ht),+ , _F_> = ::rt::handler::ComClass::from_interface(this_);
+                            (this.invoke)($($p),*)
+                        }
+                        Invoke::<$($ht),+ , _F_>
+                    }
+                }
+            }
+        }
+
+        /*impl<$($ht: RtType),+ , _F_> Drop for $imp<$($ht),+ , _F_>
+            where _F_: 'static + Send + FnMut($($t),*) -> $rtr
+        {
+            fn drop(&mut self) {
+                println!("DROPPED {}<...>!", stringify!($imp));
+            }
+        }*/
+    };
+}
+
 macro_rules! RT_CLASS {
     ($cls:ident : $interface:ty) => {
         pub struct $cls($interface);
+        unsafe impl RtInterface for $cls {}
+        impl ComInterface for $cls {
+            type Vtbl = <$interface as ComInterface>::Vtbl;
+        }
+        impl ComIid for $cls {
+            fn iid()-> &'static ::Guid { <$interface as ComIid>::iid() }
+        }
         impl<'a> RtType for &'a $cls {
             type In = &'a mut $cls;
             type Abi = *mut $cls;
             type Out = ComPtr<$cls>;
-            
-            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
-            unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
-        }
-    };
-    ($cls:ident<'a> : $interface:ty) => {
-        pub struct $cls<'a>($interface);
-        impl<'a,'b> RtType for &'b $cls<'a> {
-            type In = &'b mut $cls<'a>;
-            type Abi = *mut $cls<'a>;
-            type Out = ComPtr<$cls<'a>>;
             
             unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }

@@ -4,32 +4,23 @@ use ::{
     IUnknown,
     IUnknownVtbl,
     IAgileObject,
-    RtType,
     ComInterface,
     ComIid,
     ComPtr,
     Guid
 };
 
-use ::rt::gen::windows::foundation::{
-    IAsyncOperation,
-    AsyncOperationCompletedHandler,
-    AsyncOperationCompletedHandlerVtbl,
-    AsyncStatus
-};
-
 use ::w::{S_OK, HRESULT, VOID, REFIID, ULONG};
 
-// Define custom COM component and implement AsyncOperationCompletedHandler
 #[repr(C)]
 pub struct ComRepr<T, Vtbl> {
-    vtbl: Box<Vtbl>,
+    vtbl: Box<Vtbl>, // we can't use constant VTables because of generic parameters (constants can't be generic)
     refcount: atomic::AtomicUsize,
     data: T
 }
 
 /// This is a reusable implementation of AddRef that works for any ComRepr-based type
-unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut IUnknown) -> ULONG {
+pub unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut IUnknown) -> ULONG {
     let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
     
     // Increment the reference count (count member).
@@ -41,7 +32,7 @@ unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut IUnknown) -> ULONG {
 }
 
 /// This is a reusable implementation of Release that works for any ComRepr-based type
-unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG {
+pub unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG {
     let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
     
     let old_size = (*this).refcount.fetch_sub(1, atomic::Ordering::Release);
@@ -56,7 +47,7 @@ unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG {
     return 0;
 }
 
-unsafe extern "system" fn ComReprHandler_QueryInterface<T, I>(this_: *mut IUnknown, vTableGuid: REFIID, ppv: *mut *mut VOID) -> HRESULT
+pub unsafe extern "system" fn ComReprHandler_QueryInterface<T, I>(this_: *mut IUnknown, vTableGuid: REFIID, ppv: *mut *mut VOID) -> HRESULT
     where T: ComClass<I>, I: ComInterface + ComIid
 {
     let this_ = this_ as *mut I;
@@ -98,52 +89,5 @@ impl<T, Interface: ComInterface> IntoInterface<Interface> for T where T: ComClas
             data: self
         });
         unsafe { ComPtr::wrap(Box::into_raw(com) as *mut Interface) }
-    }
-}
-
-pub struct AsyncOperationCompletedHandlerImpl<TResult: RtType, F> where F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT {
-    invoke: F,
-    phantom: ::std::marker::PhantomData<TResult>
-}
-
-impl<TResult: RtType + 'static, F> AsyncOperationCompletedHandlerImpl<TResult, F>
-    where AsyncOperationCompletedHandler<TResult>: ComIid, F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT
-{
-    pub fn new(f: F) -> AsyncOperationCompletedHandlerImpl<TResult, F> {
-        AsyncOperationCompletedHandlerImpl {
-            invoke: f,
-            phantom: ::std::marker::PhantomData
-        }
-    }
-}
-
-impl<TResult: RtType + 'static, F> ComClass<AsyncOperationCompletedHandler<TResult>> for AsyncOperationCompletedHandlerImpl<TResult, F>
-    where AsyncOperationCompletedHandler<TResult>: ComIid, F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT
-{
-    fn get_vtbl() -> AsyncOperationCompletedHandlerVtbl<TResult> {
-        AsyncOperationCompletedHandlerVtbl::<TResult> {
-            parent: IUnknownVtbl {
-                QueryInterface: ComReprHandler_QueryInterface::<AsyncOperationCompletedHandlerImpl<TResult, F>, _>,
-                AddRef: ComRepr_AddRef::<AsyncOperationCompletedHandlerImpl<TResult, F>>,
-                Release: ComRepr_Release::<AsyncOperationCompletedHandlerImpl<TResult, F>>,
-            },
-            Invoke: {
-                unsafe extern "system" fn Invoke<TResult: RtType + 'static, F>(this_: *mut AsyncOperationCompletedHandler<TResult>, asyncOperation: *mut IAsyncOperation<TResult>, status: AsyncStatus) -> HRESULT
-                    where AsyncOperationCompletedHandler<TResult>: ComIid, F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT
-                {
-                    let this: &mut AsyncOperationCompletedHandlerImpl<TResult, F> = ComClass::from_interface(this_);
-                    (this.invoke)(asyncOperation, status)
-                }
-                Invoke::<TResult, F>
-            }
-        }
-    }
-}
-
-impl<TResult, F> Drop for AsyncOperationCompletedHandlerImpl<TResult, F>
-    where TResult: RtType, F: 'static + Send + FnMut(*mut IAsyncOperation<TResult>, AsyncStatus) -> HRESULT 
-{
-    fn drop(&mut self) {
-        println!("Dropped AsyncOperationCompletedHandlerImpl<...>!");
     }
 }
