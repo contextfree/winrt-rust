@@ -419,6 +419,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 			fn remove_MapChanged(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT
 		}}
 		RT_PINTERFACE!{ for<'a> IMap<&'a str, &'a str> => [0xf6d1f700,0x49c2,0x52ae,0x81,0x54,0x82,0x6f,0x99,0x08,0x77,0x3c] as IID_IMap_2_System_String_System_String }
+		RT_PINTERFACE!{ for<'a> IMapView<&'a str, &'a str> => [0xac7f26f2,0xfeb7,0x5b2a,0x8a,0xc4,0x34,0x5b,0xc6,0x2c,0xae,0xde] as IID_IMapView_2_System_String_System_String }
 		RT_PINTERFACE!{ for<'a> IVectorView<&'a ::rt::gen::windows::storage::StorageFile> => [0x80646519,0x5e2a,0x595d,0xa8,0xcd,0x2a,0x24,0xb4,0x06,0x7f,0x1b] as IID_IVectorView_1_Windows_Storage_StorageFile }
 		RT_PINTERFACE!{ for<'a> IVectorView<&'a ::rt::gen::windows::storage::StorageFolder> => [0xe20debc6,0xdc4e,0x542e,0xa2,0xe7,0xa2,0x4d,0x19,0xc8,0xdd,0x62] as IID_IVectorView_1_Windows_Storage_StorageFolder }
 		RT_PINTERFACE!{ for<'a> IVectorView<&'a ::rt::gen::windows::storage::IStorageItem> => [0x85575a41,0x06cb,0x58d0,0xb9,0x8a,0x7c,0x8f,0x06,0xe6,0xe9,0xd7] as IID_IVectorView_1_Windows_Storage_IStorageItem }

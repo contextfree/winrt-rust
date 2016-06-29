@@ -450,9 +450,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 
 			foreach (var m in def.Methods)
 			{
-				foreach (var p in m.Parameters)
+				foreach (TypeReference pty in m.Parameters.Select(p => p.ParameterType).Concat(Enumerable.Repeat(m.ReturnType, 1)))
 				{
-					var pty = p.ParameterType;
 					if (pty.ContainsGenericParameter && pty is GenericInstanceType)
 					{
 						var gpty = pty as GenericInstanceType;
