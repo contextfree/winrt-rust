@@ -535,7 +535,7 @@ mod tests {
         let s = HString::new("123456789");
         b.iter(|| {
             let _ = s.get_ref();
-        });;
+        });
     }
 
     #[bench]

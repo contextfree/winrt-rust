@@ -19,8 +19,9 @@ namespace Generator
 			public int Classes;
 			public int Structs;
 			public int Delegates;
+			public int Methods;
 
-			public int Sum()
+			public int AllTypes()
 			{
 				return Enums + Interfaces + Classes + Structs + Delegates;
 			}
@@ -28,7 +29,7 @@ namespace Generator
 
 		static Dictionary<string, GenericInstanceType> genericInstantiations = new Dictionary<string, GenericInstanceType>();
 		static Dictionary<string, TypeDefinition> definitionsWorklist = new Dictionary<string, TypeDefinition>();
-		static Dictionary<string, bool> definitionsDone = new Dictionary<string, bool>();
+		static HashSet<string> definitionsDone = new HashSet<string>();
 		static string Imports = @"use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::IntoInterface;";
 
@@ -41,8 +42,9 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 			var files = Directory.GetFiles(@"C:\Windows\System32\WinMetadata\");
 			var collection = new AssemblyCollection(files);
 
-			// TODO: enable all modules, not just "Foundation" (currently leads to parse error in Rust)
+			// TODO: enable all modules (disabled because it results in a huge file and very long compilation)
 			var names = new string[] { "Windows.Foundation", "Windows.Devices", /*"Windows.Storage", "Windows.Media", "Windows.System", "Windows.Graphics"*/ };
+
 			foreach (var asm in collection.Assemblies.Where(a => names.Contains(a.Name.Name)))
 			{
 				foreach (var t in asm.MainModule.Types.Where(t => t.FullName != "<Module>"))
@@ -57,7 +59,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 			{
 				var type = definitionsWorklist.First().Value;
 				definitionsWorklist.Remove(type.FullName);
-				definitionsDone.Add(type.FullName, false);
+				definitionsDone.Add(type.FullName);
 
 				Assert(type.Attributes.HasFlag(TypeAttributes.WindowsRuntime));
 
@@ -71,6 +73,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 				else if (type.IsInterface)
 				{
 					counter.Interfaces++;
+					counter.Methods += type.Methods.Count;
 					WriteInterface(module, type, false);
 				}
 				else if (type.IsValueType)
@@ -81,6 +84,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 				else if (IsDelegate(type))
 				{
 					counter.Delegates++;
+					counter.Methods += 1; // Invoke
 					WriteInterface(module, type, true);
 				}
 				else if (type.IsClass)
@@ -94,7 +98,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 				}
 			}
 
-			Console.WriteLine("Generated {0} type definitions ({1} enums, {2} interfaces, {3} structs, {4} classes, {5} delegates)", counter.Sum(), counter.Enums, counter.Interfaces, counter.Structs, counter.Classes, counter.Delegates);
+			Console.WriteLine("Generated {0} type definitions ({1} enums, {2} interfaces, {3} structs, {4} classes, {5} delegates) and {6} method definitions", counter.AllTypes(), counter.Enums, counter.Interfaces, counter.Structs, counter.Classes, counter.Delegates, counter.Methods);
 			var instantiationsCopy = new List<GenericInstanceType>(genericInstantiations.Values);
 			foreach (var t in instantiationsCopy)
 			{
@@ -153,6 +157,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 			string generic = "";
 			if (t.HasGenericParameters)
 			{
+				if (t.GenericParameters.Count > 2) throw new NotImplementedException("Not yet supported by RT_INTERFACE macro");
 				generic = "<" + String.Join(", ", t.GenericParameters.Select(p => p.Name)) + ">";
 			}
 
@@ -201,7 +206,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 
 		static string PreventKeywords(string name)
 		{
-			if (name == "type" || name == "Self") // TODO: add more keywords
+			if (name == "type" || name == "Self" || name == "box") // TODO: add more keywords
 			{
 				name += "_";
 			}
@@ -234,10 +239,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 			var classType = GetTypeName(t, TypeUsage.Define);
 			if (aliasedType.Contains("'a")) // if we had to introduce a lifetime parameter ...
 			{
+				// use static lifetime for classes
 				aliasedType = aliasedType.Replace("'a", "'static");
-				//classType += "<'a>";
-				Assert(definitionsDone.ContainsKey(t.FullName));
-				definitionsDone[t.FullName] = true;
 			}
 			module.Append(@"
 		RT_CLASS!(" + classType + ": " + aliasedType + ");");
@@ -350,7 +353,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 			else
 			{
 				var def = t.Resolve();
-				if (!definitionsWorklist.ContainsKey(def.FullName) && !definitionsDone.ContainsKey(def.FullName))
+				if (!definitionsWorklist.ContainsKey(def.FullName) && !definitionsDone.Contains(def.FullName))
 				{
 					definitionsWorklist.Add(def.FullName, def);
 				}
@@ -391,11 +394,6 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 					else if (usage == TypeUsage.GenericArgWithLifetime)
 					{
 						bool value;
-						if (definitionsDone.TryGetValue(t.FullName, out value) && value)
-						{
-							// we need a lifetime parameter for this type
-							//name += "<'a>";
-						}
 						name = "&'a " + name;
 					}
 					else if (usage == TypeUsage.Raw)
