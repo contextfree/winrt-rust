@@ -1,7 +1,7 @@
 use std::ops::{Deref, DerefMut};
 use std::fmt;
 use std::ptr;
-use ::{ComIid, RtInterface, IInspectable, HString, Guid};
+use ::{ComIid, ComInterface, RtInterface, IInspectable, HString, Guid};
 
 #[derive(Debug)]
 pub struct ComPtr<T>(*mut T); // TODO: use NonZero?
@@ -9,6 +9,18 @@ pub struct ComPtr<T>(*mut T); // TODO: use NonZero?
 impl<T> fmt::Pointer for ComPtr<T> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         fmt::Pointer::fmt(&self.0, f)
+    }
+}
+
+pub fn query_interface<T, Target>(interface: &T) -> Option<ComPtr<Target>> where Target: ComIid, T: ComInterface {
+    let iid: &'static Guid = Target::iid();
+    let as_unknown = unsafe { &mut *(interface  as *const T as *mut T as *mut ::w::IUnknown) };
+    let mut res = ptr::null_mut();
+    unsafe {
+        match as_unknown.QueryInterface(&iid.as_iid(), &mut res as *mut _ as *mut *mut ::w::VOID) {
+            ::w::S_OK => Some(ComPtr::wrap(res)),
+            _ => None
+        }
     }
 }
 

@@ -22,6 +22,7 @@ use ::w::{
 
 use wrt::windows::foundation::*;
 use wrt::windows::devices::enumeration::*;
+use wrt::windows::devices::midi::*;
 
 fn main() {
     unsafe {
@@ -153,7 +154,7 @@ fn run() {
     
     let mut remember = None;
     let mut i = 0;
-    for mut current in &mut deviceInformationCollection { // without the `&mut` it would consume the ComPtr
+    for mut current in deviceInformationCollection.into_iter() {
         let deviceName = unsafe {
             let mut res = ptr::null_mut();
             current.get_Name(&mut res);

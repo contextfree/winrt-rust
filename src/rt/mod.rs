@@ -99,9 +99,9 @@ impl<T> RtType for T where T: RtValueType
     }
 }
 
-// We can also implement IntoIterator for IIterable<T> and IVectorView<T> and references to those
+// We can also implement IntoIterator for IIterable<T> and IVectorView<T>
 // TODO: This should be extended to more types (at least IVector, IMap, IMapView, IObservableVector, IObservableMap)
-impl<T> IntoIterator for ComPtr<IIterable<T>> where T: RtType
+impl<'a, T> IntoIterator for &'a mut IIterable<T> where T: RtType
 {
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
@@ -114,34 +114,12 @@ impl<T> IntoIterator for ComPtr<IIterable<T>> where T: RtType
     }
 }
 
-impl<'a, T> IntoIterator for &'a mut ComPtr<IIterable<T>> where T: RtType
-{
-    type Item = <T as RtType>::Out;
-    type IntoIter = ComPtr<IIterator<T>>;
-    fn into_iter(mut self) -> Self::IntoIter {
-        unsafe {
-            let mut iterator = ptr::null_mut();
-            assert_eq!(self.First(&mut iterator), S_OK);
-            ComPtr::wrap(iterator)
-        }
-    }
-}
-
-impl<T> IntoIterator for ComPtr<IVectorView<T>> where T: RtType, IIterable<T>: ComIid
+impl<'a, T: 'static> IntoIterator for &'a mut IVectorView<T> where T: RtType, IIterable<T>: ComIid
 {
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     fn into_iter(self) -> Self::IntoIter {
-        self.query_interface::<IIterable<T>>().unwrap().into_iter()
-    }
-}
-
-impl<'a, T> IntoIterator for &'a mut ComPtr<IVectorView<T>> where T: RtType, IIterable<T>: ComIid
-{
-    type Item = <T as RtType>::Out;
-    type IntoIter = ComPtr<IIterator<T>>;
-    fn into_iter(self) -> Self::IntoIter {
-        self.query_interface::<IIterable<T>>().unwrap().into_iter()
+        ::comptr::query_interface::<_, IIterable<T>>(self).unwrap().into_iter()
     }
 }
 
@@ -624,6 +602,18 @@ macro_rules! RT_CLASS {
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
+        impl ::std::ops::Deref for $cls {
+            type Target = $interface;
+            #[inline]
+            fn deref(&self) -> &$interface {
+                &self.0
+            }
+        }
+        impl ::std::ops::DerefMut for $cls {
+            fn deref_mut(&mut self) -> &mut $interface {
+                &mut self.0
+            }
+        }
     };
 }
 
@@ -695,65 +685,4 @@ interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectab
     fn GetIids(&mut self, iidCount: *mut ULONG, iids: *mut *mut IID) -> HRESULT,
     fn GetRuntimeClassName(&mut self, className: *mut HSTRING) -> HRESULT,
     fn GetTrustLevel(&mut self, trustLevel: *mut TrustLevel) -> HRESULT
-}}
-
-// =========================================== //
-// Everything below will eventually be deleted //
-// =========================================== //
-
-DEFINE_IID!(IID_IMidiOutPortStatics, 106742761, 3976, 17547, 155, 100, 169, 88, 38, 198, 91, 143);
-RT_INTERFACE!{interface IMidiOutPortStatics(IMidiOutPortStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiOutPortStatics] {
-    fn FromIdAsync(&mut self, deviceId: HSTRING, asyncOp: *mut *mut IAsyncOperation<&IMidiOutPort>) -> HRESULT,
-    fn GetDeviceSelector(&mut self, value: *const HSTRING) -> HRESULT
-}}
-
-DEFINE_IID!(IID_IDeviceInformationStatics, 3246329870, 14918, 19064, 128, 19, 118, 157, 201, 185, 115, 144);
-RT_INTERFACE!{interface IDeviceInformationStatics(IDeviceInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationStatics] {
-    fn __CreateFromIdAsync(&mut self) -> HRESULT,
-    fn __CreateFromIdAsyncAdditionalProperties(&mut self) -> HRESULT,
-    fn FindAllAsync(&mut self, asyncOp: *mut *mut IAsyncOperation<&IVectorView<&IDeviceInformation>>) -> HRESULT,
-    fn __FindAllAsyncDeviceClass(&mut self) -> HRESULT,
-    fn FindAllAsyncAqsFilter(&mut self, aqsFilter: HSTRING, asyncOp: *mut *mut IAsyncOperation<&IVectorView<&IDeviceInformation>>) -> HRESULT,
-    fn __FindAllAsyncAqsFilterAndAdditionalProperties(&mut self) -> HRESULT,
-    fn __CreateWatcher(&mut self) -> HRESULT,
-    fn __CreateWatcherDeviceClass(&mut self) -> HRESULT,
-    fn __CreateWatcherAqsFilter(&mut self) -> HRESULT,
-    fn __CreateWatcherAqsFilterAndAdditionalProperties(&mut self) -> HRESULT
-}}
-
-// "Specialize" the IID of IIterable for a given parameter type
-impl<'a> ComIid for IIterable<&'a IDeviceInformation> {
-    // const IID: ::w::REFIID = &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation;
-    fn iid() -> &'static ::Guid {
-        &IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation
-    }
-}
-
-// This maps the logical type `DeviceInformationCollection` to its correct ABI type.
-// TODO: Is a type alias sufficient? (Also see `AggregateType` in windows.foundation.collections.h)
-pub type DeviceInformationCollection<'a> = IVectorView<&'a IDeviceInformation>;
-
-DEFINE_IID!(IID_IIterable_1__Windows_Devices_Enumeration_DeviceInformation, 0xdd9f8a5d, 0xec98, 0x5f4b, 0xa3, 0xea, 0x9c, 0x8b, 0x5a, 0xd5, 0x3c, 0x4b);
-
-// These parametrized GUIDs can be automatically generated
-DEFINE_IID!(IID_AsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection, 0x4A458732, 0x527E, 0x5C73, 0x9A, 0x68, 0xA7, 0x3D, 0xA3, 0x70, 0xF7, 0x82);
-
-impl<'a> ComIid for AsyncOperationCompletedHandler<&'a DeviceInformationCollection<'a>> {
-    // const IID: ::w::REFIID = &IID_IAsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection;
-    fn iid() -> &'static ::Guid {
-        &IID_AsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceInformationCollection
-    }
-}
-
-DEFINE_IID!(IID_IDeviceInformation, 2879454101, 17304, 18589, 142, 68, 230, 19, 9, 39, 1, 31);
-RT_INTERFACE!{interface IDeviceInformation(IDeviceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformation] {
-    fn get_Id(&mut self, value: *mut HSTRING) -> HRESULT,
-    fn get_Name(&mut self, value: *mut HSTRING) -> HRESULT
-// ...
-}}
-
-DEFINE_IID!(IID_IMidiOutPort, 2468179359, 22434, 19002, 173, 184, 70, 64, 136, 111, 102, 147);
-RT_INTERFACE!{interface IMidiOutPort(IMidiOutPortVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformation] {
-    fn __Dummy(&mut self) -> HRESULT
-// ...
 }}

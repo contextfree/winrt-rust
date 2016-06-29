@@ -42,7 +42,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 			var collection = new AssemblyCollection(files);
 
 			// TODO: enable all modules, not just "Foundation" (currently leads to parse error in Rust)
-			var names = new string[] { "Windows.Foundation", /*"Windows.Devices", "Windows.Storage", "Windows.Media", "Windows.System", "Windows.Graphics"*/ };
+			var names = new string[] { "Windows.Foundation", "Windows.Devices", /*"Windows.Storage", "Windows.Media", "Windows.System", "Windows.Graphics"*/ };
 			foreach (var asm in collection.Assemblies.Where(a => names.Contains(a.Name.Name)))
 			{
 				foreach (var t in asm.MainModule.Types.Where(t => t.FullName != "<Module>"))
@@ -426,6 +426,26 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 			file.WriteLine("} // " + newPath);
 		}
 
+		static TypeReference InstantiateType(GenericInstanceType ty, Dictionary<string, TypeReference> map)
+		{
+			var genericArguments = ty.GenericArguments.Select(arg =>
+			{
+				if (arg.MetadataType == MetadataType.Var)
+				{
+					return map[arg.FullName];
+				}
+				else if (arg is GenericInstanceType)
+				{
+					return InstantiateType((GenericInstanceType)arg, map);
+				}
+				else
+				{
+					return arg;
+				}
+			}).ToArray();
+			return ty.ElementType.MakeGenericInstanceType(genericArguments);
+		}
+
 		static void AddGenericInstantiation(GenericInstanceType ty)
 		{
 			if (genericInstantiations.ContainsKey(ty.FullName)) return;
@@ -440,7 +460,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 				}
 			}
 
-			// recursively add other instantiations introduced by function parameters
+			// build mapping from generic parameter names to instantiated types
 			TypeDefinition def = ty.Resolve();
 			var genericParameterMap = new Dictionary<string, TypeReference>();
 			for (int i = 0; i < def.GenericParameters.Count; i++)
@@ -448,16 +468,29 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 				genericParameterMap.Add(def.GenericParameters[i].FullName, ty.GenericArguments[i]);
 			}
 
+			// recursively add implemented interfaces	
+			foreach (var intf in def.Interfaces.Where(i => i.ContainsGenericParameter && i is GenericInstanceType).Cast<GenericInstanceType>())
+			{
+				var type = InstantiateType(intf, genericParameterMap);
+				if (type is GenericInstanceType)
+				{
+					AddGenericInstantiation(type as GenericInstanceType);
+				}
+			}
+
+			// recursively add other instantiations introduced by function parameters
 			foreach (var m in def.Methods)
 			{
-				foreach (TypeReference pty in m.Parameters.Select(p => p.ParameterType).Concat(Enumerable.Repeat(m.ReturnType, 1)))
+				foreach (GenericInstanceType pty in m.Parameters
+					.Select(p => p.ParameterType)
+					.Concat(Enumerable.Repeat(m.ReturnType, 1))
+					.Where(t => t.ContainsGenericParameter && t is GenericInstanceType)
+					.Cast<GenericInstanceType>())
 				{
-					if (pty.ContainsGenericParameter && pty is GenericInstanceType)
+					var type = InstantiateType(pty, genericParameterMap);
+					if (type is GenericInstanceType)
 					{
-						var gpty = pty as GenericInstanceType;
-						var genericArguments = gpty.GenericArguments.Select(arg => genericParameterMap[arg.FullName]).ToArray();
-						var instantiated = gpty.ElementType.MakeGenericInstanceType(genericArguments);
-						AddGenericInstantiation(instantiated);
+						AddGenericInstantiation(type as GenericInstanceType);
 					}
 				}
 			}
@@ -565,7 +598,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 			else if (def.IsClass)
 			{
 				var mainInterface = def.Interfaces[0];
-				return "rc(" + def.FullName + ";{" + GetGuidForType(mainInterface.Resolve()) + "})";
+				if (def.CustomAttributes.Any(a => a.AttributeType.Name == "DefaultInterfaceAttribute"))
+					throw new NotImplementedException();
+				TypeDefinition def3;
+				return "rc(" + def.FullName + ";" + GetTypeIIDDescriptor(mainInterface, out def3) + ")";
 			}
 			else
 			{

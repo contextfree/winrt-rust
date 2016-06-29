@@ -43,13 +43,6 @@ pub use rt::{RtInterface, RtValueType, RtType, IInspectable, IInspectableVtbl};
 
 pub use rt::handler::IntoInterface;
 
-// TODO: What about statics?
 pub mod windows {
     pub use rt::gen::windows::*;
-    
-    pub mod devices {
-        pub mod enumeration {
-            pub use rt::{IDeviceInformationStatics, IDeviceInformation, DeviceInformationCollection, IMidiOutPortStatics, IMidiOutPort};
-        }
-    }
 }
