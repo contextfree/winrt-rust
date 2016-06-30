@@ -59,15 +59,15 @@ impl<'a> HStringRef<'a> {
     /// This function does not allocate.
     pub fn from_utf16(slice: &'a [u16]) -> HStringRef<'a> {
         assert!(slice[slice.len() - 1] == 0, "input must be null-terminated");
-        HStringRef::from_utf16_unchecked(slice)
+        unsafe { HStringRef::from_utf16_unchecked(slice) }
     }
 
     /// Won't check if the string is null terminated
-    fn from_utf16_unchecked(slice: &'a [u16]) -> HStringRef<'a> {
+    pub unsafe fn from_utf16_unchecked(slice: &'a [u16]) -> HStringRef<'a> {
         let mut hstrref: HStringRef = HStringRef(zero_header(), PhantomData);
         if slice.len() == 0 { return hstrref; }
         let mut hstr: HSTRING = ptr::null_mut();
-        debug_assert_eq!(unsafe { WindowsCreateStringReference(slice as *const _ as LPCWSTR, slice.len() as u32 - 1, &mut hstrref.0, &mut hstr) }, S_OK);
+        debug_assert_eq!(WindowsCreateStringReference(slice as *const _ as LPCWSTR, slice.len() as u32 - 1, &mut hstrref.0, &mut hstr), S_OK);
         // The returned HSTRING is actually a pointer to the returned HSTRING_HEADER,
         // which we check here and then forget about `hstr`.
         debug_assert_eq!(hstr as *const _, &hstrref.0 as *const _ as *const HSTRING__);
@@ -311,7 +311,7 @@ impl HString {
     pub fn get_ref<'a>(&'a self) -> HStringRef<'a> {
         let mut len = 0;
         let buf = unsafe { WindowsGetStringRawBuffer(self.0, &mut len) };
-        HStringRef::from_utf16_unchecked(unsafe { ::std::slice::from_raw_parts(buf, len as usize + 1) })
+        unsafe { HStringRef::from_utf16_unchecked(::std::slice::from_raw_parts(buf, len as usize + 1)) }
     }
 }
 

@@ -101,14 +101,14 @@ impl<T> RtType for T where T: RtValueType
 
 pub trait RtActivatable {
     type Factory : ComIid;
-    // TODO: return &'static [u16] (null-terminated UTF-16 string) directly to increase performance
-    fn activatable_class_id() -> &'static str;
+    // FIXME: remove activatable_class_id() from the public interface -> necessary to introduce separate trait?
+    fn activatable_class_id() -> &'static [u16];
     fn factory() -> ComPtr<Self::Factory> {
-        let class_id: ::FastHString = Self::activatable_class_id().into();
         let mut res = ptr::null_mut();
-        let hres = unsafe { ::runtimeobject::RoGetActivationFactory(class_id.get_ref().get(), &Self::Factory::iid().as_iid(), &mut res as *mut *mut _ as *mut *mut ::w::VOID) };
+        let class_id = unsafe { HStringRef::from_utf16_unchecked(Self::activatable_class_id()) };
+        let hres = unsafe { ::runtimeobject::RoGetActivationFactory(class_id.get(), &Self::Factory::iid().as_iid(), &mut res as *mut *mut _ as *mut *mut ::w::VOID) };
         assert_eq!(hres, S_OK);
-        unsafe { ComPtr::<Self::Factory>::wrap(res) }
+        unsafe { ComPtr::wrap(res) }
     }
 }
 
@@ -630,18 +630,28 @@ macro_rules! RT_CLASS {
     };
 
     // Class is activatable using factory $factory
-    {class $cls:ident : $interface:ty [$factory:ty] [$id:expr]} => {
+    {class $cls:ident : $interface:ty [$factory:ty] [$clsid:ident]} => {
         RT_CLASS!{class $cls : $interface}
-        RT_ACTIVATABLE!{$cls [$factory] [$id]}
+        RT_ACTIVATABLE!{$cls # $factory [$clsid]}
     };
 }
 
+macro_rules! DEFINE_CLSID {
+    ($name:ident = $id:expr) => {
+        const $name: &'static [u16] = $id; // Full name of the class as null-terminated UTF16 string
+    }
+}
+
 macro_rules! RT_ACTIVATABLE {
-    {$name:ident [$factory:ty] [$id:expr]} => {
+    {$name:ident # $factory:ty [$clsid:ident]} => {
         impl ::RtActivatable for $name {
             type Factory = $factory;
-            fn activatable_class_id() -> &'static str { $id } 
+            fn activatable_class_id() -> &'static [u16] { $clsid } 
         }
+    };
+
+    {$name:ident [$clsid:ident]} => {
+        RT_ACTIVATABLE!{$name # $name [$clsid]}
     };
 }
 

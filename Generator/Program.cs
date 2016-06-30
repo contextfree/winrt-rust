@@ -249,6 +249,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 				// use static lifetime for classes
 				aliasedType = aliasedType.Replace("'a", "'static");
 			}
+
+			bool needClassID = false;
 			if (factory == null)
 			{
 				module.Append(@"
@@ -256,17 +258,31 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 			}
 			else
 			{
+				needClassID = true;
 				module.Append(@"
-		RT_CLASS!{class " + classType + ": " + aliasedType + " [" + GetTypeName(factory, TypeUsage.Alias) + "] [\"" + t.FullName + "\"]}");
+		RT_CLASS!{class " + classType + ": " + aliasedType + " [" + GetTypeName(factory, TypeUsage.Alias) + "] [CLSID_" + classType + "]}");
 			}
 
 			var statics = t.CustomAttributes.Where(a => a.AttributeType.Name == "StaticAttribute").Select(a => (TypeDefinition)a.ConstructorArguments[0].Value);
 			foreach (var staticType in statics)
 			{
 				var staticName = GetTypeName(staticType, TypeUsage.Define);
+				needClassID = true;
 				module.Append(@"
-		RT_ACTIVATABLE!{" + staticName + " [" + staticName + "] [\"" + t.FullName + "\"]}");
+		RT_ACTIVATABLE!{" + staticName + " [CLSID_" + classType + "]}");
 			}
+
+			if (needClassID)
+			{
+				module.Append(@"
+		DEFINE_CLSID!(CLSID_" + classType + " = &[" + StringToUTF16WithZero(t.FullName) + @"]);");
+			}
+		}
+
+		// Returns the string as an UTF16 encoded, null-terminated sequence of u16 values
+		static string StringToUTF16WithZero(string str)
+		{
+			return String.Join(",", str.Select(c => ((ushort)c).ToString()).Concat(new string[] {"0"}));
 		}
 
 		enum TypeUsage

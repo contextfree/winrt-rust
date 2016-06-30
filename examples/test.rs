@@ -38,6 +38,21 @@ fn main() {
 fn run() {
     use std::sync::{Arc, Mutex, Condvar};
 
+    let mut uriFactory = Uri::factory();
+    let uri = unsafe {
+        let mut res = ptr::null_mut();
+        let base = FastHString::new("https://github.com");
+        let relative = FastHString::new("contextfree/winrt-rust");
+        assert_eq!(uriFactory.CreateWithRelativeUri(base.get_ref().get(), relative.get_ref().get(), &mut res), S_OK);
+        ComPtr::wrap(res)
+    };
+    let to_string = unsafe {
+        let mut res = ptr::null_mut();
+        assert_eq!(uri.query_interface::<IStringable>().unwrap().ToString(&mut res), S_OK);
+        HString::wrap(res)
+    };
+    println!("{} -> {}", uri.get_runtime_class_name(), to_string); 
+
     let mut outPortStatics = IMidiOutPortStatics::factory();
     //println!("outPortStatics: {}", outPortStatics.get_runtime_class_name()); // this is not allowed (TODO: prevent statically)
     
