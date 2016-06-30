@@ -99,6 +99,19 @@ impl<T> RtType for T where T: RtValueType
     }
 }
 
+pub trait RtActivatable {
+    type Factory : ComIid;
+    // TODO: return &'static [u16] (null-terminated UTF-16 string) directly to increase performance
+    fn activatable_class_id() -> &'static str;
+    fn factory() -> ComPtr<Self::Factory> {
+        let class_id: ::FastHString = Self::activatable_class_id().into();
+        let mut res = ptr::null_mut();
+        let hres = unsafe { ::runtimeobject::RoGetActivationFactory(class_id.get_ref().get(), &Self::Factory::iid().as_iid(), &mut res as *mut *mut _ as *mut *mut ::w::VOID) };
+        assert_eq!(hres, S_OK);
+        unsafe { ComPtr::<Self::Factory>::wrap(res) }
+    }
+}
+
 // We can also implement IntoIterator for IIterable<T> and IVectorView<T>
 // TODO: This should be extended to more types (at least IVector, IMap, IMapView, IObservableVector, IObservableMap)
 impl<'a, T> IntoIterator for &'a mut IIterable<T> where T: RtType
@@ -584,7 +597,7 @@ macro_rules! RT_DELEGATE {
 }
 
 macro_rules! RT_CLASS {
-    ($cls:ident : $interface:ty) => {
+    {class $cls:ident : $interface:ty} => {
         pub struct $cls($interface);
         unsafe impl RtInterface for $cls {}
         impl ComInterface for $cls {
@@ -613,6 +626,21 @@ macro_rules! RT_CLASS {
             fn deref_mut(&mut self) -> &mut $interface {
                 &mut self.0
             }
+        }
+    };
+
+    // Class is activatable using factory $factory
+    {class $cls:ident : $interface:ty [$factory:ty] [$id:expr]} => {
+        RT_CLASS!{class $cls : $interface}
+        RT_ACTIVATABLE!{$cls [$factory] [$id]}
+    };
+}
+
+macro_rules! RT_ACTIVATABLE {
+    {$name:ident [$factory:ty] [$id:expr]} => {
+        impl ::RtActivatable for $name {
+            type Factory = $factory;
+            fn activatable_class_id() -> &'static str { $id } 
         }
     };
 }

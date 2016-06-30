@@ -13,7 +13,6 @@ use runtimeobject::*;
 // TODO: re-export necessary types from winapi
 use ::w::{
     HRESULT,
-    VOID,
     S_OK,
     TRUE,
     FALSE,
@@ -38,15 +37,9 @@ fn main() {
 
 fn run() {
     use std::sync::{Arc, Mutex, Condvar};
-    
-    let Windows_Devices_Midi_MidiOutPort: FastHString = "Windows.Devices.Midi.MidiOutPort".into();
-    let mut outPortStatics = unsafe {
-        let mut res = ptr::null_mut();
-        let hres = RoGetActivationFactory(Windows_Devices_Midi_MidiOutPort.get_ref().get(), &IMidiOutPortStatics::iid().as_iid(), &mut res as *mut *mut _ as *mut *mut VOID);
-        assert_eq!(hres, S_OK);
-        ComPtr::<IMidiOutPortStatics>::wrap(res)
-    };
-    //println!("outPortStatics: {}", outPortStatics.get_runtime_class_name()); // this is not allowed
+
+    let mut outPortStatics = IMidiOutPortStatics::factory();
+    //println!("outPortStatics: {}", outPortStatics.get_runtime_class_name()); // this is not allowed (TODO: prevent statically)
     
     let deviceSelector = unsafe {
         let mut res = ptr::null_mut();
@@ -55,13 +48,7 @@ fn run() {
     };
     println!("{}", deviceSelector);
     
-    let Windows_Devices_Enumeration_DeviceInformation: FastHString = "Windows.Devices.Enumeration.DeviceInformation".into();
-    let mut deviceInformationStatics = unsafe {
-        let mut res = ptr::null_mut();
-        let hres = RoGetActivationFactory(Windows_Devices_Enumeration_DeviceInformation.get_ref().get(), &IDeviceInformationStatics::iid().as_iid(), &mut res as *mut *mut _ as *mut *mut VOID);
-        println!("HRESULT (deviceInformationStatics) = {}", hres);
-        ComPtr::<IDeviceInformationStatics>::wrap(res)
-    };
+    let mut deviceInformationStatics = IDeviceInformationStatics::factory();
     
     let mut asyncOp = unsafe {
         let mut res = ptr::null_mut();

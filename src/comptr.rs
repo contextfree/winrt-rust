@@ -28,7 +28,7 @@ impl<T> ComPtr<T> {
     /// Creates a `ComPtr` to wrap a raw pointer.
     /// It takes ownership over the pointer which means it does __not__ call `AddRef`.
     /// `T` __must__ be a COM interface that inherits from `IUnknown`.
-    pub unsafe fn wrap(ptr: *mut T) -> ComPtr<T> {
+    pub unsafe fn wrap(ptr: *mut T) -> ComPtr<T> { // TODO: Add T: ComInterface bound
         debug_assert!(!ptr.is_null());
         ComPtr(ptr)
     }
@@ -51,15 +51,8 @@ impl<T> ComPtr<T> {
         unsafe { &mut *(self.0 as *mut ::w::IUnknown) }
     }
     
-    pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComIid {
-        let iid: &'static Guid = Target::iid();
-        let mut res = ptr::null_mut();
-        unsafe {
-            match self.as_unknown().QueryInterface(&iid.as_iid(), &mut res as *mut _ as *mut *mut ::w::VOID) {
-                ::w::S_OK => Some(ComPtr::wrap(res)),
-                _ => None
-            }
-        }
+    pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComIid, T: ComInterface {
+        query_interface::<_, Target>(&**self)
     }
 }
 impl<T> Deref for ComPtr<T> {

@@ -36,10 +36,11 @@ mod comptr;
 pub use comptr::ComPtr;
 
 mod cominterfaces;
-pub use cominterfaces::*;
+pub use cominterfaces::{ComInterface, ComIid, IUnknown, IUnknownVtbl, IRestrictedErrorInfo, IAgileObject};
+// TODO: get rid of IUnknownVtbl export?
 
 mod rt;
-pub use rt::{RtInterface, RtValueType, RtType, IInspectable, IInspectableVtbl};
+pub use rt::{RtInterface, RtValueType, RtType, RtActivatable, IInspectable, IInspectableVtbl};
 
 pub use rt::handler::IntoInterface;
 

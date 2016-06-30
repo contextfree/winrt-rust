@@ -149,6 +149,14 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 		static void WriteInterface(Module module, TypeDefinition t, bool isDelegate)
 		{
 			var guid = t.CustomAttributes.First(a => a.AttributeType.Name == "GuidAttribute");
+			var exclusiveTo = t.CustomAttributes.SingleOrDefault(a => a.AttributeType.Name == "ExclusiveToAttribute");
+			TypeDefinition exclusiveToType = null; // currently not used
+			if (exclusiveTo != null)
+			{
+				Assert(exclusiveTo.ConstructorArguments[0].Type.FullName == "System.Type");
+				exclusiveToType = exclusiveTo.ConstructorArguments[0].Value as TypeDefinition;
+			}
+
 			var name = GetTypeName(t, TypeUsage.Define);
 
 			module.Append(@"
@@ -222,10 +230,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 		static void WriteClass(Module module, TypeDefinition t)
 		{
 			var activatable = t.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "ActivatableAttribute");
-			string factory = null;
+			TypeDefinition factory = null;
 			if (activatable != null && activatable.ConstructorArguments[0].Type.FullName == "System.Type")
 			{
-				factory = (activatable.ConstructorArguments[0].Value as TypeDefinition).ToString();
+				factory = activatable.ConstructorArguments[0].Value as TypeDefinition;
 			}
 
 			if (t.Interfaces.Count == 0)
@@ -234,7 +242,6 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 				return;
 			}
 			var mainInterface = t.Interfaces[0];
-			//Console.WriteLine(t.FullName + " => " + mainInterface.FullName + ", " + (factory ?? "(no factory)"));
 			var aliasedType = GetTypeName(mainInterface, TypeUsage.Alias);
 			var classType = GetTypeName(t, TypeUsage.Define);
 			if (aliasedType.Contains("'a")) // if we had to introduce a lifetime parameter ...
@@ -242,8 +249,24 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 				// use static lifetime for classes
 				aliasedType = aliasedType.Replace("'a", "'static");
 			}
-			module.Append(@"
-		RT_CLASS!(" + classType + ": " + aliasedType + ");");
+			if (factory == null)
+			{
+				module.Append(@"
+		RT_CLASS!{class " + classType + ": " + aliasedType + "}");
+			}
+			else
+			{
+				module.Append(@"
+		RT_CLASS!{class " + classType + ": " + aliasedType + " [" + GetTypeName(factory, TypeUsage.Alias) + "] [\"" + t.FullName + "\"]}");
+			}
+
+			var statics = t.CustomAttributes.Where(a => a.AttributeType.Name == "StaticAttribute").Select(a => (TypeDefinition)a.ConstructorArguments[0].Value);
+			foreach (var staticType in statics)
+			{
+				var staticName = GetTypeName(staticType, TypeUsage.Define);
+				module.Append(@"
+		RT_ACTIVATABLE!{" + staticName + " [" + staticName + "] [\"" + t.FullName + "\"]}");
+			}
 		}
 
 		enum TypeUsage
@@ -393,7 +416,6 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 					}
 					else if (usage == TypeUsage.GenericArgWithLifetime)
 					{
-						bool value;
 						name = "&'a " + name;
 					}
 					else if (usage == TypeUsage.Raw)
