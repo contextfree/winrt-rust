@@ -51,7 +51,7 @@ fn run() {
     
     let mut deviceInformationStatics = IDeviceInformationStatics::factory();
     
-    let mut asyncOp = unsafe {
+    unsafe {
         let mut res = ptr::null_mut();
         // Test some error reporting by using an invalid device selector
         let wrongDeviceSelector: FastHString = "Foobar".into();
@@ -74,12 +74,10 @@ fn run() {
         println!("Got Error Info: {} ({})", description, restrictedDescription);
         assert_eq!(error, hres); // the returned HRESULT within IRestrictedErrorInfo is the same as the original HRESULT
         // NOTE: `res` is still null pointer at this point
-
-        //assert_eq!(deviceInformationStatics.FindAllAsyncAqsFilter(deviceSelector.get_ref().get(), &mut res), S_OK);
-        assert_eq!(deviceInformationStatics.FindAllAsync(&mut res), S_OK);
-        
-        ComPtr::wrap(res)
     };
+
+    //let mut asyncOp = unsafe { deviceInformationStatics.find_all_async_aqs_filter(deviceSelector.get_ref()).unwrap() };
+    let mut asyncOp = unsafe { deviceInformationStatics.find_all_async().unwrap() };
     
     println!("CLS: {}",  asyncOp.get_runtime_class_name());
     
@@ -141,10 +139,10 @@ fn run() {
     assert_eq!(i, count);
 
     // TODO: currently there's a lifetime issue with the following block
-    /*if let Some(mut r) = remember {
-        let (index, found) = unsafe { deviceInformationCollection.index_of(&mut r).unwrap() };
+    if let Some(mut r) = remember {
+        let (index, found) = unsafe { deviceInformationCollection.index_of(&mut *r).unwrap() };
         println!("Found remembered value: {} (index: {})", found, index);
-    }*/
+    }
     
     assert!(unsafe { deviceInformationCollection.get_at(2000).is_err() }); // will be E_BOUNDS (out of bounds)
     

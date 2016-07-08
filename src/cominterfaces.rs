@@ -3,7 +3,7 @@ use ::Guid;
 /// Marker trait for all COM-compatible interfaces.
 pub trait ComInterface {
     /// The type that defines the VTable of this interface.
-    type Vtbl: 'static + Sized;
+    type Vtbl: Sized;
 }
 
 /// Provides a way to get the IID for a COM/WinRT interface.

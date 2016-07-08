@@ -277,7 +277,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				}
 			}
 
-			string outType = String.Join(", ", output.Select(o => GetTypeName(o.Item2, TypeUsage.Out)));
+			string outType = String.Join(", ", output.Select(o => GetTypeName(o.Item2, TypeUsage.Out).Replace("&", "&'static ")));
 			if (output.Count != 1)
 			{
 				outType = "(" + outType + ")"; // also works for count == 0 (empty tuple)

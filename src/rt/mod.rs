@@ -2,7 +2,13 @@ use std::ptr;
 
 use super::{ComInterface, HString, HStringRef, ComPtr, ComIid, Guid};
 
-use w::{HRESULT, HSTRING, S_OK, ULONG, BOOL, TRUE, FALSE, TrustLevel, IID};
+use w::{HRESULT, HSTRING, S_OK, ULONG, TrustLevel, IID};
+
+use self::gen::windows::foundation::collections::{
+    IIterable,
+    IIterator,
+    IVectorView
+};
 
 pub type RtResult<T> = Result<T, ::w::HRESULT>;
 pub type Char = ::w::wchar_t;
@@ -122,15 +128,11 @@ impl<'a, T> IntoIterator for &'a mut IIterable<T> where T: RtType
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     fn into_iter(mut self) -> Self::IntoIter {
-        unsafe {
-            let mut iterator = ptr::null_mut();
-            assert_eq!(self.First(&mut iterator), S_OK);
-            ComPtr::wrap(iterator)
-        }
+        unsafe { self.first().unwrap() }
     }
 }
 
-impl<'a, T: 'static> IntoIterator for &'a mut IVectorView<T> where T: RtType, IIterable<T>: ComIid
+impl<'a, T> IntoIterator for &'a mut IVectorView<T> where T: RtType, IIterable<T>: ComIid
 {
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
@@ -148,18 +150,12 @@ impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType
     // TODO: This could potentially be made faster by using the output of MoveNext instead of calling HasCurrent
     //       in every iteration. That would require a wrapper struct with a boolean flag.
     fn next(&mut self) -> Option<Self::Item> {
-        let has_next = unsafe {
-            let mut hasCurrent: BOOL = FALSE;
-            self.get_HasCurrent(&mut hasCurrent);
-            hasCurrent == TRUE
-        };
+        let has_next = unsafe { self.get_has_current().unwrap() };
         if has_next {
             unsafe {
-                let mut current: <T as RtType>::Abi = <T as RtType>::uninitialized();
-                assert_eq!(self.get_Current(&mut current), S_OK);
-                let mut hasCurrent: BOOL = FALSE;
-                assert_eq!(self.MoveNext(&mut hasCurrent), S_OK);
-                Some(<T as RtType>::wrap(current))
+                let current = self.get_current().unwrap();
+                assert!(self.move_next().is_ok());
+                Some(current)
             }
         } else {
             None
@@ -199,7 +195,7 @@ macro_rules! RT_INTERFACE {
             type Vtbl = $vtbl;
         }
         impl<'a> RtType for &'a $interface {
-            type In = &'a $interface;
+            type In = *mut $interface; // FIXME: should probably be &'a $interface
             type Abi = *mut $interface;
             type Out = ComPtr<$interface>;
 
@@ -246,11 +242,11 @@ macro_rules! RT_INTERFACE {
                 ((*self.lpVtbl).$method)(self $(,$p)*)
             })+
         }
-        impl<$t1: 'static> ComInterface for $interface<$t1> where $t1: RtType {
+        impl<$t1> ComInterface for $interface<$t1> where $t1: RtType {
             type Vtbl = $vtbl<$t1>;
         }
         impl<'a, $t1> RtType for &'a $interface<$t1> where $t1: RtType{
-            type In = &'a $interface<$t1>;
+            type In = *mut $interface<$t1>; // FIXME: should probably be &'a $interface<$t1>
             type Abi = *mut $interface<$t1>;
             type Out = ComPtr<$interface<$t1>>;
 
@@ -292,7 +288,7 @@ macro_rules! RT_INTERFACE {
         }
         unsafe impl RtInterface for $interface {}
         impl<'a> RtType for &'a $interface {
-            type In = &'a $interface;
+            type In = *mut $interface; // FIXME: should probably be &'a $interface
             type Abi = *mut $interface;
             type Out = ComPtr<$interface>;
 
@@ -346,7 +342,7 @@ macro_rules! RT_INTERFACE {
         }
         unsafe impl RtInterface for $interface {}
         impl<'a> RtType for &'a $interface {
-            type In = &'a $interface;
+            type In = *mut $interface; // FIXME: should probably be &'a $interface
             type Abi = *mut $interface;
             type Out = ComPtr<$interface>;
 
@@ -393,12 +389,12 @@ macro_rules! RT_INTERFACE {
                 ((*self.lpVtbl).$method)(self $(,$p)*)
             })+
         }
-        impl<$t1: 'static> ComInterface for $interface<$t1> where $t1: RtType {
+        impl<$t1> ComInterface for $interface<$t1> where $t1: RtType {
             type Vtbl = $vtbl<$t1>;
         }
-        unsafe impl<$t1: 'static> RtInterface for $interface<$t1> where $t1: RtType {}
+        unsafe impl<$t1> RtInterface for $interface<$t1> where $t1: RtType {}
         impl<'a, $t1> RtType for &'a $interface<$t1> where $t1: RtType{
-            type In = &'a $interface<$t1>;
+            type In = *mut $interface<$t1>; // FIXME: should probably be &'a $interface<$t1>
             type Abi = *mut $interface<$t1>;
             type Out = ComPtr<$interface<$t1>>;
 
@@ -444,12 +440,12 @@ macro_rules! RT_INTERFACE {
                 ((*self.lpVtbl).$method)(self $(,$p)*)
             })+
         }
-        impl<$t1: 'static, $t2: 'static> ComInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
+        impl<$t1, $t2> ComInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type Vtbl = $vtbl<$t1, $t2>;
         }
-        unsafe impl<$t1: 'static, $t2: 'static> RtInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {}
+        unsafe impl<$t1, $t2> RtInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {}
         impl<'a, $t1, $t2> RtType for &'a $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
-            type In = &'a $interface<$t1, $t2>;
+            type In = *mut $interface<$t1, $t2>; // FIXME: should probably be &'a $interface<$t1, $t2>
             type Abi = *mut $interface<$t1, $t2>;
             type Out = ComPtr<$interface<$t1, $t2>>;
 
@@ -610,11 +606,11 @@ macro_rules! RT_CLASS {
             fn iid() -> &'static ::Guid { <$interface as ComIid>::iid() }
         }
         impl<'a> RtType for &'a $cls {
-            type In = &'a mut $cls;
+            type In = *mut $cls; //FIXME: should probably be &'a $cls;
             type Abi = *mut $cls;
             type Out = ComPtr<$cls>;
             
-            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v as *const _ as *mut _ }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
@@ -705,19 +701,7 @@ macro_rules! RT_PINTERFACE {
 }
 
 pub mod handler;
-pub mod gen; // import auto-generated definitions
-
-pub use self::gen::windows::foundation::collections::{
-    IIterable,
-    IIterator,
-    IVectorView
-};
-pub use self::gen::windows::foundation::{
-    IAsyncAction,
-    IAsyncOperation,
-    AsyncStatus,
-    AsyncOperationCompletedHandler
-};
+pub mod gen; // import auto-generated definitions (has to come after macro definitions)
 
 // FIXME: maybe better reexport from winapi?
 DEFINE_IID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);

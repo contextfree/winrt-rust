@@ -147,7 +147,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetControllersAsync(&mut self, provider: *mut ::rt::gen::windows::devices::adc::provider::IAdcProvider, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::adc::AdcController>>) -> ::w::HRESULT
 		}}
 		impl IAdcControllerStatics {
-			#[inline] pub unsafe fn get_controllers_async(&mut self, provider: &::rt::gen::windows::devices::adc::provider::IAdcProvider) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::adc::AdcController>>>> {
+			#[inline] pub unsafe fn get_controllers_async(&mut self, provider: &::rt::gen::windows::devices::adc::provider::IAdcProvider) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::adc::AdcController>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetControllersAsync)(self, provider as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -162,7 +162,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::adc::AdcController>) -> ::w::HRESULT
 		}}
 		impl IAdcControllerStatics2 {
-			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::adc::AdcController>>> {
+			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::adc::AdcController>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -264,7 +264,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetControllers(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::adc::provider::IAdcControllerProvider>) -> ::w::HRESULT
 		}}
 		impl IAdcProvider {
-			#[inline] pub unsafe fn get_controllers(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::adc::provider::IAdcControllerProvider>>> {
+			#[inline] pub unsafe fn get_controllers(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::adc::provider::IAdcControllerProvider>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetControllers)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -353,12 +353,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::gpio::GpioController>) -> ::w::HRESULT
 		}}
 		impl IGpioControllerStatics2 {
-			#[inline] pub unsafe fn get_controllers_async(&mut self, provider: &::rt::gen::windows::devices::gpio::provider::IGpioProvider) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::gpio::GpioController>>>> {
+			#[inline] pub unsafe fn get_controllers_async(&mut self, provider: &::rt::gen::windows::devices::gpio::provider::IGpioProvider) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::gpio::GpioController>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetControllersAsync)(self, provider as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::gpio::GpioController>>> {
+			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::gpio::GpioController>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -559,7 +559,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetControllers(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::gpio::provider::IGpioControllerProvider>) -> ::w::HRESULT
 		}}
 		impl IGpioProvider {
-			#[inline] pub unsafe fn get_controllers(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::gpio::provider::IGpioControllerProvider>>> {
+			#[inline] pub unsafe fn get_controllers(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::gpio::provider::IGpioControllerProvider>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetControllers)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -650,7 +650,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelectorFromFriendlyName)(self, friendlyName.get(), &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef, settings: &::rt::gen::windows::devices::i2c::I2cConnectionSettings) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::i2c::I2cDevice>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef, settings: &::rt::gen::windows::devices::i2c::I2cConnectionSettings) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::i2c::I2cDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), settings as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -676,12 +676,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::i2c::I2cController>) -> ::w::HRESULT
 		}}
 		impl II2cControllerStatics {
-			#[inline] pub unsafe fn get_controllers_async(&mut self, provider: &::rt::gen::windows::devices::i2c::provider::II2cProvider) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::i2c::I2cController>>>> {
+			#[inline] pub unsafe fn get_controllers_async(&mut self, provider: &::rt::gen::windows::devices::i2c::provider::II2cProvider) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::i2c::I2cController>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetControllersAsync)(self, provider as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::i2c::I2cController>>> {
+			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::i2c::I2cController>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -783,7 +783,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetControllersAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::i2c::provider::II2cControllerProvider>>) -> ::w::HRESULT
 		}}
 		impl II2cProvider {
-			#[inline] pub unsafe fn get_controllers_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::i2c::provider::II2cControllerProvider>>>> {
+			#[inline] pub unsafe fn get_controllers_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::i2c::provider::II2cControllerProvider>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetControllersAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -861,7 +861,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetControllersAsync(&mut self, provider: *mut ::rt::gen::windows::devices::pwm::provider::IPwmProvider, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::pwm::PwmController>>) -> ::w::HRESULT
 		}}
 		impl IPwmControllerStatics {
-			#[inline] pub unsafe fn get_controllers_async(&mut self, provider: &::rt::gen::windows::devices::pwm::provider::IPwmProvider) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::pwm::PwmController>>>> {
+			#[inline] pub unsafe fn get_controllers_async(&mut self, provider: &::rt::gen::windows::devices::pwm::provider::IPwmProvider) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::pwm::PwmController>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetControllersAsync)(self, provider as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -876,7 +876,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pwm::PwmController>) -> ::w::HRESULT
 		}}
 		impl IPwmControllerStatics2 {
-			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pwm::PwmController>>> {
+			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::pwm::PwmController>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -999,7 +999,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetControllers(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::pwm::provider::IPwmControllerProvider>) -> ::w::HRESULT
 		}}
 		impl IPwmProvider {
-			#[inline] pub unsafe fn get_controllers(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::pwm::provider::IPwmControllerProvider>>> {
+			#[inline] pub unsafe fn get_controllers(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::pwm::provider::IPwmControllerProvider>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetControllers)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -1142,7 +1142,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetBusInfo)(self, busId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, busId: HStringRef, settings: &::rt::gen::windows::devices::spi::SpiConnectionSettings) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::spi::SpiDevice>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, busId: HStringRef, settings: &::rt::gen::windows::devices::spi::SpiConnectionSettings) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::spi::SpiDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, busId.get(), settings as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -1168,12 +1168,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetControllersAsync(&mut self, provider: *mut ::rt::gen::windows::devices::spi::provider::ISpiProvider, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::spi::SpiController>>) -> ::w::HRESULT
 		}}
 		impl ISpiControllerStatics {
-			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::spi::SpiController>>> {
+			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::spi::SpiController>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_controllers_async(&mut self, provider: &::rt::gen::windows::devices::spi::provider::ISpiProvider) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::spi::SpiController>>>> {
+			#[inline] pub unsafe fn get_controllers_async(&mut self, provider: &::rt::gen::windows::devices::spi::provider::ISpiProvider) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::spi::SpiController>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetControllersAsync)(self, provider as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -1301,7 +1301,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetControllersAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::spi::provider::ISpiControllerProvider>>) -> ::w::HRESULT
 		}}
 		impl ISpiProvider {
-			#[inline] pub unsafe fn get_controllers_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::spi::provider::ISpiControllerProvider>>>> {
+			#[inline] pub unsafe fn get_controllers_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::spi::provider::ISpiControllerProvider>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetControllersAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -1342,7 +1342,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl IPrint3DDeviceStatics {
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::printers::Print3DDevice>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::printers::Print3DDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -1375,17 +1375,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn MergeAndValidateWithDefaultPrintTicketAsync(&mut self, deltaTicket: *mut ::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType>) -> ::w::HRESULT
 		}}
 		impl IPrintSchema {
-			#[inline] pub unsafe fn get_default_print_ticket_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType>>> {
+			#[inline] pub unsafe fn get_default_print_ticket_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultPrintTicketAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_capabilities_async(&mut self, constrainTicket: &::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType>>> {
+			#[inline] pub unsafe fn get_capabilities_async(&mut self, constrainTicket: &::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetCapabilitiesAsync)(self, constrainTicket as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn merge_and_validate_with_default_print_ticket_async(&mut self, deltaTicket: &::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType>>> {
+			#[inline] pub unsafe fn merge_and_validate_with_default_print_ticket_async(&mut self, deltaTicket: &::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).MergeAndValidateWithDefaultPrintTicketAsync)(self, deltaTicket as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -1662,7 +1662,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_AggregateBattery)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::power::Battery>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::power::Battery>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -1864,7 +1864,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_BinaryBody)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_headers(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMap<&str, &str>>> {
+			#[inline] pub unsafe fn get_headers(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMap<&'static str, &'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Headers)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -2292,7 +2292,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).CalculateLength)(self, message as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn send_message_and_get_result_async(&mut self, message: &::rt::gen::windows::devices::sms::ISmsMessageBase) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::sms::SmsSendMessageResult>>> {
+			#[inline] pub unsafe fn send_message_and_get_result_async(&mut self, message: &::rt::gen::windows::devices::sms::ISmsMessageBase) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::sms::SmsSendMessageResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).SendMessageAndGetResultAsync)(self, message as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -2391,22 +2391,22 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_MessageType)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_imsi_prefixes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&str>>> {
+			#[inline] pub unsafe fn get_imsi_prefixes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_ImsiPrefixes)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_device_ids(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&str>>> {
+			#[inline] pub unsafe fn get_device_ids(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_DeviceIds)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_sender_numbers(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&str>>> {
+			#[inline] pub unsafe fn get_sender_numbers(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_SenderNumbers)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_text_message_prefixes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&str>>> {
+			#[inline] pub unsafe fn get_text_message_prefixes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_TextMessagePrefixes)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -2435,12 +2435,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_TeleserviceIds)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_wap_application_ids(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&str>>> {
+			#[inline] pub unsafe fn get_wap_application_ids(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_WapApplicationIds)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_wap_content_types(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&str>>> {
+			#[inline] pub unsafe fn get_wap_content_types(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_WapContentTypes)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -2480,7 +2480,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_ActionType)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_rules(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&::rt::gen::windows::devices::sms::SmsFilterRule>>> {
+			#[inline] pub unsafe fn get_rules(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static ::rt::gen::windows::devices::sms::SmsFilterRule>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Rules)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -2505,7 +2505,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn Register(&mut self, id: ::w::HSTRING, filterRules: *mut ::rt::gen::windows::devices::sms::SmsFilterRules, out: *mut *mut ::rt::gen::windows::devices::sms::SmsMessageRegistration) -> ::w::HRESULT
 		}}
 		impl ISmsMessageRegistrationStatics {
-			#[inline] pub unsafe fn get_all_registrations(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sms::SmsMessageRegistration>>> {
+			#[inline] pub unsafe fn get_all_registrations(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::sms::SmsMessageRegistration>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_AllRegistrations)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -2658,7 +2658,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).put_Encoding)(self, value);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn to_binary_messages(&mut self, format: ::rt::gen::windows::devices::sms::SmsDataFormat) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sms::ISmsBinaryMessage>>> {
+			#[inline] pub unsafe fn to_binary_messages(&mut self, format: ::rt::gen::windows::devices::sms::SmsDataFormat) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::sms::ISmsBinaryMessage>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ToBinaryMessages)(self, format, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -2705,12 +2705,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).DeleteMessagesAsync)(self, messageFilter, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_message_async(&mut self, messageId: u32) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::sms::ISmsMessage>>> {
+			#[inline] pub unsafe fn get_message_async(&mut self, messageId: u32) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::sms::ISmsMessage>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetMessageAsync)(self, messageId, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_messages_async(&mut self, messageFilter: ::rt::gen::windows::devices::sms::SmsMessageFilter) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperationWithProgress<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sms::ISmsMessage>, i32>>> {
+			#[inline] pub unsafe fn get_messages_async(&mut self, messageFilter: ::rt::gen::windows::devices::sms::SmsMessageFilter) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperationWithProgress<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::sms::ISmsMessage>, i32>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetMessagesAsync)(self, messageFilter, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -2778,12 +2778,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::sms::SmsDevice>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::sms::SmsDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::sms::SmsDevice>>> {
+			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::sms::SmsDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -2794,7 +2794,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn FromNetworkAccountIdAsync(&mut self, networkAccountId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::sms::SmsDevice>) -> ::w::HRESULT
 		}}
 		impl ISmsDeviceStatics2 {
-			#[inline] pub unsafe fn from_network_account_id_async(&mut self, networkAccountId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::sms::SmsDevice>>> {
+			#[inline] pub unsafe fn from_network_account_id_async(&mut self, networkAccountId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::sms::SmsDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromNetworkAccountIdAsync)(self, networkAccountId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -3256,7 +3256,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_PeerCertificateErrors)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_peer_intermediate_certificates(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::security::cryptography::certificates::Certificate>>> {
+			#[inline] pub unsafe fn get_peer_intermediate_certificates(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::security::cryptography::certificates::Certificate>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_PeerIntermediateCertificates)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -3347,12 +3347,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDataBySessionPortWithLanguageAsync(&mut self, uniqueName: ::w::HSTRING, busAttachment: *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, sessionPort: u16, language: *mut ::rt::gen::windows::globalization::Language, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView>) -> ::w::HRESULT
 		}}
 		impl IAllJoynAboutDataViewStatics {
-			#[inline] pub unsafe fn get_data_by_session_port_async(&mut self, uniqueName: HStringRef, busAttachment: &::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, sessionPort: u16) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView>>> {
+			#[inline] pub unsafe fn get_data_by_session_port_async(&mut self, uniqueName: HStringRef, busAttachment: &::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, sessionPort: u16) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDataBySessionPortAsync)(self, uniqueName.get(), busAttachment as *const _ as *mut _, sessionPort, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_data_by_session_port_with_language_async(&mut self, uniqueName: HStringRef, busAttachment: &::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, sessionPort: u16, language: &::rt::gen::windows::globalization::Language) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView>>> {
+			#[inline] pub unsafe fn get_data_by_session_port_with_language_async(&mut self, uniqueName: HStringRef, busAttachment: &::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, sessionPort: u16, language: &::rt::gen::windows::globalization::Language) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDataBySessionPortWithLanguageAsync)(self, uniqueName.get(), busAttachment as *const _ as *mut _, sessionPort, language as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -3386,7 +3386,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Status)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&str, &IInspectable>>> {
+			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&'static str, &'static IInspectable>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Properties)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -3431,7 +3431,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_SoftwareVersion)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_supported_languages(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::globalization::Language>>> {
+			#[inline] pub unsafe fn get_supported_languages(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::globalization::Language>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_SupportedLanguages)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -3505,7 +3505,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).put_DefaultAppName)(self, value.get());
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_app_names(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMap<&str, &str>>> {
+			#[inline] pub unsafe fn get_app_names(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMap<&'static str, &'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_AppNames)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -3528,7 +3528,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).put_DefaultDescription)(self, value.get());
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_descriptions(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMap<&str, &str>>> {
+			#[inline] pub unsafe fn get_descriptions(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMap<&'static str, &'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Descriptions)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -3542,7 +3542,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).put_DefaultManufacturer)(self, value.get());
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_manufacturers(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMap<&str, &str>>> {
+			#[inline] pub unsafe fn get_manufacturers(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMap<&'static str, &'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Manufacturers)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -3930,12 +3930,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_ClassOfDevice)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_sdp_records(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::storage::streams::IBuffer>>> {
+			#[inline] pub unsafe fn get_sdp_records(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::storage::streams::IBuffer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_SdpRecords)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_rfcomm_services(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceService>>> {
+			#[inline] pub unsafe fn get_rfcomm_services(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceService>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_RfcommServices)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -4004,17 +4004,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl IBluetoothDeviceStatics {
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::BluetoothDevice>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::BluetoothDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_host_name_async(&mut self, hostName: &::rt::gen::windows::networking::HostName) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::BluetoothDevice>>> {
+			#[inline] pub unsafe fn from_host_name_async(&mut self, hostName: &::rt::gen::windows::networking::HostName) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::BluetoothDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromHostNameAsync)(self, hostName as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_bluetooth_address_async(&mut self, address: u64) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::BluetoothDevice>>> {
+			#[inline] pub unsafe fn from_bluetooth_address_async(&mut self, address: u64) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::BluetoothDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromBluetoothAddressAsync)(self, address, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -4439,7 +4439,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Name)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_gatt_services(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>>> {
+			#[inline] pub unsafe fn get_gatt_services(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_GattServices)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -4521,12 +4521,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl IBluetoothLEDeviceStatics {
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::BluetoothLEDevice>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::BluetoothLEDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_bluetooth_address_async(&mut self, bluetoothAddress: u64) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::BluetoothLEDevice>>> {
+			#[inline] pub unsafe fn from_bluetooth_address_async(&mut self, bluetoothAddress: u64) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::BluetoothLEDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromBluetoothAddressAsync)(self, bluetoothAddress, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -4578,7 +4578,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelectorFromAppearance)(self, appearance as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_bluetooth_address_with_bluetooth_address_type_async(&mut self, bluetoothAddress: u64, bluetoothAddressType: ::rt::gen::windows::devices::bluetooth::BluetoothAddressType) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::BluetoothLEDevice>>> {
+			#[inline] pub unsafe fn from_bluetooth_address_with_bluetooth_address_type_async(&mut self, bluetoothAddress: u64, bluetoothAddressType: ::rt::gen::windows::devices::bluetooth::BluetoothAddressType) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::BluetoothLEDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromBluetoothAddressWithBluetoothAddressTypeAsync)(self, bluetoothAddress, bluetoothAddressType, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -4771,7 +4771,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDeviceSelector(&mut self, serviceId: *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl IRfcommDeviceServiceStatics {
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceService>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceService>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -4818,12 +4818,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_MaxProtectionLevel)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_sdp_raw_attributes_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IMapView<u32, &::rt::gen::windows::storage::streams::IBuffer>>>> {
+			#[inline] pub unsafe fn get_sdp_raw_attributes_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IMapView<u32, &'static ::rt::gen::windows::storage::streams::IBuffer>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetSdpRawAttributesAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_sdp_raw_attributes_with_cache_mode_async(&mut self, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IMapView<u32, &::rt::gen::windows::storage::streams::IBuffer>>>> {
+			#[inline] pub unsafe fn get_sdp_raw_attributes_with_cache_mode_async(&mut self, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IMapView<u32, &'static ::rt::gen::windows::storage::streams::IBuffer>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetSdpRawAttributesWithCacheModeAsync)(self, cacheMode, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -4845,7 +4845,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn CreateAsync(&mut self, serviceId: *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceProvider>) -> ::w::HRESULT
 		}}
 		impl IRfcommServiceProviderStatics {
-			#[inline] pub unsafe fn create_async(&mut self, serviceId: &::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceProvider>>> {
+			#[inline] pub unsafe fn create_async(&mut self, serviceId: &::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceProvider>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateAsync)(self, serviceId as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -4867,7 +4867,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_ServiceId)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_sdp_raw_attributes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMap<u32, &::rt::gen::windows::storage::streams::IBuffer>>> {
+			#[inline] pub unsafe fn get_sdp_raw_attributes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMap<u32, &'static ::rt::gen::windows::storage::streams::IBuffer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_SdpRawAttributes)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -4921,7 +4921,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn ConvertShortIdToUuid(&mut self, shortId: u16, out: *mut ::w::GUID) -> ::w::HRESULT
 		}}
 		impl IGattDeviceServiceStatics {
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -4976,7 +4976,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn remove_ValueChanged(&mut self, valueChangedEventCookie: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT
 		}}
 		impl IGattCharacteristic {
-			#[inline] pub unsafe fn get_descriptors(&mut self, descriptorUuid: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDescriptor>>> {
+			#[inline] pub unsafe fn get_descriptors(&mut self, descriptorUuid: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDescriptor>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDescriptors)(self, descriptorUuid.as_iid(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -5010,17 +5010,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_AttributeHandle)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_presentation_formats(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattPresentationFormat>>> {
+			#[inline] pub unsafe fn get_presentation_formats(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattPresentationFormat>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_PresentationFormats)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn read_value_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattReadResult>>> {
+			#[inline] pub unsafe fn read_value_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattReadResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ReadValueAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn read_value_with_cache_mode_async(&mut self, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattReadResult>>> {
+			#[inline] pub unsafe fn read_value_with_cache_mode_async(&mut self, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattReadResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ReadValueWithCacheModeAsync)(self, cacheMode, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -5035,7 +5035,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).WriteValueWithOptionAsync)(self, value as *const _ as *mut _, writeOption, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn read_client_characteristic_configuration_descriptor_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattReadClientCharacteristicConfigurationDescriptorResult>>> {
+			#[inline] pub unsafe fn read_client_characteristic_configuration_descriptor_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattReadClientCharacteristicConfigurationDescriptorResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ReadClientCharacteristicConfigurationDescriptorAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -5075,7 +5075,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Service)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_all_descriptors(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDescriptor>>> {
+			#[inline] pub unsafe fn get_all_descriptors(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDescriptor>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetAllDescriptors)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -5122,12 +5122,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_AttributeHandle)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn read_value_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattReadResult>>> {
+			#[inline] pub unsafe fn read_value_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattReadResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ReadValueAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn read_value_with_cache_mode_async(&mut self, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattReadResult>>> {
+			#[inline] pub unsafe fn read_value_with_cache_mode_async(&mut self, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattReadResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ReadValueWithCacheModeAsync)(self, cacheMode, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -6107,12 +6107,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_AttributeHandle(&mut self, out: *mut u16) -> ::w::HRESULT
 		}}
 		impl IGattDeviceService {
-			#[inline] pub unsafe fn get_characteristics(&mut self, characteristicUuid: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattCharacteristic>>> {
+			#[inline] pub unsafe fn get_characteristics(&mut self, characteristicUuid: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattCharacteristic>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetCharacteristics)(self, characteristicUuid.as_iid(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_included_services(&mut self, serviceUuid: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>>> {
+			#[inline] pub unsafe fn get_included_services(&mut self, serviceUuid: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetIncludedServices)(self, serviceUuid.as_iid(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -6146,17 +6146,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Device)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_parent_services(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>>> {
+			#[inline] pub unsafe fn get_parent_services(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_ParentServices)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_all_characteristics(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattCharacteristic>>> {
+			#[inline] pub unsafe fn get_all_characteristics(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattCharacteristic>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetAllCharacteristics)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_all_included_services(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>>> {
+			#[inline] pub unsafe fn get_all_included_services(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetAllIncludedServices)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -6214,22 +6214,22 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_ServiceUuids)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_manufacturer_data(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEManufacturerData>>> {
+			#[inline] pub unsafe fn get_manufacturer_data(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEManufacturerData>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_ManufacturerData)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_data_sections(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementDataSection>>> {
+			#[inline] pub unsafe fn get_data_sections(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementDataSection>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_DataSections)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_manufacturer_data_by_company_id(&mut self, companyId: u16) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEManufacturerData>>> {
+			#[inline] pub unsafe fn get_manufacturer_data_by_company_id(&mut self, companyId: u16) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEManufacturerData>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetManufacturerDataByCompanyId)(self, companyId, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_sections_by_type(&mut self, type_: u8) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementDataSection>>> {
+			#[inline] pub unsafe fn get_sections_by_type(&mut self, type_: u8) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementDataSection>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetSectionsByType)(self, type_, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -6255,7 +6255,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).put_Advertisement)(self, value as *const _ as *mut _);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_byte_patterns(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementBytePattern>>> {
+			#[inline] pub unsafe fn get_byte_patterns(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementBytePattern>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_BytePatterns)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -6872,7 +6872,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Error)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_advertisements(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementReceivedEventArgs>>> {
+			#[inline] pub unsafe fn get_advertisements(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementReceivedEventArgs>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Advertisements)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7040,7 +7040,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_SupportedDeviceClasses)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_supported_device_selectors(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&str>>> {
+			#[inline] pub unsafe fn get_supported_device_selectors(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_SupportedDeviceSelectors)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7076,7 +7076,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Appearance)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_requested_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&str>>> {
+			#[inline] pub unsafe fn get_requested_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_RequestedProperties)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7116,12 +7116,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).ShowWithPlacement)(self, selection, placement);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn pick_single_device_async(&mut self, selection: ::rt::gen::windows::foundation::Rect) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DeviceInformation>>> {
+			#[inline] pub unsafe fn pick_single_device_async(&mut self, selection: ::rt::gen::windows::foundation::Rect) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DeviceInformation>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).PickSingleDeviceAsync)(self, selection, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn pick_single_device_async_with_placement(&mut self, selection: ::rt::gen::windows::foundation::Rect, placement: ::rt::gen::windows::ui::popups::Placement) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DeviceInformation>>> {
+			#[inline] pub unsafe fn pick_single_device_async_with_placement(&mut self, selection: ::rt::gen::windows::foundation::Rect, placement: ::rt::gen::windows::ui::popups::Placement) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DeviceInformation>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).PickSingleDeviceAsyncWithPlacement)(self, selection, placement, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7184,7 +7184,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Id)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&str, &IInspectable>>> {
+			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&'static str, &'static IInspectable>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Properties)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7312,32 +7312,32 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn CreateWatcherAqsFilterAndAdditionalProperties(&mut self, aqsFilter: ::w::HSTRING, additionalProperties: *mut ::rt::gen::windows::foundation::collections::IIterable<&str>, out: *mut *mut ::rt::gen::windows::devices::enumeration::DeviceWatcher) -> ::w::HRESULT
 		}}
 		impl IDeviceInformationStatics {
-			#[inline] pub unsafe fn create_from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DeviceInformation>>> {
+			#[inline] pub unsafe fn create_from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DeviceInformation>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateFromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_from_id_async_additional_properties(&mut self, deviceId: HStringRef, additionalProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DeviceInformation>>> {
+			#[inline] pub unsafe fn create_from_id_async_additional_properties(&mut self, deviceId: HStringRef, additionalProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DeviceInformation>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateFromIdAsyncAdditionalProperties)(self, deviceId.get(), additionalProperties as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn find_all_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DeviceInformationCollection>>> {
+			#[inline] pub unsafe fn find_all_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DeviceInformationCollection>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FindAllAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn find_all_async_device_class(&mut self, deviceClass: ::rt::gen::windows::devices::enumeration::DeviceClass) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DeviceInformationCollection>>> {
+			#[inline] pub unsafe fn find_all_async_device_class(&mut self, deviceClass: ::rt::gen::windows::devices::enumeration::DeviceClass) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DeviceInformationCollection>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FindAllAsyncDeviceClass)(self, deviceClass, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn find_all_async_aqs_filter(&mut self, aqsFilter: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DeviceInformationCollection>>> {
+			#[inline] pub unsafe fn find_all_async_aqs_filter(&mut self, aqsFilter: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DeviceInformationCollection>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FindAllAsyncAqsFilter)(self, aqsFilter.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn find_all_async_aqs_filter_and_additional_properties(&mut self, aqsFilter: HStringRef, additionalProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DeviceInformationCollection>>> {
+			#[inline] pub unsafe fn find_all_async_aqs_filter_and_additional_properties(&mut self, aqsFilter: HStringRef, additionalProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DeviceInformationCollection>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FindAllAsyncAqsFilterAndAdditionalProperties)(self, aqsFilter.get(), additionalProperties as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7376,12 +7376,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetAqsFilterFromDeviceClass)(self, deviceClass, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_from_id_async_with_kind_and_additional_properties(&mut self, deviceId: HStringRef, additionalProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>, kind: ::rt::gen::windows::devices::enumeration::DeviceInformationKind) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DeviceInformation>>> {
+			#[inline] pub unsafe fn create_from_id_async_with_kind_and_additional_properties(&mut self, deviceId: HStringRef, additionalProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>, kind: ::rt::gen::windows::devices::enumeration::DeviceInformationKind) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DeviceInformation>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateFromIdAsyncWithKindAndAdditionalProperties)(self, deviceId.get(), additionalProperties as *const _ as *mut _, kind, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn find_all_async_with_kind_aqs_filter_and_additional_properties(&mut self, aqsFilter: HStringRef, additionalProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>, kind: ::rt::gen::windows::devices::enumeration::DeviceInformationKind) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DeviceInformationCollection>>> {
+			#[inline] pub unsafe fn find_all_async_with_kind_aqs_filter_and_additional_properties(&mut self, aqsFilter: HStringRef, additionalProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>, kind: ::rt::gen::windows::devices::enumeration::DeviceInformationKind) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DeviceInformationCollection>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FindAllAsyncWithKindAqsFilterAndAdditionalProperties)(self, aqsFilter.get(), additionalProperties as *const _ as *mut _, kind, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7430,7 +7430,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_EnclosureLocation)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&str, &IInspectable>>> {
+			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&'static str, &'static IInspectable>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Properties)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7439,12 +7439,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).Update)(self, updateInfo as *const _ as *mut _);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_thumbnail_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DeviceThumbnail>>> {
+			#[inline] pub unsafe fn get_thumbnail_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DeviceThumbnail>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetThumbnailAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_glyph_thumbnail_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DeviceThumbnail>>> {
+			#[inline] pub unsafe fn get_glyph_thumbnail_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DeviceThumbnail>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetGlyphThumbnailAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7548,17 +7548,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn remove_PairingRequested(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT
 		}}
 		impl IDeviceInformationCustomPairing {
-			#[inline] pub unsafe fn pair_async(&mut self, pairingKindsSupported: ::rt::gen::windows::devices::enumeration::DevicePairingKinds) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DevicePairingResult>>> {
+			#[inline] pub unsafe fn pair_async(&mut self, pairingKindsSupported: ::rt::gen::windows::devices::enumeration::DevicePairingKinds) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DevicePairingResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).PairAsync)(self, pairingKindsSupported, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn pair_with_protection_level_async(&mut self, pairingKindsSupported: ::rt::gen::windows::devices::enumeration::DevicePairingKinds, minProtectionLevel: ::rt::gen::windows::devices::enumeration::DevicePairingProtectionLevel) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DevicePairingResult>>> {
+			#[inline] pub unsafe fn pair_with_protection_level_async(&mut self, pairingKindsSupported: ::rt::gen::windows::devices::enumeration::DevicePairingKinds, minProtectionLevel: ::rt::gen::windows::devices::enumeration::DevicePairingProtectionLevel) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DevicePairingResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).PairWithProtectionLevelAsync)(self, pairingKindsSupported, minProtectionLevel, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn pair_with_protection_level_and_settings_async(&mut self, pairingKindsSupported: ::rt::gen::windows::devices::enumeration::DevicePairingKinds, minProtectionLevel: ::rt::gen::windows::devices::enumeration::DevicePairingProtectionLevel, devicePairingSettings: &::rt::gen::windows::devices::enumeration::IDevicePairingSettings) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DevicePairingResult>>> {
+			#[inline] pub unsafe fn pair_with_protection_level_and_settings_async(&mut self, pairingKindsSupported: ::rt::gen::windows::devices::enumeration::DevicePairingKinds, minProtectionLevel: ::rt::gen::windows::devices::enumeration::DevicePairingProtectionLevel, devicePairingSettings: &::rt::gen::windows::devices::enumeration::IDevicePairingSettings) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DevicePairingResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).PairWithProtectionLevelAndSettingsAsync)(self, pairingKindsSupported, minProtectionLevel, devicePairingSettings as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7592,12 +7592,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_CanPair)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out == ::w::TRUE) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn pair_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DevicePairingResult>>> {
+			#[inline] pub unsafe fn pair_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DevicePairingResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).PairAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn pair_with_protection_level_async(&mut self, minProtectionLevel: ::rt::gen::windows::devices::enumeration::DevicePairingProtectionLevel) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DevicePairingResult>>> {
+			#[inline] pub unsafe fn pair_with_protection_level_async(&mut self, minProtectionLevel: ::rt::gen::windows::devices::enumeration::DevicePairingProtectionLevel) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DevicePairingResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).PairWithProtectionLevelAsync)(self, minProtectionLevel, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7621,12 +7621,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Custom)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn pair_with_protection_level_and_settings_async(&mut self, minProtectionLevel: ::rt::gen::windows::devices::enumeration::DevicePairingProtectionLevel, devicePairingSettings: &::rt::gen::windows::devices::enumeration::IDevicePairingSettings) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DevicePairingResult>>> {
+			#[inline] pub unsafe fn pair_with_protection_level_and_settings_async(&mut self, minProtectionLevel: ::rt::gen::windows::devices::enumeration::DevicePairingProtectionLevel, devicePairingSettings: &::rt::gen::windows::devices::enumeration::IDevicePairingSettings) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DevicePairingResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).PairWithProtectionLevelAndSettingsAsync)(self, minProtectionLevel, devicePairingSettings as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn unpair_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::DeviceUnpairingResult>>> {
+			#[inline] pub unsafe fn unpair_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::DeviceUnpairingResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).UnpairAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7755,7 +7755,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_DeviceWatcherEvents(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::enumeration::DeviceWatcherEvent>) -> ::w::HRESULT
 		}}
 		impl IDeviceWatcherTriggerDetails {
-			#[inline] pub unsafe fn get_device_watcher_events(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::enumeration::DeviceWatcherEvent>>> {
+			#[inline] pub unsafe fn get_device_watcher_events(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::enumeration::DeviceWatcherEvent>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_DeviceWatcherEvents)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7785,7 +7785,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Id)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&str, &IInspectable>>> {
+			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&'static str, &'static IInspectable>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Properties)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7882,17 +7882,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn CreateWatcherAqsFilter(&mut self, type_: ::rt::gen::windows::devices::enumeration::pnp::PnpObjectType, requestedProperties: *mut ::rt::gen::windows::foundation::collections::IIterable<&str>, aqsFilter: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::devices::enumeration::pnp::PnpObjectWatcher) -> ::w::HRESULT
 		}}
 		impl IPnpObjectStatics {
-			#[inline] pub unsafe fn create_from_id_async(&mut self, type_: ::rt::gen::windows::devices::enumeration::pnp::PnpObjectType, id: HStringRef, requestedProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::pnp::PnpObject>>> {
+			#[inline] pub unsafe fn create_from_id_async(&mut self, type_: ::rt::gen::windows::devices::enumeration::pnp::PnpObjectType, id: HStringRef, requestedProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::pnp::PnpObject>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateFromIdAsync)(self, type_, id.get(), requestedProperties as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn find_all_async(&mut self, type_: ::rt::gen::windows::devices::enumeration::pnp::PnpObjectType, requestedProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::pnp::PnpObjectCollection>>> {
+			#[inline] pub unsafe fn find_all_async(&mut self, type_: ::rt::gen::windows::devices::enumeration::pnp::PnpObjectType, requestedProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::pnp::PnpObjectCollection>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FindAllAsync)(self, type_, requestedProperties as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn find_all_async_aqs_filter(&mut self, type_: ::rt::gen::windows::devices::enumeration::pnp::PnpObjectType, requestedProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>, aqsFilter: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::enumeration::pnp::PnpObjectCollection>>> {
+			#[inline] pub unsafe fn find_all_async_aqs_filter(&mut self, type_: ::rt::gen::windows::devices::enumeration::pnp::PnpObjectType, requestedProperties: &::rt::gen::windows::foundation::collections::IIterable<&str>, aqsFilter: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::enumeration::pnp::PnpObjectCollection>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FindAllAsyncAqsFilter)(self, type_, requestedProperties as *const _ as *mut _, aqsFilter.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -7926,7 +7926,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Id)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&str, &IInspectable>>> {
+			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&'static str, &'static IInspectable>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Properties)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -8414,12 +8414,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_LocationStatus)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_geoposition_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::geolocation::Geoposition>>> {
+			#[inline] pub unsafe fn get_geoposition_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::geolocation::Geoposition>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetGeopositionAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_geoposition_async_with_age_and_timeout(&mut self, maximumAge: ::rt::gen::windows::foundation::TimeSpan, timeout: ::rt::gen::windows::foundation::TimeSpan) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::geolocation::Geoposition>>> {
+			#[inline] pub unsafe fn get_geoposition_async_with_age_and_timeout(&mut self, maximumAge: ::rt::gen::windows::foundation::TimeSpan, timeout: ::rt::gen::windows::foundation::TimeSpan) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::geolocation::Geoposition>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetGeopositionAsyncWithAgeAndTimeout)(self, maximumAge, timeout, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -8474,12 +8474,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).RequestAccessAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_geoposition_history_async(&mut self, startTime: ::rt::gen::windows::foundation::DateTime) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::geolocation::Geoposition>>>> {
+			#[inline] pub unsafe fn get_geoposition_history_async(&mut self, startTime: ::rt::gen::windows::foundation::DateTime) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::geolocation::Geoposition>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetGeopositionHistoryAsync)(self, startTime, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_geoposition_history_with_duration_async(&mut self, startTime: ::rt::gen::windows::foundation::DateTime, duration: ::rt::gen::windows::foundation::TimeSpan) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::geolocation::Geoposition>>>> {
+			#[inline] pub unsafe fn get_geoposition_history_with_duration_async(&mut self, startTime: ::rt::gen::windows::foundation::DateTime, duration: ::rt::gen::windows::foundation::TimeSpan) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::geolocation::Geoposition>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetGeopositionHistoryWithDurationAsync)(self, startTime, duration, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -8680,7 +8680,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Status)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_geofences(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&::rt::gen::windows::devices::geolocation::geofencing::Geofence>>> {
+			#[inline] pub unsafe fn get_geofences(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static ::rt::gen::windows::devices::geolocation::geofencing::Geofence>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Geofences)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -8699,7 +8699,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).remove_GeofenceStateChanged)(self, token);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn read_reports(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::geolocation::geofencing::GeofenceStateChangeReport>>> {
+			#[inline] pub unsafe fn read_reports(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::geolocation::geofencing::GeofenceStateChangeReport>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ReadReports)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -8743,7 +8743,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelectorVidPid)(self, usagePage, usageId, vendorId, productId, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef, accessMode: ::rt::gen::windows::storage::FileAccessMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::humaninterfacedevice::HidDevice>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef, accessMode: ::rt::gen::windows::storage::FileAccessMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::humaninterfacedevice::HidDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), accessMode, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -8793,7 +8793,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_UsageId)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_parent_collections(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::humaninterfacedevice::HidCollection>>> {
+			#[inline] pub unsafe fn get_parent_collections(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::humaninterfacedevice::HidCollection>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_ParentCollections)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -8895,7 +8895,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_HasNull)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out == ::w::TRUE) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_parent_collections(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::humaninterfacedevice::HidCollection>>> {
+			#[inline] pub unsafe fn get_parent_collections(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::humaninterfacedevice::HidCollection>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_ParentCollections)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -8952,12 +8952,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Data)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_activated_boolean_controls(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::humaninterfacedevice::HidBooleanControl>>> {
+			#[inline] pub unsafe fn get_activated_boolean_controls(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::humaninterfacedevice::HidBooleanControl>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_ActivatedBooleanControls)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_transitioned_boolean_controls(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::humaninterfacedevice::HidBooleanControl>>> {
+			#[inline] pub unsafe fn get_transitioned_boolean_controls(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::humaninterfacedevice::HidBooleanControl>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_TransitionedBooleanControls)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -9233,22 +9233,22 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_UsageId)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_input_report_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::humaninterfacedevice::HidInputReport>>> {
+			#[inline] pub unsafe fn get_input_report_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::humaninterfacedevice::HidInputReport>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetInputReportAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_input_report_by_id_async(&mut self, reportId: u16) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::humaninterfacedevice::HidInputReport>>> {
+			#[inline] pub unsafe fn get_input_report_by_id_async(&mut self, reportId: u16) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::humaninterfacedevice::HidInputReport>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetInputReportByIdAsync)(self, reportId, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_feature_report_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::humaninterfacedevice::HidFeatureReport>>> {
+			#[inline] pub unsafe fn get_feature_report_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::humaninterfacedevice::HidFeatureReport>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetFeatureReportAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_feature_report_by_id_async(&mut self, reportId: u16) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::humaninterfacedevice::HidFeatureReport>>> {
+			#[inline] pub unsafe fn get_feature_report_by_id_async(&mut self, reportId: u16) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::humaninterfacedevice::HidFeatureReport>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetFeatureReportByIdAsync)(self, reportId, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -9283,12 +9283,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).SendFeatureReportAsync)(self, featureReport as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_boolean_control_descriptions(&mut self, reportType: ::rt::gen::windows::devices::humaninterfacedevice::HidReportType, usagePage: u16, usageId: u16) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::humaninterfacedevice::HidBooleanControlDescription>>> {
+			#[inline] pub unsafe fn get_boolean_control_descriptions(&mut self, reportType: ::rt::gen::windows::devices::humaninterfacedevice::HidReportType, usagePage: u16, usageId: u16) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::humaninterfacedevice::HidBooleanControlDescription>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetBooleanControlDescriptions)(self, reportType, usagePage, usageId, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_numeric_control_descriptions(&mut self, reportType: ::rt::gen::windows::devices::humaninterfacedevice::HidReportType, usagePage: u16, usageId: u16) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::humaninterfacedevice::HidNumericControlDescription>>> {
+			#[inline] pub unsafe fn get_numeric_control_descriptions(&mut self, reportType: ::rt::gen::windows::devices::humaninterfacedevice::HidReportType, usagePage: u16, usageId: u16) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::humaninterfacedevice::HidNumericControlDescription>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetNumericControlDescriptions)(self, reportType, usagePage, usageId, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -9390,7 +9390,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetPointerDevice)(self, pointerId, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_pointer_devices(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::input::PointerDevice>>> {
+			#[inline] pub unsafe fn get_pointer_devices(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::input::PointerDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetPointerDevices)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -9512,12 +9512,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::lights::Lamp>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::lights::Lamp>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::lights::Lamp>>> {
+			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::lights::Lamp>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -9979,7 +9979,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl IMidiInPortStatics {
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::midi::MidiInPort>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::midi::MidiInPort>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -9999,7 +9999,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl IMidiOutPortStatics {
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::midi::IMidiOutPort>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::midi::IMidiOutPort>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -10020,12 +10020,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn IsSynthesizer(&mut self, midiDevice: *mut ::rt::gen::windows::devices::enumeration::DeviceInformation, out: *mut ::w::BOOL) -> ::w::HRESULT
 		}}
 		impl IMidiSynthesizerStatics {
-			#[inline] pub unsafe fn create_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::midi::MidiSynthesizer>>> {
+			#[inline] pub unsafe fn create_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::midi::MidiSynthesizer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_from_audio_device_async(&mut self, audioDevice: &::rt::gen::windows::devices::enumeration::DeviceInformation) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::midi::MidiSynthesizer>>> {
+			#[inline] pub unsafe fn create_from_audio_device_async(&mut self, audioDevice: &::rt::gen::windows::devices::enumeration::DeviceInformation) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::midi::MidiSynthesizer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateFromAudioDeviceAsync)(self, audioDevice as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -10674,12 +10674,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).CreateWatcher)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn find_all_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::perception::PerceptionInfraredFrameSource>>>> {
+			#[inline] pub unsafe fn find_all_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::perception::PerceptionInfraredFrameSource>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FindAllAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, id: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::perception::PerceptionInfraredFrameSource>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, id: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::perception::PerceptionInfraredFrameSource>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, id.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -10703,12 +10703,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).CreateWatcher)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn find_all_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::perception::PerceptionDepthFrameSource>>>> {
+			#[inline] pub unsafe fn find_all_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::perception::PerceptionDepthFrameSource>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FindAllAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, id: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::perception::PerceptionDepthFrameSource>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, id: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::perception::PerceptionDepthFrameSource>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, id.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -10732,12 +10732,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).CreateWatcher)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn find_all_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::perception::PerceptionColorFrameSource>>>> {
+			#[inline] pub unsafe fn find_all_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::perception::PerceptionColorFrameSource>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FindAllAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, id: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::perception::PerceptionColorFrameSource>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, id: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::perception::PerceptionColorFrameSource>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, id.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -10856,17 +10856,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_IsControlled)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out == ::w::TRUE) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&str, &IInspectable>>> {
+			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&'static str, &'static IInspectable>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Properties)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_supported_video_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::perception::PerceptionVideoProfile>>> {
+			#[inline] pub unsafe fn get_supported_video_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::perception::PerceptionVideoProfile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_SupportedVideoProfiles)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_available_video_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::perception::PerceptionVideoProfile>>> {
+			#[inline] pub unsafe fn get_available_video_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::perception::PerceptionVideoProfile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_AvailableVideoProfiles)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -10901,17 +10901,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).TryGetTransformTo)(self, targetId.get(), &mut result, &mut out);
 				if hr == ::w::S_OK { Ok((out == ::w::TRUE, result)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn try_get_depth_correlated_camera_intrinsics_async(&mut self, correlatedDepthFrameSource: &::rt::gen::windows::devices::perception::PerceptionDepthFrameSource) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::perception::PerceptionDepthCorrelatedCameraIntrinsics>>> {
+			#[inline] pub unsafe fn try_get_depth_correlated_camera_intrinsics_async(&mut self, correlatedDepthFrameSource: &::rt::gen::windows::devices::perception::PerceptionDepthFrameSource) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::perception::PerceptionDepthCorrelatedCameraIntrinsics>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).TryGetDepthCorrelatedCameraIntrinsicsAsync)(self, correlatedDepthFrameSource as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn try_get_depth_correlated_coordinate_mapper_async(&mut self, targetSourceId: HStringRef, correlatedDepthFrameSource: &::rt::gen::windows::devices::perception::PerceptionDepthFrameSource) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::perception::PerceptionDepthCorrelatedCoordinateMapper>>> {
+			#[inline] pub unsafe fn try_get_depth_correlated_coordinate_mapper_async(&mut self, targetSourceId: HStringRef, correlatedDepthFrameSource: &::rt::gen::windows::devices::perception::PerceptionDepthFrameSource) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::perception::PerceptionDepthCorrelatedCoordinateMapper>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).TryGetDepthCorrelatedCoordinateMapperAsync)(self, targetSourceId.get(), correlatedDepthFrameSource as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn try_set_video_profile_async(&mut self, controlSession: &::rt::gen::windows::devices::perception::PerceptionControlSession, profile: &::rt::gen::windows::devices::perception::PerceptionVideoProfile) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::perception::PerceptionFrameSourcePropertyChangeResult>>> {
+			#[inline] pub unsafe fn try_set_video_profile_async(&mut self, controlSession: &::rt::gen::windows::devices::perception::PerceptionControlSession, profile: &::rt::gen::windows::devices::perception::PerceptionVideoProfile) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::perception::PerceptionFrameSourcePropertyChangeResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).TrySetVideoProfileAsync)(self, controlSession as *const _ as *mut _, profile as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -11046,17 +11046,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_IsControlled)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out == ::w::TRUE) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&str, &IInspectable>>> {
+			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&'static str, &'static IInspectable>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Properties)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_supported_video_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::perception::PerceptionVideoProfile>>> {
+			#[inline] pub unsafe fn get_supported_video_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::perception::PerceptionVideoProfile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_SupportedVideoProfiles)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_available_video_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::perception::PerceptionVideoProfile>>> {
+			#[inline] pub unsafe fn get_available_video_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::perception::PerceptionVideoProfile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_AvailableVideoProfiles)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -11091,17 +11091,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).TryGetTransformTo)(self, targetId.get(), &mut result, &mut out);
 				if hr == ::w::S_OK { Ok((out == ::w::TRUE, result)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn try_get_depth_correlated_camera_intrinsics_async(&mut self, target: &::rt::gen::windows::devices::perception::PerceptionDepthFrameSource) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::perception::PerceptionDepthCorrelatedCameraIntrinsics>>> {
+			#[inline] pub unsafe fn try_get_depth_correlated_camera_intrinsics_async(&mut self, target: &::rt::gen::windows::devices::perception::PerceptionDepthFrameSource) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::perception::PerceptionDepthCorrelatedCameraIntrinsics>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).TryGetDepthCorrelatedCameraIntrinsicsAsync)(self, target as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn try_get_depth_correlated_coordinate_mapper_async(&mut self, targetId: HStringRef, depthFrameSourceToMapWith: &::rt::gen::windows::devices::perception::PerceptionDepthFrameSource) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::perception::PerceptionDepthCorrelatedCoordinateMapper>>> {
+			#[inline] pub unsafe fn try_get_depth_correlated_coordinate_mapper_async(&mut self, targetId: HStringRef, depthFrameSourceToMapWith: &::rt::gen::windows::devices::perception::PerceptionDepthFrameSource) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::perception::PerceptionDepthCorrelatedCoordinateMapper>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).TryGetDepthCorrelatedCoordinateMapperAsync)(self, targetId.get(), depthFrameSourceToMapWith as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn try_set_video_profile_async(&mut self, controlSession: &::rt::gen::windows::devices::perception::PerceptionControlSession, profile: &::rt::gen::windows::devices::perception::PerceptionVideoProfile) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::perception::PerceptionFrameSourcePropertyChangeResult>>> {
+			#[inline] pub unsafe fn try_set_video_profile_async(&mut self, controlSession: &::rt::gen::windows::devices::perception::PerceptionControlSession, profile: &::rt::gen::windows::devices::perception::PerceptionVideoProfile) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::perception::PerceptionFrameSourcePropertyChangeResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).TrySetVideoProfileAsync)(self, controlSession as *const _ as *mut _, profile as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -11232,17 +11232,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_IsControlled)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out == ::w::TRUE) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&str, &IInspectable>>> {
+			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&'static str, &'static IInspectable>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Properties)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_supported_video_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::perception::PerceptionVideoProfile>>> {
+			#[inline] pub unsafe fn get_supported_video_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::perception::PerceptionVideoProfile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_SupportedVideoProfiles)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_available_video_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::perception::PerceptionVideoProfile>>> {
+			#[inline] pub unsafe fn get_available_video_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::perception::PerceptionVideoProfile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_AvailableVideoProfiles)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -11277,17 +11277,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).TryGetTransformTo)(self, targetId.get(), &mut result, &mut out);
 				if hr == ::w::S_OK { Ok((out == ::w::TRUE, result)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn try_get_depth_correlated_camera_intrinsics_async(&mut self, target: &::rt::gen::windows::devices::perception::PerceptionDepthFrameSource) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::perception::PerceptionDepthCorrelatedCameraIntrinsics>>> {
+			#[inline] pub unsafe fn try_get_depth_correlated_camera_intrinsics_async(&mut self, target: &::rt::gen::windows::devices::perception::PerceptionDepthFrameSource) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::perception::PerceptionDepthCorrelatedCameraIntrinsics>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).TryGetDepthCorrelatedCameraIntrinsicsAsync)(self, target as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn try_get_depth_correlated_coordinate_mapper_async(&mut self, targetId: HStringRef, depthFrameSourceToMapWith: &::rt::gen::windows::devices::perception::PerceptionDepthFrameSource) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::perception::PerceptionDepthCorrelatedCoordinateMapper>>> {
+			#[inline] pub unsafe fn try_get_depth_correlated_coordinate_mapper_async(&mut self, targetId: HStringRef, depthFrameSourceToMapWith: &::rt::gen::windows::devices::perception::PerceptionDepthFrameSource) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::perception::PerceptionDepthCorrelatedCoordinateMapper>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).TryGetDepthCorrelatedCoordinateMapperAsync)(self, targetId.get(), depthFrameSourceToMapWith as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn try_set_video_profile_async(&mut self, controlSession: &::rt::gen::windows::devices::perception::PerceptionControlSession, profile: &::rt::gen::windows::devices::perception::PerceptionVideoProfile) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::perception::PerceptionFrameSourcePropertyChangeResult>>> {
+			#[inline] pub unsafe fn try_set_video_profile_async(&mut self, controlSession: &::rt::gen::windows::devices::perception::PerceptionControlSession, profile: &::rt::gen::windows::devices::perception::PerceptionVideoProfile) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::perception::PerceptionFrameSourcePropertyChangeResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).TrySetVideoProfileAsync)(self, controlSession as *const _ as *mut _, profile as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -11452,7 +11452,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).remove_ControlLost)(self, token);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn try_set_property_async(&mut self, name: HStringRef, value: &IInspectable) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::perception::PerceptionFrameSourcePropertyChangeResult>>> {
+			#[inline] pub unsafe fn try_set_property_async(&mut self, name: HStringRef, value: &IInspectable) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::perception::PerceptionFrameSourcePropertyChangeResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).TrySetPropertyAsync)(self, name.get(), value as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -11774,7 +11774,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_FrameProviderIds(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&str>) -> ::w::HRESULT
 		}}
 		impl IPerceptionControlGroup {
-			#[inline] pub unsafe fn get_frame_provider_ids(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&str>>> {
+			#[inline] pub unsafe fn get_frame_provider_ids(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_FrameProviderIds)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -11817,7 +11817,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_FrameProviderIds(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&str>) -> ::w::HRESULT
 		}}
 		impl IPerceptionFaceAuthenticationGroup {
-			#[inline] pub unsafe fn get_frame_provider_ids(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&str>>> {
+			#[inline] pub unsafe fn get_frame_provider_ids(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_FrameProviderIds)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -11875,7 +11875,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_RelativeLocations(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::perception::provider::PerceptionCorrelation>) -> ::w::HRESULT
 		}}
 		impl IPerceptionCorrelationGroup {
-			#[inline] pub unsafe fn get_relative_locations(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::perception::provider::PerceptionCorrelation>>> {
+			#[inline] pub unsafe fn get_relative_locations(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::perception::provider::PerceptionCorrelation>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_RelativeLocations)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -12827,12 +12827,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl IBarcodeScannerStatics {
-			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pointofservice::BarcodeScanner>>> {
+			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::pointofservice::BarcodeScanner>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pointofservice::BarcodeScanner>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::pointofservice::BarcodeScanner>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -12871,17 +12871,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Capabilities)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn claim_scanner_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pointofservice::ClaimedBarcodeScanner>>> {
+			#[inline] pub unsafe fn claim_scanner_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::pointofservice::ClaimedBarcodeScanner>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ClaimScannerAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn check_health_async(&mut self, level: ::rt::gen::windows::devices::pointofservice::UnifiedPosHealthCheckLevel) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&str>>> {
+			#[inline] pub unsafe fn check_health_async(&mut self, level: ::rt::gen::windows::devices::pointofservice::UnifiedPosHealthCheckLevel) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CheckHealthAsync)(self, level, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_supported_symbologies_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<u32>>>> {
+			#[inline] pub unsafe fn get_supported_symbologies_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<u32>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetSupportedSymbologiesAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -12891,12 +12891,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).IsSymbologySupportedAsync)(self, barcodeSymbology, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn retrieve_statistics_async(&mut self, statisticsCategories: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IBuffer>>> {
+			#[inline] pub unsafe fn retrieve_statistics_async(&mut self, statisticsCategories: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IBuffer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).RetrieveStatisticsAsync)(self, statisticsCategories as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_supported_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&str>>> {
+			#[inline] pub unsafe fn get_supported_profiles(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetSupportedProfiles)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -13045,7 +13045,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Track4)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&str, &str>>> {
+			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&'static str, &'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Properties)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -13400,12 +13400,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl IMagneticStripeReaderStatics {
-			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pointofservice::MagneticStripeReader>>> {
+			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::pointofservice::MagneticStripeReader>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pointofservice::MagneticStripeReader>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::pointofservice::MagneticStripeReader>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -13448,17 +13448,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_DeviceAuthenticationProtocol)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn check_health_async(&mut self, level: ::rt::gen::windows::devices::pointofservice::UnifiedPosHealthCheckLevel) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&str>>> {
+			#[inline] pub unsafe fn check_health_async(&mut self, level: ::rt::gen::windows::devices::pointofservice::UnifiedPosHealthCheckLevel) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CheckHealthAsync)(self, level, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn claim_reader_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pointofservice::ClaimedMagneticStripeReader>>> {
+			#[inline] pub unsafe fn claim_reader_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::pointofservice::ClaimedMagneticStripeReader>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ClaimReaderAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn retrieve_statistics_async(&mut self, statisticsCategories: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IBuffer>>> {
+			#[inline] pub unsafe fn retrieve_statistics_async(&mut self, statisticsCategories: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IBuffer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).RetrieveStatisticsAsync)(self, statisticsCategories as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -13804,12 +13804,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl IPosPrinterStatics {
-			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pointofservice::PosPrinter>>> {
+			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::pointofservice::PosPrinter>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pointofservice::PosPrinter>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::pointofservice::PosPrinter>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -13852,7 +13852,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_SupportedCharacterSets)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_supported_type_faces(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&str>>> {
+			#[inline] pub unsafe fn get_supported_type_faces(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_SupportedTypeFaces)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -13862,17 +13862,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Status)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn claim_printer_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pointofservice::ClaimedPosPrinter>>> {
+			#[inline] pub unsafe fn claim_printer_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::pointofservice::ClaimedPosPrinter>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ClaimPrinterAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn check_health_async(&mut self, level: ::rt::gen::windows::devices::pointofservice::UnifiedPosHealthCheckLevel) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&str>>> {
+			#[inline] pub unsafe fn check_health_async(&mut self, level: ::rt::gen::windows::devices::pointofservice::UnifiedPosHealthCheckLevel) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CheckHealthAsync)(self, level, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_statistics_async(&mut self, statisticsCategories: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&str>>> {
+			#[inline] pub unsafe fn get_statistics_async(&mut self, statisticsCategories: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetStatisticsAsync)(self, statisticsCategories as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -14389,12 +14389,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl ICashDrawerStatics {
-			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pointofservice::CashDrawer>>> {
+			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::pointofservice::CashDrawer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pointofservice::CashDrawer>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::pointofservice::CashDrawer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -14444,17 +14444,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_DrawerEventSource)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn claim_drawer_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::pointofservice::ClaimedCashDrawer>>> {
+			#[inline] pub unsafe fn claim_drawer_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::pointofservice::ClaimedCashDrawer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ClaimDrawerAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn check_health_async(&mut self, level: ::rt::gen::windows::devices::pointofservice::UnifiedPosHealthCheckLevel) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&str>>> {
+			#[inline] pub unsafe fn check_health_async(&mut self, level: ::rt::gen::windows::devices::pointofservice::UnifiedPosHealthCheckLevel) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CheckHealthAsync)(self, level, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_statistics_async(&mut self, statisticsCategories: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&str>>> {
+			#[inline] pub unsafe fn get_statistics_async(&mut self, statisticsCategories: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetStatisticsAsync)(self, statisticsCategories as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -14815,7 +14815,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).SetErrorReportingType)(self, value);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn retrieve_device_authentication_data_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IBuffer>>> {
+			#[inline] pub unsafe fn retrieve_device_authentication_data_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IBuffer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).RetrieveDeviceAuthenticationDataAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -15093,7 +15093,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn RequestAccessAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::radios::RadioAccessStatus>) -> ::w::HRESULT
 		}}
 		impl IRadioStatics {
-			#[inline] pub unsafe fn get_radios_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::radios::Radio>>>> {
+			#[inline] pub unsafe fn get_radios_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::radios::Radio>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetRadiosAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -15103,7 +15103,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::radios::Radio>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::radios::Radio>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -16318,7 +16318,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetSystemHistoryWithDurationAsync(&mut self, fromTime: ::rt::gen::windows::foundation::DateTime, duration: ::rt::gen::windows::foundation::TimeSpan, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sensors::ActivitySensorReading>>) -> ::w::HRESULT
 		}}
 		impl IActivitySensorStatics {
-			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::sensors::ActivitySensor>>> {
+			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::sensors::ActivitySensor>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -16328,17 +16328,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::sensors::ActivitySensor>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::sensors::ActivitySensor>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_system_history_async(&mut self, fromTime: ::rt::gen::windows::foundation::DateTime) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sensors::ActivitySensorReading>>>> {
+			#[inline] pub unsafe fn get_system_history_async(&mut self, fromTime: ::rt::gen::windows::foundation::DateTime) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::sensors::ActivitySensorReading>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetSystemHistoryAsync)(self, fromTime, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_system_history_with_duration_async(&mut self, fromTime: ::rt::gen::windows::foundation::DateTime, duration: ::rt::gen::windows::foundation::TimeSpan) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sensors::ActivitySensorReading>>>> {
+			#[inline] pub unsafe fn get_system_history_with_duration_async(&mut self, fromTime: ::rt::gen::windows::foundation::DateTime, duration: ::rt::gen::windows::foundation::TimeSpan) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::sensors::ActivitySensorReading>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetSystemHistoryWithDurationAsync)(self, fromTime, duration, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -16360,7 +16360,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn remove_ReadingChanged(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT
 		}}
 		impl IActivitySensor {
-			#[inline] pub unsafe fn get_current_reading_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::sensors::ActivitySensorReading>>> {
+			#[inline] pub unsafe fn get_current_reading_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::sensors::ActivitySensorReading>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetCurrentReadingAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -16451,7 +16451,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn ReadReports(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sensors::ActivitySensorReadingChangeReport>) -> ::w::HRESULT
 		}}
 		impl IActivitySensorTriggerDetails {
-			#[inline] pub unsafe fn read_reports(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sensors::ActivitySensorReadingChangeReport>>> {
+			#[inline] pub unsafe fn read_reports(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::sensors::ActivitySensorReadingChangeReport>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ReadReports)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -16601,12 +16601,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetSystemHistoryWithDurationAsync(&mut self, fromTime: ::rt::gen::windows::foundation::DateTime, duration: ::rt::gen::windows::foundation::TimeSpan, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sensors::PedometerReading>>) -> ::w::HRESULT
 		}}
 		impl IPedometerStatics {
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::sensors::Pedometer>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::sensors::Pedometer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::sensors::Pedometer>>> {
+			#[inline] pub unsafe fn get_default_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::sensors::Pedometer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -16616,12 +16616,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_system_history_async(&mut self, fromTime: ::rt::gen::windows::foundation::DateTime) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sensors::PedometerReading>>>> {
+			#[inline] pub unsafe fn get_system_history_async(&mut self, fromTime: ::rt::gen::windows::foundation::DateTime) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::sensors::PedometerReading>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetSystemHistoryAsync)(self, fromTime, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_system_history_with_duration_async(&mut self, fromTime: ::rt::gen::windows::foundation::DateTime, duration: ::rt::gen::windows::foundation::TimeSpan) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sensors::PedometerReading>>>> {
+			#[inline] pub unsafe fn get_system_history_with_duration_async(&mut self, fromTime: ::rt::gen::windows::foundation::DateTime, duration: ::rt::gen::windows::foundation::TimeSpan) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::sensors::PedometerReading>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetSystemHistoryWithDurationAsync)(self, fromTime, duration, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -16636,7 +16636,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetReadingsFromTriggerDetails(&mut self, triggerDetails: *mut ::rt::gen::windows::devices::sensors::SensorDataThresholdTriggerDetails, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sensors::PedometerReading>) -> ::w::HRESULT
 		}}
 		impl IPedometerStatics2 {
-			#[inline] pub unsafe fn get_readings_from_trigger_details(&mut self, triggerDetails: &::rt::gen::windows::devices::sensors::SensorDataThresholdTriggerDetails) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sensors::PedometerReading>>> {
+			#[inline] pub unsafe fn get_readings_from_trigger_details(&mut self, triggerDetails: &::rt::gen::windows::devices::sensors::SensorDataThresholdTriggerDetails) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::sensors::PedometerReading>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetReadingsFromTriggerDetails)(self, triggerDetails as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -16647,7 +16647,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetCurrentReadings(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IMapView<::rt::gen::windows::devices::sensors::PedometerStepKind, &::rt::gen::windows::devices::sensors::PedometerReading>) -> ::w::HRESULT
 		}}
 		impl IPedometer2 {
-			#[inline] pub unsafe fn get_current_readings(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<::rt::gen::windows::devices::sensors::PedometerStepKind, &::rt::gen::windows::devices::sensors::PedometerReading>>> {
+			#[inline] pub unsafe fn get_current_readings(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<::rt::gen::windows::devices::sensors::PedometerStepKind, &'static ::rt::gen::windows::devices::sensors::PedometerReading>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetCurrentReadings)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -16834,7 +16834,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetReadingsFromTriggerDetails(&mut self, triggerDetails: *mut ::rt::gen::windows::devices::sensors::SensorDataThresholdTriggerDetails, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sensors::ProximitySensorReading>) -> ::w::HRESULT
 		}}
 		impl IProximitySensorStatics2 {
-			#[inline] pub unsafe fn get_readings_from_trigger_details(&mut self, triggerDetails: &::rt::gen::windows::devices::sensors::SensorDataThresholdTriggerDetails) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::sensors::ProximitySensorReading>>> {
+			#[inline] pub unsafe fn get_readings_from_trigger_details(&mut self, triggerDetails: &::rt::gen::windows::devices::sensors::SensorDataThresholdTriggerDetails) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::sensors::ProximitySensorReading>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetReadingsFromTriggerDetails)(self, triggerDetails as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -16943,7 +16943,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, interfaceId.as_iid(), &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, sensorId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::sensors::custom::CustomSensor>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, sensorId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::sensors::custom::CustomSensor>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, sensorId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -17010,7 +17010,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Timestamp)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&str, &IInspectable>>> {
+			#[inline] pub unsafe fn get_properties(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IMapView<&'static str, &'static IInspectable>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Properties)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -17070,7 +17070,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelectorFromUsbVidPid)(self, vendorId, productId, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::serialcommunication::SerialDevice>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::serialcommunication::SerialDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -17327,7 +17327,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelectorWithKind)(self, kind, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::smartcards::SmartCardReader>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::smartcards::SmartCardReader>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -17369,7 +17369,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetStatusAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn find_all_cards_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::smartcards::SmartCard>>>> {
+			#[inline] pub unsafe fn find_all_cards_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::smartcards::SmartCard>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FindAllCardsAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -17435,7 +17435,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetStatusAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_answer_to_reset_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IBuffer>>> {
+			#[inline] pub unsafe fn get_answer_to_reset_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IBuffer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetAnswerToResetAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -17449,17 +17449,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn RequestVirtualSmartCardDeletionAsync(&mut self, card: *mut ::rt::gen::windows::devices::smartcards::SmartCard, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<bool>) -> ::w::HRESULT
 		}}
 		impl ISmartCardProvisioningStatics {
-			#[inline] pub unsafe fn from_smart_card_async(&mut self, card: &::rt::gen::windows::devices::smartcards::SmartCard) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::smartcards::SmartCardProvisioning>>> {
+			#[inline] pub unsafe fn from_smart_card_async(&mut self, card: &::rt::gen::windows::devices::smartcards::SmartCard) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::smartcards::SmartCardProvisioning>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromSmartCardAsync)(self, card as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn request_virtual_smart_card_creation_async(&mut self, friendlyName: HStringRef, administrativeKey: &::rt::gen::windows::storage::streams::IBuffer, pinPolicy: &::rt::gen::windows::devices::smartcards::SmartCardPinPolicy) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::smartcards::SmartCardProvisioning>>> {
+			#[inline] pub unsafe fn request_virtual_smart_card_creation_async(&mut self, friendlyName: HStringRef, administrativeKey: &::rt::gen::windows::storage::streams::IBuffer, pinPolicy: &::rt::gen::windows::devices::smartcards::SmartCardPinPolicy) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::smartcards::SmartCardProvisioning>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).RequestVirtualSmartCardCreationAsync)(self, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn request_virtual_smart_card_creation_async_with_card_id(&mut self, friendlyName: HStringRef, administrativeKey: &::rt::gen::windows::storage::streams::IBuffer, pinPolicy: &::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, cardId: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::smartcards::SmartCardProvisioning>>> {
+			#[inline] pub unsafe fn request_virtual_smart_card_creation_async_with_card_id(&mut self, friendlyName: HStringRef, administrativeKey: &::rt::gen::windows::storage::streams::IBuffer, pinPolicy: &::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, cardId: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::smartcards::SmartCardProvisioning>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).RequestVirtualSmartCardCreationAsyncWithCardId)(self, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, cardId.as_iid(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -17481,12 +17481,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn RequestAttestedVirtualSmartCardCreationAsyncWithCardId(&mut self, friendlyName: ::w::HSTRING, administrativeKey: *mut ::rt::gen::windows::storage::streams::IBuffer, pinPolicy: *mut ::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, cardId: ::w::GUID, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::smartcards::SmartCardProvisioning>) -> ::w::HRESULT
 		}}
 		impl ISmartCardProvisioningStatics2 {
-			#[inline] pub unsafe fn request_attested_virtual_smart_card_creation_async(&mut self, friendlyName: HStringRef, administrativeKey: &::rt::gen::windows::storage::streams::IBuffer, pinPolicy: &::rt::gen::windows::devices::smartcards::SmartCardPinPolicy) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::smartcards::SmartCardProvisioning>>> {
+			#[inline] pub unsafe fn request_attested_virtual_smart_card_creation_async(&mut self, friendlyName: HStringRef, administrativeKey: &::rt::gen::windows::storage::streams::IBuffer, pinPolicy: &::rt::gen::windows::devices::smartcards::SmartCardPinPolicy) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::smartcards::SmartCardProvisioning>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).RequestAttestedVirtualSmartCardCreationAsync)(self, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn request_attested_virtual_smart_card_creation_async_with_card_id(&mut self, friendlyName: HStringRef, administrativeKey: &::rt::gen::windows::storage::streams::IBuffer, pinPolicy: &::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, cardId: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::smartcards::SmartCardProvisioning>>> {
+			#[inline] pub unsafe fn request_attested_virtual_smart_card_creation_async_with_card_id(&mut self, friendlyName: HStringRef, administrativeKey: &::rt::gen::windows::storage::streams::IBuffer, pinPolicy: &::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, cardId: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::smartcards::SmartCardProvisioning>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).RequestAttestedVirtualSmartCardCreationAsyncWithCardId)(self, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, cardId.as_iid(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -17512,12 +17512,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetIdAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_name_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&str>>> {
+			#[inline] pub unsafe fn get_name_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetNameAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_challenge_context_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::smartcards::SmartCardChallengeContext>>> {
+			#[inline] pub unsafe fn get_challenge_context_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::smartcards::SmartCardChallengeContext>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetChallengeContextAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -17550,7 +17550,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetAuthorityKeyContainerNameAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&str>) -> ::w::HRESULT
 		}}
 		impl ISmartCardProvisioning2 {
-			#[inline] pub unsafe fn get_authority_key_container_name_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&str>>> {
+			#[inline] pub unsafe fn get_authority_key_container_name_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetAuthorityKeyContainerNameAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -17671,7 +17671,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn ConnectAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::smartcards::SmartCardConnection>) -> ::w::HRESULT
 		}}
 		impl ISmartCardConnect {
-			#[inline] pub unsafe fn connect_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::smartcards::SmartCardConnection>>> {
+			#[inline] pub unsafe fn connect_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::smartcards::SmartCardConnection>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ConnectAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -17718,7 +17718,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn TransmitAsync(&mut self, command: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IBuffer>) -> ::w::HRESULT
 		}}
 		impl ISmartCardConnection {
-			#[inline] pub unsafe fn transmit_async(&mut self, command: &::rt::gen::windows::storage::streams::IBuffer) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IBuffer>>> {
+			#[inline] pub unsafe fn transmit_async(&mut self, command: &::rt::gen::windows::storage::streams::IBuffer) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IBuffer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).TransmitAsync)(self, command as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -17999,7 +17999,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceClassSelector)(self, usbClass as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::usb::UsbDevice>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::usb::UsbDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18420,7 +18420,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_Descriptors(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbDescriptor>) -> ::w::HRESULT
 		}}
 		impl IUsbConfiguration {
-			#[inline] pub unsafe fn get_usb_interfaces(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbInterface>>> {
+			#[inline] pub unsafe fn get_usb_interfaces(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::usb::UsbInterface>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_UsbInterfaces)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18430,7 +18430,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_ConfigurationDescriptor)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_descriptors(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbDescriptor>>> {
+			#[inline] pub unsafe fn get_descriptors(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::usb::UsbDescriptor>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Descriptors)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18447,27 +18447,27 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_Descriptors(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbDescriptor>) -> ::w::HRESULT
 		}}
 		impl IUsbInterface {
-			#[inline] pub unsafe fn get_bulk_in_pipes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbBulkInPipe>>> {
+			#[inline] pub unsafe fn get_bulk_in_pipes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::usb::UsbBulkInPipe>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_BulkInPipes)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_interrupt_in_pipes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbInterruptInPipe>>> {
+			#[inline] pub unsafe fn get_interrupt_in_pipes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::usb::UsbInterruptInPipe>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_InterruptInPipes)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_bulk_out_pipes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbBulkOutPipe>>> {
+			#[inline] pub unsafe fn get_bulk_out_pipes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::usb::UsbBulkOutPipe>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_BulkOutPipes)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_interrupt_out_pipes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbInterruptOutPipe>>> {
+			#[inline] pub unsafe fn get_interrupt_out_pipes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::usb::UsbInterruptOutPipe>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_InterruptOutPipes)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_interface_settings(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbInterfaceSetting>>> {
+			#[inline] pub unsafe fn get_interface_settings(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::usb::UsbInterfaceSetting>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_InterfaceSettings)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18477,7 +18477,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_InterfaceNumber)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_descriptors(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbDescriptor>>> {
+			#[inline] pub unsafe fn get_descriptors(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::usb::UsbDescriptor>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Descriptors)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18496,22 +18496,22 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_Descriptors(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbDescriptor>) -> ::w::HRESULT
 		}}
 		impl IUsbInterfaceSetting {
-			#[inline] pub unsafe fn get_bulk_in_endpoints(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbBulkInEndpointDescriptor>>> {
+			#[inline] pub unsafe fn get_bulk_in_endpoints(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::usb::UsbBulkInEndpointDescriptor>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_BulkInEndpoints)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_interrupt_in_endpoints(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbInterruptInEndpointDescriptor>>> {
+			#[inline] pub unsafe fn get_interrupt_in_endpoints(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::usb::UsbInterruptInEndpointDescriptor>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_InterruptInEndpoints)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_bulk_out_endpoints(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbBulkOutEndpointDescriptor>>> {
+			#[inline] pub unsafe fn get_bulk_out_endpoints(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::usb::UsbBulkOutEndpointDescriptor>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_BulkOutEndpoints)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_interrupt_out_endpoints(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbInterruptOutEndpointDescriptor>>> {
+			#[inline] pub unsafe fn get_interrupt_out_endpoints(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::usb::UsbInterruptOutEndpointDescriptor>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_InterruptOutEndpoints)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18531,7 +18531,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_InterfaceDescriptor)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_descriptors(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::usb::UsbDescriptor>>> {
+			#[inline] pub unsafe fn get_descriptors(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::usb::UsbDescriptor>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Descriptors)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18662,12 +18662,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).SendControlOutTransferAsyncNoBuffer)(self, setupPacket as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn send_control_in_transfer_async(&mut self, setupPacket: &::rt::gen::windows::devices::usb::UsbSetupPacket, buffer: &::rt::gen::windows::storage::streams::IBuffer) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IBuffer>>> {
+			#[inline] pub unsafe fn send_control_in_transfer_async(&mut self, setupPacket: &::rt::gen::windows::devices::usb::UsbSetupPacket, buffer: &::rt::gen::windows::storage::streams::IBuffer) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IBuffer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).SendControlInTransferAsync)(self, setupPacket as *const _ as *mut _, buffer as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn send_control_in_transfer_async_no_buffer(&mut self, setupPacket: &::rt::gen::windows::devices::usb::UsbSetupPacket) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IBuffer>>> {
+			#[inline] pub unsafe fn send_control_in_transfer_async_no_buffer(&mut self, setupPacket: &::rt::gen::windows::devices::usb::UsbSetupPacket) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IBuffer>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).SendControlInTransferAsyncNoBuffer)(self, setupPacket as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18715,7 +18715,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn RequestAccessAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::wifi::WiFiAccessStatus>) -> ::w::HRESULT
 		}}
 		impl IWiFiAdapterStatics {
-			#[inline] pub unsafe fn find_all_adapters_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::wifi::WiFiAdapter>>>> {
+			#[inline] pub unsafe fn find_all_adapters_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::wifi::WiFiAdapter>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FindAllAdaptersAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18725,7 +18725,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::wifi::WiFiAdapter>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::wifi::WiFiAdapter>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18776,17 +18776,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).remove_AvailableNetworksChanged)(self, eventCookie);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn connect_async(&mut self, availableNetwork: &::rt::gen::windows::devices::wifi::WiFiAvailableNetwork, reconnectionKind: ::rt::gen::windows::devices::wifi::WiFiReconnectionKind) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::wifi::WiFiConnectionResult>>> {
+			#[inline] pub unsafe fn connect_async(&mut self, availableNetwork: &::rt::gen::windows::devices::wifi::WiFiAvailableNetwork, reconnectionKind: ::rt::gen::windows::devices::wifi::WiFiReconnectionKind) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::wifi::WiFiConnectionResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ConnectAsync)(self, availableNetwork as *const _ as *mut _, reconnectionKind, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn connect_with_password_credential_async(&mut self, availableNetwork: &::rt::gen::windows::devices::wifi::WiFiAvailableNetwork, reconnectionKind: ::rt::gen::windows::devices::wifi::WiFiReconnectionKind, passwordCredential: &::rt::gen::windows::security::credentials::PasswordCredential) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::wifi::WiFiConnectionResult>>> {
+			#[inline] pub unsafe fn connect_with_password_credential_async(&mut self, availableNetwork: &::rt::gen::windows::devices::wifi::WiFiAvailableNetwork, reconnectionKind: ::rt::gen::windows::devices::wifi::WiFiReconnectionKind, passwordCredential: &::rt::gen::windows::security::credentials::PasswordCredential) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::wifi::WiFiConnectionResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ConnectWithPasswordCredentialAsync)(self, availableNetwork as *const _ as *mut _, reconnectionKind, passwordCredential as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn connect_with_password_credential_and_ssid_async(&mut self, availableNetwork: &::rt::gen::windows::devices::wifi::WiFiAvailableNetwork, reconnectionKind: ::rt::gen::windows::devices::wifi::WiFiReconnectionKind, passwordCredential: &::rt::gen::windows::security::credentials::PasswordCredential, ssid: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::wifi::WiFiConnectionResult>>> {
+			#[inline] pub unsafe fn connect_with_password_credential_and_ssid_async(&mut self, availableNetwork: &::rt::gen::windows::devices::wifi::WiFiAvailableNetwork, reconnectionKind: ::rt::gen::windows::devices::wifi::WiFiReconnectionKind, passwordCredential: &::rt::gen::windows::security::credentials::PasswordCredential, ssid: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::wifi::WiFiConnectionResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ConnectWithPasswordCredentialAndSsidAsync)(self, availableNetwork as *const _ as *mut _, reconnectionKind, passwordCredential as *const _ as *mut _, ssid.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18810,7 +18810,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Timestamp)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_available_networks(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::devices::wifi::WiFiAvailableNetwork>>> {
+			#[inline] pub unsafe fn get_available_networks(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::devices::wifi::WiFiAvailableNetwork>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_AvailableNetworks)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18934,7 +18934,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::wifidirect::WiFiDirectDevice>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::wifidirect::WiFiDirectDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18955,7 +18955,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, type_, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef, connectionParameters: &::rt::gen::windows::devices::wifidirect::WiFiDirectConnectionParameters) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::wifidirect::WiFiDirectDevice>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef, connectionParameters: &::rt::gen::windows::devices::wifidirect::WiFiDirectConnectionParameters) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::wifidirect::WiFiDirectDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), connectionParameters as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -18970,12 +18970,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn CreateFromDeviceInformation(&mut self, deviceInformation: *mut ::rt::gen::windows::devices::enumeration::DeviceInformation, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<&::rt::gen::windows::devices::wifidirect::WiFiDirectInformationElement>) -> ::w::HRESULT
 		}}
 		impl IWiFiDirectInformationElementStatics {
-			#[inline] pub unsafe fn create_from_buffer(&mut self, buffer: &::rt::gen::windows::storage::streams::IBuffer) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&::rt::gen::windows::devices::wifidirect::WiFiDirectInformationElement>>> {
+			#[inline] pub unsafe fn create_from_buffer(&mut self, buffer: &::rt::gen::windows::storage::streams::IBuffer) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static ::rt::gen::windows::devices::wifidirect::WiFiDirectInformationElement>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateFromBuffer)(self, buffer as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_from_device_information(&mut self, deviceInformation: &::rt::gen::windows::devices::enumeration::DeviceInformation) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&::rt::gen::windows::devices::wifidirect::WiFiDirectInformationElement>>> {
+			#[inline] pub unsafe fn create_from_device_information(&mut self, deviceInformation: &::rt::gen::windows::devices::enumeration::DeviceInformation) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static ::rt::gen::windows::devices::wifidirect::WiFiDirectInformationElement>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateFromDeviceInformation)(self, deviceInformation as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -19072,7 +19072,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_LegacySettings(&mut self, out: *mut *mut ::rt::gen::windows::devices::wifidirect::WiFiDirectLegacySettings) -> ::w::HRESULT
 		}}
 		impl IWiFiDirectAdvertisement {
-			#[inline] pub unsafe fn get_information_elements(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&::rt::gen::windows::devices::wifidirect::WiFiDirectInformationElement>>> {
+			#[inline] pub unsafe fn get_information_elements(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static ::rt::gen::windows::devices::wifidirect::WiFiDirectInformationElement>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_InformationElements)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -19281,7 +19281,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).remove_ConnectionStatusChanged)(self, token);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_connection_endpoint_pairs(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::networking::EndpointPair>>> {
+			#[inline] pub unsafe fn get_connection_endpoint_pairs(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::networking::EndpointPair>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetConnectionEndpointPairs)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -19365,7 +19365,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_Protocol(&mut self, out: *mut ::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceIPProtocol) -> ::w::HRESULT
 		}}
 		impl IWiFiDirectServiceRemotePortAddedEventArgs {
-			#[inline] pub unsafe fn get_endpoint_pairs(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::networking::EndpointPair>>> {
+			#[inline] pub unsafe fn get_endpoint_pairs(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::networking::EndpointPair>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_EndpointPairs)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -19451,7 +19451,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_ServiceName)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_service_name_prefixes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&str>>> {
+			#[inline] pub unsafe fn get_service_name_prefixes(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_ServiceNamePrefixes)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -19552,12 +19552,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).remove_AdvertisementStatusChanged)(self, token);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn connect_async(&mut self, deviceInfo: &::rt::gen::windows::devices::enumeration::DeviceInformation) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceSession>>> {
+			#[inline] pub unsafe fn connect_async(&mut self, deviceInfo: &::rt::gen::windows::devices::enumeration::DeviceInformation) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceSession>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ConnectAsync)(self, deviceInfo as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn connect_async_with_pin(&mut self, deviceInfo: &::rt::gen::windows::devices::enumeration::DeviceInformation, pin: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceSession>>> {
+			#[inline] pub unsafe fn connect_async_with_pin(&mut self, deviceInfo: &::rt::gen::windows::devices::enumeration::DeviceInformation, pin: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceSession>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ConnectAsyncWithPin)(self, deviceInfo as *const _ as *mut _, pin.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -19588,7 +19588,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetSelectorWithFilter)(self, serviceName.get(), serviceInfoFilter as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::wifidirect::services::WiFiDirectService>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::wifidirect::services::WiFiDirectService>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -19655,17 +19655,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).remove_SessionDeferred)(self, token);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_provisioning_info_async(&mut self, selectedConfigurationMethod: ::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceConfigurationMethod) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceProvisioningInfo>>> {
+			#[inline] pub unsafe fn get_provisioning_info_async(&mut self, selectedConfigurationMethod: ::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceConfigurationMethod) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceProvisioningInfo>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetProvisioningInfoAsync)(self, selectedConfigurationMethod, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn connect_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceSession>>> {
+			#[inline] pub unsafe fn connect_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceSession>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ConnectAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn connect_async_with_pin(&mut self, pin: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceSession>>> {
+			#[inline] pub unsafe fn connect_async_with_pin(&mut self, pin: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceSession>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ConnectAsyncWithPin)(self, pin.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -19747,7 +19747,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_SessionAddress)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_connection_endpoint_pairs(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::networking::EndpointPair>>> {
+			#[inline] pub unsafe fn get_connection_endpoint_pairs(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::networking::EndpointPair>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetConnectionEndpointPairs)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -19871,7 +19871,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, classGuid.as_iid(), &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef, desiredAccess: ::rt::gen::windows::devices::custom::DeviceAccessMode, sharingMode: ::rt::gen::windows::devices::custom::DeviceSharingMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::custom::CustomDevice>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef, desiredAccess: ::rt::gen::windows::devices::custom::DeviceAccessMode, sharingMode: ::rt::gen::windows::devices::custom::DeviceSharingMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::custom::CustomDevice>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), desiredAccess, sharingMode, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -20282,7 +20282,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_ScannedFiles(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::storage::StorageFile>) -> ::w::HRESULT
 		}}
 		impl IImageScannerScanResult {
-			#[inline] pub unsafe fn get_scanned_files(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn get_scanned_files(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_ScannedFiles)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -20358,12 +20358,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).IsPreviewSupported)(self, scanSource, &mut out);
 				if hr == ::w::S_OK { Ok(out == ::w::TRUE) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn scan_preview_to_stream_async(&mut self, scanSource: ::rt::gen::windows::devices::scanners::ImageScannerScanSource, targetStream: &::rt::gen::windows::storage::streams::IRandomAccessStream) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::scanners::ImageScannerPreviewResult>>> {
+			#[inline] pub unsafe fn scan_preview_to_stream_async(&mut self, scanSource: ::rt::gen::windows::devices::scanners::ImageScannerScanSource, targetStream: &::rt::gen::windows::storage::streams::IRandomAccessStream) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::scanners::ImageScannerPreviewResult>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ScanPreviewToStreamAsync)(self, scanSource, targetStream as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn scan_files_to_folder_async(&mut self, scanSource: ::rt::gen::windows::devices::scanners::ImageScannerScanSource, storageFolder: &::rt::gen::windows::storage::StorageFolder) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperationWithProgress<&::rt::gen::windows::devices::scanners::ImageScannerScanResult, u32>>> {
+			#[inline] pub unsafe fn scan_files_to_folder_async(&mut self, scanSource: ::rt::gen::windows::devices::scanners::ImageScannerScanSource, storageFolder: &::rt::gen::windows::storage::StorageFolder) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperationWithProgress<&'static ::rt::gen::windows::devices::scanners::ImageScannerScanResult, u32>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ScanFilesToFolderAsync)(self, scanSource, storageFolder as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -20375,7 +20375,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl IImageScannerStatics {
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::devices::scanners::ImageScanner>>> {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::devices::scanners::ImageScanner>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -20405,7 +20405,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetFolderFromPathAsync(&mut self, path: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFolder>) -> ::w::HRESULT
 		}}
 		impl IStorageFolderStatics {
-			#[inline] pub unsafe fn get_folder_from_path_async(&mut self, path: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFolder>>> {
+			#[inline] pub unsafe fn get_folder_from_path_async(&mut self, path: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFolder>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetFolderFromPathAsync)(self, path.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -20425,52 +20425,52 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetItemsAsyncOverloadDefaultStartAndCount(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::storage::IStorageItem>>) -> ::w::HRESULT
 		}}
 		impl IStorageFolder {
-			#[inline] pub unsafe fn create_file_async_overload_default_options(&mut self, desiredName: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn create_file_async_overload_default_options(&mut self, desiredName: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateFileAsyncOverloadDefaultOptions)(self, desiredName.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_file_async(&mut self, desiredName: HStringRef, options: ::rt::gen::windows::storage::CreationCollisionOption) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn create_file_async(&mut self, desiredName: HStringRef, options: ::rt::gen::windows::storage::CreationCollisionOption) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateFileAsync)(self, desiredName.get(), options, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_folder_async_overload_default_options(&mut self, desiredName: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFolder>>> {
+			#[inline] pub unsafe fn create_folder_async_overload_default_options(&mut self, desiredName: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFolder>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateFolderAsyncOverloadDefaultOptions)(self, desiredName.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_folder_async(&mut self, desiredName: HStringRef, options: ::rt::gen::windows::storage::CreationCollisionOption) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFolder>>> {
+			#[inline] pub unsafe fn create_folder_async(&mut self, desiredName: HStringRef, options: ::rt::gen::windows::storage::CreationCollisionOption) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFolder>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateFolderAsync)(self, desiredName.get(), options, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_file_async(&mut self, name: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn get_file_async(&mut self, name: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetFileAsync)(self, name.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_folder_async(&mut self, name: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFolder>>> {
+			#[inline] pub unsafe fn get_folder_async(&mut self, name: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFolder>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetFolderAsync)(self, name.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_item_async(&mut self, name: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::IStorageItem>>> {
+			#[inline] pub unsafe fn get_item_async(&mut self, name: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::IStorageItem>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetItemAsync)(self, name.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_files_async_overload_default_options_start_and_count(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::storage::StorageFile>>>> {
+			#[inline] pub unsafe fn get_files_async_overload_default_options_start_and_count(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::storage::StorageFile>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetFilesAsyncOverloadDefaultOptionsStartAndCount)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_folders_async_overload_default_options_start_and_count(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::storage::StorageFolder>>>> {
+			#[inline] pub unsafe fn get_folders_async_overload_default_options_start_and_count(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::storage::StorageFolder>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetFoldersAsyncOverloadDefaultOptionsStartAndCount)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_items_async_overload_default_start_and_count(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::storage::IStorageItem>>>> {
+			#[inline] pub unsafe fn get_items_async_overload_default_start_and_count(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::storage::IStorageItem>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetItemsAsyncOverloadDefaultStartAndCount)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -20510,7 +20510,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).DeleteAsync)(self, option, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_basic_properties_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::fileproperties::BasicProperties>>> {
+			#[inline] pub unsafe fn get_basic_properties_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::fileproperties::BasicProperties>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetBasicPropertiesAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -20569,32 +20569,32 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn ReplaceWithStreamedFileFromUriAsync(&mut self, fileToReplace: *mut ::rt::gen::windows::storage::IStorageFile, uri: *mut ::rt::gen::windows::foundation::Uri, thumbnail: *mut ::rt::gen::windows::storage::streams::IRandomAccessStreamReference, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>) -> ::w::HRESULT
 		}}
 		impl IStorageFileStatics {
-			#[inline] pub unsafe fn get_file_from_path_async(&mut self, path: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn get_file_from_path_async(&mut self, path: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetFileFromPathAsync)(self, path.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_file_from_application_uri_async(&mut self, uri: &::rt::gen::windows::foundation::Uri) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn get_file_from_application_uri_async(&mut self, uri: &::rt::gen::windows::foundation::Uri) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetFileFromApplicationUriAsync)(self, uri as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_streamed_file_async(&mut self, displayNameWithExtension: HStringRef, dataRequested: &::rt::gen::windows::storage::StreamedFileDataRequestedHandler, thumbnail: &::rt::gen::windows::storage::streams::IRandomAccessStreamReference) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn create_streamed_file_async(&mut self, displayNameWithExtension: HStringRef, dataRequested: &::rt::gen::windows::storage::StreamedFileDataRequestedHandler, thumbnail: &::rt::gen::windows::storage::streams::IRandomAccessStreamReference) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateStreamedFileAsync)(self, displayNameWithExtension.get(), dataRequested as *const _ as *mut _, thumbnail as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn replace_with_streamed_file_async(&mut self, fileToReplace: &::rt::gen::windows::storage::IStorageFile, dataRequested: &::rt::gen::windows::storage::StreamedFileDataRequestedHandler, thumbnail: &::rt::gen::windows::storage::streams::IRandomAccessStreamReference) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn replace_with_streamed_file_async(&mut self, fileToReplace: &::rt::gen::windows::storage::IStorageFile, dataRequested: &::rt::gen::windows::storage::StreamedFileDataRequestedHandler, thumbnail: &::rt::gen::windows::storage::streams::IRandomAccessStreamReference) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ReplaceWithStreamedFileAsync)(self, fileToReplace as *const _ as *mut _, dataRequested as *const _ as *mut _, thumbnail as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_streamed_file_from_uri_async(&mut self, displayNameWithExtension: HStringRef, uri: &::rt::gen::windows::foundation::Uri, thumbnail: &::rt::gen::windows::storage::streams::IRandomAccessStreamReference) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn create_streamed_file_from_uri_async(&mut self, displayNameWithExtension: HStringRef, uri: &::rt::gen::windows::foundation::Uri, thumbnail: &::rt::gen::windows::storage::streams::IRandomAccessStreamReference) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateStreamedFileFromUriAsync)(self, displayNameWithExtension.get(), uri as *const _ as *mut _, thumbnail as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn replace_with_streamed_file_from_uri_async(&mut self, fileToReplace: &::rt::gen::windows::storage::IStorageFile, uri: &::rt::gen::windows::foundation::Uri, thumbnail: &::rt::gen::windows::storage::streams::IRandomAccessStreamReference) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn replace_with_streamed_file_from_uri_async(&mut self, fileToReplace: &::rt::gen::windows::storage::IStorageFile, uri: &::rt::gen::windows::foundation::Uri, thumbnail: &::rt::gen::windows::storage::streams::IRandomAccessStreamReference) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ReplaceWithStreamedFileFromUriAsync)(self, fileToReplace as *const _ as *mut _, uri as *const _ as *mut _, thumbnail as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -20637,27 +20637,27 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_ContentType)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn open_async(&mut self, accessMode: ::rt::gen::windows::storage::FileAccessMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IRandomAccessStream>>> {
+			#[inline] pub unsafe fn open_async(&mut self, accessMode: ::rt::gen::windows::storage::FileAccessMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IRandomAccessStream>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).OpenAsync)(self, accessMode, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn open_transacted_write_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageStreamTransaction>>> {
+			#[inline] pub unsafe fn open_transacted_write_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageStreamTransaction>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).OpenTransactedWriteAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn copy_overload_default_name_and_options(&mut self, destinationFolder: &::rt::gen::windows::storage::IStorageFolder) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn copy_overload_default_name_and_options(&mut self, destinationFolder: &::rt::gen::windows::storage::IStorageFolder) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CopyOverloadDefaultNameAndOptions)(self, destinationFolder as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn copy_overload_default_options(&mut self, destinationFolder: &::rt::gen::windows::storage::IStorageFolder, desiredNewName: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn copy_overload_default_options(&mut self, destinationFolder: &::rt::gen::windows::storage::IStorageFolder, desiredNewName: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CopyOverloadDefaultOptions)(self, destinationFolder as *const _ as *mut _, desiredNewName.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn copy_overload(&mut self, destinationFolder: &::rt::gen::windows::storage::IStorageFolder, desiredNewName: HStringRef, option: ::rt::gen::windows::storage::NameCollisionOption) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn copy_overload(&mut self, destinationFolder: &::rt::gen::windows::storage::IStorageFolder, desiredNewName: HStringRef, option: ::rt::gen::windows::storage::NameCollisionOption) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CopyOverload)(self, destinationFolder as *const _ as *mut _, desiredNewName.get(), option, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -20760,7 +20760,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn ReadAsync(&mut self, buffer: *mut ::rt::gen::windows::storage::streams::IBuffer, count: u32, options: ::rt::gen::windows::storage::streams::InputStreamOptions, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperationWithProgress<&::rt::gen::windows::storage::streams::IBuffer, u32>) -> ::w::HRESULT
 		}}
 		impl IInputStream {
-			#[inline] pub unsafe fn read_async(&mut self, buffer: &::rt::gen::windows::storage::streams::IBuffer, count: u32, options: ::rt::gen::windows::storage::streams::InputStreamOptions) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperationWithProgress<&::rt::gen::windows::storage::streams::IBuffer, u32>>> {
+			#[inline] pub unsafe fn read_async(&mut self, buffer: &::rt::gen::windows::storage::streams::IBuffer, count: u32, options: ::rt::gen::windows::storage::streams::InputStreamOptions) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperationWithProgress<&'static ::rt::gen::windows::storage::streams::IBuffer, u32>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).ReadAsync)(self, buffer as *const _ as *mut _, count, options, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -20959,7 +20959,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn OpenReadAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType>) -> ::w::HRESULT
 		}}
 		impl IRandomAccessStreamReference {
-			#[inline] pub unsafe fn open_read_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType>>> {
+			#[inline] pub unsafe fn open_read_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).OpenReadAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -21158,12 +21158,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_FriendlyName(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl ICertificate {
-			#[inline] pub unsafe fn build_chain_async(&mut self, certificates: &::rt::gen::windows::foundation::collections::IIterable<&::rt::gen::windows::security::cryptography::certificates::Certificate>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::security::cryptography::certificates::CertificateChain>>> {
+			#[inline] pub unsafe fn build_chain_async(&mut self, certificates: &::rt::gen::windows::foundation::collections::IIterable<&::rt::gen::windows::security::cryptography::certificates::Certificate>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::security::cryptography::certificates::CertificateChain>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).BuildChainAsync)(self, certificates as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn build_chain_with_parameters_async(&mut self, certificates: &::rt::gen::windows::foundation::collections::IIterable<&::rt::gen::windows::security::cryptography::certificates::Certificate>, parameters: &::rt::gen::windows::security::cryptography::certificates::ChainBuildingParameters) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::security::cryptography::certificates::CertificateChain>>> {
+			#[inline] pub unsafe fn build_chain_with_parameters_async(&mut self, certificates: &::rt::gen::windows::foundation::collections::IIterable<&::rt::gen::windows::security::cryptography::certificates::Certificate>, parameters: &::rt::gen::windows::security::cryptography::certificates::ChainBuildingParameters) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::security::cryptography::certificates::CertificateChain>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).BuildChainWithParametersAsync)(self, certificates as *const _ as *mut _, parameters as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -21203,7 +21203,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_ValidTo)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_enhanced_key_usages(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&str>>> {
+			#[inline] pub unsafe fn get_enhanced_key_usages(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_EnhancedKeyUsages)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -21235,7 +21235,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_ExclusiveTrustRoots(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<&::rt::gen::windows::security::cryptography::certificates::Certificate>) -> ::w::HRESULT
 		}}
 		impl IChainBuildingParameters {
-			#[inline] pub unsafe fn get_enhanced_key_usages(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&str>>> {
+			#[inline] pub unsafe fn get_enhanced_key_usages(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_EnhancedKeyUsages)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -21285,7 +21285,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).put_CurrentTimeValidationEnabled)(self, if value{ ::w::TRUE } else { ::w::FALSE });
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_exclusive_trust_roots(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&::rt::gen::windows::security::cryptography::certificates::Certificate>>> {
+			#[inline] pub unsafe fn get_exclusive_trust_roots(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVector<&'static ::rt::gen::windows::security::cryptography::certificates::Certificate>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_ExclusiveTrustRoots)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -21309,7 +21309,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).ValidateWithParameters)(self, parameter as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_certificates(&mut self, includeRoot: bool) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::security::cryptography::certificates::Certificate>>> {
+			#[inline] pub unsafe fn get_certificates(&mut self, includeRoot: bool) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::security::cryptography::certificates::Certificate>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetCertificates)(self, if includeRoot{ ::w::TRUE } else { ::w::FALSE }, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -21546,7 +21546,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_NetworkAdapterId)(self, &mut out);
 				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_connected_profile_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::networking::connectivity::ConnectionProfile>>> {
+			#[inline] pub unsafe fn get_connected_profile_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::networking::connectivity::ConnectionProfile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetConnectedProfileAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -21576,7 +21576,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetNetworkConnectivityLevel)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_network_names(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&str>>> {
+			#[inline] pub unsafe fn get_network_names(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<&'static str>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetNetworkNames)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -22071,12 +22071,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetEndpointPairsWithSortOptionsAsync(&mut self, remoteHostName: *mut ::rt::gen::windows::networking::HostName, remoteServiceName: ::w::HSTRING, sortOptions: ::rt::gen::windows::networking::HostNameSortOptions, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::networking::EndpointPair>>) -> ::w::HRESULT
 		}}
 		impl IDatagramSocketStatics {
-			#[inline] pub unsafe fn get_endpoint_pairs_async(&mut self, remoteHostName: &::rt::gen::windows::networking::HostName, remoteServiceName: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::networking::EndpointPair>>>> {
+			#[inline] pub unsafe fn get_endpoint_pairs_async(&mut self, remoteHostName: &::rt::gen::windows::networking::HostName, remoteServiceName: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::networking::EndpointPair>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetEndpointPairsAsync)(self, remoteHostName as *const _ as *mut _, remoteServiceName.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_endpoint_pairs_with_sort_options_async(&mut self, remoteHostName: &::rt::gen::windows::networking::HostName, remoteServiceName: HStringRef, sortOptions: ::rt::gen::windows::networking::HostNameSortOptions) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::collections::IVectorView<&::rt::gen::windows::networking::EndpointPair>>>> {
+			#[inline] pub unsafe fn get_endpoint_pairs_with_sort_options_async(&mut self, remoteHostName: &::rt::gen::windows::networking::HostName, remoteServiceName: HStringRef, sortOptions: ::rt::gen::windows::networking::HostNameSortOptions) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::collections::IVectorView<&'static ::rt::gen::windows::networking::EndpointPair>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetEndpointPairsWithSortOptionsAsync)(self, remoteHostName as *const _ as *mut _, remoteServiceName.get(), sortOptions, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -22137,12 +22137,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).JoinMulticastGroup)(self, host as *const _ as *mut _);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_output_stream_async(&mut self, remoteHostName: &::rt::gen::windows::networking::HostName, remoteServiceName: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IOutputStream>>> {
+			#[inline] pub unsafe fn get_output_stream_async(&mut self, remoteHostName: &::rt::gen::windows::networking::HostName, remoteServiceName: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IOutputStream>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetOutputStreamAsync)(self, remoteHostName as *const _ as *mut _, remoteServiceName.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_output_stream_with_endpoint_pair_async(&mut self, endpointPair: &::rt::gen::windows::networking::EndpointPair) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::streams::IOutputStream>>> {
+			#[inline] pub unsafe fn get_output_stream_with_endpoint_pair_async(&mut self, endpointPair: &::rt::gen::windows::networking::EndpointPair) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::streams::IOutputStream>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetOutputStreamWithEndpointPairAsync)(self, endpointPair as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -22388,7 +22388,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetPixelDataTransformedAsync(&mut self, pixelFormat: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, alphaMode: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode, transform: *mut ::rt::gen::windows::graphics::imaging::BitmapTransform, exifOrientationMode: ::rt::gen::windows::graphics::imaging::ExifOrientationMode, colorManagementMode: ::rt::gen::windows::graphics::imaging::ColorManagementMode, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::graphics::imaging::PixelDataProvider>) -> ::w::HRESULT
 		}}
 		impl IBitmapFrame {
-			#[inline] pub unsafe fn get_thumbnail_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::graphics::imaging::ImageStream>>> {
+			#[inline] pub unsafe fn get_thumbnail_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::graphics::imaging::ImageStream>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetThumbnailAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -22438,12 +22438,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_OrientedPixelHeight)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_pixel_data_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::graphics::imaging::PixelDataProvider>>> {
+			#[inline] pub unsafe fn get_pixel_data_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::graphics::imaging::PixelDataProvider>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetPixelDataAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_pixel_data_transformed_async(&mut self, pixelFormat: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, alphaMode: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode, transform: &::rt::gen::windows::graphics::imaging::BitmapTransform, exifOrientationMode: ::rt::gen::windows::graphics::imaging::ExifOrientationMode, colorManagementMode: ::rt::gen::windows::graphics::imaging::ColorManagementMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::graphics::imaging::PixelDataProvider>>> {
+			#[inline] pub unsafe fn get_pixel_data_transformed_async(&mut self, pixelFormat: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, alphaMode: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode, transform: &::rt::gen::windows::graphics::imaging::BitmapTransform, exifOrientationMode: ::rt::gen::windows::graphics::imaging::ExifOrientationMode, colorManagementMode: ::rt::gen::windows::graphics::imaging::ColorManagementMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::graphics::imaging::PixelDataProvider>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetPixelDataTransformedAsync)(self, pixelFormat, alphaMode, transform as *const _ as *mut _, exifOrientationMode, colorManagementMode, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -22553,7 +22553,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetPropertiesAsync(&mut self, propertiesToRetrieve: *mut ::rt::gen::windows::foundation::collections::IIterable<&str>, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::graphics::imaging::BitmapPropertySet>) -> ::w::HRESULT
 		}}
 		impl IBitmapPropertiesView {
-			#[inline] pub unsafe fn get_properties_async(&mut self, propertiesToRetrieve: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::graphics::imaging::BitmapPropertySet>>> {
+			#[inline] pub unsafe fn get_properties_async(&mut self, propertiesToRetrieve: &::rt::gen::windows::foundation::collections::IIterable<&str>) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::graphics::imaging::BitmapPropertySet>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetPropertiesAsync)(self, propertiesToRetrieve as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -22630,12 +22630,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).CreateCopyWithAlphaFromBuffer)(self, source as *const _ as *mut _, format, width, height, alpha, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_copy_from_surface_async(&mut self, surface: &::rt::gen::windows::graphics::directx::direct3d11::IDirect3DSurface) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::graphics::imaging::SoftwareBitmap>>> {
+			#[inline] pub unsafe fn create_copy_from_surface_async(&mut self, surface: &::rt::gen::windows::graphics::directx::direct3d11::IDirect3DSurface) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::graphics::imaging::SoftwareBitmap>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateCopyFromSurfaceAsync)(self, surface as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_copy_with_alpha_from_surface_async(&mut self, surface: &::rt::gen::windows::graphics::directx::direct3d11::IDirect3DSurface, alpha: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::graphics::imaging::SoftwareBitmap>>> {
+			#[inline] pub unsafe fn create_copy_with_alpha_from_surface_async(&mut self, surface: &::rt::gen::windows::graphics::directx::direct3d11::IDirect3DSurface, alpha: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::graphics::imaging::SoftwareBitmap>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateCopyWithAlphaFromSurfaceAsync)(self, surface as *const _ as *mut _, alpha, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -24952,7 +24952,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn CreateFromHResultAsync(&mut self, errorCode: i32, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::diagnostics::ErrorDetails>) -> ::w::HRESULT
 		}}
 		impl IErrorDetailsStatics {
-			#[inline] pub unsafe fn create_from_hresult_async(&mut self, errorCode: i32) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::foundation::diagnostics::ErrorDetails>>> {
+			#[inline] pub unsafe fn create_from_hresult_async(&mut self, errorCode: i32) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::foundation::diagnostics::ErrorDetails>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateFromHResultAsync)(self, errorCode, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -25709,7 +25709,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Name)(self, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn save_to_file_async(&mut self, folder: &::rt::gen::windows::storage::IStorageFolder, fileName: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn save_to_file_async(&mut self, folder: &::rt::gen::windows::storage::IStorageFolder, fileName: HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).SaveToFileAsync)(self, folder as *const _ as *mut _, fileName.get(), &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -25780,7 +25780,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).RemoveLoggingChannel)(self, loggingChannel as *const _ as *mut _);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn close_and_save_to_file_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&::rt::gen::windows::storage::StorageFile>>> {
+			#[inline] pub unsafe fn close_and_save_to_file_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<&'static ::rt::gen::windows::storage::StorageFile>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CloseAndSaveToFileAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
