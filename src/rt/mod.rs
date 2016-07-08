@@ -4,6 +4,9 @@ use super::{ComInterface, HString, HStringRef, ComPtr, ComIid, Guid};
 
 use w::{HRESULT, HSTRING, S_OK, ULONG, BOOL, TRUE, FALSE, TrustLevel, IID};
 
+pub type RtResult<T> = Result<T, ::w::HRESULT>;
+pub type Char = ::w::wchar_t;
+
 /// This means that the interfaced is based on IInspectable
 pub unsafe trait RtInterface: ComInterface {}
 
@@ -196,11 +199,11 @@ macro_rules! RT_INTERFACE {
             type Vtbl = $vtbl;
         }
         impl<'a> RtType for &'a $interface {
-            type In = &'a mut $interface;
+            type In = &'a $interface;
             type Abi = *mut $interface;
             type Out = ComPtr<$interface>;
 
-            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v as *const _ as *mut _ }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
@@ -247,11 +250,11 @@ macro_rules! RT_INTERFACE {
             type Vtbl = $vtbl<$t1>;
         }
         impl<'a, $t1> RtType for &'a $interface<$t1> where $t1: RtType{
-            type In = &'a mut $interface<$t1>;
+            type In = &'a $interface<$t1>;
             type Abi = *mut $interface<$t1>;
             type Out = ComPtr<$interface<$t1>>;
 
-            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v as *const _ as *mut _ }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
@@ -289,11 +292,11 @@ macro_rules! RT_INTERFACE {
         }
         unsafe impl RtInterface for $interface {}
         impl<'a> RtType for &'a $interface {
-            type In = &'a mut $interface;
+            type In = &'a $interface;
             type Abi = *mut $interface;
             type Out = ComPtr<$interface>;
 
-            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v as *const _ as *mut _ }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
@@ -343,11 +346,11 @@ macro_rules! RT_INTERFACE {
         }
         unsafe impl RtInterface for $interface {}
         impl<'a> RtType for &'a $interface {
-            type In = &'a mut $interface;
+            type In = &'a $interface;
             type Abi = *mut $interface;
             type Out = ComPtr<$interface>;
 
-            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v as *const _ as *mut _ }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
@@ -395,11 +398,11 @@ macro_rules! RT_INTERFACE {
         }
         unsafe impl<$t1: 'static> RtInterface for $interface<$t1> where $t1: RtType {}
         impl<'a, $t1> RtType for &'a $interface<$t1> where $t1: RtType{
-            type In = &'a mut $interface<$t1>;
+            type In = &'a $interface<$t1>;
             type Abi = *mut $interface<$t1>;
             type Out = ComPtr<$interface<$t1>>;
 
-            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v as *const _ as *mut _ }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
@@ -446,11 +449,11 @@ macro_rules! RT_INTERFACE {
         }
         unsafe impl<$t1: 'static, $t2: 'static> RtInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {}
         impl<'a, $t1, $t2> RtType for &'a $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
-            type In = &'a mut $interface<$t1, $t2>;
+            type In = &'a $interface<$t1, $t2>;
             type Abi = *mut $interface<$t1, $t2>;
             type Out = ComPtr<$interface<$t1, $t2>>;
 
-            unsafe fn unwrap(v: Self::In) -> Self::Abi { v }
+            unsafe fn unwrap(v: Self::In) -> Self::Abi { v as *const _ as *mut _ }
             unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
             unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
@@ -604,7 +607,7 @@ macro_rules! RT_CLASS {
             type Vtbl = <$interface as ComInterface>::Vtbl;
         }
         impl ComIid for $cls {
-            fn iid()-> &'static ::Guid { <$interface as ComIid>::iid() }
+            fn iid() -> &'static ::Guid { <$interface as ComIid>::iid() }
         }
         impl<'a> RtType for &'a $cls {
             type In = &'a mut $cls;
@@ -687,7 +690,7 @@ macro_rules! RT_PINTERFACE {
     ) => {
         DEFINE_IID!($iid, $l,$w1,$w2,$b1,$b2,$b3,$b4,$b5,$b6,$b7,$b8);
 		impl<'a> ComIid for $t {
-			fn iid()-> &'static ::Guid { &$iid }
+			fn iid() -> &'static ::Guid { &$iid }
 		}
     };
     (
@@ -696,7 +699,7 @@ macro_rules! RT_PINTERFACE {
     ) => {
         DEFINE_IID!($iid, $l,$w1,$w2,$b1,$b2,$b3,$b4,$b5,$b6,$b7,$b8);
 		impl ComIid for $t {
-			fn iid()-> &'static ::Guid { &$iid }
+			fn iid() -> &'static ::Guid { &$iid }
 		}
     };
 }

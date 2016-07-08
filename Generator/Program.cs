@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using static System.Diagnostics.Debug;
 
@@ -31,7 +32,7 @@ namespace Generator
 		static Dictionary<string, TypeDefinition> definitionsWorklist = new Dictionary<string, TypeDefinition>();
 		static HashSet<string> definitionsDone = new HashSet<string>();
 		static string Imports = @"use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::IntoInterface;";
+use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;";
 
 	static void Main(string[] args)
 		{
@@ -163,38 +164,40 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 		DEFINE_IID!(IID_" + name + ", " + String.Join(", ", guid.ConstructorArguments.Select(a => a.Value)) + ");");
 
 			string generic = "";
+			string genericWithBounds = "";
 			if (t.HasGenericParameters)
 			{
 				if (t.GenericParameters.Count > 2) throw new NotImplementedException("Not yet supported by RT_INTERFACE macro");
 				generic = "<" + String.Join(", ", t.GenericParameters.Select(p => p.Name)) + ">";
+				genericWithBounds = "<" + String.Join(", ", t.GenericParameters.Select(p => p.Name + ": RtType")) + ">";
 			}
+
+			var methods = t.Methods.Where(m => m.Name != ".ctor");
 
 			if (!isDelegate)
 			{
 				module.Append(@"
 		RT_INTERFACE!{interface " + name + generic + "(" + name + "Vtbl): IInspectable(IInspectableVtbl) [IID_" + name + @"] {
-			" + String.Join(",\r\n			", t.Methods.Select(m => GetRawMethodDeclaration(m))) + @"
+			" + String.Join(",\r\n			", methods.Select(m => GetRawMethodDeclaration(m))) + @"
 		}}");
 			}
 			else
 			{
-				var methods = t.Methods.Where(m => m.Name != ".ctor");
 				module.Append(@"
 		RT_DELEGATE!{delegate " + name + generic + "(" + name + "Vtbl, " + name + "Impl) [IID_" + name + @"] {
 			" + String.Join(",\r\n			", methods.Select(m => GetRawMethodDeclaration(m))) + @"
 		}}");
 			}
+
+			module.Append(@"
+		impl" + genericWithBounds + " " + name + generic + @" {
+			" + String.Join("\r\n			", methods.Select(m => GetMethodWrapperDefinition(m)).Where(m => m != null)) + @"
+		}");
 		}
 
 		static string GetRawMethodDeclaration(MethodDefinition m)
 		{
-			var name = m.Name;
-			var overload = m.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "OverloadAttribute");
-			if (overload != null)
-			{
-				name = (string)overload.ConstructorArguments[0].Value;
-			}
-
+			var name = GetRawMethodName(m);
 			return "fn " + name + "(" + String.Join(", ", GetMethodParameterDeclarations(m)) + ") -> ::w::HRESULT";
 		}
 
@@ -204,6 +207,11 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 			foreach (var p in m.Parameters)
 			{
 				Assert(!p.IsReturnValue);
+				if (p.ParameterType.IsArray)
+				{
+					// need additional input size parameter (no matter if array is input or output)
+					yield return p.Name + "Size: u32";
+				}
 				yield return PreventKeywords(FirstToLower(p.Name)) + ": " + GetTypeName(p.ParameterType, TypeUsage.Raw);
 			}
 			if (m.ReturnType.FullName != "System.Void")
@@ -212,9 +220,302 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 			}
 		}
 
+		static string GetRawMethodName(MethodDefinition m)
+		{
+			var rawName = m.Name;
+			var overload = m.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "OverloadAttribute");
+			if (overload != null)
+			{
+				rawName = (string)overload.ConstructorArguments[0].Value;
+			}
+			return rawName;
+		}
+
+		static string GetMethodWrapperName(MethodDefinition m, string rawName)
+		{
+			string name = PreventKeywords(CamelToSnakeCase(rawName.Replace("put_", "set_")));
+			if (rawName.Contains("_")) // name already contains '_' -> might result in a name clash after renaming
+			{
+				if (m.DeclaringType.Methods.Select(mm => new Tuple<MethodDefinition, string>(mm, GetRawMethodName(mm))).Where(mm => !mm.Item2.Contains("_")).Any(mm => GetMethodWrapperName(mm.Item1, mm.Item2) == name))
+				{
+					name += "_";
+				}
+			}
+			return name;
+		}
+
+		static string GetMethodWrapperDefinition(MethodDefinition m)
+		{
+			if (m.Parameters.Any(p => p.ParameterType.IsArray || p.ParameterType.IsByReference && (p.ParameterType as ByReferenceType).ElementType.IsArray) || m.ReturnType.IsArray)
+			{
+				Console.WriteLine("WARNING: Skipping method wrapper for {0} (arrays are not yet supported)", m.FullName);
+				return null;
+			}
+
+			string rawName = GetRawMethodName(m);
+			string name = GetMethodWrapperName(m, rawName);
+
+			var input = new List<Tuple<string, TypeReference>>();
+			var output = new List<Tuple<string, TypeReference>>();
+
+			if (m.ReturnType.FullName != "System.Void")
+			{
+				output.Add(new Tuple<string, TypeReference>("out", m.ReturnType));
+			}
+
+			foreach (var p in m.Parameters)
+			{
+				string pname = PreventKeywords(FirstToLower(p.Name));
+				if (p.ParameterType.IsByReference)
+				{
+					Assert(p.IsOut);
+					output.Add(new Tuple<string, TypeReference>(pname, ((ByReferenceType)p.ParameterType).ElementType));
+				}
+				else
+				{
+					input.Add(new Tuple<string, TypeReference>(pname, p.ParameterType));
+				}
+			}
+
+			string outType = String.Join(", ", output.Select(o => GetTypeName(o.Item2, TypeUsage.Out)));
+			if (output.Count != 1)
+			{
+				outType = "(" + outType + ")"; // also works for count == 0 (empty tuple)
+			}
+			var inputParameters = new string[] { "&mut self" }.Concat(input.Select(i => i.Item1 + ": " + GetTypeName(i.Item2, TypeUsage.In)));
+			var rawParams = new List<string> { "self" };
+			foreach (var p in m.Parameters)
+			{
+				var pname = PreventKeywords(FirstToLower(p.Name));
+				if (p.ParameterType.IsByReference)
+				{
+					// output parameter
+					rawParams.Add("&mut " + pname);
+				}
+				else
+				{
+					// input parameter
+					rawParams.Add(UnwrapInputParameter(pname, p.ParameterType));
+				}
+			}
+
+			if (m.ReturnType.FullName != "System.Void")
+			{
+				rawParams.Add("&mut out");
+			}
+
+			var outInit = String.Join(" ", output.Select(o => "let mut " + o.Item1 + " = " + CreateUninitializedOutput(o.Item2) + ";"));
+			if (outInit != "") outInit = "\r\n\t\t\t\t" + outInit;
+
+			var outWrap = String.Join(", ", output.Select(o => WrapOutputParameter(o.Item1, o.Item2)));
+			if (output.Count != 1)
+			{
+				outWrap = "(" + outWrap + ")"; // also works for count == 0 (empty tuple)
+			}
+			return "#[inline] pub unsafe fn " + name + "(" + String.Join(", ", inputParameters) + ") -> RtResult<" + outType + @"> {" + outInit + @"
+				let hr = ((*self.lpVtbl)." + rawName + ")(" + String.Join(", ", rawParams) + ");" + @"
+				if hr == ::w::S_OK { Ok(" + outWrap + @") } else { Err(hr) }
+			}";
+		}
+
+		static string UnwrapInputParameter(string name, TypeReference t)
+		{
+			if (t.IsGenericParameter)
+			{
+				return t.Name + "::unwrap(" + name + ")";
+			}
+			if (t.IsByReference)
+			{
+				throw new NotSupportedException();
+			}
+			else if (t.IsArray)
+			{
+				return name; // TODO
+			}
+			else if (t.FullName == "System.String")
+			{
+				return name + ".get()";
+			}
+			else if (t.FullName == "System.Object")
+			{
+				return name + " as *const _ as *mut _";
+			}
+			else if (t.FullName == "System.Guid")
+			{
+				return name + ".as_iid()";
+			}
+			else if (t.IsPrimitive)
+			{
+				switch (t.FullName)
+				{
+					case "System.Boolean":
+						return "if " + name + "{ ::w::TRUE } else { ::w::FALSE }";
+					case "System.Byte":
+					case "System.Int16":
+					case "System.Int32":
+					case "System.Int64":
+					case "System.UInt16":
+					case "System.UInt32":
+					case "System.UInt64":
+					case "System.Single":
+					case "System.Double":
+					case "System.Char":
+						return name;
+					default:
+						throw new NotImplementedException("Primitive type: " + t.FullName);
+				}
+			}
+			else if (t.IsValueType)
+			{
+				return name;
+			}
+			else // reference type
+			{
+				return name + " as *const _ as *mut _";
+			}
+		}
+
+		static string CreateUninitializedOutput(TypeReference t)
+		{
+			if (t.IsGenericParameter)
+			{
+				return t.Name + "::uninitialized()";
+			}
+			if (t.IsByReference)
+			{
+				throw new NotSupportedException();
+			}
+			else if (t.IsArray)
+			{
+				return "::std::ptr::null_mut()"; // TODO?
+			}
+			else if (t.FullName == "System.String")
+			{
+				return "::std::ptr::null_mut()";
+			}
+			else if (t.FullName == "System.Object")
+			{
+				return "::std::ptr::null_mut()";
+			}
+			else if (t.FullName == "System.Guid")
+			{
+				return "::std::mem::zeroed()";
+			}
+			else if (t.IsPrimitive)
+			{
+				switch (t.FullName)
+				{
+					case "System.Boolean":
+					case "System.Byte":
+					case "System.Int16":
+					case "System.Int32":
+					case "System.Int64":
+					case "System.UInt16":
+					case "System.UInt32":
+					case "System.UInt64":
+					case "System.Single":
+					case "System.Double":
+					case "System.Char":
+						return "::std::mem::zeroed()";
+					default:
+						throw new NotImplementedException("Primitive type: " + t.FullName);
+				}
+			}
+			else if (t.IsValueType)
+			{
+				return "::std::mem::zeroed()";
+			}
+			else // reference type
+			{
+				return "::std::ptr::null_mut()";
+			}
+		}
+
+		static string WrapOutputParameter(string name, TypeReference t)
+		{
+			if (t.IsGenericParameter)
+			{
+				return t.Name + "::wrap(" + name + ")";
+			}
+			if (t.IsByReference)
+			{
+				throw new NotSupportedException();
+			}
+			else if (t.IsArray)
+			{
+				return name; // TODO
+			}
+			else if (t.FullName == "System.String")
+			{
+				return "HString::wrap(" + name + ")";
+			}
+			else if (t.FullName == "System.Object")
+			{
+				return "ComPtr::wrap(" + name + ")";
+			}
+			else if (t.FullName == "System.Guid")
+			{
+				return "::Guid::from(" + name + ")";
+			}
+			else if (t.IsPrimitive)
+			{
+				switch (t.FullName)
+				{
+					case "System.Boolean":
+						return name + " == ::w::TRUE";
+					case "System.Byte":
+					case "System.Int16":
+					case "System.Int32":
+					case "System.Int64":
+					case "System.UInt16":
+					case "System.UInt32":
+					case "System.UInt64":
+					case "System.Single":
+					case "System.Double":
+					case "System.Char":
+						return name;
+					default:
+						throw new NotImplementedException("Primitive type: " + t.FullName);
+				}
+			}
+			else if (t.IsValueType)
+			{
+				return name;
+			}
+			else // reference type
+			{
+				return "ComPtr::wrap(" + name + ")";
+			}
+		}
+
+		static string CamelToSnakeCase(string name)
+		{
+			var newName = new StringBuilder();
+			bool noUnderscore = true;
+			bool previousUpper = false;
+			foreach (var c in name)
+			{
+				if (char.IsUpper(c))
+				{
+					if (!noUnderscore && !previousUpper) newName.Append("_");
+					newName.Append(char.ToLowerInvariant(c));
+					previousUpper = true;
+				}
+				else
+				{
+					newName.Append(c);
+					previousUpper = false;
+				}
+
+				noUnderscore = false;
+				if (c == '_') noUnderscore = true;
+			}
+			return newName.ToString();
+		}
+
 		static string PreventKeywords(string name)
 		{
-			if (name == "type" || name == "Self" || name == "box") // TODO: add more keywords
+			if (name == "type" || name == "Self" || name == "box" || name == "move") // TODO: add more keywords
 			{
 				name += "_";
 			}
@@ -349,7 +650,9 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 					case TypeUsage.GenericArg: return "&IInspectable";
 					case TypeUsage.GenericArgWithLifetime: return "&'a IInspectable";
 					case TypeUsage.Define: throw new NotSupportedException();
-					default: throw new NotImplementedException(); // TODO
+					case TypeUsage.In: return "&IInspectable";
+					case TypeUsage.Out: return "ComPtr<IInspectable>";
+					default: throw new InvalidOperationException();
 				}
 			}
 			else if (t.FullName == "System.Guid")
@@ -383,8 +686,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 					case "System.Double":
 						return "f64";
 					case "System.Char":
-						if (usage != TypeUsage.Raw) throw new NotImplementedException(); // TODO
-						return "::w::wchar_t";
+						return "Char";
 					default:
 						throw new NotImplementedException("Primitive type: " + t.FullName);
 				}
@@ -426,7 +728,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 				if (!t.IsValueType)
 				{
 
-					if (usage == TypeUsage.GenericArg)
+					if (usage == TypeUsage.GenericArg || usage == TypeUsage.In)
 					{
 						name = "&" + name;
 					}
@@ -438,9 +740,9 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable}; use ::rt::handler::I
 					{
 						name = "*mut " + name;
 					}
-					else if (usage == TypeUsage.In || usage == TypeUsage.Out)
+					else if (usage == TypeUsage.Out)
 					{
-						throw new NotImplementedException(); // TODO
+						name = "ComPtr<" + name + ">";
 					}
 				}
 

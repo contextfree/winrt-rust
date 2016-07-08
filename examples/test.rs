@@ -14,8 +14,6 @@ use runtimeobject::*;
 use ::w::{
     HRESULT,
     S_OK,
-    TRUE,
-    FALSE,
     RO_INIT_MULTITHREADED,
 };
 
@@ -39,28 +37,16 @@ fn run() {
     use std::sync::{Arc, Mutex, Condvar};
 
     let mut uriFactory = Uri::factory();
-    let uri = unsafe {
-        let mut res = ptr::null_mut();
-        let base = FastHString::new("https://github.com");
-        let relative = FastHString::new("contextfree/winrt-rust");
-        assert_eq!(uriFactory.CreateWithRelativeUri(base.get_ref().get(), relative.get_ref().get(), &mut res), S_OK);
-        ComPtr::wrap(res)
-    };
-    let to_string = unsafe {
-        let mut res = ptr::null_mut();
-        assert_eq!(uri.query_interface::<IStringable>().unwrap().ToString(&mut res), S_OK);
-        HString::wrap(res)
-    };
+    let base = FastHString::new("https://github.com");
+    let relative = FastHString::new("contextfree/winrt-rust");
+    let uri = unsafe { uriFactory.create_with_relative_uri(base.get_ref(), relative.get_ref()).unwrap() };
+    let to_string = unsafe { uri.query_interface::<IStringable>().unwrap().to_string().unwrap() };
     println!("{} -> {}", uri.get_runtime_class_name(), to_string); 
 
     let mut outPortStatics = IMidiOutPortStatics::factory();
     //println!("outPortStatics: {}", outPortStatics.get_runtime_class_name()); // this is not allowed (TODO: prevent statically)
     
-    let deviceSelector = unsafe {
-        let mut res = ptr::null_mut();
-        assert_eq!(outPortStatics.GetDeviceSelector(&mut res), S_OK);
-        HString::wrap(res)
-    };
+    let deviceSelector = unsafe { outPortStatics.get_device_selector().unwrap() };
     println!("{}", deviceSelector);
     
     let mut deviceInformationStatics = IDeviceInformationStatics::factory();
@@ -106,18 +92,10 @@ fn run() {
     let unknown = asi.query_interface::<IUnknown>().unwrap();
     println!("IAsyncInfo: {:p}, IAsyncOperation: {:p}, IUnknown: {:p}", asi, asyncOp, unknown);
     
-    let id = unsafe {
-        let mut res = 0;
-        assert!(asi.get_Id(&mut res) == S_OK);
-        res
-    };
+    let id = unsafe { asi.get_id().unwrap() };
     println!("id: {:?}", id);
     
-    let status = unsafe {
-        let mut res = std::mem::uninitialized();
-        assert_eq!(asi.get_Status(&mut res), S_OK);
-        res
-    };
+    let status = unsafe { asi.get_status().unwrap() };
     println!("status: {:?}", status);
     
     let pair = Arc::new((Mutex::new(false), Condvar::new()));
@@ -131,7 +109,7 @@ fn run() {
             cvar.notify_one();
             S_OK
         });
-        assert_eq!(unsafe { asyncOp.put_Completed(&mut *myHandler) }, S_OK);
+        unsafe { asyncOp.set_completed(&mut myHandler).unwrap() };
         // local reference to myHandler is dropped here -> Release() is called
     }
     
@@ -144,24 +122,15 @@ fn run() {
         started = cvar.wait(started).unwrap();
     }
 
-    let mut deviceInformationCollection = unsafe {
-        let mut res = ptr::null_mut();
-        assert!(asyncOp.GetResults(&mut res) == S_OK);
-        ComPtr::wrap(res)
-    };
+    let mut deviceInformationCollection = unsafe { asyncOp.get_results().unwrap() };
     println!("CLS: {}", deviceInformationCollection.get_runtime_class_name());
-    let mut count = 0;
-    assert_eq!(unsafe { deviceInformationCollection.get_Size(&mut count) }, S_OK);
+    let count = unsafe { deviceInformationCollection.get_size().unwrap() };
     println!("Device Count: {}", count);
     
     let mut remember = None;
     let mut i = 0;
     for mut current in deviceInformationCollection.into_iter() {
-        let deviceName = unsafe {
-            let mut res = ptr::null_mut();
-            current.get_Name(&mut res);
-            HString::wrap(res)
-        };
+        let deviceName = unsafe { current.get_name().unwrap() };
         println!("Device Name ({}): {}", i, deviceName);
         if i == 100 {
             // remember the 100th value and try to find it later using IndexOf
@@ -170,26 +139,17 @@ fn run() {
         i += 1;
     }
     assert_eq!(i, count);
-    let mut index = 0;
-    let mut found = FALSE;
-    if let Some(mut r) = remember {
-        assert_eq!(unsafe { deviceInformationCollection.IndexOf(&mut *r, &mut index, &mut found) }, S_OK);
-        println!("Found remembered value: {} (index: {})", found == TRUE, index);
-    }
+
+    // TODO: currently there's a lifetime issue with the following block
+    /*if let Some(mut r) = remember {
+        let (index, found) = unsafe { deviceInformationCollection.index_of(&mut r).unwrap() };
+        println!("Found remembered value: {} (index: {})", found, index);
+    }*/
     
-    unsafe {
-        let mut res = ptr::null_mut();
-        let hres = deviceInformationCollection.GetAt(2000, &mut res);
-        println!("HRESULT (GetAt) = {:x}", hres); // will be E_BOUNDS (out of bounds)
-    }
+    assert!(unsafe { deviceInformationCollection.get_at(2000).is_err() }); // will be E_BOUNDS (out of bounds)
     
-    let status = unsafe {
-        let mut res = std::mem::uninitialized();
-        assert_eq!(asi.get_Status(&mut res), S_OK);
-        res
-    };
+    let status = unsafe { asi.get_status().unwrap() };
     println!("status: {:?}", status);
     
-    let hres = unsafe { asi.Close() };
-    println!("HRESULT (Close AsyncInfo) = {:x}", hres);
+    assert!(unsafe { asi.close().is_ok() });
 }
