@@ -7,10 +7,12 @@
 
 #[macro_use(RIDL)] extern crate winapi as w;
 extern crate runtimeobject;
+extern crate ole32;
 extern crate oleaut32;
 
 mod guid;
 pub use guid::Guid;
+pub use ::w::TrustLevel;
 
 // Compared to the DEFINE_GUID macro from winapi, this one creates a private const
 macro_rules! DEFINE_IID {
@@ -33,7 +35,7 @@ mod bstr;
 pub use bstr::BStr;
 
 mod comptr;
-pub use comptr::ComPtr;
+pub use comptr::{ComPtr, ComArray};
 
 mod cominterfaces;
 pub use cominterfaces::{ComInterface, ComIid, IUnknown, IUnknownVtbl, IRestrictedErrorInfo, IAgileObject};

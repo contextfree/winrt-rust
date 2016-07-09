@@ -1,6 +1,6 @@
 use std::ptr;
 
-use super::{ComInterface, HString, HStringRef, ComPtr, ComIid, Guid};
+use super::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, Guid};
 
 use w::{HRESULT, HSTRING, S_OK, ULONG, TrustLevel, IID};
 
@@ -682,6 +682,15 @@ interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectab
     fn GetTrustLevel(&mut self, trustLevel: *mut TrustLevel) -> HRESULT
 }}
 impl IInspectable {
+    pub fn get_iids(&self) -> ComArray<Guid> {
+        let mut result = ::std::ptr::null_mut();
+        let mut count = 0;
+        let hr = unsafe { ((*self.lpVtbl).GetIids)(self as *const _ as *mut _, &mut count, &mut result) };
+        assert_eq!(hr, ::w::S_OK);
+        let result = result as *mut Guid; // convert from ::w::GUID to (binary compatible) Guid
+        unsafe { ComArray::from_raw(count, result) }
+    }
+
     // TODO: It seems to be disallowed to call this on "...Statics" objects (E_ILLEGAL_METHOD_CALL)
     //       -> can we prevent that at compile time?
     pub fn get_runtime_class_name(&self) -> HString {
@@ -690,5 +699,11 @@ impl IInspectable {
         assert_eq!(hr, ::w::S_OK);
         unsafe { HString::wrap(result) }
     }
-    // TODO: wrappers for GetIids and GetTrustLevel
+
+    pub fn get_trust_level(&self) -> TrustLevel {
+        let mut result = unsafe { ::std::mem::zeroed() };
+        let hr = unsafe { ((*self.lpVtbl).GetTrustLevel)(self as *const _ as *mut _, &mut result) };
+        assert_eq!(hr, ::w::S_OK);
+        result
+    }
 }

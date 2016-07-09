@@ -74,3 +74,41 @@ impl<T> PartialEq<ComPtr<T>> for ComPtr<T> {
         self.0 == other.0
     }
 }
+
+/// Owned array type that will be deallocated using `CoTaskMemFree` on drop.
+pub struct ComArray<T> {
+    size: u32,
+    first: *mut T
+}
+
+impl<T> ComArray<T> {
+    #[inline]
+    pub unsafe fn from_raw(size: u32, first: *mut T) -> ComArray<T> {
+        assert!(!first.is_null());
+        ComArray {
+            size: size,
+            first: first
+        }
+    }
+
+    #[inline]
+    pub fn len(&self) -> usize {
+        self.size as usize
+    }
+}
+
+impl<T> Deref for ComArray<T> {
+    type Target = [T];
+    #[inline]
+    fn deref(&self) -> &[T] {
+        unsafe { ::std::slice::from_raw_parts(self.first, self.size as usize) }
+    }
+}
+
+impl<T> Drop for ComArray<T> {
+    #[inline]
+    fn drop(&mut self) {
+        // TODO: call `Release` on elements if T is an interface reference
+        unsafe { ::ole32::CoTaskMemFree(self.first as ::w::LPVOID) };
+    }
+}

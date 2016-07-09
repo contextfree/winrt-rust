@@ -41,7 +41,13 @@ fn run() {
     let relative = FastHString::new("contextfree/winrt-rust");
     let uri = unsafe { uriFactory.create_with_relative_uri(base.get_ref(), relative.get_ref()).unwrap() };
     let to_string = unsafe { uri.query_interface::<IStringable>().unwrap().to_string().unwrap() };
-    println!("{} -> {}", uri.get_runtime_class_name(), to_string); 
+    println!("{} -> {}", uri.get_runtime_class_name(), to_string);
+    println!("TrustLevel: {:?}", uri.get_trust_level());
+    println!("GetIids:");
+    let iids = uri.get_iids();
+    for i in 0..iids.len() {
+        println!("  [{}] = {:?}", i, iids[i]);
+    }
 
     let mut outPortStatics = IMidiOutPortStatics::factory();
     //println!("outPortStatics: {}", outPortStatics.get_runtime_class_name()); // this is not allowed (TODO: prevent statically)
