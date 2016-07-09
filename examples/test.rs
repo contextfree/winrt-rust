@@ -52,27 +52,27 @@ fn run() {
     let mut deviceInformationStatics = IDeviceInformationStatics::factory();
     
     unsafe {
-        let mut res = ptr::null_mut();
         // Test some error reporting by using an invalid device selector
         let wrongDeviceSelector: FastHString = "Foobar".into();
-        let hres = deviceInformationStatics.FindAllAsyncAqsFilter(wrongDeviceSelector.get_ref().get(), &mut res);
-        println!("HRESULT (FindAllAsync) = {}", hres);
-
-        let mut errorInfo = {
-            let mut res = ptr::null_mut();
-            assert_eq!(GetRestrictedErrorInfo(&mut res), S_OK);
-            ComPtr::wrap(res)
-        };
-        let (description, error, restrictedDescription, _) = {
-            let mut description = ptr::null_mut();
-            let mut error: HRESULT = 0;
-            let mut restrictedDescription = ptr::null_mut();
-            let mut capabilitySid = ptr::null_mut();
-            assert_eq!(errorInfo.GetErrorDetails(&mut description, &mut error, &mut restrictedDescription, &mut capabilitySid), S_OK);
-            (BStr::wrap(description), error, BStr::wrap(restrictedDescription), BStr::wrap(capabilitySid))
-        };
-        println!("Got Error Info: {} ({})", description, restrictedDescription);
-        assert_eq!(error, hres); // the returned HRESULT within IRestrictedErrorInfo is the same as the original HRESULT
+        let res = deviceInformationStatics.find_all_async_aqs_filter(wrongDeviceSelector.get_ref());
+        if let Err(hr) = res {
+            println!("HRESULT (FindAllAsyncAqsFilter) = {:?}", hr);
+            let mut errorInfo = {
+                let mut res = ptr::null_mut();
+                assert_eq!(GetRestrictedErrorInfo(&mut res), S_OK);
+                ComPtr::wrap(res)
+            };
+            let (description, error, restrictedDescription, _) = {
+                let mut description = ptr::null_mut();
+                let mut error: HRESULT = 0;
+                let mut restrictedDescription = ptr::null_mut();
+                let mut capabilitySid = ptr::null_mut();
+                assert_eq!(errorInfo.GetErrorDetails(&mut description, &mut error, &mut restrictedDescription, &mut capabilitySid), S_OK);
+                (BStr::wrap(description), error, BStr::wrap(restrictedDescription), BStr::wrap(capabilitySid))
+            };
+            println!("Got Error Info: {} ({})", description, restrictedDescription);
+            assert_eq!(error, hr); // the returned HRESULT within IRestrictedErrorInfo is the same as the original HRESULT
+        }        
         // NOTE: `res` is still null pointer at this point
     };
 
@@ -138,13 +138,27 @@ fn run() {
     }
     assert_eq!(i, count);
 
-    // TODO: currently there's a lifetime issue with the following block
+    let mut array = [::std::ptr::null_mut(); 2000];
+
+    let filled = unsafe { deviceInformationCollection.get_many(0, array.len() as u32, array.as_mut_ptr()).unwrap() };
+    let mut freed = 0;
+    for i in 0..array.len() {
+        if !array[i].is_null() {
+            unsafe { ComPtr::wrap(array[i]) };
+            freed += 1;
+            // reference will be released here
+        }
+    }
+    println!("Freed result of GetMany ({} of {} values).", freed, filled);
+    assert_eq!(filled, ::std::cmp::min(count, array.len() as u32));
+
+
     if let Some(mut r) = remember {
         let (index, found) = unsafe { deviceInformationCollection.index_of(&mut *r).unwrap() };
         println!("Found remembered value: {} (index: {})", found, index);
     }
     
-    assert!(unsafe { deviceInformationCollection.get_at(2000).is_err() }); // will be E_BOUNDS (out of bounds)
+    assert!(unsafe { deviceInformationCollection.get_at(count + 42).is_err() }); // will be E_BOUNDS (out of bounds)
     
     let status = unsafe { asi.get_status().unwrap() };
     println!("status: {:?}", status);

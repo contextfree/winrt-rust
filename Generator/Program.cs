@@ -207,15 +207,32 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			foreach (var p in m.Parameters)
 			{
 				Assert(!p.IsReturnValue);
+				int? lengthIs = null;
+				var lengthIsAttribute = p.CustomAttributes.SingleOrDefault(a => a.AttributeType.Name == "LengthIsAttribute");
+				if (lengthIsAttribute != null)
+				{
+					lengthIs = (int)lengthIsAttribute.ConstructorArguments[0].Value;
+				}
+
 				if (p.ParameterType.IsArray)
 				{
-					// need additional input size parameter (no matter if array is input or output)
-					yield return p.Name + "Size: u32";
+					// need additional input size parameter (even if parameter is marked as [Out])
+					yield return FirstToLower(p.Name) + "Size: u32";
+				}
+				else if (p.ParameterType.IsByReference && (p.ParameterType as ByReferenceType).ElementType.IsArray)
+				{
+					Assert(!lengthIs.HasValue);
+					// need additional output size parameter
+					yield return FirstToLower(p.Name) + "Size: *mut u32";
 				}
 				yield return PreventKeywords(FirstToLower(p.Name)) + ": " + GetTypeName(p.ParameterType, TypeUsage.Raw);
 			}
 			if (m.ReturnType.FullName != "System.Void")
 			{
+				if (m.ReturnType.IsArray)
+				{
+					yield return "outSize: *mut u32";
+				}
 				yield return "out: *mut " + GetTypeName(m.ReturnType, TypeUsage.Raw);
 			}
 		}
@@ -246,22 +263,19 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 
 		static string GetMethodWrapperDefinition(MethodDefinition m)
 		{
-			if (m.Parameters.Any(p => p.ParameterType.IsArray || p.ParameterType.IsByReference && (p.ParameterType as ByReferenceType).ElementType.IsArray) || m.ReturnType.IsArray)
-			{
-				Console.WriteLine("WARNING: Skipping method wrapper for {0} (arrays are not yet supported)", m.FullName);
-				return null;
-			}
-
 			string rawName = GetRawMethodName(m);
 			string name = GetMethodWrapperName(m, rawName);
 
-			var input = new List<Tuple<string, TypeReference>>();
-			var output = new List<Tuple<string, TypeReference>>();
-
-			if (m.ReturnType.FullName != "System.Void")
+			if (rawName == "GetMany" && m.DeclaringType.Namespace == "Windows.Foundation.Collections" &&
+				(m.DeclaringType.Name == "IVectorView`1" || m.DeclaringType.Name == "IIterator`1" || m.DeclaringType.Name == "IVector`1"))
 			{
-				output.Add(new Tuple<string, TypeReference>("out", m.ReturnType));
+				// This method has special semantics, since it takes an array and returns the number of elements that were filled
+				// It uses the __RPC__out_ecount_part(capacity, *actual) annotation in the C headers
+				// TODO ...
 			}
+
+			var input = new List<Tuple<string, TypeReference, bool>>(); // last parameter: true = is array
+			var output = new List<Tuple<string, TypeReference>>();
 
 			foreach (var p in m.Parameters)
 			{
@@ -269,11 +283,44 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				if (p.ParameterType.IsByReference)
 				{
 					Assert(p.IsOut);
-					output.Add(new Tuple<string, TypeReference>(pname, ((ByReferenceType)p.ParameterType).ElementType));
+					var realType = ((ByReferenceType)p.ParameterType).ElementType;
+					if (realType.IsArray)
+					{
+						//TODO: array output is treated as by-reference-input, but it should not
+						input.Add(new Tuple<string, TypeReference, bool>(pname + "Size", new ByReferenceType(m.Module.Import(typeof(uint))), false));
+						input.Add(new Tuple<string, TypeReference, bool>(pname, p.ParameterType, true));
+					}
+					else
+					{
+						output.Add(new Tuple<string, TypeReference>(pname, realType));
+					}
 				}
 				else
 				{
-					input.Add(new Tuple<string, TypeReference>(pname, p.ParameterType));
+					if (p.ParameterType.IsArray)
+					{
+						input.Add(new Tuple<string, TypeReference, bool>(pname + "Size", m.Module.Import(typeof(uint)), false));
+						input.Add(new Tuple<string, TypeReference, bool>(pname, p.ParameterType, true));
+					}
+					else
+					{
+						input.Add(new Tuple<string, TypeReference, bool>(pname, p.ParameterType, false));
+					}
+				}
+			}
+
+			if (m.ReturnType.FullName != "System.Void")
+			{
+				if (m.ReturnType.IsArray)
+				{
+					//TODO: array output is treated as by-reference-input, but it should not
+					input.Add(new Tuple<string, TypeReference, bool>("outSize", new ByReferenceType(m.Module.Import(typeof(uint))), false));
+					input.Add(new Tuple<string, TypeReference, bool>("out", new ByReferenceType(m.ReturnType), true));
+				}
+				else
+				{
+					// this makes the actual return value the last in the tuple (if multiple)
+					output.Add(new Tuple<string, TypeReference>("out", m.ReturnType));
 				}
 			}
 
@@ -282,26 +329,48 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			{
 				outType = "(" + outType + ")"; // also works for count == 0 (empty tuple)
 			}
-			var inputParameters = new string[] { "&mut self" }.Concat(input.Select(i => i.Item1 + ": " + GetTypeName(i.Item2, TypeUsage.In)));
+			var inputParameters = new string[] { "&mut self" }.Concat(input.Select(i => i.Item1 + ": " + GetTypeName(i.Item2, i.Item3 ? TypeUsage.Raw : TypeUsage.In)));
 			var rawParams = new List<string> { "self" };
 			foreach (var p in m.Parameters)
 			{
 				var pname = PreventKeywords(FirstToLower(p.Name));
 				if (p.ParameterType.IsByReference)
 				{
-					// output parameter
-					rawParams.Add("&mut " + pname);
+					if (((ByReferenceType)p.ParameterType).ElementType.IsArray)
+					{
+						//TODO: array output is treated as by-reference-input, but it should not
+						rawParams.Add(pname + "Size");
+						rawParams.Add(pname);
+					}
+					else
+					{
+						// output parameter
+						rawParams.Add("&mut " + pname);
+					}
 				}
 				else
 				{
 					// input parameter
+					if (p.ParameterType.IsArray)
+					{
+						rawParams.Add(pname + "Size");
+					}
 					rawParams.Add(UnwrapInputParameter(pname, p.ParameterType));
 				}
 			}
 
 			if (m.ReturnType.FullName != "System.Void")
 			{
-				rawParams.Add("&mut out");
+				if (m.ReturnType.IsArray)
+				{
+					//TODO: array output is treated as by-reference-input, but it should not
+					rawParams.Add("outSize");
+					rawParams.Add("out");
+				}
+				else
+				{
+					rawParams.Add("&mut out");
+				}
 			}
 
 			var outInit = String.Join(" ", output.Select(o => "let mut " + o.Item1 + " = " + CreateUninitializedOutput(o.Item2) + ";"));

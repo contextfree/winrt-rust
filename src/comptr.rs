@@ -1,7 +1,7 @@
 use std::ops::{Deref, DerefMut};
 use std::fmt;
 use std::ptr;
-use ::{ComIid, ComInterface, RtInterface, IInspectable, HString, Guid};
+use ::{ComIid, ComInterface, RtInterface, IInspectable, Guid};
 
 #[derive(Debug)]
 pub struct ComPtr<T>(*mut T); // TODO: use NonZero?
@@ -35,16 +35,6 @@ impl<T> ComPtr<T> {
 
     fn as_inspectable(&self) -> &mut IInspectable where T: RtInterface {
         unsafe { &mut *(self.0 as *mut IInspectable) }
-    }
-
-    // TODO: It seems to be disallowed to call this on "...Statics" objects (E_ILLEGAL_METHOD_CALL)
-    //       -> can we prevent that at compile time?
-    // FIXME: This method should not be available on ComPtr, but instead directly on IInspectable, callable through Deref
-    pub fn get_runtime_class_name(&self) -> HString where T: RtInterface {
-        let mut result = ptr::null_mut();
-        let hres = unsafe { self.as_inspectable().GetRuntimeClassName(&mut result) };
-        assert_eq!(hres, ::w::S_OK);
-        unsafe { HString::wrap(result) }
     }
     
     fn as_unknown(&self) -> &mut ::w::IUnknown {

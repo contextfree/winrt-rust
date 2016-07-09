@@ -182,12 +182,6 @@ macro_rules! RT_INTERFACE {
         pub struct $interface {
             lpVtbl: *const $vtbl
         }
-        impl $interface {
-            #[inline]
-            $(pub unsafe fn $method(&mut self $(,$p: $t)*) -> $rtr {
-                ((*self.lpVtbl).$method)(self $(,$p)*)
-            })+
-        }
         impl ComIid for $interface {
             fn iid() -> &'static ::Guid { &$iid }
         }
@@ -235,12 +229,6 @@ macro_rules! RT_INTERFACE {
         #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
         pub struct $interface<$t1> where $t1: RtType {
             lpVtbl: *const $vtbl<$t1>,
-        }
-        impl<$t1> $interface<$t1> where $t1: RtType {
-            #[inline]
-            $(pub unsafe fn $method(&mut self $(,$p: $t)*) -> $rtr {
-                ((*self.lpVtbl).$method)(self $(,$p)*)
-            })+
         }
         impl<$t1> ComInterface for $interface<$t1> where $t1: RtType {
             type Vtbl = $vtbl<$t1>;
@@ -328,12 +316,6 @@ macro_rules! RT_INTERFACE {
         pub struct $interface {
             lpVtbl: *const $vtbl
         }
-        impl $interface {
-            #[inline]
-            $(pub unsafe fn $method(&mut self $(,$p: $t)*) -> $rtr {
-                ((*self.lpVtbl).$method)(self $(,$p)*)
-            })+
-        }
         impl ComIid for $interface {
             fn iid() -> &'static ::Guid { &$iid }
         }
@@ -383,12 +365,6 @@ macro_rules! RT_INTERFACE {
         pub struct $interface<$t1> where $t1: RtType {
             lpVtbl: *const $vtbl<$t1>,
         }
-        impl<$t1> $interface<$t1> where $t1: RtType {
-            #[inline]
-            $(pub unsafe fn $method(&mut self $(,$p: $t)*) -> $rtr {
-                ((*self.lpVtbl).$method)(self $(,$p)*)
-            })+
-        }
         impl<$t1> ComInterface for $interface<$t1> where $t1: RtType {
             type Vtbl = $vtbl<$t1>;
         }
@@ -433,12 +409,6 @@ macro_rules! RT_INTERFACE {
         #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
         pub struct $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             lpVtbl: *const $vtbl<$t1, $t2>,
-        }
-        impl<$t1, $t2> $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
-            #[inline]
-            $(pub unsafe fn $method(&mut self $(,$p: $t)*) -> $rtr {
-                ((*self.lpVtbl).$method)(self $(,$p)*)
-            })+
         }
         impl<$t1, $t2> ComInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type Vtbl = $vtbl<$t1, $t2>;
@@ -711,3 +681,14 @@ interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectab
     fn GetRuntimeClassName(&mut self, className: *mut HSTRING) -> HRESULT,
     fn GetTrustLevel(&mut self, trustLevel: *mut TrustLevel) -> HRESULT
 }}
+impl IInspectable {
+    // TODO: It seems to be disallowed to call this on "...Statics" objects (E_ILLEGAL_METHOD_CALL)
+    //       -> can we prevent that at compile time?
+    pub fn get_runtime_class_name(&self) -> HString {
+        let mut result = ::std::ptr::null_mut();
+        let hr = unsafe { ((*self.lpVtbl).GetRuntimeClassName)(self as *const _ as *mut _, &mut result) };
+        assert_eq!(hr, ::w::S_OK);
+        unsafe { HString::wrap(result) }
+    }
+    // TODO: wrappers for GetIids and GetTrustLevel
+}
