@@ -160,7 +160,7 @@ fn run() {
 
 
     if let Some(mut r) = remember {
-        let (index, found) = unsafe { deviceInformationCollection.index_of(&mut *r).unwrap() };
+        let (index, found) = unsafe { deviceInformationCollection.index_of(&mut r).unwrap() };
         println!("Found remembered value: {} (index: {})", found, index);
     }
     

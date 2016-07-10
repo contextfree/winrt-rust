@@ -673,7 +673,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				switch (usage)
 				{
 					case TypeUsage.Raw: return t.Name + "::Abi";
-					case TypeUsage.In: return t.Name + "::In";
+					case TypeUsage.In: return "&" + t.Name + "::In";
 					case TypeUsage.Out: return t.Name + "::Out";
 					case TypeUsage.GenericArg:
 					case TypeUsage.GenericArgWithLifetime:
@@ -716,8 +716,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				switch (usage)
 				{
 					case TypeUsage.Raw: return "*mut IInspectable";
-					case TypeUsage.GenericArg: return "&IInspectable";
-					case TypeUsage.GenericArgWithLifetime: return "&'a IInspectable";
+					case TypeUsage.GenericArg: return "IInspectable";
+					case TypeUsage.GenericArgWithLifetime: return "IInspectable";
 					case TypeUsage.Define: throw new NotSupportedException();
 					case TypeUsage.In: return "&IInspectable";
 					case TypeUsage.Out: return "ComPtr<IInspectable>";
@@ -796,14 +796,13 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 
 				if (!t.IsValueType)
 				{
-
-					if (usage == TypeUsage.GenericArg || usage == TypeUsage.In)
+					if (usage == TypeUsage.In)
 					{
 						name = "&" + name;
 					}
-					else if (usage == TypeUsage.GenericArgWithLifetime)
+					else if (usage == TypeUsage.GenericArg || usage == TypeUsage.GenericArgWithLifetime)
 					{
-						name = "&'a " + name;
+						// leave name unchanged
 					}
 					else if (usage == TypeUsage.Raw)
 					{
