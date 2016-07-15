@@ -25,7 +25,7 @@ pub unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut IUnknown) -> ULONG {
     
     // Increment the reference count (count member).
     let old_size = (*this).refcount.fetch_add(1, atomic::Ordering::Relaxed);
-    println!("AddRef: {} -> {}", old_size, old_size  + 1);
+    //println!("AddRef: {} -> {}", old_size, old_size  + 1);
 
     // We're supposed to return the updated count.
     return (old_size + 1) as ULONG;
@@ -36,7 +36,7 @@ pub unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG {
     let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
     
     let old_size = (*this).refcount.fetch_sub(1, atomic::Ordering::Release);
-    println!("Release: {} -> {}", old_size, old_size - 1);
+    //println!("Release: {} -> {}", old_size, old_size - 1);
     if old_size != 1 {
         return (old_size - 1) as ULONG; // return the updated count
     }
@@ -52,7 +52,7 @@ pub unsafe extern "system" fn ComReprHandler_QueryInterface<T, I>(this_: *mut IU
 {
     let this_ = this_ as *mut I;
     let guid: Guid = (*vTableGuid).into();
-    println!("QueryInterface called with GUID {:?}", guid);
+    //println!("QueryInterface called with GUID {:?}", guid);
 
     // IAgileObject is only supported for Send objects
     if guid != *IUnknown::iid() && guid != *IAgileObject::iid() && guid != *<I as ComIid>::iid() { 

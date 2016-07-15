@@ -11,13 +11,17 @@ use self::gen::windows::foundation::collections::{
 };
 
 pub type RtResult<T> = Result<T, ::w::HRESULT>;
-pub type Char = ::w::wchar_t;
+
+#[derive(Clone, Copy)] #[repr(C)]
+pub struct Char(pub ::w::wchar_t);
+// TODO: deref to u16
 
 /// This means that the interfaced is based on IInspectable
 pub unsafe trait RtInterface: ComInterface {}
 
 pub unsafe trait RtValueType: Copy {}
 
+unsafe impl RtValueType for bool {}
 unsafe impl RtValueType for f32 {}
 unsafe impl RtValueType for f64 {}
 unsafe impl RtValueType for i16 {}
@@ -27,6 +31,8 @@ unsafe impl RtValueType for u8 {}
 unsafe impl RtValueType for u16 {}
 unsafe impl RtValueType for u32 {}
 unsafe impl RtValueType for u64 {}
+unsafe impl RtValueType for Char {}
+unsafe impl RtValueType for Guid {}
 
 /// This is a trait implemented by all types that can be used as generic parameters of parameterized interfaces
 pub trait RtType {
@@ -52,42 +58,6 @@ impl<'a> RtType for &'a str { // TODO: can we get rid of the lifetime here?
     }
     unsafe fn wrap(v: Self::Abi) -> Self::Out {
         HString::wrap(v)
-    }
-}
-
-impl<'a> RtType for bool {
-    type In = bool;
-    type Abi = ::w::BOOL;
-    type Out = bool;
-
-    unsafe fn unwrap(v: &Self::In) -> Self::Abi {
-        if *v {
-            ::w::TRUE
-        } else {
-            ::w::FALSE
-        }
-    }
-    unsafe fn uninitialized() -> Self::Abi {
-        ::w::FALSE
-    }
-    unsafe fn wrap(v: Self::Abi) -> Self::Out {
-        v == ::w::TRUE
-    }
-}
-
-impl RtType for Guid {
-    type In = Guid;
-    type Abi = ::w::GUID; // could also directly use Guid, since they are binary-compatible
-    type Out = Guid;
-
-    unsafe fn unwrap(v: &Self::In) -> Self::Abi {
-        v.as_iid()
-    }
-    unsafe fn uninitialized() -> Self::Abi {
-        ::std::mem::zeroed()
-    }
-    unsafe fn wrap(v: Self::Abi) -> Self::Out {
-        Guid::from(v)
     }
 }
 
@@ -705,5 +675,23 @@ impl IInspectable {
         let hr = unsafe { ((*self.lpVtbl).GetTrustLevel)(self as *const _ as *mut _, &mut result) };
         assert_eq!(hr, ::w::S_OK);
         result
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    extern crate test;
+
+    #[test]
+    fn check_sizes() {
+        use ::std::mem::size_of;
+
+        assert_eq!(size_of::<bool>(), 1);
+        assert_eq!(size_of::<::Char>(), size_of::<::w::wchar_t>());
+        assert_eq!(size_of::<::Guid>(), size_of::<::w::GUID>());
+        //assert_eq!(size_of::<::HString>(), size_of::<::w::HSTRING>());
+        assert_eq!(size_of::<&::HStringRef>(), size_of::<::w::HSTRING>());
+        //assert_eq!(size_of::<::ComPtr<::IInspectable>>(), size_of::<*mut ::IInspectable>());
+        //assert_eq!(size_of::<Option<::ComPtr<::IInspectable>>>(), size_of::<::ComPtr<::IInspectable>>());
     }
 }

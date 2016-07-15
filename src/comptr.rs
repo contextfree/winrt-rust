@@ -104,11 +104,21 @@ impl<T> Deref for ComArray<T> {
         unsafe { ::std::slice::from_raw_parts(self.first, self.size as usize) }
     }
 }
+impl<T> DerefMut for ComArray<T> {
+    #[inline]
+    fn deref_mut(&mut self) -> &mut [T] {
+        unsafe { ::std::slice::from_raw_parts_mut(self.first, self.size as usize) }
+    }
+}
 
 impl<T> Drop for ComArray<T> {
     #[inline]
     fn drop(&mut self) {
         // TODO: call `Release` on elements if T is an interface reference
-        unsafe { ::ole32::CoTaskMemFree(self.first as ::w::LPVOID) };
+        unsafe {
+            //println!("Dropping ComArray");
+            ::std::ptr::drop_in_place(&mut self[..]);
+            ::ole32::CoTaskMemFree(self.first as ::w::LPVOID)
+        };
     }
 }
