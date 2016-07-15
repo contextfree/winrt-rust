@@ -1,7 +1,7 @@
 use std::ops::{Deref, DerefMut};
 use std::fmt;
 use std::ptr;
-use ::{ComIid, ComInterface, RtInterface, IInspectable, Guid};
+use ::{ComIid, ComInterface, RtInterface, RtClassInterface, IInspectable, Guid};
 
 #[derive(Debug)]
 pub struct ComPtr<T>(*mut T); // TODO: use NonZero?
@@ -24,6 +24,11 @@ pub fn query_interface<T, Target>(interface: &T) -> Option<ComPtr<Target>> where
     }
 }
 
+// This trait is not exported in the library interface
+pub trait HiddenGetRuntimeClassName {
+    fn get_runtime_class_name(&self) -> ::HString;
+}
+
 impl<T> ComPtr<T> {
     /// Creates a `ComPtr` to wrap a raw pointer.
     /// It takes ownership over the pointer which means it does __not__ call `AddRef`.
@@ -39,6 +44,10 @@ impl<T> ComPtr<T> {
     
     fn as_unknown(&self) -> &mut ::w::IUnknown {
         unsafe { &mut *(self.0 as *mut ::w::IUnknown) }
+    }
+    
+    pub fn get_runtime_class_name(&self) -> ::HString where T: RtClassInterface {
+        HiddenGetRuntimeClassName::get_runtime_class_name(self.as_inspectable())
     }
     
     pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComIid, T: ComInterface {

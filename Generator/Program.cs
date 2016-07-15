@@ -32,7 +32,7 @@ namespace Generator
 		static Dictionary<string, TypeDefinition> definitionsWorklist = new Dictionary<string, TypeDefinition>();
 		static HashSet<string> definitionsDone = new HashSet<string>();
 		static string Imports = @"use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;";
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 
 		static IEnumerable<Type> BaseTypes = new List<Type>
 		{
@@ -63,19 +63,18 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			"Rect"
 		};
 
+		static AssemblyCollection Assemblies = new AssemblyCollection(Directory.GetFiles(@"C:\Windows\System32\WinMetadata\"));
+
 	static void Main(string[] args)
 		{
 			if (args.Length < 1) throw new ArgumentException("Please specify result file path as first argument");
 
 			TypeCounter counter = new TypeCounter { Enums = 0, Interfaces = 0, Classes = 0, Structs = 0 };
 
-			var files = Directory.GetFiles(@"C:\Windows\System32\WinMetadata\");
-			var collection = new AssemblyCollection(files);
-
 			// TODO: enable all modules (disabled because it results in a huge file and very long compilation)
 			var names = new string[] { "Windows.Foundation", "Windows.Devices", /*"Windows.Storage", "Windows.Media", "Windows.System", "Windows.Graphics"*/ };
 
-			foreach (var asm in collection.Assemblies.Where(a => names.Contains(a.Name.Name)))
+			foreach (var asm in Assemblies.Assemblies.Where(a => names.Contains(a.Name.Name)))
 			{
 				foreach (var t in asm.MainModule.Types.Where(t => t.FullName != "<Module>"))
 				{
@@ -83,11 +82,9 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				}
 			}
 
-			var foundation = collection.Assemblies.Single(a => a.Name.Name == "Windows.Foundation").MainModule;
-
-			var allBaseTypes = BaseTypes.Select(t => foundation.Import(t)).Concat(BaseTypes2.Select(t => foundation.Import(new TypeReference("Windows.Foundation", t, foundation, foundation).Resolve())));
-			var tyIReference = foundation.Import(new TypeReference("Windows.Foundation", "IReference`1", foundation, foundation)).Resolve();
-			var tyIReferenceArray = foundation.Import(new TypeReference("Windows.Foundation", "IReferenceArray`1", foundation, foundation)).Resolve();
+			var allBaseTypes = BaseTypes.Select(t => Assemblies.Assemblies.First().MainModule.Import(t)).Concat(BaseTypes2.Select(t => Assemblies.GetTypeDefinition("Windows.Foundation", t)));
+			var tyIReference = Assemblies.GetTypeDefinition("Windows.Foundation", "IReference`1");
+			var tyIReferenceArray = Assemblies.GetTypeDefinition("Windows.Foundation", "IReferenceArray`1");
 
 			foreach (var baseType in allBaseTypes)
 			{
@@ -194,12 +191,14 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		{
 			var guid = t.CustomAttributes.First(a => a.AttributeType.Name == "GuidAttribute");
 			var exclusiveTo = t.CustomAttributes.SingleOrDefault(a => a.AttributeType.Name == "ExclusiveToAttribute");
-			TypeDefinition exclusiveToType = null; // currently not used
+			TypeDefinition exclusiveToType = null;
 			if (exclusiveTo != null)
 			{
 				Assert(exclusiveTo.ConstructorArguments[0].Type.FullName == "System.Type");
 				exclusiveToType = exclusiveTo.ConstructorArguments[0].Value as TypeDefinition;
 			}
+
+			bool isFactoryOrStatic = IsFactoryOrStatic(t, exclusiveToType);
 
 			var name = GetTypeName(t, TypeUsage.Define);
 
@@ -216,11 +215,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 
 			var methods = t.Methods.Where(m => m.Name != ".ctor");
+			string prependStatic = isFactoryOrStatic ? "static " : "";
 
 			if (!isDelegate)
 			{
 				module.Append(@"
-		RT_INTERFACE!{interface " + name + generic + "(" + name + "Vtbl): IInspectable(IInspectableVtbl) [IID_" + name + @"] {
+		RT_INTERFACE!{" + prependStatic + "interface " + name + generic + "(" + name + "Vtbl): IInspectable(IInspectableVtbl) [IID_" + name + @"] {
 			" + String.Join(",\r\n			", methods.Select(m => GetRawMethodDeclaration(m))) + @"
 		}}");
 			}
@@ -236,6 +236,37 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		impl" + genericWithBounds + " " + name + generic + @" {
 			" + String.Join("\r\n			", methods.Select(m => GetMethodWrapperDefinition(m)).Where(m => m != null)) + @"
 		}");
+		}
+
+		static bool IsFactoryOrStatic(TypeDefinition t, TypeDefinition exclusiveToType)
+		{
+			var trimmedName = t.Name.TrimEnd('1', '2', '3', '4', '5', '6', '7', '8', '9');
+			var guessedFromName = trimmedName.EndsWith("Factory") || trimmedName.EndsWith("Statics");
+			HashSet<TypeDefinition> candidates = new HashSet<TypeDefinition>();
+			if (exclusiveToType != null)
+			{
+				candidates.Add(exclusiveToType);
+			}
+
+			if (guessedFromName)
+			{
+				var targetTypeName = trimmedName.Substring(0, trimmedName.Length - 7); // "Factory" and "Statics" both have length 7
+				var resolved = Assemblies.GetTypeDefinition(t.Namespace, targetTypeName);
+				if (resolved != null)
+				{
+					candidates.Add(resolved);
+				}
+				if (targetTypeName.StartsWith("I"))
+				{
+					var resolved2 = Assemblies.GetTypeDefinition(t.Namespace, targetTypeName.Substring(1));
+					if (resolved2 != null)
+					{
+						candidates.Add(resolved2);
+					}
+				}
+			}
+
+			return candidates.Any(c => GetFactoryType(c) == t || GetStaticTypes(c).Contains(t));
 		}
 
 		static string GetRawMethodDeclaration(MethodDefinition m)
@@ -659,16 +690,25 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			return name[0].ToString().ToLower() + name.Substring(1);
 		}
 
+		static TypeDefinition GetFactoryType(TypeDefinition t)
+		{
+			var activatable = t.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "ActivatableAttribute" && a.ConstructorArguments[0].Type.FullName == "System.Type");
+			if (activatable != null)
+			{
+				return activatable.ConstructorArguments[0].Value as TypeDefinition;
+			}
+			return null;
+		}
+
+		static IEnumerable<TypeDefinition> GetStaticTypes(TypeDefinition t)
+		{
+			return t.CustomAttributes.Where(a => a.AttributeType.Name == "StaticAttribute").Select(a => (TypeDefinition)a.ConstructorArguments[0].Value);
+		}
+
 		static void WriteClass(Module module, TypeDefinition t)
 		{
-			var activatable = t.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "ActivatableAttribute");
-			TypeDefinition factory = null;
-			if (activatable != null && activatable.ConstructorArguments[0].Type.FullName == "System.Type")
-			{
-				factory = activatable.ConstructorArguments[0].Value as TypeDefinition;
-			}
-
-			var statics = t.CustomAttributes.Where(a => a.AttributeType.Name == "StaticAttribute").Select(a => (TypeDefinition)a.ConstructorArguments[0].Value);
+			var factory = GetFactoryType(t);
+			var statics = GetStaticTypes(t);
 
 			if (t.Interfaces.Count == 0 && !statics.Any())
 			{
@@ -830,7 +870,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 					case "System.Double":
 						return "f64";
 					case "System.Char":
-						return "Char";
+						return "::Char";
 					default:
 						throw new NotImplementedException("Primitive type: " + t.FullName);
 				}

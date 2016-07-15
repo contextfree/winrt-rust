@@ -2,10 +2,10 @@
 #![allow(non_camel_case_types, unused_imports)]
 pub mod windows { // Windows
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 pub mod devices { // Windows.Devices
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct DevicesLowLevelContract {
 			
 		}}
@@ -45,7 +45,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ILowLevelDevicesAggregateProviderFactory, 2596580086, 13427, 18014, 150, 213, 54, 40, 26, 44, 87, 175);
-		RT_INTERFACE!{interface ILowLevelDevicesAggregateProviderFactory(ILowLevelDevicesAggregateProviderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILowLevelDevicesAggregateProviderFactory] {
+		RT_INTERFACE!{static interface ILowLevelDevicesAggregateProviderFactory(ILowLevelDevicesAggregateProviderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILowLevelDevicesAggregateProviderFactory] {
 			fn Create(&mut self, adc: *mut ::rt::gen::windows::devices::adc::provider::IAdcControllerProvider, pwm: *mut ::rt::gen::windows::devices::pwm::provider::IPwmControllerProvider, gpio: *mut ::rt::gen::windows::devices::gpio::provider::IGpioControllerProvider, i2c: *mut ::rt::gen::windows::devices::i2c::provider::II2cControllerProvider, spi: *mut ::rt::gen::windows::devices::spi::provider::ISpiControllerProvider, out: *mut *mut ::rt::gen::windows::devices::LowLevelDevicesAggregateProvider) -> ::w::HRESULT
 		}}
 		impl ILowLevelDevicesAggregateProviderFactory {
@@ -65,7 +65,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			
 		}
 		DEFINE_IID!(IID_ILowLevelDevicesControllerStatics, 155095658, 64715, 17300, 166, 151, 25, 222, 99, 124, 45, 179);
-		RT_INTERFACE!{interface ILowLevelDevicesControllerStatics(ILowLevelDevicesControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILowLevelDevicesControllerStatics] {
+		RT_INTERFACE!{static interface ILowLevelDevicesControllerStatics(ILowLevelDevicesControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILowLevelDevicesControllerStatics] {
 			fn get_DefaultProvider(&mut self, out: *mut *mut ::rt::gen::windows::devices::ILowLevelDevicesAggregateProvider) -> ::w::HRESULT,
 			fn put_DefaultProvider(&mut self, value: *mut ::rt::gen::windows::devices::ILowLevelDevicesAggregateProvider) -> ::w::HRESULT
 		}}
@@ -85,7 +85,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_CLSID!(CLSID_LowLevelDevicesController = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,76,111,119,76,101,118,101,108,68,101,118,105,99,101,115,67,111,110,116,114,111,108,108,101,114,0]);
 pub mod adc { // Windows.Devices.Adc
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum AdcChannelMode: i32 {
 			SingleEnded (AdcChannelMode_SingleEnded) = 0, Differential (AdcChannelMode_Differential) = 1,
 		}}
@@ -143,7 +143,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class AdcChannel: ::rt::gen::windows::devices::adc::IAdcChannel}
 		DEFINE_IID!(IID_IAdcControllerStatics, 3437858316, 504, 18577, 188, 59, 190, 83, 239, 39, 156, 164);
-		RT_INTERFACE!{interface IAdcControllerStatics(IAdcControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAdcControllerStatics] {
+		RT_INTERFACE!{static interface IAdcControllerStatics(IAdcControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAdcControllerStatics] {
 			fn GetControllersAsync(&mut self, provider: *mut ::rt::gen::windows::devices::adc::provider::IAdcProvider, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::adc::AdcController>>) -> ::w::HRESULT
 		}}
 		impl IAdcControllerStatics {
@@ -158,7 +158,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IAdcControllerStatics2 [CLSID_AdcController]}
 		DEFINE_CLSID!(CLSID_AdcController = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,100,99,46,65,100,99,67,111,110,116,114,111,108,108,101,114,0]);
 		DEFINE_IID!(IID_IAdcControllerStatics2, 2730048285, 38779, 20314, 165, 254, 166, 171, 175, 254, 100, 132);
-		RT_INTERFACE!{interface IAdcControllerStatics2(IAdcControllerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdcControllerStatics2] {
+		RT_INTERFACE!{static interface IAdcControllerStatics2(IAdcControllerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdcControllerStatics2] {
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::adc::AdcController>) -> ::w::HRESULT
 		}}
 		impl IAdcControllerStatics2 {
@@ -193,7 +193,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 pub mod provider { // Windows.Devices.Adc.Provider
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum ProviderAdcChannelMode: i32 {
 			SingleEnded (ProviderAdcChannelMode_SingleEnded) = 0, Differential (ProviderAdcChannelMode_Differential) = 1,
 		}}
@@ -274,7 +274,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Adc
 pub mod gpio { // Windows.Devices.Gpio
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum GpioSharingMode: i32 {
 			Exclusive (GpioSharingMode_Exclusive) = 0, SharedReadOnly (GpioSharingMode_SharedReadOnly) = 1,
 		}}
@@ -333,7 +333,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGpioControllerStatics, 785839150, 31479, 16662, 149, 51, 196, 61, 153, 161, 251, 100);
-		RT_INTERFACE!{interface IGpioControllerStatics(IGpioControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGpioControllerStatics] {
+		RT_INTERFACE!{static interface IGpioControllerStatics(IGpioControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGpioControllerStatics] {
 			fn GetDefault(&mut self, out: *mut *mut ::rt::gen::windows::devices::gpio::GpioController) -> ::w::HRESULT
 		}}
 		impl IGpioControllerStatics {
@@ -348,7 +348,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IGpioControllerStatics2 [CLSID_GpioController]}
 		DEFINE_CLSID!(CLSID_GpioController = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,112,105,111,46,71,112,105,111,67,111,110,116,114,111,108,108,101,114,0]);
 		DEFINE_IID!(IID_IGpioControllerStatics2, 2435546400, 27812, 16646, 163, 115, 255, 253, 52, 107, 14, 91);
-		RT_INTERFACE!{interface IGpioControllerStatics2(IGpioControllerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGpioControllerStatics2] {
+		RT_INTERFACE!{static interface IGpioControllerStatics2(IGpioControllerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGpioControllerStatics2] {
 			fn GetControllersAsync(&mut self, provider: *mut ::rt::gen::windows::devices::gpio::provider::IGpioProvider, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::gpio::GpioController>>) -> ::w::HRESULT,
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::gpio::GpioController>) -> ::w::HRESULT
 		}}
@@ -433,7 +433,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 pub mod provider { // Windows.Devices.Gpio.Provider
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum ProviderGpioSharingMode: i32 {
 			Exclusive (ProviderGpioSharingMode_Exclusive) = 0, SharedReadOnly (ProviderGpioSharingMode_SharedReadOnly) = 1,
 		}}
@@ -447,7 +447,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			FallingEdge (ProviderGpioPinEdge_FallingEdge) = 0, RisingEdge (ProviderGpioPinEdge_RisingEdge) = 1,
 		}}
 		DEFINE_IID!(IID_IGpioPinProviderValueChangedEventArgsFactory, 1053494105, 22156, 17298, 178, 74, 138, 89, 169, 2, 177, 241);
-		RT_INTERFACE!{interface IGpioPinProviderValueChangedEventArgsFactory(IGpioPinProviderValueChangedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGpioPinProviderValueChangedEventArgsFactory] {
+		RT_INTERFACE!{static interface IGpioPinProviderValueChangedEventArgsFactory(IGpioPinProviderValueChangedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGpioPinProviderValueChangedEventArgsFactory] {
 			fn Create(&mut self, edge: ::rt::gen::windows::devices::gpio::provider::ProviderGpioPinEdge, out: *mut *mut ::rt::gen::windows::devices::gpio::provider::GpioPinProviderValueChangedEventArgs) -> ::w::HRESULT
 		}}
 		impl IGpioPinProviderValueChangedEventArgsFactory {
@@ -569,7 +569,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Gpio
 pub mod i2c { // Windows.Devices.I2c
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum I2cBusSpeed: i32 {
 			StandardMode (I2cBusSpeed_StandardMode) = 0, FastMode (I2cBusSpeed_FastMode) = 1,
 		}}
@@ -583,7 +583,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			Status: ::rt::gen::windows::devices::i2c::I2cTransferStatus, BytesTransferred: u32,
 		}}
 		DEFINE_IID!(IID_II2cConnectionSettingsFactory, 2176157363, 38547, 16817, 162, 67, 222, 212, 246, 230, 105, 38);
-		RT_INTERFACE!{interface II2cConnectionSettingsFactory(II2cConnectionSettingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_II2cConnectionSettingsFactory] {
+		RT_INTERFACE!{static interface II2cConnectionSettingsFactory(II2cConnectionSettingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_II2cConnectionSettingsFactory] {
 			fn Create(&mut self, slaveAddress: i32, out: *mut *mut ::rt::gen::windows::devices::i2c::I2cConnectionSettings) -> ::w::HRESULT
 		}}
 		impl II2cConnectionSettingsFactory {
@@ -634,7 +634,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_II2cDeviceStatics, 2443394019, 29492, 17682, 150, 188, 251, 174, 148, 89, 245, 246);
-		RT_INTERFACE!{interface II2cDeviceStatics(II2cDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_II2cDeviceStatics] {
+		RT_INTERFACE!{static interface II2cDeviceStatics(II2cDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_II2cDeviceStatics] {
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorFromFriendlyName(&mut self, friendlyName: ::w::HSTRING, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, settings: *mut ::rt::gen::windows::devices::i2c::I2cConnectionSettings, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::i2c::I2cDevice>) -> ::w::HRESULT
@@ -671,7 +671,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_II2cControllerStatics, 1090257765, 24325, 20094, 132, 189, 16, 13, 184, 224, 174, 197);
-		RT_INTERFACE!{interface II2cControllerStatics(II2cControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_II2cControllerStatics] {
+		RT_INTERFACE!{static interface II2cControllerStatics(II2cControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_II2cControllerStatics] {
 			fn GetControllersAsync(&mut self, provider: *mut ::rt::gen::windows::devices::i2c::provider::II2cProvider, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::i2c::I2cController>>) -> ::w::HRESULT,
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::i2c::I2cController>) -> ::w::HRESULT
 		}}
@@ -742,7 +742,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 pub mod provider { // Windows.Devices.I2c.Provider
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum ProviderI2cBusSpeed: i32 {
 			StandardMode (ProviderI2cBusSpeed_StandardMode) = 0, FastMode (ProviderI2cBusSpeed_FastMode) = 1,
 		}}
@@ -864,7 +864,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.I2c
 pub mod pwm { // Windows.Devices.Pwm
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum PwmPulsePolarity: i32 {
 			ActiveHigh (PwmPulsePolarity_ActiveHigh) = 0, ActiveLow (PwmPulsePolarity_ActiveLow) = 1,
 		}}
@@ -911,7 +911,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class PwmPin: ::rt::gen::windows::devices::pwm::IPwmPin}
 		DEFINE_IID!(IID_IPwmControllerStatics, 1113832865, 35142, 17412, 189, 72, 129, 221, 18, 74, 244, 217);
-		RT_INTERFACE!{interface IPwmControllerStatics(IPwmControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPwmControllerStatics] {
+		RT_INTERFACE!{static interface IPwmControllerStatics(IPwmControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPwmControllerStatics] {
 			fn GetControllersAsync(&mut self, provider: *mut ::rt::gen::windows::devices::pwm::provider::IPwmProvider, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::pwm::PwmController>>) -> ::w::HRESULT
 		}}
 		impl IPwmControllerStatics {
@@ -926,7 +926,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IPwmControllerStatics [CLSID_PwmController]}
 		DEFINE_CLSID!(CLSID_PwmController = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,119,109,46,80,119,109,67,111,110,116,114,111,108,108,101,114,0]);
 		DEFINE_IID!(IID_IPwmControllerStatics2, 1157389087, 61721, 19421, 151, 173, 247, 110, 249, 134, 115, 109);
-		RT_INTERFACE!{interface IPwmControllerStatics2(IPwmControllerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPwmControllerStatics2] {
+		RT_INTERFACE!{static interface IPwmControllerStatics2(IPwmControllerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPwmControllerStatics2] {
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::pwm::PwmController>) -> ::w::HRESULT
 		}}
 		impl IPwmControllerStatics2 {
@@ -987,7 +987,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 pub mod provider { // Windows.Devices.Pwm.Provider
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IPwmControllerProvider, 318789947, 58083, 16548, 183, 217, 72, 223, 240, 55, 122, 82);
 		RT_INTERFACE!{interface IPwmControllerProvider(IPwmControllerProviderVtbl): IInspectable(IInspectableVtbl) [IID_IPwmControllerProvider] {
 			fn get_PinCount(&mut self, out: *mut i32) -> ::w::HRESULT,
@@ -1063,7 +1063,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Pwm
 pub mod spi { // Windows.Devices.Spi
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum SpiMode: i32 {
 			Mode0 (SpiMode_Mode0) = 0, Mode1 (SpiMode_Mode1) = 1, Mode2 (SpiMode_Mode2) = 2, Mode3 (SpiMode_Mode3) = 3,
 		}}
@@ -1071,7 +1071,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			Exclusive (SpiSharingMode_Exclusive) = 0, Shared (SpiSharingMode_Shared) = 1,
 		}}
 		DEFINE_IID!(IID_ISpiConnectionSettingsFactory, 4288219166, 4292, 17591, 159, 234, 167, 72, 181, 164, 111, 49);
-		RT_INTERFACE!{interface ISpiConnectionSettingsFactory(ISpiConnectionSettingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISpiConnectionSettingsFactory] {
+		RT_INTERFACE!{static interface ISpiConnectionSettingsFactory(ISpiConnectionSettingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISpiConnectionSettingsFactory] {
 			fn Create(&mut self, chipSelectLine: i32, out: *mut *mut ::rt::gen::windows::devices::spi::SpiConnectionSettings) -> ::w::HRESULT
 		}}
 		impl ISpiConnectionSettingsFactory {
@@ -1174,7 +1174,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class SpiBusInfo: ::rt::gen::windows::devices::spi::ISpiBusInfo}
 		DEFINE_IID!(IID_ISpiDeviceStatics, 2725832025, 22304, 19775, 189, 147, 86, 245, 255, 90, 88, 121);
-		RT_INTERFACE!{interface ISpiDeviceStatics(ISpiDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpiDeviceStatics] {
+		RT_INTERFACE!{static interface ISpiDeviceStatics(ISpiDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpiDeviceStatics] {
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorFromFriendlyName(&mut self, friendlyName: ::w::HSTRING, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetBusInfo(&mut self, busId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::devices::spi::SpiBusInfo) -> ::w::HRESULT,
@@ -1217,7 +1217,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ISpiControllerStatics, 223488482, 5003, 20040, 185, 100, 79, 47, 121, 185, 197, 162);
-		RT_INTERFACE!{interface ISpiControllerStatics(ISpiControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpiControllerStatics] {
+		RT_INTERFACE!{static interface ISpiControllerStatics(ISpiControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpiControllerStatics] {
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::spi::SpiController>) -> ::w::HRESULT,
 			fn GetControllersAsync(&mut self, provider: *mut ::rt::gen::windows::devices::spi::provider::ISpiProvider, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::spi::SpiController>>) -> ::w::HRESULT
 		}}
@@ -1275,7 +1275,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 pub mod provider { // Windows.Devices.Spi.Provider
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum ProviderSpiMode: i32 {
 			Mode0 (ProviderSpiMode_Mode0) = 0, Mode1 (ProviderSpiMode_Mode1) = 1, Mode2 (ProviderSpiMode_Mode2) = 2, Mode3 (ProviderSpiMode_Mode3) = 3,
 		}}
@@ -1283,7 +1283,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			Exclusive (ProviderSpiSharingMode_Exclusive) = 0, Shared (ProviderSpiSharingMode_Shared) = 1,
 		}}
 		DEFINE_IID!(IID_IProviderSpiConnectionSettingsFactory, 1715825498, 3193, 17379, 159, 60, 229, 151, 128, 172, 24, 250);
-		RT_INTERFACE!{interface IProviderSpiConnectionSettingsFactory(IProviderSpiConnectionSettingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IProviderSpiConnectionSettingsFactory] {
+		RT_INTERFACE!{static interface IProviderSpiConnectionSettingsFactory(IProviderSpiConnectionSettingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IProviderSpiConnectionSettingsFactory] {
 			fn Create(&mut self, chipSelectLine: i32, out: *mut *mut ::rt::gen::windows::devices::spi::provider::ProviderSpiConnectionSettings) -> ::w::HRESULT
 		}}
 		impl IProviderSpiConnectionSettingsFactory {
@@ -1418,12 +1418,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Spi
 pub mod printers { // Windows.Devices.Printers
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct PrintersContract {
 			
 		}}
 		DEFINE_IID!(IID_IPrint3DDeviceStatics, 4259537418, 26573, 16823, 163, 68, 81, 80, 161, 253, 117, 181);
-		RT_INTERFACE!{interface IPrint3DDeviceStatics(IPrint3DDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DDeviceStatics] {
+		RT_INTERFACE!{static interface IPrint3DDeviceStatics(IPrint3DDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DDeviceStatics] {
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::printers::Print3DDevice>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
@@ -1479,7 +1479,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 pub mod extensions { // Windows.Devices.Printers.Extensions
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum Print3DWorkflowStatus: i32 {
 			Abandoned (Print3DWorkflowStatus_Abandoned) = 0, Canceled (Print3DWorkflowStatus_Canceled) = 1, Failed (Print3DWorkflowStatus_Failed) = 2, Slicing (Print3DWorkflowStatus_Slicing) = 3, Submitted (Print3DWorkflowStatus_Submitted) = 4,
 		}}
@@ -1654,7 +1654,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class PrintNotificationEventDetails: ::rt::gen::windows::devices::printers::extensions::IPrintNotificationEventDetails}
 		DEFINE_IID!(IID_IPrintExtensionContextStatic, 3876429761, 65401, 19108, 140, 155, 12, 147, 174, 223, 222, 138);
-		RT_INTERFACE!{interface IPrintExtensionContextStatic(IPrintExtensionContextStaticVtbl): IInspectable(IInspectableVtbl) [IID_IPrintExtensionContextStatic] {
+		RT_INTERFACE!{static interface IPrintExtensionContextStatic(IPrintExtensionContextStaticVtbl): IInspectable(IInspectableVtbl) [IID_IPrintExtensionContextStatic] {
 			fn FromDeviceId(&mut self, deviceId: ::w::HSTRING, out: *mut *mut IInspectable) -> ::w::HRESULT
 		}}
 		impl IPrintExtensionContextStatic {
@@ -1670,7 +1670,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Printers
 pub mod power { // Windows.Devices.Power
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IBattery, 3163115462, 114, 18376, 139, 93, 97, 74, 170, 122, 67, 126);
 		RT_INTERFACE!{interface IBattery(IBatteryVtbl): IInspectable(IInspectableVtbl) [IID_IBattery] {
 			fn get_DeviceId(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -1739,7 +1739,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IBatteryStatics, 2043507382, 40542, 17490, 190, 166, 223, 205, 84, 30, 89, 127);
-		RT_INTERFACE!{interface IBatteryStatics(IBatteryStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBatteryStatics] {
+		RT_INTERFACE!{static interface IBatteryStatics(IBatteryStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBatteryStatics] {
 			fn get_AggregateBattery(&mut self, out: *mut *mut ::rt::gen::windows::devices::power::Battery) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::power::Battery>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
@@ -1764,7 +1764,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Power
 pub mod sms { // Windows.Devices.Sms
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum SmsMessageClass: i32 {
 			None (SmsMessageClass_None) = 0, Class0 (SmsMessageClass_Class0) = 1, Class1 (SmsMessageClass_Class1) = 2, Class2 (SmsMessageClass_Class2) = 3, Class3 (SmsMessageClass_Class3) = 4,
 		}}
@@ -2295,7 +2295,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class SmsSendMessageResult: ::rt::gen::windows::devices::sms::ISmsSendMessageResult}
 		DEFINE_IID!(IID_ISmsDevice2Statics, 1707574053, 4145, 18718, 143, 182, 239, 153, 145, 175, 227, 99);
-		RT_INTERFACE!{interface ISmsDevice2Statics(ISmsDevice2StaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsDevice2Statics] {
+		RT_INTERFACE!{static interface ISmsDevice2Statics(ISmsDevice2StaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsDevice2Statics] {
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromId(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::devices::sms::SmsDevice2) -> ::w::HRESULT,
 			fn GetDefault(&mut self, out: *mut *mut ::rt::gen::windows::devices::sms::SmsDevice2) -> ::w::HRESULT,
@@ -2545,7 +2545,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ISmsFilterRuleFactory, 12805384, 25238, 20265, 154, 173, 137, 32, 206, 186, 60, 232);
-		RT_INTERFACE!{interface ISmsFilterRuleFactory(ISmsFilterRuleFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmsFilterRuleFactory] {
+		RT_INTERFACE!{static interface ISmsFilterRuleFactory(ISmsFilterRuleFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmsFilterRuleFactory] {
 			fn CreateFilterRule(&mut self, messageType: ::rt::gen::windows::devices::sms::SmsMessageType, out: *mut *mut ::rt::gen::windows::devices::sms::SmsFilterRule) -> ::w::HRESULT
 		}}
 		impl ISmsFilterRuleFactory {
@@ -2575,7 +2575,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ISmsFilterRulesFactory, 2694391021, 28206, 17712, 159, 222, 70, 93, 2, 238, 208, 14);
-		RT_INTERFACE!{interface ISmsFilterRulesFactory(ISmsFilterRulesFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmsFilterRulesFactory] {
+		RT_INTERFACE!{static interface ISmsFilterRulesFactory(ISmsFilterRulesFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmsFilterRulesFactory] {
 			fn CreateFilterRules(&mut self, actionType: ::rt::gen::windows::devices::sms::SmsFilterActionType, out: *mut *mut ::rt::gen::windows::devices::sms::SmsFilterRules) -> ::w::HRESULT
 		}}
 		impl ISmsFilterRulesFactory {
@@ -2588,7 +2588,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class SmsFilterRules: ::rt::gen::windows::devices::sms::ISmsFilterRules [::rt::gen::windows::devices::sms::ISmsFilterRulesFactory] [CLSID_SmsFilterRules]}
 		DEFINE_CLSID!(CLSID_SmsFilterRules = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,70,105,108,116,101,114,82,117,108,101,115,0]);
 		DEFINE_IID!(IID_ISmsMessageRegistrationStatics, 1671451748, 10392, 18296, 160, 60, 111, 153, 73, 7, 214, 58);
-		RT_INTERFACE!{interface ISmsMessageRegistrationStatics(ISmsMessageRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsMessageRegistrationStatics] {
+		RT_INTERFACE!{static interface ISmsMessageRegistrationStatics(ISmsMessageRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsMessageRegistrationStatics] {
 			fn get_AllRegistrations(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::sms::SmsMessageRegistration>) -> ::w::HRESULT,
 			fn Register(&mut self, id: ::w::HSTRING, filterRules: *mut ::rt::gen::windows::devices::sms::SmsFilterRules, out: *mut *mut ::rt::gen::windows::devices::sms::SmsMessageRegistration) -> ::w::HRESULT
 		}}
@@ -2762,7 +2762,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ISmsTextMessageStatics, 2137572845, 15564, 18339, 140, 85, 56, 13, 59, 1, 8, 146);
-		RT_INTERFACE!{interface ISmsTextMessageStatics(ISmsTextMessageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsTextMessageStatics] {
+		RT_INTERFACE!{static interface ISmsTextMessageStatics(ISmsTextMessageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsTextMessageStatics] {
 			fn FromBinaryMessage(&mut self, binaryMessage: *mut ::rt::gen::windows::devices::sms::SmsBinaryMessage, out: *mut *mut ::rt::gen::windows::devices::sms::SmsTextMessage) -> ::w::HRESULT,
 			fn FromBinaryData(&mut self, format: ::rt::gen::windows::devices::sms::SmsDataFormat, valueSize: u32, value: *mut u8, out: *mut *mut ::rt::gen::windows::devices::sms::SmsTextMessage) -> ::w::HRESULT
 		}}
@@ -2869,7 +2869,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class GetSmsDeviceOperation: ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::sms::SmsDevice>}
 		DEFINE_IID!(IID_ISmsDeviceStatics, 4169992170, 55317, 19921, 162, 52, 69, 32, 206, 70, 4, 164);
-		RT_INTERFACE!{interface ISmsDeviceStatics(ISmsDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsDeviceStatics] {
+		RT_INTERFACE!{static interface ISmsDeviceStatics(ISmsDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsDeviceStatics] {
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::sms::SmsDevice>) -> ::w::HRESULT,
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::sms::SmsDevice>) -> ::w::HRESULT
@@ -2892,7 +2892,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ISmsDeviceStatics2, 748756103, 2163, 19631, 138, 125, 189, 71, 30, 133, 134, 209);
-		RT_INTERFACE!{interface ISmsDeviceStatics2(ISmsDeviceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmsDeviceStatics2] {
+		RT_INTERFACE!{static interface ISmsDeviceStatics2(ISmsDeviceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmsDeviceStatics2] {
 			fn FromNetworkAccountIdAsync(&mut self, networkAccountId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::sms::SmsDevice>) -> ::w::HRESULT
 		}}
 		impl ISmsDeviceStatics2 {
@@ -3003,12 +3003,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Sms
 pub mod alljoyn { // Windows.Devices.AllJoyn
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum AllJoynAuthenticationMechanism: i32 {
 			None (AllJoynAuthenticationMechanism_None) = 0, SrpAnonymous (AllJoynAuthenticationMechanism_SrpAnonymous) = 1, SrpLogon (AllJoynAuthenticationMechanism_SrpLogon) = 2, EcdheNull (AllJoynAuthenticationMechanism_EcdheNull) = 3, EcdhePsk (AllJoynAuthenticationMechanism_EcdhePsk) = 4, EcdheEcdsa (AllJoynAuthenticationMechanism_EcdheEcdsa) = 5,
 		}}
 		DEFINE_IID!(IID_IAllJoynStatusStatics, 3501695358, 3369, 19881, 138, 198, 84, 197, 84, 190, 219, 197);
-		RT_INTERFACE!{interface IAllJoynStatusStatics(IAllJoynStatusStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynStatusStatics] {
+		RT_INTERFACE!{static interface IAllJoynStatusStatics(IAllJoynStatusStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynStatusStatics] {
 			fn get_Ok(&mut self, out: *mut i32) -> ::w::HRESULT,
 			fn get_Fail(&mut self, out: *mut i32) -> ::w::HRESULT,
 			fn get_OperationTimedOut(&mut self, out: *mut i32) -> ::w::HRESULT,
@@ -3221,7 +3221,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		RT_CLASS!{class AllJoynAboutData: ::rt::gen::windows::devices::alljoyn::IAllJoynAboutData}
-		RT_CLASS!{class AllJoynBusAttachment: ::rt::gen::windows::devices::alljoyn::IAllJoynBusAttachment}
+		RT_CLASS!{class AllJoynBusAttachment: ::rt::gen::windows::devices::alljoyn::IAllJoynBusAttachment [::rt::gen::windows::devices::alljoyn::IAllJoynBusAttachmentFactory] [CLSID_AllJoynBusAttachment]}
+		DEFINE_CLSID!(CLSID_AllJoynBusAttachment = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,66,117,115,65,116,116,97,99,104,109,101,110,116,0]);
 		RT_CLASS!{class AllJoynBusAttachmentStateChangedEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynBusAttachmentStateChangedEventArgs}
 		RT_CLASS!{class AllJoynCredentialsRequestedEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynCredentialsRequestedEventArgs}
 		RT_CLASS!{class AllJoynCredentialsVerificationRequestedEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynCredentialsVerificationRequestedEventArgs}
@@ -3399,7 +3400,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IAllJoynBusAttachmentFactory, 1680798116, 44421, 19935, 144, 174, 96, 68, 82, 178, 34, 136);
-		RT_INTERFACE!{interface IAllJoynBusAttachmentFactory(IAllJoynBusAttachmentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusAttachmentFactory] {
+		RT_INTERFACE!{static interface IAllJoynBusAttachmentFactory(IAllJoynBusAttachmentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusAttachmentFactory] {
 			fn Create(&mut self, connectionSpecification: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment) -> ::w::HRESULT
 		}}
 		impl IAllJoynBusAttachmentFactory {
@@ -3433,7 +3434,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IAllJoynServiceInfoFactory, 1971444413, 65027, 20299, 148, 164, 240, 47, 220, 189, 17, 184);
-		RT_INTERFACE!{interface IAllJoynServiceInfoFactory(IAllJoynServiceInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynServiceInfoFactory] {
+		RT_INTERFACE!{static interface IAllJoynServiceInfoFactory(IAllJoynServiceInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynServiceInfoFactory] {
 			fn Create(&mut self, uniqueName: ::w::HSTRING, objectPath: ::w::HSTRING, sessionPort: u16, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo) -> ::w::HRESULT
 		}}
 		impl IAllJoynServiceInfoFactory {
@@ -3446,7 +3447,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class AllJoynServiceInfo: ::rt::gen::windows::devices::alljoyn::IAllJoynServiceInfo [::rt::gen::windows::devices::alljoyn::IAllJoynServiceInfoFactory] [CLSID_AllJoynServiceInfo]}
 		DEFINE_CLSID!(CLSID_AllJoynServiceInfo = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,114,118,105,99,101,73,110,102,111,0]);
 		DEFINE_IID!(IID_IAllJoynAboutDataViewStatics, 1475196552, 3166, 16750, 136, 181, 57, 179, 45, 37, 196, 125);
-		RT_INTERFACE!{interface IAllJoynAboutDataViewStatics(IAllJoynAboutDataViewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynAboutDataViewStatics] {
+		RT_INTERFACE!{static interface IAllJoynAboutDataViewStatics(IAllJoynAboutDataViewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynAboutDataViewStatics] {
 			fn GetDataBySessionPortAsync(&mut self, uniqueName: ::w::HSTRING, busAttachment: *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, sessionPort: u16, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView>) -> ::w::HRESULT,
 			fn GetDataBySessionPortWithLanguageAsync(&mut self, uniqueName: ::w::HSTRING, busAttachment: *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, sessionPort: u16, language: *mut ::rt::gen::windows::globalization::Language, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView>) -> ::w::HRESULT
 		}}
@@ -3742,7 +3743,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IAllJoynAcceptSessionJoinerEventArgsFactory, 3024313280, 24901, 17054, 132, 219, 213, 191, 231, 114, 177, 79);
-		RT_INTERFACE!{interface IAllJoynAcceptSessionJoinerEventArgsFactory(IAllJoynAcceptSessionJoinerEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynAcceptSessionJoinerEventArgsFactory] {
+		RT_INTERFACE!{static interface IAllJoynAcceptSessionJoinerEventArgsFactory(IAllJoynAcceptSessionJoinerEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynAcceptSessionJoinerEventArgsFactory] {
 			fn Create(&mut self, uniqueName: ::w::HSTRING, sessionPort: u16, trafficType: ::rt::gen::windows::devices::alljoyn::AllJoynTrafficType, proximity: u8, acceptSessionJoiner: *mut ::rt::gen::windows::devices::alljoyn::IAllJoynAcceptSessionJoiner, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynAcceptSessionJoinerEventArgs) -> ::w::HRESULT
 		}}
 		impl IAllJoynAcceptSessionJoinerEventArgsFactory {
@@ -3766,7 +3767,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IAllJoynSessionMemberAddedEventArgsFactory, 874373970, 7475, 16545, 161, 211, 229, 119, 112, 32, 225, 241);
-		RT_INTERFACE!{interface IAllJoynSessionMemberAddedEventArgsFactory(IAllJoynSessionMemberAddedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionMemberAddedEventArgsFactory] {
+		RT_INTERFACE!{static interface IAllJoynSessionMemberAddedEventArgsFactory(IAllJoynSessionMemberAddedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionMemberAddedEventArgsFactory] {
 			fn Create(&mut self, uniqueName: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynSessionMemberAddedEventArgs) -> ::w::HRESULT
 		}}
 		impl IAllJoynSessionMemberAddedEventArgsFactory {
@@ -3790,7 +3791,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IAllJoynSessionMemberRemovedEventArgsFactory, 3302184424, 17080, 19303, 183, 87, 208, 207, 202, 213, 146, 128);
-		RT_INTERFACE!{interface IAllJoynSessionMemberRemovedEventArgsFactory(IAllJoynSessionMemberRemovedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionMemberRemovedEventArgsFactory] {
+		RT_INTERFACE!{static interface IAllJoynSessionMemberRemovedEventArgsFactory(IAllJoynSessionMemberRemovedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionMemberRemovedEventArgsFactory] {
 			fn Create(&mut self, uniqueName: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynSessionMemberRemovedEventArgs) -> ::w::HRESULT
 		}}
 		impl IAllJoynSessionMemberRemovedEventArgsFactory {
@@ -3817,7 +3818,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IAllJoynSessionLostEventArgsFactory, 331087154, 54004, 18889, 152, 14, 40, 5, 225, 53, 134, 177);
-		RT_INTERFACE!{interface IAllJoynSessionLostEventArgsFactory(IAllJoynSessionLostEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionLostEventArgsFactory] {
+		RT_INTERFACE!{static interface IAllJoynSessionLostEventArgsFactory(IAllJoynSessionLostEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionLostEventArgsFactory] {
 			fn Create(&mut self, reason: ::rt::gen::windows::devices::alljoyn::AllJoynSessionLostReason, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynSessionLostEventArgs) -> ::w::HRESULT
 		}}
 		impl IAllJoynSessionLostEventArgsFactory {
@@ -3841,7 +3842,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IAllJoynProducerStoppedEventArgsFactory, 1448253793, 45593, 19822, 159, 120, 250, 63, 153, 250, 143, 229);
-		RT_INTERFACE!{interface IAllJoynProducerStoppedEventArgsFactory(IAllJoynProducerStoppedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynProducerStoppedEventArgsFactory] {
+		RT_INTERFACE!{static interface IAllJoynProducerStoppedEventArgsFactory(IAllJoynProducerStoppedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynProducerStoppedEventArgsFactory] {
 			fn Create(&mut self, status: i32, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynProducerStoppedEventArgs) -> ::w::HRESULT
 		}}
 		impl IAllJoynProducerStoppedEventArgsFactory {
@@ -3865,7 +3866,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IAllJoynWatcherStoppedEventArgsFactory, 2274338216, 11600, 18401, 144, 74, 32, 191, 13, 72, 199, 130);
-		RT_INTERFACE!{interface IAllJoynWatcherStoppedEventArgsFactory(IAllJoynWatcherStoppedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynWatcherStoppedEventArgsFactory] {
+		RT_INTERFACE!{static interface IAllJoynWatcherStoppedEventArgsFactory(IAllJoynWatcherStoppedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynWatcherStoppedEventArgsFactory] {
 			fn Create(&mut self, status: i32, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynWatcherStoppedEventArgs) -> ::w::HRESULT
 		}}
 		impl IAllJoynWatcherStoppedEventArgsFactory {
@@ -3889,7 +3890,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IAllJoynServiceInfoRemovedEventArgsFactory, 230655527, 39679, 18773, 146, 39, 105, 83, 186, 244, 21, 105);
-		RT_INTERFACE!{interface IAllJoynServiceInfoRemovedEventArgsFactory(IAllJoynServiceInfoRemovedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynServiceInfoRemovedEventArgsFactory] {
+		RT_INTERFACE!{static interface IAllJoynServiceInfoRemovedEventArgsFactory(IAllJoynServiceInfoRemovedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynServiceInfoRemovedEventArgsFactory] {
 			fn Create(&mut self, uniqueName: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynServiceInfoRemovedEventArgs) -> ::w::HRESULT
 		}}
 		impl IAllJoynServiceInfoRemovedEventArgsFactory {
@@ -3913,7 +3914,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IAllJoynMessageInfoFactory, 879119402, 33417, 17364, 180, 168, 63, 77, 227, 89, 240, 67);
-		RT_INTERFACE!{interface IAllJoynMessageInfoFactory(IAllJoynMessageInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynMessageInfoFactory] {
+		RT_INTERFACE!{static interface IAllJoynMessageInfoFactory(IAllJoynMessageInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynMessageInfoFactory] {
 			fn Create(&mut self, senderUniqueName: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynMessageInfo) -> ::w::HRESULT
 		}}
 		impl IAllJoynMessageInfoFactory {
@@ -3928,7 +3929,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.AllJoyn
 pub mod background { // Windows.Devices.Background
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IDeviceUseDetails, 2102808897, 21886, 16724, 185, 148, 228, 247, 161, 31, 179, 35);
 		RT_INTERFACE!{interface IDeviceUseDetails(IDeviceUseDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceUseDetails] {
 			fn get_DeviceId(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -3974,7 +3975,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Background
 pub mod bluetooth { // Windows.Devices.Bluetooth
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum BluetoothCacheMode: i32 {
 			Cached (BluetoothCacheMode_Cached) = 0, Uncached (BluetoothCacheMode_Uncached) = 1,
 		}}
@@ -4101,7 +4102,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IBluetoothDeviceStatics, 160554833, 22491, 18213, 187, 215, 132, 246, 67, 39, 236, 44);
-		RT_INTERFACE!{interface IBluetoothDeviceStatics(IBluetoothDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDeviceStatics] {
+		RT_INTERFACE!{static interface IBluetoothDeviceStatics(IBluetoothDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDeviceStatics] {
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>) -> ::w::HRESULT,
 			fn FromHostNameAsync(&mut self, hostName: *mut ::rt::gen::windows::networking::HostName, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>) -> ::w::HRESULT,
 			fn FromBluetoothAddressAsync(&mut self, address: u64, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>) -> ::w::HRESULT,
@@ -4130,7 +4131,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IBluetoothDeviceStatics2, 3265170991, 19988, 17527, 170, 27, 184, 180, 126, 91, 126, 206);
-		RT_INTERFACE!{interface IBluetoothDeviceStatics2(IBluetoothDeviceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDeviceStatics2] {
+		RT_INTERFACE!{static interface IBluetoothDeviceStatics2(IBluetoothDeviceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDeviceStatics2] {
 			fn GetDeviceSelectorFromPairingState(&mut self, pairingState: bool, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorFromConnectionStatus(&mut self, connectionStatus: ::rt::gen::windows::devices::bluetooth::BluetoothConnectionStatus, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorFromDeviceName(&mut self, deviceName: ::w::HSTRING, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -4165,7 +4166,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IBluetoothLEAppearanceCategoriesStatics, 1833784574, 1130, 16773, 170, 182, 130, 76, 240, 97, 8, 97);
-		RT_INTERFACE!{interface IBluetoothLEAppearanceCategoriesStatics(IBluetoothLEAppearanceCategoriesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAppearanceCategoriesStatics] {
+		RT_INTERFACE!{static interface IBluetoothLEAppearanceCategoriesStatics(IBluetoothLEAppearanceCategoriesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAppearanceCategoriesStatics] {
 			fn get_Uncategorized(&mut self, out: *mut u16) -> ::w::HRESULT,
 			fn get_Phone(&mut self, out: *mut u16) -> ::w::HRESULT,
 			fn get_Computer(&mut self, out: *mut u16) -> ::w::HRESULT,
@@ -4304,7 +4305,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IBluetoothLEAppearanceCategoriesStatics [CLSID_BluetoothLEAppearanceCategories]}
 		DEFINE_CLSID!(CLSID_BluetoothLEAppearanceCategories = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,76,69,65,112,112,101,97,114,97,110,99,101,67,97,116,101,103,111,114,105,101,115,0]);
 		DEFINE_IID!(IID_IBluetoothLEAppearanceSubcategoriesStatics, 3850085894, 8516, 16730, 131, 18, 113, 204, 242, 145, 248, 209);
-		RT_INTERFACE!{interface IBluetoothLEAppearanceSubcategoriesStatics(IBluetoothLEAppearanceSubcategoriesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAppearanceSubcategoriesStatics] {
+		RT_INTERFACE!{static interface IBluetoothLEAppearanceSubcategoriesStatics(IBluetoothLEAppearanceSubcategoriesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAppearanceSubcategoriesStatics] {
 			fn get_Generic(&mut self, out: *mut u16) -> ::w::HRESULT,
 			fn get_SportsWatch(&mut self, out: *mut u16) -> ::w::HRESULT,
 			fn get_ThermometerEar(&mut self, out: *mut u16) -> ::w::HRESULT,
@@ -4502,7 +4503,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IBluetoothLEAppearanceStatics, 2710814919, 17668, 20298, 155, 165, 205, 16, 84, 229, 224, 101);
-		RT_INTERFACE!{interface IBluetoothLEAppearanceStatics(IBluetoothLEAppearanceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAppearanceStatics] {
+		RT_INTERFACE!{static interface IBluetoothLEAppearanceStatics(IBluetoothLEAppearanceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAppearanceStatics] {
 			fn FromRawValue(&mut self, rawValue: u16, out: *mut *mut ::rt::gen::windows::devices::bluetooth::BluetoothLEAppearance) -> ::w::HRESULT,
 			fn FromParts(&mut self, appearanceCategory: u16, appearanceSubCategory: u16, out: *mut *mut ::rt::gen::windows::devices::bluetooth::BluetoothLEAppearance) -> ::w::HRESULT
 		}}
@@ -4623,7 +4624,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IBluetoothLEDeviceStatics, 3369015833, 61622, 19440, 134, 137, 65, 48, 61, 226, 217, 244);
-		RT_INTERFACE!{interface IBluetoothLEDeviceStatics(IBluetoothLEDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEDeviceStatics] {
+		RT_INTERFACE!{static interface IBluetoothLEDeviceStatics(IBluetoothLEDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEDeviceStatics] {
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothLEDevice>) -> ::w::HRESULT,
 			fn FromBluetoothAddressAsync(&mut self, bluetoothAddress: u64, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothLEDevice>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
@@ -4646,7 +4647,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IBluetoothLEDeviceStatics2, 1595064427, 15276, 17384, 173, 22, 86, 50, 113, 189, 65, 194);
-		RT_INTERFACE!{interface IBluetoothLEDeviceStatics2(IBluetoothLEDeviceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEDeviceStatics2] {
+		RT_INTERFACE!{static interface IBluetoothLEDeviceStatics2(IBluetoothLEDeviceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEDeviceStatics2] {
 			fn GetDeviceSelectorFromPairingState(&mut self, pairingState: bool, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorFromConnectionStatus(&mut self, connectionStatus: ::rt::gen::windows::devices::bluetooth::BluetoothConnectionStatus, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorFromDeviceName(&mut self, deviceName: ::w::HSTRING, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -4722,7 +4723,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IBluetoothClassOfDeviceStatics, 3831575997, 4002, 16748, 145, 180, 193, 228, 140, 160, 97, 193);
-		RT_INTERFACE!{interface IBluetoothClassOfDeviceStatics(IBluetoothClassOfDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothClassOfDeviceStatics] {
+		RT_INTERFACE!{static interface IBluetoothClassOfDeviceStatics(IBluetoothClassOfDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothClassOfDeviceStatics] {
 			fn FromRawValue(&mut self, rawValue: u32, out: *mut *mut ::rt::gen::windows::devices::bluetooth::BluetoothClassOfDevice) -> ::w::HRESULT,
 			fn FromParts(&mut self, majorClass: ::rt::gen::windows::devices::bluetooth::BluetoothMajorClass, minorClass: ::rt::gen::windows::devices::bluetooth::BluetoothMinorClass, serviceCapabilities: ::rt::gen::windows::devices::bluetooth::BluetoothServiceCapabilities, out: *mut *mut ::rt::gen::windows::devices::bluetooth::BluetoothClassOfDevice) -> ::w::HRESULT
 		}}
@@ -4790,12 +4791,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class BluetoothSignalStrengthFilter: ::rt::gen::windows::devices::bluetooth::IBluetoothSignalStrengthFilter}
 pub mod rfcomm { // Windows.Devices.Bluetooth.Rfcomm
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class RfcommDeviceService: ::rt::gen::windows::devices::bluetooth::rfcomm::IRfcommDeviceService}
 		RT_ACTIVATABLE!{IRfcommDeviceServiceStatics [CLSID_RfcommDeviceService]}
 		DEFINE_CLSID!(CLSID_RfcommDeviceService = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,82,102,99,111,109,109,46,82,102,99,111,109,109,68,101,118,105,99,101,83,101,114,118,105,99,101,0]);
 		DEFINE_IID!(IID_IRfcommServiceIdStatics, 706191034, 43381, 18147, 181, 107, 8, 255, 215, 131, 165, 254);
-		RT_INTERFACE!{interface IRfcommServiceIdStatics(IRfcommServiceIdStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommServiceIdStatics] {
+		RT_INTERFACE!{static interface IRfcommServiceIdStatics(IRfcommServiceIdStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommServiceIdStatics] {
 			fn FromUuid(&mut self, uuid: ::Guid, out: *mut *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> ::w::HRESULT,
 			fn FromShortId(&mut self, shortId: u32, out: *mut *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> ::w::HRESULT,
 			fn get_SerialPort(&mut self, out: *mut *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> ::w::HRESULT,
@@ -4874,7 +4875,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IRfcommDeviceServiceStatics, 2762033647, 25197, 16812, 178, 83, 135, 172, 92, 39, 226, 138);
-		RT_INTERFACE!{interface IRfcommDeviceServiceStatics(IRfcommDeviceServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommDeviceServiceStatics] {
+		RT_INTERFACE!{static interface IRfcommDeviceServiceStatics(IRfcommDeviceServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommDeviceServiceStatics] {
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceService>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, serviceId: *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
@@ -4949,7 +4950,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IRfcommServiceProviderStatics, 2559083267, 27082, 16698, 132, 247, 67, 68, 199, 41, 41, 151);
-		RT_INTERFACE!{interface IRfcommServiceProviderStatics(IRfcommServiceProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommServiceProviderStatics] {
+		RT_INTERFACE!{static interface IRfcommServiceProviderStatics(IRfcommServiceProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommServiceProviderStatics] {
 			fn CreateAsync(&mut self, serviceId: *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceProvider>) -> ::w::HRESULT
 		}}
 		impl IRfcommServiceProviderStatics {
@@ -5002,7 +5003,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Bluetooth.Rfcomm
 pub mod genericattributeprofile { // Windows.Devices.Bluetooth.GenericAttributeProfile
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class GattDeviceService: ::rt::gen::windows::devices::bluetooth::genericattributeprofile::IGattDeviceService}
 		RT_ACTIVATABLE!{IGattDeviceServiceStatics [CLSID_GattDeviceService]}
 		DEFINE_CLSID!(CLSID_GattDeviceService = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,68,101,118,105,99,101,83,101,114,118,105,99,101,0]);
@@ -5022,7 +5023,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			Success (GattCommunicationStatus_Success) = 0, Unreachable (GattCommunicationStatus_Unreachable) = 1,
 		}}
 		DEFINE_IID!(IID_IGattDeviceServiceStatics, 426573858, 64173, 17884, 174, 91, 42, 195, 24, 78, 132, 219);
-		RT_INTERFACE!{interface IGattDeviceServiceStatics(IGattDeviceServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattDeviceServiceStatics] {
+		RT_INTERFACE!{static interface IGattDeviceServiceStatics(IGattDeviceServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattDeviceServiceStatics] {
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>) -> ::w::HRESULT,
 			fn GetDeviceSelectorFromUuid(&mut self, serviceUuid: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorFromShortId(&mut self, serviceShortId: u16, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -5054,7 +5055,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IGattCharacteristicStatics [CLSID_GattCharacteristic]}
 		DEFINE_CLSID!(CLSID_GattCharacteristic = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,67,104,97,114,97,99,116,101,114,105,115,116,105,99,0]);
 		DEFINE_IID!(IID_IGattCharacteristicStatics, 1506496707, 22836, 20328, 161, 152, 235, 134, 79, 164, 78, 107);
-		RT_INTERFACE!{interface IGattCharacteristicStatics(IGattCharacteristicStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicStatics] {
+		RT_INTERFACE!{static interface IGattCharacteristicStatics(IGattCharacteristicStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicStatics] {
 			fn ConvertShortIdToUuid(&mut self, shortId: u16, out: *mut ::Guid) -> ::w::HRESULT
 		}}
 		impl IGattCharacteristicStatics {
@@ -5190,7 +5191,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGattDescriptorStatics, 2449825581, 32900, 17220, 180, 194, 40, 77, 225, 154, 133, 6);
-		RT_INTERFACE!{interface IGattDescriptorStatics(IGattDescriptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattDescriptorStatics] {
+		RT_INTERFACE!{static interface IGattDescriptorStatics(IGattDescriptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattDescriptorStatics] {
 			fn ConvertShortIdToUuid(&mut self, shortId: u16, out: *mut ::Guid) -> ::w::HRESULT
 		}}
 		impl IGattDescriptorStatics {
@@ -5247,7 +5248,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGattPresentationFormatStatics, 426573856, 64173, 17884, 174, 91, 42, 195, 24, 78, 132, 219);
-		RT_INTERFACE!{interface IGattPresentationFormatStatics(IGattPresentationFormatStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattPresentationFormatStatics] {
+		RT_INTERFACE!{static interface IGattPresentationFormatStatics(IGattPresentationFormatStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattPresentationFormatStatics] {
 			fn get_BluetoothSigAssignedNumbers(&mut self, out: *mut u8) -> ::w::HRESULT
 		}}
 		impl IGattPresentationFormatStatics {
@@ -5258,7 +5259,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGattPresentationFormatTypesStatics, 4210145802, 12474, 16540, 190, 247, 207, 251, 109, 3, 184, 251);
-		RT_INTERFACE!{interface IGattPresentationFormatTypesStatics(IGattPresentationFormatTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattPresentationFormatTypesStatics] {
+		RT_INTERFACE!{static interface IGattPresentationFormatTypesStatics(IGattPresentationFormatTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattPresentationFormatTypesStatics] {
 			fn get_Boolean(&mut self, out: *mut u8) -> ::w::HRESULT,
 			fn get_Bit2(&mut self, out: *mut u8) -> ::w::HRESULT,
 			fn get_Nibble(&mut self, out: *mut u8) -> ::w::HRESULT,
@@ -5477,7 +5478,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGattServiceUuidsStatics, 1841655896, 39610, 17431, 184, 242, 220, 224, 22, 211, 78, 226);
-		RT_INTERFACE!{interface IGattServiceUuidsStatics(IGattServiceUuidsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceUuidsStatics] {
+		RT_INTERFACE!{static interface IGattServiceUuidsStatics(IGattServiceUuidsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceUuidsStatics] {
 			fn get_Battery(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_BloodPressure(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_CyclingSpeedAndCadence(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
@@ -5536,7 +5537,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGattServiceUuidsStatics2, 3534656757, 15637, 20345, 156, 12, 234, 175, 166, 117, 21, 92);
-		RT_INTERFACE!{interface IGattServiceUuidsStatics2(IGattServiceUuidsStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceUuidsStatics2] {
+		RT_INTERFACE!{static interface IGattServiceUuidsStatics2(IGattServiceUuidsStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceUuidsStatics2] {
 			fn get_AlertNotification(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_CurrentTime(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_CyclingPower(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
@@ -5619,7 +5620,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGattCharacteristicUuidsStatics, 1492796806, 45534, 18188, 183, 222, 13, 17, 255, 68, 244, 183);
-		RT_INTERFACE!{interface IGattCharacteristicUuidsStatics(IGattCharacteristicUuidsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicUuidsStatics] {
+		RT_INTERFACE!{static interface IGattCharacteristicUuidsStatics(IGattCharacteristicUuidsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicUuidsStatics] {
 			fn get_BatteryLevel(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_BloodPressureFeature(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_BloodPressureMeasurement(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
@@ -5750,7 +5751,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGattCharacteristicUuidsStatics2, 408269861, 54382, 18988, 156, 63, 237, 109, 234, 41, 231, 190);
-		RT_INTERFACE!{interface IGattCharacteristicUuidsStatics2(IGattCharacteristicUuidsStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicUuidsStatics2] {
+		RT_INTERFACE!{static interface IGattCharacteristicUuidsStatics2(IGattCharacteristicUuidsStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicUuidsStatics2] {
 			fn get_AlertCategoryId(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_AlertCategoryIdBitMask(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_AlertLevel(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
@@ -6115,7 +6116,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGattDescriptorUuidsStatics, 2801296078, 40188, 17137, 145, 133, 255, 55, 183, 81, 129, 211);
-		RT_INTERFACE!{interface IGattDescriptorUuidsStatics(IGattDescriptorUuidsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattDescriptorUuidsStatics] {
+		RT_INTERFACE!{static interface IGattDescriptorUuidsStatics(IGattDescriptorUuidsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattDescriptorUuidsStatics] {
 			fn get_CharacteristicAggregateFormat(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_CharacteristicExtendedProperties(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_CharacteristicPresentationFormat(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
@@ -6283,7 +6284,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Bluetooth.GenericAttributeProfile
 pub mod advertisement { // Windows.Devices.Bluetooth.Advertisement
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum BluetoothLEScanningMode: i32 {
 			Passive (BluetoothLEScanningMode_Passive) = 0, Active (BluetoothLEScanningMode_Active) = 1,
 		}}
@@ -6353,7 +6354,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
-		RT_CLASS!{class BluetoothLEManufacturerData: ::rt::gen::windows::devices::bluetooth::advertisement::IBluetoothLEManufacturerData}
+		RT_CLASS!{class BluetoothLEManufacturerData: ::rt::gen::windows::devices::bluetooth::advertisement::IBluetoothLEManufacturerData [::rt::gen::windows::devices::bluetooth::advertisement::IBluetoothLEManufacturerDataFactory] [CLSID_BluetoothLEManufacturerData]}
+		DEFINE_CLSID!(CLSID_BluetoothLEManufacturerData = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,77,97,110,117,102,97,99,116,117,114,101,114,68,97,116,97,0]);
 		RT_CLASS!{class BluetoothLEAdvertisementDataSection: ::rt::gen::windows::devices::bluetooth::advertisement::IBluetoothLEAdvertisementDataSection [::rt::gen::windows::devices::bluetooth::advertisement::IBluetoothLEAdvertisementDataSectionFactory] [CLSID_BluetoothLEAdvertisementDataSection]}
 		DEFINE_CLSID!(CLSID_BluetoothLEAdvertisementDataSection = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,68,97,116,97,83,101,99,116,105,111,110,0]);
 		RT_CLASS!{class BluetoothLEAdvertisement: ::rt::gen::windows::devices::bluetooth::advertisement::IBluetoothLEAdvertisement}
@@ -6379,7 +6381,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
-		RT_CLASS!{class BluetoothLEAdvertisementBytePattern: ::rt::gen::windows::devices::bluetooth::advertisement::IBluetoothLEAdvertisementBytePattern}
+		RT_CLASS!{class BluetoothLEAdvertisementBytePattern: ::rt::gen::windows::devices::bluetooth::advertisement::IBluetoothLEAdvertisementBytePattern [::rt::gen::windows::devices::bluetooth::advertisement::IBluetoothLEAdvertisementBytePatternFactory] [CLSID_BluetoothLEAdvertisementBytePattern]}
+		DEFINE_CLSID!(CLSID_BluetoothLEAdvertisementBytePattern = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,66,121,116,101,80,97,116,116,101,114,110,0]);
 		RT_CLASS!{class BluetoothLEAdvertisementFilter: ::rt::gen::windows::devices::bluetooth::advertisement::IBluetoothLEAdvertisementFilter}
 		DEFINE_IID!(IID_IBluetoothLEAdvertisementWatcherStoppedEventArgs, 3712022605, 59321, 17379, 156, 4, 6, 133, 208, 133, 253, 140);
 		RT_INTERFACE!{interface IBluetoothLEAdvertisementWatcherStoppedEventArgs(IBluetoothLEAdvertisementWatcherStoppedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementWatcherStoppedEventArgs] {
@@ -6394,7 +6397,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class BluetoothLEAdvertisementWatcherStoppedEventArgs: ::rt::gen::windows::devices::bluetooth::advertisement::IBluetoothLEAdvertisementWatcherStoppedEventArgs}
 		DEFINE_IID!(IID_IBluetoothLEAdvertisementWatcherFactory, 2595171670, 14764, 17726, 179, 42, 133, 198, 87, 224, 23, 241);
-		RT_INTERFACE!{interface IBluetoothLEAdvertisementWatcherFactory(IBluetoothLEAdvertisementWatcherFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementWatcherFactory] {
+		RT_INTERFACE!{static interface IBluetoothLEAdvertisementWatcherFactory(IBluetoothLEAdvertisementWatcherFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementWatcherFactory] {
 			fn Create(&mut self, advertisementFilter: *mut ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementFilter, out: *mut *mut ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementWatcher) -> ::w::HRESULT
 		}}
 		impl IBluetoothLEAdvertisementWatcherFactory {
@@ -6543,7 +6546,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IBluetoothLEAdvertisementDataSectionFactory, 3886287170, 43077, 16453, 191, 126, 62, 153, 113, 219, 138, 107);
-		RT_INTERFACE!{interface IBluetoothLEAdvertisementDataSectionFactory(IBluetoothLEAdvertisementDataSectionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementDataSectionFactory] {
+		RT_INTERFACE!{static interface IBluetoothLEAdvertisementDataSectionFactory(IBluetoothLEAdvertisementDataSectionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementDataSectionFactory] {
 			fn Create(&mut self, dataType: u8, data: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementDataSection) -> ::w::HRESULT
 		}}
 		impl IBluetoothLEAdvertisementDataSectionFactory {
@@ -6581,7 +6584,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IBluetoothLEManufacturerDataFactory, 3231398392, 12698, 17438, 141, 229, 102, 168, 30, 135, 122, 108);
-		RT_INTERFACE!{interface IBluetoothLEManufacturerDataFactory(IBluetoothLEManufacturerDataFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEManufacturerDataFactory] {
+		RT_INTERFACE!{static interface IBluetoothLEManufacturerDataFactory(IBluetoothLEManufacturerDataFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEManufacturerDataFactory] {
 			fn Create(&mut self, companyId: u16, data: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEManufacturerData) -> ::w::HRESULT
 		}}
 		impl IBluetoothLEManufacturerDataFactory {
@@ -6619,7 +6622,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IBluetoothLEAdvertisementBytePatternFactory, 3269610867, 64860, 20163, 190, 42, 156, 166, 250, 17, 183, 189);
-		RT_INTERFACE!{interface IBluetoothLEAdvertisementBytePatternFactory(IBluetoothLEAdvertisementBytePatternFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementBytePatternFactory] {
+		RT_INTERFACE!{static interface IBluetoothLEAdvertisementBytePatternFactory(IBluetoothLEAdvertisementBytePatternFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementBytePatternFactory] {
 			fn Create(&mut self, dataType: u8, offset: i16, data: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementBytePattern) -> ::w::HRESULT
 		}}
 		impl IBluetoothLEAdvertisementBytePatternFactory {
@@ -6668,7 +6671,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IBluetoothLEAdvertisementDataTypesStatics, 1001801519, 1542, 17227, 167, 110, 116, 21, 159, 6, 132, 211);
-		RT_INTERFACE!{interface IBluetoothLEAdvertisementDataTypesStatics(IBluetoothLEAdvertisementDataTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementDataTypesStatics] {
+		RT_INTERFACE!{static interface IBluetoothLEAdvertisementDataTypesStatics(IBluetoothLEAdvertisementDataTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementDataTypesStatics] {
 			fn get_Flags(&mut self, out: *mut u8) -> ::w::HRESULT,
 			fn get_IncompleteService16BitUuids(&mut self, out: *mut u8) -> ::w::HRESULT,
 			fn get_CompleteService16BitUuids(&mut self, out: *mut u8) -> ::w::HRESULT,
@@ -6828,7 +6831,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class BluetoothLEAdvertisementPublisherStatusChangedEventArgs: ::rt::gen::windows::devices::bluetooth::advertisement::IBluetoothLEAdvertisementPublisherStatusChangedEventArgs}
 		DEFINE_IID!(IID_IBluetoothLEAdvertisementPublisherFactory, 1549731422, 47203, 18817, 161, 175, 28, 84, 77, 139, 12, 13);
-		RT_INTERFACE!{interface IBluetoothLEAdvertisementPublisherFactory(IBluetoothLEAdvertisementPublisherFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementPublisherFactory] {
+		RT_INTERFACE!{static interface IBluetoothLEAdvertisementPublisherFactory(IBluetoothLEAdvertisementPublisherFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementPublisherFactory] {
 			fn Create(&mut self, advertisement: *mut ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisement, out: *mut *mut ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementPublisher) -> ::w::HRESULT
 		}}
 		impl IBluetoothLEAdvertisementPublisherFactory {
@@ -6881,7 +6884,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Bluetooth.Advertisement
 pub mod background { // Windows.Devices.Bluetooth.Background
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class RfcommInboundConnectionInformation: ::rt::gen::windows::devices::bluetooth::background::IRfcommInboundConnectionInformation}
 		RT_CLASS!{class RfcommOutboundConnectionInformation: ::rt::gen::windows::devices::bluetooth::background::IRfcommOutboundConnectionInformation}
 		DEFINE_IID!(IID_IRfcommInboundConnectionInformation, 1832809896, 21545, 16473, 146, 227, 30, 139, 101, 82, 135, 7);
@@ -7026,7 +7029,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Bluetooth
 pub mod enumeration { // Windows.Devices.Enumeration
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IDeviceConnectionChangeTriggerDetails, 3092745228, 48065, 18507, 191, 250, 123, 49, 220, 194, 0, 178);
 		RT_INTERFACE!{interface IDeviceConnectionChangeTriggerDetails(IDeviceConnectionChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceConnectionChangeTriggerDetails] {
 			fn get_DeviceId(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
@@ -7419,7 +7422,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IDeviceInformationStatics, 3246329870, 14918, 19064, 128, 19, 118, 157, 201, 185, 115, 144);
-		RT_INTERFACE!{interface IDeviceInformationStatics(IDeviceInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationStatics] {
+		RT_INTERFACE!{static interface IDeviceInformationStatics(IDeviceInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationStatics] {
 			fn CreateFromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::enumeration::DeviceInformation>) -> ::w::HRESULT,
 			fn CreateFromIdAsyncAdditionalProperties(&mut self, deviceId: ::w::HSTRING, additionalProperties: *mut ::rt::gen::windows::foundation::collections::IIterable<&str>, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::enumeration::DeviceInformation>) -> ::w::HRESULT,
 			fn FindAllAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::enumeration::DeviceInformationCollection>) -> ::w::HRESULT,
@@ -7484,7 +7487,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IDeviceInformationStatics2, 1228623668, 43087, 17917, 145, 103, 21, 209, 203, 27, 209, 249);
-		RT_INTERFACE!{interface IDeviceInformationStatics2(IDeviceInformationStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationStatics2] {
+		RT_INTERFACE!{static interface IDeviceInformationStatics2(IDeviceInformationStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationStatics2] {
 			fn GetAqsFilterFromDeviceClass(&mut self, deviceClass: ::rt::gen::windows::devices::enumeration::DeviceClass, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn CreateFromIdAsyncWithKindAndAdditionalProperties(&mut self, deviceId: ::w::HSTRING, additionalProperties: *mut ::rt::gen::windows::foundation::collections::IIterable<&str>, kind: ::rt::gen::windows::devices::enumeration::DeviceInformationKind, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::enumeration::DeviceInformation>) -> ::w::HRESULT,
 			fn FindAllAsyncWithKindAqsFilterAndAdditionalProperties(&mut self, aqsFilter: ::w::HSTRING, additionalProperties: *mut ::rt::gen::windows::foundation::collections::IIterable<&str>, kind: ::rt::gen::windows::devices::enumeration::DeviceInformationKind, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::enumeration::DeviceInformationCollection>) -> ::w::HRESULT,
@@ -7753,7 +7756,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IDeviceInformationPairingStatics, 3910517768, 14036, 18849, 191, 19, 81, 65, 115, 121, 155, 107);
-		RT_INTERFACE!{interface IDeviceInformationPairingStatics(IDeviceInformationPairingStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationPairingStatics] {
+		RT_INTERFACE!{static interface IDeviceInformationPairingStatics(IDeviceInformationPairingStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationPairingStatics] {
 			fn TryRegisterForAllInboundPairingRequests(&mut self, pairingKindsSupported: ::rt::gen::windows::devices::enumeration::DevicePairingKinds, out: *mut bool) -> ::w::HRESULT
 		}}
 		impl IDeviceInformationPairingStatics {
@@ -7824,7 +7827,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IDeviceAccessInformationStatics [CLSID_DeviceAccessInformation]}
 		DEFINE_CLSID!(CLSID_DeviceAccessInformation = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,69,110,117,109,101,114,97,116,105,111,110,46,68,101,118,105,99,101,65,99,99,101,115,115,73,110,102,111,114,109,97,116,105,111,110,0]);
 		DEFINE_IID!(IID_IDeviceAccessInformationStatics, 1464587219, 24368, 17869, 138, 148, 114, 79, 229, 151, 48, 132);
-		RT_INTERFACE!{interface IDeviceAccessInformationStatics(IDeviceAccessInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceAccessInformationStatics] {
+		RT_INTERFACE!{static interface IDeviceAccessInformationStatics(IDeviceAccessInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceAccessInformationStatics] {
 			fn CreateFromId(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::devices::enumeration::DeviceAccessInformation) -> ::w::HRESULT,
 			fn CreateFromDeviceClassId(&mut self, deviceClassId: ::Guid, out: *mut *mut ::rt::gen::windows::devices::enumeration::DeviceAccessInformation) -> ::w::HRESULT,
 			fn CreateFromDeviceClass(&mut self, deviceClass: ::rt::gen::windows::devices::enumeration::DeviceClass, out: *mut *mut ::rt::gen::windows::devices::enumeration::DeviceAccessInformation) -> ::w::HRESULT
@@ -7884,7 +7887,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class DeviceWatcherTriggerDetails: ::rt::gen::windows::devices::enumeration::IDeviceWatcherTriggerDetails}
 pub mod pnp { // Windows.Devices.Enumeration.Pnp
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum PnpObjectType: i32 {
 			Unknown (PnpObjectType_Unknown) = 0, DeviceInterface (PnpObjectType_DeviceInterface) = 1, DeviceContainer (PnpObjectType_DeviceContainer) = 2, Device (PnpObjectType_Device) = 3, DeviceInterfaceClass (PnpObjectType_DeviceInterfaceClass) = 4, AssociationEndpoint (PnpObjectType_AssociationEndpoint) = 5, AssociationEndpointContainer (PnpObjectType_AssociationEndpointContainer) = 6, AssociationEndpointService (PnpObjectType_AssociationEndpointService) = 7,
 		}}
@@ -7994,7 +7997,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IPnpObjectStatics [CLSID_PnpObject]}
 		DEFINE_CLSID!(CLSID_PnpObject = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,69,110,117,109,101,114,97,116,105,111,110,46,80,110,112,46,80,110,112,79,98,106,101,99,116,0]);
 		DEFINE_IID!(IID_IPnpObjectStatics, 3015911997, 53608, 18016, 187, 243, 167, 51, 177, 75, 110, 1);
-		RT_INTERFACE!{interface IPnpObjectStatics(IPnpObjectStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPnpObjectStatics] {
+		RT_INTERFACE!{static interface IPnpObjectStatics(IPnpObjectStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPnpObjectStatics] {
 			fn CreateFromIdAsync(&mut self, type_: ::rt::gen::windows::devices::enumeration::pnp::PnpObjectType, id: ::w::HSTRING, requestedProperties: *mut ::rt::gen::windows::foundation::collections::IIterable<&str>, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::enumeration::pnp::PnpObject>) -> ::w::HRESULT,
 			fn FindAllAsync(&mut self, type_: ::rt::gen::windows::devices::enumeration::pnp::PnpObjectType, requestedProperties: *mut ::rt::gen::windows::foundation::collections::IIterable<&str>, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::enumeration::pnp::PnpObjectCollection>) -> ::w::HRESULT,
 			fn FindAllAsyncAqsFilter(&mut self, type_: ::rt::gen::windows::devices::enumeration::pnp::PnpObjectType, requestedProperties: *mut ::rt::gen::windows::foundation::collections::IIterable<&str>, aqsFilter: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::enumeration::pnp::PnpObjectCollection>) -> ::w::HRESULT,
@@ -8060,7 +8063,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Enumeration
 pub mod geolocation { // Windows.Devices.Geolocation
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum PositionAccuracy: i32 {
 			Default (PositionAccuracy_Default) = 0, High (PositionAccuracy_High) = 1,
 		}}
@@ -8117,7 +8120,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGeopointFactory, 3681258803, 30397, 20016, 138, 247, 168, 68, 220, 55, 183, 160);
-		RT_INTERFACE!{interface IGeopointFactory(IGeopointFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeopointFactory] {
+		RT_INTERFACE!{static interface IGeopointFactory(IGeopointFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeopointFactory] {
 			fn Create(&mut self, position: ::rt::gen::windows::devices::geolocation::BasicGeoposition, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geopoint) -> ::w::HRESULT,
 			fn CreateWithAltitudeReferenceSystem(&mut self, position: ::rt::gen::windows::devices::geolocation::BasicGeoposition, altitudeReferenceSystem: ::rt::gen::windows::devices::geolocation::AltitudeReferenceSystem, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geopoint) -> ::w::HRESULT,
 			fn CreateWithAltitudeReferenceSystemAndSpatialReferenceId(&mut self, position: ::rt::gen::windows::devices::geolocation::BasicGeoposition, altitudeReferenceSystem: ::rt::gen::windows::devices::geolocation::AltitudeReferenceSystem, spatialReferenceId: u32, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geopoint) -> ::w::HRESULT
@@ -8153,7 +8156,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGeopathFactory, 666806728, 51175, 17241, 155, 155, 252, 163, 224, 94, 245, 147);
-		RT_INTERFACE!{interface IGeopathFactory(IGeopathFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeopathFactory] {
+		RT_INTERFACE!{static interface IGeopathFactory(IGeopathFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeopathFactory] {
 			fn Create(&mut self, positions: *mut ::rt::gen::windows::foundation::collections::IIterable<::rt::gen::windows::devices::geolocation::BasicGeoposition>, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geopath) -> ::w::HRESULT,
 			fn CreateWithAltitudeReference(&mut self, positions: *mut ::rt::gen::windows::foundation::collections::IIterable<::rt::gen::windows::devices::geolocation::BasicGeoposition>, altitudeReferenceSystem: ::rt::gen::windows::devices::geolocation::AltitudeReferenceSystem, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geopath) -> ::w::HRESULT,
 			fn CreateWithAltitudeReferenceAndSpatialReference(&mut self, positions: *mut ::rt::gen::windows::foundation::collections::IIterable<::rt::gen::windows::devices::geolocation::BasicGeoposition>, altitudeReferenceSystem: ::rt::gen::windows::devices::geolocation::AltitudeReferenceSystem, spatialReferenceId: u32, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geopath) -> ::w::HRESULT
@@ -8213,7 +8216,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGeoboundingBoxFactory, 1308337545, 1041, 19132, 179, 181, 91, 188, 203, 87, 217, 140);
-		RT_INTERFACE!{interface IGeoboundingBoxFactory(IGeoboundingBoxFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeoboundingBoxFactory] {
+		RT_INTERFACE!{static interface IGeoboundingBoxFactory(IGeoboundingBoxFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeoboundingBoxFactory] {
 			fn Create(&mut self, northwestCorner: ::rt::gen::windows::devices::geolocation::BasicGeoposition, southeastCorner: ::rt::gen::windows::devices::geolocation::BasicGeoposition, out: *mut *mut ::rt::gen::windows::devices::geolocation::GeoboundingBox) -> ::w::HRESULT,
 			fn CreateWithAltitudeReference(&mut self, northwestCorner: ::rt::gen::windows::devices::geolocation::BasicGeoposition, southeastCorner: ::rt::gen::windows::devices::geolocation::BasicGeoposition, altitudeReferenceSystem: ::rt::gen::windows::devices::geolocation::AltitudeReferenceSystem, out: *mut *mut ::rt::gen::windows::devices::geolocation::GeoboundingBox) -> ::w::HRESULT,
 			fn CreateWithAltitudeReferenceAndSpatialReference(&mut self, northwestCorner: ::rt::gen::windows::devices::geolocation::BasicGeoposition, southeastCorner: ::rt::gen::windows::devices::geolocation::BasicGeoposition, altitudeReferenceSystem: ::rt::gen::windows::devices::geolocation::AltitudeReferenceSystem, spatialReferenceId: u32, out: *mut *mut ::rt::gen::windows::devices::geolocation::GeoboundingBox) -> ::w::HRESULT
@@ -8239,7 +8242,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IGeoboundingBoxStatics [CLSID_GeoboundingBox]}
 		DEFINE_CLSID!(CLSID_GeoboundingBox = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,98,111,117,110,100,105,110,103,66,111,120,0]);
 		DEFINE_IID!(IID_IGeoboundingBoxStatics, 1740113672, 58906, 19664, 132, 27, 147, 35, 55, 146, 181, 202);
-		RT_INTERFACE!{interface IGeoboundingBoxStatics(IGeoboundingBoxStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeoboundingBoxStatics] {
+		RT_INTERFACE!{static interface IGeoboundingBoxStatics(IGeoboundingBoxStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeoboundingBoxStatics] {
 			fn TryCompute(&mut self, positions: *mut ::rt::gen::windows::foundation::collections::IIterable<::rt::gen::windows::devices::geolocation::BasicGeoposition>, out: *mut *mut ::rt::gen::windows::devices::geolocation::GeoboundingBox) -> ::w::HRESULT,
 			fn TryComputeWithAltitudeReference(&mut self, positions: *mut ::rt::gen::windows::foundation::collections::IIterable<::rt::gen::windows::devices::geolocation::BasicGeoposition>, altitudeRefSystem: ::rt::gen::windows::devices::geolocation::AltitudeReferenceSystem, out: *mut *mut ::rt::gen::windows::devices::geolocation::GeoboundingBox) -> ::w::HRESULT,
 			fn TryComputeWithAltitudeReferenceAndSpatialReference(&mut self, positions: *mut ::rt::gen::windows::foundation::collections::IIterable<::rt::gen::windows::devices::geolocation::BasicGeoposition>, altitudeRefSystem: ::rt::gen::windows::devices::geolocation::AltitudeReferenceSystem, spatialReferenceId: u32, out: *mut *mut ::rt::gen::windows::devices::geolocation::GeoboundingBox) -> ::w::HRESULT
@@ -8583,7 +8586,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGeolocatorStatics, 2593027441, 11765, 17809, 159, 135, 235, 95, 216, 148, 233, 183);
-		RT_INTERFACE!{interface IGeolocatorStatics(IGeolocatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeolocatorStatics] {
+		RT_INTERFACE!{static interface IGeolocatorStatics(IGeolocatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeolocatorStatics] {
 			fn RequestAccessAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::geolocation::GeolocationAccessStatus>) -> ::w::HRESULT,
 			fn GetGeopositionHistoryAsync(&mut self, startTime: ::rt::gen::windows::foundation::DateTime, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::geolocation::Geoposition>>) -> ::w::HRESULT,
 			fn GetGeopositionHistoryWithDurationAsync(&mut self, startTime: ::rt::gen::windows::foundation::DateTime, duration: ::rt::gen::windows::foundation::TimeSpan, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::geolocation::Geoposition>>) -> ::w::HRESULT
@@ -8623,7 +8626,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGeocircleFactory, 2950058783, 29361, 20349, 135, 204, 78, 212, 201, 132, 156, 5);
-		RT_INTERFACE!{interface IGeocircleFactory(IGeocircleFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeocircleFactory] {
+		RT_INTERFACE!{static interface IGeocircleFactory(IGeocircleFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeocircleFactory] {
 			fn Create(&mut self, position: ::rt::gen::windows::devices::geolocation::BasicGeoposition, radius: f64, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geocircle) -> ::w::HRESULT,
 			fn CreateWithAltitudeReferenceSystem(&mut self, position: ::rt::gen::windows::devices::geolocation::BasicGeoposition, radius: f64, altitudeReferenceSystem: ::rt::gen::windows::devices::geolocation::AltitudeReferenceSystem, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geocircle) -> ::w::HRESULT,
 			fn CreateWithAltitudeReferenceSystemAndSpatialReferenceId(&mut self, position: ::rt::gen::windows::devices::geolocation::BasicGeoposition, radius: f64, altitudeReferenceSystem: ::rt::gen::windows::devices::geolocation::AltitudeReferenceSystem, spatialReferenceId: u32, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geocircle) -> ::w::HRESULT
@@ -8649,7 +8652,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_CLSID!(CLSID_Geocircle = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,99,105,114,99,108,101,0]);
 pub mod geofencing { // Windows.Devices.Geolocation.Geofencing
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum MonitoredGeofenceStates: u32 {
 			None (MonitoredGeofenceStates_None) = 0, Entered (MonitoredGeofenceStates_Entered) = 1, Exited (MonitoredGeofenceStates_Exited) = 2, Removed (MonitoredGeofenceStates_Removed) = 4,
 		}}
@@ -8663,7 +8666,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			Used (GeofenceRemovalReason_Used) = 0, Expired (GeofenceRemovalReason_Expired) = 1,
 		}}
 		DEFINE_IID!(IID_IGeofenceFactory, 2216649291, 12895, 19344, 188, 167, 43, 128, 34, 169, 55, 150);
-		RT_INTERFACE!{interface IGeofenceFactory(IGeofenceFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeofenceFactory] {
+		RT_INTERFACE!{static interface IGeofenceFactory(IGeofenceFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeofenceFactory] {
 			fn Create(&mut self, id: ::w::HSTRING, geoshape: *mut ::rt::gen::windows::devices::geolocation::IGeoshape, out: *mut *mut ::rt::gen::windows::devices::geolocation::geofencing::Geofence) -> ::w::HRESULT,
 			fn CreateWithMonitorStates(&mut self, id: ::w::HSTRING, geoshape: *mut ::rt::gen::windows::devices::geolocation::IGeoshape, monitoredStates: ::rt::gen::windows::devices::geolocation::geofencing::MonitoredGeofenceStates, singleUse: bool, out: *mut *mut ::rt::gen::windows::devices::geolocation::geofencing::Geofence) -> ::w::HRESULT,
 			fn CreateWithMonitorStatesAndDwellTime(&mut self, id: ::w::HSTRING, geoshape: *mut ::rt::gen::windows::devices::geolocation::IGeoshape, monitoredStates: ::rt::gen::windows::devices::geolocation::geofencing::MonitoredGeofenceStates, singleUse: bool, dwellTime: ::rt::gen::windows::foundation::TimeSpan, out: *mut *mut ::rt::gen::windows::devices::geolocation::geofencing::Geofence) -> ::w::HRESULT,
@@ -8770,7 +8773,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGeofenceMonitorStatics, 768815055, 32373, 18585, 172, 227, 43, 208, 166, 92, 206, 6);
-		RT_INTERFACE!{interface IGeofenceMonitorStatics(IGeofenceMonitorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeofenceMonitorStatics] {
+		RT_INTERFACE!{static interface IGeofenceMonitorStatics(IGeofenceMonitorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeofenceMonitorStatics] {
 			fn get_Current(&mut self, out: *mut *mut ::rt::gen::windows::devices::geolocation::geofencing::GeofenceMonitor) -> ::w::HRESULT
 		}}
 		impl IGeofenceMonitorStatics {
@@ -8839,7 +8842,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Geolocation
 pub mod humaninterfacedevice { // Windows.Devices.HumanInterfaceDevice
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum HidReportType: i32 {
 			Input (HidReportType_Input) = 0, Output (HidReportType_Output) = 1, Feature (HidReportType_Feature) = 2,
 		}}
@@ -8847,7 +8850,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			Physical (HidCollectionType_Physical) = 0, Application (HidCollectionType_Application) = 1, Logical (HidCollectionType_Logical) = 2, Report (HidCollectionType_Report) = 3, NamedArray (HidCollectionType_NamedArray) = 4, UsageSwitch (HidCollectionType_UsageSwitch) = 5, UsageModifier (HidCollectionType_UsageModifier) = 6, Other (HidCollectionType_Other) = 7,
 		}}
 		DEFINE_IID!(IID_IHidDeviceStatics, 2656666084, 38998, 16780, 159, 115, 119, 222, 12, 216, 87, 84);
-		RT_INTERFACE!{interface IHidDeviceStatics(IHidDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHidDeviceStatics] {
+		RT_INTERFACE!{static interface IHidDeviceStatics(IHidDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHidDeviceStatics] {
 			fn GetDeviceSelector(&mut self, usagePage: u16, usageId: u16, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorVidPid(&mut self, usagePage: u16, usageId: u16, vendorId: u16, productId: u16, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, accessMode: ::rt::gen::windows::storage::FileAccessMode, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::humaninterfacedevice::HidDevice>) -> ::w::HRESULT
@@ -9426,7 +9429,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.HumanInterfaceDevice
 pub mod input { // Windows.Devices.Input
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum PointerDeviceType: i32 {
 			Touch (PointerDeviceType_Touch) = 0, Pen (PointerDeviceType_Pen) = 1, Mouse (PointerDeviceType_Mouse) = 2,
 		}}
@@ -9500,7 +9503,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IPointerDeviceStatics, 3635976865, 53702, 16750, 189, 141, 87, 144, 145, 77, 197, 99);
-		RT_INTERFACE!{interface IPointerDeviceStatics(IPointerDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPointerDeviceStatics] {
+		RT_INTERFACE!{static interface IPointerDeviceStatics(IPointerDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPointerDeviceStatics] {
 			fn GetPointerDevice(&mut self, pointerId: u32, out: *mut *mut ::rt::gen::windows::devices::input::PointerDevice) -> ::w::HRESULT,
 			fn GetPointerDevices(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::input::PointerDevice>) -> ::w::HRESULT
 		}}
@@ -9603,7 +9606,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_CLSID!(CLSID_MouseDevice = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,110,112,117,116,46,77,111,117,115,101,68,101,118,105,99,101,0]);
 		RT_CLASS!{class MouseEventArgs: ::rt::gen::windows::devices::input::IMouseEventArgs}
 		DEFINE_IID!(IID_IMouseDeviceStatics, 1212846149, 28016, 18907, 142, 104, 70, 255, 189, 23, 211, 141);
-		RT_INTERFACE!{interface IMouseDeviceStatics(IMouseDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMouseDeviceStatics] {
+		RT_INTERFACE!{static interface IMouseDeviceStatics(IMouseDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMouseDeviceStatics] {
 			fn GetForCurrentView(&mut self, out: *mut *mut ::rt::gen::windows::devices::input::MouseDevice) -> ::w::HRESULT
 		}}
 		impl IMouseDeviceStatics {
@@ -9619,9 +9622,9 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Input
 pub mod lights { // Windows.Devices.Lights
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_ILampStatics, 2820817260, 34949, 16414, 184, 33, 142, 139, 56, 168, 232, 236);
-		RT_INTERFACE!{interface ILampStatics(ILampStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILampStatics] {
+		RT_INTERFACE!{static interface ILampStatics(ILampStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILampStatics] {
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::lights::Lamp>) -> ::w::HRESULT,
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::lights::Lamp>) -> ::w::HRESULT
@@ -9722,7 +9725,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Lights
 pub mod midi { // Windows.Devices.Midi
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum MidiMessageType: i32 {
 			None (MidiMessageType_None) = 0, NoteOff (MidiMessageType_NoteOff) = 128, NoteOn (MidiMessageType_NoteOn) = 144, PolyphonicKeyPressure (MidiMessageType_PolyphonicKeyPressure) = 160, ControlChange (MidiMessageType_ControlChange) = 176, ProgramChange (MidiMessageType_ProgramChange) = 192, ChannelPressure (MidiMessageType_ChannelPressure) = 208, PitchBendChange (MidiMessageType_PitchBendChange) = 224, SystemExclusive (MidiMessageType_SystemExclusive) = 240, MidiTimeCode (MidiMessageType_MidiTimeCode) = 241, SongPositionPointer (MidiMessageType_SongPositionPointer) = 242, SongSelect (MidiMessageType_SongSelect) = 243, TuneRequest (MidiMessageType_TuneRequest) = 246, TimingClock (MidiMessageType_TimingClock) = 248, Start (MidiMessageType_Start) = 250, Continue (MidiMessageType_Continue) = 251, Stop (MidiMessageType_Stop) = 252, ActiveSensing (MidiMessageType_ActiveSensing) = 254, SystemReset (MidiMessageType_SystemReset) = 255,
 		}}
@@ -9932,7 +9935,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IMidiNoteOffMessageFactory, 2796699872, 42825, 16991, 138, 244, 164, 217, 121, 204, 21, 181);
-		RT_INTERFACE!{interface IMidiNoteOffMessageFactory(IMidiNoteOffMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiNoteOffMessageFactory] {
+		RT_INTERFACE!{static interface IMidiNoteOffMessageFactory(IMidiNoteOffMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiNoteOffMessageFactory] {
 			fn CreateMidiNoteOffMessage(&mut self, channel: u8, note: u8, velocity: u8, out: *mut *mut ::rt::gen::windows::devices::midi::MidiNoteOffMessage) -> ::w::HRESULT
 		}}
 		impl IMidiNoteOffMessageFactory {
@@ -9945,7 +9948,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class MidiNoteOffMessage: ::rt::gen::windows::devices::midi::IMidiNoteOffMessage [::rt::gen::windows::devices::midi::IMidiNoteOffMessageFactory] [CLSID_MidiNoteOffMessage]}
 		DEFINE_CLSID!(CLSID_MidiNoteOffMessage = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,78,111,116,101,79,102,102,77,101,115,115,97,103,101,0]);
 		DEFINE_IID!(IID_IMidiNoteOnMessageFactory, 2604826784, 22977, 16910, 181, 23, 21, 161, 10, 169, 96, 107);
-		RT_INTERFACE!{interface IMidiNoteOnMessageFactory(IMidiNoteOnMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiNoteOnMessageFactory] {
+		RT_INTERFACE!{static interface IMidiNoteOnMessageFactory(IMidiNoteOnMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiNoteOnMessageFactory] {
 			fn CreateMidiNoteOnMessage(&mut self, channel: u8, note: u8, velocity: u8, out: *mut *mut ::rt::gen::windows::devices::midi::MidiNoteOnMessage) -> ::w::HRESULT
 		}}
 		impl IMidiNoteOnMessageFactory {
@@ -9958,7 +9961,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class MidiNoteOnMessage: ::rt::gen::windows::devices::midi::IMidiNoteOnMessage [::rt::gen::windows::devices::midi::IMidiNoteOnMessageFactory] [CLSID_MidiNoteOnMessage]}
 		DEFINE_CLSID!(CLSID_MidiNoteOnMessage = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,78,111,116,101,79,110,77,101,115,115,97,103,101,0]);
 		DEFINE_IID!(IID_IMidiPolyphonicKeyPressureMessageFactory, 3918481470, 50355, 19922, 145, 124, 227, 73, 129, 90, 27, 59);
-		RT_INTERFACE!{interface IMidiPolyphonicKeyPressureMessageFactory(IMidiPolyphonicKeyPressureMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiPolyphonicKeyPressureMessageFactory] {
+		RT_INTERFACE!{static interface IMidiPolyphonicKeyPressureMessageFactory(IMidiPolyphonicKeyPressureMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiPolyphonicKeyPressureMessageFactory] {
 			fn CreateMidiPolyphonicKeyPressureMessage(&mut self, channel: u8, note: u8, pressure: u8, out: *mut *mut ::rt::gen::windows::devices::midi::MidiPolyphonicKeyPressureMessage) -> ::w::HRESULT
 		}}
 		impl IMidiPolyphonicKeyPressureMessageFactory {
@@ -9971,7 +9974,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class MidiPolyphonicKeyPressureMessage: ::rt::gen::windows::devices::midi::IMidiPolyphonicKeyPressureMessage [::rt::gen::windows::devices::midi::IMidiPolyphonicKeyPressureMessageFactory] [CLSID_MidiPolyphonicKeyPressureMessage]}
 		DEFINE_CLSID!(CLSID_MidiPolyphonicKeyPressureMessage = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,80,111,108,121,112,104,111,110,105,99,75,101,121,80,114,101,115,115,117,114,101,77,101,115,115,97,103,101,0]);
 		DEFINE_IID!(IID_IMidiControlChangeMessageFactory, 716260129, 38252, 18093, 151, 82, 248, 127, 85, 5, 47, 227);
-		RT_INTERFACE!{interface IMidiControlChangeMessageFactory(IMidiControlChangeMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiControlChangeMessageFactory] {
+		RT_INTERFACE!{static interface IMidiControlChangeMessageFactory(IMidiControlChangeMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiControlChangeMessageFactory] {
 			fn CreateMidiControlChangeMessage(&mut self, channel: u8, controller: u8, controlValue: u8, out: *mut *mut ::rt::gen::windows::devices::midi::MidiControlChangeMessage) -> ::w::HRESULT
 		}}
 		impl IMidiControlChangeMessageFactory {
@@ -9984,7 +9987,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class MidiControlChangeMessage: ::rt::gen::windows::devices::midi::IMidiControlChangeMessage [::rt::gen::windows::devices::midi::IMidiControlChangeMessageFactory] [CLSID_MidiControlChangeMessage]}
 		DEFINE_CLSID!(CLSID_MidiControlChangeMessage = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,67,111,110,116,114,111,108,67,104,97,110,103,101,77,101,115,115,97,103,101,0]);
 		DEFINE_IID!(IID_IMidiProgramChangeMessageFactory, 3601875847, 21067, 16644, 156, 153, 101, 114, 191, 210, 226, 97);
-		RT_INTERFACE!{interface IMidiProgramChangeMessageFactory(IMidiProgramChangeMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiProgramChangeMessageFactory] {
+		RT_INTERFACE!{static interface IMidiProgramChangeMessageFactory(IMidiProgramChangeMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiProgramChangeMessageFactory] {
 			fn CreateMidiProgramChangeMessage(&mut self, channel: u8, program: u8, out: *mut *mut ::rt::gen::windows::devices::midi::MidiProgramChangeMessage) -> ::w::HRESULT
 		}}
 		impl IMidiProgramChangeMessageFactory {
@@ -9997,7 +10000,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class MidiProgramChangeMessage: ::rt::gen::windows::devices::midi::IMidiProgramChangeMessage [::rt::gen::windows::devices::midi::IMidiProgramChangeMessageFactory] [CLSID_MidiProgramChangeMessage]}
 		DEFINE_CLSID!(CLSID_MidiProgramChangeMessage = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,80,114,111,103,114,97,109,67,104,97,110,103,101,77,101,115,115,97,103,101,0]);
 		DEFINE_IID!(IID_IMidiChannelPressureMessageFactory, 1645800751, 8836, 16682, 148, 207, 16, 251, 4, 132, 44, 108);
-		RT_INTERFACE!{interface IMidiChannelPressureMessageFactory(IMidiChannelPressureMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiChannelPressureMessageFactory] {
+		RT_INTERFACE!{static interface IMidiChannelPressureMessageFactory(IMidiChannelPressureMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiChannelPressureMessageFactory] {
 			fn CreateMidiChannelPressureMessage(&mut self, channel: u8, pressure: u8, out: *mut *mut ::rt::gen::windows::devices::midi::MidiChannelPressureMessage) -> ::w::HRESULT
 		}}
 		impl IMidiChannelPressureMessageFactory {
@@ -10010,7 +10013,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class MidiChannelPressureMessage: ::rt::gen::windows::devices::midi::IMidiChannelPressureMessage [::rt::gen::windows::devices::midi::IMidiChannelPressureMessageFactory] [CLSID_MidiChannelPressureMessage]}
 		DEFINE_CLSID!(CLSID_MidiChannelPressureMessage = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,67,104,97,110,110,101,108,80,114,101,115,115,117,114,101,77,101,115,115,97,103,101,0]);
 		DEFINE_IID!(IID_IMidiPitchBendChangeMessageFactory, 4126072661, 53192, 18726, 179, 14, 163, 98, 35, 147, 48, 108);
-		RT_INTERFACE!{interface IMidiPitchBendChangeMessageFactory(IMidiPitchBendChangeMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiPitchBendChangeMessageFactory] {
+		RT_INTERFACE!{static interface IMidiPitchBendChangeMessageFactory(IMidiPitchBendChangeMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiPitchBendChangeMessageFactory] {
 			fn CreateMidiPitchBendChangeMessage(&mut self, channel: u8, bend: u16, out: *mut *mut ::rt::gen::windows::devices::midi::MidiPitchBendChangeMessage) -> ::w::HRESULT
 		}}
 		impl IMidiPitchBendChangeMessageFactory {
@@ -10023,7 +10026,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class MidiPitchBendChangeMessage: ::rt::gen::windows::devices::midi::IMidiPitchBendChangeMessage [::rt::gen::windows::devices::midi::IMidiPitchBendChangeMessageFactory] [CLSID_MidiPitchBendChangeMessage]}
 		DEFINE_CLSID!(CLSID_MidiPitchBendChangeMessage = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,80,105,116,99,104,66,101,110,100,67,104,97,110,103,101,77,101,115,115,97,103,101,0]);
 		DEFINE_IID!(IID_IMidiSystemExclusiveMessageFactory, 138273314, 15220, 17184, 155, 66, 12, 168, 84, 95, 138, 36);
-		RT_INTERFACE!{interface IMidiSystemExclusiveMessageFactory(IMidiSystemExclusiveMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiSystemExclusiveMessageFactory] {
+		RT_INTERFACE!{static interface IMidiSystemExclusiveMessageFactory(IMidiSystemExclusiveMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiSystemExclusiveMessageFactory] {
 			fn CreateMidiSystemExclusiveMessage(&mut self, rawData: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::devices::midi::MidiSystemExclusiveMessage) -> ::w::HRESULT
 		}}
 		impl IMidiSystemExclusiveMessageFactory {
@@ -10036,7 +10039,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class MidiSystemExclusiveMessage: ::rt::gen::windows::devices::midi::IMidiMessage [::rt::gen::windows::devices::midi::IMidiSystemExclusiveMessageFactory] [CLSID_MidiSystemExclusiveMessage]}
 		DEFINE_CLSID!(CLSID_MidiSystemExclusiveMessage = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,83,121,115,116,101,109,69,120,99,108,117,115,105,118,101,77,101,115,115,97,103,101,0]);
 		DEFINE_IID!(IID_IMidiTimeCodeMessageFactory, 3945830853, 30492, 16606, 185, 97, 23, 90, 116, 137, 168, 94);
-		RT_INTERFACE!{interface IMidiTimeCodeMessageFactory(IMidiTimeCodeMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiTimeCodeMessageFactory] {
+		RT_INTERFACE!{static interface IMidiTimeCodeMessageFactory(IMidiTimeCodeMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiTimeCodeMessageFactory] {
 			fn CreateMidiTimeCodeMessage(&mut self, frameType: u8, values: u8, out: *mut *mut ::rt::gen::windows::devices::midi::MidiTimeCodeMessage) -> ::w::HRESULT
 		}}
 		impl IMidiTimeCodeMessageFactory {
@@ -10049,7 +10052,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class MidiTimeCodeMessage: ::rt::gen::windows::devices::midi::IMidiTimeCodeMessage [::rt::gen::windows::devices::midi::IMidiTimeCodeMessageFactory] [CLSID_MidiTimeCodeMessage]}
 		DEFINE_CLSID!(CLSID_MidiTimeCodeMessage = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,84,105,109,101,67,111,100,101,77,101,115,115,97,103,101,0]);
 		DEFINE_IID!(IID_IMidiSongPositionPointerMessageFactory, 2617305494, 61707, 20458, 179, 149, 245, 214, 207, 128, 246, 78);
-		RT_INTERFACE!{interface IMidiSongPositionPointerMessageFactory(IMidiSongPositionPointerMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiSongPositionPointerMessageFactory] {
+		RT_INTERFACE!{static interface IMidiSongPositionPointerMessageFactory(IMidiSongPositionPointerMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiSongPositionPointerMessageFactory] {
 			fn CreateMidiSongPositionPointerMessage(&mut self, beats: u16, out: *mut *mut ::rt::gen::windows::devices::midi::MidiSongPositionPointerMessage) -> ::w::HRESULT
 		}}
 		impl IMidiSongPositionPointerMessageFactory {
@@ -10062,7 +10065,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class MidiSongPositionPointerMessage: ::rt::gen::windows::devices::midi::IMidiSongPositionPointerMessage [::rt::gen::windows::devices::midi::IMidiSongPositionPointerMessageFactory] [CLSID_MidiSongPositionPointerMessage]}
 		DEFINE_CLSID!(CLSID_MidiSongPositionPointerMessage = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,83,111,110,103,80,111,115,105,116,105,111,110,80,111,105,110,116,101,114,77,101,115,115,97,103,101,0]);
 		DEFINE_IID!(IID_IMidiSongSelectMessageFactory, 2223536356, 34632, 16681, 166, 108, 160, 84, 147, 247, 93, 170);
-		RT_INTERFACE!{interface IMidiSongSelectMessageFactory(IMidiSongSelectMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiSongSelectMessageFactory] {
+		RT_INTERFACE!{static interface IMidiSongSelectMessageFactory(IMidiSongSelectMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiSongSelectMessageFactory] {
 			fn CreateMidiSongSelectMessage(&mut self, song: u8, out: *mut *mut ::rt::gen::windows::devices::midi::MidiSongSelectMessage) -> ::w::HRESULT
 		}}
 		impl IMidiSongSelectMessageFactory {
@@ -10094,7 +10097,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class MidiMessageReceivedEventArgs: ::rt::gen::windows::devices::midi::IMidiMessageReceivedEventArgs}
 		DEFINE_IID!(IID_IMidiInPortStatics, 1153710556, 26623, 19054, 139, 172, 253, 182, 97, 12, 242, 150);
-		RT_INTERFACE!{interface IMidiInPortStatics(IMidiInPortStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiInPortStatics] {
+		RT_INTERFACE!{static interface IMidiInPortStatics(IMidiInPortStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiInPortStatics] {
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::midi::MidiInPort>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
@@ -10114,7 +10117,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IMidiInPortStatics [CLSID_MidiInPort]}
 		DEFINE_CLSID!(CLSID_MidiInPort = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,73,110,80,111,114,116,0]);
 		DEFINE_IID!(IID_IMidiOutPortStatics, 106742761, 3976, 17547, 155, 100, 169, 88, 38, 198, 91, 143);
-		RT_INTERFACE!{interface IMidiOutPortStatics(IMidiOutPortStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiOutPortStatics] {
+		RT_INTERFACE!{static interface IMidiOutPortStatics(IMidiOutPortStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiOutPortStatics] {
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::midi::IMidiOutPort>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
@@ -10134,7 +10137,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IMidiOutPortStatics [CLSID_MidiOutPort]}
 		DEFINE_CLSID!(CLSID_MidiOutPort = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,79,117,116,80,111,114,116,0]);
 		DEFINE_IID!(IID_IMidiSynthesizerStatics, 1109715624, 26153, 19819, 170, 143, 212, 82, 26, 90, 49, 206);
-		RT_INTERFACE!{interface IMidiSynthesizerStatics(IMidiSynthesizerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiSynthesizerStatics] {
+		RT_INTERFACE!{static interface IMidiSynthesizerStatics(IMidiSynthesizerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiSynthesizerStatics] {
 			fn CreateAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::midi::MidiSynthesizer>) -> ::w::HRESULT,
 			fn CreateFromAudioDeviceAsync(&mut self, audioDevice: *mut ::rt::gen::windows::devices::enumeration::DeviceInformation, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::midi::MidiSynthesizer>) -> ::w::HRESULT,
 			fn IsSynthesizer(&mut self, midiDevice: *mut ::rt::gen::windows::devices::enumeration::DeviceInformation, out: *mut bool) -> ::w::HRESULT
@@ -10227,7 +10230,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Midi
 pub mod perception { // Windows.Devices.Perception
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum PerceptionFrameSourceAccessStatus: i32 {
 			Unspecified (PerceptionFrameSourceAccessStatus_Unspecified) = 0, Allowed (PerceptionFrameSourceAccessStatus_Allowed) = 1, DeniedByUser (PerceptionFrameSourceAccessStatus_DeniedByUser) = 2, DeniedBySystem (PerceptionFrameSourceAccessStatus_DeniedBySystem) = 3,
 		}}
@@ -10514,7 +10517,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IKnownPerceptionFrameSourcePropertiesStatics, 1576127650, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 71);
-		RT_INTERFACE!{interface IKnownPerceptionFrameSourcePropertiesStatics(IKnownPerceptionFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionFrameSourcePropertiesStatics] {
+		RT_INTERFACE!{static interface IKnownPerceptionFrameSourcePropertiesStatics(IKnownPerceptionFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionFrameSourcePropertiesStatics] {
 			fn get_Id(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_PhysicalDeviceIds(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_FrameKind(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -10549,7 +10552,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IKnownPerceptionFrameSourcePropertiesStatics2, 2848483441, 1500, 19021, 138, 92, 164, 236, 242, 107, 188, 70);
-		RT_INTERFACE!{interface IKnownPerceptionFrameSourcePropertiesStatics2(IKnownPerceptionFrameSourcePropertiesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionFrameSourcePropertiesStatics2] {
+		RT_INTERFACE!{static interface IKnownPerceptionFrameSourcePropertiesStatics2(IKnownPerceptionFrameSourcePropertiesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionFrameSourcePropertiesStatics2] {
 			fn get_DeviceId(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl IKnownPerceptionFrameSourcePropertiesStatics2 {
@@ -10560,7 +10563,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IKnownPerceptionVideoFrameSourcePropertiesStatics, 1576127650, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 72);
-		RT_INTERFACE!{interface IKnownPerceptionVideoFrameSourcePropertiesStatics(IKnownPerceptionVideoFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionVideoFrameSourcePropertiesStatics] {
+		RT_INTERFACE!{static interface IKnownPerceptionVideoFrameSourcePropertiesStatics(IKnownPerceptionVideoFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionVideoFrameSourcePropertiesStatics] {
 			fn get_VideoProfile(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_SupportedVideoProfiles(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_AvailableVideoProfiles(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -10595,7 +10598,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IKnownPerceptionInfraredFrameSourcePropertiesStatics, 1576127650, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 73);
-		RT_INTERFACE!{interface IKnownPerceptionInfraredFrameSourcePropertiesStatics(IKnownPerceptionInfraredFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionInfraredFrameSourcePropertiesStatics] {
+		RT_INTERFACE!{static interface IKnownPerceptionInfraredFrameSourcePropertiesStatics(IKnownPerceptionInfraredFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionInfraredFrameSourcePropertiesStatics] {
 			fn get_Exposure(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_AutoExposureEnabled(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_ExposureCompensation(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -10642,7 +10645,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IKnownPerceptionDepthFrameSourcePropertiesStatics, 1576127650, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 74);
-		RT_INTERFACE!{interface IKnownPerceptionDepthFrameSourcePropertiesStatics(IKnownPerceptionDepthFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionDepthFrameSourcePropertiesStatics] {
+		RT_INTERFACE!{static interface IKnownPerceptionDepthFrameSourcePropertiesStatics(IKnownPerceptionDepthFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionDepthFrameSourcePropertiesStatics] {
 			fn get_MinDepth(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_MaxDepth(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
@@ -10659,7 +10662,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IKnownPerceptionColorFrameSourcePropertiesStatics, 1576127650, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 75);
-		RT_INTERFACE!{interface IKnownPerceptionColorFrameSourcePropertiesStatics(IKnownPerceptionColorFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionColorFrameSourcePropertiesStatics] {
+		RT_INTERFACE!{static interface IKnownPerceptionColorFrameSourcePropertiesStatics(IKnownPerceptionColorFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionColorFrameSourcePropertiesStatics] {
 			fn get_Exposure(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_AutoExposureEnabled(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_ExposureCompensation(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
@@ -10682,7 +10685,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IKnownPerceptionVideoProfilePropertiesStatics, 2399724263, 23158, 17379, 161, 58, 218, 61, 145, 169, 239, 152);
-		RT_INTERFACE!{interface IKnownPerceptionVideoProfilePropertiesStatics(IKnownPerceptionVideoProfilePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionVideoProfilePropertiesStatics] {
+		RT_INTERFACE!{static interface IKnownPerceptionVideoProfilePropertiesStatics(IKnownPerceptionVideoProfilePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionVideoProfilePropertiesStatics] {
 			fn get_BitmapPixelFormat(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_BitmapAlphaMode(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_Width(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -10717,7 +10720,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IKnownCameraIntrinsicsPropertiesStatics, 146815352, 17274, 19863, 166, 99, 253, 49, 149, 96, 2, 73);
-		RT_INTERFACE!{interface IKnownCameraIntrinsicsPropertiesStatics(IKnownCameraIntrinsicsPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownCameraIntrinsicsPropertiesStatics] {
+		RT_INTERFACE!{static interface IKnownCameraIntrinsicsPropertiesStatics(IKnownCameraIntrinsicsPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownCameraIntrinsicsPropertiesStatics] {
 			fn get_FocalLength(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_PrincipalPoint(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_RadialDistortion(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -10782,7 +10785,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IPerceptionInfraredFrameSourceStatics, 1576258722, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 71);
-		RT_INTERFACE!{interface IPerceptionInfraredFrameSourceStatics(IPerceptionInfraredFrameSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionInfraredFrameSourceStatics] {
+		RT_INTERFACE!{static interface IPerceptionInfraredFrameSourceStatics(IPerceptionInfraredFrameSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionInfraredFrameSourceStatics] {
 			fn CreateWatcher(&mut self, out: *mut *mut ::rt::gen::windows::devices::perception::PerceptionInfraredFrameSourceWatcher) -> ::w::HRESULT,
 			fn FindAllAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::perception::PerceptionInfraredFrameSource>>) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, id: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::perception::PerceptionInfraredFrameSource>) -> ::w::HRESULT,
@@ -10811,7 +10814,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IPerceptionDepthFrameSourceStatics, 1576258722, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 72);
-		RT_INTERFACE!{interface IPerceptionDepthFrameSourceStatics(IPerceptionDepthFrameSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionDepthFrameSourceStatics] {
+		RT_INTERFACE!{static interface IPerceptionDepthFrameSourceStatics(IPerceptionDepthFrameSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionDepthFrameSourceStatics] {
 			fn CreateWatcher(&mut self, out: *mut *mut ::rt::gen::windows::devices::perception::PerceptionDepthFrameSourceWatcher) -> ::w::HRESULT,
 			fn FindAllAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::perception::PerceptionDepthFrameSource>>) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, id: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::perception::PerceptionDepthFrameSource>) -> ::w::HRESULT,
@@ -10840,7 +10843,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IPerceptionColorFrameSourceStatics, 1576258722, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 73);
-		RT_INTERFACE!{interface IPerceptionColorFrameSourceStatics(IPerceptionColorFrameSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionColorFrameSourceStatics] {
+		RT_INTERFACE!{static interface IPerceptionColorFrameSourceStatics(IPerceptionColorFrameSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionColorFrameSourceStatics] {
 			fn CreateWatcher(&mut self, out: *mut *mut ::rt::gen::windows::devices::perception::PerceptionColorFrameSourceWatcher) -> ::w::HRESULT,
 			fn FindAllAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::perception::PerceptionColorFrameSource>>) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, id: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::perception::PerceptionColorFrameSource>) -> ::w::HRESULT,
@@ -11773,9 +11776,9 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 pub mod provider { // Windows.Devices.Perception.Provider
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IKnownPerceptionFrameKindStatics, 988172758, 38505, 16646, 159, 174, 72, 53, 193, 185, 97, 4);
-		RT_INTERFACE!{interface IKnownPerceptionFrameKindStatics(IKnownPerceptionFrameKindStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionFrameKindStatics] {
+		RT_INTERFACE!{static interface IKnownPerceptionFrameKindStatics(IKnownPerceptionFrameKindStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionFrameKindStatics] {
 			fn get_Color(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_Depth(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn get_Infrared(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
@@ -11798,7 +11801,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IPerceptionFrameProviderManagerServiceStatics, 2927855334, 51929, 17241, 143, 150, 142, 174, 81, 129, 5, 38);
-		RT_INTERFACE!{interface IPerceptionFrameProviderManagerServiceStatics(IPerceptionFrameProviderManagerServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionFrameProviderManagerServiceStatics] {
+		RT_INTERFACE!{static interface IPerceptionFrameProviderManagerServiceStatics(IPerceptionFrameProviderManagerServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionFrameProviderManagerServiceStatics] {
 			fn RegisterFrameProviderInfo(&mut self, manager: *mut ::rt::gen::windows::devices::perception::provider::IPerceptionFrameProviderManager, frameProviderInfo: *mut ::rt::gen::windows::devices::perception::provider::PerceptionFrameProviderInfo) -> ::w::HRESULT,
 			fn UnregisterFrameProviderInfo(&mut self, manager: *mut ::rt::gen::windows::devices::perception::provider::IPerceptionFrameProviderManager, frameProviderInfo: *mut ::rt::gen::windows::devices::perception::provider::PerceptionFrameProviderInfo) -> ::w::HRESULT,
 			fn RegisterFaceAuthenticationGroup(&mut self, manager: *mut ::rt::gen::windows::devices::perception::provider::IPerceptionFrameProviderManager, faceAuthenticationGroup: *mut ::rt::gen::windows::devices::perception::provider::PerceptionFaceAuthenticationGroup) -> ::w::HRESULT,
@@ -11922,7 +11925,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IPerceptionControlGroupFactory, 790295264, 47857, 17723, 190, 212, 205, 157, 70, 25, 21, 76);
-		RT_INTERFACE!{interface IPerceptionControlGroupFactory(IPerceptionControlGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionControlGroupFactory] {
+		RT_INTERFACE!{static interface IPerceptionControlGroupFactory(IPerceptionControlGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionControlGroupFactory] {
 			fn Create(&mut self, ids: *mut ::rt::gen::windows::foundation::collections::IIterable<&str>, out: *mut *mut ::rt::gen::windows::devices::perception::provider::PerceptionControlGroup) -> ::w::HRESULT
 		}}
 		impl IPerceptionControlGroupFactory {
@@ -11965,7 +11968,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IPerceptionFaceAuthenticationGroupFactory, 3867805140, 46604, 16628, 188, 185, 242, 77, 70, 70, 115, 32);
-		RT_INTERFACE!{interface IPerceptionFaceAuthenticationGroupFactory(IPerceptionFaceAuthenticationGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionFaceAuthenticationGroupFactory] {
+		RT_INTERFACE!{static interface IPerceptionFaceAuthenticationGroupFactory(IPerceptionFaceAuthenticationGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionFaceAuthenticationGroupFactory] {
 			fn Create(&mut self, ids: *mut ::rt::gen::windows::foundation::collections::IIterable<&str>, startHandler: *mut ::rt::gen::windows::devices::perception::provider::PerceptionStartFaceAuthenticationHandler, stopHandler: *mut ::rt::gen::windows::devices::perception::provider::PerceptionStopFaceAuthenticationHandler, out: *mut *mut ::rt::gen::windows::devices::perception::provider::PerceptionFaceAuthenticationGroup) -> ::w::HRESULT
 		}}
 		impl IPerceptionFaceAuthenticationGroupFactory {
@@ -11987,7 +11990,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IPerceptionCorrelationFactory, 3567698981, 10372, 19087, 129, 52, 40, 53, 215, 40, 108, 191);
-		RT_INTERFACE!{interface IPerceptionCorrelationFactory(IPerceptionCorrelationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionCorrelationFactory] {
+		RT_INTERFACE!{static interface IPerceptionCorrelationFactory(IPerceptionCorrelationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionCorrelationFactory] {
 			fn Create(&mut self, targetId: ::w::HSTRING, position: ::rt::gen::windows::foundation::numerics::Vector3, orientation: ::rt::gen::windows::foundation::numerics::Quaternion, out: *mut *mut ::rt::gen::windows::devices::perception::provider::PerceptionCorrelation) -> ::w::HRESULT
 		}}
 		impl IPerceptionCorrelationFactory {
@@ -12023,7 +12026,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IPerceptionCorrelationGroupFactory, 2113806472, 25567, 18669, 131, 177, 74, 184, 41, 19, 41, 149);
-		RT_INTERFACE!{interface IPerceptionCorrelationGroupFactory(IPerceptionCorrelationGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionCorrelationGroupFactory] {
+		RT_INTERFACE!{static interface IPerceptionCorrelationGroupFactory(IPerceptionCorrelationGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionCorrelationGroupFactory] {
 			fn Create(&mut self, relativeLocations: *mut ::rt::gen::windows::foundation::collections::IIterable<::rt::gen::windows::devices::perception::provider::PerceptionCorrelation>, out: *mut *mut ::rt::gen::windows::devices::perception::provider::PerceptionCorrelationGroup) -> ::w::HRESULT
 		}}
 		impl IPerceptionCorrelationGroupFactory {
@@ -12073,7 +12076,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IPerceptionVideoFrameAllocatorFactory, 442020065, 59674, 18462, 184, 118, 168, 158, 43, 188, 107, 51);
-		RT_INTERFACE!{interface IPerceptionVideoFrameAllocatorFactory(IPerceptionVideoFrameAllocatorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionVideoFrameAllocatorFactory] {
+		RT_INTERFACE!{static interface IPerceptionVideoFrameAllocatorFactory(IPerceptionVideoFrameAllocatorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionVideoFrameAllocatorFactory] {
 			fn Create(&mut self, maxOutstandingFrameCountForWrite: u32, format: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, resolution: ::rt::gen::windows::foundation::Size, alpha: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode, out: *mut *mut ::rt::gen::windows::devices::perception::provider::PerceptionVideoFrameAllocator) -> ::w::HRESULT
 		}}
 		impl IPerceptionVideoFrameAllocatorFactory {
@@ -12193,7 +12196,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Perception
 pub mod pointofservice { // Windows.Devices.PointOfService
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum UnifiedPosErrorSeverity: i32 {
 			UnknownErrorSeverity (UnifiedPosErrorSeverity_UnknownErrorSeverity) = 0, Warning (UnifiedPosErrorSeverity_Warning) = 1, Recoverable (UnifiedPosErrorSeverity_Recoverable) = 2, Unrecoverable (UnifiedPosErrorSeverity_Unrecoverable) = 3, AssistanceRequired (UnifiedPosErrorSeverity_AssistanceRequired) = 4, Fatal (UnifiedPosErrorSeverity_Fatal) = 5,
 		}}
@@ -12306,7 +12309,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class BarcodeScannerStatusUpdatedEventArgs: ::rt::gen::windows::devices::pointofservice::IBarcodeScannerStatusUpdatedEventArgs}
 		DEFINE_IID!(IID_IBarcodeSymbologiesStatics, 3397732795, 1746, 17396, 164, 75, 198, 32, 103, 159, 216, 208);
-		RT_INTERFACE!{interface IBarcodeSymbologiesStatics(IBarcodeSymbologiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeSymbologiesStatics] {
+		RT_INTERFACE!{static interface IBarcodeSymbologiesStatics(IBarcodeSymbologiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeSymbologiesStatics] {
 			fn get_Unknown(&mut self, out: *mut u32) -> ::w::HRESULT,
 			fn get_Ean8(&mut self, out: *mut u32) -> ::w::HRESULT,
 			fn get_Ean8Add2(&mut self, out: *mut u32) -> ::w::HRESULT,
@@ -12990,7 +12993,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class BarcodeScannerCapabilities: ::rt::gen::windows::devices::pointofservice::IBarcodeScannerCapabilities}
 		DEFINE_IID!(IID_IBarcodeScannerStatics, 1561419631, 55881, 16872, 140, 140, 240, 203, 98, 169, 196, 252);
-		RT_INTERFACE!{interface IBarcodeScannerStatics(IBarcodeScannerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerStatics] {
+		RT_INTERFACE!{static interface IBarcodeScannerStatics(IBarcodeScannerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerStatics] {
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::pointofservice::BarcodeScanner>) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::pointofservice::BarcodeScanner>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
@@ -13102,7 +13105,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			None (MagneticStripeReaderTrackErrorType_None) = 0, StartSentinelError (MagneticStripeReaderTrackErrorType_StartSentinelError) = 1, EndSentinelError (MagneticStripeReaderTrackErrorType_EndSentinelError) = 2, ParityError (MagneticStripeReaderTrackErrorType_ParityError) = 3, LrcError (MagneticStripeReaderTrackErrorType_LrcError) = 4, Unknown (MagneticStripeReaderTrackErrorType_Unknown) = -1,
 		}}
 		DEFINE_IID!(IID_IMagneticStripeReaderEncryptionAlgorithmsStatics, 1404400464, 50139, 18260, 156, 0, 65, 57, 35, 116, 161, 9);
-		RT_INTERFACE!{interface IMagneticStripeReaderEncryptionAlgorithmsStatics(IMagneticStripeReaderEncryptionAlgorithmsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderEncryptionAlgorithmsStatics] {
+		RT_INTERFACE!{static interface IMagneticStripeReaderEncryptionAlgorithmsStatics(IMagneticStripeReaderEncryptionAlgorithmsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderEncryptionAlgorithmsStatics] {
 			fn get_None(&mut self, out: *mut u32) -> ::w::HRESULT,
 			fn get_TripleDesDukpt(&mut self, out: *mut u32) -> ::w::HRESULT,
 			fn get_ExtendedBase(&mut self, out: *mut u32) -> ::w::HRESULT
@@ -13127,7 +13130,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IMagneticStripeReaderEncryptionAlgorithmsStatics [CLSID_MagneticStripeReaderEncryptionAlgorithms]}
 		DEFINE_CLSID!(CLSID_MagneticStripeReaderEncryptionAlgorithms = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,77,97,103,110,101,116,105,99,83,116,114,105,112,101,82,101,97,100,101,114,69,110,99,114,121,112,116,105,111,110,65,108,103,111,114,105,116,104,109,115,0]);
 		DEFINE_IID!(IID_IMagneticStripeReaderCardTypesStatics, 1385114717, 10630, 18255, 132, 84, 124, 205, 5, 146, 141, 95);
-		RT_INTERFACE!{interface IMagneticStripeReaderCardTypesStatics(IMagneticStripeReaderCardTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderCardTypesStatics] {
+		RT_INTERFACE!{static interface IMagneticStripeReaderCardTypesStatics(IMagneticStripeReaderCardTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderCardTypesStatics] {
 			fn get_Unknown(&mut self, out: *mut u32) -> ::w::HRESULT,
 			fn get_Bank(&mut self, out: *mut u32) -> ::w::HRESULT,
 			fn get_Aamva(&mut self, out: *mut u32) -> ::w::HRESULT,
@@ -13567,7 +13570,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class MagneticStripeReaderCapabilities: ::rt::gen::windows::devices::pointofservice::IMagneticStripeReaderCapabilities}
 		RT_CLASS!{class ClaimedMagneticStripeReader: ::rt::gen::windows::devices::pointofservice::IClaimedMagneticStripeReader}
 		DEFINE_IID!(IID_IMagneticStripeReaderStatics, 3294604106, 61399, 18272, 165, 206, 21, 176, 228, 126, 148, 235);
-		RT_INTERFACE!{interface IMagneticStripeReaderStatics(IMagneticStripeReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderStatics] {
+		RT_INTERFACE!{static interface IMagneticStripeReaderStatics(IMagneticStripeReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderStatics] {
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::pointofservice::MagneticStripeReader>) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::pointofservice::MagneticStripeReader>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
@@ -13657,7 +13660,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IPosPrinterCharacterSetIdsStatics, 1550884607, 28826, 20455, 178, 21, 6, 167, 72, 163, 139, 57);
-		RT_INTERFACE!{interface IPosPrinterCharacterSetIdsStatics(IPosPrinterCharacterSetIdsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPosPrinterCharacterSetIdsStatics] {
+		RT_INTERFACE!{static interface IPosPrinterCharacterSetIdsStatics(IPosPrinterCharacterSetIdsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPosPrinterCharacterSetIdsStatics] {
 			fn get_Utf16LE(&mut self, out: *mut u32) -> ::w::HRESULT,
 			fn get_Ascii(&mut self, out: *mut u32) -> ::w::HRESULT,
 			fn get_Ansi(&mut self, out: *mut u32) -> ::w::HRESULT
@@ -13978,7 +13981,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class PosPrinterReleaseDeviceRequestedEventArgs: ::rt::gen::windows::devices::pointofservice::IPosPrinterReleaseDeviceRequestedEventArgs}
 		DEFINE_IID!(IID_IPosPrinterStatics, 2363544810, 4911, 19679, 166, 74, 45, 13, 124, 150, 168, 91);
-		RT_INTERFACE!{interface IPosPrinterStatics(IPosPrinterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPosPrinterStatics] {
+		RT_INTERFACE!{static interface IPosPrinterStatics(IPosPrinterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPosPrinterStatics] {
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::pointofservice::PosPrinter>) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::pointofservice::PosPrinter>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
@@ -14563,7 +14566,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class CashDrawerEventSource: ::rt::gen::windows::devices::pointofservice::ICashDrawerEventSource}
 		DEFINE_IID!(IID_ICashDrawerStatics, 3751843162, 54327, 20479, 181, 71, 221, 169, 105, 164, 248, 131);
-		RT_INTERFACE!{interface ICashDrawerStatics(ICashDrawerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICashDrawerStatics] {
+		RT_INTERFACE!{static interface ICashDrawerStatics(ICashDrawerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICashDrawerStatics] {
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::pointofservice::CashDrawer>) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::pointofservice::CashDrawer>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
@@ -15265,7 +15268,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.PointOfService
 pub mod radios { // Windows.Devices.Radios
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum RadioState: i32 {
 			Unknown (RadioState_Unknown) = 0, On (RadioState_On) = 1, Off (RadioState_Off) = 2, Disabled (RadioState_Disabled) = 3,
 		}}
@@ -15276,7 +15279,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			Unspecified (RadioAccessStatus_Unspecified) = 0, Allowed (RadioAccessStatus_Allowed) = 1, DeniedByUser (RadioAccessStatus_DeniedByUser) = 2, DeniedBySystem (RadioAccessStatus_DeniedBySystem) = 3,
 		}}
 		DEFINE_IID!(IID_IRadioStatics, 1605804334, 26571, 18094, 170, 233, 101, 145, 159, 134, 239, 244);
-		RT_INTERFACE!{interface IRadioStatics(IRadioStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRadioStatics] {
+		RT_INTERFACE!{static interface IRadioStatics(IRadioStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRadioStatics] {
 			fn GetRadiosAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::radios::Radio>>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::radios::Radio>) -> ::w::HRESULT,
@@ -15350,7 +15353,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Radios
 pub mod sensors { // Windows.Devices.Sensors
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum MagnetometerAccuracy: i32 {
 			Unknown (MagnetometerAccuracy_Unknown) = 0, Unreliable (MagnetometerAccuracy_Unreliable) = 1, Approximate (MagnetometerAccuracy_Approximate) = 2, High (MagnetometerAccuracy_High) = 3,
 		}}
@@ -15403,7 +15406,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IAccelerometerStatics, 2783087476, 23175, 18989, 190, 204, 15, 144, 110, 160, 97, 221);
-		RT_INTERFACE!{interface IAccelerometerStatics(IAccelerometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAccelerometerStatics] {
+		RT_INTERFACE!{static interface IAccelerometerStatics(IAccelerometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAccelerometerStatics] {
 			fn GetDefault(&mut self, out: *mut *mut ::rt::gen::windows::devices::sensors::Accelerometer) -> ::w::HRESULT
 		}}
 		impl IAccelerometerStatics {
@@ -15570,7 +15573,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IInclinometerStatics, 4063151441, 39984, 17722, 139, 73, 60, 62, 235, 51, 203, 97);
-		RT_INTERFACE!{interface IInclinometerStatics(IInclinometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IInclinometerStatics] {
+		RT_INTERFACE!{static interface IInclinometerStatics(IInclinometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IInclinometerStatics] {
 			fn GetDefault(&mut self, out: *mut *mut ::rt::gen::windows::devices::sensors::Inclinometer) -> ::w::HRESULT
 		}}
 		impl IInclinometerStatics {
@@ -15585,7 +15588,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IInclinometerStatics2 [CLSID_Inclinometer]}
 		DEFINE_CLSID!(CLSID_Inclinometer = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,73,110,99,108,105,110,111,109,101,116,101,114,0]);
 		DEFINE_IID!(IID_IInclinometerStatics2, 71276405, 27166, 18844, 134, 224, 99, 140, 26, 134, 75, 0);
-		RT_INTERFACE!{interface IInclinometerStatics2(IInclinometerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IInclinometerStatics2] {
+		RT_INTERFACE!{static interface IInclinometerStatics2(IInclinometerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IInclinometerStatics2] {
 			fn GetDefaultForRelativeReadings(&mut self, out: *mut *mut ::rt::gen::windows::devices::sensors::Inclinometer) -> ::w::HRESULT
 		}}
 		impl IInclinometerStatics2 {
@@ -15721,7 +15724,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IGyrometerStatics, 2209802185, 58525, 19257, 134, 230, 205, 85, 75, 228, 197, 193);
-		RT_INTERFACE!{interface IGyrometerStatics(IGyrometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGyrometerStatics] {
+		RT_INTERFACE!{static interface IGyrometerStatics(IGyrometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGyrometerStatics] {
 			fn GetDefault(&mut self, out: *mut *mut ::rt::gen::windows::devices::sensors::Gyrometer) -> ::w::HRESULT
 		}}
 		impl IGyrometerStatics {
@@ -15843,7 +15846,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ICompassStatics, 2596050911, 22252, 19493, 181, 77, 64, 166, 139, 181, 178, 105);
-		RT_INTERFACE!{interface ICompassStatics(ICompassStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICompassStatics] {
+		RT_INTERFACE!{static interface ICompassStatics(ICompassStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICompassStatics] {
 			fn GetDefault(&mut self, out: *mut *mut ::rt::gen::windows::devices::sensors::Compass) -> ::w::HRESULT
 		}}
 		impl ICompassStatics {
@@ -15970,7 +15973,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ILightSensorStatics, 1172016260, 50088, 18206, 154, 83, 100, 87, 250, 216, 124, 14);
-		RT_INTERFACE!{interface ILightSensorStatics(ILightSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILightSensorStatics] {
+		RT_INTERFACE!{static interface ILightSensorStatics(ILightSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILightSensorStatics] {
 			fn GetDefault(&mut self, out: *mut *mut ::rt::gen::windows::devices::sensors::LightSensor) -> ::w::HRESULT
 		}}
 		impl ILightSensorStatics {
@@ -16154,7 +16157,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IOrientationSensorStatics, 284133138, 64332, 17034, 137, 139, 39, 101, 228, 9, 230, 105);
-		RT_INTERFACE!{interface IOrientationSensorStatics(IOrientationSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IOrientationSensorStatics] {
+		RT_INTERFACE!{static interface IOrientationSensorStatics(IOrientationSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IOrientationSensorStatics] {
 			fn GetDefault(&mut self, out: *mut *mut ::rt::gen::windows::devices::sensors::OrientationSensor) -> ::w::HRESULT
 		}}
 		impl IOrientationSensorStatics {
@@ -16169,7 +16172,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IOrientationSensorStatics [CLSID_OrientationSensor]}
 		DEFINE_CLSID!(CLSID_OrientationSensor = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,79,114,105,101,110,116,97,116,105,111,110,83,101,110,115,111,114,0]);
 		DEFINE_IID!(IID_IOrientationSensorStatics2, 1507462411, 54282, 19569, 146, 118, 138, 39, 42, 10, 102, 25);
-		RT_INTERFACE!{interface IOrientationSensorStatics2(IOrientationSensorStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IOrientationSensorStatics2] {
+		RT_INTERFACE!{static interface IOrientationSensorStatics2(IOrientationSensorStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IOrientationSensorStatics2] {
 			fn GetDefaultForRelativeReadings(&mut self, out: *mut *mut ::rt::gen::windows::devices::sensors::OrientationSensor) -> ::w::HRESULT
 		}}
 		impl IOrientationSensorStatics2 {
@@ -16302,7 +16305,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ISimpleOrientationSensorStatics, 1928136303, 28842, 16582, 155, 27, 52, 51, 247, 69, 155, 78);
-		RT_INTERFACE!{interface ISimpleOrientationSensorStatics(ISimpleOrientationSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISimpleOrientationSensorStatics] {
+		RT_INTERFACE!{static interface ISimpleOrientationSensorStatics(ISimpleOrientationSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISimpleOrientationSensorStatics] {
 			fn GetDefault(&mut self, out: *mut *mut ::rt::gen::windows::devices::sensors::SimpleOrientationSensor) -> ::w::HRESULT
 		}}
 		impl ISimpleOrientationSensorStatics {
@@ -16383,7 +16386,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IMagnetometerStatics, 2235327692, 1688, 19930, 166, 223, 156, 185, 204, 74, 180, 10);
-		RT_INTERFACE!{interface IMagnetometerStatics(IMagnetometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMagnetometerStatics] {
+		RT_INTERFACE!{static interface IMagnetometerStatics(IMagnetometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMagnetometerStatics] {
 			fn GetDefault(&mut self, out: *mut *mut ::rt::gen::windows::devices::sensors::Magnetometer) -> ::w::HRESULT
 		}}
 		impl IMagnetometerStatics {
@@ -16500,7 +16503,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IActivitySensorStatics, 2803764893, 61067, 17873, 178, 91, 8, 204, 13, 249, 42, 182);
-		RT_INTERFACE!{interface IActivitySensorStatics(IActivitySensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IActivitySensorStatics] {
+		RT_INTERFACE!{static interface IActivitySensorStatics(IActivitySensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IActivitySensorStatics] {
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::sensors::ActivitySensor>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::sensors::ActivitySensor>) -> ::w::HRESULT,
@@ -16650,7 +16653,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class ActivitySensorReadingChangeReport: ::rt::gen::windows::devices::sensors::IActivitySensorReadingChangeReport}
 		RT_CLASS!{class ActivitySensorTriggerDetails: ::rt::gen::windows::devices::sensors::IActivitySensorTriggerDetails}
 		DEFINE_IID!(IID_IBarometerStatics, 678110986, 739, 20358, 132, 252, 253, 216, 146, 181, 148, 15);
-		RT_INTERFACE!{interface IBarometerStatics(IBarometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBarometerStatics] {
+		RT_INTERFACE!{static interface IBarometerStatics(IBarometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBarometerStatics] {
 			fn GetDefault(&mut self, out: *mut *mut ::rt::gen::windows::devices::sensors::Barometer) -> ::w::HRESULT
 		}}
 		impl IBarometerStatics {
@@ -16783,7 +16786,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class PedometerReading: ::rt::gen::windows::devices::sensors::IPedometerReading}
 		DEFINE_IID!(IID_IPedometerStatics, 2191002159, 16515, 19963, 180, 17, 147, 142, 160, 244, 185, 70);
-		RT_INTERFACE!{interface IPedometerStatics(IPedometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPedometerStatics] {
+		RT_INTERFACE!{static interface IPedometerStatics(IPedometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPedometerStatics] {
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::sensors::Pedometer>) -> ::w::HRESULT,
 			fn GetDefaultAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::sensors::Pedometer>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -16822,7 +16825,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IPedometerStatics [CLSID_Pedometer]}
 		DEFINE_CLSID!(CLSID_Pedometer = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,80,101,100,111,109,101,116,101,114,0]);
 		DEFINE_IID!(IID_IPedometerStatics2, 2046150331, 52750, 16691, 180, 126, 134, 39, 234, 114, 246, 119);
-		RT_INTERFACE!{interface IPedometerStatics2(IPedometerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPedometerStatics2] {
+		RT_INTERFACE!{static interface IPedometerStatics2(IPedometerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPedometerStatics2] {
 			fn GetReadingsFromTriggerDetails(&mut self, triggerDetails: *mut ::rt::gen::windows::devices::sensors::SensorDataThresholdTriggerDetails, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::sensors::PedometerReading>) -> ::w::HRESULT
 		}}
 		impl IPedometerStatics2 {
@@ -16890,7 +16893,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class PedometerReadingChangedEventArgs: ::rt::gen::windows::devices::sensors::IPedometerReadingChangedEventArgs}
 		DEFINE_IID!(IID_IPedometerDataThresholdFactory, 3417149264, 31316, 18027, 144, 16, 119, 161, 98, 252, 165, 215);
-		RT_INTERFACE!{interface IPedometerDataThresholdFactory(IPedometerDataThresholdFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPedometerDataThresholdFactory] {
+		RT_INTERFACE!{static interface IPedometerDataThresholdFactory(IPedometerDataThresholdFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPedometerDataThresholdFactory] {
 			fn Create(&mut self, sensor: *mut ::rt::gen::windows::devices::sensors::Pedometer, stepGoal: i32, out: *mut *mut ::rt::gen::windows::devices::sensors::PedometerDataThreshold) -> ::w::HRESULT
 		}}
 		impl IPedometerDataThresholdFactory {
@@ -16903,7 +16906,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class PedometerDataThreshold: ::rt::gen::windows::devices::sensors::ISensorDataThreshold [::rt::gen::windows::devices::sensors::IPedometerDataThresholdFactory] [CLSID_PedometerDataThreshold]}
 		DEFINE_CLSID!(CLSID_PedometerDataThreshold = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,80,101,100,111,109,101,116,101,114,68,97,116,97,84,104,114,101,115,104,111,108,100,0]);
 		DEFINE_IID!(IID_IProximitySensorStatics, 689464905, 25193, 20055, 165, 173, 130, 190, 128, 129, 51, 146);
-		RT_INTERFACE!{interface IProximitySensorStatics(IProximitySensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IProximitySensorStatics] {
+		RT_INTERFACE!{static interface IProximitySensorStatics(IProximitySensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IProximitySensorStatics] {
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromId(&mut self, sensorId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::devices::sensors::ProximitySensor) -> ::w::HRESULT
 		}}
@@ -17007,7 +17010,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IProximitySensorDataThresholdFactory, 2421866785, 27943, 19155, 157, 181, 100, 103, 242, 165, 173, 157);
-		RT_INTERFACE!{interface IProximitySensorDataThresholdFactory(IProximitySensorDataThresholdFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IProximitySensorDataThresholdFactory] {
+		RT_INTERFACE!{static interface IProximitySensorDataThresholdFactory(IProximitySensorDataThresholdFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IProximitySensorDataThresholdFactory] {
 			fn Create(&mut self, sensor: *mut ::rt::gen::windows::devices::sensors::ProximitySensor, out: *mut *mut ::rt::gen::windows::devices::sensors::ProximitySensorDataThreshold) -> ::w::HRESULT
 		}}
 		impl IProximitySensorDataThresholdFactory {
@@ -17020,7 +17023,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class ProximitySensorDataThreshold: ::rt::gen::windows::devices::sensors::ISensorDataThreshold [::rt::gen::windows::devices::sensors::IProximitySensorDataThresholdFactory] [CLSID_ProximitySensorDataThreshold]}
 		DEFINE_CLSID!(CLSID_ProximitySensorDataThreshold = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,80,114,111,120,105,109,105,116,121,83,101,110,115,111,114,68,97,116,97,84,104,114,101,115,104,111,108,100,0]);
 		DEFINE_IID!(IID_IProximitySensorStatics2, 3421795246, 59850, 16943, 173, 103, 76, 61, 37, 223, 53, 12);
-		RT_INTERFACE!{interface IProximitySensorStatics2(IProximitySensorStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IProximitySensorStatics2] {
+		RT_INTERFACE!{static interface IProximitySensorStatics2(IProximitySensorStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IProximitySensorStatics2] {
 			fn GetReadingsFromTriggerDetails(&mut self, triggerDetails: *mut ::rt::gen::windows::devices::sensors::SensorDataThresholdTriggerDetails, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::sensors::ProximitySensorReading>) -> ::w::HRESULT
 		}}
 		impl IProximitySensorStatics2 {
@@ -17031,7 +17034,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IAltimeterStatics, 2662651843, 58796, 18382, 142, 239, 211, 113, 129, 104, 192, 31);
-		RT_INTERFACE!{interface IAltimeterStatics(IAltimeterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAltimeterStatics] {
+		RT_INTERFACE!{static interface IAltimeterStatics(IAltimeterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAltimeterStatics] {
 			fn GetDefault(&mut self, out: *mut *mut ::rt::gen::windows::devices::sensors::Altimeter) -> ::w::HRESULT
 		}}
 		impl IAltimeterStatics {
@@ -17121,9 +17124,9 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 pub mod custom { // Windows.Devices.Sensors.Custom
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_ICustomSensorStatics, 2569032399, 62498, 19581, 131, 107, 231, 220, 116, 167, 18, 75);
-		RT_INTERFACE!{interface ICustomSensorStatics(ICustomSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICustomSensorStatics] {
+		RT_INTERFACE!{static interface ICustomSensorStatics(ICustomSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICustomSensorStatics] {
 			fn GetDeviceSelector(&mut self, interfaceId: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, sensorId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::sensors::custom::CustomSensor>) -> ::w::HRESULT
 		}}
@@ -17221,7 +17224,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Sensors
 pub mod serialcommunication { // Windows.Devices.SerialCommunication
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum SerialParity: i32 {
 			None (SerialParity_None) = 0, Odd (SerialParity_Odd) = 1, Even (SerialParity_Even) = 2, Mark (SerialParity_Mark) = 3, Space (SerialParity_Space) = 4,
 		}}
@@ -17238,7 +17241,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			BreakSignal (SerialPinChange_BreakSignal) = 0, CarrierDetect (SerialPinChange_CarrierDetect) = 1, ClearToSend (SerialPinChange_ClearToSend) = 2, DataSetReady (SerialPinChange_DataSetReady) = 3, RingIndicator (SerialPinChange_RingIndicator) = 4,
 		}}
 		DEFINE_IID!(IID_ISerialDeviceStatics, 93080176, 2102, 18835, 174, 26, 182, 26, 227, 190, 5, 107);
-		RT_INTERFACE!{interface ISerialDeviceStatics(ISerialDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISerialDeviceStatics] {
+		RT_INTERFACE!{static interface ISerialDeviceStatics(ISerialDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISerialDeviceStatics] {
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorFromPortName(&mut self, portName: ::w::HSTRING, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorFromUsbVidPid(&mut self, vendorId: u16, productId: u16, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -17487,7 +17490,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.SerialCommunication
 pub mod smartcards { // Windows.Devices.SmartCards
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum SmartCardReaderKind: i32 {
 			Any (SmartCardReaderKind_Any) = 0, Generic (SmartCardReaderKind_Generic) = 1, Tpm (SmartCardReaderKind_Tpm) = 2, Nfc (SmartCardReaderKind_Nfc) = 3, Uicc (SmartCardReaderKind_Uicc) = 4,
 		}}
@@ -17501,7 +17504,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			Allow (SmartCardPinCharacterPolicyOption_Allow) = 0, RequireAtLeastOne (SmartCardPinCharacterPolicyOption_RequireAtLeastOne) = 1, Disallow (SmartCardPinCharacterPolicyOption_Disallow) = 2,
 		}}
 		DEFINE_IID!(IID_ISmartCardReaderStatics, 272368865, 41418, 18674, 162, 129, 91, 111, 102, 154, 241, 7);
-		RT_INTERFACE!{interface ISmartCardReaderStatics(ISmartCardReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardReaderStatics] {
+		RT_INTERFACE!{static interface ISmartCardReaderStatics(ISmartCardReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardReaderStatics] {
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorWithKind(&mut self, kind: ::rt::gen::windows::devices::smartcards::SmartCardReaderKind, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardReader>) -> ::w::HRESULT
@@ -17632,7 +17635,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ISmartCardProvisioningStatics, 327690312, 3347, 20080, 151, 53, 81, 218, 236, 165, 37, 79);
-		RT_INTERFACE!{interface ISmartCardProvisioningStatics(ISmartCardProvisioningStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioningStatics] {
+		RT_INTERFACE!{static interface ISmartCardProvisioningStatics(ISmartCardProvisioningStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioningStatics] {
 			fn FromSmartCardAsync(&mut self, card: *mut ::rt::gen::windows::devices::smartcards::SmartCard, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>) -> ::w::HRESULT,
 			fn RequestVirtualSmartCardCreationAsync(&mut self, friendlyName: ::w::HSTRING, administrativeKey: *mut ::rt::gen::windows::storage::streams::IBuffer, pinPolicy: *mut ::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>) -> ::w::HRESULT,
 			fn RequestVirtualSmartCardCreationAsyncWithCardId(&mut self, friendlyName: ::w::HSTRING, administrativeKey: *mut ::rt::gen::windows::storage::streams::IBuffer, pinPolicy: *mut ::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, cardId: ::Guid, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>) -> ::w::HRESULT,
@@ -17666,7 +17669,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_CLSID!(CLSID_SmartCardProvisioning = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,80,114,111,118,105,115,105,111,110,105,110,103,0]);
 		RT_CLASS!{class SmartCardPinPolicy: ::rt::gen::windows::devices::smartcards::ISmartCardPinPolicy}
 		DEFINE_IID!(IID_ISmartCardProvisioningStatics2, 877119144, 51616, 19414, 181, 13, 37, 31, 78, 141, 58, 98);
-		RT_INTERFACE!{interface ISmartCardProvisioningStatics2(ISmartCardProvisioningStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioningStatics2] {
+		RT_INTERFACE!{static interface ISmartCardProvisioningStatics2(ISmartCardProvisioningStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioningStatics2] {
 			fn RequestAttestedVirtualSmartCardCreationAsync(&mut self, friendlyName: ::w::HSTRING, administrativeKey: *mut ::rt::gen::windows::storage::streams::IBuffer, pinPolicy: *mut ::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>) -> ::w::HRESULT,
 			fn RequestAttestedVirtualSmartCardCreationAsyncWithCardId(&mut self, friendlyName: ::w::HSTRING, administrativeKey: *mut ::rt::gen::windows::storage::streams::IBuffer, pinPolicy: *mut ::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, cardId: ::Guid, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>) -> ::w::HRESULT
 		}}
@@ -17917,7 +17920,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.SmartCards
 pub mod usb { // Windows.Devices.Usb
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum UsbTransferDirection: i32 {
 			Out (UsbTransferDirection_Out) = 0, In (UsbTransferDirection_In) = 1,
 		}}
@@ -17981,7 +17984,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class UsbControlRequestType: ::rt::gen::windows::devices::usb::IUsbControlRequestType}
 		DEFINE_IID!(IID_IUsbSetupPacketFactory, 3374677328, 6958, 19009, 162, 167, 51, 143, 12, 239, 60, 20);
-		RT_INTERFACE!{interface IUsbSetupPacketFactory(IUsbSetupPacketFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUsbSetupPacketFactory] {
+		RT_INTERFACE!{static interface IUsbSetupPacketFactory(IUsbSetupPacketFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUsbSetupPacketFactory] {
 			fn CreateWithEightByteBuffer(&mut self, eightByteBuffer: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::devices::usb::UsbSetupPacket) -> ::w::HRESULT
 		}}
 		impl IUsbSetupPacketFactory {
@@ -17991,7 +17994,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
-		RT_CLASS!{class UsbSetupPacket: ::rt::gen::windows::devices::usb::IUsbSetupPacket}
+		RT_CLASS!{class UsbSetupPacket: ::rt::gen::windows::devices::usb::IUsbSetupPacket [::rt::gen::windows::devices::usb::IUsbSetupPacketFactory] [CLSID_UsbSetupPacket]}
+		DEFINE_CLSID!(CLSID_UsbSetupPacket = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,83,101,116,117,112,80,97,99,107,101,116,0]);
 		DEFINE_IID!(IID_IUsbSetupPacket, 273391922, 51087, 19537, 182, 84, 228, 157, 2, 242, 203, 3);
 		RT_INTERFACE!{interface IUsbSetupPacket(IUsbSetupPacketVtbl): IInspectable(IInspectableVtbl) [IID_IUsbSetupPacket] {
 			fn get_RequestType(&mut self, out: *mut *mut ::rt::gen::windows::devices::usb::UsbControlRequestType) -> ::w::HRESULT,
@@ -18092,7 +18096,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class UsbDeviceClass: ::rt::gen::windows::devices::usb::IUsbDeviceClass}
 		DEFINE_IID!(IID_IUsbDeviceClassesStatics, 2987066663, 50560, 17817, 161, 101, 152, 27, 79, 208, 50, 48);
-		RT_INTERFACE!{interface IUsbDeviceClassesStatics(IUsbDeviceClassesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbDeviceClassesStatics] {
+		RT_INTERFACE!{static interface IUsbDeviceClassesStatics(IUsbDeviceClassesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbDeviceClassesStatics] {
 			fn get_CdcControl(&mut self, out: *mut *mut ::rt::gen::windows::devices::usb::UsbDeviceClass) -> ::w::HRESULT,
 			fn get_Physical(&mut self, out: *mut *mut ::rt::gen::windows::devices::usb::UsbDeviceClass) -> ::w::HRESULT,
 			fn get_PersonalHealthcare(&mut self, out: *mut *mut ::rt::gen::windows::devices::usb::UsbDeviceClass) -> ::w::HRESULT,
@@ -18161,7 +18165,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IUsbDeviceClassesStatics [CLSID_UsbDeviceClasses]}
 		DEFINE_CLSID!(CLSID_UsbDeviceClasses = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,68,101,118,105,99,101,67,108,97,115,115,101,115,0]);
 		DEFINE_IID!(IID_IUsbDeviceStatics, 107709858, 2487, 17478, 133, 2, 111, 230, 220, 170, 115, 9);
-		RT_INTERFACE!{interface IUsbDeviceStatics(IUsbDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbDeviceStatics] {
+		RT_INTERFACE!{static interface IUsbDeviceStatics(IUsbDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbDeviceStatics] {
 			fn GetDeviceSelector(&mut self, vendorId: u32, productId: u32, winUsbInterfaceClass: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorGuidOnly(&mut self, winUsbInterfaceClass: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorVidPidOnly(&mut self, vendorId: u32, productId: u32, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -18272,7 +18276,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IUsbConfigurationDescriptorStatics, 1112337811, 59200, 16545, 146, 189, 218, 18, 14, 160, 73, 20);
-		RT_INTERFACE!{interface IUsbConfigurationDescriptorStatics(IUsbConfigurationDescriptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbConfigurationDescriptorStatics] {
+		RT_INTERFACE!{static interface IUsbConfigurationDescriptorStatics(IUsbConfigurationDescriptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbConfigurationDescriptorStatics] {
 			fn TryParse(&mut self, descriptor: *mut ::rt::gen::windows::devices::usb::UsbDescriptor, parsed: *mut *mut ::rt::gen::windows::devices::usb::UsbConfigurationDescriptor, out: *mut bool) -> ::w::HRESULT,
 			fn Parse(&mut self, descriptor: *mut ::rt::gen::windows::devices::usb::UsbDescriptor, out: *mut *mut ::rt::gen::windows::devices::usb::UsbConfigurationDescriptor) -> ::w::HRESULT
 		}}
@@ -18328,7 +18332,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IUsbInterfaceDescriptorStatics, 3813318645, 30678, 18614, 176, 190, 22, 198, 66, 35, 22, 254);
-		RT_INTERFACE!{interface IUsbInterfaceDescriptorStatics(IUsbInterfaceDescriptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbInterfaceDescriptorStatics] {
+		RT_INTERFACE!{static interface IUsbInterfaceDescriptorStatics(IUsbInterfaceDescriptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbInterfaceDescriptorStatics] {
 			fn TryParse(&mut self, descriptor: *mut ::rt::gen::windows::devices::usb::UsbDescriptor, parsed: *mut *mut ::rt::gen::windows::devices::usb::UsbInterfaceDescriptor, out: *mut bool) -> ::w::HRESULT,
 			fn Parse(&mut self, descriptor: *mut ::rt::gen::windows::devices::usb::UsbDescriptor, out: *mut *mut ::rt::gen::windows::devices::usb::UsbInterfaceDescriptor) -> ::w::HRESULT
 		}}
@@ -18399,7 +18403,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class UsbBulkOutEndpointDescriptor: ::rt::gen::windows::devices::usb::IUsbBulkOutEndpointDescriptor}
 		RT_CLASS!{class UsbInterruptOutEndpointDescriptor: ::rt::gen::windows::devices::usb::IUsbInterruptOutEndpointDescriptor}
 		DEFINE_IID!(IID_IUsbEndpointDescriptorStatics, 3364925953, 39530, 18782, 168, 44, 41, 91, 158, 112, 129, 6);
-		RT_INTERFACE!{interface IUsbEndpointDescriptorStatics(IUsbEndpointDescriptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbEndpointDescriptorStatics] {
+		RT_INTERFACE!{static interface IUsbEndpointDescriptorStatics(IUsbEndpointDescriptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbEndpointDescriptorStatics] {
 			fn TryParse(&mut self, descriptor: *mut ::rt::gen::windows::devices::usb::UsbDescriptor, parsed: *mut *mut ::rt::gen::windows::devices::usb::UsbEndpointDescriptor, out: *mut bool) -> ::w::HRESULT,
 			fn Parse(&mut self, descriptor: *mut ::rt::gen::windows::devices::usb::UsbDescriptor, out: *mut *mut ::rt::gen::windows::devices::usb::UsbEndpointDescriptor) -> ::w::HRESULT
 		}}
@@ -18881,7 +18885,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Usb
 pub mod wifi { // Windows.Devices.WiFi
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum WiFiNetworkKind: i32 {
 			Any (WiFiNetworkKind_Any) = 0, Infrastructure (WiFiNetworkKind_Infrastructure) = 1, Adhoc (WiFiNetworkKind_Adhoc) = 2,
 		}}
@@ -18898,7 +18902,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			UnspecifiedFailure (WiFiConnectionStatus_UnspecifiedFailure) = 0, Success (WiFiConnectionStatus_Success) = 1, AccessRevoked (WiFiConnectionStatus_AccessRevoked) = 2, InvalidCredential (WiFiConnectionStatus_InvalidCredential) = 3, NetworkNotAvailable (WiFiConnectionStatus_NetworkNotAvailable) = 4, Timeout (WiFiConnectionStatus_Timeout) = 5, UnsupportedAuthenticationProtocol (WiFiConnectionStatus_UnsupportedAuthenticationProtocol) = 6,
 		}}
 		DEFINE_IID!(IID_IWiFiAdapterStatics, 3659922909, 53836, 17379, 170, 189, 196, 101, 159, 115, 15, 153);
-		RT_INTERFACE!{interface IWiFiAdapterStatics(IWiFiAdapterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiAdapterStatics] {
+		RT_INTERFACE!{static interface IWiFiAdapterStatics(IWiFiAdapterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiAdapterStatics] {
 			fn FindAllAdaptersAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::wifi::WiFiAdapter>>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::wifi::WiFiAdapter>) -> ::w::HRESULT,
@@ -19091,7 +19095,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.WiFi
 pub mod wifidirect { // Windows.Devices.WiFiDirect
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum WiFiDirectConnectionStatus: i32 {
 			Disconnected (WiFiDirectConnectionStatus_Disconnected) = 0, Connected (WiFiDirectConnectionStatus_Connected) = 1,
 		}}
@@ -19114,7 +19118,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			GroupOwnerNegotiation (WiFiDirectPairingProcedure_GroupOwnerNegotiation) = 0, Invitation (WiFiDirectPairingProcedure_Invitation) = 1,
 		}}
 		DEFINE_IID!(IID_IWiFiDirectDeviceStatics, 3899438460, 15020, 18513, 167, 146, 72, 42, 175, 147, 27, 4);
-		RT_INTERFACE!{interface IWiFiDirectDeviceStatics(IWiFiDirectDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectDeviceStatics] {
+		RT_INTERFACE!{static interface IWiFiDirectDeviceStatics(IWiFiDirectDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectDeviceStatics] {
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::wifidirect::WiFiDirectDevice>) -> ::w::HRESULT
 		}}
@@ -19135,7 +19139,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IWiFiDirectDeviceStatics [CLSID_WiFiDirectDevice]}
 		DEFINE_CLSID!(CLSID_WiFiDirectDevice = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,87,105,70,105,68,105,114,101,99,116,68,101,118,105,99,101,0]);
 		DEFINE_IID!(IID_IWiFiDirectDeviceStatics2, 445988425, 45315, 17278, 146, 38, 171, 103, 151, 19, 66, 249);
-		RT_INTERFACE!{interface IWiFiDirectDeviceStatics2(IWiFiDirectDeviceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectDeviceStatics2] {
+		RT_INTERFACE!{static interface IWiFiDirectDeviceStatics2(IWiFiDirectDeviceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectDeviceStatics2] {
 			fn GetDeviceSelector(&mut self, type_: ::rt::gen::windows::devices::wifidirect::WiFiDirectDeviceSelectorType, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, connectionParameters: *mut ::rt::gen::windows::devices::wifidirect::WiFiDirectConnectionParameters, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::wifidirect::WiFiDirectDevice>) -> ::w::HRESULT
 		}}
@@ -19155,7 +19159,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IWiFiDirectConnectionParametersStatics [CLSID_WiFiDirectConnectionParameters]}
 		DEFINE_CLSID!(CLSID_WiFiDirectConnectionParameters = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,87,105,70,105,68,105,114,101,99,116,67,111,110,110,101,99,116,105,111,110,80,97,114,97,109,101,116,101,114,115,0]);
 		DEFINE_IID!(IID_IWiFiDirectInformationElementStatics, 3687853846, 4517, 20064, 140, 170, 52, 119, 33, 72, 55, 138);
-		RT_INTERFACE!{interface IWiFiDirectInformationElementStatics(IWiFiDirectInformationElementStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectInformationElementStatics] {
+		RT_INTERFACE!{static interface IWiFiDirectInformationElementStatics(IWiFiDirectInformationElementStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectInformationElementStatics] {
 			fn CreateFromBuffer(&mut self, buffer: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<::rt::gen::windows::devices::wifidirect::WiFiDirectInformationElement>) -> ::w::HRESULT,
 			fn CreateFromDeviceInformation(&mut self, deviceInformation: *mut ::rt::gen::windows::devices::enumeration::DeviceInformation, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<::rt::gen::windows::devices::wifidirect::WiFiDirectInformationElement>) -> ::w::HRESULT
 		}}
@@ -19365,7 +19369,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class WiFiDirectAdvertisementPublisher: ::rt::gen::windows::devices::wifidirect::IWiFiDirectAdvertisementPublisher}
 		DEFINE_IID!(IID_IWiFiDirectConnectionParametersStatics, 1502278803, 30274, 17775, 185, 216, 232, 169, 235, 31, 64, 26);
-		RT_INTERFACE!{interface IWiFiDirectConnectionParametersStatics(IWiFiDirectConnectionParametersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectConnectionParametersStatics] {
+		RT_INTERFACE!{static interface IWiFiDirectConnectionParametersStatics(IWiFiDirectConnectionParametersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectConnectionParametersStatics] {
 			fn GetDevicePairingKinds(&mut self, configurationMethod: ::rt::gen::windows::devices::wifidirect::WiFiDirectConfigurationMethod, out: *mut ::rt::gen::windows::devices::enumeration::DevicePairingKinds) -> ::w::HRESULT
 		}}
 		impl IWiFiDirectConnectionParametersStatics {
@@ -19490,7 +19494,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 pub mod services { // Windows.Devices.WiFiDirect.Services
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum WiFiDirectServiceConfigurationMethod: i32 {
 			Default (WiFiDirectServiceConfigurationMethod_Default) = 0, PinDisplay (WiFiDirectServiceConfigurationMethod_PinDisplay) = 1, PinEntry (WiFiDirectServiceConfigurationMethod_PinEntry) = 2,
 		}}
@@ -19593,7 +19597,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class WiFiDirectServiceSessionRequest: ::rt::gen::windows::devices::wifidirect::services::IWiFiDirectServiceSessionRequest}
 		RT_CLASS!{class WiFiDirectServiceSessionRequestedEventArgs: ::rt::gen::windows::devices::wifidirect::services::IWiFiDirectServiceSessionRequestedEventArgs}
 		DEFINE_IID!(IID_IWiFiDirectServiceAdvertiserFactory, 822520845, 46150, 20243, 159, 154, 138, 233, 37, 254, 186, 43);
-		RT_INTERFACE!{interface IWiFiDirectServiceAdvertiserFactory(IWiFiDirectServiceAdvertiserFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceAdvertiserFactory] {
+		RT_INTERFACE!{static interface IWiFiDirectServiceAdvertiserFactory(IWiFiDirectServiceAdvertiserFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceAdvertiserFactory] {
 			fn CreateWiFiDirectServiceAdvertiser(&mut self, serviceName: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceAdvertiser) -> ::w::HRESULT
 		}}
 		impl IWiFiDirectServiceAdvertiserFactory {
@@ -19762,7 +19766,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IWiFiDirectServiceStatics, 2108948549, 64884, 18056, 183, 37, 93, 206, 134, 172, 242, 51);
-		RT_INTERFACE!{interface IWiFiDirectServiceStatics(IWiFiDirectServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceStatics] {
+		RT_INTERFACE!{static interface IWiFiDirectServiceStatics(IWiFiDirectServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceStatics] {
 			fn GetSelector(&mut self, serviceName: ::w::HSTRING, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetSelectorWithFilter(&mut self, serviceName: ::w::HSTRING, serviceInfoFilter: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::wifidirect::services::WiFiDirectService>) -> ::w::HRESULT
@@ -19975,12 +19979,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.WiFiDirect
 pub mod custom { // Windows.Devices.Custom
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct CustomDeviceContract {
 			
 		}}
 		DEFINE_IID!(IID_IKnownDeviceTypesStatics, 3998513602, 21576, 17882, 173, 27, 36, 148, 140, 35, 144, 148);
-		RT_INTERFACE!{interface IKnownDeviceTypesStatics(IKnownDeviceTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownDeviceTypesStatics] {
+		RT_INTERFACE!{static interface IKnownDeviceTypesStatics(IKnownDeviceTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownDeviceTypesStatics] {
 			fn get_Unknown(&mut self, out: *mut u16) -> ::w::HRESULT
 		}}
 		impl IKnownDeviceTypesStatics {
@@ -20034,7 +20038,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IIOControlCodeFactory, 2238348528, 19473, 17582, 175, 198, 184, 212, 162, 18, 120, 143);
-		RT_INTERFACE!{interface IIOControlCodeFactory(IIOControlCodeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IIOControlCodeFactory] {
+		RT_INTERFACE!{static interface IIOControlCodeFactory(IIOControlCodeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IIOControlCodeFactory] {
 			fn CreateIOControlCode(&mut self, deviceType: u16, function: u16, accessMode: ::rt::gen::windows::devices::custom::IOControlAccessMode, bufferingMethod: ::rt::gen::windows::devices::custom::IOControlBufferingMethod, out: *mut *mut ::rt::gen::windows::devices::custom::IOControlCode) -> ::w::HRESULT
 		}}
 		impl IIOControlCodeFactory {
@@ -20053,7 +20057,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			Shared (DeviceSharingMode_Shared) = 0, Exclusive (DeviceSharingMode_Exclusive) = 1,
 		}}
 		DEFINE_IID!(IID_ICustomDeviceStatics, 3357672210, 61260, 18097, 165, 142, 238, 179, 8, 220, 137, 23);
-		RT_INTERFACE!{interface ICustomDeviceStatics(ICustomDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICustomDeviceStatics] {
+		RT_INTERFACE!{static interface ICustomDeviceStatics(ICustomDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICustomDeviceStatics] {
 			fn GetDeviceSelector(&mut self, classGuid: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, desiredAccess: ::rt::gen::windows::devices::custom::DeviceAccessMode, sharingMode: ::rt::gen::windows::devices::custom::DeviceSharingMode, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::custom::CustomDevice>) -> ::w::HRESULT
 		}}
@@ -20104,7 +20108,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Custom
 pub mod portable { // Windows.Devices.Portable
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct PortableDeviceContract {
 			
 		}}
@@ -20112,7 +20116,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			CalendarService (ServiceDeviceType_CalendarService) = 0, ContactsService (ServiceDeviceType_ContactsService) = 1, DeviceStatusService (ServiceDeviceType_DeviceStatusService) = 2, NotesService (ServiceDeviceType_NotesService) = 3, RingtonesService (ServiceDeviceType_RingtonesService) = 4, SmsService (ServiceDeviceType_SmsService) = 5, TasksService (ServiceDeviceType_TasksService) = 6,
 		}}
 		DEFINE_IID!(IID_IStorageDeviceStatics, 1590576366, 6947, 19922, 134, 82, 188, 22, 79, 0, 49, 40);
-		RT_INTERFACE!{interface IStorageDeviceStatics(IStorageDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageDeviceStatics] {
+		RT_INTERFACE!{static interface IStorageDeviceStatics(IStorageDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageDeviceStatics] {
 			fn FromId(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::storage::StorageFolder) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
@@ -20129,7 +20133,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IServiceDeviceStatics, 2827097313, 22983, 18976, 171, 166, 159, 103, 7, 147, 114, 48);
-		RT_INTERFACE!{interface IServiceDeviceStatics(IServiceDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IServiceDeviceStatics] {
+		RT_INTERFACE!{static interface IServiceDeviceStatics(IServiceDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IServiceDeviceStatics] {
 			fn GetDeviceSelector(&mut self, serviceType: ::rt::gen::windows::devices::portable::ServiceDeviceType, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorFromServiceId(&mut self, serviceId: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
@@ -20152,7 +20156,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Portable
 pub mod scanners { // Windows.Devices.Scanners
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct ScannerDeviceContract {
 			
 		}}
@@ -20566,7 +20570,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IImageScannerStatics, 3159877390, 55300, 17527, 159, 181, 185, 17, 181, 71, 56, 151);
-		RT_INTERFACE!{interface IImageScannerStatics(IImageScannerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IImageScannerStatics] {
+		RT_INTERFACE!{static interface IImageScannerStatics(IImageScannerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IImageScannerStatics] {
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::scanners::ImageScanner>) -> ::w::HRESULT,
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
@@ -20589,7 +20593,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices
 pub mod storage { // Windows.Storage
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum FileAccessMode: i32 {
 			Read (FileAccessMode_Read) = 0, ReadWrite (FileAccessMode_ReadWrite) = 1,
 		}}
@@ -20597,7 +20601,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IStorageFolderStatics [CLSID_StorageFolder]}
 		DEFINE_CLSID!(CLSID_StorageFolder = &[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,70,111,108,100,101,114,0]);
 		DEFINE_IID!(IID_IStorageFolderStatics, 150153215, 34261, 18617, 174, 233, 40, 81, 30, 51, 159, 159);
-		RT_INTERFACE!{interface IStorageFolderStatics(IStorageFolderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolderStatics] {
+		RT_INTERFACE!{static interface IStorageFolderStatics(IStorageFolderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolderStatics] {
 			fn GetFolderFromPathAsync(&mut self, path: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::storage::StorageFolder>) -> ::w::HRESULT
 		}}
 		impl IStorageFolderStatics {
@@ -20756,7 +20760,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IStorageFileStatics [CLSID_StorageFile]}
 		DEFINE_CLSID!(CLSID_StorageFile = &[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,70,105,108,101,0]);
 		DEFINE_IID!(IID_IStorageFileStatics, 1501873936, 56050, 17352, 139, 180, 164, 211, 234, 207, 208, 63);
-		RT_INTERFACE!{interface IStorageFileStatics(IStorageFileStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFileStatics] {
+		RT_INTERFACE!{static interface IStorageFileStatics(IStorageFileStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFileStatics] {
 			fn GetFileFromPathAsync(&mut self, path: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::storage::StorageFile>) -> ::w::HRESULT,
 			fn GetFileFromApplicationUriAsync(&mut self, uri: *mut ::rt::gen::windows::foundation::Uri, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::storage::StorageFile>) -> ::w::HRESULT,
 			fn CreateStreamedFileAsync(&mut self, displayNameWithExtension: ::w::HSTRING, dataRequested: *mut ::rt::gen::windows::storage::StreamedFileDataRequestedHandler, thumbnail: *mut ::rt::gen::windows::storage::streams::IRandomAccessStreamReference, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::storage::StorageFile>) -> ::w::HRESULT,
@@ -20904,7 +20908,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 pub mod streams { // Windows.Storage.Streams
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IRandomAccessStreamWithContentType, 3424995367, 19261, 17295, 146, 50, 16, 199, 107, 199, 224, 56);
 		RT_INTERFACE!{interface IRandomAccessStreamWithContentType(IRandomAccessStreamWithContentTypeVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamWithContentType] {
 			
@@ -20969,7 +20973,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IDataReaderStatics [CLSID_DataReader]}
 		DEFINE_CLSID!(CLSID_DataReader = &[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,82,101,97,100,101,114,0]);
 		DEFINE_IID!(IID_IDataReaderStatics, 301776840, 63802, 18203, 177, 33, 243, 121, 227, 73, 49, 60);
-		RT_INTERFACE!{interface IDataReaderStatics(IDataReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderStatics] {
+		RT_INTERFACE!{static interface IDataReaderStatics(IDataReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderStatics] {
 			fn FromBuffer(&mut self, buffer: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::storage::streams::DataReader) -> ::w::HRESULT
 		}}
 		impl IDataReaderStatics {
@@ -20980,7 +20984,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IDataReaderFactory, 3612506183, 22490, 19989, 145, 76, 6, 128, 102, 153, 160, 152);
-		RT_INTERFACE!{interface IDataReaderFactory(IDataReaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderFactory] {
+		RT_INTERFACE!{static interface IDataReaderFactory(IDataReaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderFactory] {
 			fn CreateDataReader(&mut self, inputStream: *mut ::rt::gen::windows::storage::streams::IInputStream, out: *mut *mut ::rt::gen::windows::storage::streams::DataReader) -> ::w::HRESULT
 		}}
 		impl IDataReaderFactory {
@@ -21225,7 +21229,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Storage.Streams
 pub mod fileproperties { // Windows.Storage.FileProperties
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class BasicProperties: ::rt::gen::windows::storage::fileproperties::IBasicProperties}
 		DEFINE_IID!(IID_IBasicProperties, 3495777755, 30814, 19046, 190, 2, 155, 238, 197, 138, 234, 129);
 		RT_INTERFACE!{interface IBasicProperties(IBasicPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IBasicProperties] {
@@ -21254,10 +21258,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Storage
 pub mod system { // Windows.System
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 pub mod power { // Windows.System.Power
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum BatteryStatus: i32 {
 			NotPresent (BatteryStatus_NotPresent) = 0, Discharging (BatteryStatus_Discharging) = 1, Idle (BatteryStatus_Idle) = 2, Charging (BatteryStatus_Charging) = 3,
 		}}
@@ -21265,11 +21269,23 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.System
 pub mod security { // Windows.Security
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 pub mod credentials { // Windows.Security.Credentials
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
-		RT_CLASS!{class PasswordCredential: ::rt::gen::windows::security::credentials::IPasswordCredential}
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+		RT_CLASS!{class PasswordCredential: ::rt::gen::windows::security::credentials::IPasswordCredential [::rt::gen::windows::security::credentials::ICredentialFactory] [CLSID_PasswordCredential]}
+		DEFINE_CLSID!(CLSID_PasswordCredential = &[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,80,97,115,115,119,111,114,100,67,114,101,100,101,110,116,105,97,108,0]);
+		DEFINE_IID!(IID_ICredentialFactory, 1424954273, 48934, 18357, 151, 221, 222, 119, 155, 124, 173, 88);
+		RT_INTERFACE!{static interface ICredentialFactory(ICredentialFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICredentialFactory] {
+			fn CreatePasswordCredential(&mut self, resource: ::w::HSTRING, userName: ::w::HSTRING, password: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::security::credentials::PasswordCredential) -> ::w::HRESULT
+		}}
+		impl ICredentialFactory {
+			#[inline] pub unsafe fn create_password_credential(&mut self, resource: &HStringRef, userName: &HStringRef, password: &HStringRef) -> RtResult<ComPtr<::rt::gen::windows::security::credentials::PasswordCredential>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).CreatePasswordCredential)(self, resource.get(), userName.get(), password.get(), &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
 		DEFINE_IID!(IID_IPasswordCredential, 1790019977, 50976, 16807, 166, 193, 254, 173, 179, 99, 41, 160);
 		RT_INTERFACE!{interface IPasswordCredential(IPasswordCredentialVtbl): IInspectable(IInspectableVtbl) [IID_IPasswordCredential] {
 			fn get_Resource(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -21322,14 +21338,14 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Security.Credentials
 pub mod cryptography { // Windows.Security.Cryptography
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 pub mod certificates { // Windows.Security.Cryptography.Certificates
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class Certificate: ::rt::gen::windows::security::cryptography::certificates::ICertificate [::rt::gen::windows::security::cryptography::certificates::ICertificateFactory] [CLSID_Certificate]}
 		DEFINE_CLSID!(CLSID_Certificate = &[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,0]);
 		DEFINE_IID!(IID_ICertificateFactory, 397681180, 19375, 17570, 150, 8, 4, 251, 98, 177, 105, 66);
-		RT_INTERFACE!{interface ICertificateFactory(ICertificateFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateFactory] {
+		RT_INTERFACE!{static interface ICertificateFactory(ICertificateFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateFactory] {
 			fn CreateCertificate(&mut self, certBlob: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::security::cryptography::certificates::Certificate) -> ::w::HRESULT
 		}}
 		impl ICertificateFactory {
@@ -21569,12 +21585,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Security
 pub mod networking { // Windows.Networking
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class HostName: ::rt::gen::windows::networking::IHostName [::rt::gen::windows::networking::IHostNameFactory] [CLSID_HostName]}
 		RT_ACTIVATABLE!{IHostNameStatics [CLSID_HostName]}
 		DEFINE_CLSID!(CLSID_HostName = &[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,72,111,115,116,78,97,109,101,0]);
 		DEFINE_IID!(IID_IHostNameStatics, 4136424639, 41864, 20107, 145, 234, 84, 221, 109, 217, 1, 192);
-		RT_INTERFACE!{interface IHostNameStatics(IHostNameStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHostNameStatics] {
+		RT_INTERFACE!{static interface IHostNameStatics(IHostNameStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHostNameStatics] {
 			fn Compare(&mut self, value1: ::w::HSTRING, value2: ::w::HSTRING, out: *mut i32) -> ::w::HRESULT
 		}}
 		impl IHostNameStatics {
@@ -21585,7 +21601,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IHostNameFactory, 1166812141, 28975, 17782, 173, 241, 194, 11, 44, 100, 53, 88);
-		RT_INTERFACE!{interface IHostNameFactory(IHostNameFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHostNameFactory] {
+		RT_INTERFACE!{static interface IHostNameFactory(IHostNameFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHostNameFactory] {
 			fn CreateHostName(&mut self, hostName: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::networking::HostName) -> ::w::HRESULT
 		}}
 		impl IHostNameFactory {
@@ -21642,7 +21658,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class EndpointPair: ::rt::gen::windows::networking::IEndpointPair [::rt::gen::windows::networking::IEndpointPairFactory] [CLSID_EndpointPair]}
 		DEFINE_CLSID!(CLSID_EndpointPair = &[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,69,110,100,112,111,105,110,116,80,97,105,114,0]);
 		DEFINE_IID!(IID_IEndpointPairFactory, 3054098801, 25824, 17451, 170, 111, 204, 140, 143, 24, 31, 120);
-		RT_INTERFACE!{interface IEndpointPairFactory(IEndpointPairFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEndpointPairFactory] {
+		RT_INTERFACE!{static interface IEndpointPairFactory(IEndpointPairFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEndpointPairFactory] {
 			fn CreateEndpointPair(&mut self, localHostName: *mut ::rt::gen::windows::networking::HostName, localServiceName: ::w::HSTRING, remoteHostName: *mut ::rt::gen::windows::networking::HostName, remoteServiceName: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::networking::EndpointPair) -> ::w::HRESULT
 		}}
 		impl IEndpointPairFactory {
@@ -21706,7 +21722,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}}
 pub mod connectivity { // Windows.Networking.Connectivity
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class IPInformation: ::rt::gen::windows::networking::connectivity::IIPInformation}
 		DEFINE_IID!(IID_IIPInformation, 3629204960, 5007, 18391, 155, 58, 54, 187, 72, 140, 239, 51);
 		RT_INTERFACE!{interface IIPInformation(IIPInformationVtbl): IInspectable(IInspectableVtbl) [IID_IIPInformation] {
@@ -21992,7 +22008,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Networking.Connectivity
 pub mod sockets { // Windows.Networking.Sockets
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum SocketSslErrorSeverity: i32 {
 			None (SocketSslErrorSeverity_None) = 0, Ignorable (SocketSslErrorSeverity_Ignorable) = 1, Fatal (SocketSslErrorSeverity_Fatal) = 2,
 		}}
@@ -22281,7 +22297,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{IDatagramSocketStatics [CLSID_DatagramSocket]}
 		DEFINE_CLSID!(CLSID_DatagramSocket = &[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,68,97,116,97,103,114,97,109,83,111,99,107,101,116,0]);
 		DEFINE_IID!(IID_IDatagramSocketStatics, 3922078446, 5268, 18977, 187, 126, 133, 137, 252, 117, 29, 157);
-		RT_INTERFACE!{interface IDatagramSocketStatics(IDatagramSocketStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketStatics] {
+		RT_INTERFACE!{static interface IDatagramSocketStatics(IDatagramSocketStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketStatics] {
 			fn GetEndpointPairsAsync(&mut self, remoteHostName: *mut ::rt::gen::windows::networking::HostName, remoteServiceName: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>>) -> ::w::HRESULT,
 			fn GetEndpointPairsWithSortOptionsAsync(&mut self, remoteHostName: *mut ::rt::gen::windows::networking::HostName, remoteServiceName: ::w::HSTRING, sortOptions: ::rt::gen::windows::networking::HostNameSortOptions, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>>) -> ::w::HRESULT
 		}}
@@ -22470,13 +22486,13 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Networking
 pub mod globalization { // Windows.Globalization
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class Language: ::rt::gen::windows::globalization::ILanguage [::rt::gen::windows::globalization::ILanguageFactory] [CLSID_Language]}
 		RT_ACTIVATABLE!{ILanguageStatics [CLSID_Language]}
 		RT_ACTIVATABLE!{ILanguageStatics2 [CLSID_Language]}
 		DEFINE_CLSID!(CLSID_Language = &[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,76,97,110,103,117,97,103,101,0]);
 		DEFINE_IID!(IID_ILanguageStatics2, 806985582, 37195, 19242, 157, 110, 227, 176, 226, 125, 190, 79);
-		RT_INTERFACE!{interface ILanguageStatics2(ILanguageStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics2] {
+		RT_INTERFACE!{static interface ILanguageStatics2(ILanguageStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics2] {
 			fn TrySetInputMethodLanguageTag(&mut self, languageTag: ::w::HSTRING, out: *mut bool) -> ::w::HRESULT
 		}}
 		impl ILanguageStatics2 {
@@ -22487,7 +22503,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ILanguageStatics, 2990331223, 2149, 18132, 137, 184, 213, 155, 232, 153, 15, 13);
-		RT_INTERFACE!{interface ILanguageStatics(ILanguageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics] {
+		RT_INTERFACE!{static interface ILanguageStatics(ILanguageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics] {
 			fn IsWellFormed(&mut self, languageTag: ::w::HSTRING, out: *mut bool) -> ::w::HRESULT,
 			fn get_CurrentInputMethodLanguageTag(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
@@ -22504,7 +22520,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ILanguageFactory, 2600620716, 3111, 17656, 183, 146, 151, 147, 251, 102, 198, 62);
-		RT_INTERFACE!{interface ILanguageFactory(ILanguageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFactory] {
+		RT_INTERFACE!{static interface ILanguageFactory(ILanguageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFactory] {
 			fn CreateLanguage(&mut self, languageTag: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::globalization::Language) -> ::w::HRESULT
 		}}
 		impl ILanguageFactory {
@@ -22546,13 +22562,13 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Globalization
 pub mod ui { // Windows.UI
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct Color {
 			A: u8, R: u8, G: u8, B: u8,
 		}}
 pub mod popups { // Windows.UI.Popups
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum Placement: i32 {
 			Default (Placement_Default) = 0, Above (Placement_Above) = 1, Below (Placement_Below) = 2, Left (Placement_Left) = 3, Right (Placement_Right) = 4,
 		}}
@@ -22560,10 +22576,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.UI
 pub mod applicationmodel { // Windows.ApplicationModel
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 pub mod background { // Windows.ApplicationModel.Background
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class DeviceWatcherTrigger: ::rt::gen::windows::applicationmodel::background::IDeviceWatcherTrigger}
 		DEFINE_IID!(IID_IDeviceWatcherTrigger, 2757853149, 34163, 16992, 190, 252, 91, 236, 137, 203, 105, 61);
 		RT_INTERFACE!{interface IDeviceWatcherTrigger(IDeviceWatcherTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceWatcherTrigger] {
@@ -22576,10 +22592,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.ApplicationModel
 pub mod graphics { // Windows.Graphics
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 pub mod imaging { // Windows.Graphics.Imaging
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum BitmapAlphaMode: i32 {
 			Premultiplied (BitmapAlphaMode_Premultiplied) = 0, Straight (BitmapAlphaMode_Straight) = 1, Ignore (BitmapAlphaMode_Ignore) = 2,
 		}}
@@ -22782,7 +22798,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class BitmapTypedValue: ::rt::gen::windows::graphics::imaging::IBitmapTypedValue [::rt::gen::windows::graphics::imaging::IBitmapTypedValueFactory] [CLSID_BitmapTypedValue]}
 		DEFINE_CLSID!(CLSID_BitmapTypedValue = &[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,84,121,112,101,100,86,97,108,117,101,0]);
 		DEFINE_IID!(IID_IBitmapTypedValueFactory, 2463872409, 52755, 18107, 149, 69, 203, 58, 63, 99, 235, 139);
-		RT_INTERFACE!{interface IBitmapTypedValueFactory(IBitmapTypedValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapTypedValueFactory] {
+		RT_INTERFACE!{static interface IBitmapTypedValueFactory(IBitmapTypedValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapTypedValueFactory] {
 			fn Create(&mut self, value: *mut IInspectable, type_: ::rt::gen::windows::foundation::PropertyType, out: *mut *mut ::rt::gen::windows::graphics::imaging::BitmapTypedValue) -> ::w::HRESULT
 		}}
 		impl IBitmapTypedValueFactory {
@@ -22814,7 +22830,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{ISoftwareBitmapStatics [CLSID_SoftwareBitmap]}
 		DEFINE_CLSID!(CLSID_SoftwareBitmap = &[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,83,111,102,116,119,97,114,101,66,105,116,109,97,112,0]);
 		DEFINE_IID!(IID_ISoftwareBitmapStatics, 3741550043, 26415, 19101, 128, 110, 194, 68, 47, 52, 62, 134);
-		RT_INTERFACE!{interface ISoftwareBitmapStatics(ISoftwareBitmapStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISoftwareBitmapStatics] {
+		RT_INTERFACE!{static interface ISoftwareBitmapStatics(ISoftwareBitmapStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISoftwareBitmapStatics] {
 			fn Copy(&mut self, source: *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap, out: *mut *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> ::w::HRESULT,
 			fn Convert(&mut self, source: *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap, format: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, out: *mut *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> ::w::HRESULT,
 			fn ConvertWithAlpha(&mut self, source: *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap, format: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, alpha: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode, out: *mut *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> ::w::HRESULT,
@@ -22861,7 +22877,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ISoftwareBitmapFactory, 3382700905, 11618, 19783, 166, 179, 79, 219, 106, 7, 253, 248);
-		RT_INTERFACE!{interface ISoftwareBitmapFactory(ISoftwareBitmapFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISoftwareBitmapFactory] {
+		RT_INTERFACE!{static interface ISoftwareBitmapFactory(ISoftwareBitmapFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISoftwareBitmapFactory] {
 			fn Create(&mut self, format: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, width: i32, height: i32, out: *mut *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> ::w::HRESULT,
 			fn CreateWithAlpha(&mut self, format: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, width: i32, height: i32, alpha: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode, out: *mut *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> ::w::HRESULT
 		}}
@@ -22988,20 +23004,20 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Graphics.Imaging
 pub mod display { // Windows.Graphics.Display
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum DisplayOrientations: u32 {
 			None (DisplayOrientations_None) = 0, Landscape (DisplayOrientations_Landscape) = 1, Portrait (DisplayOrientations_Portrait) = 2, LandscapeFlipped (DisplayOrientations_LandscapeFlipped) = 4, PortraitFlipped (DisplayOrientations_PortraitFlipped) = 8,
 		}}
 } // Windows.Graphics.Display
 pub mod directx { // Windows.Graphics.DirectX
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum DirectXPixelFormat: i32 {
 			Unknown (DirectXPixelFormat_Unknown) = 0, R32G32B32A32Typeless (DirectXPixelFormat_R32G32B32A32Typeless) = 1, R32G32B32A32Float (DirectXPixelFormat_R32G32B32A32Float) = 2, R32G32B32A32UInt (DirectXPixelFormat_R32G32B32A32UInt) = 3, R32G32B32A32Int (DirectXPixelFormat_R32G32B32A32Int) = 4, R32G32B32Typeless (DirectXPixelFormat_R32G32B32Typeless) = 5, R32G32B32Float (DirectXPixelFormat_R32G32B32Float) = 6, R32G32B32UInt (DirectXPixelFormat_R32G32B32UInt) = 7, R32G32B32Int (DirectXPixelFormat_R32G32B32Int) = 8, R16G16B16A16Typeless (DirectXPixelFormat_R16G16B16A16Typeless) = 9, R16G16B16A16Float (DirectXPixelFormat_R16G16B16A16Float) = 10, R16G16B16A16UIntNormalized (DirectXPixelFormat_R16G16B16A16UIntNormalized) = 11, R16G16B16A16UInt (DirectXPixelFormat_R16G16B16A16UInt) = 12, R16G16B16A16IntNormalized (DirectXPixelFormat_R16G16B16A16IntNormalized) = 13, R16G16B16A16Int (DirectXPixelFormat_R16G16B16A16Int) = 14, R32G32Typeless (DirectXPixelFormat_R32G32Typeless) = 15, R32G32Float (DirectXPixelFormat_R32G32Float) = 16, R32G32UInt (DirectXPixelFormat_R32G32UInt) = 17, R32G32Int (DirectXPixelFormat_R32G32Int) = 18, R32G8X24Typeless (DirectXPixelFormat_R32G8X24Typeless) = 19, D32FloatS8X24UInt (DirectXPixelFormat_D32FloatS8X24UInt) = 20, R32FloatX8X24Typeless (DirectXPixelFormat_R32FloatX8X24Typeless) = 21, X32TypelessG8X24UInt (DirectXPixelFormat_X32TypelessG8X24UInt) = 22, R10G10B10A2Typeless (DirectXPixelFormat_R10G10B10A2Typeless) = 23, R10G10B10A2UIntNormalized (DirectXPixelFormat_R10G10B10A2UIntNormalized) = 24, R10G10B10A2UInt (DirectXPixelFormat_R10G10B10A2UInt) = 25, R11G11B10Float (DirectXPixelFormat_R11G11B10Float) = 26, R8G8B8A8Typeless (DirectXPixelFormat_R8G8B8A8Typeless) = 27, R8G8B8A8UIntNormalized (DirectXPixelFormat_R8G8B8A8UIntNormalized) = 28, R8G8B8A8UIntNormalizedSrgb (DirectXPixelFormat_R8G8B8A8UIntNormalizedSrgb) = 29, R8G8B8A8UInt (DirectXPixelFormat_R8G8B8A8UInt) = 30, R8G8B8A8IntNormalized (DirectXPixelFormat_R8G8B8A8IntNormalized) = 31, R8G8B8A8Int (DirectXPixelFormat_R8G8B8A8Int) = 32, R16G16Typeless (DirectXPixelFormat_R16G16Typeless) = 33, R16G16Float (DirectXPixelFormat_R16G16Float) = 34, R16G16UIntNormalized (DirectXPixelFormat_R16G16UIntNormalized) = 35, R16G16UInt (DirectXPixelFormat_R16G16UInt) = 36, R16G16IntNormalized (DirectXPixelFormat_R16G16IntNormalized) = 37, R16G16Int (DirectXPixelFormat_R16G16Int) = 38, R32Typeless (DirectXPixelFormat_R32Typeless) = 39, D32Float (DirectXPixelFormat_D32Float) = 40, R32Float (DirectXPixelFormat_R32Float) = 41, R32UInt (DirectXPixelFormat_R32UInt) = 42, R32Int (DirectXPixelFormat_R32Int) = 43, R24G8Typeless (DirectXPixelFormat_R24G8Typeless) = 44, D24UIntNormalizedS8UInt (DirectXPixelFormat_D24UIntNormalizedS8UInt) = 45, R24UIntNormalizedX8Typeless (DirectXPixelFormat_R24UIntNormalizedX8Typeless) = 46, X24TypelessG8UInt (DirectXPixelFormat_X24TypelessG8UInt) = 47, R8G8Typeless (DirectXPixelFormat_R8G8Typeless) = 48, R8G8UIntNormalized (DirectXPixelFormat_R8G8UIntNormalized) = 49, R8G8UInt (DirectXPixelFormat_R8G8UInt) = 50, R8G8IntNormalized (DirectXPixelFormat_R8G8IntNormalized) = 51, R8G8Int (DirectXPixelFormat_R8G8Int) = 52, R16Typeless (DirectXPixelFormat_R16Typeless) = 53, R16Float (DirectXPixelFormat_R16Float) = 54, D16UIntNormalized (DirectXPixelFormat_D16UIntNormalized) = 55, R16UIntNormalized (DirectXPixelFormat_R16UIntNormalized) = 56, R16UInt (DirectXPixelFormat_R16UInt) = 57, R16IntNormalized (DirectXPixelFormat_R16IntNormalized) = 58, R16Int (DirectXPixelFormat_R16Int) = 59, R8Typeless (DirectXPixelFormat_R8Typeless) = 60, R8UIntNormalized (DirectXPixelFormat_R8UIntNormalized) = 61, R8UInt (DirectXPixelFormat_R8UInt) = 62, R8IntNormalized (DirectXPixelFormat_R8IntNormalized) = 63, R8Int (DirectXPixelFormat_R8Int) = 64, A8UIntNormalized (DirectXPixelFormat_A8UIntNormalized) = 65, R1UIntNormalized (DirectXPixelFormat_R1UIntNormalized) = 66, R9G9B9E5SharedExponent (DirectXPixelFormat_R9G9B9E5SharedExponent) = 67, R8G8B8G8UIntNormalized (DirectXPixelFormat_R8G8B8G8UIntNormalized) = 68, G8R8G8B8UIntNormalized (DirectXPixelFormat_G8R8G8B8UIntNormalized) = 69, BC1Typeless (DirectXPixelFormat_BC1Typeless) = 70, BC1UIntNormalized (DirectXPixelFormat_BC1UIntNormalized) = 71, BC1UIntNormalizedSrgb (DirectXPixelFormat_BC1UIntNormalizedSrgb) = 72, BC2Typeless (DirectXPixelFormat_BC2Typeless) = 73, BC2UIntNormalized (DirectXPixelFormat_BC2UIntNormalized) = 74, BC2UIntNormalizedSrgb (DirectXPixelFormat_BC2UIntNormalizedSrgb) = 75, BC3Typeless (DirectXPixelFormat_BC3Typeless) = 76, BC3UIntNormalized (DirectXPixelFormat_BC3UIntNormalized) = 77, BC3UIntNormalizedSrgb (DirectXPixelFormat_BC3UIntNormalizedSrgb) = 78, BC4Typeless (DirectXPixelFormat_BC4Typeless) = 79, BC4UIntNormalized (DirectXPixelFormat_BC4UIntNormalized) = 80, BC4IntNormalized (DirectXPixelFormat_BC4IntNormalized) = 81, BC5Typeless (DirectXPixelFormat_BC5Typeless) = 82, BC5UIntNormalized (DirectXPixelFormat_BC5UIntNormalized) = 83, BC5IntNormalized (DirectXPixelFormat_BC5IntNormalized) = 84, B5G6R5UIntNormalized (DirectXPixelFormat_B5G6R5UIntNormalized) = 85, B5G5R5A1UIntNormalized (DirectXPixelFormat_B5G5R5A1UIntNormalized) = 86, B8G8R8A8UIntNormalized (DirectXPixelFormat_B8G8R8A8UIntNormalized) = 87, B8G8R8X8UIntNormalized (DirectXPixelFormat_B8G8R8X8UIntNormalized) = 88, R10G10B10XRBiasA2UIntNormalized (DirectXPixelFormat_R10G10B10XRBiasA2UIntNormalized) = 89, B8G8R8A8Typeless (DirectXPixelFormat_B8G8R8A8Typeless) = 90, B8G8R8A8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8A8UIntNormalizedSrgb) = 91, B8G8R8X8Typeless (DirectXPixelFormat_B8G8R8X8Typeless) = 92, B8G8R8X8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8X8UIntNormalizedSrgb) = 93, BC6HTypeless (DirectXPixelFormat_BC6HTypeless) = 94, BC6H16UnsignedFloat (DirectXPixelFormat_BC6H16UnsignedFloat) = 95, BC6H16Float (DirectXPixelFormat_BC6H16Float) = 96, BC7Typeless (DirectXPixelFormat_BC7Typeless) = 97, BC7UIntNormalized (DirectXPixelFormat_BC7UIntNormalized) = 98, BC7UIntNormalizedSrgb (DirectXPixelFormat_BC7UIntNormalizedSrgb) = 99, Ayuv (DirectXPixelFormat_Ayuv) = 100, Y410 (DirectXPixelFormat_Y410) = 101, Y416 (DirectXPixelFormat_Y416) = 102, NV12 (DirectXPixelFormat_NV12) = 103, P010 (DirectXPixelFormat_P010) = 104, P016 (DirectXPixelFormat_P016) = 105, Opaque420 (DirectXPixelFormat_Opaque420) = 106, Yuy2 (DirectXPixelFormat_Yuy2) = 107, Y210 (DirectXPixelFormat_Y210) = 108, Y216 (DirectXPixelFormat_Y216) = 109, NV11 (DirectXPixelFormat_NV11) = 110, AI44 (DirectXPixelFormat_AI44) = 111, IA44 (DirectXPixelFormat_IA44) = 112, P8 (DirectXPixelFormat_P8) = 113, A8P8 (DirectXPixelFormat_A8P8) = 114, B4G4R4A4UIntNormalized (DirectXPixelFormat_B4G4R4A4UIntNormalized) = 115, P208 (DirectXPixelFormat_P208) = 130, V208 (DirectXPixelFormat_V208) = 131, V408 (DirectXPixelFormat_V408) = 132,
 		}}
 pub mod direct3d11 { // Windows.Graphics.DirectX.Direct3D11
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IDirect3DSurface, 200581446, 5057, 18068, 190, 227, 122, 191, 21, 234, 245, 134);
 		RT_INTERFACE!{interface IDirect3DSurface(IDirect3DSurfaceVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3DSurface] {
 			fn get_Description(&mut self, out: *mut ::rt::gen::windows::graphics::directx::direct3d11::Direct3DSurfaceDescription) -> ::w::HRESULT
@@ -23023,7 +23039,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Graphics.DirectX
 pub mod printing { // Windows.Graphics.Printing
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum PrintOrientation: i32 {
 			Default (PrintOrientation_Default) = 0, NotAvailable (PrintOrientation_NotAvailable) = 1, PrinterCustom (PrintOrientation_PrinterCustom) = 2, Portrait (PrintOrientation_Portrait) = 3, PortraitFlipped (PrintOrientation_PortraitFlipped) = 4, Landscape (PrintOrientation_Landscape) = 5, LandscapeFlipped (PrintOrientation_LandscapeFlipped) = 6,
 		}}
@@ -23034,11 +23050,11 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Graphics
 pub mod media { // Windows.Media
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class VideoFrame: ::rt::gen::windows::media::IVideoFrame [::rt::gen::windows::media::IVideoFrameFactory] [CLSID_VideoFrame]}
 		DEFINE_CLSID!(CLSID_VideoFrame = &[87,105,110,100,111,119,115,46,77,101,100,105,97,46,86,105,100,101,111,70,114,97,109,101,0]);
 		DEFINE_IID!(IID_IVideoFrameFactory, 21720425, 8744, 19602, 146, 255, 80, 195, 128, 211, 231, 118);
-		RT_INTERFACE!{interface IVideoFrameFactory(IVideoFrameFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVideoFrameFactory] {
+		RT_INTERFACE!{static interface IVideoFrameFactory(IVideoFrameFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVideoFrameFactory] {
 			fn Create(&mut self, format: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, width: i32, height: i32, out: *mut *mut ::rt::gen::windows::media::VideoFrame) -> ::w::HRESULT,
 			fn CreateWithAlpha(&mut self, format: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, width: i32, height: i32, alpha: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode, out: *mut *mut ::rt::gen::windows::media::VideoFrame) -> ::w::HRESULT
 		}}
@@ -23079,10 +23095,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 pub mod devices { // Windows.Media.Devices
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 pub mod core { // Windows.Media.Devices.Core
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class CameraIntrinsics: ::rt::gen::windows::media::devices::core::ICameraIntrinsics}
 		DEFINE_IID!(IID_ICameraIntrinsics, 178711858, 25993, 18906, 175, 222, 89, 66, 112, 202, 10, 172);
 		RT_INTERFACE!{interface ICameraIntrinsics(ICameraIntrinsicsVtbl): IInspectable(IInspectableVtbl) [IID_ICameraIntrinsics] {
@@ -23152,7 +23168,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Media
 pub mod foundation { // Windows.Foundation
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IClosable, 819308585, 32676, 16422, 131, 187, 215, 91, 174, 78, 169, 158);
 		RT_INTERFACE!{interface IClosable(IClosableVtbl): IInspectable(IInspectableVtbl) [IID_IClosable] {
 			fn Close(&mut self) -> ::w::HRESULT
@@ -23194,7 +23210,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetUInt64(&mut self, out: *mut u64) -> ::w::HRESULT,
 			fn GetSingle(&mut self, out: *mut f32) -> ::w::HRESULT,
 			fn GetDouble(&mut self, out: *mut f64) -> ::w::HRESULT,
-			fn GetChar16(&mut self, out: *mut Char) -> ::w::HRESULT,
+			fn GetChar16(&mut self, out: *mut ::Char) -> ::w::HRESULT,
 			fn GetBoolean(&mut self, out: *mut bool) -> ::w::HRESULT,
 			fn GetString(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetGuid(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
@@ -23212,7 +23228,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetUInt64Array(&mut self, valueSize: *mut u32, value: *mut *mut u64) -> ::w::HRESULT,
 			fn GetSingleArray(&mut self, valueSize: *mut u32, value: *mut *mut f32) -> ::w::HRESULT,
 			fn GetDoubleArray(&mut self, valueSize: *mut u32, value: *mut *mut f64) -> ::w::HRESULT,
-			fn GetChar16Array(&mut self, valueSize: *mut u32, value: *mut *mut Char) -> ::w::HRESULT,
+			fn GetChar16Array(&mut self, valueSize: *mut u32, value: *mut *mut ::Char) -> ::w::HRESULT,
 			fn GetBooleanArray(&mut self, valueSize: *mut u32, value: *mut *mut bool) -> ::w::HRESULT,
 			fn GetStringArray(&mut self, valueSize: *mut u32, value: *mut *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetInspectableArray(&mut self, valueSize: *mut u32, value: *mut *mut *mut IInspectable) -> ::w::HRESULT,
@@ -23279,7 +23295,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDouble)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_char16(&mut self) -> RtResult<Char> {
+			#[inline] pub unsafe fn get_char16(&mut self) -> RtResult<::Char> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).GetChar16)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
@@ -23369,7 +23385,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetDoubleArray)(self, &mut valueSize, &mut value);
 				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_char16_array(&mut self) -> RtResult<ComArray<Char>> {
+			#[inline] pub unsafe fn get_char16_array(&mut self) -> RtResult<ComArray<::Char>> {
 				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetChar16Array)(self, &mut valueSize, &mut value);
 				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
@@ -23421,7 +23437,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IPropertyValueStatics, 1654381512, 55602, 20468, 150, 185, 141, 150, 197, 193, 232, 88);
-		RT_INTERFACE!{interface IPropertyValueStatics(IPropertyValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPropertyValueStatics] {
+		RT_INTERFACE!{static interface IPropertyValueStatics(IPropertyValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPropertyValueStatics] {
 			fn CreateEmpty(&mut self, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateUInt8(&mut self, value: u8, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateInt16(&mut self, value: i16, out: *mut *mut IInspectable) -> ::w::HRESULT,
@@ -23432,7 +23448,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn CreateUInt64(&mut self, value: u64, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateSingle(&mut self, value: f32, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateDouble(&mut self, value: f64, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreateChar16(&mut self, value: Char, out: *mut *mut IInspectable) -> ::w::HRESULT,
+			fn CreateChar16(&mut self, value: ::Char, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateBoolean(&mut self, value: bool, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateString(&mut self, value: ::w::HSTRING, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateInspectable(&mut self, value: *mut IInspectable, out: *mut *mut IInspectable) -> ::w::HRESULT,
@@ -23451,7 +23467,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn CreateUInt64Array(&mut self, valueSize: u32, value: *mut u64, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateSingleArray(&mut self, valueSize: u32, value: *mut f32, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateDoubleArray(&mut self, valueSize: u32, value: *mut f64, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreateChar16Array(&mut self, valueSize: u32, value: *mut Char, out: *mut *mut IInspectable) -> ::w::HRESULT,
+			fn CreateChar16Array(&mut self, valueSize: u32, value: *mut ::Char, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateBooleanArray(&mut self, valueSize: u32, value: *mut bool, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateStringArray(&mut self, valueSize: u32, value: *mut ::w::HSTRING, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateInspectableArray(&mut self, valueSize: u32, value: *mut *mut IInspectable, out: *mut *mut IInspectable) -> ::w::HRESULT,
@@ -23513,7 +23529,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).CreateDouble)(self, value, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_char16(&mut self, value: Char) -> RtResult<ComPtr<IInspectable>> {
+			#[inline] pub unsafe fn create_char16(&mut self, value: ::Char) -> RtResult<ComPtr<IInspectable>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateChar16)(self, value, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -23608,7 +23624,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).CreateDoubleArray)(self, value.len() as u32, value.as_ptr() as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_char16_array(&mut self, value: &[Char]) -> RtResult<ComPtr<IInspectable>> {
+			#[inline] pub unsafe fn create_char16_array(&mut self, value: &[::Char]) -> RtResult<ComPtr<IInspectable>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateChar16Array)(self, value.len() as u32, value.as_ptr() as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -23703,7 +23719,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IDeferralFactory, 1705110725, 16309, 18482, 140, 169, 240, 97, 178, 129, 209, 58);
-		RT_INTERFACE!{interface IDeferralFactory(IDeferralFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDeferralFactory] {
+		RT_INTERFACE!{static interface IDeferralFactory(IDeferralFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDeferralFactory] {
 			fn Create(&mut self, handler: *mut ::rt::gen::windows::foundation::DeferralCompletedHandler, out: *mut *mut ::rt::gen::windows::foundation::Deferral) -> ::w::HRESULT
 		}}
 		impl IDeferralFactory {
@@ -24090,7 +24106,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IUriEscapeStatics, 3251909306, 51236, 17490, 167, 253, 81, 43, 195, 187, 233, 161);
-		RT_INTERFACE!{interface IUriEscapeStatics(IUriEscapeStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUriEscapeStatics] {
+		RT_INTERFACE!{static interface IUriEscapeStatics(IUriEscapeStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUriEscapeStatics] {
 			fn UnescapeComponent(&mut self, toUnescape: ::w::HSTRING, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn EscapeComponent(&mut self, toEscape: ::w::HSTRING, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
@@ -24107,7 +24123,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IUriRuntimeClassFactory, 1151957359, 29246, 20447, 162, 24, 3, 62, 117, 176, 192, 132);
-		RT_INTERFACE!{interface IUriRuntimeClassFactory(IUriRuntimeClassFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUriRuntimeClassFactory] {
+		RT_INTERFACE!{static interface IUriRuntimeClassFactory(IUriRuntimeClassFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUriRuntimeClassFactory] {
 			fn CreateUri(&mut self, uri: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::Uri) -> ::w::HRESULT,
 			fn CreateWithRelativeUri(&mut self, baseUri: ::w::HSTRING, relativeUri: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::Uri) -> ::w::HRESULT
 		}}
@@ -24152,7 +24168,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IWwwFormUrlDecoderRuntimeClassFactory, 1535929149, 9390, 16821, 161, 191, 240, 195, 213, 68, 132, 91);
-		RT_INTERFACE!{interface IWwwFormUrlDecoderRuntimeClassFactory(IWwwFormUrlDecoderRuntimeClassFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWwwFormUrlDecoderRuntimeClassFactory] {
+		RT_INTERFACE!{static interface IWwwFormUrlDecoderRuntimeClassFactory(IWwwFormUrlDecoderRuntimeClassFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWwwFormUrlDecoderRuntimeClassFactory] {
 			fn CreateWwwFormUrlDecoder(&mut self, query: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::WwwFormUrlDecoder) -> ::w::HRESULT
 		}}
 		impl IWwwFormUrlDecoderRuntimeClassFactory {
@@ -24208,7 +24224,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IMemoryBufferFactory, 4223982891, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
-		RT_INTERFACE!{interface IMemoryBufferFactory(IMemoryBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBufferFactory] {
+		RT_INTERFACE!{static interface IMemoryBufferFactory(IMemoryBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBufferFactory] {
 			fn Create(&mut self, capacity: u32, out: *mut *mut ::rt::gen::windows::foundation::MemoryBuffer) -> ::w::HRESULT
 		}}
 		impl IMemoryBufferFactory {
@@ -24243,8 +24259,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_PINTERFACE!{ for IReferenceArray<f32> => [0x6ab1ea83,0xcb41,0x5f99,0x92,0xcc,0x23,0xbd,0x43,0x36,0xa1,0xfb] as IID_IReferenceArray_1_System_Single }
 		RT_PINTERFACE!{ for IReference<f64> => [0x2f2d6c29,0x5473,0x5f3e,0x92,0xe7,0x96,0x57,0x2b,0xb9,0x90,0xe2] as IID_IReference_1_System_Double }
 		RT_PINTERFACE!{ for IReferenceArray<f64> => [0xd301f253,0xe0a3,0x5d2b,0x9a,0x41,0xa4,0xd6,0x2b,0xec,0x46,0x23] as IID_IReferenceArray_1_System_Double }
-		RT_PINTERFACE!{ for IReference<Char> => [0xfb393ef3,0xbbac,0x5bd5,0x91,0x44,0x84,0xf2,0x35,0x76,0xf4,0x15] as IID_IReference_1_System_Char }
-		RT_PINTERFACE!{ for IReferenceArray<Char> => [0xa4095aab,0xeb7d,0x5782,0x8f,0xad,0x16,0x09,0xde,0xa2,0x49,0xad] as IID_IReferenceArray_1_System_Char }
+		RT_PINTERFACE!{ for IReference<::Char> => [0xfb393ef3,0xbbac,0x5bd5,0x91,0x44,0x84,0xf2,0x35,0x76,0xf4,0x15] as IID_IReference_1_System_Char }
+		RT_PINTERFACE!{ for IReferenceArray<::Char> => [0xa4095aab,0xeb7d,0x5782,0x8f,0xad,0x16,0x09,0xde,0xa2,0x49,0xad] as IID_IReferenceArray_1_System_Char }
 		RT_PINTERFACE!{ for IReference<bool> => [0x3c00fd60,0x2950,0x5939,0xa2,0x1a,0x2d,0x12,0xc5,0xa0,0x1b,0x8a] as IID_IReference_1_System_Boolean }
 		RT_PINTERFACE!{ for IReferenceArray<bool> => [0xe8e72666,0x48cc,0x593f,0xba,0x85,0x26,0x63,0x49,0x69,0x56,0xe3] as IID_IReferenceArray_1_System_Boolean }
 		RT_PINTERFACE!{ for<'a> IReference<&'a str> => [0xfd416dfb,0x2a07,0x52eb,0xaa,0xe3,0xdf,0xce,0x14,0x11,0x6c,0x05] as IID_IReference_1_System_String }
@@ -24625,7 +24641,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::foundation::diagnostics::IFileLoggingSession, ::rt::gen::windows::foundation::diagnostics::LogFileGeneratedEventArgs> => [0x0c6563b0,0x9d8b,0x5b60,0x99,0x4b,0xde,0xe1,0x17,0x4d,0x1e,0xfb] as IID_TypedEventHandler_2_Windows_Foundation_Diagnostics_IFileLoggingSession_Windows_Foundation_Diagnostics_LogFileGeneratedEventArgs }
 pub mod collections { // Windows.Foundation.Collections
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum CollectionChange: i32 {
 			Reset (CollectionChange_Reset) = 0, ItemInserted (CollectionChange_ItemInserted) = 1, ItemRemoved (CollectionChange_ItemRemoved) = 2, ItemChanged (CollectionChange_ItemChanged) = 3,
 		}}
@@ -25239,12 +25255,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Foundation.Collections
 pub mod metadata { // Windows.Foundation.Metadata
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum GCPressureAmount: i32 {
 			Low (GCPressureAmount_Low) = 0, Medium (GCPressureAmount_Medium) = 1, High (GCPressureAmount_High) = 2,
 		}}
 		DEFINE_IID!(IID_IApiInformationStatics, 2574531070, 63105, 18961, 180, 22, 193, 58, 71, 232, 186, 54);
-		RT_INTERFACE!{interface IApiInformationStatics(IApiInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApiInformationStatics] {
+		RT_INTERFACE!{static interface IApiInformationStatics(IApiInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApiInformationStatics] {
 			fn IsTypePresent(&mut self, typeName: ::w::HSTRING, out: *mut bool) -> ::w::HRESULT,
 			fn IsMethodPresent(&mut self, typeName: ::w::HSTRING, methodName: ::w::HSTRING, out: *mut bool) -> ::w::HRESULT,
 			fn IsMethodPresentWithArity(&mut self, typeName: ::w::HSTRING, methodName: ::w::HSTRING, inputParameterCount: u32, out: *mut bool) -> ::w::HRESULT,
@@ -25331,7 +25347,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Foundation.Metadata
 pub mod diagnostics { // Windows.Foundation.Diagnostics
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum CausalityTraceLevel: i32 {
 			Required (CausalityTraceLevel_Required) = 0, Important (CausalityTraceLevel_Important) = 1, Verbose (CausalityTraceLevel_Verbose) = 2,
 		}}
@@ -25362,7 +25378,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IAsyncCausalityTracerStatics, 1350896422, 9854, 17691, 168, 144, 171, 106, 55, 2, 69, 238);
-		RT_INTERFACE!{interface IAsyncCausalityTracerStatics(IAsyncCausalityTracerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncCausalityTracerStatics] {
+		RT_INTERFACE!{static interface IAsyncCausalityTracerStatics(IAsyncCausalityTracerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncCausalityTracerStatics] {
 			fn TraceOperationCreation(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::Guid, operationId: u64, operationName: ::w::HSTRING, relatedContext: u64) -> ::w::HRESULT,
 			fn TraceOperationCompletion(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::Guid, operationId: u64, status: ::rt::gen::windows::foundation::AsyncStatus) -> ::w::HRESULT,
 			fn TraceOperationRelation(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::Guid, operationId: u64, relation: ::rt::gen::windows::foundation::diagnostics::CausalityRelation) -> ::w::HRESULT,
@@ -25426,7 +25442,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class RuntimeBrokerErrorSettings: ::rt::gen::windows::foundation::diagnostics::IErrorReportingSettings}
 		DEFINE_IID!(IID_IErrorDetailsStatics, 3077584720, 2845, 18120, 170, 14, 75, 129, 120, 228, 252, 233);
-		RT_INTERFACE!{interface IErrorDetailsStatics(IErrorDetailsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorDetailsStatics] {
+		RT_INTERFACE!{static interface IErrorDetailsStatics(IErrorDetailsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorDetailsStatics] {
 			fn CreateFromHResultAsync(&mut self, errorCode: i32, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::diagnostics::ErrorDetails>) -> ::w::HRESULT
 		}}
 		impl IErrorDetailsStatics {
@@ -25543,7 +25559,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ILoggingOptionsFactory, 3608397515, 39083, 17995, 159, 34, 163, 38, 132, 120, 54, 138);
-		RT_INTERFACE!{interface ILoggingOptionsFactory(ILoggingOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingOptionsFactory] {
+		RT_INTERFACE!{static interface ILoggingOptionsFactory(ILoggingOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingOptionsFactory] {
 			fn CreateWithKeywords(&mut self, keywords: i64, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingOptions) -> ::w::HRESULT
 		}}
 		impl ILoggingOptionsFactory {
@@ -25572,7 +25588,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ILoggingChannelOptionsFactory, 2838581722, 32687, 16785, 135, 85, 94, 134, 220, 101, 216, 150);
-		RT_INTERFACE!{interface ILoggingChannelOptionsFactory(ILoggingChannelOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelOptionsFactory] {
+		RT_INTERFACE!{static interface ILoggingChannelOptionsFactory(ILoggingChannelOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelOptionsFactory] {
 			fn Create(&mut self, group: ::Guid, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannelOptions) -> ::w::HRESULT
 		}}
 		impl ILoggingChannelOptionsFactory {
@@ -25647,12 +25663,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn AddDoubleArray(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut f64) -> ::w::HRESULT,
 			fn AddDoubleArrayWithFormat(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut f64, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> ::w::HRESULT,
 			fn AddDoubleArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut f64, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddChar16(&mut self, name: ::w::HSTRING, value: Char) -> ::w::HRESULT,
-			fn AddChar16WithFormat(&mut self, name: ::w::HSTRING, value: Char, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddChar16WithFormatAndTags(&mut self, name: ::w::HSTRING, value: Char, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddChar16Array(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut Char) -> ::w::HRESULT,
-			fn AddChar16ArrayWithFormat(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut Char, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddChar16ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut Char, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddChar16(&mut self, name: ::w::HSTRING, value: ::Char) -> ::w::HRESULT,
+			fn AddChar16WithFormat(&mut self, name: ::w::HSTRING, value: ::Char, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddChar16WithFormatAndTags(&mut self, name: ::w::HSTRING, value: ::Char, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddChar16Array(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut ::Char) -> ::w::HRESULT,
+			fn AddChar16ArrayWithFormat(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut ::Char, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddChar16ArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut ::Char, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddBoolean(&mut self, name: ::w::HSTRING, value: bool) -> ::w::HRESULT,
 			fn AddBooleanWithFormat(&mut self, name: ::w::HSTRING, value: bool, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> ::w::HRESULT,
 			fn AddBooleanWithFormatAndTags(&mut self, name: ::w::HSTRING, value: bool, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
@@ -25947,27 +25963,27 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).AddDoubleArrayWithFormatAndTags)(self, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn add_char16(&mut self, name: &HStringRef, value: Char) -> RtResult<()> {
+			#[inline] pub unsafe fn add_char16(&mut self, name: &HStringRef, value: ::Char) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).AddChar16)(self, name.get(), value);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn add_char16_with_format(&mut self, name: &HStringRef, value: Char, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> RtResult<()> {
+			#[inline] pub unsafe fn add_char16_with_format(&mut self, name: &HStringRef, value: ::Char, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).AddChar16WithFormat)(self, name.get(), value, format);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn add_char16_with_format_and_tags(&mut self, name: &HStringRef, value: Char, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> RtResult<()> {
+			#[inline] pub unsafe fn add_char16_with_format_and_tags(&mut self, name: &HStringRef, value: ::Char, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).AddChar16WithFormatAndTags)(self, name.get(), value, format, tags);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn add_char16_array(&mut self, name: &HStringRef, value: &[Char]) -> RtResult<()> {
+			#[inline] pub unsafe fn add_char16_array(&mut self, name: &HStringRef, value: &[::Char]) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).AddChar16Array)(self, name.get(), value.len() as u32, value.as_ptr() as *mut _);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn add_char16_array_with_format(&mut self, name: &HStringRef, value: &[Char], format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> RtResult<()> {
+			#[inline] pub unsafe fn add_char16_array_with_format(&mut self, name: &HStringRef, value: &[::Char], format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).AddChar16ArrayWithFormat)(self, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn add_char16_array_with_format_and_tags(&mut self, name: &HStringRef, value: &[Char], format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> RtResult<()> {
+			#[inline] pub unsafe fn add_char16_array_with_format_and_tags(&mut self, name: &HStringRef, value: &[::Char], format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).AddChar16ArrayWithFormatAndTags)(self, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
@@ -26313,7 +26329,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class LoggingChannel: ::rt::gen::windows::foundation::diagnostics::ILoggingChannel [::rt::gen::windows::foundation::diagnostics::ILoggingChannelFactory2] [CLSID_LoggingChannel]}
 		DEFINE_CLSID!(CLSID_LoggingChannel = &[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,0]);
 		DEFINE_IID!(IID_ILoggingChannelFactory2, 1282340317, 15143, 19913, 153, 240, 41, 156, 110, 70, 3, 161);
-		RT_INTERFACE!{interface ILoggingChannelFactory2(ILoggingChannelFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory2] {
+		RT_INTERFACE!{static interface ILoggingChannelFactory2(ILoggingChannelFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory2] {
 			fn CreateWithOptions(&mut self, name: ::w::HSTRING, options: *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannelOptions, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannel) -> ::w::HRESULT,
 			fn CreateWithOptionsAndId(&mut self, name: ::w::HSTRING, options: *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannelOptions, id: ::Guid, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannel) -> ::w::HRESULT
 		}}
@@ -26373,7 +26389,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ILoggingActivityFactory, 1798550659, 57610, 19544, 151, 213, 16, 251, 69, 16, 116, 251);
-		RT_INTERFACE!{interface ILoggingActivityFactory(ILoggingActivityFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivityFactory] {
+		RT_INTERFACE!{static interface ILoggingActivityFactory(ILoggingActivityFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivityFactory] {
 			fn CreateLoggingActivity(&mut self, activityName: ::w::HSTRING, loggingChannel: *mut ::rt::gen::windows::foundation::diagnostics::ILoggingChannel, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingActivity) -> ::w::HRESULT,
 			fn CreateLoggingActivityWithLevel(&mut self, activityName: ::w::HSTRING, loggingChannel: *mut ::rt::gen::windows::foundation::diagnostics::ILoggingChannel, level: ::rt::gen::windows::foundation::diagnostics::LoggingLevel, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingActivity) -> ::w::HRESULT
 		}}
@@ -26422,7 +26438,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_ILoggingSessionFactory, 1318289125, 22781, 17888, 140, 47, 161, 50, 239, 249, 92, 30);
-		RT_INTERFACE!{interface ILoggingSessionFactory(ILoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingSessionFactory] {
+		RT_INTERFACE!{static interface ILoggingSessionFactory(ILoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingSessionFactory] {
 			fn Create(&mut self, name: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingSession) -> ::w::HRESULT
 		}}
 		impl ILoggingSessionFactory {
@@ -26490,7 +26506,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 		DEFINE_IID!(IID_IFileLoggingSessionFactory, 4003499470, 33863, 19882, 145, 51, 18, 235, 70, 246, 151, 212);
-		RT_INTERFACE!{interface IFileLoggingSessionFactory(IFileLoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileLoggingSessionFactory] {
+		RT_INTERFACE!{static interface IFileLoggingSessionFactory(IFileLoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileLoggingSessionFactory] {
 			fn Create(&mut self, name: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::FileLoggingSession) -> ::w::HRESULT
 		}}
 		impl IFileLoggingSessionFactory {
@@ -26505,7 +26521,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Foundation.Diagnostics
 pub mod numerics { // Windows.Foundation.Numerics
 use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct Vector2 {
 			X: f32, Y: f32,
 		}}

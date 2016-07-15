@@ -30,6 +30,23 @@ impl ComIid for IRestrictedErrorInfo { fn iid() -> &'static Guid { &IID_IRestric
 impl ComInterface for IRestrictedErrorInfo { type Vtbl = IRestrictedErrorInfoVtbl; }
 
 DEFINE_IID!(IID_IAgileObject, 0x94EA2B94, 0xE9CC, 0x49E0, 0xC0, 0xFF, 0xEE, 0x64, 0xCA, 0x8F, 0x5B, 0x90);
-RIDL!(interface IAgileObject(IAgileObjectVtbl) : IUnknown(IUnknownVtbl) {});
+
+#[repr(C)] #[derive(Debug)]
+pub struct IAgileObject {
+    lpVtbl: *const IUnknownVtbl // IAgileObject has no methods besides what IUnknown has
+}
+impl ::std::ops::Deref for IAgileObject {
+    type Target = IUnknown;
+    #[inline]
+    fn deref(&self) -> &IUnknown {
+        unsafe { ::std::mem::transmute(self) }
+    }
+}
+impl ::std::ops::DerefMut for IAgileObject {
+    #[inline]
+    fn deref_mut(&mut self) -> &mut IUnknown {
+        unsafe { ::std::mem::transmute(self) }
+    }
+}
 impl ComIid for IAgileObject { fn iid() -> &'static Guid { &IID_IAgileObject } }
-impl ComInterface for IAgileObject { type Vtbl = IAgileObjectVtbl; }
+impl ComInterface for IAgileObject { type Vtbl = IUnknownVtbl; }

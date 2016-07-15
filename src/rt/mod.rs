@@ -16,8 +16,10 @@ pub type RtResult<T> = Result<T, ::w::HRESULT>;
 pub struct Char(pub ::w::wchar_t);
 // TODO: deref to u16
 
-/// This means that the interfaced is based on IInspectable
+/// This means that the interface is based on IInspectable
 pub unsafe trait RtInterface: ComInterface {}
+/// This means that the interface is not a factory or static interface
+pub unsafe trait RtClassInterface: RtInterface {}
 
 pub unsafe trait RtValueType: Copy {}
 
@@ -80,7 +82,7 @@ impl<T> RtType for T where T: RtValueType
 }
 
 pub trait RtActivatable {
-    type Factory : ComIid;
+    type Factory: ComIid;
     // FIXME: remove activatable_class_id() from the public interface -> necessary to introduce separate trait?
     fn activatable_class_id() -> &'static [u16];
     fn factory() -> ComPtr<Self::Factory> {
@@ -135,100 +137,41 @@ impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType
 }
 
 macro_rules! RT_INTERFACE {
-// Specialized version for IUnknown (does not impl RtInterface) -> TODO: get rid of this
-    (interface $interface:ident ($vtbl:ident) : IUnknown(IUnknownVtbl) [$iid:ident]
-        {$(
-            fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
-        ),+}
-    ) => {
-        #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
-        pub struct $vtbl {
-            pub parent: $crate::IUnknownVtbl
-            $(,pub $method: unsafe extern "system" fn(
-                This: *mut $interface
-                $(,$p: $t)*
-            ) -> $rtr)+
-        }
-        #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
-        pub struct $interface {
-            lpVtbl: *const $vtbl
-        }
-        impl ComIid for $interface {
-            fn iid() -> &'static ::Guid { &$iid }
-        }
-        impl ComInterface for $interface {
-            type Vtbl = $vtbl;
-        }
-        impl<'a> RtType for $interface {
-            type In = $interface;
-            type Abi = *mut $interface;
-            type Out = ComPtr<$interface>;
-
-            unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
-            unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
-        }
-
-        impl ::std::ops::Deref for $interface {
-            type Target = $crate::IUnknown;
-            #[inline]
-            fn deref(&self) -> &$crate::IUnknown {
-                unsafe { ::std::mem::transmute(self) }
-            }
-        }
-        impl ::std::ops::DerefMut for $interface {
-            #[inline]
-            fn deref_mut(&mut self) -> &mut $crate::IUnknown {
-                unsafe { ::std::mem::transmute(self) }
-            }
-        }
+    (interface $interface:ident<$t1:ident, $t2:ident> $($rest:tt)*) => {
+        RT_INTERFACE!(basic $interface<$t1,$t2> $($rest)*);
+        unsafe impl<$t1: RtType, $t2: RtType> ::RtInterface for $interface<$t1,$t2> {}
+        unsafe impl<$t1: RtType, $t2: RtType> ::RtClassInterface for $interface<$t1,$t2> {}
     };
 
-    (interface $interface:ident<$t1:ident> ($vtbl:ident) : IUnknown(IUnknownVtbl) [$iid:ident]
-        {$(
-            fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
-        ),+}
-    ) => {
-        #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
-        pub struct $vtbl<$t1> where $t1: RtType {
-            pub parent: $crate::IUnknownVtbl
-            $(,pub $method: unsafe extern "system" fn(
-                This: *mut $interface<$t1>
-                $(,$p: $t)*
-            ) -> $rtr)+
-        }
-        #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
-        pub struct $interface<$t1> where $t1: RtType {
-            lpVtbl: *const $vtbl<$t1>,
-        }
-        impl<$t1> ComInterface for $interface<$t1> where $t1: RtType {
-            type Vtbl = $vtbl<$t1>;
-        }
-        impl<$t1> RtType for $interface<$t1> where $t1: RtType{
-            type In = $interface<$t1>;
-            type Abi = *mut $interface<$t1>;
-            type Out = ComPtr<$interface<$t1>>;
-
-            unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
-            unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
-        }
-        impl<$t1> ::std::ops::Deref for $interface<$t1> where $t1: RtType {
-            type Target = $crate::IUnknown;
-            #[inline]
-            fn deref(&self) -> &$crate::IUnknown {
-                unsafe { ::std::mem::transmute(self) }
-            }
-        }
-        impl<$t1> ::std::ops::DerefMut for $interface<$t1> where $t1: RtType {
-            #[inline]
-            fn deref_mut(&mut self) -> &mut $crate::IUnknown {
-                unsafe { ::std::mem::transmute(self) }
-            }
-        }
+    (interface $interface:ident<$t1:ident> $($rest:tt)*) => {
+        RT_INTERFACE!(basic $interface<$t1> $($rest)*);
+        unsafe impl<$t1: RtType> ::RtInterface for $interface<$t1> {}
+        unsafe impl<$t1: RtType> ::RtClassInterface for $interface<$t1> {}
     };
 
-    (interface $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
+    (interface $interface:ident $($rest:tt)*) => {
+        RT_INTERFACE!(basic $interface $($rest)*);
+        unsafe impl ::RtInterface for $interface {}
+        unsafe impl ::RtClassInterface for $interface {}
+    };
+
+    (static interface $interface:ident<$t1:ident, $t2:ident> $($rest:tt)*) => {
+        RT_INTERFACE!(basic $interface<$t1,$t2> $($rest)*);
+        unsafe impl<$t1: RtType, $t2: RtType> ::RtInterface for $interface<$t1,$t2> {}
+    };
+
+    (static interface $interface:ident<$t1:ident> $($rest:tt)*) => {
+        RT_INTERFACE!(basic $interface<$t1> $($rest)*);
+        unsafe impl<$t1: RtType> ::RtInterface for $interface<$t1> {}
+    };
+
+    (static interface $interface:ident $($rest:tt)*) => {
+        RT_INTERFACE!(basic $interface $($rest)*);
+        unsafe impl ::RtInterface for $interface {}
+    };
+
+    // version with no methods
+    (basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
         {}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
@@ -245,8 +188,7 @@ macro_rules! RT_INTERFACE {
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
         }
-        unsafe impl RtInterface for $interface {}
-        impl RtType for $interface {
+        impl ::RtType for $interface {
             type In = $interface;
             type Abi = *mut $interface;
             type Out = ComPtr<$interface>;
@@ -270,7 +212,8 @@ macro_rules! RT_INTERFACE {
         }
     };
 
-    (interface $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
+    // version with methods, but without generic parameters
+    (basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
         {$(
             fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
@@ -293,8 +236,7 @@ macro_rules! RT_INTERFACE {
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
         }
-        unsafe impl RtInterface for $interface {}
-        impl RtType for $interface {
+        impl ::RtType for $interface {
             type In = $interface;
             type Abi = *mut $interface;
             type Out = ComPtr<$interface>;
@@ -319,7 +261,7 @@ macro_rules! RT_INTERFACE {
     };
     // The $iid is actually not necessary, because it refers to the uninstantiated version of the interface,
     // which is irrelevant at runtime (it is used to generate the IIDs of the parameterized interfaces).
-    (interface $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
+    (basic $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
         {$(
             fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
@@ -339,8 +281,7 @@ macro_rules! RT_INTERFACE {
         impl<$t1> ComInterface for $interface<$t1> where $t1: RtType {
             type Vtbl = $vtbl<$t1>;
         }
-        unsafe impl<$t1> RtInterface for $interface<$t1> where $t1: RtType {}
-        impl<$t1> RtType for $interface<$t1> where $t1: RtType{
+        impl<$t1> ::RtType for $interface<$t1> where $t1: RtType{
             type In = $interface<$t1>;
             type Abi = *mut $interface<$t1>;
             type Out = ComPtr<$interface<$t1>>;
@@ -364,7 +305,7 @@ macro_rules! RT_INTERFACE {
         }
     };
 
-    (interface $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
+    (basic $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
         {$(
             fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
@@ -384,8 +325,7 @@ macro_rules! RT_INTERFACE {
         impl<$t1, $t2> ComInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type Vtbl = $vtbl<$t1, $t2>;
         }
-        unsafe impl<$t1, $t2> RtInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {}
-        impl<$t1, $t2> RtType for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
+        impl<$t1, $t2> ::RtType for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type In = $interface<$t1, $t2>;
             type Abi = *mut $interface<$t1, $t2>;
             type Out = ComPtr<$interface<$t1, $t2>>;
@@ -415,7 +355,7 @@ macro_rules! RT_DELEGATE {
     (delegate $interface:ident ($vtbl:ident, $imp:ident) [$iid:ident] {
         fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
     }) => {
-        RT_INTERFACE!{interface $interface($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
+        RT_INTERFACE!{basic $interface($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
             fn Invoke(&mut self $(,$p : $t)*) -> $rtr
         }}
 
@@ -476,7 +416,7 @@ macro_rules! RT_DELEGATE {
     (delegate $interface:ident<$($ht:ident),+> ($vtbl:ident, $imp:ident) [$iid:ident] {
         fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
     }) => {
-        RT_INTERFACE!{interface $interface<$($ht),+>($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
+        RT_INTERFACE!{basic $interface<$($ht),+>($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
             fn Invoke(&mut self $(,$p : $t)*) -> $rtr
         }}
 
@@ -539,14 +479,15 @@ macro_rules! RT_DELEGATE {
 macro_rules! RT_CLASS {
     {class $cls:ident : $interface:ty} => {
         pub struct $cls($interface);
-        unsafe impl RtInterface for $cls {}
+        unsafe impl ::RtInterface for $cls {}
+        unsafe impl ::RtClassInterface for $cls {}
         impl ComInterface for $cls {
             type Vtbl = <$interface as ComInterface>::Vtbl;
         }
         impl ComIid for $cls {
             fn iid() -> &'static ::Guid { <$interface as ComIid>::iid() }
         }
-        impl RtType for $cls {
+        impl ::RtType for $cls {
             type In = $cls;
             type Abi = *mut $cls;
             type Out = ComPtr<$cls>;
@@ -606,7 +547,7 @@ macro_rules! RT_ENUM {
         impl $name {
             $(pub const $variant: $name = $name($value);)+
         }
-        unsafe impl RtValueType for $name {}
+        unsafe impl ::RtValueType for $name {}
     };
 }
 
@@ -616,7 +557,7 @@ macro_rules! RT_STRUCT {
         pub struct $name {
             $(pub $field: $ftype,)*
         }
-        unsafe impl RtValueType for $name {}
+        unsafe impl ::RtValueType for $name {}
     };
 }
 
@@ -662,20 +603,20 @@ impl IInspectable {
         unsafe { ComArray::from_raw(count, result) }
     }
 
-    // TODO: It seems to be disallowed to call this on "...Statics" objects (E_ILLEGAL_METHOD_CALL)
-    //       -> can we prevent that at compile time?
-    pub fn get_runtime_class_name(&self) -> HString {
-        let mut result = ::std::ptr::null_mut();
-        let hr = unsafe { ((*self.lpVtbl).GetRuntimeClassName)(self as *const _ as *mut _, &mut result) };
-        assert_eq!(hr, ::w::S_OK);
-        unsafe { HString::wrap(result) }
-    }
-
     pub fn get_trust_level(&self) -> TrustLevel {
         let mut result = unsafe { ::std::mem::zeroed() };
         let hr = unsafe { ((*self.lpVtbl).GetTrustLevel)(self as *const _ as *mut _, &mut result) };
         assert_eq!(hr, ::w::S_OK);
         result
+    }
+}
+
+impl ::comptr::HiddenGetRuntimeClassName for IInspectable {
+    fn get_runtime_class_name(&self) -> HString {
+        let mut result = ::std::ptr::null_mut();
+        let hr = unsafe { ((*self.lpVtbl).GetRuntimeClassName)(self as *const _ as *mut _, &mut result) };
+        assert_eq!(hr, ::w::S_OK);
+        unsafe { HString::wrap(result) }
     }
 }
 

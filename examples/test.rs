@@ -50,7 +50,7 @@ fn run() {
     }
 
     let mut outPortStatics = IMidiOutPortStatics::factory();
-    //println!("outPortStatics: {}", outPortStatics.get_runtime_class_name()); // this is not allowed (TODO: prevent statically)
+    //println!("outPortStatics: {}", outPortStatics.get_runtime_class_name()); // this is not allowed (prevented statically)
     
     let deviceSelector = unsafe { outPortStatics.get_device_selector().unwrap() };
     println!("{}", deviceSelector);

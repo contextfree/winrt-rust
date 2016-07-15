@@ -5,7 +5,7 @@
 
 #![allow(dead_code,non_upper_case_globals,non_snake_case)]
 
-#[macro_use(RIDL)] extern crate winapi as w;
+extern crate winapi as w;
 extern crate runtimeobject;
 extern crate ole32;
 extern crate oleaut32;
@@ -42,7 +42,7 @@ pub use cominterfaces::{ComInterface, ComIid, IUnknown, IUnknownVtbl, IRestricte
 // TODO: get rid of IUnknownVtbl export?
 
 mod rt;
-pub use rt::{RtInterface, RtValueType, RtType, RtActivatable, IInspectable, IInspectableVtbl, RtResult, Char};
+pub use rt::{RtInterface, RtClassInterface, RtValueType, RtType, RtActivatable, IInspectable, IInspectableVtbl, RtResult, Char};
 
 pub use rt::handler::IntoInterface;
 
