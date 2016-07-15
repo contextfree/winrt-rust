@@ -17,7 +17,7 @@ pub fn query_interface<T, Target>(interface: &T) -> Option<ComPtr<Target>> where
     let as_unknown = unsafe { &mut *(interface  as *const T as *mut T as *mut ::w::IUnknown) };
     let mut res = ptr::null_mut();
     unsafe {
-        match as_unknown.QueryInterface(&iid.as_iid(), &mut res as *mut _ as *mut *mut ::w::VOID) {
+        match as_unknown.QueryInterface(iid.as_ref(), &mut res as *mut _ as *mut *mut ::w::VOID) {
             ::w::S_OK => Some(ComPtr::wrap(res)),
             _ => None
         }

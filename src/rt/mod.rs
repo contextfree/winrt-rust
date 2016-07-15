@@ -86,7 +86,7 @@ pub trait RtActivatable {
     fn factory() -> ComPtr<Self::Factory> {
         let mut res = ptr::null_mut();
         let class_id = unsafe { HStringRef::from_utf16_unchecked(Self::activatable_class_id()) };
-        let hres = unsafe { ::runtimeobject::RoGetActivationFactory(class_id.get(), &Self::Factory::iid().as_iid(), &mut res as *mut *mut _ as *mut *mut ::w::VOID) };
+        let hres = unsafe { ::runtimeobject::RoGetActivationFactory(class_id.get(), Self::Factory::iid().as_ref(), &mut res as *mut *mut _ as *mut *mut ::w::VOID) };
         assert_eq!(hres, S_OK);
         unsafe { ComPtr::wrap(res) }
     }

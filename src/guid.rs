@@ -1,34 +1,39 @@
-use std::{fmt, cmp};
+use std::{fmt, cmp, mem};
 
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub struct Guid(pub ::w::GUID); // TODO: field should be private (probably requires const fn)
+pub struct Guid { // TODO: fields should not be public (requires const fn constructor)
+    pub Data1: u32,
+    pub Data2: u16,
+    pub Data3: u16,
+    pub Data4: [u8; 8]
+}
 
-impl Guid {
-    pub fn as_iid(&self) -> ::w::IID {
-        self.0
+impl AsRef<::w::GUID> for Guid {
+    fn as_ref(&self) -> &::w::GUID {
+        unsafe { mem::transmute(self) }
     } 
 }
 
 impl From<::w::GUID> for Guid {
     fn from(guid: ::w::GUID) -> Self {
-        Guid(guid)
+        unsafe { mem::transmute(guid) }
     }
 }
 
 impl fmt::Debug for Guid {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{:08X}-{:04X}-{:04X}-{:02X}{:02X}-{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}",
-            self.0.Data1, self.0.Data2, self.0.Data3,
-            self.0.Data4[0], self.0.Data4[1], self.0.Data4[2], self.0.Data4[3],
-            self.0.Data4[4], self.0.Data4[5], self.0.Data4[6], self.0.Data4[7])
+            self.Data1, self.Data2, self.Data3,
+            self.Data4[0], self.Data4[1], self.Data4[2], self.Data4[3],
+            self.Data4[4], self.Data4[5], self.Data4[6], self.Data4[7])
     }
 }
 
 impl cmp::PartialEq<Guid> for Guid {
     #[inline]
     fn eq(&self, other: &Self) -> bool {
-        self.0.Data1 == other.0.Data1 && self.0.Data2 == other.0.Data2 && self.0.Data3 == other.0.Data3 && self.0.Data4 == other.0.Data4
+        self.Data1 == other.Data1 && self.Data2 == other.Data2 && self.Data3 == other.Data3 && self.Data4 == other.Data4
     }
 }
 
