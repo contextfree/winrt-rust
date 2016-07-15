@@ -31,13 +31,14 @@ namespace Generator
 		static Dictionary<string, GenericInstanceType> genericInstantiations = new Dictionary<string, GenericInstanceType>();
 		static Dictionary<string, TypeDefinition> definitionsWorklist = new Dictionary<string, TypeDefinition>();
 		static HashSet<string> definitionsDone = new HashSet<string>();
-		static string Imports = @"use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+		static string Imports = @"use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;";
 
 		static IEnumerable<Type> BaseTypes = new List<Type>
 		{
 			//typeof(void),
 			typeof(byte),
+			typeof(sbyte),
 			typeof(short),
 			typeof(ushort),
 			typeof(int),
@@ -344,16 +345,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				{
 					Assert(p.IsOut);
 					var realType = ((ByReferenceType)p.ParameterType).ElementType;
-					if (realType.IsArray)
-					{
-						//TODO: this should be a ComArray output
-						input.Add(new Tuple<string, TypeReference, InputKind>(pname + "Size", new ByReferenceType(m.Module.Import(typeof(uint))), InputKind.Default));
-						input.Add(new Tuple<string, TypeReference, InputKind>(pname, p.ParameterType, InputKind.Raw));
-					}
-					else
-					{
-						output.Add(new Tuple<string, TypeReference>(pname, realType));
-					}
+					output.Add(new Tuple<string, TypeReference>(pname, realType));
 				}
 				else
 				{
@@ -379,17 +371,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 
 			if (m.ReturnType.FullName != "System.Void")
 			{
-				if (m.ReturnType.IsArray)
-				{
-					//TODO: this should be a ComArray output
-					input.Add(new Tuple<string, TypeReference, InputKind>("outSize", new ByReferenceType(m.Module.Import(typeof(uint))), InputKind.Default));
-					input.Add(new Tuple<string, TypeReference, InputKind>("out", new ByReferenceType(m.ReturnType), InputKind.Raw));
-				}
-				else
-				{
-					// this makes the actual return value the last in the tuple (if multiple)
-					output.Add(new Tuple<string, TypeReference>("out", m.ReturnType));
-				}
+				// this makes the actual return value the last in the tuple (if multiple)
+				output.Add(new Tuple<string, TypeReference>("out", m.ReturnType));
 			}
 
 			string outType = String.Join(", ", output.Select(o => GetTypeName(o.Item2, TypeUsage.Out).Replace("&", "&'static ")));
@@ -406,15 +389,11 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				{
 					if (((ByReferenceType)p.ParameterType).ElementType.IsArray)
 					{
-						//TODO: this should be a ComArray output
-						rawParams.Add(pname + "Size");
-						rawParams.Add(pname);
+						rawParams.Add("&mut " + pname + "Size");
 					}
-					else
-					{
-						// output parameter
-						rawParams.Add("&mut " + pname);
-					}
+
+					// output parameter
+					rawParams.Add("&mut " + pname);
 				}
 				else
 				{
@@ -444,17 +423,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			{
 				if (m.ReturnType.IsArray)
 				{
-					//TODO: array output is treated as by-reference-input, but it should not
-					rawParams.Add("outSize");
-					rawParams.Add("out");
+					rawParams.Add("&mut outSize");
 				}
-				else
-				{
-					rawParams.Add("&mut out");
-				}
+				rawParams.Add("&mut out");
 			}
 
-			var outInit = String.Join(" ", output.Select(o => "let mut " + o.Item1 + " = " + CreateUninitializedOutput(o.Item2) + ";"));
+			var outInit = String.Join(" ", output.SelectMany(o => CreateUninitializedOutputs(o.Item1, o.Item2)));
 			if (outInit != "") outInit = "\r\n\t\t\t\t" + outInit;
 
 			var outWrap = String.Join(", ", output.Select(o => WrapOutputParameter(o.Item1, o.Item2)));
@@ -466,6 +440,15 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl)." + rawName + ")(" + String.Join(", ", rawParams) + ");" + @"
 				if hr == ::w::S_OK { Ok(" + outWrap + @") } else { Err(hr) }
 			}";
+		}
+
+		static IEnumerable<string> CreateUninitializedOutputs(string name, TypeReference t)
+		{
+			if (t.IsArray)
+			{
+				yield return "let mut " + name + "Size = 0;";
+			}
+			yield return "let mut " + name + " = " + CreateUninitializedOutput(t) + ";";
 		}
 
 		static string UnwrapInputParameter(string name, TypeReference t)
@@ -492,7 +475,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 			else if (t.FullName == "System.Guid")
 			{
-				return name + ".as_iid()";
+				return name;
 			}
 			else if (t.IsPrimitive)
 			{
@@ -592,7 +575,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 			else if (t.IsArray)
 			{
-				return name; // TODO
+				return "ComArray::from_raw(" + name + "Size, " + name + ")";
 			}
 			else if (t.FullName == "System.String")
 			{
@@ -604,7 +587,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 			else if (t.FullName == "System.Guid")
 			{
-				return "::Guid::from(" + name + ")";
+				return name;
 			}
 			else if (t.IsPrimitive)
 			{
@@ -772,7 +755,14 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			else if (t.IsArray)
 			{
 				var ty = (ArrayType)t;
-				return "*mut " + GetTypeName(ty.ElementType, usage);
+				if (usage == TypeUsage.Out)
+				{
+					return "ComArray<" + GetTypeName(ty.ElementType, TypeUsage.Raw) + ">";
+				}
+				else
+				{
+					return "*mut " + GetTypeName(ty.ElementType, usage);
+				}
 			}
 			else
 			{
@@ -810,7 +800,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			else if (t.FullName == "System.Guid")
 			{
 				Assert(usage != TypeUsage.Define);
-				return usage == TypeUsage.Raw ? "::w::GUID" : "::Guid";
+				return "::Guid";
 			}
 			else if (t.IsPrimitive)
 			{
@@ -819,14 +809,16 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				{
 					case "System.Boolean":
 						return "bool";
-					case "System.Byte":
-						return "u8";
+					case "System.SByte":
+						return "i8";
 					case "System.Int16":
 						return "i16";
 					case "System.Int32":
 						return "i32";
 					case "System.Int64":
 						return "i64";
+					case "System.Byte":
+						return "u8";
 					case "System.UInt16":
 						return "u16";
 					case "System.UInt32":
@@ -1028,10 +1020,11 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				switch (t.FullName)
 				{
 					case "System.Boolean": return "b1";
-					case "System.Byte": return "u1";
+					case "System.SByte": return "i1";
 					case "System.Int16": return "i2";
 					case "System.Int32": return "i4";
 					case "System.Int64": return "i8";
+					case "System.Byte": return "u1";
 					case "System.UInt16": return "u2";
 					case "System.UInt32": return "u4";
 					case "System.UInt64": return "u8";

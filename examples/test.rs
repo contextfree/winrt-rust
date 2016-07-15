@@ -166,20 +166,15 @@ fn run() {
     
     assert!(unsafe { deviceInformationCollection.get_at(count + 42).is_err() }); // will be E_BOUNDS (out of bounds)
 
-    unsafe {
-        let array = &mut [true, false, false, true];
-        let boxed_array = IPropertyValueStatics::factory().create_boolean_array(array);
-        let mut boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
-        assert_eq!(boxed_array.get_type().unwrap(), PropertyType_BooleanArray);
-        let mut boxed_array = boxed_array.query_interface::<IReferenceArray<bool>>().unwrap();
-        let mut outSize = 0;
-        let mut out = ::std::ptr::null_mut();
-        boxed_array.get_value(&mut outSize, &mut out).unwrap();
-        let returned_array = ComArray::from_raw(outSize, out);
-        println!("{:?} = {:?}", array, &returned_array[..]);
-        assert_eq!(array, &returned_array[..]);
-        // TODO: test array of string and object (also see if ComArray drops contents correctly)
-    }
+    let array = &mut [true, false, false, true];
+    let boxed_array = unsafe { IPropertyValueStatics::factory().create_boolean_array(array) };
+    let mut boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
+    assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType_BooleanArray);
+    let mut boxed_array = boxed_array.query_interface::<IReferenceArray<bool>>().unwrap();
+    let returned_array = unsafe { boxed_array.get_value().unwrap() };
+    println!("{:?} = {:?}", array, &returned_array[..]);
+    assert_eq!(array, &returned_array[..]);
+    // TODO: test array of string and object (also see if ComArray drops contents correctly)
     
     let status = unsafe { asi.get_status().unwrap() };
     println!("status: {:?}", status);

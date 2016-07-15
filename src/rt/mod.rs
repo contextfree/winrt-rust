@@ -24,6 +24,7 @@ pub unsafe trait RtValueType: Copy {}
 unsafe impl RtValueType for bool {}
 unsafe impl RtValueType for f32 {}
 unsafe impl RtValueType for f64 {}
+unsafe impl RtValueType for i8 {}
 unsafe impl RtValueType for i16 {}
 unsafe impl RtValueType for i32 {}
 unsafe impl RtValueType for i64 {}

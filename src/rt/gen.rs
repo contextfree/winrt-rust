@@ -1,10 +1,10 @@
 // DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED!
 #![allow(non_camel_case_types, unused_imports)]
 pub mod windows { // Windows
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 pub mod devices { // Windows.Devices
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct DevicesLowLevelContract {
 			
@@ -84,7 +84,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_ACTIVATABLE!{ILowLevelDevicesControllerStatics [CLSID_LowLevelDevicesController]}
 		DEFINE_CLSID!(CLSID_LowLevelDevicesController = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,76,111,119,76,101,118,101,108,68,101,118,105,99,101,115,67,111,110,116,114,111,108,108,101,114,0]);
 pub mod adc { // Windows.Devices.Adc
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum AdcChannelMode: i32 {
 			SingleEnded (AdcChannelMode_SingleEnded) = 0, Differential (AdcChannelMode_Differential) = 1,
@@ -192,7 +192,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 pub mod provider { // Windows.Devices.Adc.Provider
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum ProviderAdcChannelMode: i32 {
 			SingleEnded (ProviderAdcChannelMode_SingleEnded) = 0, Differential (ProviderAdcChannelMode_Differential) = 1,
@@ -273,7 +273,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Adc.Provider
 } // Windows.Devices.Adc
 pub mod gpio { // Windows.Devices.Gpio
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum GpioSharingMode: i32 {
 			Exclusive (GpioSharingMode_Exclusive) = 0, SharedReadOnly (GpioSharingMode_SharedReadOnly) = 1,
@@ -432,7 +432,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 pub mod provider { // Windows.Devices.Gpio.Provider
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum ProviderGpioSharingMode: i32 {
 			Exclusive (ProviderGpioSharingMode_Exclusive) = 0, SharedReadOnly (ProviderGpioSharingMode_SharedReadOnly) = 1,
@@ -568,7 +568,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Gpio.Provider
 } // Windows.Devices.Gpio
 pub mod i2c { // Windows.Devices.I2c
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum I2cBusSpeed: i32 {
 			StandardMode (I2cBusSpeed_StandardMode) = 0, FastMode (I2cBusSpeed_FastMode) = 1,
@@ -741,7 +741,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 pub mod provider { // Windows.Devices.I2c.Provider
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum ProviderI2cBusSpeed: i32 {
 			StandardMode (ProviderI2cBusSpeed_StandardMode) = 0, FastMode (ProviderI2cBusSpeed_FastMode) = 1,
@@ -863,7 +863,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.I2c.Provider
 } // Windows.Devices.I2c
 pub mod pwm { // Windows.Devices.Pwm
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum PwmPulsePolarity: i32 {
 			ActiveHigh (PwmPulsePolarity_ActiveHigh) = 0, ActiveLow (PwmPulsePolarity_ActiveLow) = 1,
@@ -986,7 +986,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 pub mod provider { // Windows.Devices.Pwm.Provider
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IPwmControllerProvider, 318789947, 58083, 16548, 183, 217, 72, 223, 240, 55, 122, 82);
 		RT_INTERFACE!{interface IPwmControllerProvider(IPwmControllerProviderVtbl): IInspectable(IInspectableVtbl) [IID_IPwmControllerProvider] {
@@ -1062,7 +1062,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Pwm.Provider
 } // Windows.Devices.Pwm
 pub mod spi { // Windows.Devices.Spi
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum SpiMode: i32 {
 			Mode0 (SpiMode_Mode0) = 0, Mode1 (SpiMode_Mode1) = 1, Mode2 (SpiMode_Mode2) = 2, Mode3 (SpiMode_Mode3) = 3,
@@ -1274,7 +1274,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 pub mod provider { // Windows.Devices.Spi.Provider
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum ProviderSpiMode: i32 {
 			Mode0 (ProviderSpiMode_Mode0) = 0, Mode1 (ProviderSpiMode_Mode1) = 1, Mode2 (ProviderSpiMode_Mode2) = 2, Mode3 (ProviderSpiMode_Mode3) = 3,
@@ -1417,7 +1417,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Spi.Provider
 } // Windows.Devices.Spi
 pub mod printers { // Windows.Devices.Printers
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct PrintersContract {
 			
@@ -1478,7 +1478,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 pub mod extensions { // Windows.Devices.Printers.Extensions
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum Print3DWorkflowStatus: i32 {
 			Abandoned (Print3DWorkflowStatus_Abandoned) = 0, Canceled (Print3DWorkflowStatus_Canceled) = 1, Failed (Print3DWorkflowStatus_Failed) = 2, Slicing (Print3DWorkflowStatus_Slicing) = 3, Submitted (Print3DWorkflowStatus_Submitted) = 4,
@@ -1669,7 +1669,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Printers.Extensions
 } // Windows.Devices.Printers
 pub mod power { // Windows.Devices.Power
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IBattery, 3163115462, 114, 18376, 139, 93, 97, 74, 170, 122, 67, 126);
 		RT_INTERFACE!{interface IBattery(IBatteryVtbl): IInspectable(IInspectableVtbl) [IID_IBattery] {
@@ -1763,7 +1763,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.Power
 pub mod sms { // Windows.Devices.Sms
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum SmsMessageClass: i32 {
 			None (SmsMessageClass_None) = 0, Class0 (SmsMessageClass_Class0) = 1, Class1 (SmsMessageClass_Class1) = 2, Class2 (SmsMessageClass_Class2) = 3, Class3 (SmsMessageClass_Class3) = 4,
@@ -2671,9 +2671,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).put_Format)(self, value);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_data(&mut self, outSize: *mut u32, out: *mut *mut u8) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetData)(self, outSize, out);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_data(&mut self) -> RtResult<ComArray<u8>> {
+				let mut outSize = 0; let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetData)(self, &mut outSize, &mut out);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(outSize, out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn set_data(&mut self, value: &[u8]) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).SetData)(self, value.len() as u32, value.as_ptr() as *mut _);
@@ -3001,7 +3002,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class SmsReceivedEventDetails: ::rt::gen::windows::devices::sms::ISmsReceivedEventDetails}
 } // Windows.Devices.Sms
 pub mod alljoyn { // Windows.Devices.AllJoyn
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum AllJoynAuthenticationMechanism: i32 {
 			None (AllJoynAuthenticationMechanism_None) = 0, SrpAnonymous (AllJoynAuthenticationMechanism_SrpAnonymous) = 1, SrpLogon (AllJoynAuthenticationMechanism_SrpLogon) = 2, EcdheNull (AllJoynAuthenticationMechanism_EcdheNull) = 3, EcdhePsk (AllJoynAuthenticationMechanism_EcdhePsk) = 4, EcdheEcdsa (AllJoynAuthenticationMechanism_EcdheEcdsa) = 5,
@@ -3469,7 +3470,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_Status(&mut self, out: *mut i32) -> ::w::HRESULT,
 			fn get_Properties(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IMapView<&str, IInspectable>) -> ::w::HRESULT,
 			fn get_AJSoftwareVersion(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn get_AppId(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
+			fn get_AppId(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_DateOfManufacture(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> ::w::HRESULT,
 			fn get_DefaultLanguage(&mut self, out: *mut *mut ::rt::gen::windows::globalization::Language) -> ::w::HRESULT,
 			fn get_DeviceId(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -3502,7 +3503,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			#[inline] pub unsafe fn get_app_id(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_AppId)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_date_of_manufacture(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>> {
 				let mut out = ::std::ptr::null_mut();
@@ -3586,8 +3587,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn put_SoftwareVersion(&mut self, value: ::w::HSTRING) -> ::w::HRESULT,
 			fn get_SupportUrl(&mut self, out: *mut *mut ::rt::gen::windows::foundation::Uri) -> ::w::HRESULT,
 			fn put_SupportUrl(&mut self, value: *mut ::rt::gen::windows::foundation::Uri) -> ::w::HRESULT,
-			fn get_AppId(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn put_AppId(&mut self, value: ::w::GUID) -> ::w::HRESULT
+			fn get_AppId(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn put_AppId(&mut self, value: ::Guid) -> ::w::HRESULT
 		}}
 		impl IAllJoynAboutData {
 			#[inline] pub unsafe fn get_is_enabled(&mut self) -> RtResult<bool> {
@@ -3680,10 +3681,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			#[inline] pub unsafe fn get_app_id(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_AppId)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn set_app_id(&mut self, value: ::Guid) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).put_AppId)(self, value.as_iid());
+				let hr = ((*self.lpVtbl).put_AppId)(self, value);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 		}
@@ -3926,7 +3927,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_CLSID!(CLSID_AllJoynMessageInfo = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,77,101,115,115,97,103,101,73,110,102,111,0]);
 } // Windows.Devices.AllJoyn
 pub mod background { // Windows.Devices.Background
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IDeviceUseDetails, 2102808897, 21886, 16724, 185, 148, 228, 247, 161, 31, 179, 35);
 		RT_INTERFACE!{interface IDeviceUseDetails(IDeviceUseDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceUseDetails] {
@@ -3972,7 +3973,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class DeviceServicingDetails: ::rt::gen::windows::devices::background::IDeviceServicingDetails}
 } // Windows.Devices.Background
 pub mod bluetooth { // Windows.Devices.Bluetooth
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum BluetoothCacheMode: i32 {
 			Cached (BluetoothCacheMode_Cached) = 0, Uncached (BluetoothCacheMode_Uncached) = 1,
@@ -4527,7 +4528,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_GattServices(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>) -> ::w::HRESULT,
 			fn get_ConnectionStatus(&mut self, out: *mut ::rt::gen::windows::devices::bluetooth::BluetoothConnectionStatus) -> ::w::HRESULT,
 			fn get_BluetoothAddress(&mut self, out: *mut u64) -> ::w::HRESULT,
-			fn GetGattService(&mut self, serviceUuid: ::w::GUID, out: *mut *mut ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService) -> ::w::HRESULT,
+			fn GetGattService(&mut self, serviceUuid: ::Guid, out: *mut *mut ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService) -> ::w::HRESULT,
 			fn add_NameChanged(&mut self, handler: *mut ::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::bluetooth::BluetoothLEDevice, IInspectable>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
 			fn remove_NameChanged(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
 			fn add_GattServicesChanged(&mut self, handler: *mut ::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::bluetooth::BluetoothLEDevice, IInspectable>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
@@ -4563,7 +4564,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 			#[inline] pub unsafe fn get_gatt_service(&mut self, serviceUuid: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetGattService)(self, serviceUuid.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).GetGattService)(self, serviceUuid, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn add_name_changed(&mut self, handler: &::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::bluetooth::BluetoothLEDevice, IInspectable>) -> RtResult<::rt::gen::windows::foundation::EventRegistrationToken> {
@@ -4788,14 +4789,14 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class BluetoothSignalStrengthFilter: ::rt::gen::windows::devices::bluetooth::IBluetoothSignalStrengthFilter}
 pub mod rfcomm { // Windows.Devices.Bluetooth.Rfcomm
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class RfcommDeviceService: ::rt::gen::windows::devices::bluetooth::rfcomm::IRfcommDeviceService}
 		RT_ACTIVATABLE!{IRfcommDeviceServiceStatics [CLSID_RfcommDeviceService]}
 		DEFINE_CLSID!(CLSID_RfcommDeviceService = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,82,102,99,111,109,109,46,82,102,99,111,109,109,68,101,118,105,99,101,83,101,114,118,105,99,101,0]);
 		DEFINE_IID!(IID_IRfcommServiceIdStatics, 706191034, 43381, 18147, 181, 107, 8, 255, 215, 131, 165, 254);
 		RT_INTERFACE!{interface IRfcommServiceIdStatics(IRfcommServiceIdStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommServiceIdStatics] {
-			fn FromUuid(&mut self, uuid: ::w::GUID, out: *mut *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> ::w::HRESULT,
+			fn FromUuid(&mut self, uuid: ::Guid, out: *mut *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> ::w::HRESULT,
 			fn FromShortId(&mut self, shortId: u32, out: *mut *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> ::w::HRESULT,
 			fn get_SerialPort(&mut self, out: *mut *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> ::w::HRESULT,
 			fn get_ObexObjectPush(&mut self, out: *mut *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> ::w::HRESULT,
@@ -4807,7 +4808,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		impl IRfcommServiceIdStatics {
 			#[inline] pub unsafe fn from_uuid(&mut self, uuid: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).FromUuid)(self, uuid.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).FromUuid)(self, uuid, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn from_short_id(&mut self, shortId: u32) -> RtResult<ComPtr<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId>> {
@@ -4851,7 +4852,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_CLSID!(CLSID_RfcommServiceId = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,82,102,99,111,109,109,46,82,102,99,111,109,109,83,101,114,118,105,99,101,73,100,0]);
 		DEFINE_IID!(IID_IRfcommServiceId, 576885252, 32258, 16407, 129, 54, 218, 27, 106, 27, 155, 191);
 		RT_INTERFACE!{interface IRfcommServiceId(IRfcommServiceIdVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommServiceId] {
-			fn get_Uuid(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
+			fn get_Uuid(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn AsShortId(&mut self, out: *mut u32) -> ::w::HRESULT,
 			fn AsString(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
@@ -4859,7 +4860,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			#[inline] pub unsafe fn get_uuid(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_Uuid)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn as_short_id(&mut self) -> RtResult<u32> {
 				let mut out = ::std::mem::zeroed();
@@ -5000,7 +5001,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.Bluetooth.Rfcomm
 pub mod genericattributeprofile { // Windows.Devices.Bluetooth.GenericAttributeProfile
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class GattDeviceService: ::rt::gen::windows::devices::bluetooth::genericattributeprofile::IGattDeviceService}
 		RT_ACTIVATABLE!{IGattDeviceServiceStatics [CLSID_GattDeviceService]}
@@ -5023,9 +5024,9 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_IID!(IID_IGattDeviceServiceStatics, 426573858, 64173, 17884, 174, 91, 42, 195, 24, 78, 132, 219);
 		RT_INTERFACE!{interface IGattDeviceServiceStatics(IGattDeviceServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattDeviceServiceStatics] {
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>) -> ::w::HRESULT,
-			fn GetDeviceSelectorFromUuid(&mut self, serviceUuid: ::w::GUID, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn GetDeviceSelectorFromUuid(&mut self, serviceUuid: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorFromShortId(&mut self, serviceShortId: u16, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn ConvertShortIdToUuid(&mut self, shortId: u16, out: *mut ::w::GUID) -> ::w::HRESULT
+			fn ConvertShortIdToUuid(&mut self, shortId: u16, out: *mut ::Guid) -> ::w::HRESULT
 		}}
 		impl IGattDeviceServiceStatics {
 			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: &HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>>> {
@@ -5035,7 +5036,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 			#[inline] pub unsafe fn get_device_selector_from_uuid(&mut self, serviceUuid: ::Guid) -> RtResult<HString> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDeviceSelectorFromUuid)(self, serviceUuid.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).GetDeviceSelectorFromUuid)(self, serviceUuid, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_device_selector_from_short_id(&mut self, serviceShortId: u16) -> RtResult<HString> {
@@ -5046,7 +5047,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			#[inline] pub unsafe fn convert_short_id_to_uuid(&mut self, shortId: u16) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).ConvertShortIdToUuid)(self, shortId, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
 		RT_CLASS!{class GattCharacteristic: ::rt::gen::windows::devices::bluetooth::genericattributeprofile::IGattCharacteristic}
@@ -5054,23 +5055,23 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_CLSID!(CLSID_GattCharacteristic = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,67,104,97,114,97,99,116,101,114,105,115,116,105,99,0]);
 		DEFINE_IID!(IID_IGattCharacteristicStatics, 1506496707, 22836, 20328, 161, 152, 235, 134, 79, 164, 78, 107);
 		RT_INTERFACE!{interface IGattCharacteristicStatics(IGattCharacteristicStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicStatics] {
-			fn ConvertShortIdToUuid(&mut self, shortId: u16, out: *mut ::w::GUID) -> ::w::HRESULT
+			fn ConvertShortIdToUuid(&mut self, shortId: u16, out: *mut ::Guid) -> ::w::HRESULT
 		}}
 		impl IGattCharacteristicStatics {
 			#[inline] pub unsafe fn convert_short_id_to_uuid(&mut self, shortId: u16) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).ConvertShortIdToUuid)(self, shortId, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_IGattCharacteristic, 1506496705, 22836, 20328, 161, 152, 235, 134, 79, 164, 78, 107);
 		RT_INTERFACE!{interface IGattCharacteristic(IGattCharacteristicVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristic] {
-			fn GetDescriptors(&mut self, descriptorUuid: ::w::GUID, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDescriptor>) -> ::w::HRESULT,
+			fn GetDescriptors(&mut self, descriptorUuid: ::Guid, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDescriptor>) -> ::w::HRESULT,
 			fn get_CharacteristicProperties(&mut self, out: *mut ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattCharacteristicProperties) -> ::w::HRESULT,
 			fn get_ProtectionLevel(&mut self, out: *mut ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattProtectionLevel) -> ::w::HRESULT,
 			fn put_ProtectionLevel(&mut self, value: ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattProtectionLevel) -> ::w::HRESULT,
 			fn get_UserDescription(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn get_Uuid(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
+			fn get_Uuid(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_AttributeHandle(&mut self, out: *mut u16) -> ::w::HRESULT,
 			fn get_PresentationFormats(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattPresentationFormat>) -> ::w::HRESULT,
 			fn ReadValueAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattReadResult>) -> ::w::HRESULT,
@@ -5085,7 +5086,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		impl IGattCharacteristic {
 			#[inline] pub unsafe fn get_descriptors(&mut self, descriptorUuid: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDescriptor>>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDescriptors)(self, descriptorUuid.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).GetDescriptors)(self, descriptorUuid, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_characteristic_properties(&mut self) -> RtResult<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattCharacteristicProperties> {
@@ -5110,7 +5111,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			#[inline] pub unsafe fn get_uuid(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_Uuid)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_attribute_handle(&mut self) -> RtResult<u16> {
 				let mut out = ::std::mem::zeroed();
@@ -5190,20 +5191,20 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		DEFINE_IID!(IID_IGattDescriptorStatics, 2449825581, 32900, 17220, 180, 194, 40, 77, 225, 154, 133, 6);
 		RT_INTERFACE!{interface IGattDescriptorStatics(IGattDescriptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattDescriptorStatics] {
-			fn ConvertShortIdToUuid(&mut self, shortId: u16, out: *mut ::w::GUID) -> ::w::HRESULT
+			fn ConvertShortIdToUuid(&mut self, shortId: u16, out: *mut ::Guid) -> ::w::HRESULT
 		}}
 		impl IGattDescriptorStatics {
 			#[inline] pub unsafe fn convert_short_id_to_uuid(&mut self, shortId: u16) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).ConvertShortIdToUuid)(self, shortId, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_IGattDescriptor, 2449825579, 32900, 17220, 180, 194, 40, 77, 225, 154, 133, 6);
 		RT_INTERFACE!{interface IGattDescriptor(IGattDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IGattDescriptor] {
 			fn get_ProtectionLevel(&mut self, out: *mut ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattProtectionLevel) -> ::w::HRESULT,
 			fn put_ProtectionLevel(&mut self, value: ::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattProtectionLevel) -> ::w::HRESULT,
-			fn get_Uuid(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
+			fn get_Uuid(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_AttributeHandle(&mut self, out: *mut u16) -> ::w::HRESULT,
 			fn ReadValueAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattReadResult>) -> ::w::HRESULT,
 			fn ReadValueWithCacheModeAsync(&mut self, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattReadResult>) -> ::w::HRESULT,
@@ -5222,7 +5223,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			#[inline] pub unsafe fn get_uuid(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_Uuid)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_attribute_handle(&mut self) -> RtResult<u16> {
 				let mut out = ::std::mem::zeroed();
@@ -5477,681 +5478,681 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		DEFINE_IID!(IID_IGattServiceUuidsStatics, 1841655896, 39610, 17431, 184, 242, 220, 224, 22, 211, 78, 226);
 		RT_INTERFACE!{interface IGattServiceUuidsStatics(IGattServiceUuidsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceUuidsStatics] {
-			fn get_Battery(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_BloodPressure(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_CyclingSpeedAndCadence(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_GenericAccess(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_GenericAttribute(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_Glucose(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_HealthThermometer(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_HeartRate(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_RunningSpeedAndCadence(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT
+			fn get_Battery(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_BloodPressure(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_CyclingSpeedAndCadence(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_GenericAccess(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_GenericAttribute(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_Glucose(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_HealthThermometer(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_HeartRate(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_RunningSpeedAndCadence(&mut self, out: *mut ::Guid) -> ::w::HRESULT
 		}}
 		impl IGattServiceUuidsStatics {
 			#[inline] pub unsafe fn get_battery(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_Battery)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_blood_pressure(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_BloodPressure)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_cycling_speed_and_cadence(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CyclingSpeedAndCadence)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_generic_access(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_GenericAccess)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_generic_attribute(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_GenericAttribute)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_glucose(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_Glucose)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_health_thermometer(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_HealthThermometer)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_heart_rate(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_HeartRate)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_running_speed_and_cadence(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_RunningSpeedAndCadence)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_IGattServiceUuidsStatics2, 3534656757, 15637, 20345, 156, 12, 234, 175, 166, 117, 21, 92);
 		RT_INTERFACE!{interface IGattServiceUuidsStatics2(IGattServiceUuidsStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceUuidsStatics2] {
-			fn get_AlertNotification(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_CurrentTime(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_CyclingPower(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_DeviceInformation(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_HumanInterfaceDevice(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_ImmediateAlert(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_LinkLoss(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_LocationAndNavigation(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_NextDstChange(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_PhoneAlertStatus(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_ReferenceTimeUpdate(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_ScanParameters(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_TxPower(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT
+			fn get_AlertNotification(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_CurrentTime(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_CyclingPower(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_DeviceInformation(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_HumanInterfaceDevice(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_ImmediateAlert(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_LinkLoss(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_LocationAndNavigation(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_NextDstChange(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_PhoneAlertStatus(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_ReferenceTimeUpdate(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_ScanParameters(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_TxPower(&mut self, out: *mut ::Guid) -> ::w::HRESULT
 		}}
 		impl IGattServiceUuidsStatics2 {
 			#[inline] pub unsafe fn get_alert_notification(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_AlertNotification)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_current_time(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CurrentTime)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_cycling_power(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CyclingPower)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_device_information(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_DeviceInformation)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_human_interface_device(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_HumanInterfaceDevice)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_immediate_alert(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ImmediateAlert)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_link_loss(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_LinkLoss)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_location_and_navigation(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_LocationAndNavigation)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_next_dst_change(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_NextDstChange)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_phone_alert_status(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_PhoneAlertStatus)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_reference_time_update(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ReferenceTimeUpdate)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_scan_parameters(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ScanParameters)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_tx_power(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_TxPower)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_IGattCharacteristicUuidsStatics, 1492796806, 45534, 18188, 183, 222, 13, 17, 255, 68, 244, 183);
 		RT_INTERFACE!{interface IGattCharacteristicUuidsStatics(IGattCharacteristicUuidsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicUuidsStatics] {
-			fn get_BatteryLevel(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_BloodPressureFeature(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_BloodPressureMeasurement(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_BodySensorLocation(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_CscFeature(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_CscMeasurement(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_GlucoseFeature(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_GlucoseMeasurement(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_GlucoseMeasurementContext(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_HeartRateControlPoint(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_HeartRateMeasurement(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_IntermediateCuffPressure(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_IntermediateTemperature(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_MeasurementInterval(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_RecordAccessControlPoint(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_RscFeature(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_RscMeasurement(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_SCControlPoint(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_SensorLocation(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_TemperatureMeasurement(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_TemperatureType(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT
+			fn get_BatteryLevel(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_BloodPressureFeature(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_BloodPressureMeasurement(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_BodySensorLocation(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_CscFeature(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_CscMeasurement(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_GlucoseFeature(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_GlucoseMeasurement(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_GlucoseMeasurementContext(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_HeartRateControlPoint(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_HeartRateMeasurement(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_IntermediateCuffPressure(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_IntermediateTemperature(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_MeasurementInterval(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_RecordAccessControlPoint(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_RscFeature(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_RscMeasurement(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_SCControlPoint(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_SensorLocation(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_TemperatureMeasurement(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_TemperatureType(&mut self, out: *mut ::Guid) -> ::w::HRESULT
 		}}
 		impl IGattCharacteristicUuidsStatics {
 			#[inline] pub unsafe fn get_battery_level(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_BatteryLevel)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_blood_pressure_feature(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_BloodPressureFeature)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_blood_pressure_measurement(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_BloodPressureMeasurement)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_body_sensor_location(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_BodySensorLocation)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_csc_feature(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CscFeature)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_csc_measurement(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CscMeasurement)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_glucose_feature(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_GlucoseFeature)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_glucose_measurement(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_GlucoseMeasurement)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_glucose_measurement_context(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_GlucoseMeasurementContext)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_heart_rate_control_point(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_HeartRateControlPoint)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_heart_rate_measurement(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_HeartRateMeasurement)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_intermediate_cuff_pressure(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_IntermediateCuffPressure)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_intermediate_temperature(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_IntermediateTemperature)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_measurement_interval(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_MeasurementInterval)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_record_access_control_point(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_RecordAccessControlPoint)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_rsc_feature(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_RscFeature)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_rsc_measurement(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_RscMeasurement)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_sccontrol_point(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_SCControlPoint)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_sensor_location(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_SensorLocation)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_temperature_measurement(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_TemperatureMeasurement)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_temperature_type(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_TemperatureType)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_IGattCharacteristicUuidsStatics2, 408269861, 54382, 18988, 156, 63, 237, 109, 234, 41, 231, 190);
 		RT_INTERFACE!{interface IGattCharacteristicUuidsStatics2(IGattCharacteristicUuidsStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicUuidsStatics2] {
-			fn get_AlertCategoryId(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_AlertCategoryIdBitMask(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_AlertLevel(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_AlertNotificationControlPoint(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_AlertStatus(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_GapAppearance(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_BootKeyboardInputReport(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_BootKeyboardOutputReport(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_BootMouseInputReport(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_CurrentTime(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_CyclingPowerControlPoint(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_CyclingPowerFeature(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_CyclingPowerMeasurement(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_CyclingPowerVector(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_DateTime(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_DayDateTime(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_DayOfWeek(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_GapDeviceName(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_DstOffset(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_ExactTime256(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_FirmwareRevisionString(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_HardwareRevisionString(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_HidControlPoint(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_HidInformation(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_Ieee1107320601RegulatoryCertificationDataList(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_LnControlPoint(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_LnFeature(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_LocalTimeInformation(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_LocationAndSpeed(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_ManufacturerNameString(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_ModelNumberString(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_Navigation(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_NewAlert(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_GapPeripheralPreferredConnectionParameters(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_GapPeripheralPrivacyFlag(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_PnpId(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_PositionQuality(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_ProtocolMode(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_GapReconnectionAddress(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_ReferenceTimeInformation(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_Report(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_ReportMap(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_RingerControlPoint(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_RingerSetting(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_ScanIntervalWindow(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_ScanRefresh(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_SerialNumberString(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_GattServiceChanged(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_SoftwareRevisionString(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_SupportedNewAlertCategory(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_SupportUnreadAlertCategory(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_SystemId(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_TimeAccuracy(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_TimeSource(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_TimeUpdateControlPoint(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_TimeUpdateState(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_TimeWithDst(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_TimeZone(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_TxPowerLevel(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_UnreadAlertStatus(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT
+			fn get_AlertCategoryId(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_AlertCategoryIdBitMask(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_AlertLevel(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_AlertNotificationControlPoint(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_AlertStatus(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_GapAppearance(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_BootKeyboardInputReport(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_BootKeyboardOutputReport(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_BootMouseInputReport(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_CurrentTime(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_CyclingPowerControlPoint(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_CyclingPowerFeature(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_CyclingPowerMeasurement(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_CyclingPowerVector(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_DateTime(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_DayDateTime(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_DayOfWeek(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_GapDeviceName(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_DstOffset(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_ExactTime256(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_FirmwareRevisionString(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_HardwareRevisionString(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_HidControlPoint(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_HidInformation(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_Ieee1107320601RegulatoryCertificationDataList(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_LnControlPoint(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_LnFeature(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_LocalTimeInformation(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_LocationAndSpeed(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_ManufacturerNameString(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_ModelNumberString(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_Navigation(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_NewAlert(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_GapPeripheralPreferredConnectionParameters(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_GapPeripheralPrivacyFlag(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_PnpId(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_PositionQuality(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_ProtocolMode(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_GapReconnectionAddress(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_ReferenceTimeInformation(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_Report(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_ReportMap(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_RingerControlPoint(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_RingerSetting(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_ScanIntervalWindow(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_ScanRefresh(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_SerialNumberString(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_GattServiceChanged(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_SoftwareRevisionString(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_SupportedNewAlertCategory(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_SupportUnreadAlertCategory(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_SystemId(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_TimeAccuracy(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_TimeSource(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_TimeUpdateControlPoint(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_TimeUpdateState(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_TimeWithDst(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_TimeZone(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_TxPowerLevel(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_UnreadAlertStatus(&mut self, out: *mut ::Guid) -> ::w::HRESULT
 		}}
 		impl IGattCharacteristicUuidsStatics2 {
 			#[inline] pub unsafe fn get_alert_category_id(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_AlertCategoryId)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_alert_category_id_bit_mask(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_AlertCategoryIdBitMask)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_alert_level(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_AlertLevel)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_alert_notification_control_point(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_AlertNotificationControlPoint)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_alert_status(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_AlertStatus)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_gap_appearance(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_GapAppearance)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_boot_keyboard_input_report(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_BootKeyboardInputReport)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_boot_keyboard_output_report(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_BootKeyboardOutputReport)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_boot_mouse_input_report(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_BootMouseInputReport)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_current_time(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CurrentTime)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_cycling_power_control_point(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CyclingPowerControlPoint)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_cycling_power_feature(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CyclingPowerFeature)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_cycling_power_measurement(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CyclingPowerMeasurement)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_cycling_power_vector(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CyclingPowerVector)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_date_time(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_DateTime)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_day_date_time(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_DayDateTime)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_day_of_week(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_DayOfWeek)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_gap_device_name(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_GapDeviceName)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_dst_offset(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_DstOffset)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_exact_time256(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ExactTime256)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_firmware_revision_string(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_FirmwareRevisionString)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_hardware_revision_string(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_HardwareRevisionString)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_hid_control_point(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_HidControlPoint)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_hid_information(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_HidInformation)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_ieee1107320601_regulatory_certification_data_list(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_Ieee1107320601RegulatoryCertificationDataList)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_ln_control_point(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_LnControlPoint)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_ln_feature(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_LnFeature)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_local_time_information(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_LocalTimeInformation)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_location_and_speed(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_LocationAndSpeed)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_manufacturer_name_string(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ManufacturerNameString)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_model_number_string(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ModelNumberString)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_navigation(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_Navigation)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_new_alert(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_NewAlert)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_gap_peripheral_preferred_connection_parameters(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_GapPeripheralPreferredConnectionParameters)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_gap_peripheral_privacy_flag(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_GapPeripheralPrivacyFlag)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_pnp_id(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_PnpId)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_position_quality(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_PositionQuality)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_protocol_mode(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ProtocolMode)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_gap_reconnection_address(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_GapReconnectionAddress)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_reference_time_information(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ReferenceTimeInformation)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_report(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_Report)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_report_map(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ReportMap)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_ringer_control_point(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_RingerControlPoint)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_ringer_setting(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_RingerSetting)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_scan_interval_window(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ScanIntervalWindow)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_scan_refresh(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ScanRefresh)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_serial_number_string(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_SerialNumberString)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_gatt_service_changed(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_GattServiceChanged)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_software_revision_string(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_SoftwareRevisionString)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_supported_new_alert_category(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_SupportedNewAlertCategory)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_support_unread_alert_category(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_SupportUnreadAlertCategory)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_system_id(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_SystemId)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_time_accuracy(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_TimeAccuracy)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_time_source(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_TimeSource)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_time_update_control_point(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_TimeUpdateControlPoint)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_time_update_state(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_TimeUpdateState)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_time_with_dst(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_TimeWithDst)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_time_zone(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_TimeZone)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_tx_power_level(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_TxPowerLevel)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_unread_alert_status(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_UnreadAlertStatus)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_IGattDescriptorUuidsStatics, 2801296078, 40188, 17137, 145, 133, 255, 55, 183, 81, 129, 211);
 		RT_INTERFACE!{interface IGattDescriptorUuidsStatics(IGattDescriptorUuidsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattDescriptorUuidsStatics] {
-			fn get_CharacteristicAggregateFormat(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_CharacteristicExtendedProperties(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_CharacteristicPresentationFormat(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_CharacteristicUserDescription(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_ClientCharacteristicConfiguration(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn get_ServerCharacteristicConfiguration(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT
+			fn get_CharacteristicAggregateFormat(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_CharacteristicExtendedProperties(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_CharacteristicPresentationFormat(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_CharacteristicUserDescription(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_ClientCharacteristicConfiguration(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn get_ServerCharacteristicConfiguration(&mut self, out: *mut ::Guid) -> ::w::HRESULT
 		}}
 		impl IGattDescriptorUuidsStatics {
 			#[inline] pub unsafe fn get_characteristic_aggregate_format(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CharacteristicAggregateFormat)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_characteristic_extended_properties(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CharacteristicExtendedProperties)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_characteristic_presentation_format(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CharacteristicPresentationFormat)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_characteristic_user_description(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_CharacteristicUserDescription)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_client_characteristic_configuration(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ClientCharacteristicConfiguration)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_server_characteristic_configuration(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ServerCharacteristicConfiguration)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_IGattReliableWriteTransaction, 1671851783, 6890, 19532, 165, 15, 151, 186, 228, 116, 179, 72);
@@ -6217,21 +6218,21 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_CLSID!(CLSID_GattPresentationFormatTypes = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,80,114,101,115,101,110,116,97,116,105,111,110,70,111,114,109,97,116,84,121,112,101,115,0]);
 		DEFINE_IID!(IID_IGattDeviceService, 2893773829, 45884, 18383, 153, 15, 107, 143, 85, 119, 223, 113);
 		RT_INTERFACE!{interface IGattDeviceService(IGattDeviceServiceVtbl): IInspectable(IInspectableVtbl) [IID_IGattDeviceService] {
-			fn GetCharacteristics(&mut self, characteristicUuid: ::w::GUID, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattCharacteristic>) -> ::w::HRESULT,
-			fn GetIncludedServices(&mut self, serviceUuid: ::w::GUID, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>) -> ::w::HRESULT,
+			fn GetCharacteristics(&mut self, characteristicUuid: ::Guid, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattCharacteristic>) -> ::w::HRESULT,
+			fn GetIncludedServices(&mut self, serviceUuid: ::Guid, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>) -> ::w::HRESULT,
 			fn get_DeviceId(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn get_Uuid(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
+			fn get_Uuid(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn get_AttributeHandle(&mut self, out: *mut u16) -> ::w::HRESULT
 		}}
 		impl IGattDeviceService {
 			#[inline] pub unsafe fn get_characteristics(&mut self, characteristicUuid: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattCharacteristic>>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetCharacteristics)(self, characteristicUuid.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).GetCharacteristics)(self, characteristicUuid, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_included_services(&mut self, serviceUuid: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::bluetooth::genericattributeprofile::GattDeviceService>>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetIncludedServices)(self, serviceUuid.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).GetIncludedServices)(self, serviceUuid, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_device_id(&mut self) -> RtResult<HString> {
@@ -6242,7 +6243,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			#[inline] pub unsafe fn get_uuid(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_Uuid)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_attribute_handle(&mut self) -> RtResult<u16> {
 				let mut out = ::std::mem::zeroed();
@@ -6281,7 +6282,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.Bluetooth.GenericAttributeProfile
 pub mod advertisement { // Windows.Devices.Bluetooth.Advertisement
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum BluetoothLEScanningMode: i32 {
 			Passive (BluetoothLEScanningMode_Passive) = 0, Active (BluetoothLEScanningMode_Active) = 1,
@@ -6879,7 +6880,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.Bluetooth.Advertisement
 pub mod background { // Windows.Devices.Bluetooth.Background
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class RfcommInboundConnectionInformation: ::rt::gen::windows::devices::bluetooth::background::IRfcommInboundConnectionInformation}
 		RT_CLASS!{class RfcommOutboundConnectionInformation: ::rt::gen::windows::devices::bluetooth::background::IRfcommOutboundConnectionInformation}
@@ -7024,7 +7025,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Bluetooth.Background
 } // Windows.Devices.Bluetooth
 pub mod enumeration { // Windows.Devices.Enumeration
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IDeviceConnectionChangeTriggerDetails, 3092745228, 48065, 18507, 191, 250, 123, 49, 220, 194, 0, 178);
 		RT_INTERFACE!{interface IDeviceConnectionChangeTriggerDetails(IDeviceConnectionChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceConnectionChangeTriggerDetails] {
@@ -7825,7 +7826,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_IID!(IID_IDeviceAccessInformationStatics, 1464587219, 24368, 17869, 138, 148, 114, 79, 229, 151, 48, 132);
 		RT_INTERFACE!{interface IDeviceAccessInformationStatics(IDeviceAccessInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceAccessInformationStatics] {
 			fn CreateFromId(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::devices::enumeration::DeviceAccessInformation) -> ::w::HRESULT,
-			fn CreateFromDeviceClassId(&mut self, deviceClassId: ::w::GUID, out: *mut *mut ::rt::gen::windows::devices::enumeration::DeviceAccessInformation) -> ::w::HRESULT,
+			fn CreateFromDeviceClassId(&mut self, deviceClassId: ::Guid, out: *mut *mut ::rt::gen::windows::devices::enumeration::DeviceAccessInformation) -> ::w::HRESULT,
 			fn CreateFromDeviceClass(&mut self, deviceClass: ::rt::gen::windows::devices::enumeration::DeviceClass, out: *mut *mut ::rt::gen::windows::devices::enumeration::DeviceAccessInformation) -> ::w::HRESULT
 		}}
 		impl IDeviceAccessInformationStatics {
@@ -7836,7 +7837,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 			#[inline] pub unsafe fn create_from_device_class_id(&mut self, deviceClassId: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::devices::enumeration::DeviceAccessInformation>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).CreateFromDeviceClassId)(self, deviceClassId.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).CreateFromDeviceClassId)(self, deviceClassId, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn create_from_device_class(&mut self, deviceClass: ::rt::gen::windows::devices::enumeration::DeviceClass) -> RtResult<ComPtr<::rt::gen::windows::devices::enumeration::DeviceAccessInformation>> {
@@ -7882,7 +7883,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		RT_CLASS!{class DeviceWatcherTriggerDetails: ::rt::gen::windows::devices::enumeration::IDeviceWatcherTriggerDetails}
 pub mod pnp { // Windows.Devices.Enumeration.Pnp
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum PnpObjectType: i32 {
 			Unknown (PnpObjectType_Unknown) = 0, DeviceInterface (PnpObjectType_DeviceInterface) = 1, DeviceContainer (PnpObjectType_DeviceContainer) = 2, Device (PnpObjectType_Device) = 3, DeviceInterfaceClass (PnpObjectType_DeviceInterfaceClass) = 4, AssociationEndpoint (PnpObjectType_AssociationEndpoint) = 5, AssociationEndpointContainer (PnpObjectType_AssociationEndpointContainer) = 6, AssociationEndpointService (PnpObjectType_AssociationEndpointService) = 7,
@@ -8058,7 +8059,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Enumeration.Pnp
 } // Windows.Devices.Enumeration
 pub mod geolocation { // Windows.Devices.Geolocation
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum PositionAccuracy: i32 {
 			Default (PositionAccuracy_Default) = 0, High (PositionAccuracy_High) = 1,
@@ -8647,7 +8648,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class Geocircle: ::rt::gen::windows::devices::geolocation::IGeocircle [::rt::gen::windows::devices::geolocation::IGeocircleFactory] [CLSID_Geocircle]}
 		DEFINE_CLSID!(CLSID_Geocircle = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,99,105,114,99,108,101,0]);
 pub mod geofencing { // Windows.Devices.Geolocation.Geofencing
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum MonitoredGeofenceStates: u32 {
 			None (MonitoredGeofenceStates_None) = 0, Entered (MonitoredGeofenceStates_Entered) = 1, Exited (MonitoredGeofenceStates_Exited) = 2, Removed (MonitoredGeofenceStates_Removed) = 4,
@@ -8837,7 +8838,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Geolocation.Geofencing
 } // Windows.Devices.Geolocation
 pub mod humaninterfacedevice { // Windows.Devices.HumanInterfaceDevice
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum HidReportType: i32 {
 			Input (HidReportType_Input) = 0, Output (HidReportType_Output) = 1, Feature (HidReportType_Feature) = 2,
@@ -9424,7 +9425,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.HumanInterfaceDevice
 pub mod input { // Windows.Devices.Input
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum PointerDeviceType: i32 {
 			Touch (PointerDeviceType_Touch) = 0, Pen (PointerDeviceType_Pen) = 1, Mouse (PointerDeviceType_Mouse) = 2,
@@ -9617,7 +9618,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class TouchCapabilities: ::rt::gen::windows::devices::input::ITouchCapabilities}
 } // Windows.Devices.Input
 pub mod lights { // Windows.Devices.Lights
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_ILampStatics, 2820817260, 34949, 16414, 184, 33, 142, 139, 56, 168, 232, 236);
 		RT_INTERFACE!{interface ILampStatics(ILampStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILampStatics] {
@@ -9720,7 +9721,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.Lights
 pub mod midi { // Windows.Devices.Midi
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum MidiMessageType: i32 {
 			None (MidiMessageType_None) = 0, NoteOff (MidiMessageType_NoteOff) = 128, NoteOn (MidiMessageType_NoteOn) = 144, PolyphonicKeyPressure (MidiMessageType_PolyphonicKeyPressure) = 160, ControlChange (MidiMessageType_ControlChange) = 176, ProgramChange (MidiMessageType_ProgramChange) = 192, ChannelPressure (MidiMessageType_ChannelPressure) = 208, PitchBendChange (MidiMessageType_PitchBendChange) = 224, SystemExclusive (MidiMessageType_SystemExclusive) = 240, MidiTimeCode (MidiMessageType_MidiTimeCode) = 241, SongPositionPointer (MidiMessageType_SongPositionPointer) = 242, SongSelect (MidiMessageType_SongSelect) = 243, TuneRequest (MidiMessageType_TuneRequest) = 246, TimingClock (MidiMessageType_TimingClock) = 248, Start (MidiMessageType_Start) = 250, Continue (MidiMessageType_Continue) = 251, Stop (MidiMessageType_Stop) = 252, ActiveSensing (MidiMessageType_ActiveSensing) = 254, SystemReset (MidiMessageType_SystemReset) = 255,
@@ -10225,7 +10226,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.Midi
 pub mod perception { // Windows.Devices.Perception
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum PerceptionFrameSourceAccessStatus: i32 {
 			Unspecified (PerceptionFrameSourceAccessStatus_Unspecified) = 0, Allowed (PerceptionFrameSourceAccessStatus_Allowed) = 1, DeniedByUser (PerceptionFrameSourceAccessStatus_DeniedByUser) = 2, DeniedBySystem (PerceptionFrameSourceAccessStatus_DeniedBySystem) = 3,
@@ -11771,7 +11772,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 pub mod provider { // Windows.Devices.Perception.Provider
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IKnownPerceptionFrameKindStatics, 988172758, 38505, 16646, 159, 174, 72, 53, 193, 185, 97, 4);
 		RT_INTERFACE!{interface IKnownPerceptionFrameKindStatics(IKnownPerceptionFrameKindStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionFrameKindStatics] {
@@ -12191,7 +12192,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Perception.Provider
 } // Windows.Devices.Perception
 pub mod pointofservice { // Windows.Devices.PointOfService
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum UnifiedPosErrorSeverity: i32 {
 			UnknownErrorSeverity (UnifiedPosErrorSeverity_UnknownErrorSeverity) = 0, Warning (UnifiedPosErrorSeverity_Warning) = 1, Recoverable (UnifiedPosErrorSeverity_Recoverable) = 2, Unrecoverable (UnifiedPosErrorSeverity_Unrecoverable) = 3, AssistanceRequired (UnifiedPosErrorSeverity_AssistanceRequired) = 4, Fatal (UnifiedPosErrorSeverity_Fatal) = 5,
@@ -13615,9 +13616,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).get_Capabilities)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_supported_card_types(&mut self, outSize: *mut u32, out: *mut *mut u32) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).get_SupportedCardTypes)(self, outSize, out);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_supported_card_types(&mut self) -> RtResult<ComArray<u32>> {
+				let mut outSize = 0; let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_SupportedCardTypes)(self, &mut outSize, &mut out);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(outSize, out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_device_authentication_protocol(&mut self) -> RtResult<::rt::gen::windows::devices::pointofservice::MagneticStripeReaderAuthenticationProtocol> {
 				let mut out = ::std::mem::zeroed();
@@ -15262,7 +15264,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.PointOfService
 pub mod radios { // Windows.Devices.Radios
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum RadioState: i32 {
 			Unknown (RadioState_Unknown) = 0, On (RadioState_On) = 1, Off (RadioState_Off) = 2, Disabled (RadioState_Disabled) = 3,
@@ -15347,7 +15349,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.Radios
 pub mod sensors { // Windows.Devices.Sensors
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum MagnetometerAccuracy: i32 {
 			Unknown (MagnetometerAccuracy_Unknown) = 0, Unreliable (MagnetometerAccuracy_Unreliable) = 1, Approximate (MagnetometerAccuracy_Approximate) = 2, High (MagnetometerAccuracy_High) = 3,
@@ -17118,17 +17120,17 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 pub mod custom { // Windows.Devices.Sensors.Custom
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_ICustomSensorStatics, 2569032399, 62498, 19581, 131, 107, 231, 220, 116, 167, 18, 75);
 		RT_INTERFACE!{interface ICustomSensorStatics(ICustomSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICustomSensorStatics] {
-			fn GetDeviceSelector(&mut self, interfaceId: ::w::GUID, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn GetDeviceSelector(&mut self, interfaceId: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, sensorId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::sensors::custom::CustomSensor>) -> ::w::HRESULT
 		}}
 		impl ICustomSensorStatics {
 			#[inline] pub unsafe fn get_device_selector(&mut self, interfaceId: ::Guid) -> RtResult<HString> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, interfaceId.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, interfaceId, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn from_id_async(&mut self, sensorId: &HStringRef) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::sensors::custom::CustomSensor>>> {
@@ -17218,7 +17220,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Sensors.Custom
 } // Windows.Devices.Sensors
 pub mod serialcommunication { // Windows.Devices.SerialCommunication
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum SerialParity: i32 {
 			None (SerialParity_None) = 0, Odd (SerialParity_Odd) = 1, Even (SerialParity_Even) = 2, Mark (SerialParity_Mark) = 3, Space (SerialParity_Space) = 4,
@@ -17484,7 +17486,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.SerialCommunication
 pub mod smartcards { // Windows.Devices.SmartCards
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum SmartCardReaderKind: i32 {
 			Any (SmartCardReaderKind_Any) = 0, Generic (SmartCardReaderKind_Generic) = 1, Tpm (SmartCardReaderKind_Tpm) = 2, Nfc (SmartCardReaderKind_Nfc) = 3, Uicc (SmartCardReaderKind_Uicc) = 4,
@@ -17633,7 +17635,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_INTERFACE!{interface ISmartCardProvisioningStatics(ISmartCardProvisioningStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioningStatics] {
 			fn FromSmartCardAsync(&mut self, card: *mut ::rt::gen::windows::devices::smartcards::SmartCard, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>) -> ::w::HRESULT,
 			fn RequestVirtualSmartCardCreationAsync(&mut self, friendlyName: ::w::HSTRING, administrativeKey: *mut ::rt::gen::windows::storage::streams::IBuffer, pinPolicy: *mut ::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>) -> ::w::HRESULT,
-			fn RequestVirtualSmartCardCreationAsyncWithCardId(&mut self, friendlyName: ::w::HSTRING, administrativeKey: *mut ::rt::gen::windows::storage::streams::IBuffer, pinPolicy: *mut ::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, cardId: ::w::GUID, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>) -> ::w::HRESULT,
+			fn RequestVirtualSmartCardCreationAsyncWithCardId(&mut self, friendlyName: ::w::HSTRING, administrativeKey: *mut ::rt::gen::windows::storage::streams::IBuffer, pinPolicy: *mut ::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, cardId: ::Guid, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>) -> ::w::HRESULT,
 			fn RequestVirtualSmartCardDeletionAsync(&mut self, card: *mut ::rt::gen::windows::devices::smartcards::SmartCard, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<bool>) -> ::w::HRESULT
 		}}
 		impl ISmartCardProvisioningStatics {
@@ -17649,7 +17651,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 			#[inline] pub unsafe fn request_virtual_smart_card_creation_async_with_card_id(&mut self, friendlyName: &HStringRef, administrativeKey: &::rt::gen::windows::storage::streams::IBuffer, pinPolicy: &::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, cardId: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).RequestVirtualSmartCardCreationAsyncWithCardId)(self, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, cardId.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).RequestVirtualSmartCardCreationAsyncWithCardId)(self, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, cardId, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn request_virtual_smart_card_deletion_async(&mut self, card: &::rt::gen::windows::devices::smartcards::SmartCard) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<bool>>> {
@@ -17666,7 +17668,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_IID!(IID_ISmartCardProvisioningStatics2, 877119144, 51616, 19414, 181, 13, 37, 31, 78, 141, 58, 98);
 		RT_INTERFACE!{interface ISmartCardProvisioningStatics2(ISmartCardProvisioningStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioningStatics2] {
 			fn RequestAttestedVirtualSmartCardCreationAsync(&mut self, friendlyName: ::w::HSTRING, administrativeKey: *mut ::rt::gen::windows::storage::streams::IBuffer, pinPolicy: *mut ::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>) -> ::w::HRESULT,
-			fn RequestAttestedVirtualSmartCardCreationAsyncWithCardId(&mut self, friendlyName: ::w::HSTRING, administrativeKey: *mut ::rt::gen::windows::storage::streams::IBuffer, pinPolicy: *mut ::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, cardId: ::w::GUID, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>) -> ::w::HRESULT
+			fn RequestAttestedVirtualSmartCardCreationAsyncWithCardId(&mut self, friendlyName: ::w::HSTRING, administrativeKey: *mut ::rt::gen::windows::storage::streams::IBuffer, pinPolicy: *mut ::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, cardId: ::Guid, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>) -> ::w::HRESULT
 		}}
 		impl ISmartCardProvisioningStatics2 {
 			#[inline] pub unsafe fn request_attested_virtual_smart_card_creation_async(&mut self, friendlyName: &HStringRef, administrativeKey: &::rt::gen::windows::storage::streams::IBuffer, pinPolicy: &::rt::gen::windows::devices::smartcards::SmartCardPinPolicy) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>>> {
@@ -17676,7 +17678,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 			#[inline] pub unsafe fn request_attested_virtual_smart_card_creation_async_with_card_id(&mut self, friendlyName: &HStringRef, administrativeKey: &::rt::gen::windows::storage::streams::IBuffer, pinPolicy: &::rt::gen::windows::devices::smartcards::SmartCardPinPolicy, cardId: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::smartcards::SmartCardProvisioning>>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).RequestAttestedVirtualSmartCardCreationAsyncWithCardId)(self, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, cardId.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).RequestAttestedVirtualSmartCardCreationAsyncWithCardId)(self, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, cardId, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
@@ -17871,7 +17873,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_Challenge(&mut self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> ::w::HRESULT,
 			fn VerifyResponseAsync(&mut self, response: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<bool>) -> ::w::HRESULT,
 			fn ProvisionAsync(&mut self, response: *mut ::rt::gen::windows::storage::streams::IBuffer, formatCard: bool, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> ::w::HRESULT,
-			fn ProvisionAsyncWithNewCardId(&mut self, response: *mut ::rt::gen::windows::storage::streams::IBuffer, formatCard: bool, newCardId: ::w::GUID, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> ::w::HRESULT,
+			fn ProvisionAsyncWithNewCardId(&mut self, response: *mut ::rt::gen::windows::storage::streams::IBuffer, formatCard: bool, newCardId: ::Guid, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> ::w::HRESULT,
 			fn ChangeAdministrativeKeyAsync(&mut self, response: *mut ::rt::gen::windows::storage::streams::IBuffer, newAdministrativeKey: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> ::w::HRESULT
 		}}
 		impl ISmartCardChallengeContext {
@@ -17892,7 +17894,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 			#[inline] pub unsafe fn provision_async_with_new_card_id(&mut self, response: &::rt::gen::windows::storage::streams::IBuffer, formatCard: bool, newCardId: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).ProvisionAsyncWithNewCardId)(self, response as *const _ as *mut _, formatCard, newCardId.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).ProvisionAsyncWithNewCardId)(self, response as *const _ as *mut _, formatCard, newCardId, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn change_administrative_key_async(&mut self, response: &::rt::gen::windows::storage::streams::IBuffer, newAdministrativeKey: &::rt::gen::windows::storage::streams::IBuffer) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> {
@@ -17914,7 +17916,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.SmartCards
 pub mod usb { // Windows.Devices.Usb
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum UsbTransferDirection: i32 {
 			Out (UsbTransferDirection_Out) = 0, In (UsbTransferDirection_In) = 1,
@@ -18160,8 +18162,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_CLSID!(CLSID_UsbDeviceClasses = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,68,101,118,105,99,101,67,108,97,115,115,101,115,0]);
 		DEFINE_IID!(IID_IUsbDeviceStatics, 107709858, 2487, 17478, 133, 2, 111, 230, 220, 170, 115, 9);
 		RT_INTERFACE!{interface IUsbDeviceStatics(IUsbDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbDeviceStatics] {
-			fn GetDeviceSelector(&mut self, vendorId: u32, productId: u32, winUsbInterfaceClass: ::w::GUID, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn GetDeviceSelectorGuidOnly(&mut self, winUsbInterfaceClass: ::w::GUID, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn GetDeviceSelector(&mut self, vendorId: u32, productId: u32, winUsbInterfaceClass: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn GetDeviceSelectorGuidOnly(&mut self, winUsbInterfaceClass: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceSelectorVidPidOnly(&mut self, vendorId: u32, productId: u32, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetDeviceClassSelector(&mut self, usbClass: *mut ::rt::gen::windows::devices::usb::UsbDeviceClass, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::usb::UsbDevice>) -> ::w::HRESULT
@@ -18169,12 +18171,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		impl IUsbDeviceStatics {
 			#[inline] pub unsafe fn get_device_selector(&mut self, vendorId: u32, productId: u32, winUsbInterfaceClass: ::Guid) -> RtResult<HString> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, vendorId, productId, winUsbInterfaceClass.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, vendorId, productId, winUsbInterfaceClass, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_device_selector_guid_only(&mut self, winUsbInterfaceClass: ::Guid) -> RtResult<HString> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDeviceSelectorGuidOnly)(self, winUsbInterfaceClass.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).GetDeviceSelectorGuidOnly)(self, winUsbInterfaceClass, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_device_selector_vid_pid_only(&mut self, vendorId: u32, productId: u32) -> RtResult<HString> {
@@ -18878,7 +18880,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.Usb
 pub mod wifi { // Windows.Devices.WiFi
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum WiFiNetworkKind: i32 {
 			Any (WiFiNetworkKind_Any) = 0, Infrastructure (WiFiNetworkKind_Infrastructure) = 1, Adhoc (WiFiNetworkKind_Adhoc) = 2,
@@ -19088,7 +19090,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.WiFi
 pub mod wifidirect { // Windows.Devices.WiFiDirect
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum WiFiDirectConnectionStatus: i32 {
 			Disconnected (WiFiDirectConnectionStatus_Disconnected) = 0, Connected (WiFiDirectConnectionStatus_Connected) = 1,
@@ -19487,7 +19489,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 pub mod services { // Windows.Devices.WiFiDirect.Services
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum WiFiDirectServiceConfigurationMethod: i32 {
 			Default (WiFiDirectServiceConfigurationMethod_Default) = 0, PinDisplay (WiFiDirectServiceConfigurationMethod_PinDisplay) = 1, PinEntry (WiFiDirectServiceConfigurationMethod_PinEntry) = 2,
@@ -19972,7 +19974,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.WiFiDirect.Services
 } // Windows.Devices.WiFiDirect
 pub mod custom { // Windows.Devices.Custom
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct CustomDeviceContract {
 			
@@ -20052,13 +20054,13 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}}
 		DEFINE_IID!(IID_ICustomDeviceStatics, 3357672210, 61260, 18097, 165, 142, 238, 179, 8, 220, 137, 23);
 		RT_INTERFACE!{interface ICustomDeviceStatics(ICustomDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICustomDeviceStatics] {
-			fn GetDeviceSelector(&mut self, classGuid: ::w::GUID, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn GetDeviceSelector(&mut self, classGuid: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, desiredAccess: ::rt::gen::windows::devices::custom::DeviceAccessMode, sharingMode: ::rt::gen::windows::devices::custom::DeviceSharingMode, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::custom::CustomDevice>) -> ::w::HRESULT
 		}}
 		impl ICustomDeviceStatics {
 			#[inline] pub unsafe fn get_device_selector(&mut self, classGuid: ::Guid) -> RtResult<HString> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, classGuid.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, classGuid, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: &HStringRef, desiredAccess: ::rt::gen::windows::devices::custom::DeviceAccessMode, sharingMode: ::rt::gen::windows::devices::custom::DeviceSharingMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::custom::CustomDevice>>> {
@@ -20101,7 +20103,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Devices.Custom
 pub mod portable { // Windows.Devices.Portable
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct PortableDeviceContract {
 			
@@ -20129,7 +20131,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_IID!(IID_IServiceDeviceStatics, 2827097313, 22983, 18976, 171, 166, 159, 103, 7, 147, 114, 48);
 		RT_INTERFACE!{interface IServiceDeviceStatics(IServiceDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IServiceDeviceStatics] {
 			fn GetDeviceSelector(&mut self, serviceType: ::rt::gen::windows::devices::portable::ServiceDeviceType, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn GetDeviceSelectorFromServiceId(&mut self, serviceId: ::w::GUID, out: *mut ::w::HSTRING) -> ::w::HRESULT
+			fn GetDeviceSelectorFromServiceId(&mut self, serviceId: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT
 		}}
 		impl IServiceDeviceStatics {
 			#[inline] pub unsafe fn get_device_selector(&mut self, serviceType: ::rt::gen::windows::devices::portable::ServiceDeviceType) -> RtResult<HString> {
@@ -20139,7 +20141,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 			#[inline] pub unsafe fn get_device_selector_from_service_id(&mut self, serviceId: ::Guid) -> RtResult<HString> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDeviceSelectorFromServiceId)(self, serviceId.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).GetDeviceSelectorFromServiceId)(self, serviceId, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
 		}
@@ -20149,7 +20151,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_CLSID!(CLSID_ServiceDevice = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,114,116,97,98,108,101,46,83,101,114,118,105,99,101,68,101,118,105,99,101,0]);
 } // Windows.Devices.Portable
 pub mod scanners { // Windows.Devices.Scanners
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct ScannerDeviceContract {
 			
@@ -20586,7 +20588,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Devices.Scanners
 } // Windows.Devices
 pub mod storage { // Windows.Storage
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum FileAccessMode: i32 {
 			Read (FileAccessMode_Read) = 0, ReadWrite (FileAccessMode_ReadWrite) = 1,
@@ -20901,7 +20903,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 pub mod streams { // Windows.Storage.Streams
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IRandomAccessStreamWithContentType, 3424995367, 19261, 17295, 146, 50, 16, 199, 107, 199, 224, 56);
 		RT_INTERFACE!{interface IRandomAccessStreamWithContentType(IRandomAccessStreamWithContentTypeVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamWithContentType] {
@@ -21001,7 +21003,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn ReadBytes(&mut self, valueSize: u32, value: *mut u8) -> ::w::HRESULT,
 			fn ReadBuffer(&mut self, length: u32, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> ::w::HRESULT,
 			fn ReadBoolean(&mut self, out: *mut bool) -> ::w::HRESULT,
-			fn ReadGuid(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
+			fn ReadGuid(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn ReadInt16(&mut self, out: *mut i16) -> ::w::HRESULT,
 			fn ReadInt32(&mut self, out: *mut i32) -> ::w::HRESULT,
 			fn ReadInt64(&mut self, out: *mut i64) -> ::w::HRESULT,
@@ -21072,7 +21074,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			#[inline] pub unsafe fn read_guid(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).ReadGuid)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn read_int16(&mut self) -> RtResult<i16> {
 				let mut out = ::std::mem::zeroed();
@@ -21222,7 +21224,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Storage.Streams
 pub mod fileproperties { // Windows.Storage.FileProperties
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class BasicProperties: ::rt::gen::windows::storage::fileproperties::IBasicProperties}
 		DEFINE_IID!(IID_IBasicProperties, 3495777755, 30814, 19046, 190, 2, 155, 238, 197, 138, 234, 129);
@@ -21251,10 +21253,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Storage.FileProperties
 } // Windows.Storage
 pub mod system { // Windows.System
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 pub mod power { // Windows.System.Power
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum BatteryStatus: i32 {
 			NotPresent (BatteryStatus_NotPresent) = 0, Discharging (BatteryStatus_Discharging) = 1, Idle (BatteryStatus_Idle) = 2, Charging (BatteryStatus_Charging) = 3,
@@ -21262,10 +21264,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.System.Power
 } // Windows.System
 pub mod security { // Windows.Security
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 pub mod credentials { // Windows.Security.Credentials
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class PasswordCredential: ::rt::gen::windows::security::credentials::IPasswordCredential}
 		DEFINE_IID!(IID_IPasswordCredential, 1790019977, 50976, 16807, 166, 193, 254, 173, 179, 99, 41, 160);
@@ -21319,10 +21321,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Security.Credentials
 pub mod cryptography { // Windows.Security.Cryptography
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 pub mod certificates { // Windows.Security.Cryptography.Certificates
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class Certificate: ::rt::gen::windows::security::cryptography::certificates::ICertificate [::rt::gen::windows::security::cryptography::certificates::ICertificateFactory] [CLSID_Certificate]}
 		DEFINE_CLSID!(CLSID_Certificate = &[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,0]);
@@ -21366,17 +21368,20 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).BuildChainWithParametersAsync)(self, certificates as *const _ as *mut _, parameters as *const _ as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_serial_number(&mut self, outSize: *mut u32, out: *mut *mut u8) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).get_SerialNumber)(self, outSize, out);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_serial_number(&mut self) -> RtResult<ComArray<u8>> {
+				let mut outSize = 0; let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_SerialNumber)(self, &mut outSize, &mut out);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(outSize, out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_hash_value(&mut self, outSize: *mut u32, out: *mut *mut u8) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetHashValue)(self, outSize, out);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_hash_value(&mut self) -> RtResult<ComArray<u8>> {
+				let mut outSize = 0; let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetHashValue)(self, &mut outSize, &mut out);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(outSize, out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_hash_value_with_algorithm(&mut self, hashAlgorithmName: &HStringRef, outSize: *mut u32, out: *mut *mut u8) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetHashValueWithAlgorithm)(self, hashAlgorithmName.get(), outSize, out);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_hash_value_with_algorithm(&mut self, hashAlgorithmName: &HStringRef) -> RtResult<ComArray<u8>> {
+				let mut outSize = 0; let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetHashValueWithAlgorithm)(self, hashAlgorithmName.get(), &mut outSize, &mut out);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(outSize, out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_certificate_blob(&mut self) -> RtResult<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
 				let mut out = ::std::ptr::null_mut();
@@ -21563,7 +21568,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Security.Cryptography
 } // Windows.Security
 pub mod networking { // Windows.Networking
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class HostName: ::rt::gen::windows::networking::IHostName [::rt::gen::windows::networking::IHostNameFactory] [CLSID_HostName]}
 		RT_ACTIVATABLE!{IHostNameStatics [CLSID_HostName]}
@@ -21700,7 +21705,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			None (HostNameSortOptions_None) = 0, OptimizeForLongConnections (HostNameSortOptions_OptimizeForLongConnections) = 2,
 		}}
 pub mod connectivity { // Windows.Networking.Connectivity
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class IPInformation: ::rt::gen::windows::networking::connectivity::IIPInformation}
 		DEFINE_IID!(IID_IIPInformation, 3629204960, 5007, 18391, 155, 58, 54, 187, 72, 140, 239, 51);
@@ -21727,7 +21732,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_InboundMaxBitsPerSecond(&mut self, out: *mut u64) -> ::w::HRESULT,
 			fn get_IanaInterfaceType(&mut self, out: *mut u32) -> ::w::HRESULT,
 			fn get_NetworkItem(&mut self, out: *mut *mut ::rt::gen::windows::networking::connectivity::NetworkItem) -> ::w::HRESULT,
-			fn get_NetworkAdapterId(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
+			fn get_NetworkAdapterId(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn GetConnectedProfileAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::networking::connectivity::ConnectionProfile>) -> ::w::HRESULT
 		}}
 		impl INetworkAdapter {
@@ -21754,7 +21759,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			#[inline] pub unsafe fn get_network_adapter_id(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_NetworkAdapterId)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_connected_profile_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::networking::connectivity::ConnectionProfile>>> {
 				let mut out = ::std::ptr::null_mut();
@@ -21966,14 +21971,14 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_CLASS!{class NetworkItem: ::rt::gen::windows::networking::connectivity::INetworkItem}
 		DEFINE_IID!(IID_INetworkItem, 29117753, 62944, 17767, 162, 140, 66, 8, 12, 131, 27, 43);
 		RT_INTERFACE!{interface INetworkItem(INetworkItemVtbl): IInspectable(IInspectableVtbl) [IID_INetworkItem] {
-			fn get_NetworkId(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
+			fn get_NetworkId(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn GetNetworkTypes(&mut self, out: *mut ::rt::gen::windows::networking::connectivity::NetworkTypes) -> ::w::HRESULT
 		}}
 		impl INetworkItem {
 			#[inline] pub unsafe fn get_network_id(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_NetworkId)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_network_types(&mut self) -> RtResult<::rt::gen::windows::networking::connectivity::NetworkTypes> {
 				let mut out = ::std::mem::zeroed();
@@ -21986,7 +21991,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}}
 } // Windows.Networking.Connectivity
 pub mod sockets { // Windows.Networking.Sockets
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum SocketSslErrorSeverity: i32 {
 			None (SocketSslErrorSeverity_None) = 0, Ignorable (SocketSslErrorSeverity_Ignorable) = 1, Fatal (SocketSslErrorSeverity_Fatal) = 2,
@@ -22464,7 +22469,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Networking.Sockets
 } // Windows.Networking
 pub mod globalization { // Windows.Globalization
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class Language: ::rt::gen::windows::globalization::ILanguage [::rt::gen::windows::globalization::ILanguageFactory] [CLSID_Language]}
 		RT_ACTIVATABLE!{ILanguageStatics [CLSID_Language]}
@@ -22540,13 +22545,13 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 } // Windows.Globalization
 pub mod ui { // Windows.UI
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct Color {
 			A: u8, R: u8, G: u8, B: u8,
 		}}
 pub mod popups { // Windows.UI.Popups
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum Placement: i32 {
 			Default (Placement_Default) = 0, Above (Placement_Above) = 1, Below (Placement_Below) = 2, Left (Placement_Left) = 3, Right (Placement_Right) = 4,
@@ -22554,10 +22559,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.UI.Popups
 } // Windows.UI
 pub mod applicationmodel { // Windows.ApplicationModel
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 pub mod background { // Windows.ApplicationModel.Background
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class DeviceWatcherTrigger: ::rt::gen::windows::applicationmodel::background::IDeviceWatcherTrigger}
 		DEFINE_IID!(IID_IDeviceWatcherTrigger, 2757853149, 34163, 16992, 190, 252, 91, 236, 137, 203, 105, 61);
@@ -22570,10 +22575,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.ApplicationModel.Background
 } // Windows.ApplicationModel
 pub mod graphics { // Windows.Graphics
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 pub mod imaging { // Windows.Graphics.Imaging
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum BitmapAlphaMode: i32 {
 			Premultiplied (BitmapAlphaMode_Premultiplied) = 0, Straight (BitmapAlphaMode_Straight) = 1, Ignore (BitmapAlphaMode_Ignore) = 2,
@@ -22755,9 +22760,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn DetachPixelData(&mut self, outSize: *mut u32, out: *mut *mut u8) -> ::w::HRESULT
 		}}
 		impl IPixelDataProvider {
-			#[inline] pub unsafe fn detach_pixel_data(&mut self, outSize: *mut u32, out: *mut *mut u8) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).DetachPixelData)(self, outSize, out);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn detach_pixel_data(&mut self) -> RtResult<ComArray<u8>> {
+				let mut outSize = 0; let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).DetachPixelData)(self, &mut outSize, &mut out);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(outSize, out)) } else { Err(hr) }
 			}
 		}
 		RT_CLASS!{class BitmapPropertiesView: ::rt::gen::windows::graphics::imaging::IBitmapPropertiesView}
@@ -22981,20 +22987,20 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}}
 } // Windows.Graphics.Imaging
 pub mod display { // Windows.Graphics.Display
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum DisplayOrientations: u32 {
 			None (DisplayOrientations_None) = 0, Landscape (DisplayOrientations_Landscape) = 1, Portrait (DisplayOrientations_Portrait) = 2, LandscapeFlipped (DisplayOrientations_LandscapeFlipped) = 4, PortraitFlipped (DisplayOrientations_PortraitFlipped) = 8,
 		}}
 } // Windows.Graphics.Display
 pub mod directx { // Windows.Graphics.DirectX
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum DirectXPixelFormat: i32 {
 			Unknown (DirectXPixelFormat_Unknown) = 0, R32G32B32A32Typeless (DirectXPixelFormat_R32G32B32A32Typeless) = 1, R32G32B32A32Float (DirectXPixelFormat_R32G32B32A32Float) = 2, R32G32B32A32UInt (DirectXPixelFormat_R32G32B32A32UInt) = 3, R32G32B32A32Int (DirectXPixelFormat_R32G32B32A32Int) = 4, R32G32B32Typeless (DirectXPixelFormat_R32G32B32Typeless) = 5, R32G32B32Float (DirectXPixelFormat_R32G32B32Float) = 6, R32G32B32UInt (DirectXPixelFormat_R32G32B32UInt) = 7, R32G32B32Int (DirectXPixelFormat_R32G32B32Int) = 8, R16G16B16A16Typeless (DirectXPixelFormat_R16G16B16A16Typeless) = 9, R16G16B16A16Float (DirectXPixelFormat_R16G16B16A16Float) = 10, R16G16B16A16UIntNormalized (DirectXPixelFormat_R16G16B16A16UIntNormalized) = 11, R16G16B16A16UInt (DirectXPixelFormat_R16G16B16A16UInt) = 12, R16G16B16A16IntNormalized (DirectXPixelFormat_R16G16B16A16IntNormalized) = 13, R16G16B16A16Int (DirectXPixelFormat_R16G16B16A16Int) = 14, R32G32Typeless (DirectXPixelFormat_R32G32Typeless) = 15, R32G32Float (DirectXPixelFormat_R32G32Float) = 16, R32G32UInt (DirectXPixelFormat_R32G32UInt) = 17, R32G32Int (DirectXPixelFormat_R32G32Int) = 18, R32G8X24Typeless (DirectXPixelFormat_R32G8X24Typeless) = 19, D32FloatS8X24UInt (DirectXPixelFormat_D32FloatS8X24UInt) = 20, R32FloatX8X24Typeless (DirectXPixelFormat_R32FloatX8X24Typeless) = 21, X32TypelessG8X24UInt (DirectXPixelFormat_X32TypelessG8X24UInt) = 22, R10G10B10A2Typeless (DirectXPixelFormat_R10G10B10A2Typeless) = 23, R10G10B10A2UIntNormalized (DirectXPixelFormat_R10G10B10A2UIntNormalized) = 24, R10G10B10A2UInt (DirectXPixelFormat_R10G10B10A2UInt) = 25, R11G11B10Float (DirectXPixelFormat_R11G11B10Float) = 26, R8G8B8A8Typeless (DirectXPixelFormat_R8G8B8A8Typeless) = 27, R8G8B8A8UIntNormalized (DirectXPixelFormat_R8G8B8A8UIntNormalized) = 28, R8G8B8A8UIntNormalizedSrgb (DirectXPixelFormat_R8G8B8A8UIntNormalizedSrgb) = 29, R8G8B8A8UInt (DirectXPixelFormat_R8G8B8A8UInt) = 30, R8G8B8A8IntNormalized (DirectXPixelFormat_R8G8B8A8IntNormalized) = 31, R8G8B8A8Int (DirectXPixelFormat_R8G8B8A8Int) = 32, R16G16Typeless (DirectXPixelFormat_R16G16Typeless) = 33, R16G16Float (DirectXPixelFormat_R16G16Float) = 34, R16G16UIntNormalized (DirectXPixelFormat_R16G16UIntNormalized) = 35, R16G16UInt (DirectXPixelFormat_R16G16UInt) = 36, R16G16IntNormalized (DirectXPixelFormat_R16G16IntNormalized) = 37, R16G16Int (DirectXPixelFormat_R16G16Int) = 38, R32Typeless (DirectXPixelFormat_R32Typeless) = 39, D32Float (DirectXPixelFormat_D32Float) = 40, R32Float (DirectXPixelFormat_R32Float) = 41, R32UInt (DirectXPixelFormat_R32UInt) = 42, R32Int (DirectXPixelFormat_R32Int) = 43, R24G8Typeless (DirectXPixelFormat_R24G8Typeless) = 44, D24UIntNormalizedS8UInt (DirectXPixelFormat_D24UIntNormalizedS8UInt) = 45, R24UIntNormalizedX8Typeless (DirectXPixelFormat_R24UIntNormalizedX8Typeless) = 46, X24TypelessG8UInt (DirectXPixelFormat_X24TypelessG8UInt) = 47, R8G8Typeless (DirectXPixelFormat_R8G8Typeless) = 48, R8G8UIntNormalized (DirectXPixelFormat_R8G8UIntNormalized) = 49, R8G8UInt (DirectXPixelFormat_R8G8UInt) = 50, R8G8IntNormalized (DirectXPixelFormat_R8G8IntNormalized) = 51, R8G8Int (DirectXPixelFormat_R8G8Int) = 52, R16Typeless (DirectXPixelFormat_R16Typeless) = 53, R16Float (DirectXPixelFormat_R16Float) = 54, D16UIntNormalized (DirectXPixelFormat_D16UIntNormalized) = 55, R16UIntNormalized (DirectXPixelFormat_R16UIntNormalized) = 56, R16UInt (DirectXPixelFormat_R16UInt) = 57, R16IntNormalized (DirectXPixelFormat_R16IntNormalized) = 58, R16Int (DirectXPixelFormat_R16Int) = 59, R8Typeless (DirectXPixelFormat_R8Typeless) = 60, R8UIntNormalized (DirectXPixelFormat_R8UIntNormalized) = 61, R8UInt (DirectXPixelFormat_R8UInt) = 62, R8IntNormalized (DirectXPixelFormat_R8IntNormalized) = 63, R8Int (DirectXPixelFormat_R8Int) = 64, A8UIntNormalized (DirectXPixelFormat_A8UIntNormalized) = 65, R1UIntNormalized (DirectXPixelFormat_R1UIntNormalized) = 66, R9G9B9E5SharedExponent (DirectXPixelFormat_R9G9B9E5SharedExponent) = 67, R8G8B8G8UIntNormalized (DirectXPixelFormat_R8G8B8G8UIntNormalized) = 68, G8R8G8B8UIntNormalized (DirectXPixelFormat_G8R8G8B8UIntNormalized) = 69, BC1Typeless (DirectXPixelFormat_BC1Typeless) = 70, BC1UIntNormalized (DirectXPixelFormat_BC1UIntNormalized) = 71, BC1UIntNormalizedSrgb (DirectXPixelFormat_BC1UIntNormalizedSrgb) = 72, BC2Typeless (DirectXPixelFormat_BC2Typeless) = 73, BC2UIntNormalized (DirectXPixelFormat_BC2UIntNormalized) = 74, BC2UIntNormalizedSrgb (DirectXPixelFormat_BC2UIntNormalizedSrgb) = 75, BC3Typeless (DirectXPixelFormat_BC3Typeless) = 76, BC3UIntNormalized (DirectXPixelFormat_BC3UIntNormalized) = 77, BC3UIntNormalizedSrgb (DirectXPixelFormat_BC3UIntNormalizedSrgb) = 78, BC4Typeless (DirectXPixelFormat_BC4Typeless) = 79, BC4UIntNormalized (DirectXPixelFormat_BC4UIntNormalized) = 80, BC4IntNormalized (DirectXPixelFormat_BC4IntNormalized) = 81, BC5Typeless (DirectXPixelFormat_BC5Typeless) = 82, BC5UIntNormalized (DirectXPixelFormat_BC5UIntNormalized) = 83, BC5IntNormalized (DirectXPixelFormat_BC5IntNormalized) = 84, B5G6R5UIntNormalized (DirectXPixelFormat_B5G6R5UIntNormalized) = 85, B5G5R5A1UIntNormalized (DirectXPixelFormat_B5G5R5A1UIntNormalized) = 86, B8G8R8A8UIntNormalized (DirectXPixelFormat_B8G8R8A8UIntNormalized) = 87, B8G8R8X8UIntNormalized (DirectXPixelFormat_B8G8R8X8UIntNormalized) = 88, R10G10B10XRBiasA2UIntNormalized (DirectXPixelFormat_R10G10B10XRBiasA2UIntNormalized) = 89, B8G8R8A8Typeless (DirectXPixelFormat_B8G8R8A8Typeless) = 90, B8G8R8A8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8A8UIntNormalizedSrgb) = 91, B8G8R8X8Typeless (DirectXPixelFormat_B8G8R8X8Typeless) = 92, B8G8R8X8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8X8UIntNormalizedSrgb) = 93, BC6HTypeless (DirectXPixelFormat_BC6HTypeless) = 94, BC6H16UnsignedFloat (DirectXPixelFormat_BC6H16UnsignedFloat) = 95, BC6H16Float (DirectXPixelFormat_BC6H16Float) = 96, BC7Typeless (DirectXPixelFormat_BC7Typeless) = 97, BC7UIntNormalized (DirectXPixelFormat_BC7UIntNormalized) = 98, BC7UIntNormalizedSrgb (DirectXPixelFormat_BC7UIntNormalizedSrgb) = 99, Ayuv (DirectXPixelFormat_Ayuv) = 100, Y410 (DirectXPixelFormat_Y410) = 101, Y416 (DirectXPixelFormat_Y416) = 102, NV12 (DirectXPixelFormat_NV12) = 103, P010 (DirectXPixelFormat_P010) = 104, P016 (DirectXPixelFormat_P016) = 105, Opaque420 (DirectXPixelFormat_Opaque420) = 106, Yuy2 (DirectXPixelFormat_Yuy2) = 107, Y210 (DirectXPixelFormat_Y210) = 108, Y216 (DirectXPixelFormat_Y216) = 109, NV11 (DirectXPixelFormat_NV11) = 110, AI44 (DirectXPixelFormat_AI44) = 111, IA44 (DirectXPixelFormat_IA44) = 112, P8 (DirectXPixelFormat_P8) = 113, A8P8 (DirectXPixelFormat_A8P8) = 114, B4G4R4A4UIntNormalized (DirectXPixelFormat_B4G4R4A4UIntNormalized) = 115, P208 (DirectXPixelFormat_P208) = 130, V208 (DirectXPixelFormat_V208) = 131, V408 (DirectXPixelFormat_V408) = 132,
 		}}
 pub mod direct3d11 { // Windows.Graphics.DirectX.Direct3D11
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IDirect3DSurface, 200581446, 5057, 18068, 190, 227, 122, 191, 21, 234, 245, 134);
 		RT_INTERFACE!{interface IDirect3DSurface(IDirect3DSurfaceVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3DSurface] {
@@ -23016,7 +23022,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Graphics.DirectX.Direct3D11
 } // Windows.Graphics.DirectX
 pub mod printing { // Windows.Graphics.Printing
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum PrintOrientation: i32 {
 			Default (PrintOrientation_Default) = 0, NotAvailable (PrintOrientation_NotAvailable) = 1, PrinterCustom (PrintOrientation_PrinterCustom) = 2, Portrait (PrintOrientation_Portrait) = 3, PortraitFlipped (PrintOrientation_PortraitFlipped) = 4, Landscape (PrintOrientation_Landscape) = 5, LandscapeFlipped (PrintOrientation_LandscapeFlipped) = 6,
@@ -23027,7 +23033,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Graphics.Printing
 } // Windows.Graphics
 pub mod media { // Windows.Media
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class VideoFrame: ::rt::gen::windows::media::IVideoFrame [::rt::gen::windows::media::IVideoFrameFactory] [CLSID_VideoFrame]}
 		DEFINE_CLSID!(CLSID_VideoFrame = &[87,105,110,100,111,119,115,46,77,101,100,105,97,46,86,105,100,101,111,70,114,97,109,101,0]);
@@ -23072,10 +23078,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 		}
 pub mod devices { // Windows.Media.Devices
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 pub mod core { // Windows.Media.Devices.Core
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class CameraIntrinsics: ::rt::gen::windows::media::devices::core::ICameraIntrinsics}
 		DEFINE_IID!(IID_ICameraIntrinsics, 178711858, 25993, 18906, 175, 222, 89, 66, 112, 202, 10, 172);
@@ -23145,7 +23151,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 } // Windows.Media.Devices
 } // Windows.Media
 pub mod foundation { // Windows.Foundation
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		DEFINE_IID!(IID_IClosable, 819308585, 32676, 16422, 131, 187, 215, 91, 174, 78, 169, 158);
 		RT_INTERFACE!{interface IClosable(IClosableVtbl): IInspectable(IInspectableVtbl) [IID_IClosable] {
@@ -23191,7 +23197,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetChar16(&mut self, out: *mut Char) -> ::w::HRESULT,
 			fn GetBoolean(&mut self, out: *mut bool) -> ::w::HRESULT,
 			fn GetString(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn GetGuid(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
+			fn GetGuid(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
 			fn GetDateTime(&mut self, out: *mut ::rt::gen::windows::foundation::DateTime) -> ::w::HRESULT,
 			fn GetTimeSpan(&mut self, out: *mut ::rt::gen::windows::foundation::TimeSpan) -> ::w::HRESULT,
 			fn GetPoint(&mut self, out: *mut ::rt::gen::windows::foundation::Point) -> ::w::HRESULT,
@@ -23210,7 +23216,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn GetBooleanArray(&mut self, valueSize: *mut u32, value: *mut *mut bool) -> ::w::HRESULT,
 			fn GetStringArray(&mut self, valueSize: *mut u32, value: *mut *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn GetInspectableArray(&mut self, valueSize: *mut u32, value: *mut *mut *mut IInspectable) -> ::w::HRESULT,
-			fn GetGuidArray(&mut self, valueSize: *mut u32, value: *mut *mut ::w::GUID) -> ::w::HRESULT,
+			fn GetGuidArray(&mut self, valueSize: *mut u32, value: *mut *mut ::Guid) -> ::w::HRESULT,
 			fn GetDateTimeArray(&mut self, valueSize: *mut u32, value: *mut *mut ::rt::gen::windows::foundation::DateTime) -> ::w::HRESULT,
 			fn GetTimeSpanArray(&mut self, valueSize: *mut u32, value: *mut *mut ::rt::gen::windows::foundation::TimeSpan) -> ::w::HRESULT,
 			fn GetPointArray(&mut self, valueSize: *mut u32, value: *mut *mut ::rt::gen::windows::foundation::Point) -> ::w::HRESULT,
@@ -23291,7 +23297,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			#[inline] pub unsafe fn get_guid(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).GetGuid)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_date_time(&mut self) -> RtResult<::rt::gen::windows::foundation::DateTime> {
 				let mut out = ::std::mem::zeroed();
@@ -23318,81 +23324,100 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).GetRect)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_uint8_array(&mut self, valueSize: *mut u32, value: *mut *mut u8) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetUInt8Array)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_uint8_array(&mut self) -> RtResult<ComArray<u8>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetUInt8Array)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_int16_array(&mut self, valueSize: *mut u32, value: *mut *mut i16) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetInt16Array)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_int16_array(&mut self) -> RtResult<ComArray<i16>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetInt16Array)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_uint16_array(&mut self, valueSize: *mut u32, value: *mut *mut u16) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetUInt16Array)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_uint16_array(&mut self) -> RtResult<ComArray<u16>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetUInt16Array)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_int32_array(&mut self, valueSize: *mut u32, value: *mut *mut i32) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetInt32Array)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_int32_array(&mut self) -> RtResult<ComArray<i32>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetInt32Array)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_uint32_array(&mut self, valueSize: *mut u32, value: *mut *mut u32) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetUInt32Array)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_uint32_array(&mut self) -> RtResult<ComArray<u32>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetUInt32Array)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_int64_array(&mut self, valueSize: *mut u32, value: *mut *mut i64) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetInt64Array)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_int64_array(&mut self) -> RtResult<ComArray<i64>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetInt64Array)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_uint64_array(&mut self, valueSize: *mut u32, value: *mut *mut u64) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetUInt64Array)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_uint64_array(&mut self) -> RtResult<ComArray<u64>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetUInt64Array)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_single_array(&mut self, valueSize: *mut u32, value: *mut *mut f32) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetSingleArray)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_single_array(&mut self) -> RtResult<ComArray<f32>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetSingleArray)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_double_array(&mut self, valueSize: *mut u32, value: *mut *mut f64) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetDoubleArray)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_double_array(&mut self) -> RtResult<ComArray<f64>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDoubleArray)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_char16_array(&mut self, valueSize: *mut u32, value: *mut *mut Char) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetChar16Array)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_char16_array(&mut self) -> RtResult<ComArray<Char>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetChar16Array)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_boolean_array(&mut self, valueSize: *mut u32, value: *mut *mut bool) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetBooleanArray)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_boolean_array(&mut self) -> RtResult<ComArray<bool>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetBooleanArray)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_string_array(&mut self, valueSize: *mut u32, value: *mut *mut ::w::HSTRING) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetStringArray)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_string_array(&mut self) -> RtResult<ComArray<::w::HSTRING>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetStringArray)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_inspectable_array(&mut self, valueSize: *mut u32, value: *mut *mut *mut IInspectable) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetInspectableArray)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_inspectable_array(&mut self) -> RtResult<ComArray<*mut IInspectable>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetInspectableArray)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_guid_array(&mut self, valueSize: *mut u32, value: *mut *mut ::w::GUID) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetGuidArray)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_guid_array(&mut self) -> RtResult<ComArray<::Guid>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetGuidArray)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_date_time_array(&mut self, valueSize: *mut u32, value: *mut *mut ::rt::gen::windows::foundation::DateTime) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetDateTimeArray)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_date_time_array(&mut self) -> RtResult<ComArray<::rt::gen::windows::foundation::DateTime>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDateTimeArray)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_time_span_array(&mut self, valueSize: *mut u32, value: *mut *mut ::rt::gen::windows::foundation::TimeSpan) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetTimeSpanArray)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_time_span_array(&mut self) -> RtResult<ComArray<::rt::gen::windows::foundation::TimeSpan>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetTimeSpanArray)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_point_array(&mut self, valueSize: *mut u32, value: *mut *mut ::rt::gen::windows::foundation::Point) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetPointArray)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_point_array(&mut self) -> RtResult<ComArray<::rt::gen::windows::foundation::Point>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetPointArray)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_size_array(&mut self, valueSize: *mut u32, value: *mut *mut ::rt::gen::windows::foundation::Size) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetSizeArray)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_size_array(&mut self) -> RtResult<ComArray<::rt::gen::windows::foundation::Size>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetSizeArray)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_rect_array(&mut self, valueSize: *mut u32, value: *mut *mut ::rt::gen::windows::foundation::Rect) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).GetRectArray)(self, valueSize, value);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_rect_array(&mut self) -> RtResult<ComArray<::rt::gen::windows::foundation::Rect>> {
+				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetRectArray)(self, &mut valueSize, &mut value);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_IPropertyValueStatics, 1654381512, 55602, 20468, 150, 185, 141, 150, 197, 193, 232, 88);
@@ -23411,7 +23436,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn CreateBoolean(&mut self, value: bool, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateString(&mut self, value: ::w::HSTRING, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateInspectable(&mut self, value: *mut IInspectable, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreateGuid(&mut self, value: ::w::GUID, out: *mut *mut IInspectable) -> ::w::HRESULT,
+			fn CreateGuid(&mut self, value: ::Guid, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateDateTime(&mut self, value: ::rt::gen::windows::foundation::DateTime, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateTimeSpan(&mut self, value: ::rt::gen::windows::foundation::TimeSpan, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreatePoint(&mut self, value: ::rt::gen::windows::foundation::Point, out: *mut *mut IInspectable) -> ::w::HRESULT,
@@ -23430,7 +23455,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn CreateBooleanArray(&mut self, valueSize: u32, value: *mut bool, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateStringArray(&mut self, valueSize: u32, value: *mut ::w::HSTRING, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateInspectableArray(&mut self, valueSize: u32, value: *mut *mut IInspectable, out: *mut *mut IInspectable) -> ::w::HRESULT,
-			fn CreateGuidArray(&mut self, valueSize: u32, value: *mut ::w::GUID, out: *mut *mut IInspectable) -> ::w::HRESULT,
+			fn CreateGuidArray(&mut self, valueSize: u32, value: *mut ::Guid, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateDateTimeArray(&mut self, valueSize: u32, value: *mut ::rt::gen::windows::foundation::DateTime, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreateTimeSpanArray(&mut self, valueSize: u32, value: *mut ::rt::gen::windows::foundation::TimeSpan, out: *mut *mut IInspectable) -> ::w::HRESULT,
 			fn CreatePointArray(&mut self, valueSize: u32, value: *mut ::rt::gen::windows::foundation::Point, out: *mut *mut IInspectable) -> ::w::HRESULT,
@@ -23510,7 +23535,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 			#[inline] pub unsafe fn create_guid(&mut self, value: ::Guid) -> RtResult<ComPtr<IInspectable>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).CreateGuid)(self, value.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).CreateGuid)(self, value, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn create_date_time(&mut self, value: ::rt::gen::windows::foundation::DateTime) -> RtResult<ComPtr<IInspectable>> {
@@ -23603,7 +23628,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				let hr = ((*self.lpVtbl).CreateInspectableArray)(self, value.len() as u32, value.as_ptr() as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_guid_array(&mut self, value: &[::w::GUID]) -> RtResult<ComPtr<IInspectable>> {
+			#[inline] pub unsafe fn create_guid_array(&mut self, value: &[::Guid]) -> RtResult<ComPtr<IInspectable>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateGuidArray)(self, value.len() as u32, value.as_ptr() as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -23906,9 +23931,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn get_Value(&mut self, outSize: *mut u32, out: *mut *mut T::Abi) -> ::w::HRESULT
 		}}
 		impl<T: RtType> IReferenceArray<T> {
-			#[inline] pub unsafe fn get_value(&mut self, outSize: *mut u32, out: *mut *mut T::Abi) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).get_Value)(self, outSize, out);
-				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			#[inline] pub unsafe fn get_value(&mut self) -> RtResult<ComArray<T::Abi>> {
+				let mut outSize = 0; let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_Value)(self, &mut outSize, &mut out);
+				if hr == ::w::S_OK { Ok(ComArray::from_raw(outSize, out)) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_TypedEventHandler, 2648818996, 27361, 4576, 132, 225, 24, 169, 5, 188, 197, 63);
@@ -24199,6 +24225,8 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}}
 		RT_PINTERFACE!{ for IReference<u8> => [0xe5198cc8,0x2873,0x55f5,0xb0,0xa1,0x84,0xff,0x9e,0x4a,0xad,0x62] as IID_IReference_1_System_Byte }
 		RT_PINTERFACE!{ for IReferenceArray<u8> => [0x2af22683,0x3734,0x56d0,0xa6,0x0e,0x68,0x8c,0xc8,0x5d,0x16,0x19] as IID_IReferenceArray_1_System_Byte }
+		RT_PINTERFACE!{ for IReference<i8> => [0x95500129,0xfbf6,0x5afc,0x89,0xdf,0x70,0x64,0x2d,0x74,0x19,0x90] as IID_IReference_1_System_SByte }
+		RT_PINTERFACE!{ for IReferenceArray<i8> => [0x08de13ea,0xbbbf,0x50db,0xa4,0x03,0x57,0x84,0x20,0xbb,0x49,0xef] as IID_IReferenceArray_1_System_SByte }
 		RT_PINTERFACE!{ for IReference<i16> => [0x6ec9e41b,0x6709,0x5647,0x99,0x18,0xa1,0x27,0x01,0x10,0xfc,0x4e] as IID_IReference_1_System_Int16 }
 		RT_PINTERFACE!{ for IReferenceArray<i16> => [0x912f8fd7,0xadc0,0x5d60,0xa8,0x96,0x7e,0xd7,0x60,0x89,0xcc,0x5b] as IID_IReferenceArray_1_System_Int16 }
 		RT_PINTERFACE!{ for IReference<u16> => [0x5ab7d2c3,0x6b62,0x5e71,0xa4,0xb6,0x2d,0x49,0xc4,0xf2,0x38,0xfd] as IID_IReference_1_System_UInt16 }
@@ -24596,7 +24624,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::foundation::diagnostics::ILoggingChannel, IInspectable> => [0x52c9c2a1,0x54a3,0x5ef9,0x9a,0xff,0x01,0x4e,0x7c,0x45,0x46,0x55] as IID_TypedEventHandler_2_Windows_Foundation_Diagnostics_ILoggingChannel_System_Object }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::foundation::diagnostics::IFileLoggingSession, ::rt::gen::windows::foundation::diagnostics::LogFileGeneratedEventArgs> => [0x0c6563b0,0x9d8b,0x5b60,0x99,0x4b,0xde,0xe1,0x17,0x4d,0x1e,0xfb] as IID_TypedEventHandler_2_Windows_Foundation_Diagnostics_IFileLoggingSession_Windows_Foundation_Diagnostics_LogFileGeneratedEventArgs }
 pub mod collections { // Windows.Foundation.Collections
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum CollectionChange: i32 {
 			Reset (CollectionChange_Reset) = 0, ItemInserted (CollectionChange_ItemInserted) = 1, ItemRemoved (CollectionChange_ItemRemoved) = 2, ItemChanged (CollectionChange_ItemChanged) = 3,
@@ -25210,7 +25238,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		RT_PINTERFACE!{ for IIterator<::rt::gen::windows::storage::IStorageItem> => [0x05b487c2,0x3830,0x5d3c,0x98,0xda,0x25,0xfa,0x11,0x54,0x2d,0xbd] as IID_IIterator_1_Windows_Storage_IStorageItem }
 } // Windows.Foundation.Collections
 pub mod metadata { // Windows.Foundation.Metadata
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum GCPressureAmount: i32 {
 			Low (GCPressureAmount_Low) = 0, Medium (GCPressureAmount_Medium) = 1, High (GCPressureAmount_High) = 2,
@@ -25302,7 +25330,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}}
 } // Windows.Foundation.Metadata
 pub mod diagnostics { // Windows.Foundation.Diagnostics
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum CausalityTraceLevel: i32 {
 			Required (CausalityTraceLevel_Required) = 0, Important (CausalityTraceLevel_Important) = 1, Verbose (CausalityTraceLevel_Verbose) = 2,
@@ -25335,29 +25363,29 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		DEFINE_IID!(IID_IAsyncCausalityTracerStatics, 1350896422, 9854, 17691, 168, 144, 171, 106, 55, 2, 69, 238);
 		RT_INTERFACE!{interface IAsyncCausalityTracerStatics(IAsyncCausalityTracerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncCausalityTracerStatics] {
-			fn TraceOperationCreation(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::w::GUID, operationId: u64, operationName: ::w::HSTRING, relatedContext: u64) -> ::w::HRESULT,
-			fn TraceOperationCompletion(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::w::GUID, operationId: u64, status: ::rt::gen::windows::foundation::AsyncStatus) -> ::w::HRESULT,
-			fn TraceOperationRelation(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::w::GUID, operationId: u64, relation: ::rt::gen::windows::foundation::diagnostics::CausalityRelation) -> ::w::HRESULT,
-			fn TraceSynchronousWorkStart(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::w::GUID, operationId: u64, work: ::rt::gen::windows::foundation::diagnostics::CausalitySynchronousWork) -> ::w::HRESULT,
+			fn TraceOperationCreation(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::Guid, operationId: u64, operationName: ::w::HSTRING, relatedContext: u64) -> ::w::HRESULT,
+			fn TraceOperationCompletion(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::Guid, operationId: u64, status: ::rt::gen::windows::foundation::AsyncStatus) -> ::w::HRESULT,
+			fn TraceOperationRelation(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::Guid, operationId: u64, relation: ::rt::gen::windows::foundation::diagnostics::CausalityRelation) -> ::w::HRESULT,
+			fn TraceSynchronousWorkStart(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::Guid, operationId: u64, work: ::rt::gen::windows::foundation::diagnostics::CausalitySynchronousWork) -> ::w::HRESULT,
 			fn TraceSynchronousWorkCompletion(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, work: ::rt::gen::windows::foundation::diagnostics::CausalitySynchronousWork) -> ::w::HRESULT,
 			fn add_TracingStatusChanged(&mut self, handler: *mut ::rt::gen::windows::foundation::EventHandler<::rt::gen::windows::foundation::diagnostics::TracingStatusChangedEventArgs>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
 			fn remove_TracingStatusChanged(&mut self, cookie: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT
 		}}
 		impl IAsyncCausalityTracerStatics {
 			#[inline] pub unsafe fn trace_operation_creation(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::Guid, operationId: u64, operationName: &HStringRef, relatedContext: u64) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).TraceOperationCreation)(self, traceLevel, source, platformId.as_iid(), operationId, operationName.get(), relatedContext);
+				let hr = ((*self.lpVtbl).TraceOperationCreation)(self, traceLevel, source, platformId, operationId, operationName.get(), relatedContext);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn trace_operation_completion(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::Guid, operationId: u64, status: ::rt::gen::windows::foundation::AsyncStatus) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).TraceOperationCompletion)(self, traceLevel, source, platformId.as_iid(), operationId, status);
+				let hr = ((*self.lpVtbl).TraceOperationCompletion)(self, traceLevel, source, platformId, operationId, status);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn trace_operation_relation(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::Guid, operationId: u64, relation: ::rt::gen::windows::foundation::diagnostics::CausalityRelation) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).TraceOperationRelation)(self, traceLevel, source, platformId.as_iid(), operationId, relation);
+				let hr = ((*self.lpVtbl).TraceOperationRelation)(self, traceLevel, source, platformId, operationId, relation);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn trace_synchronous_work_start(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, platformId: ::Guid, operationId: u64, work: ::rt::gen::windows::foundation::diagnostics::CausalitySynchronousWork) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).TraceSynchronousWorkStart)(self, traceLevel, source, platformId.as_iid(), operationId, work);
+				let hr = ((*self.lpVtbl).TraceSynchronousWorkStart)(self, traceLevel, source, platformId, operationId, work);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn trace_synchronous_work_completion(&mut self, traceLevel: ::rt::gen::windows::foundation::diagnostics::CausalityTraceLevel, source: ::rt::gen::windows::foundation::diagnostics::CausalitySource, work: ::rt::gen::windows::foundation::diagnostics::CausalitySynchronousWork) -> RtResult<()> {
@@ -25453,10 +25481,10 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn put_Task(&mut self, value: i16) -> ::w::HRESULT,
 			fn get_Opcode(&mut self, out: *mut ::rt::gen::windows::foundation::diagnostics::LoggingOpcode) -> ::w::HRESULT,
 			fn put_Opcode(&mut self, value: ::rt::gen::windows::foundation::diagnostics::LoggingOpcode) -> ::w::HRESULT,
-			fn get_ActivityId(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn put_ActivityId(&mut self, value: ::w::GUID) -> ::w::HRESULT,
-			fn get_RelatedActivityId(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn put_RelatedActivityId(&mut self, value: ::w::GUID) -> ::w::HRESULT
+			fn get_ActivityId(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn put_ActivityId(&mut self, value: ::Guid) -> ::w::HRESULT,
+			fn get_RelatedActivityId(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn put_RelatedActivityId(&mut self, value: ::Guid) -> ::w::HRESULT
 		}}
 		impl ILoggingOptions {
 			#[inline] pub unsafe fn get_keywords(&mut self) -> RtResult<i64> {
@@ -25498,19 +25526,19 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			#[inline] pub unsafe fn get_activity_id(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_ActivityId)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn set_activity_id(&mut self, value: ::Guid) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).put_ActivityId)(self, value.as_iid());
+				let hr = ((*self.lpVtbl).put_ActivityId)(self, value);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn get_related_activity_id(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_RelatedActivityId)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn set_related_activity_id(&mut self, value: ::Guid) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).put_RelatedActivityId)(self, value.as_iid());
+				let hr = ((*self.lpVtbl).put_RelatedActivityId)(self, value);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 		}
@@ -25529,28 +25557,28 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_CLSID!(CLSID_LoggingOptions = &[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,79,112,116,105,111,110,115,0]);
 		DEFINE_IID!(IID_ILoggingChannelOptions, 3286779903, 3771, 19027, 140, 84, 222, 194, 73, 38, 203, 44);
 		RT_INTERFACE!{interface ILoggingChannelOptions(ILoggingChannelOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelOptions] {
-			fn get_Group(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT,
-			fn put_Group(&mut self, value: ::w::GUID) -> ::w::HRESULT
+			fn get_Group(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
+			fn put_Group(&mut self, value: ::Guid) -> ::w::HRESULT
 		}}
 		impl ILoggingChannelOptions {
 			#[inline] pub unsafe fn get_group(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_Group)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn set_group(&mut self, value: ::Guid) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).put_Group)(self, value.as_iid());
+				let hr = ((*self.lpVtbl).put_Group)(self, value);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_ILoggingChannelOptionsFactory, 2838581722, 32687, 16785, 135, 85, 94, 134, 220, 101, 216, 150);
 		RT_INTERFACE!{interface ILoggingChannelOptionsFactory(ILoggingChannelOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelOptionsFactory] {
-			fn Create(&mut self, group: ::w::GUID, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannelOptions) -> ::w::HRESULT
+			fn Create(&mut self, group: ::Guid, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannelOptions) -> ::w::HRESULT
 		}}
 		impl ILoggingChannelOptionsFactory {
 			#[inline] pub unsafe fn create(&mut self, group: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::diagnostics::LoggingChannelOptions>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).Create)(self, group.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).Create)(self, group, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
@@ -25637,12 +25665,12 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			fn AddStringArray(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut ::w::HSTRING) -> ::w::HRESULT,
 			fn AddStringArrayWithFormat(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut ::w::HSTRING, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> ::w::HRESULT,
 			fn AddStringArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut ::w::HSTRING, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddGuid(&mut self, name: ::w::HSTRING, value: ::w::GUID) -> ::w::HRESULT,
-			fn AddGuidWithFormat(&mut self, name: ::w::HSTRING, value: ::w::GUID, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddGuidWithFormatAndTags(&mut self, name: ::w::HSTRING, value: ::w::GUID, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
-			fn AddGuidArray(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut ::w::GUID) -> ::w::HRESULT,
-			fn AddGuidArrayWithFormat(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut ::w::GUID, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> ::w::HRESULT,
-			fn AddGuidArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut ::w::GUID, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddGuid(&mut self, name: ::w::HSTRING, value: ::Guid) -> ::w::HRESULT,
+			fn AddGuidWithFormat(&mut self, name: ::w::HSTRING, value: ::Guid, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddGuidWithFormatAndTags(&mut self, name: ::w::HSTRING, value: ::Guid, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
+			fn AddGuidArray(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut ::Guid) -> ::w::HRESULT,
+			fn AddGuidArrayWithFormat(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut ::Guid, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> ::w::HRESULT,
+			fn AddGuidArrayWithFormatAndTags(&mut self, name: ::w::HSTRING, valueSize: u32, value: *mut ::Guid, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
 			fn AddDateTime(&mut self, name: ::w::HSTRING, value: ::rt::gen::windows::foundation::DateTime) -> ::w::HRESULT,
 			fn AddDateTimeWithFormat(&mut self, name: ::w::HSTRING, value: ::rt::gen::windows::foundation::DateTime, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> ::w::HRESULT,
 			fn AddDateTimeWithFormatAndTags(&mut self, name: ::w::HSTRING, value: ::rt::gen::windows::foundation::DateTime, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> ::w::HRESULT,
@@ -25992,26 +26020,26 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn add_guid(&mut self, name: &HStringRef, value: ::Guid) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).AddGuid)(self, name.get(), value.as_iid());
+				let hr = ((*self.lpVtbl).AddGuid)(self, name.get(), value);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn add_guid_with_format(&mut self, name: &HStringRef, value: ::Guid, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).AddGuidWithFormat)(self, name.get(), value.as_iid(), format);
+				let hr = ((*self.lpVtbl).AddGuidWithFormat)(self, name.get(), value, format);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn add_guid_with_format_and_tags(&mut self, name: &HStringRef, value: ::Guid, format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> RtResult<()> {
-				let hr = ((*self.lpVtbl).AddGuidWithFormatAndTags)(self, name.get(), value.as_iid(), format, tags);
+				let hr = ((*self.lpVtbl).AddGuidWithFormatAndTags)(self, name.get(), value, format, tags);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn add_guid_array(&mut self, name: &HStringRef, value: &[::w::GUID]) -> RtResult<()> {
+			#[inline] pub unsafe fn add_guid_array(&mut self, name: &HStringRef, value: &[::Guid]) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).AddGuidArray)(self, name.get(), value.len() as u32, value.as_ptr() as *mut _);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn add_guid_array_with_format(&mut self, name: &HStringRef, value: &[::w::GUID], format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> RtResult<()> {
+			#[inline] pub unsafe fn add_guid_array_with_format(&mut self, name: &HStringRef, value: &[::Guid], format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).AddGuidArrayWithFormat)(self, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn add_guid_array_with_format_and_tags(&mut self, name: &HStringRef, value: &[::w::GUID], format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> RtResult<()> {
+			#[inline] pub unsafe fn add_guid_array_with_format_and_tags(&mut self, name: &HStringRef, value: &[::Guid], format: ::rt::gen::windows::foundation::diagnostics::LoggingFieldFormat, tags: i32) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).AddGuidArrayWithFormatAndTags)(self, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
@@ -26262,13 +26290,13 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		}
 		DEFINE_IID!(IID_ILoggingChannel2, 2672573683, 2988, 17829, 158, 51, 186, 243, 243, 162, 70, 165);
 		RT_INTERFACE!{interface ILoggingChannel2(ILoggingChannel2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannel2] {
-			fn get_Id(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT
+			fn get_Id(&mut self, out: *mut ::Guid) -> ::w::HRESULT
 		}}
 		impl ILoggingChannel2 {
 			#[inline] pub unsafe fn get_id(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_Id)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_ILoggingChannelFactory, 1323064220, 44928, 19099, 176, 220, 57, 143, 154, 229, 32, 123);
@@ -26287,7 +26315,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_IID!(IID_ILoggingChannelFactory2, 1282340317, 15143, 19913, 153, 240, 41, 156, 110, 70, 3, 161);
 		RT_INTERFACE!{interface ILoggingChannelFactory2(ILoggingChannelFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory2] {
 			fn CreateWithOptions(&mut self, name: ::w::HSTRING, options: *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannelOptions, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannel) -> ::w::HRESULT,
-			fn CreateWithOptionsAndId(&mut self, name: ::w::HSTRING, options: *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannelOptions, id: ::w::GUID, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannel) -> ::w::HRESULT
+			fn CreateWithOptionsAndId(&mut self, name: ::w::HSTRING, options: *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannelOptions, id: ::Guid, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannel) -> ::w::HRESULT
 		}}
 		impl ILoggingChannelFactory2 {
 			#[inline] pub unsafe fn create_with_options(&mut self, name: &HStringRef, options: &::rt::gen::windows::foundation::diagnostics::LoggingChannelOptions) -> RtResult<ComPtr<::rt::gen::windows::foundation::diagnostics::LoggingChannel>> {
@@ -26297,14 +26325,14 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			}
 			#[inline] pub unsafe fn create_with_options_and_id(&mut self, name: &HStringRef, options: &::rt::gen::windows::foundation::diagnostics::LoggingChannelOptions, id: ::Guid) -> RtResult<ComPtr<::rt::gen::windows::foundation::diagnostics::LoggingChannel>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).CreateWithOptionsAndId)(self, name.get(), options as *const _ as *mut _, id.as_iid(), &mut out);
+				let hr = ((*self.lpVtbl).CreateWithOptionsAndId)(self, name.get(), options as *const _ as *mut _, id, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_ILoggingActivity, 3154323777, 46950, 19637, 152, 72, 151, 172, 107, 166, 214, 12);
 		RT_INTERFACE!{interface ILoggingActivity(ILoggingActivityVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivity] {
 			fn get_Name(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn get_Id(&mut self, out: *mut ::w::GUID) -> ::w::HRESULT
+			fn get_Id(&mut self, out: *mut ::Guid) -> ::w::HRESULT
 		}}
 		impl ILoggingActivity {
 			#[inline] pub unsafe fn get_name(&mut self) -> RtResult<HString> {
@@ -26315,7 +26343,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 			#[inline] pub unsafe fn get_id(&mut self) -> RtResult<::Guid> {
 				let mut out = ::std::mem::zeroed();
 				let hr = ((*self.lpVtbl).get_Id)(self, &mut out);
-				if hr == ::w::S_OK { Ok(::Guid::from(out)) } else { Err(hr) }
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_ILoggingActivity2, 650287112, 25378, 17770, 175, 130, 128, 200, 100, 47, 23, 139);
@@ -26476,7 +26504,7 @@ use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use 
 		DEFINE_CLSID!(CLSID_FileLoggingSession = &[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,70,105,108,101,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]);
 } // Windows.Foundation.Diagnostics
 pub mod numerics { // Windows.Foundation.Numerics
-use ::{ComInterface, HString, HStringRef, ComPtr, ComIid, IUnknown};
+use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtInterface, RtType, RtValueType, IInspectable, RtResult, Char}; use ::rt::handler::IntoInterface;
 		RT_STRUCT! { struct Vector2 {
 			X: f32, Y: f32,
