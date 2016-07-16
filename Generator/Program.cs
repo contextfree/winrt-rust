@@ -31,7 +31,7 @@ namespace Generator
 		static Dictionary<string, GenericInstanceType> genericInstantiations = new Dictionary<string, GenericInstanceType>();
 		static Dictionary<string, TypeDefinition> definitionsWorklist = new Dictionary<string, TypeDefinition>();
 		static HashSet<string> definitionsDone = new HashSet<string>();
-		static string Imports = @"use ::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, IUnknown};
+		static string Imports = @"use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 
 		static IEnumerable<Type> BaseTypes = new List<Type>
@@ -406,7 +406,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 				output.Add(new Tuple<string, TypeReference>("out", m.ReturnType));
 			}
 
-			string outType = String.Join(", ", output.Select(o => GetTypeName(o.Item2, TypeUsage.Out).Replace("&", "&'static ")));
+			string outType = String.Join(", ", output.Select(o => GetTypeName(o.Item2, TypeUsage.Out)));
 			if (output.Count != 1)
 			{
 				outType = "(" + outType + ")"; // also works for count == 0 (empty tuple)
@@ -721,11 +721,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 			{
 				var mainInterface = t.Interfaces[0];
 				var aliasedType = GetTypeName(mainInterface, TypeUsage.Alias);
-				if (aliasedType.Contains("'a")) // if we had to introduce a lifetime parameter ...
-				{
-					// use static lifetime for classes
-					aliasedType = aliasedType.Replace("'a", "'static");
-				}
 				
 				if (factory == null)
 				{
@@ -769,7 +764,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 			Define,
 			Alias,
 			GenericArg,
-			GenericArgWithLifetime
 		}
 
 		static string GetTypeName(TypeReference t, TypeUsage usage)
@@ -781,9 +775,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 					case TypeUsage.Raw: return t.Name + "::Abi";
 					case TypeUsage.In: return "&" + t.Name + "::In";
 					case TypeUsage.Out: return t.Name + "::Out";
-					case TypeUsage.GenericArg:
-					case TypeUsage.GenericArgWithLifetime:
-						return t.Name;
+					case TypeUsage.GenericArg: return t.Name;
 					default: throw new NotSupportedException();
 				}
 			}
@@ -817,10 +809,9 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 				switch (usage)
 				{
 					case TypeUsage.Raw: return "::w::HSTRING";
-					case TypeUsage.In: return "&HStringRef";
+					case TypeUsage.In: return "&HStringArg";
 					case TypeUsage.Out: return "HString";
-					case TypeUsage.GenericArg: return "&str";
-					case TypeUsage.GenericArgWithLifetime: return "&'a str";
+					case TypeUsage.GenericArg: return "HString";
 					default: throw new NotSupportedException();
 				}
 			}
@@ -830,7 +821,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 				{
 					case TypeUsage.Raw: return "*mut IInspectable";
 					case TypeUsage.GenericArg: return "IInspectable";
-					case TypeUsage.GenericArgWithLifetime: return "IInspectable";
 					case TypeUsage.Define: throw new NotSupportedException();
 					case TypeUsage.In: return "&IInspectable";
 					case TypeUsage.Out: return "ComPtr<IInspectable>";
@@ -905,8 +895,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 					{
 						AddGenericInstantiation(ty);
 					}
-					var argUsage = (usage == TypeUsage.Define || usage == TypeUsage.Alias || usage == TypeUsage.GenericArgWithLifetime) ? TypeUsage.GenericArgWithLifetime : TypeUsage.GenericArg;
-					name += "<" + String.Join(", ", ty.GenericArguments.Select(a => GetTypeName(a, argUsage))) + ">";
+					name += "<" + String.Join(", ", ty.GenericArguments.Select(a => GetTypeName(a, TypeUsage.GenericArg))) + ">";
 				}
 
 				if (!t.IsValueType)
@@ -915,7 +904,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 					{
 						name = "&" + name;
 					}
-					else if (usage == TypeUsage.GenericArg || usage == TypeUsage.GenericArgWithLifetime)
+					else if (usage == TypeUsage.GenericArg)
 					{
 						// leave name unchanged
 					}
@@ -1025,18 +1014,13 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 			var desc = GetTypeIIDDescriptor(t, out def);
 			Assert(def != null); // def is only null for primitive types
 			var name = GetTypeName(t, TypeUsage.Define);
-			string lifetime = "";
-			if (name.Contains("'a"))
-			{
-				lifetime = "<'a>";
-			}
 			var iidName = "IID_" + Regex.Replace(t.FullName.Substring(t.Namespace.Length + 1), @"[\.`<>,]", "_").TrimEnd('_');
 			var guid = Utility.GuidUtility.Create(PinterfaceNamespace, desc);
 			var guidStr = Regex.Replace(guid.ToString("X"), @"[\{\}]", "");
 			var module = root.FindChild(def.Namespace);
 
 			module.Append(@"
-		RT_PINTERFACE!{ for" + lifetime + " " + name + " => [" + guidStr + "] as " + iidName + " }");
+		RT_PINTERFACE!{ for " + name + " => [" + guidStr + "] as " + iidName + " }");
 		}
 
 		static string GetTypeIIDDescriptor(TypeReference t, out TypeDefinition def)

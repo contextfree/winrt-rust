@@ -30,7 +30,7 @@ macro_rules! DEFINE_IID {
 }
 
 mod hstring;
-pub use hstring::{HString, FastHString, HStringRef};
+pub use hstring::{HString, FastHString, HStringReference, HStringArg};
 mod bstr;
 pub use bstr::BStr;
 

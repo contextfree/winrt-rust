@@ -1,6 +1,6 @@
 use std::ptr;
 
-use super::{ComInterface, HString, HStringRef, ComPtr, ComArray, ComIid, Guid};
+use super::{ComInterface, HString, HStringReference, HStringArg, ComPtr, ComArray, ComIid, Guid};
 
 use w::{HRESULT, HSTRING, S_OK, ULONG, TrustLevel, IID};
 
@@ -48,12 +48,12 @@ pub trait RtType {
     unsafe fn wrap(abi: Self::Abi) -> Self::Out;
 }
 
-impl<'a> RtType for &'a str { // TODO: can we get rid of the lifetime here?
-    type In = HStringRef<'a>;
+impl<'a> RtType for HString {
+    type In = HStringArg;
     type Abi = ::w::HSTRING;
     type Out = HString;
 
-    unsafe fn unwrap(v: &HStringRef<'a>) -> Self::Abi {
+    unsafe fn unwrap(v: &HStringArg) -> Self::Abi {
         v.get()
     }
     unsafe fn uninitialized() -> Self::Abi {
@@ -87,7 +87,7 @@ pub trait RtActivatable {
     fn activatable_class_id() -> &'static [u16];
     fn factory() -> ComPtr<Self::Factory> {
         let mut res = ptr::null_mut();
-        let class_id = unsafe { HStringRef::from_utf16_unchecked(Self::activatable_class_id()) };
+        let class_id = unsafe { HStringReference::from_utf16_unchecked(Self::activatable_class_id()) };
         let hres = unsafe { ::runtimeobject::RoGetActivationFactory(class_id.get(), Self::Factory::iid().as_ref(), &mut res as *mut *mut _ as *mut *mut ::w::VOID) };
         assert_eq!(hres, S_OK);
         unsafe { ComPtr::wrap(res) }
@@ -563,15 +563,6 @@ macro_rules! RT_STRUCT {
 
 macro_rules! RT_PINTERFACE {
     (
-        for<'a> $t:ty => [$l:expr, $w1:expr, $w2:expr, $b1:expr, $b2:expr, $b3:expr, $b4:expr, $b5:expr,
-        $b6:expr, $b7:expr, $b8:expr] as $iid:ident
-    ) => {
-        DEFINE_IID!($iid, $l,$w1,$w2,$b1,$b2,$b3,$b4,$b5,$b6,$b7,$b8);
-		impl<'a> ComIid for $t {
-			fn iid() -> &'static ::Guid { &$iid }
-		}
-    };
-    (
         for $t:ty => [$l:expr, $w1:expr, $w2:expr, $b1:expr, $b2:expr, $b3:expr, $b4:expr, $b5:expr,
         $b6:expr, $b7:expr, $b8:expr] as $iid:ident
     ) => {
@@ -631,8 +622,7 @@ mod tests {
         assert_eq!(size_of::<bool>(), 1);
         assert_eq!(size_of::<::Char>(), size_of::<::w::wchar_t>());
         assert_eq!(size_of::<::Guid>(), size_of::<::w::GUID>());
-        //assert_eq!(size_of::<::HString>(), size_of::<::w::HSTRING>());
-        assert_eq!(size_of::<&::HStringRef>(), size_of::<::w::HSTRING>());
+        
         //assert_eq!(size_of::<::ComPtr<::IInspectable>>(), size_of::<*mut ::IInspectable>());
         //assert_eq!(size_of::<Option<::ComPtr<::IInspectable>>>(), size_of::<::ComPtr<::IInspectable>>());
     }

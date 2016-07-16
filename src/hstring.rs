@@ -3,6 +3,7 @@ use ::std::fmt;
 use ::std::cmp;
 use ::std::mem;
 use ::std::marker::PhantomData;
+use ::std::ops::Deref;
 
 use ::w::*;
 use ::runtimeobject::*;
@@ -49,22 +50,21 @@ fn zero_header() -> HSTRING_HEADER {
 }
 
 /// A reference to either an `HString`, a `FastHString`, or a raw null-terminated UTF-16 buffer.
-/// This is the type that WinRT methods accept as input.
 #[derive(Copy, Clone)]
-pub struct HStringRef<'a>(HSTRING_HEADER, PhantomData<&'a ()>);
+pub struct HStringReference<'a>(HSTRING_HEADER, PhantomData<&'a ()>);
 
-impl<'a> HStringRef<'a> {
+impl<'a> HStringReference<'a> {
     #[inline]
-    /// Creates a new `HStringRef` from a UTF-16 encoded slice, which must be null-terminated.
+    /// Creates a new `HStringReference` from a UTF-16 encoded slice, which must be null-terminated.
     /// This function does not allocate.
-    pub fn from_utf16(slice: &'a [u16]) -> HStringRef<'a> {
+    pub fn from_utf16(slice: &'a [u16]) -> HStringReference<'a> {
         assert!(slice[slice.len() - 1] == 0, "input must be null-terminated");
-        unsafe { HStringRef::from_utf16_unchecked(slice) }
+        unsafe { HStringReference::from_utf16_unchecked(slice) }
     }
 
     /// Won't check if the string is null terminated
-    pub unsafe fn from_utf16_unchecked(slice: &'a [u16]) -> HStringRef<'a> {
-        let mut hstrref: HStringRef = HStringRef(zero_header(), PhantomData);
+    pub unsafe fn from_utf16_unchecked(slice: &'a [u16]) -> HStringReference<'a> {
+        let mut hstrref: HStringReference = HStringReference(zero_header(), PhantomData);
         if slice.len() == 0 { return hstrref; }
         let mut hstr: HSTRING = ptr::null_mut();
         debug_assert_eq!(WindowsCreateStringReference(slice as *const _ as LPCWSTR, slice.len() as u32 - 1, &mut hstrref.0, &mut hstr), S_OK);
@@ -90,49 +90,54 @@ impl<'a> HStringRef<'a> {
     unsafe fn as_hstring(&self) -> HSTRING {
         &self.0 as *const HSTRING_HEADER as *mut HSTRING_HEADER as *mut HSTRING__
     }
-
-    #[inline]
-    pub unsafe fn get(&self) -> HSTRING {
-        self.as_hstring()
-    }
 }
 
-// Common trait impl<'a>s for HStringRef<'a>
+// Common trait impl<'a>s for HStringReference<'a>
 #[cfg(feature = "nightly")]
-impl<'a> ToString for HStringRef<'a> {
+impl<'a> ToString for HStringReference<'a> {
     fn to_string(&self) -> String {
         internal_to_string(unsafe { self.as_hstring() })
     }
 }
 
-impl<'a> fmt::Display for HStringRef<'a> {
+impl<'a> fmt::Display for HStringReference<'a> {
     fn fmt(&self, formatter: &mut fmt::Formatter) -> Result<(), fmt::Error> {
         formatter.write_str(&internal_to_string(unsafe { self.as_hstring() }))
     }
 }
 
-impl<'a> cmp::PartialOrd for HStringRef<'a> {
+impl<'a> cmp::PartialOrd for HStringReference<'a> {
     #[inline]
     fn partial_cmp(&self, other: &Self) -> Option<cmp::Ordering> {
         Some(unsafe { internal_cmp(self.as_hstring(), other.as_hstring()) })
     }
 }
 
-impl<'a> cmp::Ord for HStringRef<'a> {
+impl<'a> cmp::Ord for HStringReference<'a> {
     #[inline]
     fn cmp(&self, other: &Self) -> cmp::Ordering {
         unsafe { internal_cmp(self.as_hstring(), other.as_hstring()) }
     }
 }
 
-impl<'a, 'b> cmp::PartialEq<HStringRef<'a>> for HStringRef<'b> {
+impl<'a, 'b> cmp::PartialEq<HStringReference<'a>> for HStringReference<'b> {
     #[inline]
-    fn eq(&self, other: &HStringRef) -> bool {
+    fn eq(&self, other: &HStringReference) -> bool {
         unsafe { internal_cmp(self.as_hstring(), other.as_hstring()) == cmp::Ordering::Equal }
     }
 }
 
-impl<'a> cmp::Eq for HStringRef<'a> {}
+impl<'a> cmp::Eq for HStringReference<'a> {}
+
+impl<'a> Deref for HStringReference<'a> {
+    type Target = HStringArg;
+
+    #[inline]
+    fn deref(&self) -> &HStringArg {
+        // transmute *const HStringArg -> &HStringArg
+        unsafe { mem::transmute(self as *const HStringReference as *const HStringArg) }
+    }
+}
 
 /// An HSTRING wrapper with several benefits
 ///
@@ -195,10 +200,10 @@ impl FastHString {
     }
 
     #[inline]
-    pub fn get_ref(&self) -> HStringRef {
+    pub fn make_reference(&self) -> HStringReference {
         // Creating another reference is basically free,
         // since we're already managing our own memory.
-        HStringRef(self.0, PhantomData)
+        HStringReference(self.0, PhantomData)
     }
 }
 
@@ -256,6 +261,30 @@ impl cmp::PartialEq<FastHString> for FastHString {
 
 impl cmp::Eq for FastHString {}
 
+impl<'a> Deref for FastHString {
+    type Target = HStringArg;
+
+    #[inline]
+    fn deref(&self) -> &HStringArg {
+        // transmute *const HStringArg -> &HStringArg
+        unsafe { mem::transmute(self as *const FastHString as *const HStringArg) }
+    }
+}
+
+/// References of this type are passed to WinRT functions. You can not create a value of
+/// this type, only references can exist and are obtained via (automatic) dereferencing of
+/// `FastHString` or `HStringReference`.
+pub struct HStringArg(HSTRING_HEADER);
+
+impl HStringArg {
+    // Since HSTRING is just a pointer to HSTRING_HEADER in disguise, we can just return
+    // a pointer to our wrapper header and cast it accordingly.
+    #[inline]
+    pub unsafe fn get(&self) -> HSTRING {
+        &self.0 as *const HSTRING_HEADER as *mut HSTRING_HEADER as *mut HSTRING__
+    }
+}
+
 /// A wrapper over an HSTRING whose memory is managed by the Windows Runtime.
 /// This is what you get as return values from WinRT methods.
 pub struct HString(HSTRING);
@@ -308,10 +337,10 @@ impl HString {
     }
 
     #[inline]
-    pub fn get_ref<'a>(&'a self) -> HStringRef<'a> {
+    pub fn make_reference<'a>(&'a self) -> HStringReference<'a> {
         let mut len = 0;
         let buf = unsafe { WindowsGetStringRawBuffer(self.0, &mut len) };
-        unsafe { HStringRef::from_utf16_unchecked(::std::slice::from_raw_parts(buf, len as usize + 1)) }
+        unsafe { HStringReference::from_utf16_unchecked(::std::slice::from_raw_parts(buf, len as usize + 1)) }
     }
 }
 
@@ -371,27 +400,27 @@ impl cmp::PartialEq<HString> for HString {
 impl cmp::Eq for HString {}
 
 // PartialEq impls for comparison of different types
-impl<'a> cmp::PartialEq<HString> for HStringRef<'a> {
+impl<'a> cmp::PartialEq<HString> for HStringReference<'a> {
     #[inline]
     fn eq(&self, other: &HString) -> bool {
         unsafe { internal_cmp(self.as_hstring(), other.as_hstring()) == cmp::Ordering::Equal }
     }
 }
-impl<'a> cmp::PartialEq<HStringRef<'a>> for HString {
+impl<'a> cmp::PartialEq<HStringReference<'a>> for HString {
     #[inline]
-    fn eq(&self, other: &HStringRef) -> bool {
+    fn eq(&self, other: &HStringReference) -> bool {
         unsafe { internal_cmp(self.as_hstring(), other.as_hstring()) == cmp::Ordering::Equal }
     }
 }
-impl<'a> cmp::PartialEq<FastHString> for HStringRef<'a> {
+impl<'a> cmp::PartialEq<FastHString> for HStringReference<'a> {
     #[inline]
     fn eq(&self, other: &FastHString) -> bool {
         unsafe { internal_cmp(self.as_hstring(), other.as_hstring()) == cmp::Ordering::Equal }
     }
 }
-impl<'a> cmp::PartialEq<HStringRef<'a>> for FastHString {
+impl<'a> cmp::PartialEq<HStringReference<'a>> for FastHString {
     #[inline]
-    fn eq(&self, other: &HStringRef) -> bool {
+    fn eq(&self, other: &HStringReference) -> bool {
         unsafe { internal_cmp(self.as_hstring(), other.as_hstring()) == cmp::Ordering::Equal }
     }
 }
@@ -416,6 +445,14 @@ mod tests {
     use self::test::Bencher;
 
     #[test]
+    fn check_sizes() {
+        use ::std::mem::size_of;
+        // TODO: get rid of drop flag
+        //assert_eq!(size_of::<::HString>(), size_of::<::w::HSTRING>());
+        assert_eq!(size_of::<&::HStringArg>(), size_of::<::w::HSTRING>());
+    }
+
+    #[test]
     fn roundtrip() {
         let s = "12345";
         let hstr = HString::new(s);
@@ -432,9 +469,9 @@ mod tests {
     }
 
     #[test]
-    fn get_ref() {
+    fn make_reference() {
         let s1 = HString::new("AAA");
-        assert_eq!(s1.get_ref().to_string(), "AAA");
+        assert_eq!(s1.make_reference().to_string(), "AAA");
     }
     
     #[test]
@@ -454,7 +491,7 @@ mod tests {
     #[test]
     fn empty_ref() {
         let hstr = FastHString::empty();
-        let hstrref = hstr.get_ref();
+        let hstrref = hstr.make_reference();
         assert!(hstrref.len() == 0);
         assert!(hstrref.to_string().len() == 0);
     }
@@ -504,7 +541,7 @@ mod tests {
     fn cmp2() {
         let s1 = HString::new("AAA");
         let s2 = FastHString::new("BBB");
-        let s3 = s1.get_ref();
+        let s3 = s1.make_reference();
         let s4 = FastHString::new("AAA");
         
         assert!(s2 != s1);
@@ -531,18 +568,18 @@ mod tests {
     }
 
     #[bench]
-    fn bench_get_ref(b: &mut Bencher) {
+    fn bench_make_reference(b: &mut Bencher) {
         let s = HString::new("123456789");
         b.iter(|| {
-            let _ = s.get_ref();
+            let _ = s.make_reference();
         });
     }
 
     #[bench]
-    fn bench_get_ref_fast(b: &mut Bencher) {
+    fn bench_make_reference_fast(b: &mut Bencher) {
         let s = FastHString::new("123456789");
         b.iter(|| {
-            let _ = s.get_ref();
+            let _ = s.make_reference();
         });
     }
 
@@ -550,7 +587,7 @@ mod tests {
     fn bench_from_utf16(b: &mut Bencher) {
         let utf16: Vec<_> = "This is some test string".encode_utf16().chain(Some(0)).collect();
         b.iter(|| {
-            let _ = HStringRef::from_utf16(&utf16);
+            let _ = HStringReference::from_utf16(&utf16);
         });
     }
     

@@ -39,7 +39,7 @@ fn run() {
     let mut uriFactory = Uri::factory();
     let base = FastHString::new("https://github.com");
     let relative = FastHString::new("contextfree/winrt-rust");
-    let uri = unsafe { uriFactory.create_with_relative_uri(&base.get_ref(), &relative.get_ref()).unwrap() };
+    let uri = unsafe { uriFactory.create_with_relative_uri(&base, &relative).unwrap() };
     let to_string = unsafe { uri.query_interface::<IStringable>().unwrap().to_string().unwrap() };
     println!("{} -> {}", uri.get_runtime_class_name(), to_string);
     println!("TrustLevel: {:?}", uri.get_trust_level());
@@ -60,7 +60,7 @@ fn run() {
     unsafe {
         // Test some error reporting by using an invalid device selector
         let wrongDeviceSelector: FastHString = "Foobar".into();
-        let res = deviceInformationStatics.find_all_async_aqs_filter(&wrongDeviceSelector.get_ref());
+        let res = deviceInformationStatics.find_all_async_aqs_filter(&wrongDeviceSelector);
         if let Err(hr) = res {
             println!("HRESULT (FindAllAsyncAqsFilter) = {:?}", hr);
             let mut errorInfo = {
