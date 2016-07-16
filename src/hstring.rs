@@ -8,6 +8,8 @@ use ::std::ops::Deref;
 use ::w::*;
 use ::runtimeobject::*;
 
+// For some information about HSTRINGs, see http://ksav.com.np/tech/2016/06/16/raymonds-complete-guide-to-hstring-semantics/
+
 // Some helper functions
 #[inline]
 fn internal_to_string(hstr: HSTRING) -> String {
@@ -67,7 +69,7 @@ impl<'a> HStringReference<'a> {
         let mut hstrref: HStringReference = HStringReference(zero_header(), PhantomData);
         if slice.len() == 0 { return hstrref; }
         let mut hstr: HSTRING = ptr::null_mut();
-        debug_assert_eq!(WindowsCreateStringReference(slice as *const _ as LPCWSTR, slice.len() as u32 - 1, &mut hstrref.0, &mut hstr), S_OK);
+        assert_eq!(WindowsCreateStringReference(slice as *const _ as LPCWSTR, slice.len() as u32 - 1, &mut hstrref.0, &mut hstr), S_OK);
         // The returned HSTRING is actually a pointer to the returned HSTRING_HEADER,
         // which we check here and then forget about `hstr`.
         debug_assert_eq!(hstr as *const _, &hstrref.0 as *const _ as *const HSTRING__);
@@ -92,7 +94,7 @@ impl<'a> HStringReference<'a> {
     }
 }
 
-// Common trait impl<'a>s for HStringReference<'a>
+// Common trait impls for HStringReference<'a>
 #[cfg(feature = "nightly")]
 impl<'a> ToString for HStringReference<'a> {
     fn to_string(&self) -> String {
@@ -134,8 +136,7 @@ impl<'a> Deref for HStringReference<'a> {
 
     #[inline]
     fn deref(&self) -> &HStringArg {
-        // transmute *const HStringArg -> &HStringArg
-        unsafe { mem::transmute(self as *const HStringReference as *const HStringArg) }
+        unsafe { &*(self as *const HStringReference as *const HStringArg) }
     }
 }
 
@@ -266,8 +267,7 @@ impl<'a> Deref for FastHString {
 
     #[inline]
     fn deref(&self) -> &HStringArg {
-        // transmute *const HStringArg -> &HStringArg
-        unsafe { mem::transmute(self as *const FastHString as *const HStringArg) }
+        unsafe { &*(self as *const FastHString as *const HStringArg) }
     }
 }
 
@@ -287,6 +287,10 @@ impl HStringArg {
 
 /// A wrapper over an HSTRING whose memory is managed by the Windows Runtime.
 /// This is what you get as return values from WinRT methods.
+/// Note that dereferencing to &HStringArg is not implemented for this, because
+/// the containing HSTRING might be null (empty string), and null references
+/// are not allowed. In order to obtain an &HStringArg from an HString,
+/// first create an `HStringReference` using `make_reference()`.
 pub struct HString(HSTRING);
 
 impl HString {
