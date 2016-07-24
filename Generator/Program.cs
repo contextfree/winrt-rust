@@ -68,8 +68,12 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 	static void Main(string[] args)
 		{
 			if (args.Length < 1) throw new ArgumentException("Please specify result file path as first argument");
+            
+            // Meant to indicate whether this is being run as part of a script (batch mode) as opposed to interactively by the user.
+            // Controls whether we will pause for user acknowledgement on completion.
+            bool isBatchMode = ((args.Length >= 2) && (args[1] == "--batch"));
 
-			TypeCounter counter = new TypeCounter { Enums = 0, Interfaces = 0, Classes = 0, Structs = 0 };
+            TypeCounter counter = new TypeCounter { Enums = 0, Interfaces = 0, Classes = 0, Structs = 0 };
 
 			// TODO: enable all modules (disabled because it results in a huge file and very long compilation)
 			var names = new string[] { "Windows.Foundation", "Windows.Devices", /*"Windows.Storage", "Windows.Media", "Windows.System", "Windows.Graphics"*/ };
@@ -157,9 +161,12 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 				}
 				Console.WriteLine(" done.");
 			}
-			
-			Console.ReadLine();
-		}
+
+            if (!isBatchMode)
+            {
+                Console.ReadLine();
+            }
+        }
 
 		static bool IsDelegate(TypeDefinition t)
 		{
