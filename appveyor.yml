@@ -25,6 +25,8 @@ install:
 - rustc -V
 - cargo -V
 
+configuration: Release
+
 before_build:
 - nuget restore Generator\Generator.sln
 
