@@ -154,8 +154,8 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 		RT_CLASS!{class AdcController: ::rt::gen::windows::devices::adc::IAdcController}
-		RT_ACTIVATABLE!{IAdcControllerStatics [CLSID_AdcController]}
 		RT_ACTIVATABLE!{IAdcControllerStatics2 [CLSID_AdcController]}
+		RT_ACTIVATABLE!{IAdcControllerStatics [CLSID_AdcController]}
 		DEFINE_CLSID!(CLSID_AdcController = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,100,99,46,65,100,99,67,111,110,116,114,111,108,108,101,114,0]);
 		DEFINE_IID!(IID_IAdcControllerStatics2, 2730048285, 38779, 20314, 165, 254, 166, 171, 175, 254, 100, 132);
 		RT_INTERFACE!{static interface IAdcControllerStatics2(IAdcControllerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdcControllerStatics2] {
@@ -344,8 +344,8 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 		RT_CLASS!{class GpioController: ::rt::gen::windows::devices::gpio::IGpioController}
-		RT_ACTIVATABLE!{IGpioControllerStatics [CLSID_GpioController]}
 		RT_ACTIVATABLE!{IGpioControllerStatics2 [CLSID_GpioController]}
+		RT_ACTIVATABLE!{IGpioControllerStatics [CLSID_GpioController]}
 		DEFINE_CLSID!(CLSID_GpioController = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,112,105,111,46,71,112,105,111,67,111,110,116,114,111,108,108,101,114,0]);
 		DEFINE_IID!(IID_IGpioControllerStatics2, 2435546400, 27812, 16646, 163, 115, 255, 253, 52, 107, 14, 91);
 		RT_INTERFACE!{static interface IGpioControllerStatics2(IGpioControllerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGpioControllerStatics2] {
@@ -922,8 +922,8 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 		RT_CLASS!{class PwmController: ::rt::gen::windows::devices::pwm::IPwmController}
-		RT_ACTIVATABLE!{IPwmControllerStatics2 [CLSID_PwmController]}
 		RT_ACTIVATABLE!{IPwmControllerStatics [CLSID_PwmController]}
+		RT_ACTIVATABLE!{IPwmControllerStatics2 [CLSID_PwmController]}
 		DEFINE_CLSID!(CLSID_PwmController = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,119,109,46,80,119,109,67,111,110,116,114,111,108,108,101,114,0]);
 		DEFINE_IID!(IID_IPwmControllerStatics2, 1157389087, 61721, 19421, 151, 173, 247, 110, 249, 134, 115, 109);
 		RT_INTERFACE!{static interface IPwmControllerStatics2(IPwmControllerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPwmControllerStatics2] {
@@ -1416,6 +1416,135 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.Spi.Provider
 } // Windows.Devices.Spi
+pub mod custom { // Windows.Devices.Custom
+use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+		RT_STRUCT! { struct CustomDeviceContract {
+			
+		}}
+		DEFINE_IID!(IID_IKnownDeviceTypesStatics, 3998513602, 21576, 17882, 173, 27, 36, 148, 140, 35, 144, 148);
+		RT_INTERFACE!{static interface IKnownDeviceTypesStatics(IKnownDeviceTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownDeviceTypesStatics] {
+			fn get_Unknown(&mut self, out: *mut u16) -> ::w::HRESULT
+		}}
+		impl IKnownDeviceTypesStatics {
+			#[inline] pub unsafe fn get_unknown(&mut self) -> RtResult<u16> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_Unknown)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+		}
+		RT_ACTIVATABLE!{IKnownDeviceTypesStatics [CLSID_KnownDeviceTypes]}
+		DEFINE_CLSID!(CLSID_KnownDeviceTypes = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,67,117,115,116,111,109,46,75,110,111,119,110,68,101,118,105,99,101,84,121,112,101,115,0]);
+		RT_ENUM! { enum IOControlAccessMode: i32 {
+			Any (IOControlAccessMode_Any) = 0, Read (IOControlAccessMode_Read) = 1, Write (IOControlAccessMode_Write) = 2, ReadWrite (IOControlAccessMode_ReadWrite) = 3,
+		}}
+		RT_ENUM! { enum IOControlBufferingMethod: i32 {
+			Buffered (IOControlBufferingMethod_Buffered) = 0, DirectInput (IOControlBufferingMethod_DirectInput) = 1, DirectOutput (IOControlBufferingMethod_DirectOutput) = 2, Neither (IOControlBufferingMethod_Neither) = 3,
+		}}
+		DEFINE_IID!(IID_IIOControlCode, 244668903, 24776, 17269, 167, 97, 127, 136, 8, 6, 108, 96);
+		RT_INTERFACE!{interface IIOControlCode(IIOControlCodeVtbl): IInspectable(IInspectableVtbl) [IID_IIOControlCode] {
+			fn get_AccessMode(&mut self, out: *mut ::rt::gen::windows::devices::custom::IOControlAccessMode) -> ::w::HRESULT,
+			fn get_BufferingMethod(&mut self, out: *mut ::rt::gen::windows::devices::custom::IOControlBufferingMethod) -> ::w::HRESULT,
+			fn get_Function(&mut self, out: *mut u16) -> ::w::HRESULT,
+			fn get_DeviceType(&mut self, out: *mut u16) -> ::w::HRESULT,
+			fn get_ControlCode(&mut self, out: *mut u32) -> ::w::HRESULT
+		}}
+		impl IIOControlCode {
+			#[inline] pub unsafe fn get_access_mode(&mut self) -> RtResult<::rt::gen::windows::devices::custom::IOControlAccessMode> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_AccessMode)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_buffering_method(&mut self) -> RtResult<::rt::gen::windows::devices::custom::IOControlBufferingMethod> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_BufferingMethod)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_function(&mut self) -> RtResult<u16> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_Function)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_device_type(&mut self) -> RtResult<u16> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_DeviceType)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_control_code(&mut self) -> RtResult<u32> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_ControlCode)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+		}
+		DEFINE_IID!(IID_IIOControlCodeFactory, 2238348528, 19473, 17582, 175, 198, 184, 212, 162, 18, 120, 143);
+		RT_INTERFACE!{static interface IIOControlCodeFactory(IIOControlCodeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IIOControlCodeFactory] {
+			fn CreateIOControlCode(&mut self, deviceType: u16, function: u16, accessMode: ::rt::gen::windows::devices::custom::IOControlAccessMode, bufferingMethod: ::rt::gen::windows::devices::custom::IOControlBufferingMethod, out: *mut *mut ::rt::gen::windows::devices::custom::IOControlCode) -> ::w::HRESULT
+		}}
+		impl IIOControlCodeFactory {
+			#[inline] pub unsafe fn create_iocontrol_code(&mut self, deviceType: u16, function: u16, accessMode: ::rt::gen::windows::devices::custom::IOControlAccessMode, bufferingMethod: ::rt::gen::windows::devices::custom::IOControlBufferingMethod) -> RtResult<ComPtr<::rt::gen::windows::devices::custom::IOControlCode>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).CreateIOControlCode)(self, deviceType, function, accessMode, bufferingMethod, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
+		RT_CLASS!{class IOControlCode: ::rt::gen::windows::devices::custom::IIOControlCode [::rt::gen::windows::devices::custom::IIOControlCodeFactory] [CLSID_IOControlCode]}
+		DEFINE_CLSID!(CLSID_IOControlCode = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,67,117,115,116,111,109,46,73,79,67,111,110,116,114,111,108,67,111,100,101,0]);
+		RT_ENUM! { enum DeviceAccessMode: i32 {
+			Read (DeviceAccessMode_Read) = 0, Write (DeviceAccessMode_Write) = 1, ReadWrite (DeviceAccessMode_ReadWrite) = 2,
+		}}
+		RT_ENUM! { enum DeviceSharingMode: i32 {
+			Shared (DeviceSharingMode_Shared) = 0, Exclusive (DeviceSharingMode_Exclusive) = 1,
+		}}
+		DEFINE_IID!(IID_ICustomDeviceStatics, 3357672210, 61260, 18097, 165, 142, 238, 179, 8, 220, 137, 23);
+		RT_INTERFACE!{static interface ICustomDeviceStatics(ICustomDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICustomDeviceStatics] {
+			fn GetDeviceSelector(&mut self, classGuid: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, desiredAccess: ::rt::gen::windows::devices::custom::DeviceAccessMode, sharingMode: ::rt::gen::windows::devices::custom::DeviceSharingMode, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::custom::CustomDevice>) -> ::w::HRESULT
+		}}
+		impl ICustomDeviceStatics {
+			#[inline] pub unsafe fn get_device_selector(&mut self, classGuid: ::Guid) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, classGuid, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: &HStringArg, desiredAccess: ::rt::gen::windows::devices::custom::DeviceAccessMode, sharingMode: ::rt::gen::windows::devices::custom::DeviceSharingMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::custom::CustomDevice>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), desiredAccess, sharingMode, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
+		RT_CLASS!{class CustomDevice: ::rt::gen::windows::devices::custom::ICustomDevice}
+		RT_ACTIVATABLE!{ICustomDeviceStatics [CLSID_CustomDevice]}
+		DEFINE_CLSID!(CLSID_CustomDevice = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,67,117,115,116,111,109,46,67,117,115,116,111,109,68,101,118,105,99,101,0]);
+		DEFINE_IID!(IID_ICustomDevice, 3710919967, 50315, 17341, 188, 177, 222, 200, 143, 21, 20, 62);
+		RT_INTERFACE!{interface ICustomDevice(ICustomDeviceVtbl): IInspectable(IInspectableVtbl) [IID_ICustomDevice] {
+			fn get_InputStream(&mut self, out: *mut *mut ::rt::gen::windows::storage::streams::IInputStream) -> ::w::HRESULT,
+			fn get_OutputStream(&mut self, out: *mut *mut ::rt::gen::windows::storage::streams::IOutputStream) -> ::w::HRESULT,
+			fn SendIOControlAsync(&mut self, ioControlCode: *mut ::rt::gen::windows::devices::custom::IIOControlCode, inputBuffer: *mut ::rt::gen::windows::storage::streams::IBuffer, outputBuffer: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<u32>) -> ::w::HRESULT,
+			fn TrySendIOControlAsync(&mut self, ioControlCode: *mut ::rt::gen::windows::devices::custom::IIOControlCode, inputBuffer: *mut ::rt::gen::windows::storage::streams::IBuffer, outputBuffer: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<bool>) -> ::w::HRESULT
+		}}
+		impl ICustomDevice {
+			#[inline] pub unsafe fn get_input_stream(&mut self) -> RtResult<ComPtr<::rt::gen::windows::storage::streams::IInputStream>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_InputStream)(self, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_output_stream(&mut self) -> RtResult<ComPtr<::rt::gen::windows::storage::streams::IOutputStream>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_OutputStream)(self, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn send_iocontrol_async(&mut self, ioControlCode: &::rt::gen::windows::devices::custom::IIOControlCode, inputBuffer: &::rt::gen::windows::storage::streams::IBuffer, outputBuffer: &::rt::gen::windows::storage::streams::IBuffer) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<u32>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).SendIOControlAsync)(self, ioControlCode as *const _ as *mut _, inputBuffer as *const _ as *mut _, outputBuffer as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn try_send_iocontrol_async(&mut self, ioControlCode: &::rt::gen::windows::devices::custom::IIOControlCode, inputBuffer: &::rt::gen::windows::storage::streams::IBuffer, outputBuffer: &::rt::gen::windows::storage::streams::IBuffer) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<bool>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).TrySendIOControlAsync)(self, ioControlCode as *const _ as *mut _, inputBuffer as *const _ as *mut _, outputBuffer as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
+} // Windows.Devices.Custom
 pub mod printers { // Windows.Devices.Printers
 use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
@@ -1512,7 +1641,19 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 		}
+		DEFINE_IID!(IID_IPrint3DWorkflowPrinterChangedEventArgs, 1159881730, 38396, 18503, 147, 179, 19, 77, 191, 92, 96, 247);
+		RT_INTERFACE!{interface IPrint3DWorkflowPrinterChangedEventArgs(IPrint3DWorkflowPrinterChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DWorkflowPrinterChangedEventArgs] {
+			fn get_NewDeviceId(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
+		}}
+		impl IPrint3DWorkflowPrinterChangedEventArgs {
+			#[inline] pub unsafe fn get_new_device_id(&mut self) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_NewDeviceId)(self, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+		}
 		RT_CLASS!{class Print3DWorkflowPrintRequestedEventArgs: ::rt::gen::windows::devices::printers::extensions::IPrint3DWorkflowPrintRequestedEventArgs}
+		RT_CLASS!{class Print3DWorkflowPrinterChangedEventArgs: ::rt::gen::windows::devices::printers::extensions::IPrint3DWorkflowPrinterChangedEventArgs}
 		DEFINE_IID!(IID_IPrint3DWorkflow, 3312415933, 13929, 19046, 171, 66, 200, 21, 25, 48, 205, 52);
 		RT_INTERFACE!{interface IPrint3DWorkflow(IPrint3DWorkflowVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DWorkflow] {
 			fn get_DeviceID(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -1553,6 +1694,22 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 		RT_CLASS!{class Print3DWorkflow: ::rt::gen::windows::devices::printers::extensions::IPrint3DWorkflow}
+		DEFINE_IID!(IID_IPrint3DWorkflow2, 2728838479, 35521, 18712, 151, 65, 227, 79, 48, 4, 35, 158);
+		RT_INTERFACE!{interface IPrint3DWorkflow2(IPrint3DWorkflow2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DWorkflow2] {
+			fn add_PrinterChanged(&mut self, eventHandler: *mut ::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::printers::extensions::Print3DWorkflow, ::rt::gen::windows::devices::printers::extensions::Print3DWorkflowPrinterChangedEventArgs>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
+			fn remove_PrinterChanged(&mut self, eventCookie: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT
+		}}
+		impl IPrint3DWorkflow2 {
+			#[inline] pub unsafe fn add_printer_changed(&mut self, eventHandler: &::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::printers::extensions::Print3DWorkflow, ::rt::gen::windows::devices::printers::extensions::Print3DWorkflowPrinterChangedEventArgs>) -> RtResult<::rt::gen::windows::foundation::EventRegistrationToken> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).add_PrinterChanged)(self, eventHandler as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn remove_printer_changed(&mut self, eventCookie: ::rt::gen::windows::foundation::EventRegistrationToken) -> RtResult<()> {
+				let hr = ((*self.lpVtbl).remove_PrinterChanged)(self, eventCookie);
+				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			}
+		}
 		RT_STRUCT! { struct ExtensionsContract {
 			
 		}}
@@ -2854,8 +3011,8 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 		RT_CLASS!{class SmsDevice: ::rt::gen::windows::devices::sms::ISmsDevice}
-		RT_ACTIVATABLE!{ISmsDeviceStatics2 [CLSID_SmsDevice]}
 		RT_ACTIVATABLE!{ISmsDeviceStatics [CLSID_SmsDevice]}
+		RT_ACTIVATABLE!{ISmsDeviceStatics2 [CLSID_SmsDevice]}
 		DEFINE_CLSID!(CLSID_SmsDevice = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,68,101,118,105,99,101,0]);
 		DEFINE_IID!(IID_SmsDeviceStatusChangedEventHandler, 2552959330, 15831, 17944, 175, 137, 12, 39, 45, 93, 6, 216);
 		RT_DELEGATE!{delegate SmsDeviceStatusChangedEventHandler(SmsDeviceStatusChangedEventHandlerVtbl, SmsDeviceStatusChangedEventHandlerImpl) [IID_SmsDeviceStatusChangedEventHandler] {
@@ -3005,7 +3162,7 @@ pub mod alljoyn { // Windows.Devices.AllJoyn
 use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum AllJoynAuthenticationMechanism: i32 {
-			None (AllJoynAuthenticationMechanism_None) = 0, SrpAnonymous (AllJoynAuthenticationMechanism_SrpAnonymous) = 1, SrpLogon (AllJoynAuthenticationMechanism_SrpLogon) = 2, EcdheNull (AllJoynAuthenticationMechanism_EcdheNull) = 3, EcdhePsk (AllJoynAuthenticationMechanism_EcdhePsk) = 4, EcdheEcdsa (AllJoynAuthenticationMechanism_EcdheEcdsa) = 5,
+			None (AllJoynAuthenticationMechanism_None) = 0, SrpAnonymous (AllJoynAuthenticationMechanism_SrpAnonymous) = 1, SrpLogon (AllJoynAuthenticationMechanism_SrpLogon) = 2, EcdheNull (AllJoynAuthenticationMechanism_EcdheNull) = 3, EcdhePsk (AllJoynAuthenticationMechanism_EcdhePsk) = 4, EcdheEcdsa (AllJoynAuthenticationMechanism_EcdheEcdsa) = 5, EcdheSpeke (AllJoynAuthenticationMechanism_EcdheSpeke) = 6,
 		}}
 		DEFINE_IID!(IID_IAllJoynStatusStatics, 3501695358, 3369, 19881, 138, 198, 84, 197, 84, 190, 219, 197);
 		RT_INTERFACE!{static interface IAllJoynStatusStatics(IAllJoynStatusStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynStatusStatics] {
@@ -3222,11 +3379,78 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 		RT_CLASS!{class AllJoynAboutData: ::rt::gen::windows::devices::alljoyn::IAllJoynAboutData}
 		RT_CLASS!{class AllJoynBusAttachment: ::rt::gen::windows::devices::alljoyn::IAllJoynBusAttachment [::rt::gen::windows::devices::alljoyn::IAllJoynBusAttachmentFactory] [CLSID_AllJoynBusAttachment]}
+		RT_ACTIVATABLE!{IAllJoynBusAttachmentStatics [CLSID_AllJoynBusAttachment]}
 		DEFINE_CLSID!(CLSID_AllJoynBusAttachment = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,66,117,115,65,116,116,97,99,104,109,101,110,116,0]);
 		RT_CLASS!{class AllJoynBusAttachmentStateChangedEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynBusAttachmentStateChangedEventArgs}
 		RT_CLASS!{class AllJoynCredentialsRequestedEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynCredentialsRequestedEventArgs}
 		RT_CLASS!{class AllJoynCredentialsVerificationRequestedEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynCredentialsVerificationRequestedEventArgs}
 		RT_CLASS!{class AllJoynAuthenticationCompleteEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynAuthenticationCompleteEventArgs}
+		DEFINE_IID!(IID_IAllJoynBusAttachment2, 880069406, 9064, 17330, 180, 62, 106, 58, 193, 39, 141, 152);
+		RT_INTERFACE!{interface IAllJoynBusAttachment2(IAllJoynBusAttachment2Vtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusAttachment2] {
+			fn GetAboutDataAsync(&mut self, serviceInfo: *mut ::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView>) -> ::w::HRESULT,
+			fn GetAboutDataWithLanguageAsync(&mut self, serviceInfo: *mut ::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo, language: *mut ::rt::gen::windows::globalization::Language, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView>) -> ::w::HRESULT,
+			fn add_AcceptSessionJoinerRequested(&mut self, handler: *mut ::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, ::rt::gen::windows::devices::alljoyn::AllJoynAcceptSessionJoinerEventArgs>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
+			fn remove_AcceptSessionJoinerRequested(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
+			fn add_SessionJoined(&mut self, handler: *mut ::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, ::rt::gen::windows::devices::alljoyn::AllJoynSessionJoinedEventArgs>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
+			fn remove_SessionJoined(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT
+		}}
+		impl IAllJoynBusAttachment2 {
+			#[inline] pub unsafe fn get_about_data_async(&mut self, serviceInfo: &::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetAboutDataAsync)(self, serviceInfo as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_about_data_with_language_async(&mut self, serviceInfo: &::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo, language: &::rt::gen::windows::globalization::Language) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetAboutDataWithLanguageAsync)(self, serviceInfo as *const _ as *mut _, language as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn add_accept_session_joiner_requested(&mut self, handler: &::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, ::rt::gen::windows::devices::alljoyn::AllJoynAcceptSessionJoinerEventArgs>) -> RtResult<::rt::gen::windows::foundation::EventRegistrationToken> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).add_AcceptSessionJoinerRequested)(self, handler as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn remove_accept_session_joiner_requested(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> RtResult<()> {
+				let hr = ((*self.lpVtbl).remove_AcceptSessionJoinerRequested)(self, token);
+				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn add_session_joined(&mut self, handler: &::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, ::rt::gen::windows::devices::alljoyn::AllJoynSessionJoinedEventArgs>) -> RtResult<::rt::gen::windows::foundation::EventRegistrationToken> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).add_SessionJoined)(self, handler as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn remove_session_joined(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> RtResult<()> {
+				let hr = ((*self.lpVtbl).remove_SessionJoined)(self, token);
+				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			}
+		}
+		RT_CLASS!{class AllJoynServiceInfo: ::rt::gen::windows::devices::alljoyn::IAllJoynServiceInfo [::rt::gen::windows::devices::alljoyn::IAllJoynServiceInfoFactory] [CLSID_AllJoynServiceInfo]}
+		RT_ACTIVATABLE!{IAllJoynServiceInfoStatics [CLSID_AllJoynServiceInfo]}
+		DEFINE_CLSID!(CLSID_AllJoynServiceInfo = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,114,118,105,99,101,73,110,102,111,0]);
+		RT_CLASS!{class AllJoynAboutDataView: ::rt::gen::windows::devices::alljoyn::IAllJoynAboutDataView}
+		RT_ACTIVATABLE!{IAllJoynAboutDataViewStatics [CLSID_AllJoynAboutDataView]}
+		DEFINE_CLSID!(CLSID_AllJoynAboutDataView = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,65,98,111,117,116,68,97,116,97,86,105,101,119,0]);
+		RT_CLASS!{class AllJoynAcceptSessionJoinerEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynAcceptSessionJoinerEventArgs [::rt::gen::windows::devices::alljoyn::IAllJoynAcceptSessionJoinerEventArgsFactory] [CLSID_AllJoynAcceptSessionJoinerEventArgs]}
+		DEFINE_CLSID!(CLSID_AllJoynAcceptSessionJoinerEventArgs = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,65,99,99,101,112,116,83,101,115,115,105,111,110,74,111,105,110,101,114,69,118,101,110,116,65,114,103,115,0]);
+		RT_CLASS!{class AllJoynSessionJoinedEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynSessionJoinedEventArgs [::rt::gen::windows::devices::alljoyn::IAllJoynSessionJoinedEventArgsFactory] [CLSID_AllJoynSessionJoinedEventArgs]}
+		DEFINE_CLSID!(CLSID_AllJoynSessionJoinedEventArgs = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,115,115,105,111,110,74,111,105,110,101,100,69,118,101,110,116,65,114,103,115,0]);
+		DEFINE_IID!(IID_IAllJoynBusAttachmentStatics, 2208124221, 4177, 16599, 135, 42, 141, 1, 65, 17, 91, 31);
+		RT_INTERFACE!{static interface IAllJoynBusAttachmentStatics(IAllJoynBusAttachmentStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusAttachmentStatics] {
+			fn GetDefault(&mut self, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment) -> ::w::HRESULT,
+			fn GetWatcher(&mut self, requiredInterfaces: *mut ::rt::gen::windows::foundation::collections::IIterable<HString>, out: *mut *mut ::rt::gen::windows::devices::enumeration::DeviceWatcher) -> ::w::HRESULT
+		}}
+		impl IAllJoynBusAttachmentStatics {
+			#[inline] pub unsafe fn get_default(&mut self) -> RtResult<ComPtr<::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDefault)(self, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_watcher(&mut self, requiredInterfaces: &::rt::gen::windows::foundation::collections::IIterable<HString>) -> RtResult<ComPtr<::rt::gen::windows::devices::enumeration::DeviceWatcher>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetWatcher)(self, requiredInterfaces as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
 		DEFINE_IID!(IID_IAllJoynBusAttachmentStateChangedEventArgs, 3626923508, 49194, 16876, 168, 213, 234, 177, 85, 137, 83, 170);
 		RT_INTERFACE!{interface IAllJoynBusAttachmentStateChangedEventArgs(IAllJoynBusAttachmentStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusAttachmentStateChangedEventArgs] {
 			fn get_State(&mut self, out: *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusAttachmentState) -> ::w::HRESULT,
@@ -3410,6 +3634,162 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
+		DEFINE_IID!(IID_IAllJoynSession, 3906018060, 49364, 16492, 136, 169, 169, 62, 250, 133, 212, 177);
+		RT_INTERFACE!{interface IAllJoynSession(IAllJoynSessionVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSession] {
+			fn get_Id(&mut self, out: *mut i32) -> ::w::HRESULT,
+			fn get_Status(&mut self, out: *mut i32) -> ::w::HRESULT,
+			fn RemoveMemberAsync(&mut self, uniqueName: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<i32>) -> ::w::HRESULT,
+			fn add_MemberAdded(&mut self, handler: *mut ::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynSession, ::rt::gen::windows::devices::alljoyn::AllJoynSessionMemberAddedEventArgs>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
+			fn remove_MemberAdded(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
+			fn add_MemberRemoved(&mut self, handler: *mut ::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynSession, ::rt::gen::windows::devices::alljoyn::AllJoynSessionMemberRemovedEventArgs>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
+			fn remove_MemberRemoved(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
+			fn add_Lost(&mut self, handler: *mut ::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynSession, ::rt::gen::windows::devices::alljoyn::AllJoynSessionLostEventArgs>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
+			fn remove_Lost(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT
+		}}
+		impl IAllJoynSession {
+			#[inline] pub unsafe fn get_id(&mut self) -> RtResult<i32> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_Id)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_status(&mut self) -> RtResult<i32> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_Status)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn remove_member_async(&mut self, uniqueName: &HStringArg) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<i32>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).RemoveMemberAsync)(self, uniqueName.get(), &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn add_member_added(&mut self, handler: &::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynSession, ::rt::gen::windows::devices::alljoyn::AllJoynSessionMemberAddedEventArgs>) -> RtResult<::rt::gen::windows::foundation::EventRegistrationToken> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).add_MemberAdded)(self, handler as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn remove_member_added(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> RtResult<()> {
+				let hr = ((*self.lpVtbl).remove_MemberAdded)(self, token);
+				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn add_member_removed(&mut self, handler: &::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynSession, ::rt::gen::windows::devices::alljoyn::AllJoynSessionMemberRemovedEventArgs>) -> RtResult<::rt::gen::windows::foundation::EventRegistrationToken> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).add_MemberRemoved)(self, handler as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn remove_member_removed(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> RtResult<()> {
+				let hr = ((*self.lpVtbl).remove_MemberRemoved)(self, token);
+				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn add_lost(&mut self, handler: &::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynSession, ::rt::gen::windows::devices::alljoyn::AllJoynSessionLostEventArgs>) -> RtResult<::rt::gen::windows::foundation::EventRegistrationToken> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).add_Lost)(self, handler as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn remove_lost(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> RtResult<()> {
+				let hr = ((*self.lpVtbl).remove_Lost)(self, token);
+				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			}
+		}
+		RT_CLASS!{class AllJoynSession: ::rt::gen::windows::devices::alljoyn::IAllJoynSession}
+		RT_ACTIVATABLE!{IAllJoynSessionStatics [CLSID_AllJoynSession]}
+		DEFINE_CLSID!(CLSID_AllJoynSession = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,115,115,105,111,110,0]);
+		RT_CLASS!{class AllJoynSessionMemberAddedEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynSessionMemberAddedEventArgs [::rt::gen::windows::devices::alljoyn::IAllJoynSessionMemberAddedEventArgsFactory] [CLSID_AllJoynSessionMemberAddedEventArgs]}
+		DEFINE_CLSID!(CLSID_AllJoynSessionMemberAddedEventArgs = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,115,115,105,111,110,77,101,109,98,101,114,65,100,100,101,100,69,118,101,110,116,65,114,103,115,0]);
+		RT_CLASS!{class AllJoynSessionMemberRemovedEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynSessionMemberRemovedEventArgs [::rt::gen::windows::devices::alljoyn::IAllJoynSessionMemberRemovedEventArgsFactory] [CLSID_AllJoynSessionMemberRemovedEventArgs]}
+		DEFINE_CLSID!(CLSID_AllJoynSessionMemberRemovedEventArgs = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,115,115,105,111,110,77,101,109,98,101,114,82,101,109,111,118,101,100,69,118,101,110,116,65,114,103,115,0]);
+		RT_CLASS!{class AllJoynSessionLostEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynSessionLostEventArgs [::rt::gen::windows::devices::alljoyn::IAllJoynSessionLostEventArgsFactory] [CLSID_AllJoynSessionLostEventArgs]}
+		DEFINE_CLSID!(CLSID_AllJoynSessionLostEventArgs = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,115,115,105,111,110,76,111,115,116,69,118,101,110,116,65,114,103,115,0]);
+		DEFINE_IID!(IID_IAllJoynSessionStatics, 2651182596, 41068, 18132, 180, 108, 11, 11, 84, 16, 91, 68);
+		RT_INTERFACE!{static interface IAllJoynSessionStatics(IAllJoynSessionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionStatics] {
+			fn GetFromServiceInfoAsync(&mut self, serviceInfo: *mut ::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynSession>) -> ::w::HRESULT,
+			fn GetFromServiceInfoAndBusAttachmentAsync(&mut self, serviceInfo: *mut ::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo, busAttachment: *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynSession>) -> ::w::HRESULT
+		}}
+		impl IAllJoynSessionStatics {
+			#[inline] pub unsafe fn get_from_service_info_async(&mut self, serviceInfo: &::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynSession>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetFromServiceInfoAsync)(self, serviceInfo as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_from_service_info_and_bus_attachment_async(&mut self, serviceInfo: &::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo, busAttachment: &::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynSession>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetFromServiceInfoAndBusAttachmentAsync)(self, serviceInfo as *const _ as *mut _, busAttachment as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
+		DEFINE_IID!(IID_IAllJoynProducer, 2634565241, 18075, 18778, 167, 16, 172, 80, 241, 35, 6, 159);
+		RT_INTERFACE!{interface IAllJoynProducer(IAllJoynProducerVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynProducer] {
+			fn SetBusObject(&mut self, busObject: *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusObject) -> ::w::HRESULT
+		}}
+		impl IAllJoynProducer {
+			#[inline] pub unsafe fn set_bus_object(&mut self, busObject: &::rt::gen::windows::devices::alljoyn::AllJoynBusObject) -> RtResult<()> {
+				let hr = ((*self.lpVtbl).SetBusObject)(self, busObject as *const _ as *mut _);
+				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			}
+		}
+		RT_CLASS!{class AllJoynBusObject: ::rt::gen::windows::devices::alljoyn::IAllJoynBusObject [::rt::gen::windows::devices::alljoyn::IAllJoynBusObjectFactory] [CLSID_AllJoynBusObject]}
+		DEFINE_CLSID!(CLSID_AllJoynBusObject = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,66,117,115,79,98,106,101,99,116,0]);
+		DEFINE_IID!(IID_IAllJoynBusObject, 3908928094, 63290, 18700, 136, 4, 4, 224, 38, 100, 48, 71);
+		RT_INTERFACE!{interface IAllJoynBusObject(IAllJoynBusObjectVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusObject] {
+			fn Start(&mut self) -> ::w::HRESULT,
+			fn Stop(&mut self) -> ::w::HRESULT,
+			fn AddProducer(&mut self, producer: *mut ::rt::gen::windows::devices::alljoyn::IAllJoynProducer) -> ::w::HRESULT,
+			fn get_BusAttachment(&mut self, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment) -> ::w::HRESULT,
+			fn get_Session(&mut self, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynSession) -> ::w::HRESULT,
+			fn add_Stopped(&mut self, handler: *mut ::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynBusObject, ::rt::gen::windows::devices::alljoyn::AllJoynBusObjectStoppedEventArgs>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT,
+			fn remove_Stopped(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> ::w::HRESULT
+		}}
+		impl IAllJoynBusObject {
+			#[inline] pub unsafe fn start(&mut self) -> RtResult<()> {
+				let hr = ((*self.lpVtbl).Start)(self);
+				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn stop(&mut self) -> RtResult<()> {
+				let hr = ((*self.lpVtbl).Stop)(self);
+				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn add_producer(&mut self, producer: &::rt::gen::windows::devices::alljoyn::IAllJoynProducer) -> RtResult<()> {
+				let hr = ((*self.lpVtbl).AddProducer)(self, producer as *const _ as *mut _);
+				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_bus_attachment(&mut self) -> RtResult<ComPtr<::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_BusAttachment)(self, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_session(&mut self) -> RtResult<ComPtr<::rt::gen::windows::devices::alljoyn::AllJoynSession>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_Session)(self, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn add_stopped(&mut self, handler: &::rt::gen::windows::foundation::TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynBusObject, ::rt::gen::windows::devices::alljoyn::AllJoynBusObjectStoppedEventArgs>) -> RtResult<::rt::gen::windows::foundation::EventRegistrationToken> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).add_Stopped)(self, handler as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn remove_stopped(&mut self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> RtResult<()> {
+				let hr = ((*self.lpVtbl).remove_Stopped)(self, token);
+				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			}
+		}
+		RT_CLASS!{class AllJoynBusObjectStoppedEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynBusObjectStoppedEventArgs [::rt::gen::windows::devices::alljoyn::IAllJoynBusObjectStoppedEventArgsFactory] [CLSID_AllJoynBusObjectStoppedEventArgs]}
+		DEFINE_CLSID!(CLSID_AllJoynBusObjectStoppedEventArgs = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,66,117,115,79,98,106,101,99,116,83,116,111,112,112,101,100,69,118,101,110,116,65,114,103,115,0]);
+		DEFINE_IID!(IID_IAllJoynBusObjectFactory, 741318411, 36354, 20380, 172, 39, 234, 109, 173, 93, 59, 80);
+		RT_INTERFACE!{static interface IAllJoynBusObjectFactory(IAllJoynBusObjectFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusObjectFactory] {
+			fn Create(&mut self, objectPath: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusObject) -> ::w::HRESULT,
+			fn CreateWithBusAttachment(&mut self, objectPath: ::w::HSTRING, busAttachment: *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusObject) -> ::w::HRESULT
+		}}
+		impl IAllJoynBusObjectFactory {
+			#[inline] pub unsafe fn create(&mut self, objectPath: &HStringArg) -> RtResult<ComPtr<::rt::gen::windows::devices::alljoyn::AllJoynBusObject>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).Create)(self, objectPath.get(), &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn create_with_bus_attachment(&mut self, objectPath: &HStringArg, busAttachment: &::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment) -> RtResult<ComPtr<::rt::gen::windows::devices::alljoyn::AllJoynBusObject>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).CreateWithBusAttachment)(self, objectPath.get(), busAttachment as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
 		DEFINE_IID!(IID_IAllJoynServiceInfo, 1287553545, 47422, 16770, 153, 155, 221, 208, 0, 249, 197, 117);
 		RT_INTERFACE!{interface IAllJoynServiceInfo(IAllJoynServiceInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynServiceInfo] {
 			fn get_UniqueName(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -3433,6 +3813,17 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
+		DEFINE_IID!(IID_IAllJoynServiceInfoStatics, 1450727178, 24634, 18940, 183, 80, 14, 241, 54, 9, 33, 60);
+		RT_INTERFACE!{static interface IAllJoynServiceInfoStatics(IAllJoynServiceInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynServiceInfoStatics] {
+			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo>) -> ::w::HRESULT
+		}}
+		impl IAllJoynServiceInfoStatics {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: &HStringArg) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
 		DEFINE_IID!(IID_IAllJoynServiceInfoFactory, 1971444413, 65027, 20299, 148, 164, 240, 47, 220, 189, 17, 184);
 		RT_INTERFACE!{static interface IAllJoynServiceInfoFactory(IAllJoynServiceInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynServiceInfoFactory] {
 			fn Create(&mut self, uniqueName: ::w::HSTRING, objectPath: ::w::HSTRING, sessionPort: u16, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo) -> ::w::HRESULT
@@ -3444,8 +3835,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
-		RT_CLASS!{class AllJoynServiceInfo: ::rt::gen::windows::devices::alljoyn::IAllJoynServiceInfo [::rt::gen::windows::devices::alljoyn::IAllJoynServiceInfoFactory] [CLSID_AllJoynServiceInfo]}
-		DEFINE_CLSID!(CLSID_AllJoynServiceInfo = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,114,118,105,99,101,73,110,102,111,0]);
 		DEFINE_IID!(IID_IAllJoynAboutDataViewStatics, 1475196552, 3166, 16750, 136, 181, 57, 179, 45, 37, 196, 125);
 		RT_INTERFACE!{static interface IAllJoynAboutDataViewStatics(IAllJoynAboutDataViewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynAboutDataViewStatics] {
 			fn GetDataBySessionPortAsync(&mut self, uniqueName: ::w::HSTRING, busAttachment: *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, sessionPort: u16, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView>) -> ::w::HRESULT,
@@ -3463,9 +3852,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
-		RT_CLASS!{class AllJoynAboutDataView: ::rt::gen::windows::devices::alljoyn::IAllJoynAboutDataView}
-		RT_ACTIVATABLE!{IAllJoynAboutDataViewStatics [CLSID_AllJoynAboutDataView]}
-		DEFINE_CLSID!(CLSID_AllJoynAboutDataView = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,65,98,111,117,116,68,97,116,97,86,105,101,119,0]);
 		DEFINE_IID!(IID_IAllJoynAboutDataView, 1747128607, 25106, 18740, 156, 72, 225, 156, 164, 152, 66, 136);
 		RT_INTERFACE!{interface IAllJoynAboutDataView(IAllJoynAboutDataViewVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynAboutDataView] {
 			fn get_Status(&mut self, out: *mut i32) -> ::w::HRESULT,
@@ -3753,8 +4139,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
-		RT_CLASS!{class AllJoynAcceptSessionJoinerEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynAcceptSessionJoinerEventArgs [::rt::gen::windows::devices::alljoyn::IAllJoynAcceptSessionJoinerEventArgsFactory] [CLSID_AllJoynAcceptSessionJoinerEventArgs]}
-		DEFINE_CLSID!(CLSID_AllJoynAcceptSessionJoinerEventArgs = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,65,99,99,101,112,116,83,101,115,115,105,111,110,74,111,105,110,101,114,69,118,101,110,116,65,114,103,115,0]);
 		DEFINE_IID!(IID_IAllJoynSessionMemberAddedEventArgs, 1235384714, 3537, 18113, 156, 214, 39, 25, 14, 80, 58, 94);
 		RT_INTERFACE!{interface IAllJoynSessionMemberAddedEventArgs(IAllJoynSessionMemberAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionMemberAddedEventArgs] {
 			fn get_UniqueName(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
@@ -3777,8 +4161,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
-		RT_CLASS!{class AllJoynSessionMemberAddedEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynSessionMemberAddedEventArgs [::rt::gen::windows::devices::alljoyn::IAllJoynSessionMemberAddedEventArgsFactory] [CLSID_AllJoynSessionMemberAddedEventArgs]}
-		DEFINE_CLSID!(CLSID_AllJoynSessionMemberAddedEventArgs = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,115,115,105,111,110,77,101,109,98,101,114,65,100,100,101,100,69,118,101,110,116,65,114,103,115,0]);
 		DEFINE_IID!(IID_IAllJoynSessionMemberRemovedEventArgs, 1083842975, 43594, 18579, 180, 48, 186, 161, 182, 60, 98, 25);
 		RT_INTERFACE!{interface IAllJoynSessionMemberRemovedEventArgs(IAllJoynSessionMemberRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionMemberRemovedEventArgs] {
 			fn get_UniqueName(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
@@ -3801,11 +4183,31 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
-		RT_CLASS!{class AllJoynSessionMemberRemovedEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynSessionMemberRemovedEventArgs [::rt::gen::windows::devices::alljoyn::IAllJoynSessionMemberRemovedEventArgsFactory] [CLSID_AllJoynSessionMemberRemovedEventArgs]}
-		DEFINE_CLSID!(CLSID_AllJoynSessionMemberRemovedEventArgs = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,115,115,105,111,110,77,101,109,98,101,114,82,101,109,111,118,101,100,69,118,101,110,116,65,114,103,115,0]);
 		RT_ENUM! { enum AllJoynSessionLostReason: i32 {
 			None (AllJoynSessionLostReason_None) = 0, ProducerLeftSession (AllJoynSessionLostReason_ProducerLeftSession) = 1, ProducerClosedAbruptly (AllJoynSessionLostReason_ProducerClosedAbruptly) = 2, RemovedByProducer (AllJoynSessionLostReason_RemovedByProducer) = 3, LinkTimeout (AllJoynSessionLostReason_LinkTimeout) = 4, Other (AllJoynSessionLostReason_Other) = 5,
 		}}
+		DEFINE_IID!(IID_IAllJoynSessionJoinedEventArgs, 2661243856, 46551, 18373, 141, 171, 176, 64, 204, 25, 40, 113);
+		RT_INTERFACE!{interface IAllJoynSessionJoinedEventArgs(IAllJoynSessionJoinedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionJoinedEventArgs] {
+			fn get_Session(&mut self, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynSession) -> ::w::HRESULT
+		}}
+		impl IAllJoynSessionJoinedEventArgs {
+			#[inline] pub unsafe fn get_session(&mut self) -> RtResult<ComPtr<::rt::gen::windows::devices::alljoyn::AllJoynSession>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_Session)(self, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
+		DEFINE_IID!(IID_IAllJoynSessionJoinedEventArgsFactory, 1747244681, 54987, 19870, 160, 158, 53, 128, 104, 112, 177, 127);
+		RT_INTERFACE!{static interface IAllJoynSessionJoinedEventArgsFactory(IAllJoynSessionJoinedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionJoinedEventArgsFactory] {
+			fn Create(&mut self, session: *mut ::rt::gen::windows::devices::alljoyn::AllJoynSession, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynSessionJoinedEventArgs) -> ::w::HRESULT
+		}}
+		impl IAllJoynSessionJoinedEventArgsFactory {
+			#[inline] pub unsafe fn create(&mut self, session: &::rt::gen::windows::devices::alljoyn::AllJoynSession) -> RtResult<ComPtr<::rt::gen::windows::devices::alljoyn::AllJoynSessionJoinedEventArgs>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).Create)(self, session as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
 		DEFINE_IID!(IID_IAllJoynSessionLostEventArgs, 3882263690, 35768, 18772, 174, 103, 210, 250, 67, 209, 249, 107);
 		RT_INTERFACE!{interface IAllJoynSessionLostEventArgs(IAllJoynSessionLostEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionLostEventArgs] {
 			fn get_Reason(&mut self, out: *mut ::rt::gen::windows::devices::alljoyn::AllJoynSessionLostReason) -> ::w::HRESULT
@@ -3828,8 +4230,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
-		RT_CLASS!{class AllJoynSessionLostEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynSessionLostEventArgs [::rt::gen::windows::devices::alljoyn::IAllJoynSessionLostEventArgsFactory] [CLSID_AllJoynSessionLostEventArgs]}
-		DEFINE_CLSID!(CLSID_AllJoynSessionLostEventArgs = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,115,115,105,111,110,76,111,115,116,69,118,101,110,116,65,114,103,115,0]);
 		DEFINE_IID!(IID_IAllJoynProducerStoppedEventArgs, 1362138992, 18743, 18733, 128, 128, 35, 100, 57, 152, 124, 235);
 		RT_INTERFACE!{interface IAllJoynProducerStoppedEventArgs(IAllJoynProducerStoppedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynProducerStoppedEventArgs] {
 			fn get_Status(&mut self, out: *mut i32) -> ::w::HRESULT
@@ -3854,6 +4254,28 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 		RT_CLASS!{class AllJoynProducerStoppedEventArgs: ::rt::gen::windows::devices::alljoyn::IAllJoynProducerStoppedEventArgs [::rt::gen::windows::devices::alljoyn::IAllJoynProducerStoppedEventArgsFactory] [CLSID_AllJoynProducerStoppedEventArgs]}
 		DEFINE_CLSID!(CLSID_AllJoynProducerStoppedEventArgs = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,80,114,111,100,117,99,101,114,83,116,111,112,112,101,100,69,118,101,110,116,65,114,103,115,0]);
+		DEFINE_IID!(IID_IAllJoynBusObjectStoppedEventArgs, 3725598997, 61326, 19778, 185, 59, 162, 174, 116, 81, 151, 102);
+		RT_INTERFACE!{interface IAllJoynBusObjectStoppedEventArgs(IAllJoynBusObjectStoppedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusObjectStoppedEventArgs] {
+			fn get_Status(&mut self, out: *mut i32) -> ::w::HRESULT
+		}}
+		impl IAllJoynBusObjectStoppedEventArgs {
+			#[inline] pub unsafe fn get_status(&mut self) -> RtResult<i32> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_Status)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+		}
+		DEFINE_IID!(IID_IAllJoynBusObjectStoppedEventArgsFactory, 1797455176, 53411, 16981, 149, 58, 71, 114, 180, 2, 128, 115);
+		RT_INTERFACE!{static interface IAllJoynBusObjectStoppedEventArgsFactory(IAllJoynBusObjectStoppedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusObjectStoppedEventArgsFactory] {
+			fn Create(&mut self, status: i32, out: *mut *mut ::rt::gen::windows::devices::alljoyn::AllJoynBusObjectStoppedEventArgs) -> ::w::HRESULT
+		}}
+		impl IAllJoynBusObjectStoppedEventArgsFactory {
+			#[inline] pub unsafe fn create(&mut self, status: i32) -> RtResult<ComPtr<::rt::gen::windows::devices::alljoyn::AllJoynBusObjectStoppedEventArgs>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).Create)(self, status, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
 		DEFINE_IID!(IID_IAllJoynWatcherStoppedEventArgs, 3388776507, 28701, 19112, 151, 221, 162, 187, 10, 143, 95, 163);
 		RT_INTERFACE!{interface IAllJoynWatcherStoppedEventArgs(IAllJoynWatcherStoppedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynWatcherStoppedEventArgs] {
 			fn get_Status(&mut self, out: *mut i32) -> ::w::HRESULT
@@ -3992,11 +4414,82 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			Disconnected (BluetoothConnectionStatus_Disconnected) = 0, Connected (BluetoothConnectionStatus_Connected) = 1,
 		}}
 		RT_ENUM! { enum BluetoothError: i32 {
-			Success (BluetoothError_Success) = 0, RadioNotAvailable (BluetoothError_RadioNotAvailable) = 1, ResourceInUse (BluetoothError_ResourceInUse) = 2, DeviceNotConnected (BluetoothError_DeviceNotConnected) = 3, OtherError (BluetoothError_OtherError) = 4, DisabledByPolicy (BluetoothError_DisabledByPolicy) = 5, NotSupported (BluetoothError_NotSupported) = 6, DisabledByUser (BluetoothError_DisabledByUser) = 7,
+			Success (BluetoothError_Success) = 0, RadioNotAvailable (BluetoothError_RadioNotAvailable) = 1, ResourceInUse (BluetoothError_ResourceInUse) = 2, DeviceNotConnected (BluetoothError_DeviceNotConnected) = 3, OtherError (BluetoothError_OtherError) = 4, DisabledByPolicy (BluetoothError_DisabledByPolicy) = 5, NotSupported (BluetoothError_NotSupported) = 6, DisabledByUser (BluetoothError_DisabledByUser) = 7, ConsentRequired (BluetoothError_ConsentRequired) = 8,
 		}}
 		RT_ENUM! { enum BluetoothAddressType: i32 {
 			Public (BluetoothAddressType_Public) = 0, Random (BluetoothAddressType_Random) = 1,
 		}}
+		DEFINE_IID!(IID_IBluetoothDeviceStatics, 160554833, 22491, 18213, 187, 215, 132, 246, 67, 39, 236, 44);
+		RT_INTERFACE!{static interface IBluetoothDeviceStatics(IBluetoothDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDeviceStatics] {
+			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>) -> ::w::HRESULT,
+			fn FromHostNameAsync(&mut self, hostName: *mut ::rt::gen::windows::networking::HostName, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>) -> ::w::HRESULT,
+			fn FromBluetoothAddressAsync(&mut self, address: u64, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>) -> ::w::HRESULT,
+			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
+		}}
+		impl IBluetoothDeviceStatics {
+			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: &HStringArg) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn from_host_name_async(&mut self, hostName: &::rt::gen::windows::networking::HostName) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).FromHostNameAsync)(self, hostName as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn from_bluetooth_address_async(&mut self, address: u64) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).FromBluetoothAddressAsync)(self, address, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_device_selector(&mut self) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+		}
+		RT_CLASS!{class BluetoothDevice: ::rt::gen::windows::devices::bluetooth::IBluetoothDevice}
+		RT_ACTIVATABLE!{IBluetoothDeviceStatics [CLSID_BluetoothDevice]}
+		RT_ACTIVATABLE!{IBluetoothDeviceStatics2 [CLSID_BluetoothDevice]}
+		DEFINE_CLSID!(CLSID_BluetoothDevice = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,68,101,118,105,99,101,0]);
+		DEFINE_IID!(IID_IBluetoothDeviceStatics2, 3265170991, 19988, 17527, 170, 27, 184, 180, 126, 91, 126, 206);
+		RT_INTERFACE!{static interface IBluetoothDeviceStatics2(IBluetoothDeviceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDeviceStatics2] {
+			fn GetDeviceSelectorFromPairingState(&mut self, pairingState: bool, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn GetDeviceSelectorFromConnectionStatus(&mut self, connectionStatus: ::rt::gen::windows::devices::bluetooth::BluetoothConnectionStatus, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn GetDeviceSelectorFromDeviceName(&mut self, deviceName: ::w::HSTRING, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn GetDeviceSelectorFromBluetoothAddress(&mut self, bluetoothAddress: u64, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn GetDeviceSelectorFromClassOfDevice(&mut self, classOfDevice: *mut ::rt::gen::windows::devices::bluetooth::BluetoothClassOfDevice, out: *mut ::w::HSTRING) -> ::w::HRESULT
+		}}
+		impl IBluetoothDeviceStatics2 {
+			#[inline] pub unsafe fn get_device_selector_from_pairing_state(&mut self, pairingState: bool) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDeviceSelectorFromPairingState)(self, pairingState, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_device_selector_from_connection_status(&mut self, connectionStatus: ::rt::gen::windows::devices::bluetooth::BluetoothConnectionStatus) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDeviceSelectorFromConnectionStatus)(self, connectionStatus, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_device_selector_from_device_name(&mut self, deviceName: &HStringArg) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDeviceSelectorFromDeviceName)(self, deviceName.get(), &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_device_selector_from_bluetooth_address(&mut self, bluetoothAddress: u64) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDeviceSelectorFromBluetoothAddress)(self, bluetoothAddress, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_device_selector_from_class_of_device(&mut self, classOfDevice: &::rt::gen::windows::devices::bluetooth::BluetoothClassOfDevice) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDeviceSelectorFromClassOfDevice)(self, classOfDevice as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+		}
+		RT_CLASS!{class BluetoothClassOfDevice: ::rt::gen::windows::devices::bluetooth::IBluetoothClassOfDevice}
+		RT_ACTIVATABLE!{IBluetoothClassOfDeviceStatics [CLSID_BluetoothClassOfDevice]}
+		DEFINE_CLSID!(CLSID_BluetoothClassOfDevice = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,67,108,97,115,115,79,102,68,101,118,105,99,101,0]);
 		DEFINE_IID!(IID_IBluetoothDevice, 590721366, 37074, 18948, 174, 245, 14, 32, 185, 230, 183, 7);
 		RT_INTERFACE!{interface IBluetoothDevice(IBluetoothDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDevice] {
 			fn get_DeviceId(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -4083,13 +4576,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 		}
-		RT_CLASS!{class BluetoothClassOfDevice: ::rt::gen::windows::devices::bluetooth::IBluetoothClassOfDevice}
-		RT_ACTIVATABLE!{IBluetoothClassOfDeviceStatics [CLSID_BluetoothClassOfDevice]}
-		DEFINE_CLSID!(CLSID_BluetoothClassOfDevice = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,67,108,97,115,115,79,102,68,101,118,105,99,101,0]);
-		RT_CLASS!{class BluetoothDevice: ::rt::gen::windows::devices::bluetooth::IBluetoothDevice}
-		RT_ACTIVATABLE!{IBluetoothDeviceStatics [CLSID_BluetoothDevice]}
-		RT_ACTIVATABLE!{IBluetoothDeviceStatics2 [CLSID_BluetoothDevice]}
-		DEFINE_CLSID!(CLSID_BluetoothDevice = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,68,101,118,105,99,101,0]);
 		DEFINE_IID!(IID_IBluetoothDevice2, 20183380, 45398, 19920, 177, 245, 193, 27, 195, 26, 81, 99);
 		RT_INTERFACE!{interface IBluetoothDevice2(IBluetoothDevice2Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDevice2] {
 			fn get_DeviceInformation(&mut self, out: *mut *mut ::rt::gen::windows::devices::enumeration::DeviceInformation) -> ::w::HRESULT
@@ -4101,68 +4587,45 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
-		DEFINE_IID!(IID_IBluetoothDeviceStatics, 160554833, 22491, 18213, 187, 215, 132, 246, 67, 39, 236, 44);
-		RT_INTERFACE!{static interface IBluetoothDeviceStatics(IBluetoothDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDeviceStatics] {
-			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>) -> ::w::HRESULT,
-			fn FromHostNameAsync(&mut self, hostName: *mut ::rt::gen::windows::networking::HostName, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>) -> ::w::HRESULT,
-			fn FromBluetoothAddressAsync(&mut self, address: u64, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>) -> ::w::HRESULT,
-			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
+		DEFINE_IID!(IID_IBluetoothDevice3, 1476392843, 25882, 17492, 185, 15, 235, 33, 239, 11, 13, 113);
+		RT_INTERFACE!{interface IBluetoothDevice3(IBluetoothDevice3Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDevice3] {
+			fn get_DeviceAccessInformation(&mut self, out: *mut *mut ::rt::gen::windows::devices::enumeration::DeviceAccessInformation) -> ::w::HRESULT,
+			fn RequestAccessAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::enumeration::DeviceAccessStatus>) -> ::w::HRESULT,
+			fn GetRfcommServicesAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceServicesResult>) -> ::w::HRESULT,
+			fn GetRfcommServicesWithCacheModeAsync(&mut self, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceServicesResult>) -> ::w::HRESULT,
+			fn GetRfcommServicesForIdAsync(&mut self, serviceId: *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceServicesResult>) -> ::w::HRESULT,
+			fn GetRfcommServicesForIdWithCacheModeAsync(&mut self, serviceId: *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceServicesResult>) -> ::w::HRESULT
 		}}
-		impl IBluetoothDeviceStatics {
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: &HStringArg) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>>> {
+		impl IBluetoothDevice3 {
+			#[inline] pub unsafe fn get_device_access_information(&mut self) -> RtResult<ComPtr<::rt::gen::windows::devices::enumeration::DeviceAccessInformation>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), &mut out);
+				let hr = ((*self.lpVtbl).get_DeviceAccessInformation)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_host_name_async(&mut self, hostName: &::rt::gen::windows::networking::HostName) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>>> {
+			#[inline] pub unsafe fn request_access_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::enumeration::DeviceAccessStatus>>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).FromHostNameAsync)(self, hostName as *const _ as *mut _, &mut out);
+				let hr = ((*self.lpVtbl).RequestAccessAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn from_bluetooth_address_async(&mut self, address: u64) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice>>> {
+			#[inline] pub unsafe fn get_rfcomm_services_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceServicesResult>>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).FromBluetoothAddressAsync)(self, address, &mut out);
+				let hr = ((*self.lpVtbl).GetRfcommServicesAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_device_selector(&mut self) -> RtResult<HString> {
+			#[inline] pub unsafe fn get_rfcomm_services_with_cache_mode_async(&mut self, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceServicesResult>>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, &mut out);
-				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+				let hr = ((*self.lpVtbl).GetRfcommServicesWithCacheModeAsync)(self, cacheMode, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-		}
-		DEFINE_IID!(IID_IBluetoothDeviceStatics2, 3265170991, 19988, 17527, 170, 27, 184, 180, 126, 91, 126, 206);
-		RT_INTERFACE!{static interface IBluetoothDeviceStatics2(IBluetoothDeviceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDeviceStatics2] {
-			fn GetDeviceSelectorFromPairingState(&mut self, pairingState: bool, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn GetDeviceSelectorFromConnectionStatus(&mut self, connectionStatus: ::rt::gen::windows::devices::bluetooth::BluetoothConnectionStatus, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn GetDeviceSelectorFromDeviceName(&mut self, deviceName: ::w::HSTRING, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn GetDeviceSelectorFromBluetoothAddress(&mut self, bluetoothAddress: u64, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn GetDeviceSelectorFromClassOfDevice(&mut self, classOfDevice: *mut ::rt::gen::windows::devices::bluetooth::BluetoothClassOfDevice, out: *mut ::w::HSTRING) -> ::w::HRESULT
-		}}
-		impl IBluetoothDeviceStatics2 {
-			#[inline] pub unsafe fn get_device_selector_from_pairing_state(&mut self, pairingState: bool) -> RtResult<HString> {
+			#[inline] pub unsafe fn get_rfcomm_services_for_id_async(&mut self, serviceId: &::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceServicesResult>>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDeviceSelectorFromPairingState)(self, pairingState, &mut out);
-				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+				let hr = ((*self.lpVtbl).GetRfcommServicesForIdAsync)(self, serviceId as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_device_selector_from_connection_status(&mut self, connectionStatus: ::rt::gen::windows::devices::bluetooth::BluetoothConnectionStatus) -> RtResult<HString> {
+			#[inline] pub unsafe fn get_rfcomm_services_for_id_with_cache_mode_async(&mut self, serviceId: &::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceServicesResult>>> {
 				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDeviceSelectorFromConnectionStatus)(self, connectionStatus, &mut out);
-				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn get_device_selector_from_device_name(&mut self, deviceName: &HStringArg) -> RtResult<HString> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDeviceSelectorFromDeviceName)(self, deviceName.get(), &mut out);
-				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn get_device_selector_from_bluetooth_address(&mut self, bluetoothAddress: u64) -> RtResult<HString> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDeviceSelectorFromBluetoothAddress)(self, bluetoothAddress, &mut out);
-				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn get_device_selector_from_class_of_device(&mut self, classOfDevice: &::rt::gen::windows::devices::bluetooth::BluetoothClassOfDevice) -> RtResult<HString> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDeviceSelectorFromClassOfDevice)(self, classOfDevice as *const _ as *mut _, &mut out);
-				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+				let hr = ((*self.lpVtbl).GetRfcommServicesForIdWithCacheModeAsync)(self, serviceId as *const _ as *mut _, cacheMode, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_IBluetoothLEAppearanceCategoriesStatics, 1833784574, 1130, 16773, 170, 182, 130, 76, 240, 97, 8, 97);
@@ -4597,8 +5060,8 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 		RT_CLASS!{class BluetoothLEDevice: ::rt::gen::windows::devices::bluetooth::IBluetoothLEDevice}
-		RT_ACTIVATABLE!{IBluetoothLEDeviceStatics [CLSID_BluetoothLEDevice]}
 		RT_ACTIVATABLE!{IBluetoothLEDeviceStatics2 [CLSID_BluetoothLEDevice]}
+		RT_ACTIVATABLE!{IBluetoothLEDeviceStatics [CLSID_BluetoothLEDevice]}
 		DEFINE_CLSID!(CLSID_BluetoothLEDevice = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,76,69,68,101,118,105,99,101,0]);
 		DEFINE_IID!(IID_IBluetoothLEDevice2, 653288115, 31470, 19761, 186, 186, 177, 185, 119, 95, 89, 22);
 		RT_INTERFACE!{interface IBluetoothLEDevice2(IBluetoothLEDevice2Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEDevice2] {
@@ -4794,7 +5257,12 @@ use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class RfcommDeviceService: ::rt::gen::windows::devices::bluetooth::rfcomm::IRfcommDeviceService}
 		RT_ACTIVATABLE!{IRfcommDeviceServiceStatics [CLSID_RfcommDeviceService]}
+		RT_ACTIVATABLE!{IRfcommDeviceServiceStatics2 [CLSID_RfcommDeviceService]}
 		DEFINE_CLSID!(CLSID_RfcommDeviceService = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,82,102,99,111,109,109,46,82,102,99,111,109,109,68,101,118,105,99,101,83,101,114,118,105,99,101,0]);
+		RT_CLASS!{class RfcommDeviceServicesResult: ::rt::gen::windows::devices::bluetooth::rfcomm::IRfcommDeviceServicesResult}
+		RT_CLASS!{class RfcommServiceId: ::rt::gen::windows::devices::bluetooth::rfcomm::IRfcommServiceId}
+		RT_ACTIVATABLE!{IRfcommServiceIdStatics [CLSID_RfcommServiceId]}
+		DEFINE_CLSID!(CLSID_RfcommServiceId = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,82,102,99,111,109,109,46,82,102,99,111,109,109,83,101,114,118,105,99,101,73,100,0]);
 		DEFINE_IID!(IID_IRfcommServiceIdStatics, 706191034, 43381, 18147, 181, 107, 8, 255, 215, 131, 165, 254);
 		RT_INTERFACE!{static interface IRfcommServiceIdStatics(IRfcommServiceIdStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommServiceIdStatics] {
 			fn FromUuid(&mut self, uuid: ::Guid, out: *mut *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> ::w::HRESULT,
@@ -4848,9 +5316,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
-		RT_CLASS!{class RfcommServiceId: ::rt::gen::windows::devices::bluetooth::rfcomm::IRfcommServiceId}
-		RT_ACTIVATABLE!{IRfcommServiceIdStatics [CLSID_RfcommServiceId]}
-		DEFINE_CLSID!(CLSID_RfcommServiceId = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,82,102,99,111,109,109,46,82,102,99,111,109,109,83,101,114,118,105,99,101,73,100,0]);
 		DEFINE_IID!(IID_IRfcommServiceId, 576885252, 32258, 16407, 129, 54, 218, 27, 106, 27, 155, 191);
 		RT_INTERFACE!{interface IRfcommServiceId(IRfcommServiceIdVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommServiceId] {
 			fn get_Uuid(&mut self, out: *mut ::Guid) -> ::w::HRESULT,
@@ -4874,6 +5339,23 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
 		}
+		DEFINE_IID!(IID_IRfcommDeviceServicesResult, 994588812, 31951, 18574, 150, 37, 210, 89, 165, 115, 45, 85);
+		RT_INTERFACE!{interface IRfcommDeviceServicesResult(IRfcommDeviceServicesResultVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommDeviceServicesResult] {
+			fn get_Error(&mut self, out: *mut ::rt::gen::windows::devices::bluetooth::BluetoothError) -> ::w::HRESULT,
+			fn get_Services(&mut self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceService>) -> ::w::HRESULT
+		}}
+		impl IRfcommDeviceServicesResult {
+			#[inline] pub unsafe fn get_error(&mut self) -> RtResult<::rt::gen::windows::devices::bluetooth::BluetoothError> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_Error)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_services(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceService>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_Services)(self, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
 		DEFINE_IID!(IID_IRfcommDeviceServiceStatics, 2762033647, 25197, 16812, 178, 83, 135, 172, 92, 39, 226, 138);
 		RT_INTERFACE!{static interface IRfcommDeviceServiceStatics(IRfcommDeviceServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommDeviceServiceStatics] {
 			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceService>) -> ::w::HRESULT,
@@ -4888,6 +5370,35 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			#[inline] pub unsafe fn get_device_selector(&mut self, serviceId: &::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> RtResult<HString> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, serviceId as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+		}
+		DEFINE_IID!(IID_IRfcommDeviceServiceStatics2, 2861347273, 59277, 19428, 128, 118, 10, 61, 135, 160, 160, 95);
+		RT_INTERFACE!{static interface IRfcommDeviceServiceStatics2(IRfcommDeviceServiceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IRfcommDeviceServiceStatics2] {
+			fn GetDeviceSelectorForBluetoothDevice(&mut self, bluetoothDevice: *mut ::rt::gen::windows::devices::bluetooth::BluetoothDevice, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn GetDeviceSelectorForBluetoothDeviceWithCacheMode(&mut self, bluetoothDevice: *mut ::rt::gen::windows::devices::bluetooth::BluetoothDevice, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn GetDeviceSelectorForBluetoothDeviceAndServiceId(&mut self, bluetoothDevice: *mut ::rt::gen::windows::devices::bluetooth::BluetoothDevice, serviceId: *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn GetDeviceSelectorForBluetoothDeviceAndServiceIdWithCacheMode(&mut self, bluetoothDevice: *mut ::rt::gen::windows::devices::bluetooth::BluetoothDevice, serviceId: *mut ::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode, out: *mut ::w::HSTRING) -> ::w::HRESULT
+		}}
+		impl IRfcommDeviceServiceStatics2 {
+			#[inline] pub unsafe fn get_device_selector_for_bluetooth_device(&mut self, bluetoothDevice: &::rt::gen::windows::devices::bluetooth::BluetoothDevice) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDeviceSelectorForBluetoothDevice)(self, bluetoothDevice as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_device_selector_for_bluetooth_device_with_cache_mode(&mut self, bluetoothDevice: &::rt::gen::windows::devices::bluetooth::BluetoothDevice, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDeviceSelectorForBluetoothDeviceWithCacheMode)(self, bluetoothDevice as *const _ as *mut _, cacheMode, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_device_selector_for_bluetooth_device_and_service_id(&mut self, bluetoothDevice: &::rt::gen::windows::devices::bluetooth::BluetoothDevice, serviceId: &::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDeviceSelectorForBluetoothDeviceAndServiceId)(self, bluetoothDevice as *const _ as *mut _, serviceId as *const _ as *mut _, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_device_selector_for_bluetooth_device_and_service_id_with_cache_mode(&mut self, bluetoothDevice: &::rt::gen::windows::devices::bluetooth::BluetoothDevice, serviceId: &::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceId, cacheMode: ::rt::gen::windows::devices::bluetooth::BluetoothCacheMode) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDeviceSelectorForBluetoothDeviceAndServiceIdWithCacheMode)(self, bluetoothDevice as *const _ as *mut _, serviceId as *const _ as *mut _, cacheMode, &mut out);
 				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
 			}
 		}
@@ -4946,6 +5457,23 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			#[inline] pub unsafe fn get_device(&mut self) -> RtResult<ComPtr<::rt::gen::windows::devices::bluetooth::BluetoothDevice>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Device)(self, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
+		DEFINE_IID!(IID_IRfcommDeviceService3, 472034534, 56644, 19747, 134, 109, 143, 52, 134, 238, 100, 144);
+		RT_INTERFACE!{interface IRfcommDeviceService3(IRfcommDeviceService3Vtbl): IInspectable(IInspectableVtbl) [IID_IRfcommDeviceService3] {
+			fn get_DeviceAccessInformation(&mut self, out: *mut *mut ::rt::gen::windows::devices::enumeration::DeviceAccessInformation) -> ::w::HRESULT,
+			fn RequestAccessAsync(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::enumeration::DeviceAccessStatus>) -> ::w::HRESULT
+		}}
+		impl IRfcommDeviceService3 {
+			#[inline] pub unsafe fn get_device_access_information(&mut self) -> RtResult<ComPtr<::rt::gen::windows::devices::enumeration::DeviceAccessInformation>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_DeviceAccessInformation)(self, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn request_access_async(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::enumeration::DeviceAccessStatus>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).RequestAccessAsync)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
@@ -6209,8 +6737,8 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ACTIVATABLE!{IGattServiceUuidsStatics2 [CLSID_GattServiceUuids]}
 		RT_ACTIVATABLE!{IGattServiceUuidsStatics [CLSID_GattServiceUuids]}
 		DEFINE_CLSID!(CLSID_GattServiceUuids = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,83,101,114,118,105,99,101,85,117,105,100,115,0]);
-		RT_ACTIVATABLE!{IGattCharacteristicUuidsStatics [CLSID_GattCharacteristicUuids]}
 		RT_ACTIVATABLE!{IGattCharacteristicUuidsStatics2 [CLSID_GattCharacteristicUuids]}
+		RT_ACTIVATABLE!{IGattCharacteristicUuidsStatics [CLSID_GattCharacteristicUuids]}
 		DEFINE_CLSID!(CLSID_GattCharacteristicUuids = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,67,104,97,114,97,99,116,101,114,105,115,116,105,99,85,117,105,100,115,0]);
 		RT_ACTIVATABLE!{IGattDescriptorUuidsStatics [CLSID_GattDescriptorUuids]}
 		DEFINE_CLSID!(CLSID_GattDescriptorUuids = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,68,101,115,99,114,105,112,116,111,114,85,117,105,100,115,0]);
@@ -7292,6 +7820,17 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
+		DEFINE_IID!(IID_IEnclosureLocation2, 679844187, 57469, 18525, 138, 158, 189, 242, 154, 239, 79, 102);
+		RT_INTERFACE!{interface IEnclosureLocation2(IEnclosureLocation2Vtbl): IInspectable(IInspectableVtbl) [IID_IEnclosureLocation2] {
+			fn get_RotationAngleInDegreesClockwise(&mut self, out: *mut u32) -> ::w::HRESULT
+		}}
+		impl IEnclosureLocation2 {
+			#[inline] pub unsafe fn get_rotation_angle_in_degrees_clockwise(&mut self) -> RtResult<u32> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_RotationAngleInDegreesClockwise)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+		}
 		RT_CLASS!{class EnclosureLocation: ::rt::gen::windows::devices::enumeration::IEnclosureLocation}
 		RT_ENUM! { enum DeviceInformationKind: i32 {
 			Unknown (DeviceInformationKind_Unknown) = 0, DeviceInterface (DeviceInformationKind_DeviceInterface) = 1, DeviceContainer (DeviceInformationKind_DeviceContainer) = 2, Device (DeviceInformationKind_Device) = 3, DeviceInterfaceClass (DeviceInformationKind_DeviceInterfaceClass) = 4, AssociationEndpoint (DeviceInformationKind_AssociationEndpoint) = 5, AssociationEndpointContainer (DeviceInformationKind_AssociationEndpointContainer) = 6, AssociationEndpointService (DeviceInformationKind_AssociationEndpointService) = 7,
@@ -7800,6 +8339,17 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
+		DEFINE_IID!(IID_IDeviceAccessChangedEventArgs2, 2186424930, 37707, 19248, 161, 120, 173, 195, 159, 47, 43, 227);
+		RT_INTERFACE!{interface IDeviceAccessChangedEventArgs2(IDeviceAccessChangedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IDeviceAccessChangedEventArgs2] {
+			fn get_Id(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
+		}}
+		impl IDeviceAccessChangedEventArgs2 {
+			#[inline] pub unsafe fn get_id(&mut self) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_Id)(self, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+		}
 		RT_CLASS!{class DeviceAccessChangedEventArgs: ::rt::gen::windows::devices::enumeration::IDeviceAccessChangedEventArgs}
 		DEFINE_IID!(IID_IDeviceAccessInformation, 195730035, 28133, 18709, 141, 221, 154, 5, 84, 166, 245, 69);
 		RT_INTERFACE!{interface IDeviceAccessInformation(IDeviceAccessInformationVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceAccessInformation] {
@@ -8071,7 +8621,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			Ready (PositionStatus_Ready) = 0, Initializing (PositionStatus_Initializing) = 1, NoData (PositionStatus_NoData) = 2, Disabled (PositionStatus_Disabled) = 3, NotInitialized (PositionStatus_NotInitialized) = 4, NotAvailable (PositionStatus_NotAvailable) = 5,
 		}}
 		RT_ENUM! { enum PositionSource: i32 {
-			Cellular (PositionSource_Cellular) = 0, Satellite (PositionSource_Satellite) = 1, WiFi (PositionSource_WiFi) = 2, IPAddress (PositionSource_IPAddress) = 3, Unknown (PositionSource_Unknown) = 4,
+			Cellular (PositionSource_Cellular) = 0, Satellite (PositionSource_Satellite) = 1, WiFi (PositionSource_WiFi) = 2, IPAddress (PositionSource_IPAddress) = 3, Unknown (PositionSource_Unknown) = 4, Default (PositionSource_Default) = 5, Obfuscated (PositionSource_Obfuscated) = 6,
 		}}
 		RT_ENUM! { enum GeoshapeType: i32 {
 			Geopoint (GeoshapeType_Geopoint) = 0, Geocircle (GeoshapeType_Geocircle) = 1, Geopath (GeoshapeType_Geopath) = 2, GeoboundingBox (GeoshapeType_GeoboundingBox) = 3,
@@ -8568,6 +9118,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 		RT_CLASS!{class Geolocator: ::rt::gen::windows::devices::geolocation::IGeolocator}
 		RT_ACTIVATABLE!{IGeolocatorStatics [CLSID_Geolocator]}
+		RT_ACTIVATABLE!{IGeolocatorStatics2 [CLSID_Geolocator]}
 		DEFINE_CLSID!(CLSID_Geolocator = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,108,111,99,97,116,111,114,0]);
 		DEFINE_IID!(IID_IGeolocatorWithScalarAccuracy, 2532692929, 47119, 17930, 153, 77, 169, 108, 71, 165, 26, 164);
 		RT_INTERFACE!{interface IGeolocatorWithScalarAccuracy(IGeolocatorWithScalarAccuracyVtbl): IInspectable(IInspectableVtbl) [IID_IGeolocatorWithScalarAccuracy] {
@@ -8582,6 +9133,16 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 			#[inline] pub unsafe fn set_desired_accuracy_in_meters(&mut self, value: &::rt::gen::windows::foundation::IReference<u32>) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).put_DesiredAccuracyInMeters)(self, value as *const _ as *mut _);
+				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			}
+		}
+		DEFINE_IID!(IID_IGeolocator2, 3518246509, 34961, 17332, 173, 54, 39, 198, 254, 154, 151, 177);
+		RT_INTERFACE!{interface IGeolocator2(IGeolocator2Vtbl): IInspectable(IInspectableVtbl) [IID_IGeolocator2] {
+			fn AllowFallbackToConsentlessPositions(&mut self) -> ::w::HRESULT
+		}}
+		impl IGeolocator2 {
+			#[inline] pub unsafe fn allow_fallback_to_consentless_positions(&mut self) -> RtResult<()> {
+				let hr = ((*self.lpVtbl).AllowFallbackToConsentlessPositions)(self);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 		}
@@ -8605,6 +9166,28 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			#[inline] pub unsafe fn get_geoposition_history_with_duration_async(&mut self, startTime: ::rt::gen::windows::foundation::DateTime, duration: ::rt::gen::windows::foundation::TimeSpan) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::geolocation::Geoposition>>>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetGeopositionHistoryWithDurationAsync)(self, startTime, duration, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
+		DEFINE_IID!(IID_IGeolocatorStatics2, 2570064290, 64028, 17969, 167, 29, 13, 190, 177, 37, 13, 156);
+		RT_INTERFACE!{static interface IGeolocatorStatics2(IGeolocatorStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGeolocatorStatics2] {
+			fn get_IsDefaultGeopositionRecommended(&mut self, out: *mut bool) -> ::w::HRESULT,
+			fn put_DefaultGeoposition(&mut self, value: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::devices::geolocation::BasicGeoposition>) -> ::w::HRESULT,
+			fn get_DefaultGeoposition(&mut self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::devices::geolocation::BasicGeoposition>) -> ::w::HRESULT
+		}}
+		impl IGeolocatorStatics2 {
+			#[inline] pub unsafe fn get_is_default_geoposition_recommended(&mut self) -> RtResult<bool> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_IsDefaultGeopositionRecommended)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn set_default_geoposition(&mut self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::devices::geolocation::BasicGeoposition>) -> RtResult<()> {
+				let hr = ((*self.lpVtbl).put_DefaultGeoposition)(self, value as *const _ as *mut _);
+				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_default_geoposition(&mut self) -> RtResult<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::devices::geolocation::BasicGeoposition>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_DefaultGeoposition)(self, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
@@ -8923,6 +9506,17 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 		RT_CLASS!{class HidCollection: ::rt::gen::windows::devices::humaninterfacedevice::IHidCollection}
+		DEFINE_IID!(IID_IHidBooleanControlDescription2, 3371094762, 35447, 19510, 170, 0, 95, 240, 68, 157, 62, 115);
+		RT_INTERFACE!{interface IHidBooleanControlDescription2(IHidBooleanControlDescription2Vtbl): IInspectable(IInspectableVtbl) [IID_IHidBooleanControlDescription2] {
+			fn get_IsAbsolute(&mut self, out: *mut bool) -> ::w::HRESULT
+		}}
+		impl IHidBooleanControlDescription2 {
+			#[inline] pub unsafe fn get_is_absolute(&mut self) -> RtResult<bool> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_IsAbsolute)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+		}
 		DEFINE_IID!(IID_IHidNumericControlDescription, 1670209158, 7575, 19573, 146, 127, 95, 245, 139, 160, 94, 50);
 		RT_INTERFACE!{interface IHidNumericControlDescription(IHidNumericControlDescriptionVtbl): IInspectable(IInspectableVtbl) [IID_IHidNumericControlDescription] {
 			fn get_Id(&mut self, out: *mut u32) -> ::w::HRESULT,
@@ -9727,7 +10321,7 @@ pub mod midi { // Windows.Devices.Midi
 use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum MidiMessageType: i32 {
-			None (MidiMessageType_None) = 0, NoteOff (MidiMessageType_NoteOff) = 128, NoteOn (MidiMessageType_NoteOn) = 144, PolyphonicKeyPressure (MidiMessageType_PolyphonicKeyPressure) = 160, ControlChange (MidiMessageType_ControlChange) = 176, ProgramChange (MidiMessageType_ProgramChange) = 192, ChannelPressure (MidiMessageType_ChannelPressure) = 208, PitchBendChange (MidiMessageType_PitchBendChange) = 224, SystemExclusive (MidiMessageType_SystemExclusive) = 240, MidiTimeCode (MidiMessageType_MidiTimeCode) = 241, SongPositionPointer (MidiMessageType_SongPositionPointer) = 242, SongSelect (MidiMessageType_SongSelect) = 243, TuneRequest (MidiMessageType_TuneRequest) = 246, TimingClock (MidiMessageType_TimingClock) = 248, Start (MidiMessageType_Start) = 250, Continue (MidiMessageType_Continue) = 251, Stop (MidiMessageType_Stop) = 252, ActiveSensing (MidiMessageType_ActiveSensing) = 254, SystemReset (MidiMessageType_SystemReset) = 255,
+			None (MidiMessageType_None) = 0, NoteOff (MidiMessageType_NoteOff) = 128, NoteOn (MidiMessageType_NoteOn) = 144, PolyphonicKeyPressure (MidiMessageType_PolyphonicKeyPressure) = 160, ControlChange (MidiMessageType_ControlChange) = 176, ProgramChange (MidiMessageType_ProgramChange) = 192, ChannelPressure (MidiMessageType_ChannelPressure) = 208, PitchBendChange (MidiMessageType_PitchBendChange) = 224, SystemExclusive (MidiMessageType_SystemExclusive) = 240, MidiTimeCode (MidiMessageType_MidiTimeCode) = 241, SongPositionPointer (MidiMessageType_SongPositionPointer) = 242, SongSelect (MidiMessageType_SongSelect) = 243, TuneRequest (MidiMessageType_TuneRequest) = 246, EndSystemExclusive (MidiMessageType_EndSystemExclusive) = 247, TimingClock (MidiMessageType_TimingClock) = 248, Start (MidiMessageType_Start) = 250, Continue (MidiMessageType_Continue) = 251, Stop (MidiMessageType_Stop) = 252, ActiveSensing (MidiMessageType_ActiveSensing) = 254, SystemReset (MidiMessageType_SystemReset) = 255,
 		}}
 		DEFINE_IID!(IID_IMidiMessage, 2037807429, 4244, 17027, 155, 224, 40, 159, 192, 238, 131, 52);
 		RT_INTERFACE!{interface IMidiMessage(IMidiMessageVtbl): IInspectable(IInspectableVtbl) [IID_IMidiMessage] {
@@ -11587,8 +12181,8 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
-		RT_ACTIVATABLE!{IKnownPerceptionFrameSourcePropertiesStatics2 [CLSID_KnownPerceptionFrameSourceProperties]}
 		RT_ACTIVATABLE!{IKnownPerceptionFrameSourcePropertiesStatics [CLSID_KnownPerceptionFrameSourceProperties]}
+		RT_ACTIVATABLE!{IKnownPerceptionFrameSourcePropertiesStatics2 [CLSID_KnownPerceptionFrameSourceProperties]}
 		DEFINE_CLSID!(CLSID_KnownPerceptionFrameSourceProperties = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,75,110,111,119,110,80,101,114,99,101,112,116,105,111,110,70,114,97,109,101,83,111,117,114,99,101,80,114,111,112,101,114,116,105,101,115,0]);
 		RT_ACTIVATABLE!{IKnownPerceptionVideoFrameSourcePropertiesStatics [CLSID_KnownPerceptionVideoFrameSourceProperties]}
 		DEFINE_CLSID!(CLSID_KnownPerceptionVideoFrameSourceProperties = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,75,110,111,119,110,80,101,114,99,101,112,116,105,111,110,86,105,100,101,111,70,114,97,109,101,83,111,117,114,99,101,80,114,111,112,101,114,116,105,101,115,0]);
@@ -13089,6 +13683,17 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 		RT_CLASS!{class ClaimedBarcodeScanner: ::rt::gen::windows::devices::pointofservice::IClaimedBarcodeScanner}
+		DEFINE_IID!(IID_IBarcodeScanner2, 2300662119, 36078, 17261, 137, 171, 141, 251, 67, 187, 66, 134);
+		RT_INTERFACE!{interface IBarcodeScanner2(IBarcodeScanner2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScanner2] {
+			fn get_VideoDeviceId(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
+		}}
+		impl IBarcodeScanner2 {
+			#[inline] pub unsafe fn get_video_device_id(&mut self) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_VideoDeviceId)(self, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+		}
 		RT_ENUM! { enum MagneticStripeReaderStatus: i32 {
 			Unauthenticated (MagneticStripeReaderStatus_Unauthenticated) = 0, Authenticated (MagneticStripeReaderStatus_Authenticated) = 1, Extended (MagneticStripeReaderStatus_Extended) = 2,
 		}}
@@ -15366,6 +15971,12 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum SensorReadingType: i32 {
 			Absolute (SensorReadingType_Absolute) = 0, Relative (SensorReadingType_Relative) = 1,
 		}}
+		RT_ENUM! { enum AccelerometerReadingType: i32 {
+			Standard (AccelerometerReadingType_Standard) = 0, Linear (AccelerometerReadingType_Linear) = 1, Gravity (AccelerometerReadingType_Gravity) = 2,
+		}}
+		RT_ENUM! { enum SensorOptimizationGoal: i32 {
+			Precision (SensorOptimizationGoal_Precision) = 0, PowerEfficiency (SensorOptimizationGoal_PowerEfficiency) = 1,
+		}}
 		RT_ENUM! { enum SensorType: i32 {
 			Accelerometer (SensorType_Accelerometer) = 0, ActivitySensor (SensorType_ActivitySensor) = 1, Barometer (SensorType_Barometer) = 2, Compass (SensorType_Compass) = 3, CustomSensor (SensorType_CustomSensor) = 4, Gyroscope (SensorType_Gyroscope) = 5, ProximitySensor (SensorType_ProximitySensor) = 6, Inclinometer (SensorType_Inclinometer) = 7, LightSensor (SensorType_LightSensor) = 8, OrientationSensor (SensorType_OrientationSensor) = 9, Pedometer (SensorType_Pedometer) = 10, RelativeInclinometer (SensorType_RelativeInclinometer) = 11, RelativeOrientationSensor (SensorType_RelativeOrientationSensor) = 12, SimpleOrientationSensor (SensorType_SimpleOrientationSensor) = 13,
 		}}
@@ -15418,7 +16029,19 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 		RT_CLASS!{class Accelerometer: ::rt::gen::windows::devices::sensors::IAccelerometer}
 		RT_ACTIVATABLE!{IAccelerometerStatics [CLSID_Accelerometer]}
+		RT_ACTIVATABLE!{IAccelerometerStatics2 [CLSID_Accelerometer]}
 		DEFINE_CLSID!(CLSID_Accelerometer = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,65,99,99,101,108,101,114,111,109,101,116,101,114,0]);
+		DEFINE_IID!(IID_IAccelerometerStatics2, 3301213231, 55403, 18053, 178, 215, 51, 150, 247, 152, 213, 123);
+		RT_INTERFACE!{static interface IAccelerometerStatics2(IAccelerometerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IAccelerometerStatics2] {
+			fn GetDefaultWithAccelerometerReadingType(&mut self, readingType: ::rt::gen::windows::devices::sensors::AccelerometerReadingType, out: *mut *mut ::rt::gen::windows::devices::sensors::Accelerometer) -> ::w::HRESULT
+		}}
+		impl IAccelerometerStatics2 {
+			#[inline] pub unsafe fn get_default_with_accelerometer_reading_type(&mut self, readingType: ::rt::gen::windows::devices::sensors::AccelerometerReadingType) -> RtResult<ComPtr<::rt::gen::windows::devices::sensors::Accelerometer>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDefaultWithAccelerometerReadingType)(self, readingType, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
 		DEFINE_IID!(IID_IAccelerometer, 3742909768, 10001, 19879, 128, 152, 75, 130, 32, 93, 60, 125);
 		RT_INTERFACE!{interface IAccelerometer(IAccelerometerVtbl): IInspectable(IInspectableVtbl) [IID_IAccelerometer] {
 			fn GetCurrentReading(&mut self, out: *mut *mut ::rt::gen::windows::devices::sensors::AccelerometerReading) -> ::w::HRESULT,
@@ -15510,6 +16133,17 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
 		}
+		DEFINE_IID!(IID_IAccelerometer4, 490159183, 17107, 17842, 129, 68, 171, 127, 182, 101, 235, 89);
+		RT_INTERFACE!{interface IAccelerometer4(IAccelerometer4Vtbl): IInspectable(IInspectableVtbl) [IID_IAccelerometer4] {
+			fn get_ReadingType(&mut self, out: *mut ::rt::gen::windows::devices::sensors::AccelerometerReadingType) -> ::w::HRESULT
+		}}
+		impl IAccelerometer4 {
+			#[inline] pub unsafe fn get_reading_type(&mut self) -> RtResult<::rt::gen::windows::devices::sensors::AccelerometerReadingType> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).get_ReadingType)(self, &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+		}
 		DEFINE_IID!(IID_IAccelerometerReading, 3120462539, 54097, 16559, 139, 182, 122, 169, 174, 100, 31, 183);
 		RT_INTERFACE!{interface IAccelerometerReading(IAccelerometerReadingVtbl): IInspectable(IInspectableVtbl) [IID_IAccelerometerReading] {
 			fn get_Timestamp(&mut self, out: *mut ::rt::gen::windows::foundation::DateTime) -> ::w::HRESULT,
@@ -15584,8 +16218,9 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 		RT_CLASS!{class Inclinometer: ::rt::gen::windows::devices::sensors::IInclinometer}
-		RT_ACTIVATABLE!{IInclinometerStatics [CLSID_Inclinometer]}
 		RT_ACTIVATABLE!{IInclinometerStatics2 [CLSID_Inclinometer]}
+		RT_ACTIVATABLE!{IInclinometerStatics [CLSID_Inclinometer]}
+		RT_ACTIVATABLE!{IInclinometerStatics3 [CLSID_Inclinometer]}
 		DEFINE_CLSID!(CLSID_Inclinometer = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,73,110,99,108,105,110,111,109,101,116,101,114,0]);
 		DEFINE_IID!(IID_IInclinometerStatics2, 71276405, 27166, 18844, 134, 224, 99, 140, 26, 134, 75, 0);
 		RT_INTERFACE!{static interface IInclinometerStatics2(IInclinometerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IInclinometerStatics2] {
@@ -15595,6 +16230,17 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			#[inline] pub unsafe fn get_default_for_relative_readings(&mut self) -> RtResult<ComPtr<::rt::gen::windows::devices::sensors::Inclinometer>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultForRelativeReadings)(self, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
+		DEFINE_IID!(IID_IInclinometerStatics3, 3181003392, 47386, 18473, 147, 146, 171, 192, 182, 189, 242, 180);
+		RT_INTERFACE!{static interface IInclinometerStatics3(IInclinometerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IInclinometerStatics3] {
+			fn GetDefaultWithSensorReadingType(&mut self, sensorReadingtype: ::rt::gen::windows::devices::sensors::SensorReadingType, out: *mut *mut ::rt::gen::windows::devices::sensors::Inclinometer) -> ::w::HRESULT
+		}}
+		impl IInclinometerStatics3 {
+			#[inline] pub unsafe fn get_default_with_sensor_reading_type(&mut self, sensorReadingtype: ::rt::gen::windows::devices::sensors::SensorReadingType) -> RtResult<ComPtr<::rt::gen::windows::devices::sensors::Inclinometer>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDefaultWithSensorReadingType)(self, sensorReadingtype, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
@@ -16168,8 +16814,9 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 		RT_CLASS!{class OrientationSensor: ::rt::gen::windows::devices::sensors::IOrientationSensor}
-		RT_ACTIVATABLE!{IOrientationSensorStatics2 [CLSID_OrientationSensor]}
 		RT_ACTIVATABLE!{IOrientationSensorStatics [CLSID_OrientationSensor]}
+		RT_ACTIVATABLE!{IOrientationSensorStatics3 [CLSID_OrientationSensor]}
+		RT_ACTIVATABLE!{IOrientationSensorStatics2 [CLSID_OrientationSensor]}
 		DEFINE_CLSID!(CLSID_OrientationSensor = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,79,114,105,101,110,116,97,116,105,111,110,83,101,110,115,111,114,0]);
 		DEFINE_IID!(IID_IOrientationSensorStatics2, 1507462411, 54282, 19569, 146, 118, 138, 39, 42, 10, 102, 25);
 		RT_INTERFACE!{static interface IOrientationSensorStatics2(IOrientationSensorStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IOrientationSensorStatics2] {
@@ -16179,6 +16826,23 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			#[inline] pub unsafe fn get_default_for_relative_readings(&mut self) -> RtResult<ComPtr<::rt::gen::windows::devices::sensors::OrientationSensor>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetDefaultForRelativeReadings)(self, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
+		DEFINE_IID!(IID_IOrientationSensorStatics3, 3626821920, 10103, 16639, 159, 89, 214, 84, 176, 133, 241, 47);
+		RT_INTERFACE!{static interface IOrientationSensorStatics3(IOrientationSensorStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IOrientationSensorStatics3] {
+			fn GetDefaultWithSensorReadingType(&mut self, sensorReadingtype: ::rt::gen::windows::devices::sensors::SensorReadingType, out: *mut *mut ::rt::gen::windows::devices::sensors::OrientationSensor) -> ::w::HRESULT,
+			fn GetDefaultWithSensorReadingTypeAndSensorOptimizationGoal(&mut self, sensorReadingType: ::rt::gen::windows::devices::sensors::SensorReadingType, optimizationGoal: ::rt::gen::windows::devices::sensors::SensorOptimizationGoal, out: *mut *mut ::rt::gen::windows::devices::sensors::OrientationSensor) -> ::w::HRESULT
+		}}
+		impl IOrientationSensorStatics3 {
+			#[inline] pub unsafe fn get_default_with_sensor_reading_type(&mut self, sensorReadingtype: ::rt::gen::windows::devices::sensors::SensorReadingType) -> RtResult<ComPtr<::rt::gen::windows::devices::sensors::OrientationSensor>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDefaultWithSensorReadingType)(self, sensorReadingtype, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_default_with_sensor_reading_type_and_sensor_optimization_goal(&mut self, sensorReadingType: ::rt::gen::windows::devices::sensors::SensorReadingType, optimizationGoal: ::rt::gen::windows::devices::sensors::SensorOptimizationGoal) -> RtResult<ComPtr<::rt::gen::windows::devices::sensors::OrientationSensor>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetDefaultWithSensorReadingTypeAndSensorOptimizationGoal)(self, sensorReadingType, optimizationGoal, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
@@ -17492,7 +18156,7 @@ pub mod smartcards { // Windows.Devices.SmartCards
 use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum SmartCardReaderKind: i32 {
-			Any (SmartCardReaderKind_Any) = 0, Generic (SmartCardReaderKind_Generic) = 1, Tpm (SmartCardReaderKind_Tpm) = 2, Nfc (SmartCardReaderKind_Nfc) = 3, Uicc (SmartCardReaderKind_Uicc) = 4,
+			Any (SmartCardReaderKind_Any) = 0, Generic (SmartCardReaderKind_Generic) = 1, Tpm (SmartCardReaderKind_Tpm) = 2, Nfc (SmartCardReaderKind_Nfc) = 3, Uicc (SmartCardReaderKind_Uicc) = 4, EmbeddedSE (SmartCardReaderKind_EmbeddedSE) = 5,
 		}}
 		RT_ENUM! { enum SmartCardReaderStatus: i32 {
 			Disconnected (SmartCardReaderStatus_Disconnected) = 0, Ready (SmartCardReaderStatus_Ready) = 1, Exclusive (SmartCardReaderStatus_Exclusive) = 2,
@@ -18890,7 +19554,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			Any (WiFiNetworkKind_Any) = 0, Infrastructure (WiFiNetworkKind_Infrastructure) = 1, Adhoc (WiFiNetworkKind_Adhoc) = 2,
 		}}
 		RT_ENUM! { enum WiFiPhyKind: i32 {
-			Unknown (WiFiPhyKind_Unknown) = 0, Fhss (WiFiPhyKind_Fhss) = 1, Dsss (WiFiPhyKind_Dsss) = 2, IRBaseband (WiFiPhyKind_IRBaseband) = 3, Ofdm (WiFiPhyKind_Ofdm) = 4, Hrdsss (WiFiPhyKind_Hrdsss) = 5, Erp (WiFiPhyKind_Erp) = 6, HT (WiFiPhyKind_HT) = 7, Vht (WiFiPhyKind_Vht) = 8,
+			Unknown (WiFiPhyKind_Unknown) = 0, Fhss (WiFiPhyKind_Fhss) = 1, Dsss (WiFiPhyKind_Dsss) = 2, IRBaseband (WiFiPhyKind_IRBaseband) = 3, Ofdm (WiFiPhyKind_Ofdm) = 4, Hrdsss (WiFiPhyKind_Hrdsss) = 5, Erp (WiFiPhyKind_Erp) = 6, HT (WiFiPhyKind_HT) = 7, Vht (WiFiPhyKind_Vht) = 8, Dmg (WiFiPhyKind_Dmg) = 9,
 		}}
 		RT_ENUM! { enum WiFiAccessStatus: i32 {
 			Unspecified (WiFiAccessStatus_Unspecified) = 0, Allowed (WiFiAccessStatus_Allowed) = 1, DeniedByUser (WiFiAccessStatus_DeniedByUser) = 2, DeniedBySystem (WiFiAccessStatus_DeniedBySystem) = 3,
@@ -19977,135 +20641,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.WiFiDirect.Services
 } // Windows.Devices.WiFiDirect
-pub mod custom { // Windows.Devices.Custom
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
-		RT_STRUCT! { struct CustomDeviceContract {
-			
-		}}
-		DEFINE_IID!(IID_IKnownDeviceTypesStatics, 3998513602, 21576, 17882, 173, 27, 36, 148, 140, 35, 144, 148);
-		RT_INTERFACE!{static interface IKnownDeviceTypesStatics(IKnownDeviceTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownDeviceTypesStatics] {
-			fn get_Unknown(&mut self, out: *mut u16) -> ::w::HRESULT
-		}}
-		impl IKnownDeviceTypesStatics {
-			#[inline] pub unsafe fn get_unknown(&mut self) -> RtResult<u16> {
-				let mut out = ::std::mem::zeroed();
-				let hr = ((*self.lpVtbl).get_Unknown)(self, &mut out);
-				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
-			}
-		}
-		RT_ACTIVATABLE!{IKnownDeviceTypesStatics [CLSID_KnownDeviceTypes]}
-		DEFINE_CLSID!(CLSID_KnownDeviceTypes = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,67,117,115,116,111,109,46,75,110,111,119,110,68,101,118,105,99,101,84,121,112,101,115,0]);
-		RT_ENUM! { enum IOControlAccessMode: i32 {
-			Any (IOControlAccessMode_Any) = 0, Read (IOControlAccessMode_Read) = 1, Write (IOControlAccessMode_Write) = 2, ReadWrite (IOControlAccessMode_ReadWrite) = 3,
-		}}
-		RT_ENUM! { enum IOControlBufferingMethod: i32 {
-			Buffered (IOControlBufferingMethod_Buffered) = 0, DirectInput (IOControlBufferingMethod_DirectInput) = 1, DirectOutput (IOControlBufferingMethod_DirectOutput) = 2, Neither (IOControlBufferingMethod_Neither) = 3,
-		}}
-		DEFINE_IID!(IID_IIOControlCode, 244668903, 24776, 17269, 167, 97, 127, 136, 8, 6, 108, 96);
-		RT_INTERFACE!{interface IIOControlCode(IIOControlCodeVtbl): IInspectable(IInspectableVtbl) [IID_IIOControlCode] {
-			fn get_AccessMode(&mut self, out: *mut ::rt::gen::windows::devices::custom::IOControlAccessMode) -> ::w::HRESULT,
-			fn get_BufferingMethod(&mut self, out: *mut ::rt::gen::windows::devices::custom::IOControlBufferingMethod) -> ::w::HRESULT,
-			fn get_Function(&mut self, out: *mut u16) -> ::w::HRESULT,
-			fn get_DeviceType(&mut self, out: *mut u16) -> ::w::HRESULT,
-			fn get_ControlCode(&mut self, out: *mut u32) -> ::w::HRESULT
-		}}
-		impl IIOControlCode {
-			#[inline] pub unsafe fn get_access_mode(&mut self) -> RtResult<::rt::gen::windows::devices::custom::IOControlAccessMode> {
-				let mut out = ::std::mem::zeroed();
-				let hr = ((*self.lpVtbl).get_AccessMode)(self, &mut out);
-				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn get_buffering_method(&mut self) -> RtResult<::rt::gen::windows::devices::custom::IOControlBufferingMethod> {
-				let mut out = ::std::mem::zeroed();
-				let hr = ((*self.lpVtbl).get_BufferingMethod)(self, &mut out);
-				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn get_function(&mut self) -> RtResult<u16> {
-				let mut out = ::std::mem::zeroed();
-				let hr = ((*self.lpVtbl).get_Function)(self, &mut out);
-				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn get_device_type(&mut self) -> RtResult<u16> {
-				let mut out = ::std::mem::zeroed();
-				let hr = ((*self.lpVtbl).get_DeviceType)(self, &mut out);
-				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn get_control_code(&mut self) -> RtResult<u32> {
-				let mut out = ::std::mem::zeroed();
-				let hr = ((*self.lpVtbl).get_ControlCode)(self, &mut out);
-				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
-			}
-		}
-		DEFINE_IID!(IID_IIOControlCodeFactory, 2238348528, 19473, 17582, 175, 198, 184, 212, 162, 18, 120, 143);
-		RT_INTERFACE!{static interface IIOControlCodeFactory(IIOControlCodeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IIOControlCodeFactory] {
-			fn CreateIOControlCode(&mut self, deviceType: u16, function: u16, accessMode: ::rt::gen::windows::devices::custom::IOControlAccessMode, bufferingMethod: ::rt::gen::windows::devices::custom::IOControlBufferingMethod, out: *mut *mut ::rt::gen::windows::devices::custom::IOControlCode) -> ::w::HRESULT
-		}}
-		impl IIOControlCodeFactory {
-			#[inline] pub unsafe fn create_iocontrol_code(&mut self, deviceType: u16, function: u16, accessMode: ::rt::gen::windows::devices::custom::IOControlAccessMode, bufferingMethod: ::rt::gen::windows::devices::custom::IOControlBufferingMethod) -> RtResult<ComPtr<::rt::gen::windows::devices::custom::IOControlCode>> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).CreateIOControlCode)(self, deviceType, function, accessMode, bufferingMethod, &mut out);
-				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
-			}
-		}
-		RT_CLASS!{class IOControlCode: ::rt::gen::windows::devices::custom::IIOControlCode [::rt::gen::windows::devices::custom::IIOControlCodeFactory] [CLSID_IOControlCode]}
-		DEFINE_CLSID!(CLSID_IOControlCode = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,67,117,115,116,111,109,46,73,79,67,111,110,116,114,111,108,67,111,100,101,0]);
-		RT_ENUM! { enum DeviceAccessMode: i32 {
-			Read (DeviceAccessMode_Read) = 0, Write (DeviceAccessMode_Write) = 1, ReadWrite (DeviceAccessMode_ReadWrite) = 2,
-		}}
-		RT_ENUM! { enum DeviceSharingMode: i32 {
-			Shared (DeviceSharingMode_Shared) = 0, Exclusive (DeviceSharingMode_Exclusive) = 1,
-		}}
-		DEFINE_IID!(IID_ICustomDeviceStatics, 3357672210, 61260, 18097, 165, 142, 238, 179, 8, 220, 137, 23);
-		RT_INTERFACE!{static interface ICustomDeviceStatics(ICustomDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICustomDeviceStatics] {
-			fn GetDeviceSelector(&mut self, classGuid: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn FromIdAsync(&mut self, deviceId: ::w::HSTRING, desiredAccess: ::rt::gen::windows::devices::custom::DeviceAccessMode, sharingMode: ::rt::gen::windows::devices::custom::DeviceSharingMode, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::custom::CustomDevice>) -> ::w::HRESULT
-		}}
-		impl ICustomDeviceStatics {
-			#[inline] pub unsafe fn get_device_selector(&mut self, classGuid: ::Guid) -> RtResult<HString> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).GetDeviceSelector)(self, classGuid, &mut out);
-				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn from_id_async(&mut self, deviceId: &HStringArg, desiredAccess: ::rt::gen::windows::devices::custom::DeviceAccessMode, sharingMode: ::rt::gen::windows::devices::custom::DeviceSharingMode) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::devices::custom::CustomDevice>>> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).FromIdAsync)(self, deviceId.get(), desiredAccess, sharingMode, &mut out);
-				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
-			}
-		}
-		RT_CLASS!{class CustomDevice: ::rt::gen::windows::devices::custom::ICustomDevice}
-		RT_ACTIVATABLE!{ICustomDeviceStatics [CLSID_CustomDevice]}
-		DEFINE_CLSID!(CLSID_CustomDevice = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,67,117,115,116,111,109,46,67,117,115,116,111,109,68,101,118,105,99,101,0]);
-		DEFINE_IID!(IID_ICustomDevice, 3710919967, 50315, 17341, 188, 177, 222, 200, 143, 21, 20, 62);
-		RT_INTERFACE!{interface ICustomDevice(ICustomDeviceVtbl): IInspectable(IInspectableVtbl) [IID_ICustomDevice] {
-			fn get_InputStream(&mut self, out: *mut *mut ::rt::gen::windows::storage::streams::IInputStream) -> ::w::HRESULT,
-			fn get_OutputStream(&mut self, out: *mut *mut ::rt::gen::windows::storage::streams::IOutputStream) -> ::w::HRESULT,
-			fn SendIOControlAsync(&mut self, ioControlCode: *mut ::rt::gen::windows::devices::custom::IIOControlCode, inputBuffer: *mut ::rt::gen::windows::storage::streams::IBuffer, outputBuffer: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<u32>) -> ::w::HRESULT,
-			fn TrySendIOControlAsync(&mut self, ioControlCode: *mut ::rt::gen::windows::devices::custom::IIOControlCode, inputBuffer: *mut ::rt::gen::windows::storage::streams::IBuffer, outputBuffer: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<bool>) -> ::w::HRESULT
-		}}
-		impl ICustomDevice {
-			#[inline] pub unsafe fn get_input_stream(&mut self) -> RtResult<ComPtr<::rt::gen::windows::storage::streams::IInputStream>> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).get_InputStream)(self, &mut out);
-				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn get_output_stream(&mut self) -> RtResult<ComPtr<::rt::gen::windows::storage::streams::IOutputStream>> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).get_OutputStream)(self, &mut out);
-				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn send_iocontrol_async(&mut self, ioControlCode: &::rt::gen::windows::devices::custom::IIOControlCode, inputBuffer: &::rt::gen::windows::storage::streams::IBuffer, outputBuffer: &::rt::gen::windows::storage::streams::IBuffer) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<u32>>> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).SendIOControlAsync)(self, ioControlCode as *const _ as *mut _, inputBuffer as *const _ as *mut _, outputBuffer as *const _ as *mut _, &mut out);
-				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn try_send_iocontrol_async(&mut self, ioControlCode: &::rt::gen::windows::devices::custom::IIOControlCode, inputBuffer: &::rt::gen::windows::storage::streams::IBuffer, outputBuffer: &::rt::gen::windows::storage::streams::IBuffer) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<bool>>> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).TrySendIOControlAsync)(self, ioControlCode as *const _ as *mut _, inputBuffer as *const _ as *mut _, outputBuffer as *const _ as *mut _, &mut out);
-				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
-			}
-		}
-} // Windows.Devices.Custom
 pub mod portable { // Windows.Devices.Portable
 use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
@@ -20909,13 +21444,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 pub mod streams { // Windows.Storage.Streams
 use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
-		DEFINE_IID!(IID_IRandomAccessStreamWithContentType, 3424995367, 19261, 17295, 146, 50, 16, 199, 107, 199, 224, 56);
-		RT_INTERFACE!{interface IRandomAccessStreamWithContentType(IRandomAccessStreamWithContentTypeVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamWithContentType] {
-			
-		}}
-		impl IRandomAccessStreamWithContentType {
-			
-		}
 		DEFINE_IID!(IID_IBuffer, 2421821408, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
 		RT_INTERFACE!{interface IBuffer(IBufferVtbl): IInspectable(IInspectableVtbl) [IID_IBuffer] {
 			fn get_Capacity(&mut self, out: *mut u32) -> ::w::HRESULT,
@@ -20969,6 +21497,13 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum InputStreamOptions: u32 {
 			None (InputStreamOptions_None) = 0, Partial (InputStreamOptions_Partial) = 1, ReadAhead (InputStreamOptions_ReadAhead) = 2,
 		}}
+		DEFINE_IID!(IID_IRandomAccessStreamWithContentType, 3424995367, 19261, 17295, 146, 50, 16, 199, 107, 199, 224, 56);
+		RT_INTERFACE!{interface IRandomAccessStreamWithContentType(IRandomAccessStreamWithContentTypeVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamWithContentType] {
+			
+		}}
+		impl IRandomAccessStreamWithContentType {
+			
+		}
 		RT_CLASS!{class DataReader: ::rt::gen::windows::storage::streams::IDataReader [::rt::gen::windows::storage::streams::IDataReaderFactory] [CLSID_DataReader]}
 		RT_ACTIVATABLE!{IDataReaderStatics [CLSID_DataReader]}
 		DEFINE_CLSID!(CLSID_DataReader = &[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,82,101,97,100,101,114,0]);
@@ -21267,6 +21802,82 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}}
 } // Windows.System.Power
 } // Windows.System
+pub mod globalization { // Windows.Globalization
+use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
+use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+		RT_CLASS!{class Language: ::rt::gen::windows::globalization::ILanguage [::rt::gen::windows::globalization::ILanguageFactory] [CLSID_Language]}
+		RT_ACTIVATABLE!{ILanguageStatics [CLSID_Language]}
+		RT_ACTIVATABLE!{ILanguageStatics2 [CLSID_Language]}
+		DEFINE_CLSID!(CLSID_Language = &[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,76,97,110,103,117,97,103,101,0]);
+		DEFINE_IID!(IID_ILanguageStatics2, 806985582, 37195, 19242, 157, 110, 227, 176, 226, 125, 190, 79);
+		RT_INTERFACE!{static interface ILanguageStatics2(ILanguageStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics2] {
+			fn TrySetInputMethodLanguageTag(&mut self, languageTag: ::w::HSTRING, out: *mut bool) -> ::w::HRESULT
+		}}
+		impl ILanguageStatics2 {
+			#[inline] pub unsafe fn try_set_input_method_language_tag(&mut self, languageTag: &HStringArg) -> RtResult<bool> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).TrySetInputMethodLanguageTag)(self, languageTag.get(), &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+		}
+		DEFINE_IID!(IID_ILanguageStatics, 2990331223, 2149, 18132, 137, 184, 213, 155, 232, 153, 15, 13);
+		RT_INTERFACE!{static interface ILanguageStatics(ILanguageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics] {
+			fn IsWellFormed(&mut self, languageTag: ::w::HSTRING, out: *mut bool) -> ::w::HRESULT,
+			fn get_CurrentInputMethodLanguageTag(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
+		}}
+		impl ILanguageStatics {
+			#[inline] pub unsafe fn is_well_formed(&mut self, languageTag: &HStringArg) -> RtResult<bool> {
+				let mut out = ::std::mem::zeroed();
+				let hr = ((*self.lpVtbl).IsWellFormed)(self, languageTag.get(), &mut out);
+				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_current_input_method_language_tag(&mut self) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_CurrentInputMethodLanguageTag)(self, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+		}
+		DEFINE_IID!(IID_ILanguageFactory, 2600620716, 3111, 17656, 183, 146, 151, 147, 251, 102, 198, 62);
+		RT_INTERFACE!{static interface ILanguageFactory(ILanguageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFactory] {
+			fn CreateLanguage(&mut self, languageTag: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::globalization::Language) -> ::w::HRESULT
+		}}
+		impl ILanguageFactory {
+			#[inline] pub unsafe fn create_language(&mut self, languageTag: &HStringArg) -> RtResult<ComPtr<::rt::gen::windows::globalization::Language>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).CreateLanguage)(self, languageTag.get(), &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
+		DEFINE_IID!(IID_ILanguage, 3933841234, 63426, 16997, 177, 189, 196, 222, 196, 228, 240, 128);
+		RT_INTERFACE!{interface ILanguage(ILanguageVtbl): IInspectable(IInspectableVtbl) [IID_ILanguage] {
+			fn get_LanguageTag(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn get_DisplayName(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn get_NativeName(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
+			fn get_Script(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
+		}}
+		impl ILanguage {
+			#[inline] pub unsafe fn get_language_tag(&mut self) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_LanguageTag)(self, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_display_name(&mut self) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_DisplayName)(self, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_native_name(&mut self) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_NativeName)(self, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_script(&mut self) -> RtResult<HString> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).get_Script)(self, &mut out);
+				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
+			}
+		}
+} // Windows.Globalization
 pub mod security { // Windows.Security
 use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
@@ -21655,6 +22266,9 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ENUM! { enum HostNameType: i32 {
 			DomainName (HostNameType_DomainName) = 0, Ipv4 (HostNameType_Ipv4) = 1, Ipv6 (HostNameType_Ipv6) = 2, Bluetooth (HostNameType_Bluetooth) = 3,
 		}}
+		RT_ENUM! { enum HostNameSortOptions: u32 {
+			None (HostNameSortOptions_None) = 0, OptimizeForLongConnections (HostNameSortOptions_OptimizeForLongConnections) = 2,
+		}}
 		RT_CLASS!{class EndpointPair: ::rt::gen::windows::networking::IEndpointPair [::rt::gen::windows::networking::IEndpointPairFactory] [CLSID_EndpointPair]}
 		DEFINE_CLSID!(CLSID_EndpointPair = &[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,69,110,100,112,111,105,110,116,80,97,105,114,0]);
 		DEFINE_IID!(IID_IEndpointPairFactory, 3054098801, 25824, 17451, 170, 111, 204, 140, 143, 24, 31, 120);
@@ -21717,9 +22331,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
 		}
-		RT_ENUM! { enum HostNameSortOptions: u32 {
-			None (HostNameSortOptions_None) = 0, OptimizeForLongConnections (HostNameSortOptions_OptimizeForLongConnections) = 2,
-		}}
 pub mod connectivity { // Windows.Networking.Connectivity
 use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
@@ -22069,6 +22680,25 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 		RT_CLASS!{class StreamSocket: ::rt::gen::windows::networking::sockets::IStreamSocket}
+		RT_ACTIVATABLE!{IStreamSocketStatics [CLSID_StreamSocket]}
+		DEFINE_CLSID!(CLSID_StreamSocket = &[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,116,114,101,97,109,83,111,99,107,101,116,0]);
+		DEFINE_IID!(IID_IStreamSocketStatics, 2753608778, 28206, 19189, 181, 86, 53, 90, 224, 205, 79, 41);
+		RT_INTERFACE!{static interface IStreamSocketStatics(IStreamSocketStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketStatics] {
+			fn GetEndpointPairsAsync(&mut self, remoteHostName: *mut ::rt::gen::windows::networking::HostName, remoteServiceName: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>>) -> ::w::HRESULT,
+			fn GetEndpointPairsWithSortOptionsAsync(&mut self, remoteHostName: *mut ::rt::gen::windows::networking::HostName, remoteServiceName: ::w::HSTRING, sortOptions: ::rt::gen::windows::networking::HostNameSortOptions, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>>) -> ::w::HRESULT
+		}}
+		impl IStreamSocketStatics {
+			#[inline] pub unsafe fn get_endpoint_pairs_async(&mut self, remoteHostName: &::rt::gen::windows::networking::HostName, remoteServiceName: &HStringArg) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetEndpointPairsAsync)(self, remoteHostName as *const _ as *mut _, remoteServiceName.get(), &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+			#[inline] pub unsafe fn get_endpoint_pairs_with_sort_options_async(&mut self, remoteHostName: &::rt::gen::windows::networking::HostName, remoteServiceName: &HStringArg, sortOptions: ::rt::gen::windows::networking::HostNameSortOptions) -> RtResult<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>>>> {
+				let mut out = ::std::ptr::null_mut();
+				let hr = ((*self.lpVtbl).GetEndpointPairsWithSortOptionsAsync)(self, remoteHostName as *const _ as *mut _, remoteServiceName.get(), sortOptions, &mut out);
+				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
+			}
+		}
 		DEFINE_IID!(IID_IStreamSocket, 1772236019, 64635, 18519, 175, 56, 246, 231, 222, 106, 91, 73);
 		RT_INTERFACE!{interface IStreamSocket(IStreamSocketVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocket] {
 			fn get_Control(&mut self, out: *mut *mut ::rt::gen::windows::networking::sockets::StreamSocketControl) -> ::w::HRESULT,
@@ -22484,82 +23114,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Networking.Sockets
 } // Windows.Networking
-pub mod globalization { // Windows.Globalization
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
-		RT_CLASS!{class Language: ::rt::gen::windows::globalization::ILanguage [::rt::gen::windows::globalization::ILanguageFactory] [CLSID_Language]}
-		RT_ACTIVATABLE!{ILanguageStatics [CLSID_Language]}
-		RT_ACTIVATABLE!{ILanguageStatics2 [CLSID_Language]}
-		DEFINE_CLSID!(CLSID_Language = &[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,76,97,110,103,117,97,103,101,0]);
-		DEFINE_IID!(IID_ILanguageStatics2, 806985582, 37195, 19242, 157, 110, 227, 176, 226, 125, 190, 79);
-		RT_INTERFACE!{static interface ILanguageStatics2(ILanguageStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics2] {
-			fn TrySetInputMethodLanguageTag(&mut self, languageTag: ::w::HSTRING, out: *mut bool) -> ::w::HRESULT
-		}}
-		impl ILanguageStatics2 {
-			#[inline] pub unsafe fn try_set_input_method_language_tag(&mut self, languageTag: &HStringArg) -> RtResult<bool> {
-				let mut out = ::std::mem::zeroed();
-				let hr = ((*self.lpVtbl).TrySetInputMethodLanguageTag)(self, languageTag.get(), &mut out);
-				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
-			}
-		}
-		DEFINE_IID!(IID_ILanguageStatics, 2990331223, 2149, 18132, 137, 184, 213, 155, 232, 153, 15, 13);
-		RT_INTERFACE!{static interface ILanguageStatics(ILanguageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics] {
-			fn IsWellFormed(&mut self, languageTag: ::w::HSTRING, out: *mut bool) -> ::w::HRESULT,
-			fn get_CurrentInputMethodLanguageTag(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
-		}}
-		impl ILanguageStatics {
-			#[inline] pub unsafe fn is_well_formed(&mut self, languageTag: &HStringArg) -> RtResult<bool> {
-				let mut out = ::std::mem::zeroed();
-				let hr = ((*self.lpVtbl).IsWellFormed)(self, languageTag.get(), &mut out);
-				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn get_current_input_method_language_tag(&mut self) -> RtResult<HString> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).get_CurrentInputMethodLanguageTag)(self, &mut out);
-				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
-			}
-		}
-		DEFINE_IID!(IID_ILanguageFactory, 2600620716, 3111, 17656, 183, 146, 151, 147, 251, 102, 198, 62);
-		RT_INTERFACE!{static interface ILanguageFactory(ILanguageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFactory] {
-			fn CreateLanguage(&mut self, languageTag: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::globalization::Language) -> ::w::HRESULT
-		}}
-		impl ILanguageFactory {
-			#[inline] pub unsafe fn create_language(&mut self, languageTag: &HStringArg) -> RtResult<ComPtr<::rt::gen::windows::globalization::Language>> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).CreateLanguage)(self, languageTag.get(), &mut out);
-				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
-			}
-		}
-		DEFINE_IID!(IID_ILanguage, 3933841234, 63426, 16997, 177, 189, 196, 222, 196, 228, 240, 128);
-		RT_INTERFACE!{interface ILanguage(ILanguageVtbl): IInspectable(IInspectableVtbl) [IID_ILanguage] {
-			fn get_LanguageTag(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn get_DisplayName(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn get_NativeName(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
-			fn get_Script(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
-		}}
-		impl ILanguage {
-			#[inline] pub unsafe fn get_language_tag(&mut self) -> RtResult<HString> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).get_LanguageTag)(self, &mut out);
-				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn get_display_name(&mut self) -> RtResult<HString> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).get_DisplayName)(self, &mut out);
-				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn get_native_name(&mut self) -> RtResult<HString> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).get_NativeName)(self, &mut out);
-				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
-			}
-			#[inline] pub unsafe fn get_script(&mut self) -> RtResult<HString> {
-				let mut out = ::std::ptr::null_mut();
-				let hr = ((*self.lpVtbl).get_Script)(self, &mut out);
-				if hr == ::w::S_OK { Ok(HString::wrap(out)) } else { Err(hr) }
-			}
-		}
-} // Windows.Globalization
 pub mod ui { // Windows.UI
 use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
 use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
@@ -24308,11 +24862,23 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::spi::SpiController> => [0x5e94d949,0xa844,0x5b25,0xa3,0xcc,0xaf,0xab,0xeb,0x18,0xc1,0xd2] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Spi_SpiController }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::spi::SpiController>> => [0x89624331,0xf802,0x56f7,0x9b,0x33,0x17,0xc6,0x16,0xec,0xbc,0xfa] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Spi_SpiController }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::spi::SpiController>> => [0xc8afc9cb,0x6807,0x57ec,0x84,0xc9,0x9f,0x3d,0xbc,0x00,0x34,0x50] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Spi_SpiController }
-		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::gpio::GpioPin, ::rt::gen::windows::devices::gpio::GpioPinValueChangedEventArgs> => [0x44ba689b,0x7d42,0x5374,0xad,0xd9,0xab,0x41,0xe8,0x77,0xa3,0x4b] as IID_TypedEventHandler_2_Windows_Devices_Gpio_GpioPin_Windows_Devices_Gpio_GpioPinValueChangedEventArgs }
+		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::custom::CustomDevice> => [0x2a6344aa,0x0568,0x548e,0xa1,0xa2,0xb6,0xbb,0x45,0x1d,0x22,0x8c] as IID_IAsyncOperation_1_Windows_Devices_Custom_CustomDevice }
+		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::custom::CustomDevice> => [0x1fdd39b0,0xe0e5,0x5c59,0xb2,0x7d,0xa5,0x49,0xb1,0x07,0x5c,0xe9] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Custom_CustomDevice }
+		RT_PINTERFACE!{ for IAsyncOperation<u32> => [0xef60385f,0xbe78,0x584b,0xaa,0xef,0x78,0x29,0xad,0xa2,0xb0,0xde] as IID_IAsyncOperation_1_System_UInt32 }
+		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<u32> => [0x9343b6e7,0xe3d2,0x5e4a,0xab,0x2d,0x2b,0xce,0x49,0x19,0xa6,0xa4] as IID_AsyncOperationCompletedHandler_1_System_UInt32 }
+		RT_PINTERFACE!{ for IAsyncOperation<bool> => [0xcdb5efb3,0x5788,0x509d,0x9b,0xe1,0x71,0xcc,0xb8,0xa3,0x36,0x2a] as IID_IAsyncOperation_1_System_Boolean }
+		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<bool> => [0xc1d3d1a2,0xae17,0x5a5f,0xb5,0xa2,0xbd,0xcc,0x88,0x44,0x88,0x9a] as IID_AsyncOperationCompletedHandler_1_System_Boolean }
+		RT_PINTERFACE!{ for IAsyncOperationWithProgress<u32, u32> => [0xeccb574a,0xc684,0x5572,0xa6,0x79,0x6b,0x08,0x42,0xcf,0xb5,0x7f] as IID_IAsyncOperationWithProgress_2_System_UInt32_System_UInt32 }
+		RT_PINTERFACE!{ for AsyncOperationProgressHandler<u32, u32> => [0xea0fe405,0xd432,0x5ac7,0x9e,0xf8,0x5a,0x65,0xe1,0xf9,0x7d,0x7e] as IID_AsyncOperationProgressHandler_2_System_UInt32_System_UInt32 }
+		RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<u32, u32> => [0x1e466dc5,0x840f,0x54f9,0xb8,0x77,0x5e,0x3a,0x9f,0x4b,0x6c,0x74] as IID_AsyncOperationWithProgressCompletedHandler_2_System_UInt32_System_UInt32 }
+		RT_PINTERFACE!{ for IAsyncOperationWithProgress<::rt::gen::windows::storage::streams::IBuffer, u32> => [0xd26b2819,0x897f,0x5c7d,0x84,0xd6,0x56,0xd7,0x96,0x56,0x14,0x31] as IID_IAsyncOperationWithProgress_2_Windows_Storage_Streams_IBuffer_System_UInt32 }
+		RT_PINTERFACE!{ for AsyncOperationProgressHandler<::rt::gen::windows::storage::streams::IBuffer, u32> => [0xbf666554,0x7605,0x5d9a,0xb1,0x4e,0x18,0xd8,0xc8,0x47,0x2a,0xfe] as IID_AsyncOperationProgressHandler_2_Windows_Storage_Streams_IBuffer_System_UInt32 }
+		RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<::rt::gen::windows::storage::streams::IBuffer, u32> => [0x06386a7a,0xe009,0x5b0b,0xab,0x68,0xa8,0xe4,0x8b,0x51,0x66,0x47] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Storage_Streams_IBuffer_System_UInt32 }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::printers::Print3DDevice> => [0x7cfc4a8f,0x5eb7,0x5af7,0xbc,0x9f,0x78,0xa7,0xe4,0x07,0xcd,0x2e] as IID_IAsyncOperation_1_Windows_Devices_Printers_Print3DDevice }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::printers::Print3DDevice> => [0x8d4b123f,0x4343,0x5195,0xbb,0xc9,0xb9,0x9e,0x95,0x6e,0x05,0x7f] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Printers_Print3DDevice }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType> => [0xc4a57c5e,0x32b0,0x55b3,0xad,0x13,0xce,0x1c,0x23,0x04,0x1e,0xd6] as IID_IAsyncOperation_1_Windows_Storage_Streams_IRandomAccessStreamWithContentType }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType> => [0x3dddecf4,0x1d39,0x58e8,0x83,0xb1,0xdb,0xed,0x54,0x1c,0x7f,0x35] as IID_AsyncOperationCompletedHandler_1_Windows_Storage_Streams_IRandomAccessStreamWithContentType }
+		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::gpio::GpioPin, ::rt::gen::windows::devices::gpio::GpioPinValueChangedEventArgs> => [0x44ba689b,0x7d42,0x5374,0xad,0xd9,0xab,0x41,0xe8,0x77,0xa3,0x4b] as IID_TypedEventHandler_2_Windows_Devices_Gpio_GpioPin_Windows_Devices_Gpio_GpioPinValueChangedEventArgs }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::power::Battery, IInspectable> => [0x4d4aa646,0x767f,0x5645,0xaf,0x5c,0x54,0x64,0x64,0xd3,0xec,0x09] as IID_TypedEventHandler_2_Windows_Devices_Power_Battery_System_Object }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::power::Battery> => [0xdaa3d556,0x1529,0x56d2,0xa5,0xf8,0xbf,0xb6,0xc2,0x2a,0x3d,0xfe] as IID_IAsyncOperation_1_Windows_Devices_Power_Battery }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::power::Battery> => [0x97f82115,0x3822,0x507b,0x82,0xe6,0x27,0x77,0xb3,0x36,0xe9,0x8e] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Power_Battery }
@@ -24326,15 +24892,29 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, ::rt::gen::windows::devices::alljoyn::AllJoynCredentialsRequestedEventArgs> => [0xab2196e7,0x4b41,0x53bd,0x95,0xb1,0xb8,0x0c,0xad,0x82,0x47,0x95] as IID_TypedEventHandler_2_Windows_Devices_AllJoyn_AllJoynBusAttachment_Windows_Devices_AllJoyn_AllJoynCredentialsRequestedEventArgs }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, ::rt::gen::windows::devices::alljoyn::AllJoynCredentialsVerificationRequestedEventArgs> => [0x7ef99c96,0x51b1,0x5670,0xa4,0x1f,0xae,0x40,0x4f,0x2f,0xf5,0x3f] as IID_TypedEventHandler_2_Windows_Devices_AllJoyn_AllJoynBusAttachment_Windows_Devices_AllJoyn_AllJoynCredentialsVerificationRequestedEventArgs }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, ::rt::gen::windows::devices::alljoyn::AllJoynAuthenticationCompleteEventArgs> => [0xe4fd18b4,0x4cde,0x508e,0x80,0x84,0x63,0xe7,0x28,0x32,0x62,0xc5] as IID_TypedEventHandler_2_Windows_Devices_AllJoyn_AllJoynBusAttachment_Windows_Devices_AllJoyn_AllJoynAuthenticationCompleteEventArgs }
+		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView> => [0x3757414e,0xf54b,0x51c4,0x8f,0x2f,0xe0,0x47,0x75,0x59,0xb2,0xad] as IID_IAsyncOperation_1_Windows_Devices_AllJoyn_AllJoynAboutDataView }
+		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView> => [0xba2da2f5,0xf9b0,0x5c66,0x8f,0xc9,0x7d,0x43,0x7a,0x67,0xf2,0x8a] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_AllJoyn_AllJoynAboutDataView }
+		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, ::rt::gen::windows::devices::alljoyn::AllJoynAcceptSessionJoinerEventArgs> => [0xdd224d96,0xf45c,0x5e3d,0x88,0x60,0x85,0x96,0xd0,0xe4,0x74,0xf0] as IID_TypedEventHandler_2_Windows_Devices_AllJoyn_AllJoynBusAttachment_Windows_Devices_AllJoyn_AllJoynAcceptSessionJoinerEventArgs }
+		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynBusAttachment, ::rt::gen::windows::devices::alljoyn::AllJoynSessionJoinedEventArgs> => [0x56bb8d26,0x39b6,0x53fa,0x80,0x13,0x37,0x81,0xaa,0x27,0xa0,0xbc] as IID_TypedEventHandler_2_Windows_Devices_AllJoyn_AllJoynBusAttachment_Windows_Devices_AllJoyn_AllJoynSessionJoinedEventArgs }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::security::cryptography::certificates::CertificateChain> => [0xf618c7d4,0xaee1,0x58ae,0xaf,0xe8,0xfc,0x33,0x6d,0xaf,0x03,0x95] as IID_IAsyncOperation_1_Windows_Security_Cryptography_Certificates_CertificateChain }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::security::cryptography::certificates::CertificateChain> => [0x4c3f50e9,0x90e3,0x5a30,0x90,0x15,0x4a,0xa0,0x37,0x69,0x04,0xf3] as IID_AsyncOperationCompletedHandler_1_Windows_Security_Cryptography_Certificates_CertificateChain }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::networking::connectivity::ConnectionProfile> => [0x5bf519ca,0x8adb,0x5ab5,0xab,0xb8,0xff,0x1b,0xbe,0x5d,0x2d,0xe8] as IID_IAsyncOperation_1_Windows_Networking_Connectivity_ConnectionProfile }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::networking::connectivity::ConnectionProfile> => [0xe4f0c96a,0x0571,0x59f4,0xa9,0xa9,0xaf,0xac,0x3e,0x61,0xca,0xa0] as IID_AsyncOperationCompletedHandler_1_Windows_Networking_Connectivity_ConnectionProfile }
-		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView> => [0x3757414e,0xf54b,0x51c4,0x8f,0x2f,0xe0,0x47,0x75,0x59,0xb2,0xad] as IID_IAsyncOperation_1_Windows_Devices_AllJoyn_AllJoynAboutDataView }
-		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::alljoyn::AllJoynAboutDataView> => [0xba2da2f5,0xf9b0,0x5c66,0x8f,0xc9,0x7d,0x43,0x7a,0x67,0xf2,0x8a] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_AllJoyn_AllJoynAboutDataView }
-		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::bluetooth::BluetoothDevice, IInspectable> => [0xdb56ce1c,0x5e9f,0x5138,0x92,0x27,0xb1,0xa6,0x6d,0x60,0xbc,0x1b] as IID_TypedEventHandler_2_Windows_Devices_Bluetooth_BluetoothDevice_System_Object }
+		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynSession, ::rt::gen::windows::devices::alljoyn::AllJoynSessionMemberAddedEventArgs> => [0x330baa61,0x1c24,0x5faa,0xaf,0x3c,0x4d,0x69,0xad,0x2f,0x1e,0x31] as IID_TypedEventHandler_2_Windows_Devices_AllJoyn_AllJoynSession_Windows_Devices_AllJoyn_AllJoynSessionMemberAddedEventArgs }
+		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynSession, ::rt::gen::windows::devices::alljoyn::AllJoynSessionMemberRemovedEventArgs> => [0x2969ed7c,0xdb6c,0x58aa,0x9f,0x6d,0x89,0xe7,0xfe,0x08,0x9f,0xc1] as IID_TypedEventHandler_2_Windows_Devices_AllJoyn_AllJoynSession_Windows_Devices_AllJoyn_AllJoynSessionMemberRemovedEventArgs }
+		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynSession, ::rt::gen::windows::devices::alljoyn::AllJoynSessionLostEventArgs> => [0xdffc2b25,0x5ae2,0x52f1,0xbb,0xc4,0x36,0x3c,0xef,0xed,0xa0,0x3f] as IID_TypedEventHandler_2_Windows_Devices_AllJoyn_AllJoynSession_Windows_Devices_AllJoyn_AllJoynSessionLostEventArgs }
+		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynSession> => [0x74ae55f8,0x3d63,0x5472,0x91,0x3d,0x74,0xe9,0xa1,0x12,0x5d,0xd3] as IID_IAsyncOperation_1_Windows_Devices_AllJoyn_AllJoynSession }
+		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::alljoyn::AllJoynSession> => [0x52490f64,0xc98f,0x5019,0x83,0x61,0xb2,0xa3,0xe1,0x67,0x9f,0x27] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_AllJoyn_AllJoynSession }
+		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::alljoyn::AllJoynBusObject, ::rt::gen::windows::devices::alljoyn::AllJoynBusObjectStoppedEventArgs> => [0x9871592f,0x823d,0x5630,0xbe,0x72,0xca,0x8f,0x17,0x84,0x6b,0x71] as IID_TypedEventHandler_2_Windows_Devices_AllJoyn_AllJoynBusObject_Windows_Devices_AllJoyn_AllJoynBusObjectStoppedEventArgs }
+		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo> => [0xb9ce48c1,0x16cc,0x5e46,0x91,0xd5,0xe5,0xcd,0x06,0xf8,0x02,0x6e] as IID_IAsyncOperation_1_Windows_Devices_AllJoyn_AllJoynServiceInfo }
+		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::alljoyn::AllJoynServiceInfo> => [0xffb22299,0xa9c9,0x5c2a,0xac,0xe3,0x0c,0xd0,0xa6,0xdd,0x10,0x39] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_AllJoyn_AllJoynServiceInfo }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothDevice> => [0xb58d8d19,0x44bd,0x5ac0,0xa0,0xd6,0x1b,0x50,0x80,0x0f,0x31,0x81] as IID_IAsyncOperation_1_Windows_Devices_Bluetooth_BluetoothDevice }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::bluetooth::BluetoothDevice> => [0xb2e8cdd1,0x66aa,0x5892,0x85,0xa3,0x8f,0x0b,0x16,0x5e,0x43,0xfc] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Bluetooth_BluetoothDevice }
+		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::bluetooth::BluetoothDevice, IInspectable> => [0xdb56ce1c,0x5e9f,0x5138,0x92,0x27,0xb1,0xa6,0x6d,0x60,0xbc,0x1b] as IID_TypedEventHandler_2_Windows_Devices_Bluetooth_BluetoothDevice_System_Object }
+		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::enumeration::DeviceAccessStatus> => [0xc00bc2f2,0xa7f8,0x5f3f,0x80,0xd1,0x28,0x08,0xef,0x6b,0xca,0x10] as IID_IAsyncOperation_1_Windows_Devices_Enumeration_DeviceAccessStatus }
+		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::enumeration::DeviceAccessStatus> => [0xee154d83,0x805b,0x53e8,0x84,0x69,0x90,0x71,0x50,0x36,0xd0,0x13] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Enumeration_DeviceAccessStatus }
+		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceServicesResult> => [0xb7f2f74d,0xbf9c,0x5721,0xbf,0x6e,0x03,0xf1,0xb4,0x40,0x95,0x88] as IID_IAsyncOperation_1_Windows_Devices_Bluetooth_Rfcomm_RfcommDeviceServicesResult }
+		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommDeviceServicesResult> => [0x522c25d1,0x866b,0x5de4,0xbd,0x8e,0x1f,0xeb,0x5a,0xe6,0x0d,0x47] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Bluetooth_Rfcomm_RfcommDeviceServicesResult }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::bluetooth::BluetoothLEDevice, IInspectable> => [0xa90661e2,0x372e,0x5d1e,0xbb,0xbb,0xb8,0xa2,0xce,0x0e,0x7c,0x4d] as IID_TypedEventHandler_2_Windows_Devices_Bluetooth_BluetoothLEDevice_System_Object }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::bluetooth::BluetoothLEDevice> => [0x375f9d67,0x74a2,0x5f91,0xa1,0x1d,0x16,0x90,0x93,0x71,0x8d,0x41] as IID_IAsyncOperation_1_Windows_Devices_Bluetooth_BluetoothLEDevice }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::bluetooth::BluetoothLEDevice> => [0x9156b79f,0xc54a,0x5277,0x8f,0x8b,0xd2,0xcc,0x43,0xc7,0xe0,0x04] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Bluetooth_BluetoothLEDevice }
@@ -24354,14 +24934,8 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceProvider> => [0xfed44828,0xe232,0x554d,0x85,0xd1,0x2f,0x04,0xd1,0x32,0x2e,0x69] as IID_IAsyncOperation_1_Windows_Devices_Bluetooth_Rfcomm_RfcommServiceProvider }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::bluetooth::rfcomm::RfcommServiceProvider> => [0x446a7f50,0x8f2e,0x51f0,0xae,0xbb,0x1b,0xc3,0xd1,0x92,0x90,0x5f] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Bluetooth_Rfcomm_RfcommServiceProvider }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::networking::sockets::StreamSocketListener, ::rt::gen::windows::networking::sockets::StreamSocketListenerConnectionReceivedEventArgs> => [0x33d00d41,0xc94f,0x5a61,0x9a,0xb7,0x28,0x0d,0xce,0xfa,0x0b,0x08] as IID_TypedEventHandler_2_Windows_Networking_Sockets_StreamSocketListener_Windows_Networking_Sockets_StreamSocketListenerConnectionReceivedEventArgs }
-		RT_PINTERFACE!{ for IAsyncOperationWithProgress<u32, u32> => [0xeccb574a,0xc684,0x5572,0xa6,0x79,0x6b,0x08,0x42,0xcf,0xb5,0x7f] as IID_IAsyncOperationWithProgress_2_System_UInt32_System_UInt32 }
-		RT_PINTERFACE!{ for AsyncOperationProgressHandler<u32, u32> => [0xea0fe405,0xd432,0x5ac7,0x9e,0xf8,0x5a,0x65,0xe1,0xf9,0x7d,0x7e] as IID_AsyncOperationProgressHandler_2_System_UInt32_System_UInt32 }
-		RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<u32, u32> => [0x1e466dc5,0x840f,0x54f9,0xb8,0x77,0x5e,0x3a,0x9f,0x4b,0x6c,0x74] as IID_AsyncOperationWithProgressCompletedHandler_2_System_UInt32_System_UInt32 }
-		RT_PINTERFACE!{ for IAsyncOperation<bool> => [0xcdb5efb3,0x5788,0x509d,0x9b,0xe1,0x71,0xcc,0xb8,0xa3,0x36,0x2a] as IID_IAsyncOperation_1_System_Boolean }
-		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<bool> => [0xc1d3d1a2,0xae17,0x5a5f,0xb5,0xa2,0xbd,0xcc,0x88,0x44,0x88,0x9a] as IID_AsyncOperationCompletedHandler_1_System_Boolean }
-		RT_PINTERFACE!{ for IAsyncOperationWithProgress<::rt::gen::windows::storage::streams::IBuffer, u32> => [0xd26b2819,0x897f,0x5c7d,0x84,0xd6,0x56,0xd7,0x96,0x56,0x14,0x31] as IID_IAsyncOperationWithProgress_2_Windows_Storage_Streams_IBuffer_System_UInt32 }
-		RT_PINTERFACE!{ for AsyncOperationProgressHandler<::rt::gen::windows::storage::streams::IBuffer, u32> => [0xbf666554,0x7605,0x5d9a,0xb1,0x4e,0x18,0xd8,0xc8,0x47,0x2a,0xfe] as IID_AsyncOperationProgressHandler_2_Windows_Storage_Streams_IBuffer_System_UInt32 }
-		RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<::rt::gen::windows::storage::streams::IBuffer, u32> => [0x06386a7a,0xe009,0x5b0b,0xab,0x68,0xa8,0xe4,0x8b,0x51,0x66,0x47] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Storage_Streams_IBuffer_System_UInt32 }
+		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>> => [0xafc2ff8e,0xe393,0x566a,0x89,0xc4,0xd0,0x43,0xe9,0x40,0x05,0x0d] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_EndpointPair }
+		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>> => [0x20d6faab,0x3b8e,0x5a1f,0x83,0x97,0xb0,0x1c,0xb2,0x19,0xa1,0x8d] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_EndpointPair }
 		RT_PINTERFACE!{ for IReference<::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementFlags> => [0x91c0ba96,0x9e69,0x5b82,0xbf,0x1d,0x83,0xab,0x2a,0x50,0x9c,0x53] as IID_IReference_1_Windows_Devices_Bluetooth_Advertisement_BluetoothLEAdvertisementFlags }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementWatcher, ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementReceivedEventArgs> => [0x90eb4eca,0xd465,0x5ea0,0xa6,0x1c,0x03,0x3c,0x8c,0x5e,0xce,0xf2] as IID_TypedEventHandler_2_Windows_Devices_Bluetooth_Advertisement_BluetoothLEAdvertisementWatcher_Windows_Devices_Bluetooth_Advertisement_BluetoothLEAdvertisementReceivedEventArgs }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementWatcher, ::rt::gen::windows::devices::bluetooth::advertisement::BluetoothLEAdvertisementWatcherStoppedEventArgs> => [0x9936a4db,0xdc99,0x55c3,0x9e,0x9b,0xbf,0x48,0x54,0xbd,0x9e,0xab] as IID_TypedEventHandler_2_Windows_Devices_Bluetooth_Advertisement_BluetoothLEAdvertisementWatcher_Windows_Devices_Bluetooth_Advertisement_BluetoothLEAdvertisementWatcherStoppedEventArgs }
@@ -24400,6 +24974,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::geolocation::GeolocationAccessStatus> => [0xf3524c93,0xe5c7,0x5b88,0xbe,0xdb,0xd3,0xe6,0x37,0xcf,0xf2,0x71] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Geolocation_GeolocationAccessStatus }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::geolocation::Geoposition>> => [0x9454b533,0xefb4,0x5385,0x8d,0x3a,0x43,0x7f,0xab,0xc3,0x2d,0x91] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Geolocation_Geoposition }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::geolocation::Geoposition>> => [0x6c67a1d1,0x9441,0x5aee,0xb6,0x25,0xe3,0xc1,0xb5,0x67,0x6a,0x6d] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Geolocation_Geoposition }
+		RT_PINTERFACE!{ for IReference<::rt::gen::windows::devices::geolocation::BasicGeoposition> => [0xe4d5dda6,0xf57c,0x57cc,0xb6,0x7f,0x29,0x39,0xa9,0x01,0xda,0xbe] as IID_IReference_1_Windows_Devices_Geolocation_BasicGeoposition }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::humaninterfacedevice::HidDevice> => [0xa76a4fbf,0x5177,0x5256,0x84,0xa8,0xb3,0x1a,0x8d,0xcf,0x10,0x48] as IID_IAsyncOperation_1_Windows_Devices_HumanInterfaceDevice_HidDevice }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::humaninterfacedevice::HidDevice> => [0xb0e8e149,0x0cb6,0x55a7,0xbc,0xc1,0xd9,0x96,0x32,0x4d,0x65,0xc4] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_HumanInterfaceDevice_HidDevice }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::input::MouseDevice, ::rt::gen::windows::devices::input::MouseEventArgs> => [0x5d72e594,0x28e4,0x5895,0xa3,0x4b,0xea,0x91,0x0f,0x70,0xfd,0xbb] as IID_TypedEventHandler_2_Windows_Devices_Input_MouseDevice_Windows_Devices_Input_MouseEventArgs }
@@ -24482,6 +25057,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::pointofservice::CashDrawer, ::rt::gen::windows::devices::pointofservice::CashDrawerStatusUpdatedEventArgs> => [0x64662ef4,0xcb0e,0x5c6f,0xa8,0x20,0x7d,0x0a,0x76,0x95,0x54,0xc9] as IID_TypedEventHandler_2_Windows_Devices_PointOfService_CashDrawer_Windows_Devices_PointOfService_CashDrawerStatusUpdatedEventArgs }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::pointofservice::CashDrawerCloseAlarm, IInspectable> => [0xc54fbda4,0x5e0b,0x54c3,0x94,0xf2,0x83,0x35,0x1e,0x41,0xc4,0x6f] as IID_TypedEventHandler_2_Windows_Devices_PointOfService_CashDrawerCloseAlarm_System_Object }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::printers::extensions::Print3DWorkflow, ::rt::gen::windows::devices::printers::extensions::Print3DWorkflowPrintRequestedEventArgs> => [0x5f4c6603,0x5512,0x59aa,0x8d,0x96,0xb1,0x38,0x9d,0x8b,0x57,0x96] as IID_TypedEventHandler_2_Windows_Devices_Printers_Extensions_Print3DWorkflow_Windows_Devices_Printers_Extensions_Print3DWorkflowPrintRequestedEventArgs }
+		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::printers::extensions::Print3DWorkflow, ::rt::gen::windows::devices::printers::extensions::Print3DWorkflowPrinterChangedEventArgs> => [0xb4b5ddc2,0x1a74,0x5905,0x9f,0xc5,0xdd,0xaa,0xe9,0xa3,0xab,0x93] as IID_TypedEventHandler_2_Windows_Devices_Printers_Extensions_Print3DWorkflow_Windows_Devices_Printers_Extensions_Print3DWorkflowPrinterChangedEventArgs }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::radios::Radio>> => [0x040b54a1,0x203e,0x58f5,0x94,0x3f,0xc1,0xcc,0xa8,0x6b,0xd5,0x32] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Radios_Radio }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::radios::Radio>> => [0xd30691e6,0x60a0,0x59c9,0x89,0x65,0x5b,0xbe,0x28,0x2e,0x82,0x08] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Radios_Radio }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::radios::Radio> => [0xeac62c40,0x8dbc,0x5854,0x8b,0xa0,0xb7,0xb9,0x94,0x0e,0x73,0x89] as IID_IAsyncOperation_1_Windows_Devices_Radios_Radio }
@@ -24566,8 +25142,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::humaninterfacedevice::HidInputReport> => [0x01c83770,0x03ab,0x5576,0x98,0xb4,0x8d,0x75,0xce,0x1a,0x98,0x85] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_HumanInterfaceDevice_HidInputReport }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::humaninterfacedevice::HidFeatureReport> => [0xd72fb6f9,0x42f6,0x5f45,0xbf,0xe3,0x29,0xaf,0x24,0x7c,0x2e,0x85] as IID_IAsyncOperation_1_Windows_Devices_HumanInterfaceDevice_HidFeatureReport }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::humaninterfacedevice::HidFeatureReport> => [0xdb643555,0x3d16,0x57fe,0xb7,0xef,0x2b,0xdb,0xd7,0x19,0xfd,0xbf] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_HumanInterfaceDevice_HidFeatureReport }
-		RT_PINTERFACE!{ for IAsyncOperation<u32> => [0xef60385f,0xbe78,0x584b,0xaa,0xef,0x78,0x29,0xad,0xa2,0xb0,0xde] as IID_IAsyncOperation_1_System_UInt32 }
-		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<u32> => [0x9343b6e7,0xe3d2,0x5e4a,0xab,0x2d,0x2b,0xce,0x49,0x19,0xa6,0xa4] as IID_AsyncOperationCompletedHandler_1_System_UInt32 }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::humaninterfacedevice::HidDevice, ::rt::gen::windows::devices::humaninterfacedevice::HidInputReportReceivedEventArgs> => [0x31e757c8,0x8f6a,0x540b,0x93,0x8b,0xab,0xa7,0x9b,0x6f,0x03,0xec] as IID_TypedEventHandler_2_Windows_Devices_HumanInterfaceDevice_HidDevice_Windows_Devices_HumanInterfaceDevice_HidInputReportReceivedEventArgs }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::lights::Lamp, ::rt::gen::windows::devices::lights::LampAvailabilityChangedEventArgs> => [0x556a02d9,0x7685,0x576f,0x89,0xca,0xb6,0x2d,0xc4,0x81,0xd2,0x9d] as IID_TypedEventHandler_2_Windows_Devices_Lights_Lamp_Windows_Devices_Lights_LampAvailabilityChangedEventArgs }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::midi::MidiInPort, ::rt::gen::windows::devices::midi::MidiMessageReceivedEventArgs> => [0x50017240,0xcc39,0x5775,0x8a,0x6b,0xf6,0xf2,0x23,0x86,0xbf,0xca] as IID_TypedEventHandler_2_Windows_Devices_Midi_MidiInPort_Windows_Devices_Midi_MidiMessageReceivedEventArgs }
@@ -24593,20 +25167,9 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::wifidirect::WiFiDirectDevice, IInspectable> => [0x9208929a,0x2a3c,0x50ad,0xaa,0x08,0xa0,0xa9,0x86,0xed,0xba,0xbe] as IID_TypedEventHandler_2_Windows_Devices_WiFiDirect_WiFiDirectDevice_System_Object }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceSession, IInspectable> => [0x10c33301,0xe31c,0x5cce,0xb2,0xa0,0xc1,0xdc,0x2d,0x8d,0x0e,0x13] as IID_TypedEventHandler_2_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceSession_System_Object }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceSession, ::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceRemotePortAddedEventArgs> => [0x8326a337,0x3c19,0x57a7,0x80,0xec,0xcc,0xa2,0xea,0x62,0xef,0x12] as IID_TypedEventHandler_2_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceSession_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceRemotePortAddedEventArgs }
-		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>> => [0xafc2ff8e,0xe393,0x566a,0x89,0xc4,0xd0,0x43,0xe9,0x40,0x05,0x0d] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_EndpointPair }
-		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>> => [0x20d6faab,0x3b8e,0x5a1f,0x83,0x97,0xb0,0x1c,0xb2,0x19,0xa1,0x8d] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_EndpointPair }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::storage::streams::IOutputStream> => [0xe8736833,0xd013,0x5361,0x97,0x7d,0xc5,0xe9,0x99,0x34,0x68,0x0e] as IID_IAsyncOperation_1_Windows_Storage_Streams_IOutputStream }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::storage::streams::IOutputStream> => [0xbcb37f4f,0x3af4,0x561c,0xa9,0xe3,0xee,0xf1,0x73,0x84,0x94,0xd7] as IID_AsyncOperationCompletedHandler_1_Windows_Storage_Streams_IOutputStream }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::networking::sockets::DatagramSocket, ::rt::gen::windows::networking::sockets::DatagramSocketMessageReceivedEventArgs> => [0x4482e19b,0x2389,0x5767,0x9b,0x0b,0x8d,0x7a,0x8e,0xf5,0x57,0x43] as IID_TypedEventHandler_2_Windows_Networking_Sockets_DatagramSocket_Windows_Networking_Sockets_DatagramSocketMessageReceivedEventArgs }
-		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::custom::CustomDevice> => [0x2a6344aa,0x0568,0x548e,0xa1,0xa2,0xb6,0xbb,0x45,0x1d,0x22,0x8c] as IID_IAsyncOperation_1_Windows_Devices_Custom_CustomDevice }
-		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::custom::CustomDevice> => [0x1fdd39b0,0xe0e5,0x5c59,0xb2,0x7d,0xa5,0x49,0xb1,0x07,0x5c,0xe9] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Custom_CustomDevice }
-		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::sms::ISmsMessage> => [0xabf9b459,0x48c3,0x5eac,0x97,0x49,0x4c,0x6d,0xb4,0xd5,0x07,0xe6] as IID_IAsyncOperation_1_Windows_Devices_Sms_ISmsMessage }
-		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::sms::ISmsMessage> => [0x4e6c4c86,0xebe6,0x55d9,0xad,0xc0,0xfe,0xcc,0x38,0xc8,0x2a,0xa2] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sms_ISmsMessage }
-		RT_PINTERFACE!{ for IAsyncOperationWithProgress<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::sms::ISmsMessage>, i32> => [0x12f85589,0x415d,0x5b5d,0xb0,0xd0,0xfd,0xa3,0xb0,0x29,0x5a,0xdc] as IID_IAsyncOperationWithProgress_2_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Sms_ISmsMessage__System_Int32 }
-		RT_PINTERFACE!{ for AsyncOperationProgressHandler<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::sms::ISmsMessage>, i32> => [0x3f9d1255,0xebf8,0x569f,0x91,0xc3,0x49,0x74,0x0d,0x59,0x44,0xce] as IID_AsyncOperationProgressHandler_2_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Sms_ISmsMessage__System_Int32 }
-		RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::sms::ISmsMessage>, i32> => [0xc0454cfc,0x2f2f,0x5e0c,0x8d,0xe9,0x58,0xb9,0xe8,0x2a,0x03,0xba] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Sms_ISmsMessage__System_Int32 }
-		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::sms::SmsDevice> => [0xab710de1,0xfcbb,0x5bd6,0x9f,0x2f,0x28,0x5f,0xa9,0xfb,0x44,0xe8] as IID_IAsyncOperation_1_Windows_Devices_Sms_SmsDevice }
-		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::sms::SmsDevice> => [0x44aa5484,0x43d0,0x5893,0xa4,0xee,0x7d,0xb0,0x01,0x13,0xae,0x60] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sms_SmsDevice }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::storage::StorageFolder> => [0x6be9e7d7,0xe83a,0x5cbc,0x80,0x2c,0x17,0x68,0x96,0x0b,0x52,0xc3] as IID_IAsyncOperation_1_Windows_Storage_StorageFolder }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::storage::StorageFolder> => [0xc211026e,0x9e63,0x5452,0xba,0x54,0x3a,0x07,0xd6,0xa9,0x68,0x74] as IID_AsyncOperationCompletedHandler_1_Windows_Storage_StorageFolder }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::storage::StorageFile> => [0x5e52f8ce,0xaced,0x5a42,0x95,0xb4,0xf6,0x74,0xdd,0x84,0x88,0x5e] as IID_IAsyncOperation_1_Windows_Storage_StorageFile }
@@ -24633,6 +25196,13 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::scanners::ImageScanner> => [0x75d78736,0x6c52,0x551e,0xab,0x5f,0x50,0x67,0x4f,0x32,0x34,0x31] as IID_IAsyncOperation_1_Windows_Devices_Scanners_ImageScanner }
 		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::scanners::ImageScanner> => [0xb35ad6b4,0x0da0,0x5241,0x87,0xff,0xee,0xf3,0xa1,0x88,0x32,0x43] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Scanners_ImageScanner }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::devices::printers::extensions::PrintTaskConfiguration, ::rt::gen::windows::devices::printers::extensions::PrintTaskConfigurationSaveRequestedEventArgs> => [0x0363f57a,0xb7a2,0x5e20,0xa1,0x56,0x25,0x34,0x23,0xe7,0xee,0x40] as IID_TypedEventHandler_2_Windows_Devices_Printers_Extensions_PrintTaskConfiguration_Windows_Devices_Printers_Extensions_PrintTaskConfigurationSaveRequestedEventArgs }
+		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::sms::ISmsMessage> => [0xabf9b459,0x48c3,0x5eac,0x97,0x49,0x4c,0x6d,0xb4,0xd5,0x07,0xe6] as IID_IAsyncOperation_1_Windows_Devices_Sms_ISmsMessage }
+		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::sms::ISmsMessage> => [0x4e6c4c86,0xebe6,0x55d9,0xad,0xc0,0xfe,0xcc,0x38,0xc8,0x2a,0xa2] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sms_ISmsMessage }
+		RT_PINTERFACE!{ for IAsyncOperationWithProgress<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::sms::ISmsMessage>, i32> => [0x12f85589,0x415d,0x5b5d,0xb0,0xd0,0xfd,0xa3,0xb0,0x29,0x5a,0xdc] as IID_IAsyncOperationWithProgress_2_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Sms_ISmsMessage__System_Int32 }
+		RT_PINTERFACE!{ for AsyncOperationProgressHandler<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::sms::ISmsMessage>, i32> => [0x3f9d1255,0xebf8,0x569f,0x91,0xc3,0x49,0x74,0x0d,0x59,0x44,0xce] as IID_AsyncOperationProgressHandler_2_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Sms_ISmsMessage__System_Int32 }
+		RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::devices::sms::ISmsMessage>, i32> => [0xc0454cfc,0x2f2f,0x5e0c,0x8d,0xe9,0x58,0xb9,0xe8,0x2a,0x03,0xba] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Sms_ISmsMessage__System_Int32 }
+		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::devices::sms::SmsDevice> => [0xab710de1,0xfcbb,0x5bd6,0x9f,0x2f,0x28,0x5f,0xa9,0xfb,0x44,0xe8] as IID_IAsyncOperation_1_Windows_Devices_Sms_SmsDevice }
+		RT_PINTERFACE!{ for AsyncOperationCompletedHandler<::rt::gen::windows::devices::sms::SmsDevice> => [0x44aa5484,0x43d0,0x5893,0xa4,0xee,0x7d,0xb0,0x01,0x13,0xae,0x60] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sms_SmsDevice }
 		RT_PINTERFACE!{ for EventHandler<::rt::gen::windows::foundation::diagnostics::TracingStatusChangedEventArgs> => [0x2bf27008,0x2eb4,0x5675,0xb1,0xcd,0xe9,0x90,0x6c,0xc5,0xce,0x64] as IID_EventHandler_1_Windows_Foundation_Diagnostics_TracingStatusChangedEventArgs }
 		RT_PINTERFACE!{ for TypedEventHandler<::rt::gen::windows::foundation::IMemoryBufferReference, IInspectable> => [0xf4637d4a,0x0760,0x5431,0xbf,0xc0,0x24,0xeb,0x1d,0x4f,0x6c,0x4f] as IID_TypedEventHandler_2_Windows_Foundation_IMemoryBufferReference_System_Object }
 		RT_PINTERFACE!{ for IAsyncOperation<::rt::gen::windows::foundation::diagnostics::ErrorDetails> => [0x9b05106d,0x77e0,0x5c24,0x82,0xb0,0x9b,0x2d,0xc8,0xf7,0x96,0x71] as IID_IAsyncOperation_1_Windows_Foundation_Diagnostics_ErrorDetails }
@@ -25063,6 +25633,9 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_PINTERFACE!{ for IKeyValuePair<u32, ::rt::gen::windows::storage::streams::IBuffer> => [0x82a3a3b7,0xe04a,0x5395,0x84,0x87,0x7f,0x94,0xf1,0x50,0x8c,0xe7] as IID_IKeyValuePair_2_System_UInt32_Windows_Storage_Streams_IBuffer }
 		RT_PINTERFACE!{ for IIterator<::rt::gen::windows::foundation::collections::IKeyValuePair<u32, ::rt::gen::windows::storage::streams::IBuffer>> => [0xa295fa0c,0xc99f,0x5109,0x8a,0xb9,0x91,0x53,0x4b,0xb4,0x8c,0x9b] as IID_IIterator_1_Windows_Foundation_Collections_IKeyValuePair_2_System_UInt32_Windows_Storage_Streams_IBuffer }
 		RT_PINTERFACE!{ for IMap<u32, ::rt::gen::windows::storage::streams::IBuffer> => [0x5d2591df,0x48c5,0x5734,0x9e,0xf1,0xbd,0x63,0x9b,0x03,0x20,0x07] as IID_IMap_2_System_UInt32_Windows_Storage_Streams_IBuffer }
+		RT_PINTERFACE!{ for IVectorView<::rt::gen::windows::networking::EndpointPair> => [0x8780a851,0x6d48,0x5006,0x92,0x88,0x81,0xf3,0xd7,0x04,0x5a,0x96] as IID_IVectorView_1_Windows_Networking_EndpointPair }
+		RT_PINTERFACE!{ for IIterable<::rt::gen::windows::networking::EndpointPair> => [0xd7ec83c4,0xa17b,0x51bf,0x89,0x97,0xaa,0x33,0xb9,0x10,0x2d,0xc9] as IID_IIterable_1_Windows_Networking_EndpointPair }
+		RT_PINTERFACE!{ for IIterator<::rt::gen::windows::networking::EndpointPair> => [0xc899ff9f,0xe6f5,0x5673,0x81,0x0c,0x04,0xe2,0xff,0x98,0x70,0x4f] as IID_IIterator_1_Windows_Networking_EndpointPair }
 		RT_PINTERFACE!{ for IVector<::Guid> => [0x482e676d,0xb913,0x5ec1,0xaf,0xa8,0x5f,0x96,0x92,0x2e,0x94,0xae] as IID_IVector_1_System_Guid }
 		RT_PINTERFACE!{ for IIterable<::Guid> => [0xf4ca3045,0x5dd7,0x54be,0x98,0x2e,0xd8,0x8d,0x8c,0xa0,0x87,0x6e] as IID_IIterable_1_System_Guid }
 		RT_PINTERFACE!{ for IIterator<::Guid> => [0xd3d64048,0x82b3,0x53c7,0x92,0x85,0xb0,0xbe,0x18,0x36,0x84,0x82] as IID_IIterator_1_System_Guid }
@@ -25221,9 +25794,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_PINTERFACE!{ for IIterable<::rt::gen::windows::devices::wifidirect::WiFiDirectConfigurationMethod> => [0x794f12da,0x2dc6,0x5277,0x82,0xdc,0xb0,0x78,0x16,0x10,0x53,0x7b] as IID_IIterable_1_Windows_Devices_WiFiDirect_WiFiDirectConfigurationMethod }
 		RT_PINTERFACE!{ for IIterator<::rt::gen::windows::devices::wifidirect::WiFiDirectConfigurationMethod> => [0x201940f9,0xa368,0x57f4,0x9e,0xf2,0x3f,0x64,0xe2,0x43,0xe0,0xa4] as IID_IIterator_1_Windows_Devices_WiFiDirect_WiFiDirectConfigurationMethod }
 		RT_PINTERFACE!{ for IVectorView<::rt::gen::windows::devices::wifidirect::WiFiDirectConfigurationMethod> => [0x61a32670,0x04d3,0x551d,0xad,0x66,0xbd,0x04,0xe9,0xef,0x5c,0x78] as IID_IVectorView_1_Windows_Devices_WiFiDirect_WiFiDirectConfigurationMethod }
-		RT_PINTERFACE!{ for IVectorView<::rt::gen::windows::networking::EndpointPair> => [0x8780a851,0x6d48,0x5006,0x92,0x88,0x81,0xf3,0xd7,0x04,0x5a,0x96] as IID_IVectorView_1_Windows_Networking_EndpointPair }
-		RT_PINTERFACE!{ for IIterable<::rt::gen::windows::networking::EndpointPair> => [0xd7ec83c4,0xa17b,0x51bf,0x89,0x97,0xaa,0x33,0xb9,0x10,0x2d,0xc9] as IID_IIterable_1_Windows_Networking_EndpointPair }
-		RT_PINTERFACE!{ for IIterator<::rt::gen::windows::networking::EndpointPair> => [0xc899ff9f,0xe6f5,0x5673,0x81,0x0c,0x04,0xe2,0xff,0x98,0x70,0x4f] as IID_IIterator_1_Windows_Networking_EndpointPair }
 		RT_PINTERFACE!{ for IVector<::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceConfigurationMethod> => [0xf6a6f91c,0x0579,0x565d,0xbe,0x07,0x45,0x38,0xa5,0x56,0x90,0xbe] as IID_IVector_1_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceConfigurationMethod }
 		RT_PINTERFACE!{ for IIterable<::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceConfigurationMethod> => [0xd9773b1a,0xa148,0x58bf,0x9c,0x4b,0xaf,0xea,0xc9,0xbe,0x3a,0xb4] as IID_IIterable_1_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceConfigurationMethod }
 		RT_PINTERFACE!{ for IIterator<::rt::gen::windows::devices::wifidirect::services::WiFiDirectServiceConfigurationMethod> => [0x19889f5e,0x49ae,0x5e31,0xb0,0x59,0x08,0x3f,0x9f,0x15,0x32,0xc3] as IID_IIterator_1_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceConfigurationMethod }
@@ -25237,12 +25807,6 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_PINTERFACE!{ for IVectorView<::rt::gen::windows::devices::humaninterfacedevice::HidNumericControlDescription> => [0xe02ca66c,0x610a,0x51b4,0xae,0xf9,0x37,0x07,0xb6,0x97,0xb9,0x85] as IID_IVectorView_1_Windows_Devices_HumanInterfaceDevice_HidNumericControlDescription }
 		RT_PINTERFACE!{ for IIterable<::rt::gen::windows::devices::humaninterfacedevice::HidNumericControlDescription> => [0x868f060d,0xe0d4,0x571b,0xb2,0xf7,0x43,0x1d,0x69,0x84,0xa5,0x13] as IID_IIterable_1_Windows_Devices_HumanInterfaceDevice_HidNumericControlDescription }
 		RT_PINTERFACE!{ for IIterator<::rt::gen::windows::devices::humaninterfacedevice::HidNumericControlDescription> => [0x52b9c36e,0x7d95,0x5d1c,0xac,0xab,0x23,0xc1,0x9e,0xa7,0x6f,0x01] as IID_IIterator_1_Windows_Devices_HumanInterfaceDevice_HidNumericControlDescription }
-		RT_PINTERFACE!{ for IVectorView<::rt::gen::windows::devices::sms::ISmsBinaryMessage> => [0x6ea176ea,0x99ea,0x5c79,0x87,0x6a,0xf4,0xc4,0x37,0xb8,0x3d,0xf6] as IID_IVectorView_1_Windows_Devices_Sms_ISmsBinaryMessage }
-		RT_PINTERFACE!{ for IIterable<::rt::gen::windows::devices::sms::ISmsBinaryMessage> => [0x5678a6a5,0x4d5a,0x51c2,0xa1,0x33,0x4b,0x83,0xbf,0x25,0xd9,0x87] as IID_IIterable_1_Windows_Devices_Sms_ISmsBinaryMessage }
-		RT_PINTERFACE!{ for IIterator<::rt::gen::windows::devices::sms::ISmsBinaryMessage> => [0x13e60d89,0xea0a,0x5b01,0x9c,0x2f,0x0e,0x5b,0x43,0x50,0x58,0xe0] as IID_IIterator_1_Windows_Devices_Sms_ISmsBinaryMessage }
-		RT_PINTERFACE!{ for IVectorView<::rt::gen::windows::devices::sms::ISmsMessage> => [0xd3acc5b1,0x6f85,0x507e,0xb4,0x0a,0x69,0x50,0x74,0x9b,0x42,0x6f] as IID_IVectorView_1_Windows_Devices_Sms_ISmsMessage }
-		RT_PINTERFACE!{ for IIterable<::rt::gen::windows::devices::sms::ISmsMessage> => [0xecabfd70,0x9601,0x5e38,0x83,0xcf,0xb1,0x04,0x60,0x22,0xa2,0x44] as IID_IIterable_1_Windows_Devices_Sms_ISmsMessage }
-		RT_PINTERFACE!{ for IIterator<::rt::gen::windows::devices::sms::ISmsMessage> => [0xeed04f5c,0xb2b2,0x5c83,0x8b,0x13,0xc7,0x8a,0xf6,0xca,0x3a,0x18] as IID_IIterator_1_Windows_Devices_Sms_ISmsMessage }
 		RT_PINTERFACE!{ for IVectorView<::rt::gen::windows::storage::StorageFile> => [0x80646519,0x5e2a,0x595d,0xa8,0xcd,0x2a,0x24,0xb4,0x06,0x7f,0x1b] as IID_IVectorView_1_Windows_Storage_StorageFile }
 		RT_PINTERFACE!{ for IIterable<::rt::gen::windows::storage::StorageFile> => [0x9ac00304,0x83ea,0x5688,0x87,0xb6,0xae,0x38,0xaa,0xb6,0x5d,0x0b] as IID_IIterable_1_Windows_Storage_StorageFile }
 		RT_PINTERFACE!{ for IIterator<::rt::gen::windows::storage::StorageFile> => [0x43e29f53,0x0298,0x55aa,0xa6,0xc8,0x4e,0xdd,0x32,0x3d,0x95,0x98] as IID_IIterator_1_Windows_Storage_StorageFile }
@@ -25252,6 +25816,12 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_PINTERFACE!{ for IVectorView<::rt::gen::windows::storage::IStorageItem> => [0x85575a41,0x06cb,0x58d0,0xb9,0x8a,0x7c,0x8f,0x06,0xe6,0xe9,0xd7] as IID_IVectorView_1_Windows_Storage_IStorageItem }
 		RT_PINTERFACE!{ for IIterable<::rt::gen::windows::storage::IStorageItem> => [0xbb8b8418,0x65d1,0x544b,0xb0,0x83,0x6d,0x17,0x2f,0x56,0x8c,0x73] as IID_IIterable_1_Windows_Storage_IStorageItem }
 		RT_PINTERFACE!{ for IIterator<::rt::gen::windows::storage::IStorageItem> => [0x05b487c2,0x3830,0x5d3c,0x98,0xda,0x25,0xfa,0x11,0x54,0x2d,0xbd] as IID_IIterator_1_Windows_Storage_IStorageItem }
+		RT_PINTERFACE!{ for IVectorView<::rt::gen::windows::devices::sms::ISmsBinaryMessage> => [0x6ea176ea,0x99ea,0x5c79,0x87,0x6a,0xf4,0xc4,0x37,0xb8,0x3d,0xf6] as IID_IVectorView_1_Windows_Devices_Sms_ISmsBinaryMessage }
+		RT_PINTERFACE!{ for IIterable<::rt::gen::windows::devices::sms::ISmsBinaryMessage> => [0x5678a6a5,0x4d5a,0x51c2,0xa1,0x33,0x4b,0x83,0xbf,0x25,0xd9,0x87] as IID_IIterable_1_Windows_Devices_Sms_ISmsBinaryMessage }
+		RT_PINTERFACE!{ for IIterator<::rt::gen::windows::devices::sms::ISmsBinaryMessage> => [0x13e60d89,0xea0a,0x5b01,0x9c,0x2f,0x0e,0x5b,0x43,0x50,0x58,0xe0] as IID_IIterator_1_Windows_Devices_Sms_ISmsBinaryMessage }
+		RT_PINTERFACE!{ for IVectorView<::rt::gen::windows::devices::sms::ISmsMessage> => [0xd3acc5b1,0x6f85,0x507e,0xb4,0x0a,0x69,0x50,0x74,0x9b,0x42,0x6f] as IID_IVectorView_1_Windows_Devices_Sms_ISmsMessage }
+		RT_PINTERFACE!{ for IIterable<::rt::gen::windows::devices::sms::ISmsMessage> => [0xecabfd70,0x9601,0x5e38,0x83,0xcf,0xb1,0x04,0x60,0x22,0xa2,0x44] as IID_IIterable_1_Windows_Devices_Sms_ISmsMessage }
+		RT_PINTERFACE!{ for IIterator<::rt::gen::windows::devices::sms::ISmsMessage> => [0xeed04f5c,0xb2b2,0x5c83,0x8b,0x13,0xc7,0x8a,0xf6,0xca,0x3a,0x18] as IID_IIterator_1_Windows_Devices_Sms_ISmsMessage }
 } // Windows.Foundation.Collections
 pub mod metadata { // Windows.Foundation.Metadata
 use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
@@ -26316,7 +26886,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 		DEFINE_IID!(IID_ILoggingChannelFactory, 1323064220, 44928, 19099, 176, 220, 57, 143, 154, 229, 32, 123);
-		RT_INTERFACE!{interface ILoggingChannelFactory(ILoggingChannelFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory] {
+		RT_INTERFACE!{static interface ILoggingChannelFactory(ILoggingChannelFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory] {
 			fn Create(&mut self, name: ::w::HSTRING, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannel) -> ::w::HRESULT
 		}}
 		impl ILoggingChannelFactory {
@@ -26326,10 +26896,10 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
 		}
-		RT_CLASS!{class LoggingChannel: ::rt::gen::windows::foundation::diagnostics::ILoggingChannel [::rt::gen::windows::foundation::diagnostics::ILoggingChannelFactory2] [CLSID_LoggingChannel]}
+		RT_CLASS!{class LoggingChannel: ::rt::gen::windows::foundation::diagnostics::ILoggingChannel [::rt::gen::windows::foundation::diagnostics::ILoggingChannelFactory] [CLSID_LoggingChannel]}
 		DEFINE_CLSID!(CLSID_LoggingChannel = &[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,0]);
 		DEFINE_IID!(IID_ILoggingChannelFactory2, 1282340317, 15143, 19913, 153, 240, 41, 156, 110, 70, 3, 161);
-		RT_INTERFACE!{static interface ILoggingChannelFactory2(ILoggingChannelFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory2] {
+		RT_INTERFACE!{interface ILoggingChannelFactory2(ILoggingChannelFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory2] {
 			fn CreateWithOptions(&mut self, name: ::w::HSTRING, options: *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannelOptions, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannel) -> ::w::HRESULT,
 			fn CreateWithOptionsAndId(&mut self, name: ::w::HSTRING, options: *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannelOptions, id: ::Guid, out: *mut *mut ::rt::gen::windows::foundation::diagnostics::LoggingChannel) -> ::w::HRESULT
 		}}

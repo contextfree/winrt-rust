@@ -31,7 +31,7 @@ before_build:
 - nuget restore Generator\Generator.sln
 
 after_build:
-- .\Generator\bin\Release\Generator.exe .\src\rt\gen.rs
+- .\Generator\bin\Release\Generator.exe .\src\rt\gen.rs --batch
 - cargo build --verbose
 
 
