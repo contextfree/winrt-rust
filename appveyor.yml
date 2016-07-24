@@ -1,31 +1,32 @@
--
-    environment:
+environment:
 
-        matrix:
-        - TARGET: x86_64-pc-windows-msvc
-        - TARGET: i686-pc-windows-msvc
+  matrix:
+  - TARGET: x86_64-pc-windows-msvc
+  - TARGET: i686-pc-windows-msvc
 
-        matrix:
-        - rust_version: 1.10.0
-        - rust_version: nightly
-            allow_failures:
-            - rust_version: nightly
+  matrix:
+  - rust_version: 1.10.0
+  - rust_version: nightly
 
-    install:
-    - ps: (new-object Net.WebClient).DownloadFile(
-         "https://static.rust-lang.org/dist/rust-${env:rust_version}-${env:TARGET}.exe"
-        )
-    - rust-%rust_version%-%TARGET%.exe /VERYSILENT /NORESTART /DIR="C:\Rust"
-    - set PATH=%PATH%;C:\Rust\bin
-    - rustc -V
-    - cargo -V
+allow_failures:
+- rust_version: nightly
 
-    before_build:
-    - nuget restore Generator\Generator.sln
+install:
+- ps: >
+   (new-object Net.WebClient).DownloadFile(
+        "https://static.rust-lang.org/dist/rust-${env:rust_version}-${env:TARGET}.exe"
+    )
+- rust-%rust_version%-%TARGET%.exe /VERYSILENT /NORESTART /DIR="C:\Rust"
+- set PATH=%PATH%;C:\Rust\bin
+- rustc -V
+- cargo -V
 
-    after_build:
-    - .\Generator\bin\Release\Generator.exe .\src\rt\gen.rs
-    - cargo build --verbose
+before_build:
+- nuget restore Generator\Generator.sln
+
+after_build:
+- .\Generator\bin\Release\Generator.exe .\src\rt\gen.rs
+- cargo build --verbose
 
 
 
