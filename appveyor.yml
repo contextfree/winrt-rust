@@ -3,13 +3,12 @@ environment:
   matrix:
   - TARGET: x86_64-pc-windows-msvc
   - TARGET: i686-pc-windows-msvc
-
-  matrix:
   - rust_version: 1.10.0
   - rust_version: nightly
 
-allow_failures:
-- rust_version: nightly
+matrix:
+  allow_failures:
+  - rust_version: nightly
 
 install:
 - ps: >
