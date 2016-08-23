@@ -1,10 +1,11 @@
 ﻿using Mono.Cecil;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Generator
 {
-	class AssemblyCollection : IAssemblyResolver
+	public class AssemblyCollection : IAssemblyResolver
 	{
 		Dictionary<string, AssemblyDefinition> assemblies = new Dictionary<string, AssemblyDefinition>(StringComparer.Ordinal);
 		SortedList<string, AssemblyDefinition> sorted = new SortedList<string, AssemblyDefinition>(new ComparerReverser<string>(Comparer<string>.Default));
