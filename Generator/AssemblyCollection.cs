@@ -48,6 +48,7 @@ namespace Generator
 			throw new NotImplementedException();
 		}
 
+		// TODO: we can probably get rid of this (and also of `sorted`) and only rely on the list of all types
 		public TypeDefinition GetTypeDefinition(string @namespace, string name)
 		{
 			// because `sorted` is in reverse order, we will get the most specific one first

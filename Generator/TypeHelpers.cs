@@ -28,14 +28,14 @@ namespace Generator
 			if (guessedFromName)
 			{
 				var targetTypeName = trimmedName.Substring(0, trimmedName.Length - 7); // "Factory" and "Statics" both have length 7
-				var resolved = gen.GetTypeDefinition(t.Namespace, targetTypeName);
+				var resolved = gen.Assemblies.GetTypeDefinition(t.Namespace, targetTypeName);
 				if (resolved != null)
 				{
 					candidates.Add(resolved);
 				}
 				if (targetTypeName.StartsWith("I"))
 				{
-					var resolved2 = gen.GetTypeDefinition(t.Namespace, targetTypeName.Substring(1));
+					var resolved2 = gen.Assemblies.GetTypeDefinition(t.Namespace, targetTypeName.Substring(1));
 					if (resolved2 != null)
 					{
 						candidates.Add(resolved2);
@@ -46,6 +46,7 @@ namespace Generator
 			return candidates.Any(c => GetFactoryType(c) == t || GetStaticTypes(c).Contains(t));
 		}
 
+		// TODO: change this and others into methods of TypeDef
 		public static TypeDefinition GetFactoryType(TypeDefinition t)
 		{
 			var activatable = t.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "ActivatableAttribute" && a.ConstructorArguments[0].Type.FullName == "System.Type");
@@ -97,7 +98,7 @@ namespace Generator
 
 		// ---------------- The following should be split by types ---------------- //
 
-		public static string GetTypeName(Generator gen, TypeReference t, TypeUsage usage)
+		public static string GetTypeName(Generator gen, ITracksDependencies source, TypeReference t, TypeUsage usage)
 		{
 			if (t.IsGenericParameter)
 			{
@@ -113,27 +114,27 @@ namespace Generator
 			if (t.IsByReference)
 			{
 				var ty = (ByReferenceType)t;
-				return "*mut " + GetTypeName(gen, ty.ElementType, usage);
+				return "*mut " + GetTypeName(gen, source, ty.ElementType, usage);
 			}
 			else if (t.IsArray)
 			{
 				var ty = (ArrayType)t;
 				if (usage == TypeUsage.Out)
 				{
-					return "ComArray<" + GetTypeName(gen, ty.ElementType, TypeUsage.Raw) + ">";
+					return "ComArray<" + GetTypeName(gen, source, ty.ElementType, TypeUsage.Raw) + ">";
 				}
 				else
 				{
-					return "*mut " + GetTypeName(gen, ty.ElementType, usage);
+					return "*mut " + GetTypeName(gen, source, ty.ElementType, usage);
 				}
 			}
 			else
 			{
-				return GetElementTypeName(gen, t, usage);
+				return GetElementTypeName(gen, source, t, usage);
 			}
 		}
 
-		private static string GetElementTypeName(Generator gen, TypeReference t, TypeUsage usage)
+		private static string GetElementTypeName(Generator gen, ITracksDependencies source, TypeReference t, TypeUsage usage)
 		{
 			if (t.FullName == "System.String")
 			{
@@ -200,6 +201,9 @@ namespace Generator
 			{
 				var def = t.Resolve();
 				gen.AddToWorklist(def);
+				var def2 = gen.GetTypeDefinition(t);
+				source.AddDependency(def2);
+				Assert(def == def2.Type);
 
 				string name = null;
 				if (usage == TypeUsage.Define)
@@ -224,7 +228,7 @@ namespace Generator
 					{
 						gen.AddGenericInstantiation(ty);
 					}
-					name += "<" + String.Join(", ", ty.GenericArguments.Select(a => GetTypeName(gen, a, TypeUsage.GenericArg))) + ">";
+					name += "<" + String.Join(", ", ty.GenericArguments.Select(a => GetTypeName(gen, source, a, TypeUsage.GenericArg))) + ">";
 				}
 
 				if (!t.IsValueType)
@@ -251,13 +255,13 @@ namespace Generator
 			}
 		}
 
-		public static string GetInputTypeName(Generator gen, TypeReference t, InputKind kind)
+		public static string GetInputTypeName(Generator gen, ITracksDependencies source, TypeReference t, InputKind kind)
 		{
 			switch (kind)
 			{
-				case InputKind.Default: return GetTypeName(gen, t, TypeUsage.In);
-				case InputKind.Raw: return GetTypeName(gen, t, TypeUsage.Raw);
-				case InputKind.Slice: return "&[" + GetTypeName(gen, t, TypeUsage.Raw) + "]";
+				case InputKind.Default: return GetTypeName(gen, source, t, TypeUsage.In);
+				case InputKind.Raw: return GetTypeName(gen, source, t, TypeUsage.Raw);
+				case InputKind.Slice: return "&[" + GetTypeName(gen, source, t, TypeUsage.Raw) + "]";
 				default: throw new InvalidOperationException();
 			}
 		}
