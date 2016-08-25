@@ -4,6 +4,7 @@ using System.Linq;
 using static System.Diagnostics.Debug;
 
 using Mono.Cecil;
+using Mono.Cecil.Rocks;
 
 namespace Generator.Types
 {
@@ -140,7 +141,8 @@ namespace Generator.Types
 			if (!(obj is TypeDef))
 				return false;
 
-			return this.Type.Equals((obj as TypeDef).Type);
+			var other = (TypeDef)obj;
+			return this.Type.FullName.Equals(other.Type.FullName) && this.Module.Assembly.FullName.Equals(other.Module.Assembly.FullName);
 		}
 
 		public override string ToString()
@@ -151,5 +153,39 @@ namespace Generator.Types
 		public abstract void CollectDependencies();
 
 		public abstract void Emit();
+
+		public TypeDefinition GetFactoryType()
+		{
+			var activatable = Type.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "ActivatableAttribute" && a.ConstructorArguments[0].Type.FullName == "System.Type");
+			if (activatable != null)
+			{
+				return activatable.ConstructorArguments[0].Value as TypeDefinition;
+			}
+			return null;
+		}
+
+		public IEnumerable<TypeDefinition> GetStaticTypes()
+		{
+			return Type.CustomAttributes.Where(a => a.AttributeType.Name == "StaticAttribute").Select(a => (TypeDefinition)a.ConstructorArguments[0].Value);
+		}
+
+		public Guid? GetGuid()
+		{
+			var guidAttr = Type.CustomAttributes.FirstOrDefault(attr => attr.AttributeType.Name == "GuidAttribute");
+			Guid? guid = null;
+			if (guidAttr != null)
+			{
+				var a = guidAttr.ConstructorArguments;
+				guid = new Guid((uint)a[0].Value, (ushort)a[1].Value, (ushort)a[2].Value, (byte)a[3].Value, (byte)a[4].Value,
+					(byte)a[5].Value, (byte)a[6].Value, (byte)a[7].Value, (byte)a[8].Value, (byte)a[9].Value, (byte)a[10].Value);
+			}
+
+			return guid;
+		}
+
+		public GenericInstanceType MakeGenericInstanceType(params TypeReference[] arguments)
+		{
+			return Type.MakeGenericInstanceType(arguments);
+		}
 	}
 }

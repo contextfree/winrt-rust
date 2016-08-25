@@ -51,6 +51,7 @@
     <Compile Include="Generator.cs" />
     <Compile Include="GuidUtility.cs" />
     <Compile Include="AssemblyCollection.cs" />
+    <Compile Include="ParametricInterfaceInstance.cs" />
     <Compile Include="Types\ClassDef.cs" />
     <Compile Include="Types\EnumDef.cs" />
     <Compile Include="Types\InterfaceDef.cs" />

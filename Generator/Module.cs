@@ -9,6 +9,14 @@ namespace Generator
 {
 	public class Module
 	{
+		public bool IsEmpty
+		{
+			get
+			{
+				return (children.Count == 0 || children.Values.All(c => c.IsEmpty)) && Text.Length == 0;
+			}
+		}
+
 		Dictionary<string, Module> children = new Dictionary<string, Module>();
 		public Module Parent { get; private set; }
 

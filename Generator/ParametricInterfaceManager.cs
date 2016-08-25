@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using static System.Diagnostics.Debug;
 
 using Mono.Cecil;
-using Mono.Cecil.Rocks;
 
 using Generator.Types;
 
@@ -45,33 +42,34 @@ namespace Generator
 		};
 
 
-		private Dictionary<string, GenericInstanceType> genericInstantiations = new Dictionary<string, GenericInstanceType>();
+		private Dictionary<string, GenericInstanceType> genericInstances = new Dictionary<string, GenericInstanceType>();
 
-		public void AddBaseIReferenceInstantiations(AssemblyCollection assemblies)
+		public void AddBaseIReferenceInstances(Generator gen)
 		{
-			var tyIReference = assemblies.GetTypeDefinition("Windows.Foundation", "IReference`1");
-			var tyIReferenceArray = assemblies.GetTypeDefinition("Windows.Foundation", "IReferenceArray`1");
+			var tyIReference = gen.GetTypeDefinition("Windows.Foundation.IReference`1");
+			var tyIReferenceArray = gen.GetTypeDefinition("Windows.Foundation.IReferenceArray`1");
+			var assembly = tyIReference.Module.Assembly; // we need just any assembly
 
-			var allBaseTypes = baseTypes.Select(t => assemblies.Assemblies.First().MainModule.Import(t)).Concat(baseTypes2.Select(t => assemblies.GetTypeDefinition("Windows.Foundation", t)));
+			var allBaseTypes = baseTypes.Select(t => assembly.MainModule.Import(t)).Concat(baseTypes2.Select(t => gen.GetTypeDefinition("Windows.Foundation." + t).Type));
 
 			foreach (var baseType in allBaseTypes)
 			{
-				AddGenericInstantiation(tyIReference.MakeGenericInstanceType(baseType));
-				AddGenericInstantiation(tyIReferenceArray.MakeGenericInstanceType(baseType));
+				AddGenericInstance(tyIReference.MakeGenericInstanceType(baseType));
+				AddGenericInstance(tyIReferenceArray.MakeGenericInstanceType(baseType));
 			}
 		}
 
-		public void AddGenericInstantiation(GenericInstanceType ty)
+		public void AddGenericInstance(GenericInstanceType ty)
 		{
-			if (genericInstantiations.ContainsKey(ty.FullName)) return;
+			if (genericInstances.ContainsKey(ty.FullName)) return;
 
-			genericInstantiations.Add(ty.FullName, ty);
+			genericInstances.Add(ty.FullName, ty);
 			// recursively add generic arguments
 			foreach (var arg in ty.GenericArguments)
 			{
 				if (arg.IsGenericInstance)
 				{
-					AddGenericInstantiation((GenericInstanceType)arg);
+					AddGenericInstance((GenericInstanceType)arg);
 				}
 			}
 
@@ -89,11 +87,11 @@ namespace Generator
 				var type = TypeHelpers.InstantiateType(intf, genericParameterMap);
 				if (type is GenericInstanceType)
 				{
-					AddGenericInstantiation(type as GenericInstanceType);
+					AddGenericInstance(type as GenericInstanceType);
 				}
 			}
 
-			// recursively add other instantiations introduced by function parameters
+			// recursively add other instances introduced by function parameters
 			foreach (var m in def.Methods)
 			{
 				foreach (GenericInstanceType pty in m.Parameters
@@ -105,127 +103,15 @@ namespace Generator
 					var type = TypeHelpers.InstantiateType(pty, genericParameterMap);
 					if (type is GenericInstanceType)
 					{
-						AddGenericInstantiation(type as GenericInstanceType);
+						AddGenericInstance(type as GenericInstanceType);
 					}
 				}
 			}
 		}
 
-		public int Generate(Generator gen)
+		public IEnumerable<ParametricInterfaceInstance> Collect(Generator gen)
 		{
-			var instantiationsCopy = new List<GenericInstanceType>(genericInstantiations.Values);
-			foreach (var t in instantiationsCopy)
-			{
-				WriteParametricIID(gen, t);
-			}
-			return genericInstantiations.Count;
-		}
-
-		public void WriteParametricIID(Generator gen, GenericInstanceType t)
-		{
-			TypeDefinition def;
-			var desc = GetTypeIIDDescriptor(t, out def);
-			Assert(def != null); // def is only null for primitive types
-			var name = TypeHelpers.GetTypeName(gen, gen.GetTypeDefinition(def), t, TypeUsage.GenericArg);
-			var iidName = "IID_" + Regex.Replace(t.FullName.Substring(t.Namespace.Length + 1), @"[\.`<>,]", "_").TrimEnd('_');
-			var guid = Utility.GuidUtility.Create(Namespace, desc);
-			var guidStr = Regex.Replace(guid.ToString("X"), @"[\{\}]", "");
-			var module = gen.GetModule(def.Namespace);
-
-			module.Append(@"
-		RT_PINTERFACE!{ for " + name + " => [" + guidStr + "] as " + iidName + " }");
-		}
-
-		private static string GetTypeIIDDescriptor(TypeReference t, out TypeDefinition def)
-		{
-			def = null;
-
-			if (t.FullName == "System.String")
-			{
-				return "string";
-			}
-			else if (t.FullName == "System.Object")
-			{
-				return "cinterface(IInspectable)";
-			}
-			else if (t.FullName == "System.Guid")
-			{
-				return "g16";
-			}
-			else if (t.IsPrimitive)
-			{
-				switch (t.FullName)
-				{
-					case "System.Boolean": return "b1";
-					case "System.SByte": return "i1";
-					case "System.Int16": return "i2";
-					case "System.Int32": return "i4";
-					case "System.Int64": return "i8";
-					case "System.Byte": return "u1";
-					case "System.UInt16": return "u2";
-					case "System.UInt32": return "u4";
-					case "System.UInt64": return "u8";
-					case "System.Single": return "f4";
-					case "System.Double": return "f8";
-					case "System.Char": return "c2";
-					default:
-						throw new NotImplementedException("Primitive type: " + t.FullName);
-				}
-			}
-
-			def = t.Resolve();
-
-			var guid = TypeHelpers.GetGuidForType(def);
-			TypeDefinition def2;
-
-			if (def.IsInterface)
-			{
-				if (t.IsGenericInstance)
-				{
-					var ty = (GenericInstanceType)t;
-					return "pinterface({" + guid.Value.ToString() + "};" + String.Join(";", ty.GenericArguments.Select(p => GetTypeIIDDescriptor(p, out def2))) + ")";
-				}
-				else
-				{
-					return "{" + guid.Value.ToString() + "}";
-				}
-			}
-			else if (TypeHelpers.IsDelegate(def))
-			{
-				if (t.IsGenericInstance)
-				{
-					var ty = (GenericInstanceType)t;
-					return "pinterface({" + guid.Value.ToString() + "};" + String.Join(";", ty.GenericArguments.Select(p => GetTypeIIDDescriptor(p, out def2))) + ")";
-				}
-				else
-				{
-					//return "delegate({" + guid.Value.ToString() + "})";
-					throw new NotImplementedException(); // This has never been tested
-				}
-
-			}
-			else if (def.IsEnum)
-			{
-
-				var underlyingType = GetTypeIIDDescriptor(def.Fields.Single(f => f.Name == "value__").FieldType, out def2);
-				return "enum(" + def.FullName + ";" + underlyingType + ")";
-			}
-			else if (def.IsValueType)
-			{
-				return "struct(" + def.FullName + ";" + String.Join(";", def.Fields.Select(f => GetTypeIIDDescriptor(f.FieldType, out def2))) + ")";
-			}
-			else if (def.IsClass)
-			{
-				var mainInterface = def.Interfaces[0];
-				if (def.CustomAttributes.Any(a => a.AttributeType.Name == "DefaultInterfaceAttribute"))
-					throw new NotImplementedException();
-				TypeDefinition def3;
-				return "rc(" + def.FullName + ";" + GetTypeIIDDescriptor(mainInterface, out def3) + ")";
-			}
-			else
-			{
-				throw new NotImplementedException();
-			}
+			return genericInstances.Values.Select(t => new ParametricInterfaceInstance(gen, t));
 		}
 	}
 }

@@ -15,53 +15,6 @@ namespace Generator.Types
 			return t.IsClass && t.BaseType.FullName == "System.MulticastDelegate";
 		}
 
-		public static bool IsFactoryOrStatic(Generator gen, TypeDefinition t, TypeDefinition exclusiveToType)
-		{
-			var trimmedName = t.Name.TrimEnd('1', '2', '3', '4', '5', '6', '7', '8', '9');
-			var guessedFromName = trimmedName.EndsWith("Factory") || trimmedName.EndsWith("Statics");
-			HashSet<TypeDefinition> candidates = new HashSet<TypeDefinition>();
-			if (exclusiveToType != null)
-			{
-				candidates.Add(exclusiveToType);
-			}
-
-			if (guessedFromName)
-			{
-				var targetTypeName = trimmedName.Substring(0, trimmedName.Length - 7); // "Factory" and "Statics" both have length 7
-				var resolved = gen.Assemblies.GetTypeDefinition(t.Namespace, targetTypeName);
-				if (resolved != null)
-				{
-					candidates.Add(resolved);
-				}
-				if (targetTypeName.StartsWith("I"))
-				{
-					var resolved2 = gen.Assemblies.GetTypeDefinition(t.Namespace, targetTypeName.Substring(1));
-					if (resolved2 != null)
-					{
-						candidates.Add(resolved2);
-					}
-				}
-			}
-
-			return candidates.Any(c => GetFactoryType(c) == t || GetStaticTypes(c).Contains(t));
-		}
-
-		// TODO: change this and others into methods of TypeDef
-		public static TypeDefinition GetFactoryType(TypeDefinition t)
-		{
-			var activatable = t.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "ActivatableAttribute" && a.ConstructorArguments[0].Type.FullName == "System.Type");
-			if (activatable != null)
-			{
-				return activatable.ConstructorArguments[0].Value as TypeDefinition;
-			}
-			return null;
-		}
-
-		public static IEnumerable<TypeDefinition> GetStaticTypes(TypeDefinition t)
-		{
-			return t.CustomAttributes.Where(a => a.AttributeType.Name == "StaticAttribute").Select(a => (TypeDefinition)a.ConstructorArguments[0].Value);
-		}
-
 		public static TypeReference InstantiateType(GenericInstanceType ty, Dictionary<string, TypeReference> map)
 		{
 			var genericArguments = ty.GenericArguments.Select(arg =>
@@ -80,20 +33,6 @@ namespace Generator.Types
 				}
 			}).ToArray();
 			return ty.ElementType.MakeGenericInstanceType(genericArguments);
-		}
-
-		public static Guid? GetGuidForType(TypeDefinition t)
-		{
-			var guidAttr = t.CustomAttributes.FirstOrDefault(attr => attr.AttributeType.Name == "GuidAttribute");
-			Guid? guid = null;
-			if (guidAttr != null)
-			{
-				var a = guidAttr.ConstructorArguments;
-				guid = new Guid((uint)a[0].Value, (ushort)a[1].Value, (ushort)a[2].Value, (byte)a[3].Value, (byte)a[4].Value,
-					(byte)a[5].Value, (byte)a[6].Value, (byte)a[7].Value, (byte)a[8].Value, (byte)a[9].Value, (byte)a[10].Value);
-			}
-
-			return guid;
 		}
 
 		// ---------------- The following should be split by types ---------------- //
@@ -196,14 +135,11 @@ namespace Generator.Types
 			}
 			else
 			{
-				var def = t.Resolve(); // TODO: remove
-				gen.AddToWorklist(def); // TODO: remove
-				var def2 = gen.GetTypeDefinition(t);
-				source.AddDependency(def2);
-				Assert(def == def2.Type);
+				var def = gen.GetTypeDefinition(t);
+				source.AddDependency(def);
 
 				string name = null;
-				if (def2.Module == source.Module)
+				if (def.Module == source.Module)
 				{
 					name = t.Name;
 				}
@@ -223,7 +159,7 @@ namespace Generator.Types
 					var ty = (GenericInstanceType)t;
 					if (!ty.ContainsGenericParameter)
 					{
-						gen.AddGenericInstantiation(ty);
+						gen.AddGenericInstance(ty);
 					}
 					name += "<" + String.Join(", ", ty.GenericArguments.Select(a => GetTypeName(gen, source, a, TypeUsage.GenericArg))) + ">";
 				}

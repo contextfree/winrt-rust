@@ -30,12 +30,18 @@ namespace Generator.Types
 
 		public ClassDef(TypeDefinition t) : base(t)
 		{
-			statics = TypeHelpers.GetStaticTypes(t).ToList(); // this is required early to know whether it can be skipped
+			// this is required early to know whether the definition can be skipped
+			statics = GetStaticTypes().ToList(); 
 		}
 
 		public override void CollectDependencies()
 		{
-			var factoryType = TypeHelpers.GetFactoryType(Type);
+			foreach (var staticType in statics)
+			{
+				AddDependency(Generator.GetTypeDefinition(staticType));
+			}
+
+			var factoryType = GetFactoryType();
 			if (factoryType != null)
 			{
 				factory = TypeHelpers.GetTypeName(Generator, this, factoryType, TypeUsage.Alias);

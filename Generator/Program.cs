@@ -20,9 +20,9 @@ namespace Generator
 			PrintStatistics(generator.AllTypes);
 			PrintDependencyStatistics(generator.AllTypes);
 			//WriteDependencyGraph(generator.AllTypes);
-			generator.EmitTypes();
-			int pinterfaceCount = generator.EmitParametricInstantiations();
-			Console.WriteLine("Found and generated IIDs for {0} distinct generic instantiations.", pinterfaceCount);
+			var emittedTypes = generator.EmitTypes();
+			int pinterfaceCount = generator.EmitParametricInstances(emittedTypes);
+			Console.WriteLine("Found and generated IIDs for {0} distinct generic instances.", pinterfaceCount);
 			Console.Write("Writing results to " + new FileInfo(args[0]).FullName + " ...");
 			using (var file = new StreamWriter(args[0]))
 			{

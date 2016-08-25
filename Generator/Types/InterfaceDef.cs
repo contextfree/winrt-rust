@@ -49,7 +49,7 @@ namespace Generator.Types
 				exclusiveToType = exclusiveTo.ConstructorArguments[0].Value as TypeDefinition;
 			}
 
-			isFactoryOrStatic = TypeHelpers.IsFactoryOrStatic(Generator, Type, exclusiveToType);
+			isFactoryOrStatic = IsFactoryOrStatic(Generator, this, exclusiveToType);
 
 			rawMethodDeclarations = methods.Select(m => m.GetRawDeclaration()).ToList();
 			wrapperMethodDeclarations = methods.Select(m => m.GetWrapperDefinition()).Where(m => m != null).ToList();
@@ -91,10 +91,43 @@ namespace Generator.Types
 		}}");
 			}
 
-			Module.Append(@"
+			if (wrapperMethodDeclarations.Any())
+			{
+				Module.Append(@"
 		impl" + genericWithBounds + " " + name + generic + @" {
 			" + String.Join("\r\n			", wrapperMethodDeclarations) + @"
 		}");
+			}
+		}
+
+		private bool IsFactoryOrStatic(Generator gen, TypeDef t, TypeDefinition exclusiveToType)
+		{
+			var trimmedName = t.Name.TrimEnd('1', '2', '3', '4', '5', '6', '7', '8', '9');
+			var guessedFromName = trimmedName.EndsWith("Factory") || trimmedName.EndsWith("Statics");
+			var candidates = new HashSet<TypeDef>();
+			if (exclusiveToType != null)
+			{
+				candidates.Add(gen.GetTypeDefinition(exclusiveToType));
+			}
+
+			if (guessedFromName)
+			{
+				var targetTypeName = trimmedName.Substring(0, trimmedName.Length - 7); // "Factory" and "Statics" both have length 7
+				TypeDef resolved;
+				if (gen.TryGetTypeDefinition(t.Namespace + "." + targetTypeName, out resolved))
+				{
+					candidates.Add(resolved);
+				}
+				if (targetTypeName.StartsWith("I"))
+				{
+					if (gen.TryGetTypeDefinition(t.Namespace + "." + targetTypeName.Substring(1), out resolved))
+					{
+						candidates.Add(resolved);
+					}
+				}
+			}
+
+			return candidates.Any(c => c.GetFactoryType() == t.Type || c.GetStaticTypes().Contains(t.Type));
 		}
 	}
 }
