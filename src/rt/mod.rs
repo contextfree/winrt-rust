@@ -215,13 +215,13 @@ macro_rules! RT_INTERFACE {
     // version with methods, but without generic parameters
     (basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
         {$(
-            fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+            $(#[cfg($cond_attr:meta)])* fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl {
             pub parent: $crate::$pvtbl
-            $(,pub $method: unsafe extern "system" fn(
+            $(, $(#[cfg($cond_attr)])* pub $method: unsafe extern "system" fn(
                 This: *mut $interface
                 $(,$p: $t)*
             ) -> $rtr)+
@@ -263,13 +263,13 @@ macro_rules! RT_INTERFACE {
     // which is irrelevant at runtime (it is used to generate the IIDs of the parameterized interfaces).
     (basic $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
         {$(
-            fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+            $(#[cfg($cond_attr:meta)])* fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl<$t1> where $t1: RtType {
             pub parent: $crate::$pvtbl
-            $(,pub $method: unsafe extern "system" fn(
+            $(, $(#[cfg($cond_attr)])* pub $method: unsafe extern "system" fn(
                 This: *mut $interface<$t1>
                 $(,$p: $t)*
             ) -> $rtr)+
@@ -307,13 +307,13 @@ macro_rules! RT_INTERFACE {
 
     (basic $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
         {$(
-            fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+            $(#[cfg($cond_attr:meta)])* fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl<$t1, $t2> where $t1: RtType, $t2: RtType {
             pub parent: $crate::$pvtbl
-            $(,pub $method: unsafe extern "system" fn(
+            $(, $(#[cfg($cond_attr)])* pub $method: unsafe extern "system" fn(
                 This: *mut $interface<$t1, $t2>
                 $(,$p: $t)*
             ) -> $rtr)+
@@ -353,10 +353,10 @@ macro_rules! RT_INTERFACE {
 macro_rules! RT_DELEGATE {
     // without generic parameters
     (delegate $interface:ident ($vtbl:ident, $imp:ident) [$iid:ident] {
-        fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
     }) => {
         RT_INTERFACE!{basic $interface($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
-            fn Invoke(&mut self $(,$p : $t)*) -> $rtr
+            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> $rtr
         }}
 
         impl $interface {
@@ -414,10 +414,10 @@ macro_rules! RT_DELEGATE {
 
     // with generic parameters
     (delegate $interface:ident<$($ht:ident),+> ($vtbl:ident, $imp:ident) [$iid:ident] {
-        fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
     }) => {
         RT_INTERFACE!{basic $interface<$($ht),+>($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
-            fn Invoke(&mut self $(,$p : $t)*) -> $rtr
+            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> $rtr
         }}
 
         impl<$($ht: RtType + 'static),+> $interface<$($ht),+> {

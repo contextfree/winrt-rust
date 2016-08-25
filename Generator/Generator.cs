@@ -85,42 +85,23 @@ namespace Generator
 			}
 		}
 
-		public HashSet<TypeDef> EmitTypes()
+		public void EmitTypes()
 		{
 			// TODO: get rid of this and enable all modules (disabled because it results in a huge file and very long compilation)
 			var assemblyNames = new string[] { "Windows.Foundation", "Windows.Devices"/*, "Windows.Storage", "Windows.Media", "Windows.System", "Windows.Graphics"*/ };
 
-			var worklist = new HashSet<TypeDef>(definitionsList.Values.Where(t => assemblyNames.Contains(t.Module.Assembly.Name.Name)));
-			var definitionsDone = new HashSet<TypeDef>();
-
-			while (worklist.Count > 0)
+			foreach (var type in definitionsList.Values/*.Where(t => assemblyNames.Contains(t.Module.Assembly.Name.Name))*/)
 			{
-				var type = worklist.First();
-				worklist.Remove(type);
-				definitionsDone.Add(type);
-				foreach (var dep in type.Dependencies)
-				{
-					if (!definitionsDone.Contains(dep))
-					{
-						worklist.Add(dep);
-					}
-				}
-
 				type.Emit();
 			}
-			return definitionsDone;
 		}
 
-		public int EmitParametricInstances(HashSet<TypeDef> availableDefinitions)
+		public int EmitParametricInstances()
 		{
 			var instances = pinterfaceManager.Collect(this).ToList();
 			foreach (var inst in instances)
 			{
-				// emit instance only if all definitions that it needs are available
-				if (inst.Dependencies.All(d => availableDefinitions.Contains(d)))
-				{
-					inst.Emit();
-				}
+				inst.Emit();
 			}
 			return instances.Count;
 		}
@@ -135,7 +116,7 @@ namespace Generator
 			}
 		}
 
-		private void WriteModuleTree(Module mod, StreamWriter file, string path = null)
+		private void WriteModuleTree(Module mod, StreamWriter file, string path = null, AssemblyDefinition asm = null)
 		{
 			if (mod.IsEmpty) return;
 
@@ -144,6 +125,10 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 
 			string name = mod.Name.ToLower();
 			string newPath = path == null ? mod.Name : (path + "." + mod.Name);
+			if (asm != mod.Assembly && mod.Assembly.Name.Name != "Windows.Foundation")
+			{
+				file.WriteLine(new FeatureConditions(new string[] { mod.Assembly.Name.Name }).GetAttribute().TrimEnd());
+			}
 			file.WriteLine("pub mod " + name + " { // " + newPath);
 			var text = mod.Text.ToString();
 			if (!string.IsNullOrWhiteSpace(text))
@@ -153,7 +138,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
 			}
 			foreach (var child in mod.Children.Values)
 			{
-				WriteModuleTree(child, file, newPath);
+				WriteModuleTree(child, file, newPath, mod.Assembly);
 			}
 			file.WriteLine("} // " + newPath);
 		}
