@@ -16,11 +16,12 @@ namespace Generator
 			if (args.Length < 1) throw new ArgumentException("Please specify result file path as first argument");
 
 			var generator = new Generator(new AssemblyCollection(Directory.GetFiles(@"C:\Windows\System32\WinMetadata\")));
-			generator.GenerateTypes();
+			generator.CollectDependencies();
 			PrintStatistics(generator.AllTypes);
 			PrintDependencyStatistics(generator.AllTypes);
 			//WriteDependencyGraph(generator.AllTypes);
-			int pinterfaceCount = generator.GenerateParametricInstantiations();
+			generator.EmitTypes();
+			int pinterfaceCount = generator.EmitParametricInstantiations();
 			Console.WriteLine("Found and generated IIDs for {0} distinct generic instantiations.", pinterfaceCount);
 			Console.Write("Writing results to " + new FileInfo(args[0]).FullName + " ...");
 			using (var file = new StreamWriter(args[0]))

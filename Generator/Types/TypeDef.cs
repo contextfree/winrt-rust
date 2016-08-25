@@ -1,23 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Diagnostics.Debug;
 
 using Mono.Cecil;
 
 namespace Generator.Types
 {
-	public class TypeDef : ITypeRequestSource
+	public abstract class TypeDef : ITypeRequestSource
 	{
+		public Generator Generator { get; private set; }
 		public Module Module { get; private set; }
 		public TypeDefinition Type { get; private set; }
-		public TypeKind Kind { get; private set; }
+		public abstract TypeKind Kind { get; }
 
-		private List<MethodDef> methods;
-		public IEnumerable<MethodDef> Methods
+		public virtual bool CanBeSkipped
 		{
 			get
 			{
-				return methods;
+				return false;
+			}
+		}
+
+		public virtual IEnumerable<MethodDef> Methods
+		{
+			get
+			{
+				return Enumerable.Empty<MethodDef>();
 			}
 		}
 
@@ -78,41 +87,41 @@ namespace Generator.Types
 			}
 		}
 
-		public TypeDef(Generator gen, TypeDefinition t, AssemblyDefinition asm)
+		public static TypeDef Create(Generator gen, TypeDefinition t, AssemblyDefinition asm)
 		{
-			Type = t;
-			Module = gen.GetModule(t.Namespace);
-			Module.AssignAssembly(asm);
+			Assert(t.Attributes.HasFlag(TypeAttributes.WindowsRuntime));
 
+			TypeDef result;
 			if (t.IsEnum)
 			{
-				Kind = TypeKind.Enum;
+				result = new EnumDef(t);
 			}
-			else if (t.IsInterface)
+			else if (t.IsInterface || TypeHelpers.IsDelegate(t))
 			{
-				Kind = TypeKind.Interface;
+				result = new InterfaceDef(t);
 			}
 			else if (t.IsValueType)
 			{
-				Kind = TypeKind.Struct;
-			}
-			else if (TypeHelpers.IsDelegate(t))
-			{
-				Kind = TypeKind.Delegate;
+				result = new StructDef(t);
 			}
 			else if (t.IsClass)
 			{
-				Kind = TypeKind.Class;
+				result = new ClassDef(t);
 			}
 			else
 			{
 				throw new NotSupportedException();
 			}
 
-			if (Kind == TypeKind.Interface || Kind == TypeKind.Delegate)
-			{
-				methods = t.Methods.Where(m => m.Name != ".ctor").Select(m => new MethodDef(this, m)).ToList();
-			}
+			result.Module = gen.GetModule(t.Namespace);
+			result.Module.AssignAssembly(asm);
+			result.Generator = gen; // TODO: get rid of this
+			return result;
+		}
+
+		protected TypeDef(TypeDefinition t)
+		{
+			Type = t;
 		}
 
 		public void AddDependency(TypeDef other)
@@ -138,5 +147,9 @@ namespace Generator.Types
 		{
 			return this.Type.FullName;
 		}
+
+		public abstract void CollectDependencies();
+
+		public abstract void Emit();
 	}
 }
