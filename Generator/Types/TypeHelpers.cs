@@ -6,7 +6,7 @@ using static System.Diagnostics.Debug;
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
 
-namespace Generator
+namespace Generator.Types
 {
 	public class TypeHelpers
 	{
@@ -98,7 +98,7 @@ namespace Generator
 
 		// ---------------- The following should be split by types ---------------- //
 
-		public static string GetTypeName(Generator gen, ITracksDependencies source, TypeReference t, TypeUsage usage)
+		public static string GetTypeName(Generator gen, ITypeRequestSource source, TypeReference t, TypeUsage usage)
 		{
 			if (t.IsGenericParameter)
 			{
@@ -134,7 +134,7 @@ namespace Generator
 			}
 		}
 
-		private static string GetElementTypeName(Generator gen, ITracksDependencies source, TypeReference t, TypeUsage usage)
+		private static string GetElementTypeName(Generator gen, ITypeRequestSource source, TypeReference t, TypeUsage usage)
 		{
 			if (t.FullName == "System.String")
 			{
@@ -153,7 +153,6 @@ namespace Generator
 				{
 					case TypeUsage.Raw: return "*mut IInspectable";
 					case TypeUsage.GenericArg: return "IInspectable";
-					case TypeUsage.Define: throw new NotSupportedException();
 					case TypeUsage.In: return "&IInspectable";
 					case TypeUsage.Out: return "ComPtr<IInspectable>";
 					default: throw new InvalidOperationException();
@@ -161,12 +160,10 @@ namespace Generator
 			}
 			else if (t.FullName == "System.Guid")
 			{
-				Assert(usage != TypeUsage.Define);
 				return "::Guid";
 			}
 			else if (t.IsPrimitive)
 			{
-				Assert(usage != TypeUsage.Define);
 				switch (t.FullName)
 				{
 					case "System.Boolean":
@@ -199,14 +196,14 @@ namespace Generator
 			}
 			else
 			{
-				var def = t.Resolve();
-				gen.AddToWorklist(def);
+				var def = t.Resolve(); // TODO: remove
+				gen.AddToWorklist(def); // TODO: remove
 				var def2 = gen.GetTypeDefinition(t);
 				source.AddDependency(def2);
 				Assert(def == def2.Type);
 
 				string name = null;
-				if (usage == TypeUsage.Define)
+				if (def2.Module == source.Module)
 				{
 					name = t.Name;
 				}
@@ -255,7 +252,7 @@ namespace Generator
 			}
 		}
 
-		public static string GetInputTypeName(Generator gen, ITracksDependencies source, TypeReference t, InputKind kind)
+		public static string GetInputTypeName(Generator gen, ITypeRequestSource source, TypeReference t, InputKind kind)
 		{
 			switch (kind)
 			{
@@ -449,7 +446,6 @@ namespace Generator
 		In,
 		Out,
 		Raw,
-		Define,
 		Alias,
 		GenericArg,
 	}

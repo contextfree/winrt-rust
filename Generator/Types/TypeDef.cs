@@ -4,18 +4,9 @@ using System.Linq;
 
 using Mono.Cecil;
 
-namespace Generator
+namespace Generator.Types
 {
-	public enum TypeKind
-	{
-		Enum,
-		Struct,
-		Interface,
-		Class,
-		Delegate
-	}
-
-	public class TypeDef : ITracksDependencies
+	public class TypeDef : ITypeRequestSource
 	{
 		public Module Module { get; private set; }
 		public TypeDefinition Type { get; private set; }
@@ -70,6 +61,20 @@ namespace Generator
 			get
 			{
 				return Type.Namespace;
+			}
+		}
+
+		public string DefinitionName
+		{
+			get
+			{
+				var name = Type.Name;
+				int i = name.IndexOf('`');
+				if (i >= 0)
+				{
+					name = name.Substring(0, i);
+				}
+				return name;
 			}
 		}
 

@@ -7,6 +7,8 @@ using static System.Diagnostics.Debug;
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
 
+using Generator.Types;
+
 namespace Generator
 {
 	public class ParametricInterfaceManager
@@ -124,7 +126,7 @@ namespace Generator
 			TypeDefinition def;
 			var desc = GetTypeIIDDescriptor(t, out def);
 			Assert(def != null); // def is only null for primitive types
-			var name = TypeHelpers.GetTypeName(gen, gen.GetTypeDefinition(def), t, TypeUsage.Define);
+			var name = TypeHelpers.GetTypeName(gen, gen.GetTypeDefinition(def), t, TypeUsage.GenericArg);
 			var iidName = "IID_" + Regex.Replace(t.FullName.Substring(t.Namespace.Length + 1), @"[\.`<>,]", "_").TrimEnd('_');
 			var guid = Utility.GuidUtility.Create(Namespace, desc);
 			var guidStr = Regex.Replace(guid.ToString("X"), @"[\{\}]", "");

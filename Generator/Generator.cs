@@ -6,6 +6,8 @@ using static System.Diagnostics.Debug;
 
 using Mono.Cecil;
 
+using Generator.Types;
+
 namespace Generator
 {
 	public class Generator
@@ -121,7 +123,7 @@ namespace Generator
 			var t = def.Type;
 			var isFlags = t.CustomAttributes.Any(a => a.AttributeType.Name == "FlagsAttribute");
 			var underlyingType = t.Fields.Single(f => f.Name == "value__").FieldType;
-			string name = TypeHelpers.GetTypeName(this, def, t, TypeUsage.Define);
+			string name = def.DefinitionName;
 			def.Module.Append(@"
 		RT_ENUM! { enum " + name + ": " + TypeHelpers.GetTypeName(this, def, underlyingType, TypeUsage.Raw) + @" {
 			" + String.Join(", ", t.Fields.Where(f => f.Name != "value__").Select(f => NameHelpers.PreventKeywords(f.Name) + " (" + t.Name + "_" + f.Name + ") = " + f.Constant)) + @",
@@ -131,7 +133,7 @@ namespace Generator
 		private void WriteStruct(TypeDef def)
 		{
 			var t = def.Type;
-			string name = TypeHelpers.GetTypeName(this, def, t, TypeUsage.Define);
+			string name = def.DefinitionName;
 			// TODO: derive(Eq) whenever possible?
 			def.Module.Append(@"
 		RT_STRUCT! { struct " + name + @" {
@@ -153,7 +155,7 @@ namespace Generator
 
 			bool isFactoryOrStatic = TypeHelpers.IsFactoryOrStatic(this, t, exclusiveToType);
 
-			var name = TypeHelpers.GetTypeName(this, def, t, TypeUsage.Define);
+			var name = def.DefinitionName;
 
 			def.Module.Append(@"
 		DEFINE_IID!(IID_" + name + ", " + String.Join(", ", guid.ConstructorArguments.Select(a => a.Value)) + ");");
@@ -364,7 +366,7 @@ namespace Generator
 				Console.WriteLine("WARNING: Skipping " + t + " (class with no interfaces or statics)");
 				return;
 			}
-			var classType = TypeHelpers.GetTypeName(this, def, t, TypeUsage.Define);
+			var classType = def.DefinitionName;
 			bool needClassID = false;
 			if (t.Interfaces.Count > 0)
 			{
@@ -386,7 +388,7 @@ namespace Generator
 
 			foreach (var staticType in statics)
 			{
-				var staticName = TypeHelpers.GetTypeName(this, def, staticType, TypeUsage.Define);
+				var staticName = GetTypeDefinition(staticType).DefinitionName;
 				needClassID = true;
 				def.Module.Append(@"
 		RT_ACTIVATABLE!{" + staticName + " [CLSID_" + classType + "]}");

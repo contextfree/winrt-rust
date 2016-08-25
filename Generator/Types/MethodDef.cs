@@ -1,16 +1,23 @@
-﻿using Mono.Cecil;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Generator
+using Mono.Cecil;
+
+namespace Generator.Types
 {
-	public class MethodDef : ITracksDependencies
+	public class MethodDef : ITypeRequestSource
 	{
 		public TypeDef DeclaringType { get; private set; }
 		public MethodDefinition Method { get; private set; }
+
+		public Module Module
+		{
+			get
+			{
+				return DeclaringType.Module;
+			}
+		}
 
 		private HashSet<TypeDef> dependencies = new HashSet<TypeDef>();
 		public IEnumerable<TypeDef> Dependencies
