@@ -353,10 +353,10 @@ macro_rules! RT_INTERFACE {
 macro_rules! RT_DELEGATE {
     // without generic parameters
     (delegate $interface:ident ($vtbl:ident, $imp:ident) [$iid:ident] {
-        fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
     }) => {
         RT_INTERFACE!{basic $interface($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
-            fn Invoke(&mut self $(,$p : $t)*) -> $rtr
+            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> $rtr
         }}
 
         impl $interface {
@@ -414,10 +414,10 @@ macro_rules! RT_DELEGATE {
 
     // with generic parameters
     (delegate $interface:ident<$($ht:ident),+> ($vtbl:ident, $imp:ident) [$iid:ident] {
-        fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
     }) => {
         RT_INTERFACE!{basic $interface<$($ht),+>($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
-            fn Invoke(&mut self $(,$p : $t)*) -> $rtr
+            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> $rtr
         }}
 
         impl<$($ht: RtType + 'static),+> $interface<$($ht),+> {

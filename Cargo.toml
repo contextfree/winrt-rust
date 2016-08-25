@@ -28,3 +28,7 @@ nightly = []
 "windows.ui" = []
 "windows.ui.xaml" = ["windows.ui"]
 "windows.web" = []
+"all" = ["windows.applicationmodel", "windows.data", "windows.devices", "windows.gaming",
+         "windows.globalization", "windows.graphics", "windows.management", "windows.media",
+         "windows.networking", "windows.perception", "windows.security", "windows.services",
+         "windows.storage", "windows.system", "windows.ui", "windows.ui.xaml", "windows.web"]

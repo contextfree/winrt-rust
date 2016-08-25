@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using static System.Diagnostics.Debug;
 
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
