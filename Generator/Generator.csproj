@@ -48,11 +48,24 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generator.cs" />
     <Compile Include="GuidUtility.cs" />
     <Compile Include="AssemblyCollection.cs" />
+    <Compile Include="ParametricInterfaceInstance.cs" />
+    <Compile Include="Types\ClassDef.cs" />
+    <Compile Include="Types\EnumDef.cs" />
+    <Compile Include="Types\InterfaceDef.cs" />
+    <Compile Include="Types\ITypeRequestSource.cs" />
+    <Compile Include="Types\MethodDef.cs" />
     <Compile Include="Module.cs" />
+    <Compile Include="NameHelpers.cs" />
+    <Compile Include="ParametricInterfaceManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\StructDef.cs" />
+    <Compile Include="Types\TypeDef.cs" />
+    <Compile Include="Types\TypeHelpers.cs" />
+    <Compile Include="Types\TypeKind.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

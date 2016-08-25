@@ -1,12 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+
+using Mono.Cecil;
 
 namespace Generator
 {
 	public class Module
 	{
+		public bool IsEmpty
+		{
+			get
+			{
+				return (children.Count == 0 || children.Values.All(c => c.IsEmpty)) && Text.Length == 0;
+			}
+		}
+
 		Dictionary<string, Module> children = new Dictionary<string, Module>();
+		public Module Parent { get; private set; }
 
 		public IReadOnlyDictionary<string, Module> Children
 		{
@@ -17,12 +29,53 @@ namespace Generator
 		}
 
 		public string Name { get; private set; }
+
+		public string FullName
+		{
+			get
+			{
+				if (Parent == null || String.IsNullOrEmpty(Parent.FullName))
+
+				{
+					return Name;
+				}
+				else
+				{
+					return Parent.FullName + "." + Name;
+				}
+			}
+		}
+
 		public StringBuilder Text { get; private set; }
 
-		public Module(string name)
+		public AssemblyDefinition Assembly { get; private set; }
+
+		public Module(Module parent, string name)
 		{
+			Parent = parent;
 			Name = name;
 			Text = new StringBuilder();
+		}
+
+		public void AssignAssembly(AssemblyDefinition assembly)
+		{
+			if (Assembly == null)
+			{
+				Assembly = assembly;
+			}
+			else if (Assembly.Name.Name == assembly.Name.Name)
+			{
+				return; // already assigned
+			}
+			else
+			{
+				throw new NotSupportedException("This should never happen.");
+			}
+
+			if (Parent != null && FullName != assembly.Name.Name)
+			{
+				Parent.AssignAssembly(assembly);
+			}
 		}
 
 		public void Append(string text)
@@ -37,7 +90,7 @@ namespace Generator
 			Module mod;
 			if (!children.TryGetValue(name, out mod))
 			{
-				mod = new Module(name);
+				mod = new Module(this, name);
 				children[name] = mod;
 			}
 
