@@ -59,13 +59,26 @@ namespace Generator.Types
 			bool needClassID = false;
 			if (Type.Interfaces.Count > 0)
 			{
+				var dependsOnAssemblies = new List<string>(ForeignAssemblyDependencies.GroupBy(t => t.Module.Assembly.Name.Name).Select(g => g.Key));
+				var features = new FeatureConditions(dependsOnAssemblies);
+
 				if (string.IsNullOrEmpty(factory))
 				{
 					Module.Append(@"
-		RT_CLASS!{class " + DefinitionName + ": " + aliasedType + "}");
+		" + features.GetAttribute() + "RT_CLASS!{class " + DefinitionName + ": " + aliasedType + "}");
+					if (!features.IsEmpty)
+					{
+						// if the aliased type is from a different assembly, just use IInspectable instead
+						Module.Append(@"
+		" + features.GetInvertedAttribute() + "RT_CLASS!{class " + DefinitionName + ": IInspectable}");
+					}
 				}
 				else
 				{
+					if (!features.IsEmpty)
+					{
+						throw new NotImplementedException("This case is currently not supported.");
+					}
 					needClassID = true;
 					Module.Append(@"
 		RT_CLASS!{class " + DefinitionName + ": " + aliasedType + " [" + factory + "] [CLSID_" + classType + "]}");

@@ -239,5 +239,11 @@ namespace Generator.Types
 				yield return "out: *mut " + TypeHelpers.GetTypeName(DeclaringType.Generator, this, Method.ReturnType, TypeUsage.Raw);
 			}
 		}
+
+		public FeatureConditions GetFeatureCondition()
+		{
+			var dependsOnAssemblies = new List<string>(ForeignAssemblyDependencies.GroupBy(t => t.Module.Assembly.Name.Name).Select(g => g.Key));
+			return new FeatureConditions(dependsOnAssemblies);
+		}
 	}
 }

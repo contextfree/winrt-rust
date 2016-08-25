@@ -52,13 +52,15 @@ namespace Generator.Types
 			isFactoryOrStatic = IsFactoryOrStatic(Generator, this, exclusiveToType);
 
 			rawMethodDeclarations = methods.Select(m => m.GetRawDeclaration()).ToList();
-			wrapperMethodDeclarations = methods.Select(m => m.GetWrapperDefinition()).Where(m => m != null).ToList();
+			wrapperMethodDeclarations = methods.Select(m => m.GetWrapperDefinition()).ToList();
 		}
 
 		public override void Emit()
 		{
 			var t = Type;
 			var guid = t.CustomAttributes.First(a => a.AttributeType.Name == "GuidAttribute");
+
+			var definitionFeatureConditions = methods.Select(m => m.GetFeatureCondition()).ToList();
 
 			var name = DefinitionName;
 
@@ -76,18 +78,38 @@ namespace Generator.Types
 
 			string prependStatic = isFactoryOrStatic ? "static " : "";
 
+			var rawMethodDeclarationsWithFeatures = new List<string>();
+			var lastFeatureAttr = definitionFeatureConditions.LastOrDefault()?.GetAttribute();
+
+			// walk through method declaration backwards in order to emit dummy definitions in between valid ones
+			for (int i = rawMethodDeclarations.Count - 1; i >= 0; i--)
+			{
+				var feature = definitionFeatureConditions[i];
+				var featureAttr = feature.GetAttribute();
+				var decl = rawMethodDeclarations[i];
+				if (feature.IsEmpty || featureAttr == lastFeatureAttr)
+				{
+					rawMethodDeclarationsWithFeatures.Insert(0, featureAttr + decl);
+				}
+				else
+				{
+					rawMethodDeclarationsWithFeatures.Insert(0, featureAttr + decl);
+					rawMethodDeclarationsWithFeatures.Insert(0, feature.GetInvertedAttribute() + "fn __Dummy" + i + "(&mut self) -> ()");
+				}
+			}
+
 			if (!IsDelegate)
 			{
 				Module.Append(@"
 		RT_INTERFACE!{" + prependStatic + "interface " + name + generic + "(" + name + "Vtbl): IInspectable(IInspectableVtbl) [IID_" + name + @"] {
-			" + String.Join(",\r\n			", rawMethodDeclarations) + @"
+			" + String.Join(",\r\n			", rawMethodDeclarationsWithFeatures) + @"
 		}}");
 			}
 			else
 			{
 				Module.Append(@"
 		RT_DELEGATE!{delegate " + name + generic + "(" + name + "Vtbl, " + name + "Impl) [IID_" + name + @"] {
-			" + String.Join(",\r\n			", rawMethodDeclarations) + @"
+			" + String.Join(",\r\n			", rawMethodDeclarationsWithFeatures) + @"
 		}}");
 			}
 
@@ -95,7 +117,7 @@ namespace Generator.Types
 			{
 				Module.Append(@"
 		impl" + genericWithBounds + " " + name + generic + @" {
-			" + String.Join("\r\n			", wrapperMethodDeclarations) + @"
+			" + String.Join("\r\n			", wrapperMethodDeclarations.Zip(definitionFeatureConditions, (wrapper, feature) => feature.GetAttribute() + wrapper)) + @"
 		}");
 			}
 		}

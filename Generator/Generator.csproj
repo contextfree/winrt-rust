@@ -48,6 +48,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeatureConditions.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="GuidUtility.cs" />
     <Compile Include="AssemblyCollection.cs" />

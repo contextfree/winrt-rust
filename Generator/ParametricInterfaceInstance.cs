@@ -32,6 +32,14 @@ namespace Generator
 			}
 		}
 
+		public IEnumerable<TypeDef> ForeignAssemblyDependencies
+		{
+			get
+			{
+				return dependencies.Where(t => t.Module.Assembly != Module.Assembly && t.Module.Assembly.Name.Name != "Windows.Foundation");
+			}
+		}
+
 		private string name;
 		private GenericInstanceType originalType;
 
@@ -49,8 +57,12 @@ namespace Generator
 			var guid = Utility.GuidUtility.Create(Namespace, Descriptor);
 			var guidStr = Regex.Replace(guid.ToString("X"), @"[\{\}]", "");
 
+			var dependsOnAssemblies = new List<string>(ForeignAssemblyDependencies.GroupBy(t => t.Module.Assembly.Name.Name).Select(g => g.Key));
+			var features = new FeatureConditions(dependsOnAssemblies);
+
+
 			Module.Append(@"
-		RT_PINTERFACE!{ for " + name + " => [" + guidStr + "] as " + iidName + " }");
+		" + features.GetAttribute() + "RT_PINTERFACE!{ for " + name + " => [" + guidStr + "] as " + iidName + " }");
 		}
 
 		private static string GetTypeIIDDescriptor(Generator gen, TypeReference t, List<TypeDef> dependencies)
