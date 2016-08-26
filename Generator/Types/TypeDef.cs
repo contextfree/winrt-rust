@@ -127,6 +127,7 @@ namespace Generator.Types
 
 		public void AddDependency(TypeDef other)
 		{
+			Assert(Generator.AllowAddDependencies);
 			dependencies.Add(other);
 			other.reverseDependencies.Add(this);
 		}
@@ -181,6 +182,23 @@ namespace Generator.Types
 			}
 
 			return guid;
+		}
+
+		public string GetPath(Module requestingModule)
+		{
+			string name = null;
+			if (Module == requestingModule)
+			{
+				name = Name;
+			}
+			else
+			{
+				name = "::rt::gen::" + Module.Path + "::" + Name;
+				var relative = Module.GetRelativePath(requestingModule) + "::" + Name;
+				if (relative.Length < name.Length)
+					name = relative;
+			}
+			return name;
 		}
 
 		public GenericInstanceType MakeGenericInstanceType(params TypeReference[] arguments)

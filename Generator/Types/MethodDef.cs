@@ -50,6 +50,7 @@ namespace Generator.Types
 
 		public void AddDependency(TypeDef other)
 		{
+			Assert(DeclaringType.Generator.AllowAddDependencies);
 			dependencies.Add(other);
 			DeclaringType.AddDependency(other);
 		}

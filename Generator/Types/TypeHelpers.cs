@@ -137,15 +137,7 @@ namespace Generator.Types
 				var def = gen.GetTypeDefinition(t);
 				source.AddDependency(def);
 
-				string name = null;
-				if (def.Module == source.Module)
-				{
-					name = t.Name;
-				}
-				else
-				{
-					name = "::rt::gen::" + t.Namespace.ToLower().Replace(".", "::") + "::" + t.Name;
-				}
+				string name = def.GetPath(source.Module);
 
 				int i = name.IndexOf('`');
 				if (i >= 0)

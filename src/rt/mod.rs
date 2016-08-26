@@ -178,7 +178,7 @@ macro_rules! RT_INTERFACE {
         pub struct $vtbl {
             pub parent: $crate::$pvtbl
         }
-        #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
+        #[repr(C)] #[allow(missing_copy_implementations)]
         pub struct $interface {
             lpVtbl: *const $vtbl
         }
@@ -226,7 +226,7 @@ macro_rules! RT_INTERFACE {
                 $(,$p: $t)*
             ) -> $rtr)+
         }
-        #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
+        #[repr(C)] #[allow(missing_copy_implementations)]
         pub struct $interface {
             lpVtbl: *const $vtbl
         }
@@ -274,7 +274,7 @@ macro_rules! RT_INTERFACE {
                 $(,$p: $t)*
             ) -> $rtr)+
         }
-        #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
+        #[repr(C)] #[allow(missing_copy_implementations)]
         pub struct $interface<$t1> where $t1: RtType {
             lpVtbl: *const $vtbl<$t1>,
         }
@@ -318,7 +318,7 @@ macro_rules! RT_INTERFACE {
                 $(,$p: $t)*
             ) -> $rtr)+
         }
-        #[repr(C)] #[derive(Debug)] #[allow(missing_copy_implementations)]
+        #[repr(C)] #[allow(missing_copy_implementations)]
         pub struct $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             lpVtbl: *const $vtbl<$t1, $t2>,
         }
@@ -552,8 +552,8 @@ macro_rules! RT_ENUM {
 }
 
 macro_rules! RT_STRUCT {
-    {$(#[$attrs:meta])* struct $name:ident { $($field:ident: $ftype:ty,)* }} => {
-        #[repr(C)] #[derive(Debug,Copy,Clone)] $(#[$attrs])*
+    { struct $name:ident { $($field:ident: $ftype:ty,)* }} => {
+        #[repr(C)] #[derive(Debug,Copy,Clone)]
         pub struct $name {
             $(pub $field: $ftype,)*
         }

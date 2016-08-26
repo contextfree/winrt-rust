@@ -21,6 +21,8 @@ namespace Generator
 
 		private Module rootModule = new Module(null, "");
 
+		public bool AllowAddDependencies { get; private set; }
+
 		public IEnumerable<TypeDef> AllTypes
 		{
 			get
@@ -32,6 +34,7 @@ namespace Generator
 		public Generator(AssemblyCollection assemblies)
 		{
 			Assemblies = assemblies;
+			AllowAddDependencies = true;
 
 			foreach (var asm in Assemblies.Assemblies)
 			{
@@ -83,6 +86,8 @@ namespace Generator
 			{
 				typedef.CollectDependencies();
 			}
+
+			AllowAddDependencies = false; // this prevents logic bugs where new dependencies are added after this phase
 		}
 
 		public void EmitTypes()
@@ -90,7 +95,7 @@ namespace Generator
 			// TODO: get rid of this and enable all modules (disabled because it results in a huge file and very long compilation)
 			var assemblyNames = new string[] { "Windows.Foundation", "Windows.Devices"/*, "Windows.Storage", "Windows.Media", "Windows.System", "Windows.Graphics"*/ };
 
-			foreach (var type in definitionsList.Values/*.Where(t => assemblyNames.Contains(t.Module.Assembly.Name.Name))*/)
+			foreach (var type in definitionsList.Values.Where(t => assemblyNames.Contains(t.Module.Assembly.Name.Name)))
 			{
 				type.Emit();
 			}
@@ -99,6 +104,7 @@ namespace Generator
 		public int EmitParametricInstances()
 		{
 			var instances = pinterfaceManager.Collect(this).ToList();
+			instances.Sort((x, y) => x.Name.CompareTo(y.Name));
 			foreach (var inst in instances)
 			{
 				inst.Emit();
