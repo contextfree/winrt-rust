@@ -140,7 +140,7 @@ impl<'a> Deref for HStringReference<'a> {
     }
 }
 
-/// An HSTRING wrapper with several benefits
+/// An `HSTRING` wrapper with several benefits
 ///
 /// - Faster allocation
 /// - Faster (basically free) creation of references
@@ -287,14 +287,14 @@ impl HStringArg {
 
 /// A wrapper over an HSTRING whose memory is managed by the Windows Runtime.
 /// This is what you get as return values from WinRT methods.
-/// Note that dereferencing to &HStringArg is not implemented for this, because
+/// Note that dereferencing to `&HStringArg` is not implemented for this, because
 /// the containing HSTRING might be null (empty string), and null references
-/// are not allowed. In order to obtain an &HStringArg from an HString,
+/// are not allowed. In order to obtain an `&HStringArg` from an `HString`,
 /// first create an `HStringReference` using `make_reference()`.
 pub struct HString(HSTRING);
 
 impl HString {
-    /// Creates a new HString whose memory is managed by the Windows Runtime.
+    /// Creates a new `HString` whose memory is managed by the Windows Runtime.
     /// This allocates twice (once for the conversion to UTF-16, and again within `WindowsCreateString`),
     /// therefore this should not be used. Use `FastHString::new()` instead.
     pub fn new<'a>(s: &'a str) -> HString {
