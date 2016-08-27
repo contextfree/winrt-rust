@@ -1,3 +1,5 @@
+#![cfg(windows)]
+
 #![cfg_attr(test,feature(test))]
 
 #![cfg_attr(feature = "nightly", feature(specialization))]
