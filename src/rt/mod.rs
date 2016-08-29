@@ -617,20 +617,3 @@ impl ::comptr::HiddenGetRuntimeClassName for IInspectable {
         unsafe { HString::wrap(result) }
     }
 }
-
-#[cfg(test)]
-mod tests {
-    extern crate test;
-
-    #[test]
-    fn check_sizes() {
-        use ::std::mem::size_of;
-
-        assert_eq!(size_of::<bool>(), 1);
-        assert_eq!(size_of::<::Char>(), size_of::<::w::wchar_t>());
-        assert_eq!(size_of::<::Guid>(), size_of::<::w::GUID>());
-        
-        //assert_eq!(size_of::<::ComPtr<::IInspectable>>(), size_of::<*mut ::IInspectable>());
-        //assert_eq!(size_of::<Option<::ComPtr<::IInspectable>>>(), size_of::<::ComPtr<::IInspectable>>());
-    }
-}

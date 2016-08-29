@@ -451,8 +451,7 @@ mod tests {
     #[test]
     fn check_sizes() {
         use ::std::mem::size_of;
-        // TODO: get rid of drop flag
-        //assert_eq!(size_of::<::HString>(), size_of::<::w::HSTRING>());
+        assert_eq!(size_of::<::HString>(), size_of::<::w::HSTRING>());
         assert_eq!(size_of::<&::HStringArg>(), size_of::<::w::HSTRING>());
     }
 
