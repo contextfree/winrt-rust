@@ -46,6 +46,14 @@ namespace Generator
 			}
 		}
 
+		public string Path
+		{
+			get
+			{
+				return FullName.ToLower().Replace(".", "::");
+			}
+		}
+
 		public StringBuilder Text { get; private set; }
 
 		public AssemblyDefinition Assembly { get; private set; }
@@ -102,6 +110,28 @@ namespace Generator
 			{
 				return mod;
 			}
+		}
+
+		public string GetRelativePath(Module requestingModule)
+		{
+			string[] thisPath = FullName.ToLower().Split('.');
+			string[] requestingPath = requestingModule.FullName.ToLower().Split('.');
+			var maxCommonLength = Math.Min(thisPath.Length, requestingPath.Length);
+			int i;
+			for (i = 0; i < maxCommonLength; i++)
+			{
+				if (thisPath[i] != requestingPath[i])
+					break;
+			}
+
+			var goUp = Enumerable.Repeat("super", requestingPath.Length - i); // how many times do we need to go up one level
+			var goDown = thisPath.Skip(i);
+			return string.Join("::", goUp.Concat(goDown));
+		}
+
+		public override string ToString()
+		{
+			return FullName;
 		}
 	}
 }

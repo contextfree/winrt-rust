@@ -131,3 +131,19 @@ impl<T> Drop for ComArray<T> {
         };
     }
 }
+
+#[cfg(test)]
+mod tests {
+    extern crate test;
+
+    #[test]
+    fn check_sizes() {
+        use ::std::mem::size_of;
+
+        // make sure that ComPtr is pointer-sized
+        assert_eq!(size_of::<::ComPtr<::IInspectable>>(), size_of::<*mut ::IInspectable>());
+        
+        // TODO: enable this once the null-pointer optimization can be used for Option<ComPtr>
+        //assert_eq!(size_of::<Option<::ComPtr<::IInspectable>>>(), size_of::<*mut ::IInspectable>());
+    }
+}

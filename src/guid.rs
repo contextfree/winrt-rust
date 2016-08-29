@@ -38,3 +38,15 @@ impl cmp::PartialEq<Guid> for Guid {
 }
 
 impl cmp::Eq for Guid {}
+
+#[cfg(test)]
+mod tests {
+    extern crate test;
+
+    #[test]
+    fn check_size() {
+        use ::std::mem::size_of;
+
+        assert_eq!(size_of::<::Guid>(), size_of::<::w::GUID>());
+    }
+}

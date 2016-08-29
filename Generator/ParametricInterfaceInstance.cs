@@ -9,7 +9,7 @@ using Generator.Types;
 
 namespace Generator
 {
-	public class ParametricInterfaceInstance
+	public class ParametricInterfaceInstance : ITypeRequestSource
 	{
 		private static Guid Namespace = new Guid("11F47AD5-7B73-42C0-ABAE-878B1E16ADEE");
 
@@ -21,7 +21,6 @@ namespace Generator
 				return Type.Module;
 			}
 		}
-		public string Descriptor { get; private set; }
 
 		private List<TypeDef> dependencies = new List<TypeDef>();
 		public IEnumerable<TypeDef> Dependencies
@@ -40,21 +39,22 @@ namespace Generator
 			}
 		}
 
-		private string name;
+		public string Name { get; private set; }
+
 		private GenericInstanceType originalType;
 
 		public ParametricInterfaceInstance(Generator gen, GenericInstanceType type)
 		{
 			originalType = type;
 			Type = gen.GetTypeDefinition(type);
-			Descriptor = GetTypeIIDDescriptor(gen, type, dependencies);
-			name = TypeHelpers.GetTypeName(gen, Type, type, TypeUsage.Alias);
+			Name = TypeHelpers.GetTypeName(gen, this, type, TypeUsage.Alias);
 		}
 
 		public void Emit()
 		{
+			var descriptor = GetTypeIIDDescriptor(Type.Generator, originalType);
 			var iidName = "IID_" + Regex.Replace(originalType.FullName.Substring(Type.Namespace.Length + 1), @"[\.`<>,]", "_").TrimEnd('_');
-			var guid = Utility.GuidUtility.Create(Namespace, Descriptor);
+			var guid = Utility.GuidUtility.Create(Namespace, descriptor);
 			var guidStr = Regex.Replace(guid.ToString("X"), @"[\{\}]", "");
 
 			var dependsOnAssemblies = new List<string>(ForeignAssemblyDependencies.GroupBy(t => t.Module.Assembly.Name.Name).Select(g => g.Key));
@@ -62,10 +62,10 @@ namespace Generator
 
 
 			Module.Append(@"
-		" + features.GetAttribute() + "RT_PINTERFACE!{ for " + name + " => [" + guidStr + "] as " + iidName + " }");
+		" + features.GetAttribute() + "RT_PINTERFACE!{ for " + Name + " => [" + guidStr + "] as " + iidName + " }");
 		}
 
-		private static string GetTypeIIDDescriptor(Generator gen, TypeReference t, List<TypeDef> dependencies)
+		private static string GetTypeIIDDescriptor(Generator gen, TypeReference t)
 		{
 			if (t.FullName == "System.String")
 			{
@@ -101,8 +101,6 @@ namespace Generator
 			}
 
 			var def = gen.GetTypeDefinition(t);
-			dependencies.Add(def);
-
 			var guid = def.GetGuid();
 
 			if (def.Kind == TypeKind.Interface)
@@ -110,7 +108,7 @@ namespace Generator
 				if (t.IsGenericInstance)
 				{
 					var ty = (GenericInstanceType)t;
-					return "pinterface({" + guid.Value.ToString() + "};" + String.Join(";", ty.GenericArguments.Select(p => GetTypeIIDDescriptor(gen, p, dependencies))) + ")";
+					return "pinterface({" + guid.Value.ToString() + "};" + String.Join(";", ty.GenericArguments.Select(p => GetTypeIIDDescriptor(gen, p))) + ")";
 				}
 				else
 				{
@@ -122,7 +120,7 @@ namespace Generator
 				if (t.IsGenericInstance)
 				{
 					var ty = (GenericInstanceType)t;
-					return "pinterface({" + guid.Value.ToString() + "};" + String.Join(";", ty.GenericArguments.Select(p => GetTypeIIDDescriptor(gen, p, dependencies))) + ")";
+					return "pinterface({" + guid.Value.ToString() + "};" + String.Join(";", ty.GenericArguments.Select(p => GetTypeIIDDescriptor(gen, p))) + ")";
 				}
 				else
 				{
@@ -133,24 +131,29 @@ namespace Generator
 			}
 			else if (def.Kind == TypeKind.Enum)
 			{
-				var underlyingType = GetTypeIIDDescriptor(gen, def.Type.Fields.Single(f => f.Name == "value__").FieldType, dependencies);
+				var underlyingType = GetTypeIIDDescriptor(gen, def.Type.Fields.Single(f => f.Name == "value__").FieldType);
 				return "enum(" + def.Type.FullName + ";" + underlyingType + ")";
 			}
 			else if (def.Kind == TypeKind.Struct)
 			{
-				return "struct(" + def.Type.FullName + ";" + String.Join(";", def.Type.Fields.Select(f => GetTypeIIDDescriptor(gen, f.FieldType, dependencies))) + ")";
+				return "struct(" + def.Type.FullName + ";" + String.Join(";", def.Type.Fields.Select(f => GetTypeIIDDescriptor(gen, f.FieldType))) + ")";
 			}
 			else if (def.Kind == TypeKind.Class)
 			{
 				var mainInterface = def.Type.Interfaces[0];
 				if (def.Type.CustomAttributes.Any(a => a.AttributeType.Name == "DefaultInterfaceAttribute"))
 					throw new NotImplementedException();
-				return "rc(" + def.Type.FullName + ";" + GetTypeIIDDescriptor(gen, mainInterface, dependencies) + ")";
+				return "rc(" + def.Type.FullName + ";" + GetTypeIIDDescriptor(gen, mainInterface) + ")";
 			}
 			else
 			{
 				throw new NotImplementedException();
 			}
+		}
+
+		public void AddDependency(TypeDef other)
+		{
+			dependencies.Add(other);
 		}
 	}
 }
