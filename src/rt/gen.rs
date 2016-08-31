@@ -21417,12 +21417,12 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				let hr = ((*self.lpVtbl).GetBooleanArray)(self, &mut valueSize, &mut value);
 				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_string_array(&mut self) -> RtResult<ComArray<::w::HSTRING>> {
+			#[inline] pub unsafe fn get_string_array(&mut self) -> RtResult<ComArray<HString>> {
 				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetStringArray)(self, &mut valueSize, &mut value);
 				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_inspectable_array(&mut self) -> RtResult<ComArray<*mut IInspectable>> {
+			#[inline] pub unsafe fn get_inspectable_array(&mut self) -> RtResult<ComArray<IInspectable>> {
 				let mut valueSize = 0; let mut value = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).GetInspectableArray)(self, &mut valueSize, &mut value);
 				if hr == ::w::S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { Err(hr) }
@@ -21656,12 +21656,12 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				let hr = ((*self.lpVtbl).CreateBooleanArray)(self, value.len() as u32, value.as_ptr() as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_string_array(&mut self, value: &[::w::HSTRING]) -> RtResult<ComPtr<IInspectable>> {
+			#[inline] pub unsafe fn create_string_array(&mut self, value: &[&HStringArg]) -> RtResult<ComPtr<IInspectable>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateStringArray)(self, value.len() as u32, value.as_ptr() as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn create_inspectable_array(&mut self, value: &[*mut IInspectable]) -> RtResult<ComPtr<IInspectable>> {
+			#[inline] pub unsafe fn create_inspectable_array(&mut self, value: &[&IInspectable]) -> RtResult<ComPtr<IInspectable>> {
 				let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).CreateInspectableArray)(self, value.len() as u32, value.as_ptr() as *mut _, &mut out);
 				if hr == ::w::S_OK { Ok(ComPtr::wrap(out)) } else { Err(hr) }
@@ -21969,7 +21969,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			fn get_Value(&mut self, outSize: *mut u32, out: *mut *mut T::Abi) -> ::w::HRESULT
 		}}
 		impl<T: RtType> IReferenceArray<T> {
-			#[inline] pub unsafe fn get_value(&mut self) -> RtResult<ComArray<T::Abi>> {
+			#[inline] pub unsafe fn get_value(&mut self) -> RtResult<ComArray<T>> {
 				let mut outSize = 0; let mut out = ::std::ptr::null_mut();
 				let hr = ((*self.lpVtbl).get_Value)(self, &mut outSize, &mut out);
 				if hr == ::w::S_OK { Ok(ComArray::from_raw(outSize, out)) } else { Err(hr) }
@@ -24007,7 +24007,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				let hr = ((*self.lpVtbl).GetMany)(self, startIndex, itemsSize, items, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn replace_all(&mut self, items: &[T::Abi]) -> RtResult<()> {
+			#[inline] pub unsafe fn replace_all(&mut self, items: &[&T::In]) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).ReplaceAll)(self, items.len() as u32, items.as_ptr() as *mut _);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
@@ -26486,15 +26486,15 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				let hr = ((*self.lpVtbl).AddStringWithFormatAndTags)(self, name.get(), value.get(), format, tags);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn add_string_array(&mut self, name: &HStringArg, value: &[::w::HSTRING]) -> RtResult<()> {
+			#[inline] pub unsafe fn add_string_array(&mut self, name: &HStringArg, value: &[&HStringArg]) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).AddStringArray)(self, name.get(), value.len() as u32, value.as_ptr() as *mut _);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn add_string_array_with_format(&mut self, name: &HStringArg, value: &[::w::HSTRING], format: LoggingFieldFormat) -> RtResult<()> {
+			#[inline] pub unsafe fn add_string_array_with_format(&mut self, name: &HStringArg, value: &[&HStringArg], format: LoggingFieldFormat) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).AddStringArrayWithFormat)(self, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn add_string_array_with_format_and_tags(&mut self, name: &HStringArg, value: &[::w::HSTRING], format: LoggingFieldFormat, tags: i32) -> RtResult<()> {
+			#[inline] pub unsafe fn add_string_array_with_format_and_tags(&mut self, name: &HStringArg, value: &[&HStringArg], format: LoggingFieldFormat, tags: i32) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).AddStringArrayWithFormatAndTags)(self, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}

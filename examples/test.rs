@@ -174,7 +174,20 @@ fn run() {
     let returned_array = unsafe { boxed_array.get_value().unwrap() };
     println!("{:?} = {:?}", array, &returned_array[..]);
     assert_eq!(array, &returned_array[..]);
-    // TODO: test array of string and object (also see if ComArray drops contents correctly)
+
+    let str1 = FastHString::new("foo");
+    let str2 = FastHString::new("bar");
+    let array = &mut [&*str1, &*str2, &*str1, &*str2];
+    let boxed_array = unsafe { IPropertyValueStatics::factory().create_string_array(array) };
+    let mut boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
+    assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType_StringArray);
+    let mut boxed_array = boxed_array.query_interface::<IReferenceArray<HString>>().unwrap();
+    let returned_array = unsafe { boxed_array.get_value().unwrap() };
+    assert_eq!(array.len(), returned_array.len());
+    for i in 0..array.len() {
+        assert!(returned_array[i] == (if i % 2 == 0 { &str1 } else { &str2 }));
+    }
+    // TODO: test array interface objects (also see if ComArray drops contents correctly)
     
     let status = unsafe { asi.get_status().unwrap() };
     println!("status: {:?}", status);
