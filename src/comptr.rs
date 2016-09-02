@@ -110,13 +110,13 @@ impl<T> Deref for ComArray<T> where T: ::RtType {
     type Target = [T::Out];
     #[inline]
     fn deref(&self) -> &[T::Out] {
-        unsafe { ::std::slice::from_raw_parts(::std::mem::transmute(self.first), self.size as usize) }
+        unsafe { ::std::slice::from_raw_parts(self.first as *mut T::Out, self.size as usize) }
     }
 }
 impl<T> DerefMut for ComArray<T> where T: ::RtType {
     #[inline]
     fn deref_mut(&mut self) -> &mut [T::Out] {
-        unsafe { ::std::slice::from_raw_parts_mut(::std::mem::transmute(self.first), self.size as usize) }
+        unsafe { ::std::slice::from_raw_parts_mut(self.first as *mut T::Out, self.size as usize) }
     }
 }
 
@@ -132,7 +132,7 @@ impl<T> Drop for ComArray<T> where T: ::RtType {
 
 mod extra {
     // makes sure that compile fails when ComPtr is not pointer-sized
-    // i.e. a compiler version is used that still has dropflags
+    // i.e. when a compiler version is used that still has dropflags
     fn assert_no_dropflags() {
         let p: *mut ::IInspectable = ::std::ptr::null_mut();
         let _: ::ComPtr<::IInspectable> = unsafe { ::std::mem::transmute(p) };
