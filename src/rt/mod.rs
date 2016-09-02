@@ -366,25 +366,25 @@ macro_rules! RT_INTERFACE {
 macro_rules! RT_DELEGATE {
     // without generic parameters
     (delegate $interface:ident ($vtbl:ident, $imp:ident) [$iid:ident] {
-        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> HRESULT
     }) => {
         RT_INTERFACE!{basic $interface($vtbl) : IUnknown(::w::IUnknownVtbl) [$iid] {
-            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> $rtr
+            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> HRESULT
         }}
 
         impl $interface {
 			#[inline] pub fn new<_F_>(f: _F_) -> ComPtr<$interface>
-				where _F_: 'static + Send + FnMut($($t),*) -> $rtr, $interface: ComIid {
+				where _F_: 'static + Send + FnMut($($t),*) -> Result<()>, $interface: ComIid {
 				$imp::new(f).into_interface()
     		}
 		}
 
-        struct $imp<_F_> where _F_: 'static + Send + FnMut($($t),*) -> $rtr {
+        struct $imp<_F_> where _F_: 'static + Send + FnMut($($t),*) -> Result<()> {
             invoke: _F_
         }
 
         impl<_F_> $imp<_F_>
-            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
             pub fn new(f: _F_) -> $imp<_F_> {
                 $imp {
@@ -394,7 +394,7 @@ macro_rules! RT_DELEGATE {
         }
 
         impl<_F_> ::rt::handler::ComClass<$interface> for $imp<_F_>
-            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
             fn get_vtbl() -> $vtbl {
                 $vtbl {
@@ -404,11 +404,14 @@ macro_rules! RT_DELEGATE {
                         Release: ::rt::handler::ComRepr_Release::<$imp<_F_>>,
                     },
                     Invoke: {
-                        unsafe extern "system" fn Invoke<_F_>(this_: *mut $interface $(,$p : $t)*) -> $rtr
-                            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+                        unsafe extern "system" fn Invoke<_F_>(this_: *mut $interface $(,$p : $t)*) -> HRESULT
+                            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
                         {
                             let this: &mut $imp<_F_> = ::rt::handler::ComClass::from_interface(this_);
-                            (this.invoke)($($p),*)
+                            match (this.invoke)($($p),*) {
+                                Ok(()) => S_OK,
+                                Err(err) => err.as_hresult()
+                            }
                         }
                         Invoke::<_F_>
                     }
@@ -417,7 +420,7 @@ macro_rules! RT_DELEGATE {
         }
 
         /*impl<_F_> Drop for $imp<_F_>
-            where _F_: 'static + Send + FnMut($($t),*) -> $rtr
+            where _F_: 'static + Send + FnMut($($t),*) -> HRESULT
         {
             fn drop(&mut self) {
                 println!("DROPPED {}<...>!", stringify!($imp));
@@ -427,26 +430,26 @@ macro_rules! RT_DELEGATE {
 
     // with generic parameters
     (delegate $interface:ident<$($ht:ident),+> ($vtbl:ident, $imp:ident) [$iid:ident] {
-        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> HRESULT
     }) => {
         RT_INTERFACE!{basic $interface<$($ht),+>($vtbl) : IUnknown(::w::IUnknownVtbl) [$iid] {
-            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> $rtr
+            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> HRESULT
         }}
 
         impl<$($ht: RtType + 'static),+> $interface<$($ht),+> {
 			#[inline] pub fn new<_F_>(f: _F_) -> ComPtr<$interface<$($ht),+>>
-				where _F_: 'static + Send + FnMut($($t),*) -> $rtr, $interface<$($ht),+>: ComIid {
+				where _F_: 'static + Send + FnMut($($t),*) -> Result<()>, $interface<$($ht),+>: ComIid {
 				$imp::new(f).into_interface()
     		}
 		}
 
-        struct $imp<$($ht: RtType),+ , _F_> where _F_: 'static + Send + FnMut($($t),*) -> $rtr {
+        struct $imp<$($ht: RtType),+ , _F_> where _F_: 'static + Send + FnMut($($t),*) -> Result<()> {
             invoke: _F_,
             phantom: ::std::marker::PhantomData<($($ht),+)>
         }
 
         impl<$($ht: RtType + 'static),+ , _F_> $imp<$($ht),+ , _F_>
-            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
             pub fn new(f: _F_) -> $imp<$($ht),+ , _F_> {
                 $imp {
@@ -457,7 +460,7 @@ macro_rules! RT_DELEGATE {
         }
 
         impl<$($ht: RtType + 'static),+ , _F_> ::rt::handler::ComClass<$interface<$($ht),+>> for $imp<$($ht),+ , _F_>
-            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
             fn get_vtbl() -> $vtbl<$($ht),+> {
                 $vtbl::<$($ht),+> {
@@ -467,11 +470,14 @@ macro_rules! RT_DELEGATE {
                         Release: ::rt::handler::ComRepr_Release::<$imp<$($ht),+ , _F_>>,
                     },
                     Invoke: {
-                        unsafe extern "system" fn Invoke<$($ht: RtType + 'static),+ , _F_>(this_: *mut $interface<$($ht),+> $(,$p : $t)*) -> $rtr
-                            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+                        unsafe extern "system" fn Invoke<$($ht: RtType + 'static),+ , _F_>(this_: *mut $interface<$($ht),+> $(,$p : $t)*) -> HRESULT
+                            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
                         {
                             let this: &mut $imp<$($ht),+ , _F_> = ::rt::handler::ComClass::from_interface(this_);
-                            (this.invoke)($($p),*)
+                            match (this.invoke)($($p),*) {
+                                Ok(()) => S_OK,
+                                Err(err) => err.as_hresult()
+                            }
                         }
                         Invoke::<$($ht),+ , _F_>
                     }
@@ -480,7 +486,7 @@ macro_rules! RT_DELEGATE {
         }
 
         /*impl<$($ht: RtType),+ , _F_> Drop for $imp<$($ht),+ , _F_>
-            where _F_: 'static + Send + FnMut($($t),*) -> $rtr
+            where _F_: 'static + Send + FnMut($($t),*) -> HRESULT
         {
             fn drop(&mut self) {
                 println!("DROPPED {}<...>!", stringify!($imp));

@@ -8,13 +8,6 @@ extern crate runtimeobject;
 use std::ptr;
 
 use wrt::*;
-use runtimeobject::*;
-
-// TODO: re-export necessary types from winapi
-use ::w::{
-    S_OK,
-};
-
 use wrt::windows::foundation::*;
 use wrt::windows::devices::enumeration::*;
 use wrt::windows::devices::midi::*;
@@ -50,6 +43,9 @@ fn run() {
     let mut deviceInformationStatics = IDeviceInformationStatics::factory();
     
     unsafe {
+        use runtimeobject::*;
+        use ::w::S_OK;
+
         // Test some error reporting by using an invalid device selector
         let wrongDeviceSelector: FastHString = "Foobar".into();
         let res = deviceInformationStatics.find_all_async_aqs_filter(&wrongDeviceSelector);
@@ -103,7 +99,7 @@ fn run() {
             let mut started = lock.lock().unwrap();
             *started = true;
             cvar.notify_one();
-            S_OK // TODO: return Result instead
+            Ok(())
         });
         unsafe { asyncOp.set_completed(&mut myHandler).unwrap() };
         // local reference to myHandler is dropped here -> Release() is called
@@ -151,7 +147,10 @@ fn run() {
         println!("Found remembered value: {} (index: {})", found, index);
     }
     
-    assert!(unsafe { deviceInformationCollection.get_at(count + 42).is_err() }); // will be E_BOUNDS (out of bounds)
+    match unsafe { deviceInformationCollection.get_at(count + 42) } {
+        Err(e) => println!("Error getting element at {}: {:?}", count + 42, e), // will be out of bounds
+        Ok(_) => panic!("expected Error")
+    };
 
     let array = &mut [true, false, false, true];
     let boxed_array = unsafe { IPropertyValueStatics::factory().create_boolean_array(array) };
