@@ -220,16 +220,16 @@ namespace Generator.Types
 
 			string inline = isGetMany ? "" : "#[inline] ";
 
-			return inline + "pub unsafe fn " + name + "(" + String.Join(", ", inputParameters) + ") -> RtResult<" + outType + @"> {" + outInit + @"
+			return inline + "pub unsafe fn " + name + "(" + String.Join(", ", inputParameters) + ") -> Result<" + outType + @"> {" + outInit + @"
 				let hr = ((*self.lpVtbl)." + rawName + ")(" + String.Join(", ", rawParams) + ");" + @"
-				if hr == ::w::S_OK { " + outWrap + @" } else { Err(hr) }
+				if hr == S_OK { " + outWrap + @" } else { err(hr) }
 			}";
 		}
 
 		public string GetRawDeclaration()
 		{
 			var name = GetRawName();
-			return "fn " + name + "(" + String.Join(", ", GetParameterDeclarations()) + ") -> ::w::HRESULT";
+			return "fn " + name + "(" + String.Join(", ", GetParameterDeclarations()) + ") -> HRESULT";
 		}
 
 		public IEnumerable<string> GetParameterDeclarations()

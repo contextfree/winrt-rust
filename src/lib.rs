@@ -40,13 +40,15 @@ mod comptr;
 pub use comptr::{ComPtr, ComArray};
 
 mod cominterfaces;
-pub use cominterfaces::{ComInterface, ComIid, IUnknown, IUnknownVtbl, IRestrictedErrorInfo, IAgileObject};
-// TODO: get rid of IUnknownVtbl export?
+pub use cominterfaces::{ComInterface, ComIid, IUnknown, IRestrictedErrorInfo, IAgileObject};
 
 mod rt;
-pub use rt::{RtInterface, RtClassInterface, RtValueType, RtType, RtActivatable, IInspectable, IInspectableVtbl, RtResult, Char};
+pub use rt::{RtInterface, RtClassInterface, RtValueType, RtType, RtActivatable, IInspectable, IInspectableVtbl, Char, RuntimeContext};
 
 pub use rt::handler::IntoInterface;
+
+mod result;
+pub use result::{Result, Error, HRESULT};
 
 pub mod windows {
     pub use rt::gen::windows::*;
@@ -54,7 +56,19 @@ pub mod windows {
 
 /// This is only for internal use within the generated code
 mod prelude {
-    pub use ::rt::{RtType, IInspectable, RtResult};
+    pub use ::rt::{RtType, IInspectable, IInspectableVtbl, Char};
     pub use ::rt::handler::IntoInterface;
-    pub use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
+    pub use ::cominterfaces::{ComInterface, ComIid, IUnknown};
+    pub use ::comptr::{ComPtr, ComArray};
+    pub use ::hstring::{HString, HStringArg};
+    pub use ::result::{Result, HRESULT};
+    pub use ::w::{IUnknownVtbl, S_OK, HSTRING};
+    pub use ::std::ptr::null_mut;
+    pub use ::std::mem::zeroed;
+    pub use ::guid::Guid;
+
+    #[inline]
+    pub fn err<T>(hr: ::result::HRESULT) -> ::result::Result<T> {
+        Err(::result::Error::from_hresult(hr))
+    }
 }

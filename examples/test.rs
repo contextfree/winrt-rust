@@ -8,29 +8,14 @@ extern crate runtimeobject;
 use std::ptr;
 
 use wrt::*;
-use runtimeobject::*;
-
-// TODO: re-export necessary types from winapi
-use ::w::{
-    HRESULT,
-    S_OK,
-    RO_INIT_MULTITHREADED,
-};
-
 use wrt::windows::foundation::*;
 use wrt::windows::devices::enumeration::*;
 use wrt::windows::devices::midi::*;
 
 fn main() {
-    unsafe {
-        let hres = RoInitialize(RO_INIT_MULTITHREADED);
-        println!("HRESULT (RoInitialize) = {}", hres);
-        let mut f: ::w::UINT32 = 0;
-        assert!(RoGetErrorReportingFlags(&mut f) == S_OK);
-        println!("ErrorReportingFlags: {:?}", f);
-        run();
-        RoUninitialize();
-    }
+    let rt = RuntimeContext::init();
+    run();
+    rt.uninit();
 }
 
 fn run() {
@@ -58,11 +43,14 @@ fn run() {
     let mut deviceInformationStatics = IDeviceInformationStatics::factory();
     
     unsafe {
+        use runtimeobject::*;
+        use ::w::S_OK;
+
         // Test some error reporting by using an invalid device selector
         let wrongDeviceSelector: FastHString = "Foobar".into();
         let res = deviceInformationStatics.find_all_async_aqs_filter(&wrongDeviceSelector);
-        if let Err(hr) = res {
-            println!("HRESULT (FindAllAsyncAqsFilter) = {:?}", hr);
+        if let Err(e) = res {
+            println!("HRESULT (FindAllAsyncAqsFilter) = {:?}", e.as_hresult());
             let mut errorInfo = {
                 let mut res = ptr::null_mut();
                 assert_eq!(GetRestrictedErrorInfo(&mut res), S_OK);
@@ -70,15 +58,15 @@ fn run() {
             };
             let (description, error, restrictedDescription, _) = {
                 let mut description = ptr::null_mut();
-                let mut error: HRESULT = 0;
+                let mut error = 0;
                 let mut restrictedDescription = ptr::null_mut();
                 let mut capabilitySid = ptr::null_mut();
                 assert_eq!(errorInfo.GetErrorDetails(&mut description, &mut error, &mut restrictedDescription, &mut capabilitySid), S_OK);
                 (BStr::wrap(description), error, BStr::wrap(restrictedDescription), BStr::wrap(capabilitySid))
             };
             println!("Got Error Info: {} ({})", description, restrictedDescription);
-            assert_eq!(error, hr); // the returned HRESULT within IRestrictedErrorInfo is the same as the original HRESULT
-        }        
+            assert_eq!(error, e.as_hresult()); // the returned HRESULT within IRestrictedErrorInfo is the same as the original HRESULT
+        }
         // NOTE: `res` is still null pointer at this point
     };
 
@@ -111,7 +99,7 @@ fn run() {
             let mut started = lock.lock().unwrap();
             *started = true;
             cvar.notify_one();
-            S_OK
+            Ok(())
         });
         unsafe { asyncOp.set_completed(&mut myHandler).unwrap() };
         // local reference to myHandler is dropped here -> Release() is called
@@ -145,7 +133,6 @@ fn run() {
     assert_eq!(i, count);
 
     let mut buffer = Vec::with_capacity(2000);
-
     unsafe { deviceInformationCollection.get_many(0, &mut buffer).unwrap() };
     for (b, i) in buffer.iter_mut().zip(0..) {
         let deviceName = unsafe { b.get_name().unwrap() };
@@ -160,7 +147,10 @@ fn run() {
         println!("Found remembered value: {} (index: {})", found, index);
     }
     
-    assert!(unsafe { deviceInformationCollection.get_at(count + 42).is_err() }); // will be E_BOUNDS (out of bounds)
+    match unsafe { deviceInformationCollection.get_at(count + 42) } {
+        Err(e) => println!("Error getting element at {}: {:?}", count + 42, e), // will be out of bounds
+        Ok(_) => panic!("expected Error")
+    };
 
     let array = &mut [true, false, false, true];
     let boxed_array = unsafe { IPropertyValueStatics::factory().create_boolean_array(array) };

@@ -2,7 +2,6 @@ use std::sync::atomic;
 
 use ::{
     IUnknown,
-    IUnknownVtbl,
     IAgileObject,
     ComInterface,
     ComIid,
@@ -10,7 +9,7 @@ use ::{
     Guid
 };
 
-use ::w::{S_OK, HRESULT, VOID, REFIID, ULONG};
+use ::w::{S_OK, HRESULT, VOID, REFIID, ULONG, IUnknownVtbl};
 
 #[repr(C)]
 pub struct ComRepr<T, Vtbl> {

@@ -2,15 +2,13 @@ use std::ptr;
 
 use super::{ComInterface, HString, HStringReference, HStringArg, ComPtr, ComArray, ComIid, Guid};
 
-use w::{HRESULT, HSTRING, S_OK, ULONG, TrustLevel, IID};
+use w::{HRESULT, HSTRING, S_OK, S_FALSE, ULONG, TrustLevel, IID, CO_E_NOTINITIALIZED};
 
 use self::gen::windows::foundation::collections::{
     IIterable,
     IIterator,
     IVectorView
 };
-
-pub type RtResult<T> = Result<T, ::w::HRESULT>;
 
 #[derive(Clone, Copy)] #[repr(C)]
 pub struct Char(pub ::w::wchar_t);
@@ -93,12 +91,19 @@ pub trait RtActivatable {
     type Factory: ComIid;
     #[doc(hidden)]
     fn activatable_class_id() -> &'static [u16];
+
+    /// Returns a factory to create instances of this type or call static methods.
     fn factory() -> ComPtr<Self::Factory> {
         let mut res = ptr::null_mut();
         let class_id = unsafe { HStringReference::from_utf16_unchecked(Self::activatable_class_id()) };
-        let hres = unsafe { ::runtimeobject::RoGetActivationFactory(class_id.get(), Self::Factory::iid().as_ref(), &mut res as *mut *mut _ as *mut *mut ::w::VOID) };
-        assert_eq!(hres, S_OK);
-        unsafe { ComPtr::wrap(res) }
+        let hr = unsafe { ::runtimeobject::RoGetActivationFactory(class_id.get(), Self::Factory::iid().as_ref(), &mut res as *mut *mut _ as *mut *mut ::w::VOID) };
+        if hr == S_OK {
+            unsafe { ComPtr::wrap(res) }
+        } else if hr == CO_E_NOTINITIALIZED {
+            panic!("WinRT is not initialized")
+        } else {
+            panic!("RoGetActivationFactory failed with error code {}", hr)
+        }        
     }
 }
 
@@ -179,12 +184,12 @@ macro_rules! RT_INTERFACE {
     };
 
     // version with no methods
-    (basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
+    (basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl {
-            pub parent: $crate::$pvtbl
+            pub parent: $pvtbl
         }
         #[repr(C)] #[allow(missing_copy_implementations)]
         pub struct $interface {
@@ -221,14 +226,14 @@ macro_rules! RT_INTERFACE {
     };
 
     // version with methods, but without generic parameters
-    (basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
+    (basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl {
-            pub parent: $crate::$pvtbl
+            pub parent: $pvtbl
             $(, $(#[cfg($cond_attr)])* pub $method: unsafe extern "system" fn(
                 This: *mut $interface
                 $(,$p: $t)*
@@ -269,14 +274,14 @@ macro_rules! RT_INTERFACE {
     };
     // The $iid is actually not necessary, because it refers to the uninstantiated version of the interface,
     // which is irrelevant at runtime (it is used to generate the IIDs of the parameterized interfaces).
-    (basic $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
+    (basic $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl<$t1> where $t1: RtType {
-            pub parent: $crate::$pvtbl
+            pub parent: $pvtbl
             $(, $(#[cfg($cond_attr)])* pub $method: unsafe extern "system" fn(
                 This: *mut $interface<$t1>
                 $(,$p: $t)*
@@ -313,14 +318,14 @@ macro_rules! RT_INTERFACE {
         }
     };
 
-    (basic $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ident) [$iid:ident]
+    (basic $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl<$t1, $t2> where $t1: RtType, $t2: RtType {
-            pub parent: $crate::$pvtbl
+            pub parent: $pvtbl
             $(, $(#[cfg($cond_attr)])* pub $method: unsafe extern "system" fn(
                 This: *mut $interface<$t1, $t2>
                 $(,$p: $t)*
@@ -361,25 +366,25 @@ macro_rules! RT_INTERFACE {
 macro_rules! RT_DELEGATE {
     // without generic parameters
     (delegate $interface:ident ($vtbl:ident, $imp:ident) [$iid:ident] {
-        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> HRESULT
     }) => {
-        RT_INTERFACE!{basic $interface($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
-            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> $rtr
+        RT_INTERFACE!{basic $interface($vtbl) : IUnknown(::w::IUnknownVtbl) [$iid] {
+            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> HRESULT
         }}
 
         impl $interface {
 			#[inline] pub fn new<_F_>(f: _F_) -> ComPtr<$interface>
-				where _F_: 'static + Send + FnMut($($t),*) -> $rtr, $interface: ComIid {
+				where _F_: 'static + Send + FnMut($($t),*) -> Result<()>, $interface: ComIid {
 				$imp::new(f).into_interface()
     		}
 		}
 
-        struct $imp<_F_> where _F_: 'static + Send + FnMut($($t),*) -> $rtr {
+        struct $imp<_F_> where _F_: 'static + Send + FnMut($($t),*) -> Result<()> {
             invoke: _F_
         }
 
         impl<_F_> $imp<_F_>
-            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
             pub fn new(f: _F_) -> $imp<_F_> {
                 $imp {
@@ -389,21 +394,24 @@ macro_rules! RT_DELEGATE {
         }
 
         impl<_F_> ::rt::handler::ComClass<$interface> for $imp<_F_>
-            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
             fn get_vtbl() -> $vtbl {
                 $vtbl {
-                    parent: ::IUnknownVtbl {
+                    parent: ::w::IUnknownVtbl {
                         QueryInterface: ::rt::handler::ComReprHandler_QueryInterface::<$imp<_F_>, _>,
                         AddRef: ::rt::handler::ComRepr_AddRef::<$imp<_F_>>,
                         Release: ::rt::handler::ComRepr_Release::<$imp<_F_>>,
                     },
                     Invoke: {
-                        unsafe extern "system" fn Invoke<_F_>(this_: *mut $interface $(,$p : $t)*) -> $rtr
-                            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+                        unsafe extern "system" fn Invoke<_F_>(this_: *mut $interface $(,$p : $t)*) -> HRESULT
+                            where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
                         {
                             let this: &mut $imp<_F_> = ::rt::handler::ComClass::from_interface(this_);
-                            (this.invoke)($($p),*)
+                            match (this.invoke)($($p),*) {
+                                Ok(()) => S_OK,
+                                Err(err) => err.as_hresult()
+                            }
                         }
                         Invoke::<_F_>
                     }
@@ -412,7 +420,7 @@ macro_rules! RT_DELEGATE {
         }
 
         /*impl<_F_> Drop for $imp<_F_>
-            where _F_: 'static + Send + FnMut($($t),*) -> $rtr
+            where _F_: 'static + Send + FnMut($($t),*) -> HRESULT
         {
             fn drop(&mut self) {
                 println!("DROPPED {}<...>!", stringify!($imp));
@@ -422,26 +430,26 @@ macro_rules! RT_DELEGATE {
 
     // with generic parameters
     (delegate $interface:ident<$($ht:ident),+> ($vtbl:ident, $imp:ident) [$iid:ident] {
-        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> HRESULT
     }) => {
-        RT_INTERFACE!{basic $interface<$($ht),+>($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
-            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> $rtr
+        RT_INTERFACE!{basic $interface<$($ht),+>($vtbl) : IUnknown(::w::IUnknownVtbl) [$iid] {
+            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> HRESULT
         }}
 
         impl<$($ht: RtType + 'static),+> $interface<$($ht),+> {
 			#[inline] pub fn new<_F_>(f: _F_) -> ComPtr<$interface<$($ht),+>>
-				where _F_: 'static + Send + FnMut($($t),*) -> $rtr, $interface<$($ht),+>: ComIid {
+				where _F_: 'static + Send + FnMut($($t),*) -> Result<()>, $interface<$($ht),+>: ComIid {
 				$imp::new(f).into_interface()
     		}
 		}
 
-        struct $imp<$($ht: RtType),+ , _F_> where _F_: 'static + Send + FnMut($($t),*) -> $rtr {
+        struct $imp<$($ht: RtType),+ , _F_> where _F_: 'static + Send + FnMut($($t),*) -> Result<()> {
             invoke: _F_,
             phantom: ::std::marker::PhantomData<($($ht),+)>
         }
 
         impl<$($ht: RtType + 'static),+ , _F_> $imp<$($ht),+ , _F_>
-            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
             pub fn new(f: _F_) -> $imp<$($ht),+ , _F_> {
                 $imp {
@@ -452,21 +460,24 @@ macro_rules! RT_DELEGATE {
         }
 
         impl<$($ht: RtType + 'static),+ , _F_> ::rt::handler::ComClass<$interface<$($ht),+>> for $imp<$($ht),+ , _F_>
-            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
             fn get_vtbl() -> $vtbl<$($ht),+> {
                 $vtbl::<$($ht),+> {
-                    parent: ::IUnknownVtbl {
+                    parent: ::w::IUnknownVtbl {
                         QueryInterface: ::rt::handler::ComReprHandler_QueryInterface::<$imp<$($ht),+ , _F_>, _>,
                         AddRef: ::rt::handler::ComRepr_AddRef::<$imp<$($ht),+ , _F_>>,
                         Release: ::rt::handler::ComRepr_Release::<$imp<$($ht),+ , _F_>>,
                     },
                     Invoke: {
-                        unsafe extern "system" fn Invoke<$($ht: RtType + 'static),+ , _F_>(this_: *mut $interface<$($ht),+> $(,$p : $t)*) -> $rtr
-                            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> $rtr
+                        unsafe extern "system" fn Invoke<$($ht: RtType + 'static),+ , _F_>(this_: *mut $interface<$($ht),+> $(,$p : $t)*) -> HRESULT
+                            where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
                         {
                             let this: &mut $imp<$($ht),+ , _F_> = ::rt::handler::ComClass::from_interface(this_);
-                            (this.invoke)($($p),*)
+                            match (this.invoke)($($p),*) {
+                                Ok(()) => S_OK,
+                                Err(err) => err.as_hresult()
+                            }
                         }
                         Invoke::<$($ht),+ , _F_>
                     }
@@ -475,7 +486,7 @@ macro_rules! RT_DELEGATE {
         }
 
         /*impl<$($ht: RtType),+ , _F_> Drop for $imp<$($ht),+ , _F_>
-            where _F_: 'static + Send + FnMut($($t),*) -> $rtr
+            where _F_: 'static + Send + FnMut($($t),*) -> HRESULT
         {
             fn drop(&mut self) {
                 println!("DROPPED {}<...>!", stringify!($imp));
@@ -588,7 +599,7 @@ pub mod gen; // import auto-generated definitions (has to come after macro defin
 // FIXME: maybe better reexport from winapi?
 DEFINE_IID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);
 RT_INTERFACE!{
-interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectable]  {
+interface IInspectable(IInspectableVtbl): IUnknown(::w::IUnknownVtbl) [IID_IInspectable]  {
     fn GetIids(&mut self, iidCount: *mut ULONG, iids: *mut *mut IID) -> HRESULT,
     fn GetRuntimeClassName(&mut self, className: *mut HSTRING) -> HRESULT,
     fn GetTrustLevel(&mut self, trustLevel: *mut TrustLevel) -> HRESULT
@@ -617,5 +628,36 @@ impl ::comptr::HiddenGetRuntimeClassName for IInspectable {
         let hr = unsafe { ((*self.lpVtbl).GetRuntimeClassName)(self as *const _ as *mut _, &mut result) };
         assert_eq!(hr, ::w::S_OK);
         unsafe { HString::wrap(result) }
+    }
+}
+
+pub struct RuntimeContext {
+    token: ()
+}
+
+impl RuntimeContext {
+    /// Initializes the Windows Runtime. This must be called before any other operations can use
+    /// the Windows Runtime. The Windows Runtime will be unitilized when the returned `RuntimeContext`
+    /// is dropped or `uninit` is called explicitly. You have to make sure that this does not happen
+    /// as long as any Windows Runtime object is still alive.
+    pub fn init() -> RuntimeContext {
+        let hr = unsafe { ::runtimeobject::RoInitialize(::w::RO_INIT_MULTITHREADED) };
+        assert!(hr == S_OK || hr == S_FALSE, "failed to call RoInitialize: error {}", hr);
+        /*let mut f: ::w::UINT32 = 0;
+        assert!(RoGetErrorReportingFlags(&mut f) == S_OK);
+        println!("ErrorReportingFlags: {:?}", f);*/
+        RuntimeContext { token: () }
+    }
+    
+    /// Unitializes the Windows Runtime. This must not be called as long as any Windows Runtime
+    /// object is still alive.
+    pub fn uninit(self) {
+        drop(self);
+    }
+}
+
+impl Drop for RuntimeContext {
+    fn drop(&mut self) {
+        unsafe { ::runtimeobject::RoUninitialize() };
     }
 }
