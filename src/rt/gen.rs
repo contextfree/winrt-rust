@@ -3,8 +3,7 @@
 pub mod windows { // Windows
 #[cfg(feature="windows.devices")]
 pub mod devices { // Windows.Devices
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_STRUCT! { struct DevicesLowLevelContract {
 			
 		}}
@@ -80,8 +79,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_ACTIVATABLE!{ILowLevelDevicesControllerStatics [CLSID_LowLevelDevicesController]}
 		DEFINE_CLSID!(CLSID_LowLevelDevicesController = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,76,111,119,76,101,118,101,108,68,101,118,105,99,101,115,67,111,110,116,114,111,108,108,101,114,0]);
 pub mod adc { // Windows.Devices.Adc
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum AdcChannelMode: i32 {
 			SingleEnded (AdcChannelMode_SingleEnded) = 0, Differential (AdcChannelMode_Differential) = 1,
 		}}
@@ -188,8 +186,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 pub mod provider { // Windows.Devices.Adc.Provider
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum ProviderAdcChannelMode: i32 {
 			SingleEnded (ProviderAdcChannelMode_SingleEnded) = 0, Differential (ProviderAdcChannelMode_Differential) = 1,
 		}}
@@ -269,8 +266,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 } // Windows.Devices.Adc.Provider
 } // Windows.Devices.Adc
 pub mod gpio { // Windows.Devices.Gpio
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum GpioSharingMode: i32 {
 			Exclusive (GpioSharingMode_Exclusive) = 0, SharedReadOnly (GpioSharingMode_SharedReadOnly) = 1,
 		}}
@@ -428,8 +424,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 pub mod provider { // Windows.Devices.Gpio.Provider
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum ProviderGpioSharingMode: i32 {
 			Exclusive (ProviderGpioSharingMode_Exclusive) = 0, SharedReadOnly (ProviderGpioSharingMode_SharedReadOnly) = 1,
 		}}
@@ -564,8 +559,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 } // Windows.Devices.Gpio.Provider
 } // Windows.Devices.Gpio
 pub mod i2c { // Windows.Devices.I2c
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum I2cBusSpeed: i32 {
 			StandardMode (I2cBusSpeed_StandardMode) = 0, FastMode (I2cBusSpeed_FastMode) = 1,
 		}}
@@ -737,8 +731,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 pub mod provider { // Windows.Devices.I2c.Provider
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum ProviderI2cBusSpeed: i32 {
 			StandardMode (ProviderI2cBusSpeed_StandardMode) = 0, FastMode (ProviderI2cBusSpeed_FastMode) = 1,
 		}}
@@ -859,8 +852,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 } // Windows.Devices.I2c.Provider
 } // Windows.Devices.I2c
 pub mod pwm { // Windows.Devices.Pwm
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum PwmPulsePolarity: i32 {
 			ActiveHigh (PwmPulsePolarity_ActiveHigh) = 0, ActiveLow (PwmPulsePolarity_ActiveLow) = 1,
 		}}
@@ -982,8 +974,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 pub mod provider { // Windows.Devices.Pwm.Provider
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		DEFINE_IID!(IID_IPwmControllerProvider, 318789947, 58083, 16548, 183, 217, 72, 223, 240, 55, 122, 82);
 		RT_INTERFACE!{interface IPwmControllerProvider(IPwmControllerProviderVtbl): IInspectable(IInspectableVtbl) [IID_IPwmControllerProvider] {
 			fn get_PinCount(&mut self, out: *mut i32) -> ::w::HRESULT,
@@ -1058,8 +1049,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 } // Windows.Devices.Pwm.Provider
 } // Windows.Devices.Pwm
 pub mod spi { // Windows.Devices.Spi
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum SpiMode: i32 {
 			Mode0 (SpiMode_Mode0) = 0, Mode1 (SpiMode_Mode1) = 1, Mode2 (SpiMode_Mode2) = 2, Mode3 (SpiMode_Mode3) = 3,
 		}}
@@ -1270,8 +1260,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 pub mod provider { // Windows.Devices.Spi.Provider
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum ProviderSpiMode: i32 {
 			Mode0 (ProviderSpiMode_Mode0) = 0, Mode1 (ProviderSpiMode_Mode1) = 1, Mode2 (ProviderSpiMode_Mode2) = 2, Mode3 (ProviderSpiMode_Mode3) = 3,
 		}}
@@ -1413,8 +1402,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 } // Windows.Devices.Spi.Provider
 } // Windows.Devices.Spi
 pub mod custom { // Windows.Devices.Custom
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_STRUCT! { struct CustomDeviceContract {
 			
 		}}
@@ -1542,8 +1530,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.Custom
 pub mod printers { // Windows.Devices.Printers
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_STRUCT! { struct PrintersContract {
 			
 		}}
@@ -1603,8 +1590,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 pub mod extensions { // Windows.Devices.Printers.Extensions
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum Print3DWorkflowStatus: i32 {
 			Abandoned (Print3DWorkflowStatus_Abandoned) = 0, Canceled (Print3DWorkflowStatus_Canceled) = 1, Failed (Print3DWorkflowStatus_Failed) = 2, Slicing (Print3DWorkflowStatus_Slicing) = 3, Submitted (Print3DWorkflowStatus_Submitted) = 4,
 		}}
@@ -1822,8 +1808,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 } // Windows.Devices.Printers.Extensions
 } // Windows.Devices.Printers
 pub mod power { // Windows.Devices.Power
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		DEFINE_IID!(IID_IBattery, 3163115462, 114, 18376, 139, 93, 97, 74, 170, 122, 67, 126);
 		RT_INTERFACE!{interface IBattery(IBatteryVtbl): IInspectable(IInspectableVtbl) [IID_IBattery] {
 			fn get_DeviceId(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -1916,8 +1901,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.Power
 pub mod sms { // Windows.Devices.Sms
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum SmsMessageClass: i32 {
 			None (SmsMessageClass_None) = 0, Class0 (SmsMessageClass_Class0) = 1, Class1 (SmsMessageClass_Class1) = 2, Class2 (SmsMessageClass_Class2) = 3, Class3 (SmsMessageClass_Class3) = 4,
 		}}
@@ -3156,8 +3140,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class SmsReceivedEventDetails: ISmsReceivedEventDetails}
 } // Windows.Devices.Sms
 pub mod alljoyn { // Windows.Devices.AllJoyn
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum AllJoynAuthenticationMechanism: i32 {
 			None (AllJoynAuthenticationMechanism_None) = 0, SrpAnonymous (AllJoynAuthenticationMechanism_SrpAnonymous) = 1, SrpLogon (AllJoynAuthenticationMechanism_SrpLogon) = 2, EcdheNull (AllJoynAuthenticationMechanism_EcdheNull) = 3, EcdhePsk (AllJoynAuthenticationMechanism_EcdhePsk) = 4, EcdheEcdsa (AllJoynAuthenticationMechanism_EcdheEcdsa) = 5, EcdheSpeke (AllJoynAuthenticationMechanism_EcdheSpeke) = 6,
 		}}
@@ -4358,8 +4341,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		DEFINE_CLSID!(CLSID_AllJoynMessageInfo = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,77,101,115,115,97,103,101,73,110,102,111,0]);
 } // Windows.Devices.AllJoyn
 pub mod background { // Windows.Devices.Background
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		DEFINE_IID!(IID_IDeviceUseDetails, 2102808897, 21886, 16724, 185, 148, 228, 247, 161, 31, 179, 35);
 		RT_INTERFACE!{interface IDeviceUseDetails(IDeviceUseDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceUseDetails] {
 			fn get_DeviceId(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -4404,8 +4386,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class DeviceServicingDetails: IDeviceServicingDetails}
 } // Windows.Devices.Background
 pub mod bluetooth { // Windows.Devices.Bluetooth
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum BluetoothCacheMode: i32 {
 			Cached (BluetoothCacheMode_Cached) = 0, Uncached (BluetoothCacheMode_Uncached) = 1,
 		}}
@@ -5264,8 +5245,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 		RT_CLASS!{class BluetoothSignalStrengthFilter: IBluetoothSignalStrengthFilter}
 pub mod rfcomm { // Windows.Devices.Bluetooth.Rfcomm
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_CLASS!{class RfcommDeviceService: IRfcommDeviceService}
 		RT_ACTIVATABLE!{IRfcommDeviceServiceStatics [CLSID_RfcommDeviceService]}
 		RT_ACTIVATABLE!{IRfcommDeviceServiceStatics2 [CLSID_RfcommDeviceService]}
@@ -5546,8 +5526,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.Bluetooth.Rfcomm
 pub mod genericattributeprofile { // Windows.Devices.Bluetooth.GenericAttributeProfile
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_CLASS!{class GattDeviceService: IGattDeviceService}
 		RT_ACTIVATABLE!{IGattDeviceServiceStatics [CLSID_GattDeviceService]}
 		DEFINE_CLSID!(CLSID_GattDeviceService = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,68,101,118,105,99,101,83,101,114,118,105,99,101,0]);
@@ -6831,8 +6810,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.Bluetooth.GenericAttributeProfile
 pub mod advertisement { // Windows.Devices.Bluetooth.Advertisement
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum BluetoothLEScanningMode: i32 {
 			Passive (BluetoothLEScanningMode_Passive) = 0, Active (BluetoothLEScanningMode_Active) = 1,
 		}}
@@ -7431,8 +7409,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.Bluetooth.Advertisement
 pub mod background { // Windows.Devices.Bluetooth.Background
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_CLASS!{class RfcommInboundConnectionInformation: IRfcommInboundConnectionInformation}
 		RT_CLASS!{class RfcommOutboundConnectionInformation: IRfcommOutboundConnectionInformation}
 		DEFINE_IID!(IID_IRfcommInboundConnectionInformation, 1832809896, 21545, 16473, 146, 227, 30, 139, 101, 82, 135, 7);
@@ -7579,8 +7556,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 } // Windows.Devices.Bluetooth.Background
 } // Windows.Devices.Bluetooth
 pub mod enumeration { // Windows.Devices.Enumeration
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		DEFINE_IID!(IID_IDeviceConnectionChangeTriggerDetails, 3092745228, 48065, 18507, 191, 250, 123, 49, 220, 194, 0, 178);
 		RT_INTERFACE!{interface IDeviceConnectionChangeTriggerDetails(IDeviceConnectionChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceConnectionChangeTriggerDetails] {
 			fn get_DeviceId(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT
@@ -8459,8 +8435,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 		RT_CLASS!{class DeviceWatcherTriggerDetails: IDeviceWatcherTriggerDetails}
 pub mod pnp { // Windows.Devices.Enumeration.Pnp
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum PnpObjectType: i32 {
 			Unknown (PnpObjectType_Unknown) = 0, DeviceInterface (PnpObjectType_DeviceInterface) = 1, DeviceContainer (PnpObjectType_DeviceContainer) = 2, Device (PnpObjectType_Device) = 3, DeviceInterfaceClass (PnpObjectType_DeviceInterfaceClass) = 4, AssociationEndpoint (PnpObjectType_AssociationEndpoint) = 5, AssociationEndpointContainer (PnpObjectType_AssociationEndpointContainer) = 6, AssociationEndpointService (PnpObjectType_AssociationEndpointService) = 7,
 		}}
@@ -8635,8 +8610,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 } // Windows.Devices.Enumeration.Pnp
 } // Windows.Devices.Enumeration
 pub mod geolocation { // Windows.Devices.Geolocation
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum PositionAccuracy: i32 {
 			Default (PositionAccuracy_Default) = 0, High (PositionAccuracy_High) = 1,
 		}}
@@ -9257,8 +9231,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class Geocircle: IGeocircle [IGeocircleFactory] [CLSID_Geocircle]}
 		DEFINE_CLSID!(CLSID_Geocircle = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,99,105,114,99,108,101,0]);
 pub mod geofencing { // Windows.Devices.Geolocation.Geofencing
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum MonitoredGeofenceStates: u32 {
 			None (MonitoredGeofenceStates_None) = 0, Entered (MonitoredGeofenceStates_Entered) = 1, Exited (MonitoredGeofenceStates_Exited) = 2, Removed (MonitoredGeofenceStates_Removed) = 4,
 		}}
@@ -9447,8 +9420,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 } // Windows.Devices.Geolocation.Geofencing
 } // Windows.Devices.Geolocation
 pub mod humaninterfacedevice { // Windows.Devices.HumanInterfaceDevice
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum HidReportType: i32 {
 			Input (HidReportType_Input) = 0, Output (HidReportType_Output) = 1, Feature (HidReportType_Feature) = 2,
 		}}
@@ -10050,8 +10022,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.HumanInterfaceDevice
 pub mod input { // Windows.Devices.Input
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum PointerDeviceType: i32 {
 			Touch (PointerDeviceType_Touch) = 0, Pen (PointerDeviceType_Pen) = 1, Mouse (PointerDeviceType_Mouse) = 2,
 		}}
@@ -10243,8 +10214,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		RT_CLASS!{class TouchCapabilities: ITouchCapabilities}
 } // Windows.Devices.Input
 pub mod lights { // Windows.Devices.Lights
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		DEFINE_IID!(IID_ILampStatics, 2820817260, 34949, 16414, 184, 33, 142, 139, 56, 168, 232, 236);
 		RT_INTERFACE!{static interface ILampStatics(ILampStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILampStatics] {
 			fn GetDeviceSelector(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -10348,8 +10318,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.Lights
 pub mod midi { // Windows.Devices.Midi
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum MidiMessageType: i32 {
 			None (MidiMessageType_None) = 0, NoteOff (MidiMessageType_NoteOff) = 128, NoteOn (MidiMessageType_NoteOn) = 144, PolyphonicKeyPressure (MidiMessageType_PolyphonicKeyPressure) = 160, ControlChange (MidiMessageType_ControlChange) = 176, ProgramChange (MidiMessageType_ProgramChange) = 192, ChannelPressure (MidiMessageType_ChannelPressure) = 208, PitchBendChange (MidiMessageType_PitchBendChange) = 224, SystemExclusive (MidiMessageType_SystemExclusive) = 240, MidiTimeCode (MidiMessageType_MidiTimeCode) = 241, SongPositionPointer (MidiMessageType_SongPositionPointer) = 242, SongSelect (MidiMessageType_SongSelect) = 243, TuneRequest (MidiMessageType_TuneRequest) = 246, EndSystemExclusive (MidiMessageType_EndSystemExclusive) = 247, TimingClock (MidiMessageType_TimingClock) = 248, Start (MidiMessageType_Start) = 250, Continue (MidiMessageType_Continue) = 251, Stop (MidiMessageType_Stop) = 252, ActiveSensing (MidiMessageType_ActiveSensing) = 254, SystemReset (MidiMessageType_SystemReset) = 255,
 		}}
@@ -10855,8 +10824,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.Midi
 pub mod perception { // Windows.Devices.Perception
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum PerceptionFrameSourceAccessStatus: i32 {
 			Unspecified (PerceptionFrameSourceAccessStatus_Unspecified) = 0, Allowed (PerceptionFrameSourceAccessStatus_Allowed) = 1, DeniedByUser (PerceptionFrameSourceAccessStatus_DeniedByUser) = 2, DeniedBySystem (PerceptionFrameSourceAccessStatus_DeniedBySystem) = 3,
 		}}
@@ -12406,8 +12374,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 pub mod provider { // Windows.Devices.Perception.Provider
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		DEFINE_IID!(IID_IKnownPerceptionFrameKindStatics, 988172758, 38505, 16646, 159, 174, 72, 53, 193, 185, 97, 4);
 		RT_INTERFACE!{static interface IKnownPerceptionFrameKindStatics(IKnownPerceptionFrameKindStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionFrameKindStatics] {
 			fn get_Color(&mut self, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -12826,8 +12793,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 } // Windows.Devices.Perception.Provider
 } // Windows.Devices.Perception
 pub mod pointofservice { // Windows.Devices.PointOfService
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum UnifiedPosErrorSeverity: i32 {
 			UnknownErrorSeverity (UnifiedPosErrorSeverity_UnknownErrorSeverity) = 0, Warning (UnifiedPosErrorSeverity_Warning) = 1, Recoverable (UnifiedPosErrorSeverity_Recoverable) = 2, Unrecoverable (UnifiedPosErrorSeverity_Unrecoverable) = 3, AssistanceRequired (UnifiedPosErrorSeverity_AssistanceRequired) = 4, Fatal (UnifiedPosErrorSeverity_Fatal) = 5,
 		}}
@@ -15906,8 +15872,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.PointOfService
 pub mod radios { // Windows.Devices.Radios
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum RadioState: i32 {
 			Unknown (RadioState_Unknown) = 0, On (RadioState_On) = 1, Off (RadioState_Off) = 2, Disabled (RadioState_Disabled) = 3,
 		}}
@@ -15991,8 +15956,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.Radios
 pub mod sensors { // Windows.Devices.Sensors
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum MagnetometerAccuracy: i32 {
 			Unknown (MagnetometerAccuracy_Unknown) = 0, Unreliable (MagnetometerAccuracy_Unreliable) = 1, Approximate (MagnetometerAccuracy_Approximate) = 2, High (MagnetometerAccuracy_High) = 3,
 		}}
@@ -17822,8 +17786,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 pub mod custom { // Windows.Devices.Sensors.Custom
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		DEFINE_IID!(IID_ICustomSensorStatics, 2569032399, 62498, 19581, 131, 107, 231, 220, 116, 167, 18, 75);
 		RT_INTERFACE!{static interface ICustomSensorStatics(ICustomSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICustomSensorStatics] {
 			fn GetDeviceSelector(&mut self, interfaceId: ::Guid, out: *mut ::w::HSTRING) -> ::w::HRESULT,
@@ -17922,8 +17885,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 } // Windows.Devices.Sensors.Custom
 } // Windows.Devices.Sensors
 pub mod serialcommunication { // Windows.Devices.SerialCommunication
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum SerialParity: i32 {
 			None (SerialParity_None) = 0, Odd (SerialParity_Odd) = 1, Even (SerialParity_Even) = 2, Mark (SerialParity_Mark) = 3, Space (SerialParity_Space) = 4,
 		}}
@@ -18190,8 +18152,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.SerialCommunication
 pub mod smartcards { // Windows.Devices.SmartCards
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum SmartCardReaderKind: i32 {
 			Any (SmartCardReaderKind_Any) = 0, Generic (SmartCardReaderKind_Generic) = 1, Tpm (SmartCardReaderKind_Tpm) = 2, Nfc (SmartCardReaderKind_Nfc) = 3, Uicc (SmartCardReaderKind_Uicc) = 4, EmbeddedSE (SmartCardReaderKind_EmbeddedSE) = 5,
 		}}
@@ -18622,8 +18583,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.SmartCards
 pub mod usb { // Windows.Devices.Usb
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum UsbTransferDirection: i32 {
 			Out (UsbTransferDirection_Out) = 0, In (UsbTransferDirection_In) = 1,
 		}}
@@ -19587,8 +19547,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.Usb
 pub mod wifi { // Windows.Devices.WiFi
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum WiFiNetworkKind: i32 {
 			Any (WiFiNetworkKind_Any) = 0, Infrastructure (WiFiNetworkKind_Infrastructure) = 1, Adhoc (WiFiNetworkKind_Adhoc) = 2,
 		}}
@@ -19801,8 +19760,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}
 } // Windows.Devices.WiFi
 pub mod wifidirect { // Windows.Devices.WiFiDirect
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum WiFiDirectConnectionStatus: i32 {
 			Disconnected (WiFiDirectConnectionStatus_Disconnected) = 0, Connected (WiFiDirectConnectionStatus_Connected) = 1,
 		}}
@@ -20201,8 +20159,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 			}
 		}
 pub mod services { // Windows.Devices.WiFiDirect.Services
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum WiFiDirectServiceConfigurationMethod: i32 {
 			Default (WiFiDirectServiceConfigurationMethod_Default) = 0, PinDisplay (WiFiDirectServiceConfigurationMethod_PinDisplay) = 1, PinEntry (WiFiDirectServiceConfigurationMethod_PinEntry) = 2,
 		}}
@@ -20698,8 +20655,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 } // Windows.Devices.WiFiDirect.Services
 } // Windows.Devices.WiFiDirect
 pub mod portable { // Windows.Devices.Portable
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_STRUCT! { struct PortableDeviceContract {
 			
 		}}
@@ -20747,8 +20703,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		DEFINE_CLSID!(CLSID_ServiceDevice = &[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,114,116,97,98,108,101,46,83,101,114,118,105,99,101,68,101,118,105,99,101,0]);
 } // Windows.Devices.Portable
 pub mod scanners { // Windows.Devices.Scanners
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_STRUCT! { struct ScannerDeviceContract {
 			
 		}}
@@ -21189,8 +21144,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 } // Windows.Devices.Scanners
 } // Windows.Devices
 pub mod foundation { // Windows.Foundation
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		DEFINE_IID!(IID_IClosable, 819308585, 32676, 16422, 131, 187, 215, 91, 174, 78, 169, 158);
 		RT_INTERFACE!{interface IClosable(IClosableVtbl): IInspectable(IInspectableVtbl) [IID_IClosable] {
 			fn Close(&mut self) -> ::w::HRESULT
@@ -23844,8 +23798,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		#[cfg(feature="windows.web")] RT_PINTERFACE!{ for TypedEventHandler<super::web::http::diagnostics::HttpDiagnosticProvider, super::web::http::diagnostics::HttpDiagnosticProviderResponseReceivedEventArgs> => [0x2eef1846,0x8176,0x52af,0x8d,0x2b,0xe0,0xc9,0x32,0x51,0x2e,0x9f] as IID_TypedEventHandler_2_Windows_Web_Http_Diagnostics_HttpDiagnosticProvider_Windows_Web_Http_Diagnostics_HttpDiagnosticProviderResponseReceivedEventArgs }
 		#[cfg(feature="windows.web")] RT_PINTERFACE!{ for TypedEventHandler<super::web::http::filters::HttpBaseProtocolFilter, super::web::http::filters::HttpServerCustomValidationRequestedEventArgs> => [0xed0260c6,0x41f2,0x5a04,0x9a,0x8b,0x29,0x30,0xd7,0xff,0x8a,0x9e] as IID_TypedEventHandler_2_Windows_Web_Http_Filters_HttpBaseProtocolFilter_Windows_Web_Http_Filters_HttpServerCustomValidationRequestedEventArgs }
 pub mod collections { // Windows.Foundation.Collections
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum CollectionChange: i32 {
 			Reset (CollectionChange_Reset) = 0, ItemInserted (CollectionChange_ItemInserted) = 1, ItemRemoved (CollectionChange_ItemRemoved) = 2, ItemChanged (CollectionChange_ItemChanged) = 3,
 		}}
@@ -25720,8 +25673,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		#[cfg(feature="windows.ui.xaml")] RT_PINTERFACE!{ for VectorChangedEventHandler<super::super::ui::xaml::DependencyObject> => [0xb62dec93,0xa7a5,0x5ff5,0xb2,0xd2,0x6b,0xd2,0x0c,0xa0,0xbd,0x4d] as IID_VectorChangedEventHandler_1_Windows_UI_Xaml_DependencyObject }
 } // Windows.Foundation.Collections
 pub mod metadata { // Windows.Foundation.Metadata
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum GCPressureAmount: i32 {
 			Low (GCPressureAmount_Low) = 0, Medium (GCPressureAmount_Medium) = 1, High (GCPressureAmount_High) = 2,
 		}}
@@ -25812,8 +25764,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		}}
 } // Windows.Foundation.Metadata
 pub mod diagnostics { // Windows.Foundation.Diagnostics
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_ENUM! { enum CausalityTraceLevel: i32 {
 			Required (CausalityTraceLevel_Required) = 0, Important (CausalityTraceLevel_Important) = 1, Verbose (CausalityTraceLevel_Verbose) = 2,
 		}}
@@ -26988,8 +26939,7 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 		DEFINE_CLSID!(CLSID_FileLoggingSession = &[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,70,105,108,101,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]);
 } // Windows.Foundation.Diagnostics
 pub mod numerics { // Windows.Foundation.Numerics
-use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
+use ::prelude::*;
 		RT_STRUCT! { struct Vector2 {
 			X: f32, Y: f32,
 		}}
