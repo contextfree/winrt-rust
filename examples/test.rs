@@ -144,20 +144,16 @@ fn run() {
     }
     assert_eq!(i, count);
 
-    let mut array = [::std::ptr::null_mut(); 2000];
+    let mut buffer = Vec::with_capacity(2000);
 
-    let filled = unsafe { deviceInformationCollection.get_many(0, array.len() as u32, array.as_mut_ptr()).unwrap() };
-    let mut freed = 0;
-    for i in 0..array.len() {
-        if !array[i].is_null() {
-            unsafe { ComPtr::wrap(array[i]) };
-            freed += 1;
-            // reference will be released here
-        }
+    unsafe { deviceInformationCollection.get_many(0, &mut buffer).unwrap() };
+    for (b, i) in buffer.iter_mut().zip(0..) {
+        let deviceName = unsafe { b.get_name().unwrap() };
+        println!("Device Name ({}): {}", i, deviceName);
     }
-    println!("Freed result of GetMany ({} of {} values).", freed, filled);
-    assert_eq!(filled, ::std::cmp::min(count, array.len() as u32));
-
+    let len = buffer.len();
+    drop(buffer);
+    println!("Freed result of GetMany ({} values).", len);
 
     if let Some(mut r) = remember {
         let (index, found) = unsafe { deviceInformationCollection.index_of(&mut r).unwrap() };
@@ -174,7 +170,20 @@ fn run() {
     let returned_array = unsafe { boxed_array.get_value().unwrap() };
     println!("{:?} = {:?}", array, &returned_array[..]);
     assert_eq!(array, &returned_array[..]);
-    // TODO: test array of string and object (also see if ComArray drops contents correctly)
+
+    let str1 = FastHString::new("foo");
+    let str2 = FastHString::new("bar");
+    let array = &mut [&*str1, &*str2, &*str1, &*str2];
+    let boxed_array = unsafe { IPropertyValueStatics::factory().create_string_array(array) };
+    let mut boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
+    assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType_StringArray);
+    let mut boxed_array = boxed_array.query_interface::<IReferenceArray<HString>>().unwrap();
+    let returned_array = unsafe { boxed_array.get_value().unwrap() };
+    assert_eq!(array.len(), returned_array.len());
+    for i in 0..array.len() {
+        assert!(returned_array[i] == (if i % 2 == 0 { &str1 } else { &str2 }));
+    }
+    // TODO: test array interface objects (also see if ComArray drops contents correctly)
     
     let status = unsafe { asi.get_status().unwrap() };
     println!("status: {:?}", status);

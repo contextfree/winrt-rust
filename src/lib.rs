@@ -51,3 +51,10 @@ pub use rt::handler::IntoInterface;
 pub mod windows {
     pub use rt::gen::windows::*;
 }
+
+/// This is only for internal use within the generated code
+mod prelude {
+    pub use ::rt::{RtType, IInspectable, RtResult};
+    pub use ::rt::handler::IntoInterface;
+    pub use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
+}

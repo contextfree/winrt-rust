@@ -126,8 +126,7 @@ namespace Generator
 		{
 			if (mod.IsEmpty) return;
 
-			const string IMPORTS = @"use ::{ComInterface, HString, HStringArg, ComPtr, ComArray, ComIid, IUnknown};
-use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;";
+			const string IMPORTS = @"use ::prelude::*;";
 
 			string name = mod.Name.ToLower();
 			string newPath = path == null ? mod.Name : (path + "." + mod.Name);

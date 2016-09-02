@@ -434,6 +434,13 @@ impl cmp::PartialEq<FastHString> for HString {
         unsafe { internal_cmp(self.as_hstring(), other.as_hstring()) == cmp::Ordering::Equal }
     }
 }
+// TODO: How to generalize this for all kinds of references?
+impl<'a> cmp::PartialEq<&'a FastHString> for HString {
+    #[inline]
+    fn eq(&self, other: &&'a FastHString) -> bool {
+        unsafe { internal_cmp(self.as_hstring(), other.as_hstring()) == cmp::Ordering::Equal }
+    }
+}
 impl cmp::PartialEq<HString> for FastHString {
     #[inline]
     fn eq(&self, other: &HString) -> bool {

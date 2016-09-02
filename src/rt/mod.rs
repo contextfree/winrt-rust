@@ -37,7 +37,9 @@ unsafe impl RtValueType for u64 {}
 unsafe impl RtValueType for Char {}
 unsafe impl RtValueType for Guid {}
 
-/// This is a trait implemented by all types that can be used as generic parameters of parameterized interfaces
+/// This is a trait implemented by all types that can be used as generic parameters of parameterized interfaces.
+/// `Abi` and `Out` must be binary compatible (i.e. `wrap` must basically be the same as `transmute`)
+/// in order to work in `ComArray`.
 pub trait RtType {
     type In;
     type Abi;

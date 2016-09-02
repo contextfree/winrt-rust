@@ -84,13 +84,12 @@ namespace Generator.Types
 			string rawName = GetRawName();
 			string name = GetWrapperName(rawName);
 
-			if (rawName == "GetMany" && DeclaringType.Namespace == "Windows.Foundation.Collections" &&
-				(DeclaringType.Name == "IVectorView`1" || DeclaringType.Name == "IIterator`1" || DeclaringType.Name == "IVector`1"))
-			{
-				// This method has special semantics, since it takes an array and returns the number of elements that were filled
-				// It uses the __RPC__out_ecount_part(capacity, *actual) annotation in the C headers
-				// TODO ...
-			}
+			bool isGetMany = (rawName == "GetMany" && DeclaringType.Namespace == "Windows.Foundation.Collections" &&
+							 (DeclaringType.Name == "IVectorView`1" || DeclaringType.Name == "IIterator`1" || DeclaringType.Name == "IVector`1"));
+			string getManyPname = null;
+
+			// These `GetMany` methods have special semantics, since it takes an array and returns the number of elements that were filled
+			// It uses the __RPC__out_ecount_part(capacity, *actual) annotation in the C headers. For the wrapper we use a &mut Vec<> buffer.
 
 			var input = new List<Tuple<string, TypeReference, InputKind>>();
 			var output = new List<Tuple<string, TypeReference>>();
@@ -110,9 +109,18 @@ namespace Generator.Types
 					{
 						if (p.IsOut)
 						{
-							//TODO: this should probably be a mutable, write-only, empty slice -> what type?
-							input.Add(new Tuple<string, TypeReference, InputKind>(pname + "Size", Method.Module.Import(typeof(uint)), InputKind.Default));
-							input.Add(new Tuple<string, TypeReference, InputKind>(pname, p.ParameterType, InputKind.Raw));
+							if (isGetMany)
+							{
+								Assert(getManyPname == null); // there should only be one out-array parameter for GetMany
+								getManyPname = pname;
+								input.Add(new Tuple<string, TypeReference, InputKind>(pname, ((ArrayType)p.ParameterType).ElementType, InputKind.VecBuffer));
+							}
+							else
+							{
+								//TODO: this should probably be a mutable, write-only, empty slice -> what type?
+								input.Add(new Tuple<string, TypeReference, InputKind>(pname + "Size", Method.Module.Import(typeof(uint)), InputKind.Default));
+								input.Add(new Tuple<string, TypeReference, InputKind>(pname, p.ParameterType, InputKind.Raw));
+							}
 						}
 						else
 						{
@@ -159,9 +167,17 @@ namespace Generator.Types
 					{
 						if (p.IsOut)
 						{
-							//TODO: this should probably be a mutable, write-only, empty slice -> what type?
-							rawParams.Add(pname + "Size");
-							rawParams.Add(TypeHelpers.UnwrapInputParameter(pname, p.ParameterType));
+							if (isGetMany)
+							{
+								rawParams.Add(pname + ".capacity() as u32");
+								rawParams.Add(pname + ".as_mut_ptr() as *mut T::Abi");
+							}
+							else
+							{
+								//TODO: this should probably be a mutable, write-only, empty slice -> what type?
+								rawParams.Add(pname + "Size");
+								rawParams.Add(TypeHelpers.UnwrapInputParameter(pname, p.ParameterType));
+							}
 						}
 						else
 						{
@@ -193,9 +209,20 @@ namespace Generator.Types
 			{
 				outWrap = "(" + outWrap + ")"; // also works for count == 0 (empty tuple)
 			}
-			return "#[inline] pub unsafe fn " + name + "(" + String.Join(", ", inputParameters) + ") -> RtResult<" + outType + @"> {" + outInit + @"
+			outWrap = "Ok(" + outWrap + ")";
+
+			if (isGetMany)
+			{
+				outType = "()";
+				outInit = "\r\n\t\t\t\tdebug_assert!(" + getManyPname + ".capacity() > 0, \"capacity of `" + getManyPname + "` must not be 0 (use Vec::with_capacity)\"); " + getManyPname + ".clear();" + outInit;
+				outWrap = getManyPname + ".set_len(out as usize); Ok(())";
+			}
+
+			string inline = isGetMany ? "" : "#[inline] ";
+
+			return inline + "pub unsafe fn " + name + "(" + String.Join(", ", inputParameters) + ") -> RtResult<" + outType + @"> {" + outInit + @"
 				let hr = ((*self.lpVtbl)." + rawName + ")(" + String.Join(", ", rawParams) + ");" + @"
-				if hr == ::w::S_OK { Ok(" + outWrap + @") } else { Err(hr) }
+				if hr == ::w::S_OK { " + outWrap + @" } else { Err(hr) }
 			}";
 		}
 

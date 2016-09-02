@@ -59,7 +59,7 @@ namespace Generator.Types
 				var ty = (ArrayType)t;
 				if (usage == TypeUsage.Out)
 				{
-					return "ComArray<" + GetTypeName(gen, source, ty.ElementType, TypeUsage.Raw) + ">";
+					return "ComArray<" + GetTypeName(gen, source, ty.ElementType, TypeUsage.GenericArg) + ">";
 				}
 				else
 				{
@@ -185,7 +185,8 @@ namespace Generator.Types
 			{
 				case InputKind.Default: return GetTypeName(gen, source, t, TypeUsage.In);
 				case InputKind.Raw: return GetTypeName(gen, source, t, TypeUsage.Raw);
-				case InputKind.Slice: return "&[" + GetTypeName(gen, source, t, TypeUsage.Raw) + "]";
+				case InputKind.Slice: return "&[" + GetTypeName(gen, source, t, TypeUsage.In) + "]";
+				case InputKind.VecBuffer: return "&mut Vec<" + GetTypeName(gen, source, t, TypeUsage.Out) + ">";
 				default: throw new InvalidOperationException();
 			}
 		}
@@ -381,6 +382,7 @@ namespace Generator.Types
 	{
 		Default,
 		Raw,
-		Slice
+		Slice,
+		VecBuffer
 	}
 }

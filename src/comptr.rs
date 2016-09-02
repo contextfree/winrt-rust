@@ -4,7 +4,7 @@ use std::ptr;
 use ::{ComIid, ComInterface, RtInterface, RtClassInterface, IInspectable, Guid};
 
 #[derive(Debug)]
-pub struct ComPtr<T>(*mut T); // TODO: use NonZero?
+pub struct ComPtr<T>(*mut T); // TODO: use NonZero or Shared (see https://github.com/rust-lang/rust/issues/27730)
 
 impl<T> fmt::Pointer for ComPtr<T> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -75,7 +75,7 @@ impl<T> Clone for ComPtr<T> {
 }
 impl<T> Drop for ComPtr<T> {
     fn drop(&mut self) {
-        unsafe { self.as_unknown().Release(); }
+        unsafe { self.as_unknown().Release() };
     }
 }
 impl<T> PartialEq<ComPtr<T>> for ComPtr<T> {
@@ -85,14 +85,14 @@ impl<T> PartialEq<ComPtr<T>> for ComPtr<T> {
 }
 
 /// Owned array type that will be deallocated using `CoTaskMemFree` on drop.
-pub struct ComArray<T> {
+pub struct ComArray<T> where T: ::RtType {
     size: u32,
-    first: *mut T
+    first: *mut T::Abi
 }
 
-impl<T> ComArray<T> {
+impl<T> ComArray<T> where T: ::RtType {
     #[inline]
-    pub unsafe fn from_raw(size: u32, first: *mut T) -> ComArray<T> {
+    pub unsafe fn from_raw(size: u32, first: *mut T::Abi) -> ComArray<T> {
         assert!(!first.is_null());
         ComArray {
             size: size,
@@ -106,29 +106,36 @@ impl<T> ComArray<T> {
     }
 }
 
-impl<T> Deref for ComArray<T> {
-    type Target = [T];
+impl<T> Deref for ComArray<T> where T: ::RtType {
+    type Target = [T::Out];
     #[inline]
-    fn deref(&self) -> &[T] {
-        unsafe { ::std::slice::from_raw_parts(self.first, self.size as usize) }
+    fn deref(&self) -> &[T::Out] {
+        unsafe { ::std::slice::from_raw_parts(self.first as *mut T::Out, self.size as usize) }
     }
 }
-impl<T> DerefMut for ComArray<T> {
+impl<T> DerefMut for ComArray<T> where T: ::RtType {
     #[inline]
-    fn deref_mut(&mut self) -> &mut [T] {
-        unsafe { ::std::slice::from_raw_parts_mut(self.first, self.size as usize) }
+    fn deref_mut(&mut self) -> &mut [T::Out] {
+        unsafe { ::std::slice::from_raw_parts_mut(self.first as *mut T::Out, self.size as usize) }
     }
 }
 
-impl<T> Drop for ComArray<T> {
+impl<T> Drop for ComArray<T> where T: ::RtType {
     #[inline]
     fn drop(&mut self) {
-        // TODO: call `Release` on elements if T is an interface reference
         unsafe {
-            //println!("Dropping ComArray");
             ::std::ptr::drop_in_place(&mut self[..]);
             ::ole32::CoTaskMemFree(self.first as ::w::LPVOID)
         };
+    }
+}
+
+mod extra {
+    // makes sure that compile fails when ComPtr is not pointer-sized
+    // i.e. when a compiler version is used that still has dropflags
+    fn assert_no_dropflags() {
+        let p: *mut ::IInspectable = ::std::ptr::null_mut();
+        let _: ::ComPtr<::IInspectable> = unsafe { ::std::mem::transmute(p) };
     }
 }
 
