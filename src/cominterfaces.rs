@@ -19,9 +19,8 @@ pub trait ComIid {
 // extend some definitions from winapi (re-export existing types where possible!)
 DEFINE_IID!(IID_IUnknown, 0x00000000, 0x0000, 0x0000, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
 pub type IUnknown = ::w::IUnknown;
-pub type IUnknownVtbl = ::w::IUnknownVtbl;
 impl ComIid for IUnknown { fn iid() -> &'static Guid { &IID_IUnknown } }
-impl ComInterface for IUnknown { type Vtbl = IUnknownVtbl; }
+impl ComInterface for IUnknown { type Vtbl = ::w::IUnknownVtbl; }
 
 DEFINE_IID!(IID_IRestrictedErrorInfo, 0x82BA7092, 0x4C88, 0x427D, 0xA7, 0xBC, 0x16, 0xDD, 0x93, 0xFE, 0xB6, 0x7E);
 pub type IRestrictedErrorInfo = ::w::IRestrictedErrorInfo;
@@ -33,7 +32,7 @@ DEFINE_IID!(IID_IAgileObject, 0x94EA2B94, 0xE9CC, 0x49E0, 0xC0, 0xFF, 0xEE, 0x64
 
 #[repr(C)] #[derive(Debug)]
 pub struct IAgileObject {
-    lpVtbl: *const IUnknownVtbl // IAgileObject has no methods besides what IUnknown has
+    lpVtbl: *const ::w::IUnknownVtbl // IAgileObject has no methods besides what IUnknown has
 }
 impl ::std::ops::Deref for IAgileObject {
     type Target = IUnknown;
@@ -49,4 +48,4 @@ impl ::std::ops::DerefMut for IAgileObject {
     }
 }
 impl ComIid for IAgileObject { fn iid() -> &'static Guid { &IID_IAgileObject } }
-impl ComInterface for IAgileObject { type Vtbl = IUnknownVtbl; }
+impl ComInterface for IAgileObject { type Vtbl = ::w::IUnknownVtbl; }

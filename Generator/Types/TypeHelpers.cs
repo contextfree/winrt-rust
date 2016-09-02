@@ -78,7 +78,7 @@ namespace Generator.Types
 			{
 				switch (usage)
 				{
-					case TypeUsage.Raw: return "::w::HSTRING";
+					case TypeUsage.Raw: return "HSTRING";
 					case TypeUsage.In: return "&HStringArg";
 					case TypeUsage.Out: return "HString";
 					case TypeUsage.GenericArg: return "HString";
@@ -98,7 +98,7 @@ namespace Generator.Types
 			}
 			else if (t.FullName == "System.Guid")
 			{
-				return "::Guid";
+				return "Guid";
 			}
 			else if (t.IsPrimitive)
 			{
@@ -127,7 +127,7 @@ namespace Generator.Types
 					case "System.Double":
 						return "f64";
 					case "System.Char":
-						return "::Char";
+						return "Char";
 					default:
 						throw new NotImplementedException("Primitive type: " + t.FullName);
 				}
@@ -268,19 +268,19 @@ namespace Generator.Types
 			}
 			else if (t.IsArray)
 			{
-				return "::std::ptr::null_mut()"; // TODO?
+				return "null_mut()"; // TODO?
 			}
 			else if (t.FullName == "System.String")
 			{
-				return "::std::ptr::null_mut()";
+				return "null_mut()";
 			}
 			else if (t.FullName == "System.Object")
 			{
-				return "::std::ptr::null_mut()";
+				return "null_mut()";
 			}
 			else if (t.FullName == "System.Guid")
 			{
-				return "::std::mem::zeroed()";
+				return "zeroed()";
 			}
 			else if (t.IsPrimitive)
 			{
@@ -297,18 +297,18 @@ namespace Generator.Types
 					case "System.Single":
 					case "System.Double":
 					case "System.Char":
-						return "::std::mem::zeroed()";
+						return "zeroed()";
 					default:
 						throw new NotImplementedException("Primitive type: " + t.FullName);
 				}
 			}
 			else if (t.IsValueType)
 			{
-				return "::std::mem::zeroed()";
+				return "zeroed()";
 			}
 			else // reference type
 			{
-				return "::std::ptr::null_mut()";
+				return "null_mut()";
 			}
 		}
 

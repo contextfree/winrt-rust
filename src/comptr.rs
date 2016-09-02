@@ -3,7 +3,7 @@ use std::fmt;
 use std::ptr;
 use ::{ComIid, ComInterface, RtInterface, RtClassInterface, IInspectable, Guid};
 
-#[derive(Debug)]
+#[repr(C)] #[derive(Debug)]
 pub struct ComPtr<T>(*mut T); // TODO: use NonZero or Shared (see https://github.com/rust-lang/rust/issues/27730)
 
 impl<T> fmt::Pointer for ComPtr<T> {
@@ -84,7 +84,8 @@ impl<T> PartialEq<ComPtr<T>> for ComPtr<T> {
     }
 }
 
-/// Owned array type that will be deallocated using `CoTaskMemFree` on drop.
+/// Owned array type that is returned from WinRT calls.
+/// Has been allocated by WinRT and will be deallocated using `CoTaskMemFree` on drop.
 pub struct ComArray<T> where T: ::RtType {
     size: u32,
     first: *mut T::Abi
