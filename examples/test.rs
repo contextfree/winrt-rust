@@ -144,20 +144,16 @@ fn run() {
     }
     assert_eq!(i, count);
 
-    let mut array = [::std::ptr::null_mut(); 2000];
+    let mut buffer = Vec::with_capacity(2000);
 
-    let filled = unsafe { deviceInformationCollection.get_many(0, array.len() as u32, array.as_mut_ptr()).unwrap() };
-    let mut freed = 0;
-    for i in 0..array.len() {
-        if !array[i].is_null() {
-            unsafe { ComPtr::wrap(array[i]) };
-            freed += 1;
-            // reference will be released here
-        }
+    unsafe { deviceInformationCollection.get_many(0, &mut buffer).unwrap() };
+    for (b, i) in buffer.iter_mut().zip(0..) {
+        let deviceName = unsafe { b.get_name().unwrap() };
+        println!("Device Name ({}): {}", i, deviceName);
     }
-    println!("Freed result of GetMany ({} of {} values).", freed, filled);
-    assert_eq!(filled, ::std::cmp::min(count, array.len() as u32));
-
+    let len = buffer.len();
+    drop(buffer);
+    println!("Freed result of GetMany ({} values).", len);
 
     if let Some(mut r) = remember {
         let (index, found) = unsafe { deviceInformationCollection.index_of(&mut r).unwrap() };

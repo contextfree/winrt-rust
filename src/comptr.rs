@@ -75,7 +75,7 @@ impl<T> Clone for ComPtr<T> {
 }
 impl<T> Drop for ComPtr<T> {
     fn drop(&mut self) {
-        unsafe { self.as_unknown().Release(); }
+        unsafe { self.as_unknown().Release() };
     }
 }
 impl<T> PartialEq<ComPtr<T>> for ComPtr<T> {
@@ -123,7 +123,6 @@ impl<T> DerefMut for ComArray<T> where T: ::RtType {
 impl<T> Drop for ComArray<T> where T: ::RtType {
     #[inline]
     fn drop(&mut self) {
-        // TODO: call `Release` on elements if T is an interface reference
         unsafe {
             ::std::ptr::drop_in_place(&mut self[..]);
             ::ole32::CoTaskMemFree(self.first as ::w::LPVOID)

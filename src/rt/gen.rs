@@ -23907,10 +23907,11 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				let hr = ((*self.lpVtbl).MoveNext)(self, &mut out);
 				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_many(&mut self, itemsSize: u32, items: *mut T::Abi) -> RtResult<u32> {
+			pub unsafe fn get_many(&mut self, items: &mut Vec<T::Out>) -> RtResult<()> {
+				debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
 				let mut out = ::std::mem::zeroed();
-				let hr = ((*self.lpVtbl).GetMany)(self, itemsSize, items, &mut out);
-				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+				let hr = ((*self.lpVtbl).GetMany)(self, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
+				if hr == ::w::S_OK { items.set_len(out as usize); Ok(()) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_IVectorView, 3152149068, 45283, 17795, 186, 239, 31, 27, 46, 72, 62, 86);
@@ -23936,10 +23937,11 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				let hr = ((*self.lpVtbl).IndexOf)(self, T::unwrap(value), &mut index, &mut out);
 				if hr == ::w::S_OK { Ok((index, out)) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_many(&mut self, startIndex: u32, itemsSize: u32, items: *mut T::Abi) -> RtResult<u32> {
+			pub unsafe fn get_many(&mut self, startIndex: u32, items: &mut Vec<T::Out>) -> RtResult<()> {
+				debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
 				let mut out = ::std::mem::zeroed();
-				let hr = ((*self.lpVtbl).GetMany)(self, startIndex, itemsSize, items, &mut out);
-				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+				let hr = ((*self.lpVtbl).GetMany)(self, startIndex, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
+				if hr == ::w::S_OK { items.set_len(out as usize); Ok(()) } else { Err(hr) }
 			}
 		}
 		DEFINE_IID!(IID_IVector, 2436052969, 4513, 17221, 163, 162, 78, 127, 149, 110, 34, 45);
@@ -24002,10 +24004,11 @@ use ::rt::{RtType, IInspectable, RtResult}; use ::rt::handler::IntoInterface;
 				let hr = ((*self.lpVtbl).Clear)(self);
 				if hr == ::w::S_OK { Ok(()) } else { Err(hr) }
 			}
-			#[inline] pub unsafe fn get_many(&mut self, startIndex: u32, itemsSize: u32, items: *mut T::Abi) -> RtResult<u32> {
+			pub unsafe fn get_many(&mut self, startIndex: u32, items: &mut Vec<T::Out>) -> RtResult<()> {
+				debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
 				let mut out = ::std::mem::zeroed();
-				let hr = ((*self.lpVtbl).GetMany)(self, startIndex, itemsSize, items, &mut out);
-				if hr == ::w::S_OK { Ok(out) } else { Err(hr) }
+				let hr = ((*self.lpVtbl).GetMany)(self, startIndex, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
+				if hr == ::w::S_OK { items.set_len(out as usize); Ok(()) } else { Err(hr) }
 			}
 			#[inline] pub unsafe fn replace_all(&mut self, items: &[&T::In]) -> RtResult<()> {
 				let hr = ((*self.lpVtbl).ReplaceAll)(self, items.len() as u32, items.as_ptr() as *mut _);
