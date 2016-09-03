@@ -1,7 +1,12 @@
 [package]
 name = "winrt"
 version = "0.1.0"
-authors = ["Patrick Reisert"]
+authors = ["Patrick Reisert", "Max Strini"]
+description = "Automatically generated, (mostly) safe bindings for the Windows Runtime APIs"
+repository = "https://github.com/contextfree/winrt-rust"
+readme = "README.md"
+keywords = ["winrt", "uwp", "windows", "runtime"]
+license = "MIT OR Apache-2.0"
 
 [dependencies]
 winapi = "0.2.8"
