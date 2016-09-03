@@ -101,7 +101,6 @@ impl<T> Clone for ComPtr<T> {
 }
 impl<T> Drop for ComPtr<T> {
     fn drop(&mut self) {
-        println!("Releasing ComPtr");
         unsafe { self.as_unknown().Release() };
     }
 }

@@ -682,8 +682,6 @@ impl RuntimeContext {
 
 impl Drop for RuntimeContext {
     fn drop(&mut self) {
-        println!("Uninitializing now ...");
         unsafe { ::runtimeobject::RoUninitialize() };
-        println!("Uninitialized.");
     }
 }
