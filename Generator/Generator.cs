@@ -92,10 +92,7 @@ namespace Generator
 
 		public void EmitTypes()
 		{
-			// TODO: get rid of this and enable all modules (disabled because it results in a huge file and very long compilation)
-			var assemblyNames = new string[] { "Windows.Foundation", "Windows.Devices"/*, "Windows.Storage", "Windows.Media", "Windows.System", "Windows.Graphics"*/ };
-
-			foreach (var type in definitionsList.Values.Where(t => assemblyNames.Contains(t.Module.Assembly.Name.Name)))
+			foreach (var type in definitionsList.Values)
 			{
 				type.Emit();
 			}
