@@ -1,3 +1,27 @@
+//! Using Windows Runtime APIs from Rust.
+//!
+//! ## Example
+//! ```
+//! # // THIS IS THE SAME CODE THAT IS SHOWN IN README.md
+//! # // PLEASE KEEP THEM IN SYNC SO WE CAN RELY ON DOCTESTS!
+//! extern crate winrt;
+//!
+//! use winrt::*; // import various helper types
+//! use winrt::windows::system::diagnostics::*; // import namespace Windows.System.Diagnostics
+//!
+//! fn main() {
+//!     let rt = RuntimeContext::init(); // initialize the Windows Runtime
+//!     // get factory, which is also used to call static methods
+//!     let mut pdi_statics = IProcessDiagnosticInfoStatics::factory();
+//!     let mut infos = unsafe { pdi_statics.get_for_processes().unwrap() };
+//!     println!("Currently executed processes ({}):", unsafe { infos.get_size().unwrap() });
+//!     for mut p in infos.into_iter() {
+//!         let pid = unsafe { p.get_process_id().unwrap() };
+//!         let exe = unsafe { p.get_executable_file_name().unwrap() };
+//!         println!("[{}] {}", pid, exe);
+//!     }
+//! }
+
 #![cfg(windows)]
 
 #![cfg_attr(test,feature(test))]
@@ -14,7 +38,9 @@ extern crate oleaut32;
 
 mod guid;
 pub use guid::Guid;
-pub use ::w::TrustLevel;
+
+///Represents the trust level of an activatable class (re-export from WinAPI crate)
+pub type TrustLevel = ::w::TrustLevel;
 
 // Compared to the DEFINE_GUID macro from winapi, this one creates a private const
 macro_rules! DEFINE_IID {
@@ -44,8 +70,6 @@ pub use cominterfaces::{ComInterface, ComIid, IUnknown, IRestrictedErrorInfo, IA
 
 mod rt;
 pub use rt::{RtInterface, RtClassInterface, RtValueType, RtType, RtActivatable, IInspectable, IInspectableVtbl, Char, RuntimeContext};
-
-pub use rt::handler::IntoInterface;
 
 mod result;
 pub use result::{Result, Error, HRESULT};

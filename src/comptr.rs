@@ -3,6 +3,8 @@ use std::fmt;
 use std::ptr;
 use ::{ComIid, ComInterface, RtInterface, RtClassInterface, IInspectable, Guid};
 
+/// Smart pointer for Windows Runtime objects. This pointer automatically maintains the
+/// reference count of the underlying COM object.
 #[repr(C)] #[derive(Debug)]
 pub struct ComPtr<T>(*mut T); // TODO: use NonZero or Shared (see https://github.com/rust-lang/rust/issues/27730)
 
@@ -12,6 +14,7 @@ impl<T> fmt::Pointer for ComPtr<T> {
     }
 }
 
+// This is a helper method that is not exposed publically by the library
 pub fn query_interface<T, Target>(interface: &T) -> Option<ComPtr<Target>> where Target: ComIid, T: ComInterface {
     let iid: &'static Guid = Target::iid();
     let as_unknown = unsafe { &mut *(interface  as *const T as *mut T as *mut ::w::IUnknown) };
@@ -33,23 +36,46 @@ impl<T> ComPtr<T> {
     /// Creates a `ComPtr` to wrap a raw pointer.
     /// It takes ownership over the pointer which means it does __not__ call `AddRef`.
     /// `T` __must__ be a COM interface that inherits from `IUnknown`.
+    /// The wrapped pointer must not be null.
     pub unsafe fn wrap(ptr: *mut T) -> ComPtr<T> { // TODO: Add T: ComInterface bound
         debug_assert!(!ptr.is_null());
         ComPtr(ptr)
     }
 
+    /// Returns the underlying WinRT object as a reference to an `IInspectable` object.
     fn as_inspectable(&self) -> &mut IInspectable where T: RtInterface {
         unsafe { &mut *(self.0 as *mut IInspectable) }
     }
     
+    /// Returns the underlying WinRT or COM object as a reference to an `IUnknown` object.
     fn as_unknown(&self) -> &mut ::w::IUnknown {
         unsafe { &mut *(self.0 as *mut ::w::IUnknown) }
     }
     
+    /// Gets the fully qualified name of the current Windows Runtime object.
+    /// This is only available for interfaces that inherit from `IInspectable` and
+    /// are not factory or statics interfaces.
+    ///
+    /// # Examples
+    ///
+    /// Basic usage:
+    ///
+    /// ```
+    /// use winrt::*;
+    /// use winrt::windows::foundation::Uri;
+    ///
+    /// # let rt = winrt::RuntimeContext::init();
+    /// let mut uri_factory = Uri::factory();
+    /// let uri = FastHString::new("https://www.rust-lang.org");
+    /// let uri = unsafe { uri_factory.create_uri(&uri).unwrap() };
+    /// assert_eq!("Windows.Foundation.Uri", uri.get_runtime_class_name().to_string());
+    /// ```
     pub fn get_runtime_class_name(&self) -> ::HString where T: RtClassInterface {
         HiddenGetRuntimeClassName::get_runtime_class_name(self.as_inspectable())
     }
     
+    /// Retrieves a `ComPtr` to the specified interface, if it is supported by the underlying object.
+    /// If the requested interface is not supported, `None` is returned.
     pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComIid, T: ComInterface {
         query_interface::<_, Target>(&**self)
     }
@@ -84,8 +110,9 @@ impl<T> PartialEq<ComPtr<T>> for ComPtr<T> {
     }
 }
 
-/// Owned array type that is returned from WinRT calls.
-/// Has been allocated by WinRT and will be deallocated using `CoTaskMemFree` on drop.
+/// Owned array type that is used as return type when WinRT methods return arrays.
+/// It wraps a block of memory that has been allocated by WinRT and will be deallocated
+/// using `CoTaskMemFree` on drop.
 pub struct ComArray<T> where T: ::RtType {
     size: u32,
     first: *mut T::Abi
@@ -101,6 +128,7 @@ impl<T> ComArray<T> where T: ::RtType {
         }
     }
 
+    /// Returns the length of the array.
     #[inline]
     pub fn len(&self) -> usize {
         self.size as usize

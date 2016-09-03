@@ -1,5 +1,3 @@
-#![allow(non_snake_case)]
-
 extern crate winapi as w;
 extern crate winrt as wrt;
 // TODO: don't use functions from runtimeobject directly 
@@ -21,10 +19,10 @@ fn main() {
 fn run() {
     use std::sync::{Arc, Mutex, Condvar};
 
-    let mut uriFactory = Uri::factory();
+    let mut uri_factory = Uri::factory();
     let base = FastHString::new("https://github.com");
     let relative = FastHString::new("contextfree/winrt-rust");
-    let uri = unsafe { uriFactory.create_with_relative_uri(&base, &relative).unwrap() };
+    let uri = unsafe { uri_factory.create_with_relative_uri(&base, &relative).unwrap() };
     let to_string = unsafe { uri.query_interface::<IStringable>().unwrap().to_string().unwrap() };
     println!("{} -> {}", uri.get_runtime_class_name(), to_string);
     println!("TrustLevel: {:?}", uri.get_trust_level());
@@ -34,55 +32,55 @@ fn run() {
         println!("  [{}] = {:?}", i, iids[i]);
     }
 
-    let mut outPortStatics = IMidiOutPortStatics::factory();
-    //println!("outPortStatics: {}", outPortStatics.get_runtime_class_name()); // this is not allowed (prevented statically)
+    let mut out_port_statics = IMidiOutPortStatics::factory();
+    //println!("out_port_statics: {}", out_port_statics.get_runtime_class_name()); // this is not allowed (prevented statically)
     
-    let deviceSelector = unsafe { outPortStatics.get_device_selector().unwrap() };
-    println!("{}", deviceSelector);
+    let device_selector = unsafe { out_port_statics.get_device_selector().unwrap() };
+    println!("{}", device_selector);
     
-    let mut deviceInformationStatics = IDeviceInformationStatics::factory();
+    let mut device_information_statics = IDeviceInformationStatics::factory();
     
     unsafe {
         use runtimeobject::*;
         use ::w::S_OK;
 
         // Test some error reporting by using an invalid device selector
-        let wrongDeviceSelector: FastHString = "Foobar".into();
-        let res = deviceInformationStatics.find_all_async_aqs_filter(&wrongDeviceSelector);
+        let wrong_deviceselector: FastHString = "Foobar".into();
+        let res = device_information_statics.find_all_async_aqs_filter(&wrong_deviceselector);
         if let Err(e) = res {
             println!("HRESULT (FindAllAsyncAqsFilter) = {:?}", e.as_hresult());
-            let mut errorInfo = {
+            let mut error_info = {
                 let mut res = ptr::null_mut();
                 assert_eq!(GetRestrictedErrorInfo(&mut res), S_OK);
                 ComPtr::wrap(res)
             };
-            let (description, error, restrictedDescription, _) = {
+            let (description, error, restricted_description, _) = {
                 let mut description = ptr::null_mut();
                 let mut error = 0;
-                let mut restrictedDescription = ptr::null_mut();
-                let mut capabilitySid = ptr::null_mut();
-                assert_eq!(errorInfo.GetErrorDetails(&mut description, &mut error, &mut restrictedDescription, &mut capabilitySid), S_OK);
-                (BStr::wrap(description), error, BStr::wrap(restrictedDescription), BStr::wrap(capabilitySid))
+                let mut restricted_description = ptr::null_mut();
+                let mut capability_sid = ptr::null_mut();
+                assert_eq!(error_info.GetErrorDetails(&mut description, &mut error, &mut restricted_description, &mut capability_sid), S_OK);
+                (BStr::wrap(description), error, BStr::wrap(restricted_description), BStr::wrap(capability_sid))
             };
-            println!("Got Error Info: {} ({})", description, restrictedDescription);
+            println!("Got Error Info: {} ({})", description, restricted_description);
             assert_eq!(error, e.as_hresult()); // the returned HRESULT within IRestrictedErrorInfo is the same as the original HRESULT
         }
         // NOTE: `res` is still null pointer at this point
     };
 
-    //let mut asyncOp = unsafe { deviceInformationStatics.find_all_async_aqs_filter(deviceSelector.get_ref()).unwrap() };
-    let mut asyncOp = unsafe { deviceInformationStatics.find_all_async().unwrap() };
+    //let mut async_op = unsafe { device_information_statics.find_all_async_aqs_filter(device_selector.get_ref()).unwrap() };
+    let mut async_op = unsafe { device_information_statics.find_all_async().unwrap() };
     
-    println!("CLS: {}",  asyncOp.get_runtime_class_name());
+    println!("CLS: {}",  async_op.get_runtime_class_name());
     
-    let mut asi = asyncOp.query_interface::<IAsyncInfo>().unwrap();
-    println!("IAsyncInfo: {:p}, IAsyncOperation: {:p}", asi, asyncOp);
+    let mut asi = async_op.query_interface::<IAsyncInfo>().unwrap();
+    println!("IAsyncInfo: {:p}, Iasync_operation: {:p}", asi, async_op);
     
-    let unknown = asyncOp.query_interface::<IUnknown>().unwrap();
-    println!("IAsyncInfo: {:p}, IAsyncOperation: {:p}, IUnknown: {:p}", asi, asyncOp, unknown);
+    let unknown = async_op.query_interface::<IUnknown>().unwrap();
+    println!("IAsyncInfo: {:p}, Iasync_operation: {:p}, IUnknown: {:p}", asi, async_op, unknown);
     
     let unknown = asi.query_interface::<IUnknown>().unwrap();
-    println!("IAsyncInfo: {:p}, IAsyncOperation: {:p}, IUnknown: {:p}", asi, asyncOp, unknown);
+    println!("IAsyncInfo: {:p}, Iasync_operation: {:p}, IUnknown: {:p}", asi, async_op, unknown);
     
     let id = unsafe { asi.get_id().unwrap() };
     println!("id: {:?}", id);
@@ -93,7 +91,7 @@ fn run() {
     let pair = Arc::new((Mutex::new(false), Condvar::new()));
     {
         let pair2 = pair.clone();
-        let mut myHandler = AsyncOperationCompletedHandler::new(move |_op, status| {
+        let mut my_handler = AsyncOperationCompletedHandler::new(move |_op, status| {
             println!("Result handler invoked! Status: {:?}", status);
             let &(ref lock, ref cvar) = &*pair2;
             let mut started = lock.lock().unwrap();
@@ -101,8 +99,8 @@ fn run() {
             cvar.notify_one();
             Ok(())
         });
-        unsafe { asyncOp.set_completed(&mut myHandler).unwrap() };
-        // local reference to myHandler is dropped here -> Release() is called
+        unsafe { async_op.set_completed(&mut my_handler).unwrap() };
+        // local reference to my_handler is dropped here -> Release() is called
     }
     
     println!("Waiting for results of async call ...");
@@ -114,16 +112,16 @@ fn run() {
         started = cvar.wait(started).unwrap();
     }
 
-    let mut deviceInformationCollection = unsafe { asyncOp.get_results().unwrap() };
-    println!("CLS: {}", deviceInformationCollection.get_runtime_class_name());
-    let count = unsafe { deviceInformationCollection.get_size().unwrap() };
+    let mut device_information_collection = unsafe { async_op.get_results().unwrap() };
+    println!("CLS: {}", device_information_collection.get_runtime_class_name());
+    let count = unsafe { device_information_collection.get_size().unwrap() };
     println!("Device Count: {}", count);
     
     let mut remember = None;
     let mut i = 0;
-    for mut current in deviceInformationCollection.into_iter() {
-        let deviceName = unsafe { current.get_name().unwrap() };
-        println!("Device Name ({}): {}", i, deviceName);
+    for mut current in device_information_collection.into_iter() {
+        let device_name = unsafe { current.get_name().unwrap() };
+        println!("Device Name ({}): {}", i, device_name);
         if i == 100 {
             // remember the 100th value and try to find it later using IndexOf
             remember = Some(current);
@@ -133,21 +131,21 @@ fn run() {
     assert_eq!(i, count);
 
     let mut buffer = Vec::with_capacity(2000);
-    unsafe { deviceInformationCollection.get_many(0, &mut buffer).unwrap() };
+    unsafe { device_information_collection.get_many(0, &mut buffer).unwrap() };
     for (b, i) in buffer.iter_mut().zip(0..) {
-        let deviceName = unsafe { b.get_name().unwrap() };
-        println!("Device Name ({}): {}", i, deviceName);
+        let device_name = unsafe { b.get_name().unwrap() };
+        println!("Device Name ({}): {}", i, device_name);
     }
     let len = buffer.len();
     drop(buffer);
     println!("Freed result of GetMany ({} values).", len);
 
     if let Some(mut r) = remember {
-        let (index, found) = unsafe { deviceInformationCollection.index_of(&mut r).unwrap() };
+        let (index, found) = unsafe { device_information_collection.index_of(&mut r).unwrap() };
         println!("Found remembered value: {} (index: {})", found, index);
     }
     
-    match unsafe { deviceInformationCollection.get_at(count + 42) } {
+    match unsafe { device_information_collection.get_at(count + 42) } {
         Err(e) => println!("Error getting element at {}: {:?}", count + 42, e), // will be out of bounds
         Ok(_) => panic!("expected Error")
     };

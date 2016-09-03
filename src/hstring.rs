@@ -58,13 +58,26 @@ pub struct HStringReference<'a>(HSTRING_HEADER, PhantomData<&'a ()>);
 impl<'a> HStringReference<'a> {
     #[inline]
     /// Creates a new `HStringReference` from a UTF-16 encoded slice, which must be null-terminated.
-    /// This function does not allocate.
+    /// This function does not allocate and is the fastest option if you already have UTF-16 encoded
+    /// data.
+    ///
+    /// # Examples
+    ///
+    /// Basic usage:
+    ///
+    /// ```
+    /// use winrt::HStringReference;
+    /// let sparkle_heart = vec![0xD83D, 0xDC96, 0x0];
+    /// let r = HStringReference::from_utf16(&sparkle_heart);
+    /// assert_eq!("💖", r.to_string());
+    /// ```
     pub fn from_utf16(slice: &'a [u16]) -> HStringReference<'a> {
         assert!(slice[slice.len() - 1] == 0, "input must be null-terminated");
         unsafe { HStringReference::from_utf16_unchecked(slice) }
     }
 
-    /// Won't check if the string is null terminated
+    /// Creates a new `HStringReference` from a UTF-16 encoded slice, which must be null-terminated.
+    /// This function is unsafe because the caller must make sure that the data really is null-terminated.
     pub unsafe fn from_utf16_unchecked(slice: &'a [u16]) -> HStringReference<'a> {
         let mut hstrref: HStringReference = HStringReference(zero_header(), PhantomData);
         if slice.len() == 0 { return hstrref; }
@@ -76,20 +89,33 @@ impl<'a> HStringReference<'a> {
         hstrref
     }
 
+    /// Returns the length of the string in Unicode characters, as specified by `WindowsGetStringLen`.
     #[inline]
     pub fn len(&self) -> u32 {
         unsafe { WindowsGetStringLen(self.as_hstring()) }
     }
 
+    /// Checks whether the string is empty.
+    ///
+    /// # Examples
+    ///
+    /// Basic usage:
+    ///
+    /// ```
+    /// use winrt::HString;
+    /// let s = HString::empty();
+    /// assert!(s.is_empty());
+    /// ```
     #[inline]
     pub fn is_empty(&self) -> bool {
         unsafe { WindowsIsStringEmpty(self.as_hstring()) != 0 }
     }
 
-    // Since HSTRING is just a pointer to HSTRING_HEADER in disguise, we can just return
-    // a pointer to our wrapper header and cast it accordingly.
+    /// Returns the `HSTRING` that this instance is wrapping.
     #[inline]
     unsafe fn as_hstring(&self) -> HSTRING {
+        // Since HSTRING is just a pointer to HSTRING_HEADER in disguise, we can just return
+        // a pointer to our wrapper header and cast it accordingly.
         &self.0 as *const HSTRING_HEADER as *mut HSTRING_HEADER as *mut HSTRING__
     }
 }
@@ -140,14 +166,26 @@ impl<'a> Deref for HStringReference<'a> {
     }
 }
 
-/// An `HSTRING` wrapper with several benefits
-///
-/// - Faster allocation
-/// - Faster (basically free) creation of references
-/// - Manages its own memory and won't be freed by calls into the Windows Runtime
+/// A string type that should be used to create strings that can be passed to Windows Runtime
+/// functions. Creating a new `FastHString` is faster than creating an instance of `HString`
+/// because it eliminates an additional allocation. Furthermore, obtaining a `HStringArg` from
+/// a `FastHString` is basically free, which is not the case for `HString`.
 pub struct FastHString(HSTRING_HEADER);
 
 impl FastHString {
+    /// Creates a new `FastHString` from a Rust string. `FastHString` uses the Rust allocator to
+    /// create a storage buffer for its contents, where the string is stored in UTF-16 encoding.
+    /// The buffer is freed on when the `FastHString` is dropped.
+    ///
+    /// # Examples
+    ///
+    /// Basic usage:
+    ///
+    /// ```
+    /// use winrt::FastHString;
+    /// let s = FastHString::new("hello");
+    /// assert_eq!("hello", s.to_string());
+    /// ```
     pub fn new(s: &str) -> FastHString {
         let mut hstrref: FastHString = FastHString(zero_header());
         if s.is_empty() {
@@ -177,29 +215,64 @@ impl FastHString {
         hstrref
     }
 
+    /// Creates an empty `FastHString`.
     #[inline]
     pub fn empty() -> FastHString {
         FastHString(zero_header())
     }
-
-    // Since HSTRING is just a pointer to HSTRING_HEADER in disguise, we can just return
-    // a pointer to our wrapped header and cast it accordingly.
+    
+    /// Returns the `HSTRING` that this instance is wrapping.
     #[inline]
     unsafe fn as_hstring(&self) -> HSTRING {
+        // Since HSTRING is just a pointer to HSTRING_HEADER in disguise, we can just return
+        // a pointer to our wrapped header and cast it accordingly.
         &self.0 as *const HSTRING_HEADER as *mut HSTRING_HEADER as *mut HSTRING__
     }
 
+    /// Returns the length of the string in Unicode characters, as specified by `WindowsGetStringLen`.
+    ///
+    /// # Examples
+    ///
+    /// Basic usage:
+    ///
+    /// ```
+    /// use winrt::FastHString;
+    /// let s = FastHString::new("hello");
+    /// assert_eq!(5, s.len());
+    /// ```
     #[inline]
     pub fn len(&self) -> u32 {
-        // This is okay even if pointer is null (returns 0)
         unsafe { WindowsGetStringLen(self.as_hstring()) }
     }
 
+    /// Checks whether the string is empty.
+    ///
+    /// # Examples
+    ///
+    /// Basic usage:
+    ///
+    /// ```
+    /// use winrt::FastHString;
+    /// let s = FastHString::empty();
+    /// assert!(s.is_empty());
+    /// ```
     #[inline]
     pub fn is_empty(&self) -> bool {
         unsafe { WindowsIsStringEmpty(self.as_hstring()) != 0 }
     }
 
+    /// Creates an `HStringReference` that points to the contents of this `FastHString`. 
+    ///
+    /// # Examples
+    ///
+    /// Basic usage:
+    ///
+    /// ```
+    /// use winrt::FastHString;
+    /// let s = FastHString::new("hello");
+    /// let r = s.make_reference();  
+    /// assert_eq!("hello", r.to_string());
+    /// ```   
     #[inline]
     pub fn make_reference(&self) -> HStringReference {
         // Creating another reference is basically free,
@@ -277,18 +350,18 @@ impl<'a> Deref for FastHString {
 pub struct HStringArg(HSTRING_HEADER);
 
 impl HStringArg {
-    // Since HSTRING is just a pointer to HSTRING_HEADER in disguise, we can just return
-    // a pointer to our wrapper header and cast it accordingly.
     #[inline]
     pub unsafe fn get(&self) -> HSTRING {
+        // Since HSTRING is just a pointer to HSTRING_HEADER in disguise, we can just return
+        // a pointer to our wrapper header and cast it accordingly.
         &self.0 as *const HSTRING_HEADER as *mut HSTRING_HEADER as *mut HSTRING__
     }
 }
 
-/// A wrapper over an HSTRING whose memory is managed by the Windows Runtime.
-/// This is what you get as return values from WinRT methods.
+/// A wrapper over an `HSTRING` whose memory is managed by the Windows Runtime.
+/// This is what you get as return values when calling WinRT methods that return strings.
 /// Note that dereferencing to `&HStringArg` is not implemented for this, because
-/// the containing HSTRING might be null (empty string), and null references
+/// the containing `HSTRING` might be null (empty string), and null references
 /// are not allowed. In order to obtain an `&HStringArg` from an `HString`,
 /// first create an `HStringReference` using `make_reference()`.
 pub struct HString(HSTRING);
@@ -314,32 +387,70 @@ impl HString {
         hstr
     }
     
+    /// Wraps an existing `HSTRING` inside this `HString`. This is only safe
+    /// when the `HSTRING` was allocated by the Windows Runtime.
     #[inline]
     pub unsafe fn wrap(hstr: HSTRING) -> HString {
         HString(hstr)
     }
     
+    /// Creates an empty `HString`.
     #[inline]
     pub fn empty() -> HString {
-        HString(ptr::null_mut())
+        HString(ptr::null_mut()) // an empty HSTRING is represented by a null-pointer
     }
     
+    /// Returns the length of the string in Unicode characters, as specified by `WindowsGetStringLen`.
+    ///
+    /// # Examples
+    ///
+    /// Basic usage:
+    ///
+    /// ```
+    /// use winrt::HString;
+    /// let s = HString::new("hello");
+    /// assert_eq!(5, s.len());
+    /// ```
     #[inline]
     pub fn len(&self) -> u32 {
         // This is okay even if pointer is null (returns 0)
         unsafe { WindowsGetStringLen(self.0) }
     }
     
+    /// Checks whether the string is empty.
+    ///
+    /// # Examples
+    ///
+    /// Basic usage:
+    ///
+    /// ```
+    /// use winrt::HString;
+    /// let s = HString::empty();
+    /// assert!(s.is_empty());
+    /// ```
     #[inline]
     pub fn is_empty(&self) -> bool {
         unsafe { WindowsIsStringEmpty(self.0) != 0 }
     }
 
+    /// Returns the `HSTRING` that this instance is wrapping.
     #[inline]
     unsafe fn as_hstring(&self) -> HSTRING {
         self.0
     }
 
+    /// Creates an `HStringReference` that points to the contents of this `HString`. 
+    ///
+    /// # Examples
+    ///
+    /// Basic usage:
+    ///
+    /// ```
+    /// use winrt::HString;
+    /// let s = HString::new("hello");
+    /// let r = s.make_reference();  
+    /// assert_eq!(s.to_string(), r.to_string());
+    /// ```    
     #[inline]
     pub fn make_reference<'a>(&'a self) -> HStringReference<'a> {
         let mut len = 0;

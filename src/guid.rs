@@ -1,5 +1,6 @@
 use std::{fmt, cmp, mem};
 
+/// Represents a GUID type in the Windows Runtime type system.
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Guid { // TODO: fields should not be public (requires const fn constructor)

@@ -1,7 +1,9 @@
-pub type HRESULT = ::w::HRESULT; // re-export HRESULT from WinAPI
+/// Re-export from WinAPI crate
+pub type HRESULT = ::w::HRESULT;
 
 // TODO: add more codes from https://msdn.microsoft.com/en-us/library/windows/desktop/dd542643(v=vs.85).aspx, especially the `RO_`-prefixed
 
+/// Represents an error as a result of a Windows Runtime method call.
 #[derive(Debug, PartialEq, Eq)]
 pub enum Error {
     OperationAborted,
@@ -61,4 +63,5 @@ impl Error {
     }
 }
 
+/// A specialized `Result` type for Windows Runtime method calls.
 pub type Result<T> = ::std::result::Result<T, Error>;
