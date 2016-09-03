@@ -4,6 +4,10 @@ use ::std::fmt;
 use ::w::*;
 use ::oleaut32::*;
 
+// TODO: move to separate crate?
+
+/// A wrapper around `BSTR`, a string type used by classic COM. This is usually not needed when
+/// working with WinRT, but can be helpful when interacting with other APIs.
 pub struct BStr(BSTR);
 
 impl<'a> From<&'a str> for BStr {

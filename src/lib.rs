@@ -14,7 +14,9 @@ extern crate oleaut32;
 
 mod guid;
 pub use guid::Guid;
-pub use ::w::TrustLevel;
+
+///Represents the trust level of an activatable class (re-export from WinAPI crate)
+pub type TrustLevel = ::w::TrustLevel;
 
 // Compared to the DEFINE_GUID macro from winapi, this one creates a private const
 macro_rules! DEFINE_IID {
@@ -44,8 +46,6 @@ pub use cominterfaces::{ComInterface, ComIid, IUnknown, IRestrictedErrorInfo, IA
 
 mod rt;
 pub use rt::{RtInterface, RtClassInterface, RtValueType, RtType, RtActivatable, IInspectable, IInspectableVtbl, Char, RuntimeContext};
-
-pub use rt::handler::IntoInterface;
 
 mod result;
 pub use result::{Result, Error, HRESULT};

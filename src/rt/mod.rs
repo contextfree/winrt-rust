@@ -10,15 +10,18 @@ use self::gen::windows::foundation::collections::{
     IVectorView
 };
 
+/// Represents a single UTF-16 character. This is the standard character type in WinRT. 
 #[derive(Clone, Copy)] #[repr(C)]
-pub struct Char(pub ::w::wchar_t);
-// TODO: deref to u16
+pub struct Char(pub ::w::wchar_t); // TODO: deref to u16
 
-/// This means that the interface is based on IInspectable
+/// Marker trait for all Windows Runtime interfaces. They must inherit from `IInspectable`.
 pub unsafe trait RtInterface: ComInterface {}
-/// This means that the interface is not a factory or static interface
+
+/// Marker trait for all interfaces that are not factories or statics.
 pub unsafe trait RtClassInterface: RtInterface {}
 
+/// Marker trait for all value types (primitive types, structs, enums) that can be used as
+/// generic parameters in Windows Runtime.
 pub unsafe trait RtValueType: Copy {}
 
 unsafe impl RtValueType for bool {}
@@ -87,7 +90,24 @@ impl<T> RtType for T where T: RtValueType
     }
 }
 
+/// This trait is implemented by all interfaces that can be activated using a factory.
+/// Call the `factory()` method to obtain a factory. The same method is also used for
+/// interfaces that contain static member functions, since static functions are
+/// available as methods of the factory.
+///
+/// # Examples
+///
+/// ```
+/// use winrt::*;
+/// use winrt::windows::foundation::Uri;
+///
+/// # let rt = winrt::RuntimeContext::init();
+/// let mut uri_factory = Uri::factory();
+/// // Can now call uri_factory.create_url(...)
+/// // or uri_factory.create_with_relative_uri(...)
+/// ```  
 pub trait RtActivatable {
+    /// The type of the factory that will be returned when calling `factory()`.
     type Factory: ComIid;
     #[doc(hidden)]
     fn activatable_class_id() -> &'static [u16];
@@ -150,48 +170,48 @@ impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType
 }
 
 macro_rules! RT_INTERFACE {
-    (interface $interface:ident<$t1:ident, $t2:ident> $($rest:tt)*) => {
-        RT_INTERFACE!(basic $interface<$t1,$t2> $($rest)*);
+    ($(#[$attr:meta])* interface $interface:ident<$t1:ident, $t2:ident> $($rest:tt)*) => {
+        RT_INTERFACE!($(#[$attr])* basic $interface<$t1,$t2> $($rest)*);
         unsafe impl<$t1: RtType, $t2: RtType> ::RtInterface for $interface<$t1,$t2> {}
         unsafe impl<$t1: RtType, $t2: RtType> ::RtClassInterface for $interface<$t1,$t2> {}
     };
 
-    (interface $interface:ident<$t1:ident> $($rest:tt)*) => {
-        RT_INTERFACE!(basic $interface<$t1> $($rest)*);
+    ($(#[$attr:meta])* interface $interface:ident<$t1:ident> $($rest:tt)*) => {
+        RT_INTERFACE!($(#[$attr])* basic $interface<$t1> $($rest)*);
         unsafe impl<$t1: RtType> ::RtInterface for $interface<$t1> {}
         unsafe impl<$t1: RtType> ::RtClassInterface for $interface<$t1> {}
     };
 
-    (interface $interface:ident $($rest:tt)*) => {
-        RT_INTERFACE!(basic $interface $($rest)*);
+    ($(#[$attr:meta])* interface $interface:ident $($rest:tt)*) => {
+        RT_INTERFACE!($(#[$attr])* basic $interface $($rest)*);
         unsafe impl ::RtInterface for $interface {}
         unsafe impl ::RtClassInterface for $interface {}
     };
 
-    (static interface $interface:ident<$t1:ident, $t2:ident> $($rest:tt)*) => {
-        RT_INTERFACE!(basic $interface<$t1,$t2> $($rest)*);
+    ($(#[$attr:meta])* static interface $interface:ident<$t1:ident, $t2:ident> $($rest:tt)*) => {
+        RT_INTERFACE!($(#[$attr])* basic $interface<$t1,$t2> $($rest)*);
         unsafe impl<$t1: RtType, $t2: RtType> ::RtInterface for $interface<$t1,$t2> {}
     };
 
-    (static interface $interface:ident<$t1:ident> $($rest:tt)*) => {
-        RT_INTERFACE!(basic $interface<$t1> $($rest)*);
+    ($(#[$attr:meta])* static interface $interface:ident<$t1:ident> $($rest:tt)*) => {
+        RT_INTERFACE!($(#[$attr])* basic $interface<$t1> $($rest)*);
         unsafe impl<$t1: RtType> ::RtInterface for $interface<$t1> {}
     };
 
-    (static interface $interface:ident $($rest:tt)*) => {
-        RT_INTERFACE!(basic $interface $($rest)*);
+    ($(#[$attr:meta])* static interface $interface:ident $($rest:tt)*) => {
+        RT_INTERFACE!($(#[$attr])* basic $interface $($rest)*);
         unsafe impl ::RtInterface for $interface {}
     };
 
     // version with no methods
-    (basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
+    ($(#[$attr:meta])* basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl {
             pub parent: $pvtbl
         }
-        #[repr(C)] #[allow(missing_copy_implementations)]
+        $(#[$attr])* #[repr(C)] #[allow(missing_copy_implementations)]
         pub struct $interface {
             lpVtbl: *const $vtbl
         }
@@ -226,7 +246,7 @@ macro_rules! RT_INTERFACE {
     };
 
     // version with methods, but without generic parameters
-    (basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
+    ($(#[$attr:meta])* basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
@@ -239,7 +259,7 @@ macro_rules! RT_INTERFACE {
                 $(,$p: $t)*
             ) -> $rtr)+
         }
-        #[repr(C)] #[allow(missing_copy_implementations)]
+        $(#[$attr])* #[repr(C)] #[allow(missing_copy_implementations)]
         pub struct $interface {
             lpVtbl: *const $vtbl
         }
@@ -274,7 +294,7 @@ macro_rules! RT_INTERFACE {
     };
     // The $iid is actually not necessary, because it refers to the uninstantiated version of the interface,
     // which is irrelevant at runtime (it is used to generate the IIDs of the parameterized interfaces).
-    (basic $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
+    ($(#[$attr:meta])* basic $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
@@ -287,7 +307,7 @@ macro_rules! RT_INTERFACE {
                 $(,$p: $t)*
             ) -> $rtr)+
         }
-        #[repr(C)] #[allow(missing_copy_implementations)]
+        $(#[$attr])* #[repr(C)] #[allow(missing_copy_implementations)]
         pub struct $interface<$t1> where $t1: RtType {
             lpVtbl: *const $vtbl<$t1>,
         }
@@ -318,7 +338,7 @@ macro_rules! RT_INTERFACE {
         }
     };
 
-    (basic $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
+    ($(#[$attr:meta])* basic $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
@@ -331,7 +351,7 @@ macro_rules! RT_INTERFACE {
                 $(,$p: $t)*
             ) -> $rtr)+
         }
-        #[repr(C)] #[allow(missing_copy_implementations)]
+        $(#[$attr])* #[repr(C)] #[allow(missing_copy_implementations)]
         pub struct $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             lpVtbl: *const $vtbl<$t1, $t2>,
         }
@@ -599,12 +619,14 @@ pub mod gen; // import auto-generated definitions (has to come after macro defin
 // FIXME: maybe better reexport from winapi?
 DEFINE_IID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);
 RT_INTERFACE!{
+/// The `IInspectable` interface is the base interface for all Windows Runtime classes.
 interface IInspectable(IInspectableVtbl): IUnknown(::w::IUnknownVtbl) [IID_IInspectable]  {
     fn GetIids(&mut self, iidCount: *mut ULONG, iids: *mut *mut IID) -> HRESULT,
     fn GetRuntimeClassName(&mut self, className: *mut HSTRING) -> HRESULT,
     fn GetTrustLevel(&mut self, trustLevel: *mut TrustLevel) -> HRESULT
 }}
 impl IInspectable {
+    /// Returns the interfaces that are implemented by the current Windows Runtime object.
     pub fn get_iids(&self) -> ComArray<Guid> {
         let mut result = ::std::ptr::null_mut();
         let mut count = 0;
@@ -614,6 +636,7 @@ impl IInspectable {
         unsafe { ComArray::from_raw(count, result) }
     }
 
+    /// Returns the trust level of the current Windows Runtime object.
     pub fn get_trust_level(&self) -> TrustLevel {
         let mut result = unsafe { ::std::mem::zeroed() };
         let hr = unsafe { ((*self.lpVtbl).GetTrustLevel)(self as *const _ as *mut _, &mut result) };
@@ -631,6 +654,7 @@ impl ::comptr::HiddenGetRuntimeClassName for IInspectable {
     }
 }
 
+/// Manages initialization and uninitialization of the Windows Runtime.
 pub struct RuntimeContext {
     token: ()
 }
@@ -658,6 +682,8 @@ impl RuntimeContext {
 
 impl Drop for RuntimeContext {
     fn drop(&mut self) {
+        println!("Uninitializing now ...");
         unsafe { ::runtimeobject::RoUninitialize() };
+        println!("Uninitialized.");
     }
 }
