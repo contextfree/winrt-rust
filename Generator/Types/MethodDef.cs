@@ -218,9 +218,7 @@ namespace Generator.Types
 				outWrap = getManyPname + ".set_len(out as usize); Ok(())";
 			}
 
-			string inline = isGetMany ? "" : "#[inline] ";
-
-			return inline + "pub unsafe fn " + name + "(" + String.Join(", ", inputParameters) + ") -> Result<" + outType + @"> {" + outInit + @"
+			return "#[inline] pub unsafe fn " + name + "(" + String.Join(", ", inputParameters) + ") -> Result<" + outType + @"> {" + outInit + @"
 				let hr = ((*self.lpVtbl)." + rawName + ")(" + String.Join(", ", rawParams) + ");" + @"
 				if hr == S_OK { " + outWrap + @" } else { err(hr) }
 			}";

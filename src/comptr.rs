@@ -9,12 +9,14 @@ use ::{ComIid, ComInterface, RtInterface, RtClassInterface, IInspectable, Guid};
 pub struct ComPtr<T>(*mut T); // TODO: use NonZero or Shared (see https://github.com/rust-lang/rust/issues/27730)
 
 impl<T> fmt::Pointer for ComPtr<T> {
+    #[inline]
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         fmt::Pointer::fmt(&self.0, f)
     }
 }
 
 // This is a helper method that is not exposed publically by the library
+#[inline]
 pub fn query_interface<T, Target>(interface: &T) -> Option<ComPtr<Target>> where Target: ComIid, T: ComInterface {
     let iid: &'static Guid = Target::iid();
     let as_unknown = unsafe { &mut *(interface  as *const T as *mut T as *mut ::w::IUnknown) };
@@ -37,17 +39,20 @@ impl<T> ComPtr<T> {
     /// It takes ownership over the pointer which means it does __not__ call `AddRef`.
     /// `T` __must__ be a COM interface that inherits from `IUnknown`.
     /// The wrapped pointer must not be null.
+    #[inline]
     pub unsafe fn wrap(ptr: *mut T) -> ComPtr<T> { // TODO: Add T: ComInterface bound
         debug_assert!(!ptr.is_null());
         ComPtr(ptr)
     }
 
     /// Returns the underlying WinRT object as a reference to an `IInspectable` object.
+    #[inline]
     fn as_inspectable(&self) -> &mut IInspectable where T: RtInterface {
         unsafe { &mut *(self.0 as *mut IInspectable) }
     }
     
     /// Returns the underlying WinRT or COM object as a reference to an `IUnknown` object.
+    #[inline]
     fn as_unknown(&self) -> &mut ::w::IUnknown {
         unsafe { &mut *(self.0 as *mut ::w::IUnknown) }
     }
@@ -70,28 +75,34 @@ impl<T> ComPtr<T> {
     /// let uri = unsafe { uri_factory.create_uri(&uri).unwrap() };
     /// assert_eq!("Windows.Foundation.Uri", uri.get_runtime_class_name().to_string());
     /// ```
+    #[inline]
     pub fn get_runtime_class_name(&self) -> ::HString where T: RtClassInterface {
         HiddenGetRuntimeClassName::get_runtime_class_name(self.as_inspectable())
     }
     
     /// Retrieves a `ComPtr` to the specified interface, if it is supported by the underlying object.
     /// If the requested interface is not supported, `None` is returned.
+    #[inline]
     pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComIid, T: ComInterface {
         query_interface::<_, Target>(&**self)
     }
 }
 impl<T> Deref for ComPtr<T> {
     type Target = T;
+
+    #[inline]
     fn deref(&self) -> &T {
         unsafe { &*self.0 }
     }
 }
 impl<T> DerefMut for ComPtr<T> {
+    #[inline]
     fn deref_mut(&mut self) -> &mut T {
         unsafe { &mut*self.0 }
     }
 }
 impl<T> Clone for ComPtr<T> {
+    #[inline]
     fn clone(&self) -> Self {
         unsafe { 
             self.as_unknown().AddRef();
@@ -100,11 +111,13 @@ impl<T> Clone for ComPtr<T> {
     }
 }
 impl<T> Drop for ComPtr<T> {
+    #[inline]
     fn drop(&mut self) {
         unsafe { self.as_unknown().Release() };
     }
 }
 impl<T> PartialEq<ComPtr<T>> for ComPtr<T> {
+    #[inline]
     fn eq(&self, other: &ComPtr<T>) -> bool {
         self.0 == other.0
     }
@@ -162,6 +175,7 @@ impl<T> Drop for ComArray<T> where T: ::RtType {
 mod extra {
     // makes sure that compile fails when ComPtr is not pointer-sized
     // i.e. when a compiler version is used that still has dropflags
+    #[inline]
     fn assert_no_dropflags() {
         let p: *mut ::IInspectable = ::std::ptr::null_mut();
         let _: ::ComPtr<::IInspectable> = unsafe { ::std::mem::transmute(p) };

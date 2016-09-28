@@ -81,6 +81,7 @@ pub trait IntoInterface<Interface: ComInterface> {
 }
 
 impl<T, Interface: ComInterface> IntoInterface<Interface> for T where T: ComClass<Interface> + Sized {
+    #[inline]
     fn into_interface(self) -> ComPtr<Interface> {
         let com = Box::new(ComRepr {
             vtbl: Box::new(Self::get_vtbl()),

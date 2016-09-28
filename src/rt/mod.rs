@@ -56,15 +56,15 @@ impl<'a> RtType for HString {
     type Abi = ::w::HSTRING;
     type Out = HString;
 
-    #[doc(hidden)]
+    #[doc(hidden)] #[inline]
     unsafe fn unwrap(v: &HStringArg) -> Self::Abi {
         v.get()
     }
-    #[doc(hidden)]
+    #[doc(hidden)] #[inline]
     unsafe fn uninitialized() -> Self::Abi {
         ::std::ptr::null_mut()
     }
-    #[doc(hidden)]
+    #[doc(hidden)] #[inline]
     unsafe fn wrap(v: Self::Abi) -> Self::Out {
         HString::wrap(v)
     }
@@ -76,15 +76,15 @@ impl<T> RtType for T where T: RtValueType
     type Abi = T;
     type Out = T;
 
-    #[doc(hidden)]
+    #[doc(hidden)] #[inline]
     unsafe fn unwrap(v: &Self::In) -> Self::Abi {
         *v
     }
-    #[doc(hidden)]
+    #[doc(hidden)] #[inline]
     unsafe fn uninitialized() -> Self::Abi {
         ::std::mem::zeroed()
     }
-    #[doc(hidden)]
+    #[doc(hidden)] #[inline]
     unsafe fn wrap(v: Self::Abi) -> Self::Out {
         v
     }
@@ -133,7 +133,7 @@ impl<'a, T> IntoIterator for &'a mut IIterable<T> where T: RtType
 {
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
-    fn into_iter(mut self) -> Self::IntoIter {
+    #[inline] fn into_iter(mut self) -> Self::IntoIter {
         unsafe { self.first().unwrap() }
     }
 }
@@ -142,7 +142,7 @@ impl<'a, T> IntoIterator for &'a mut IVectorView<T> where T: RtType, IIterable<T
 {
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
-    fn into_iter(self) -> Self::IntoIter {
+    #[inline] fn into_iter(self) -> Self::IntoIter {
         ::comptr::query_interface::<_, IIterable<T>>(self).unwrap().into_iter()
     }
 }
@@ -155,6 +155,7 @@ impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType
 
     // TODO: This could potentially be made faster by using the output of MoveNext instead of calling HasCurrent
     //       in every iteration. That would require a wrapper struct with a boolean flag.
+    #[inline]
     fn next(&mut self) -> Option<Self::Item> {
         let has_next = unsafe { self.get_has_current().unwrap() };
         if has_next {
@@ -216,7 +217,7 @@ macro_rules! RT_INTERFACE {
             lpVtbl: *const $vtbl
         }
         impl ComIid for $interface {
-            fn iid() -> &'static ::Guid { &$iid }
+            #[inline] fn iid() -> &'static ::Guid { &$iid }
         }
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
@@ -226,9 +227,9 @@ macro_rules! RT_INTERFACE {
             type Abi = *mut $interface;
             type Out = ComPtr<$interface>;
 
-            #[doc(hidden)] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
-            #[doc(hidden)] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
         impl ::std::ops::Deref for $interface {
             type Target = $crate::$pinterface;
@@ -264,7 +265,7 @@ macro_rules! RT_INTERFACE {
             lpVtbl: *const $vtbl
         }
         impl ComIid for $interface {
-            fn iid() -> &'static ::Guid { &$iid }
+            #[inline] fn iid() -> &'static ::Guid { &$iid }
         }
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
@@ -274,9 +275,9 @@ macro_rules! RT_INTERFACE {
             type Abi = *mut $interface;
             type Out = ComPtr<$interface>;
 
-            #[doc(hidden)] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
-            #[doc(hidden)] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
         impl ::std::ops::Deref for $interface {
             type Target = $crate::$pinterface;
@@ -319,9 +320,9 @@ macro_rules! RT_INTERFACE {
             type Abi = *mut $interface<$t1>;
             type Out = ComPtr<$interface<$t1>>;
 
-            #[doc(hidden)] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
-            #[doc(hidden)] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
         impl<$t1> ::std::ops::Deref for $interface<$t1> where $t1: RtType {
             type Target = $pinterface;
@@ -363,9 +364,9 @@ macro_rules! RT_INTERFACE {
             type Abi = *mut $interface<$t1, $t2>;
             type Out = ComPtr<$interface<$t1, $t2>>;
 
-            #[doc(hidden)] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
-            #[doc(hidden)] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
         impl<$t1, $t2> ::std::ops::Deref for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type Target = $pinterface;
@@ -406,6 +407,7 @@ macro_rules! RT_DELEGATE {
         impl<_F_> $imp<_F_>
             where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
+            #[inline]
             pub fn new(f: _F_) -> $imp<_F_> {
                 $imp {
                     invoke: f,
@@ -416,6 +418,7 @@ macro_rules! RT_DELEGATE {
         impl<_F_> ::rt::handler::ComClass<$interface> for $imp<_F_>
             where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
+            #[inline]
             fn get_vtbl() -> $vtbl {
                 $vtbl {
                     parent: ::w::IUnknownVtbl {
@@ -471,6 +474,7 @@ macro_rules! RT_DELEGATE {
         impl<$($ht: RtType + 'static),+ , _F_> $imp<$($ht),+ , _F_>
             where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
+            #[inline]
             pub fn new(f: _F_) -> $imp<$($ht),+ , _F_> {
                 $imp {
                     invoke: f,
@@ -482,6 +486,7 @@ macro_rules! RT_DELEGATE {
         impl<$($ht: RtType + 'static),+ , _F_> ::rt::handler::ComClass<$interface<$($ht),+>> for $imp<$($ht),+ , _F_>
             where $interface<$($ht),+>: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
+            #[inline]
             fn get_vtbl() -> $vtbl<$($ht),+> {
                 $vtbl::<$($ht),+> {
                     parent: ::w::IUnknownVtbl {
@@ -524,16 +529,16 @@ macro_rules! RT_CLASS {
             type Vtbl = <$interface as ComInterface>::Vtbl;
         }
         impl ComIid for $cls {
-            fn iid() -> &'static ::Guid { <$interface as ComIid>::iid() }
+            #[inline] fn iid() -> &'static ::Guid { <$interface as ComIid>::iid() }
         }
         impl ::RtType for $cls {
             type In = $cls;
             type Abi = *mut $cls;
             type Out = ComPtr<$cls>;
             
-            #[doc(hidden)] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
-            #[doc(hidden)] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
         }
         impl ::std::ops::Deref for $cls {
             type Target = $interface;
@@ -543,6 +548,7 @@ macro_rules! RT_CLASS {
             }
         }
         impl ::std::ops::DerefMut for $cls {
+            #[inline]
             fn deref_mut(&mut self) -> &mut $interface {
                 &mut self.0
             }
@@ -566,7 +572,7 @@ macro_rules! RT_ACTIVATABLE {
     {$name:ident # $factory:ty [$clsid:ident]} => {
         impl ::RtActivatable for $name {
             type Factory = $factory;
-            #[doc(hidden)]
+            #[doc(hidden)] #[inline]
             fn activatable_class_id() -> &'static [u16] { $clsid } 
         }
     };
@@ -608,7 +614,7 @@ macro_rules! RT_PINTERFACE {
     ) => {
         DEFINE_IID!($iid, $l,$w1,$w2,$b1,$b2,$b3,$b4,$b5,$b6,$b7,$b8);
 		impl ComIid for $t {
-			fn iid() -> &'static ::Guid { &$iid }
+			#[inline] fn iid() -> &'static ::Guid { &$iid }
 		}
     };
 }
@@ -627,6 +633,7 @@ interface IInspectable(IInspectableVtbl): IUnknown(::w::IUnknownVtbl) [IID_IInsp
 }}
 impl IInspectable {
     /// Returns the interfaces that are implemented by the current Windows Runtime object.
+    #[inline]
     pub fn get_iids(&self) -> ComArray<Guid> {
         let mut result = ::std::ptr::null_mut();
         let mut count = 0;
@@ -637,6 +644,7 @@ impl IInspectable {
     }
 
     /// Returns the trust level of the current Windows Runtime object.
+    #[inline]
     pub fn get_trust_level(&self) -> TrustLevel {
         let mut result = unsafe { ::std::mem::zeroed() };
         let hr = unsafe { ((*self.lpVtbl).GetTrustLevel)(self as *const _ as *mut _, &mut result) };
@@ -646,6 +654,7 @@ impl IInspectable {
 }
 
 impl ::comptr::HiddenGetRuntimeClassName for IInspectable {
+    #[inline]
     fn get_runtime_class_name(&self) -> HString {
         let mut result = ::std::ptr::null_mut();
         let hr = unsafe { ((*self.lpVtbl).GetRuntimeClassName)(self as *const _ as *mut _, &mut result) };
@@ -664,6 +673,7 @@ impl RuntimeContext {
     /// the Windows Runtime. The Windows Runtime will be unitilized when the returned `RuntimeContext`
     /// is dropped or `uninit` is called explicitly. You have to make sure that this does not happen
     /// as long as any Windows Runtime object is still alive.
+    #[inline]
     pub fn init() -> RuntimeContext {
         let hr = unsafe { ::runtimeobject::RoInitialize(::w::RO_INIT_MULTITHREADED) };
         assert!(hr == S_OK || hr == S_FALSE, "failed to call RoInitialize: error {}", hr);
@@ -675,12 +685,14 @@ impl RuntimeContext {
     
     /// Unitializes the Windows Runtime. This must not be called as long as any Windows Runtime
     /// object is still alive.
+    #[inline]
     pub fn uninit(self) {
         drop(self);
     }
 }
 
 impl Drop for RuntimeContext {
+    #[inline]
     fn drop(&mut self) {
         unsafe { ::runtimeobject::RoUninitialize() };
     }

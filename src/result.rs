@@ -22,6 +22,7 @@ pub enum Error {
 }
 
 impl Error {
+    #[inline]
     pub fn from_hresult(hr: HRESULT) -> Error {
         use Error::*;
 
@@ -42,6 +43,7 @@ impl Error {
         }
     }
 
+    #[inline]
     pub fn as_hresult(&self) -> HRESULT {
         use Error::*;
 

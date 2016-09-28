@@ -11,12 +11,14 @@ pub struct Guid { // TODO: fields should not be public (requires const fn constr
 }
 
 impl AsRef<::w::GUID> for Guid {
+    #[inline]
     fn as_ref(&self) -> &::w::GUID {
         unsafe { mem::transmute(self) }
     } 
 }
 
 impl From<::w::GUID> for Guid {
+    #[inline]
     fn from(guid: ::w::GUID) -> Self {
         unsafe { mem::transmute(guid) }
     }
