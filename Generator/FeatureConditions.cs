@@ -18,7 +18,7 @@ namespace Generator
 
 		public FeatureConditions(IEnumerable<string> conditions)
 		{
-			this.conditions = new List<string>(conditions.Select(asm => "feature=\"" + asm.ToLower() + "\""));
+			this.conditions = new List<string>(conditions.Select(asm => "feature=\"" + asm.ToLower().Replace('.', '_') + "\""));
 			this.conditions.Sort(); // we want deterministic code generation
 		}
 

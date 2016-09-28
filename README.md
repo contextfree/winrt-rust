@@ -3,14 +3,14 @@
 This crate provides type and method definitions to use the *Windows Runtime (WinRT)* APIs from Rust.
 
 ## Status
-The library is still subject to breaking changes, but it is already possible to use all APIs, including asynchronous ones
-(a completion handler can to be passed as a closure).
+This library is still subject to breaking changes, but it is already possible to use all APIs, including asynchronous ones
+(a completion handler can be passed as a closure).
 Since we can not yet guarantee the safety of the generated wrappers, all methods are currently marked as `unsafe`.
-Creating custom WinRT classes using inheritance is not yet supported, so it is not yet possible to create user interfaces using *XAML*. 
+Creating custom WinRT classes using inheritance is not yet supported, so it is currently not possible to create user interfaces using *XAML*. 
 
 ## Prerequisites
-Using this crate requires at least Rust 1.13 (after the removal of dropflags) and the MSVC toolchain (because there is a bug in one of MinGWs import libraries).
-Additional nightly features (e.g. generating enum variants as associated constants) can be enabled with the `nightly` cargo feature.
+Using this crate requires at least Rust 1.13 (after the removal of dropflags) and the MSVC toolchain (because there is a bug in one of MinGW's import libraries).
+Additional nightly features (e.g. generating enum variants as associated constants) can be enabled with the `nightly` Cargo feature.
 
 ## Design
 All definitions are automatically generated from *WinMD* metadata files.
@@ -21,11 +21,11 @@ All names have been adjusted to fit the Rust coding style, therefore module name
 are converted to `snake_case`.
 
 Since it takes a long time to compile all generated definitions (the [generated file](https://github.com/contextfree/winrt-rust/blob/master/src/rt/gen.rs) has about 170k LOC),
-cargo features have been introduces that correspond to the *WinMD* files. For example, to use the definitions from `Windows.Devices.winmd`, use the feature `windows.devices`.
+Cargo features have been introduced that correspond to the *WinMD* files. For example, to use the definitions from `Windows.Devices.winmd`, use the feature `windows_devices`.
 There is no feature for definitions from `Windows.Foundation.winmd`, these are always available. Whenever a (method) definition references a type from a different *WinMD* file,
 it is also not available until you enable the corresponding features for all required type definitions.
 
-With only the definitions from `Windows.Foundation`, this crates takes about 10s to compile. With all features enabled (there is a shortcut feature `all`), compilation can take
+With only the definitions from `Windows.Foundation`, this crates takes about 10 seconds to compile. With all features enabled (there is a shortcut feature `all`), compilation can take
 as long as 10 minutes or longer, so it is highly recommended to enable features only as you need them.
 
 ## Example
@@ -63,7 +63,7 @@ Currently executed processes (132):
 
 ## WinRT and UWP
 The *Windows Runtime (WinRT)* has been introduced in Windows 8 and provides the foundation for building
-Windows applications that run on different devices using different programming languages. The *Universal Windows Platform (UWP)* is
+Windows apps that run on different devices using different programming languages. The *Universal Windows Platform (UWP)* is
 an extension of WinRT, introduced in Windows 10, that allows using additional, more platform-specific APIs besides those provided by WinRT (according to
 [MSDN](https://msdn.microsoft.com/en-us/windows/uwp/get-started/universal-application-platform-guide)).
 *WinRT* is not to be confused with the discontinued flavor of the Windows operating system for ARM devices, *Windows RT*.  
