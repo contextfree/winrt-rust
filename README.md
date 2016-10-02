@@ -1,4 +1,4 @@
-# winrt-rust [![crates.io](https://img.shields.io/crates/v/winrt.svg)](https://crates.io/crates/winrt)
+# winrt-rust [![crates.io](https://img.shields.io/crates/v/winrt.svg)](https://crates.io/crates/winrt) [![docs.rs](https://docs.rs/winrt/badge.svg)](https://docs.rs/winrt/*/x86_64-pc-windows-msvc/winrt/)
 
 This crate provides type and method definitions to use the *Windows Runtime (WinRT)* APIs from Rust.
 
@@ -26,7 +26,7 @@ There is no feature for definitions from `Windows.Foundation.winmd`, these are a
 it is also not available until you enable the corresponding features for all required type definitions.
 
 With only the definitions from `Windows.Foundation`, this crates takes about 10 seconds to compile. With all features enabled (there is a shortcut feature `all`), compilation can take
-as long as 10 minutes or longer, so it is highly recommended to enable features only as you need them.
+as long as 5 minutes, so it is highly recommended to enable features only as you need them.
 
 ## Example
 ```rust
