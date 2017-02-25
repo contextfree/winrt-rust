@@ -1,14 +1,14 @@
 extern crate winapi as w;
-extern crate winrt as wrt;
+extern crate winrt;
 // TODO: don't use functions from runtimeobject directly 
 extern crate runtimeobject;
 
 use std::ptr;
 
-use wrt::*;
-use wrt::windows::foundation::*;
-use wrt::windows::devices::enumeration::*;
-use wrt::windows::devices::midi::*;
+use winrt::*;
+use winrt::windows::foundation::*;
+use winrt::windows::devices::enumeration::*;
+use winrt::windows::devices::midi::*;
 
 fn main() {
     let rt = RuntimeContext::init();
