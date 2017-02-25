@@ -155,14 +155,19 @@ namespace Generator.Types
 
 		public abstract void Emit();
 
-		public TypeDefinition GetFactoryType()
+		public IEnumerable<TypeDefinition> GetFactoryTypes()
 		{
-			var activatable = Type.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "ActivatableAttribute" && a.ConstructorArguments[0].Type.FullName == "System.Type");
-			if (activatable != null)
-			{
-				return activatable.ConstructorArguments[0].Value as TypeDefinition;
-			}
-			return null;
+			return Type.CustomAttributes
+				.Where(a => a.AttributeType.Name == "ActivatableAttribute" && a.ConstructorArguments[0].Type.FullName == "System.Type")
+				.Select(a => a.ConstructorArguments[0].Value as TypeDefinition);
+		}
+
+		public bool IsDefaultActivatable()
+		{
+			var count = Type.CustomAttributes.Count(a => a.AttributeType.Name == "ActivatableAttribute" && a.ConstructorArguments[0].Type.FullName != "System.Type");
+			Assert(count <= 1); // make sure that our attribute filtering logic makes sense
+			return count != 0;
+
 		}
 
 		public IEnumerable<TypeDefinition> GetStaticTypes()
@@ -170,6 +175,9 @@ namespace Generator.Types
 			return Type.CustomAttributes.Where(a => a.AttributeType.Name == "StaticAttribute").Select(a => (TypeDefinition)a.ConstructorArguments[0].Value);
 		}
 
+		/// <summary>
+		/// Returns the GUID of this type, if one was defined with the `Guid` attribute in winmd.
+		/// </summary>
 		public Guid? GetGuid()
 		{
 			var guidAttr = Type.CustomAttributes.FirstOrDefault(attr => attr.AttributeType.Name == "GuidAttribute");
@@ -184,6 +192,10 @@ namespace Generator.Types
 			return guid;
 		}
 
+		/// <summary>
+		/// Gets the path of this type definition, relative to a module in which it should be named.
+		/// Might also be an absolute path, if that is shorter than a relative one.
+		/// </summary>
 		public string GetPath(Module requestingModule)
 		{
 			string name = null;

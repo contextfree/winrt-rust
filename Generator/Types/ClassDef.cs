@@ -24,14 +24,14 @@ namespace Generator.Types
 			}
 		}
 
-		private List<TypeDefinition> statics;
+		private TypeDefinition[] statics;
 		private string aliasedType;
-		private string factory;
+		private string[] factories;
 
 		public ClassDef(TypeDefinition t) : base(t)
 		{
 			// this is required early to know whether the definition can be skipped
-			statics = GetStaticTypes().ToList(); 
+			statics = GetStaticTypes().ToArray();
 		}
 
 		public override void CollectDependencies()
@@ -41,11 +41,8 @@ namespace Generator.Types
 				AddDependency(Generator.GetTypeDefinition(staticType));
 			}
 
-			var factoryType = GetFactoryType();
-			if (factoryType != null)
-			{
-				factory = TypeHelpers.GetTypeName(Generator, this, factoryType, TypeUsage.Alias);
-			}
+			factories = GetFactoryTypes().Select(f => TypeHelpers.GetTypeName(Generator, this, f, TypeUsage.Alias)).ToArray();
+			
 			if (Type.Interfaces.Count > 0)
 			{
 				var mainInterface = Type.Interfaces[0];
@@ -62,27 +59,26 @@ namespace Generator.Types
 				var dependsOnAssemblies = new List<string>(ForeignAssemblyDependencies.GroupBy(t => t.Module.Assembly.Name.Name).Select(g => g.Key));
 				var features = new FeatureConditions(dependsOnAssemblies);
 
-				if (string.IsNullOrEmpty(factory))
-				{
-					Module.Append(@"
+				Module.Append(@"
 		" + features.GetAttribute() + "RT_CLASS!{class " + DefinitionName + ": " + aliasedType + "}");
-					if (!features.IsEmpty)
-					{
-						// if the aliased type is from a different assembly, just use IInspectable instead
-						Module.Append(@"
-		" + features.GetInvertedAttribute() + "RT_CLASS!{class " + DefinitionName + ": IInspectable}");
-					}
-				}
-				else
+				if (!features.IsEmpty)
 				{
-					if (!features.IsEmpty)
-					{
-						throw new NotImplementedException("This case is currently not supported.");
-					}
+					// if the aliased type is from a different assembly that is not included, just use IInspectable instead
+					Module.Append(@"
+		" + features.GetInvertedAttribute() + "RT_CLASS!{class " + DefinitionName + ": IInspectable}");
+				}
+
+				foreach (var factory in factories)
+				{
 					needClassID = true;
 					Module.Append(@"
-		RT_CLASS!{class " + DefinitionName + ": " + aliasedType + " [" + factory + "] [CLSID_" + classType + "]}");
+		impl ::RtActivatable<" + factory + "> for " + classType + " {}");
 				}
+			}
+			else
+			{
+				Module.Append(@"
+		RT_CLASS!{static class " + DefinitionName + "}");
 			}
 
 			foreach (var staticType in statics)
@@ -90,13 +86,20 @@ namespace Generator.Types
 				var staticName = Generator.GetTypeDefinition(staticType).DefinitionName;
 				needClassID = true;
 				Module.Append(@"
-		RT_ACTIVATABLE!{" + staticName + " [CLSID_" + classType + "]}");
+		impl ::RtActivatable<" + staticName + "> for " + classType + " {}");
+			}
+
+			if (IsDefaultActivatable())
+			{
+				needClassID = true;
+				Module.Append(@"
+		impl ::RtActivatable<IActivationFactory> for " + classType + " {}");
 			}
 
 			if (needClassID)
 			{
 				Module.Append(@"
-		DEFINE_CLSID!(CLSID_" + classType + " = &[" + NameHelpers.StringToUTF16WithZero(Type.FullName) + @"]);");
+		DEFINE_CLSID!(" + classType + "(&[" + NameHelpers.StringToUTF16WithZero(Type.FullName) + @"]) [CLSID_" + classType + "]);");
 			}
 		}
 	}

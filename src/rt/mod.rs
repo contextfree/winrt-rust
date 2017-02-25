@@ -90,40 +90,32 @@ impl<T> RtType for T where T: RtValueType
     }
 }
 
-/// This trait is implemented by all interfaces that can be activated using a factory.
-/// Call the `factory()` method to obtain a factory. The same method is also used for
-/// interfaces that contain static member functions, since static functions are
-/// available as methods of the factory.
-///
-/// # Examples
-///
-/// ```
-/// use winrt::*;
-/// use winrt::windows::foundation::Uri;
-///
-/// # let rt = winrt::RuntimeContext::init();
-/// let mut uri_factory = Uri::factory();
-/// // Can now call uri_factory.create_url(...)
-/// // or uri_factory.create_with_relative_uri(...)
-/// ```  
-pub trait RtActivatable {
-    /// The type of the factory that will be returned when calling `factory()`.
-    type Factory: ComIid;
-    #[doc(hidden)]
-    fn activatable_class_id() -> &'static [u16];
+/// This trait is implemented by all classes that have a name
+/// associated with them which can be used at runtime.
+pub trait RtNamedClass {
+    /// Returns the name of the class encoded as a 16-bit wide string.
+    fn name() -> &'static [u16];
+}
 
-    /// Returns a factory to create instances of this type or call static methods.
-    fn factory() -> ComPtr<Self::Factory> {
+pub trait RtActivatable<Interface> : RtNamedClass {
+    /// Returns a factory object to create instances of this class or to call static methods.
+    fn get_activation_factory() -> ComPtr<Interface> where Interface: RtInterface + ComIid {
         let mut res = ptr::null_mut();
-        let class_id = unsafe { HStringReference::from_utf16_unchecked(Self::activatable_class_id()) };
-        let hr = unsafe { ::runtimeobject::RoGetActivationFactory(class_id.get(), Self::Factory::iid().as_ref(), &mut res as *mut *mut _ as *mut *mut ::w::VOID) };
+        let class_id = unsafe { HStringReference::from_utf16_unchecked(Self::name()) };
+        let hr = unsafe { ::runtimeobject::RoGetActivationFactory(class_id.get(), <Interface as ComIid>::iid().as_ref(), &mut res as *mut *mut _ as *mut *mut ::w::VOID) };
         if hr == S_OK {
             unsafe { ComPtr::wrap(res) }
         } else if hr == CO_E_NOTINITIALIZED {
             panic!("WinRT is not initialized")
         } else {
             panic!("RoGetActivationFactory failed with error code {}", hr)
-        }        
+        }     
+    }
+
+    /// Uses the default constructor to create an instance of this class.
+    fn activate_instance() -> ComPtr<Self> where Self: Sized + RtActivatable<IActivationFactory> + ComInterface {
+        let factory: ComPtr<IActivationFactory> = Self::get_activation_factory();
+        unsafe { factory.activate_instance().into_unchecked() }
     }
 }
 
@@ -521,6 +513,10 @@ macro_rules! RT_DELEGATE {
 }
 
 macro_rules! RT_CLASS {
+    {static class $cls:ident} => {
+        pub struct $cls; // does not exist at runtime and has no ABI representation
+    };
+
     {class $cls:ident : $interface:ty} => {
         pub struct $cls($interface);
         unsafe impl ::RtInterface for $cls {}
@@ -554,32 +550,16 @@ macro_rules! RT_CLASS {
             }
         }
     };
-
-    // Class is activatable using factory $factory
-    {class $cls:ident : $interface:ty [$factory:ty] [$clsid:ident]} => {
-        RT_CLASS!{class $cls : $interface}
-        RT_ACTIVATABLE!{$cls # $factory [$clsid]}
-    };
 }
 
 macro_rules! DEFINE_CLSID {
-    ($name:ident = $id:expr) => {
-        const $name: &'static [u16] = $id; // Full name of the class as null-terminated UTF16 string
-    }
-}
-
-macro_rules! RT_ACTIVATABLE {
-    {$name:ident # $factory:ty [$clsid:ident]} => {
-        impl ::RtActivatable for $name {
-            type Factory = $factory;
-            #[doc(hidden)] #[inline]
-            fn activatable_class_id() -> &'static [u16] { $clsid } 
+    ($clsname:ident($id:expr) [$idname:ident]) => {
+        const $idname: &'static [u16] = $id; // Full name of the class as null-terminated UTF16 string
+        impl ::RtNamedClass for $clsname {
+            #[inline]
+            fn name() -> &'static [u16] { $idname } 
         }
-    };
-
-    {$name:ident [$clsid:ident]} => {
-        RT_ACTIVATABLE!{$name # $name [$clsid]}
-    };
+    }
 }
 
 
@@ -660,6 +640,22 @@ impl ::comptr::HiddenGetRuntimeClassName for IInspectable {
         let hr = unsafe { ((*self.lpVtbl).GetRuntimeClassName)(self as *const _ as *mut _, &mut result) };
         assert_eq!(hr, ::w::S_OK);
         unsafe { HString::wrap(result) }
+    }
+}
+
+DEFINE_IID!(IID_IActivationFactory, 0x00000035, 0x0000, 0x0000, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
+RT_INTERFACE!{
+interface IActivationFactory(IActivationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IActivationFactory]  {
+    fn ActivateInstance(&mut self, instance: *mut *mut IInspectable) -> HRESULT
+}}
+
+impl IActivationFactory {
+    #[inline]
+    pub fn activate_instance(&self) -> ComPtr<IInspectable> {
+        let mut result = ::std::ptr::null_mut();
+        let hr = unsafe { ((*self.lpVtbl).ActivateInstance)(self as *const _ as *mut _, &mut result) };
+        assert_eq!(hr, ::w::S_OK);
+        unsafe { ComPtr::wrap(result) }
     }
 }
 

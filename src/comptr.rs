@@ -56,6 +56,13 @@ impl<T> ComPtr<T> {
     fn as_unknown(&self) -> &mut ::w::IUnknown {
         unsafe { &mut *(self.0 as *mut ::w::IUnknown) }
     }
+
+    /// Changes the type of the underlying COM object to a different interface without doing `QueryInterface`.
+    /// This is a runtime no-op, but you need to be sure that the interface is compatible.
+    #[inline]
+    pub unsafe fn into_unchecked<Interface>(self) -> ComPtr<Interface> where Interface: ComInterface {
+        ::std::mem::transmute(self)
+    }
     
     /// Gets the fully qualified name of the current Windows Runtime object.
     /// This is only available for interfaces that inherit from `IInspectable` and
@@ -70,7 +77,7 @@ impl<T> ComPtr<T> {
     /// use winrt::windows::foundation::Uri;
     ///
     /// # let rt = winrt::RuntimeContext::init();
-    /// let mut uri_factory = Uri::factory();
+    /// let mut uri_factory: ComPtr<IUriRuntimeClassFactory> = Uri::get_activation_factory();
     /// let uri = FastHString::new("https://www.rust-lang.org");
     /// let uri = unsafe { uri_factory.create_uri(&uri).unwrap() };
     /// assert_eq!("Windows.Foundation.Uri", uri.get_runtime_class_name().to_string());

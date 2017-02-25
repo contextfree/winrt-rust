@@ -12,7 +12,7 @@
 //! fn main() {
 //!     let rt = RuntimeContext::init(); // initialize the Windows Runtime
 //!     // get factory, which is also used to call static methods
-//!     let mut pdi_statics = IProcessDiagnosticInfoStatics::factory();
+//!     let mut pdi_statics = ProcessDiagnosticInfo::get_activation_factory();
 //!     let mut infos = unsafe { pdi_statics.get_for_processes().unwrap() };
 //!     println!("Currently executed processes ({}):", unsafe { infos.get_size().unwrap() });
 //!     for mut p in infos.into_iter() {
@@ -69,7 +69,7 @@ mod cominterfaces;
 pub use cominterfaces::{ComInterface, ComIid, IUnknown, IRestrictedErrorInfo, IAgileObject};
 
 mod rt;
-pub use rt::{RtInterface, RtClassInterface, RtValueType, RtType, RtActivatable, IInspectable, IInspectableVtbl, Char, RuntimeContext};
+pub use rt::{RtInterface, RtClassInterface, RtNamedClass, RtValueType, RtType, RtActivatable, IInspectable, IInspectableVtbl, IActivationFactory, Char, RuntimeContext};
 
 mod result;
 pub use result::{Result, Error, HRESULT};
@@ -80,7 +80,7 @@ pub mod windows {
 
 /// This is only for internal use within the generated code
 mod prelude {
-    pub use ::rt::{RtType, IInspectable, IInspectableVtbl, Char};
+    pub use ::rt::{RtType, IInspectable, IInspectableVtbl, IActivationFactory, Char};
     pub use ::rt::handler::IntoInterface;
     pub use ::cominterfaces::{ComInterface, ComIid, IUnknown};
     pub use ::comptr::{ComPtr, ComArray};

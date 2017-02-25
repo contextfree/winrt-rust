@@ -19,7 +19,7 @@ fn main() {
 fn run() {
     use std::sync::{Arc, Mutex, Condvar};
 
-    let mut uri_factory = Uri::factory();
+    let mut uri_factory: ComPtr<IUriRuntimeClassFactory> = Uri::get_activation_factory();
     let base = FastHString::new("https://github.com");
     let relative = FastHString::new("contextfree/winrt-rust");
     let uri = unsafe { uri_factory.create_with_relative_uri(&base, &relative).unwrap() };
@@ -32,13 +32,13 @@ fn run() {
         println!("  [{}] = {:?}", i, iids[i]);
     }
 
-    let mut out_port_statics = IMidiOutPortStatics::factory();
+    let mut out_port_statics = MidiOutPort::get_activation_factory();
     //println!("out_port_statics: {}", out_port_statics.get_runtime_class_name()); // this is not allowed (prevented statically)
     
     let device_selector = unsafe { out_port_statics.get_device_selector().unwrap() };
     println!("{}", device_selector);
     
-    let mut device_information_statics = IDeviceInformationStatics::factory();
+    let mut device_information_statics: ComPtr<IDeviceInformationStatics> = DeviceInformation::get_activation_factory();
     
     unsafe {
         use runtimeobject::*;
@@ -151,7 +151,7 @@ fn run() {
     };
 
     let array = &mut [true, false, false, true];
-    let boxed_array = unsafe { IPropertyValueStatics::factory().create_boolean_array(array) };
+    let boxed_array = unsafe { PropertyValue::get_activation_factory().create_boolean_array(array) };
     let mut boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
     assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType_BooleanArray);
     let mut boxed_array = boxed_array.query_interface::<IReferenceArray<bool>>().unwrap();
@@ -162,7 +162,7 @@ fn run() {
     let str1 = FastHString::new("foo");
     let str2 = FastHString::new("bar");
     let array = &mut [&*str1, &*str2, &*str1, &*str2];
-    let boxed_array = unsafe { IPropertyValueStatics::factory().create_string_array(array) };
+    let boxed_array = unsafe { PropertyValue::get_activation_factory().create_string_array(array) };
     let mut boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
     assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType_StringArray);
     let mut boxed_array = boxed_array.query_interface::<IReferenceArray<HString>>().unwrap();

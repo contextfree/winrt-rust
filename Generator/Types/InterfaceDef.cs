@@ -149,7 +149,7 @@ namespace Generator.Types
 				}
 			}
 
-			return candidates.Any(c => c.GetFactoryType() == t.Type || c.GetStaticTypes().Contains(t.Type));
+			return candidates.Any(c => c.GetFactoryTypes().Contains(t.Type) || c.GetStaticTypes().Contains(t.Type));
 		}
 	}
 }

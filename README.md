@@ -38,7 +38,7 @@ use winrt::windows::system::diagnostics::*; // import namespace Windows.System.D
 fn main() {
     let rt = RuntimeContext::init(); // initialize the Windows Runtime
     // get factory, which is also used to call static methods
-    let mut pdi_statics = IProcessDiagnosticInfoStatics::factory();
+    let mut pdi_statics = ProcessDiagnosticInfo::get_activation_factory();
     let mut infos = unsafe { pdi_statics.get_for_processes().unwrap() };
     println!("Currently executed processes ({}):", unsafe { infos.get_size().unwrap() });
     for mut p in infos.into_iter() {
