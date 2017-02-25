@@ -54,6 +54,7 @@
     <Compile Include="AssemblyCollection.cs" />
     <Compile Include="ParametricInterfaceInstance.cs" />
     <Compile Include="Types\ClassDef.cs" />
+    <Compile Include="Types\ClassMethodDef.cs" />
     <Compile Include="Types\EnumDef.cs" />
     <Compile Include="Types\InterfaceDef.cs" />
     <Compile Include="Types\ITypeRequestSource.cs" />

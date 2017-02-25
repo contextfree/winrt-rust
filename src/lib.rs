@@ -11,9 +11,7 @@
 //!
 //! fn main() {
 //!     let rt = RuntimeContext::init(); // initialize the Windows Runtime
-//!     // get factory, which is also used to call static methods
-//!     let mut pdi_statics = ProcessDiagnosticInfo::get_activation_factory();
-//!     let mut infos = unsafe { pdi_statics.get_for_processes().unwrap() };
+//!     let mut infos = ProcessDiagnosticInfo::get_for_processes().unwrap();
 //!     println!("Currently executed processes ({}):", unsafe { infos.get_size().unwrap() });
 //!     for mut p in infos.into_iter() {
 //!         let pid = unsafe { p.get_process_id().unwrap() };
@@ -80,7 +78,7 @@ pub mod windows {
 
 /// This is only for internal use within the generated code
 mod prelude {
-    pub use ::rt::{RtType, IInspectable, IInspectableVtbl, IActivationFactory, Char};
+    pub use ::rt::{RtType, RtActivatable, IInspectable, IInspectableVtbl, IActivationFactory, Char};
     pub use ::rt::handler::IntoInterface;
     pub use ::cominterfaces::{ComInterface, ComIid, IUnknown};
     pub use ::comptr::{ComPtr, ComArray};

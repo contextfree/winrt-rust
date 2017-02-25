@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Diagnostics.Debug;
 
 using Mono.Cecil;
 
@@ -27,6 +28,7 @@ namespace Generator.Types
 		private TypeDefinition[] statics;
 		private string aliasedType;
 		private string[] factories;
+		private List<ClassMethodDef> methodWrappers = new List<ClassMethodDef>();
 
 		public ClassDef(TypeDefinition t) : base(t)
 		{
@@ -48,12 +50,38 @@ namespace Generator.Types
 				var mainInterface = Type.Interfaces[0];
 				aliasedType = TypeHelpers.GetTypeName(Generator, this, mainInterface, TypeUsage.Alias);
 			}
+
+			var factoryMethods = GetFactoryTypes().SelectMany(f => Generator.GetTypeDefinition(f).Methods).ToArray();
+			var staticMethods = statics.SelectMany(s => Generator.GetTypeDefinition(s).Methods).ToArray();
+			
+			foreach (var m in factoryMethods)
+			{
+				methodWrappers.Add(new ClassMethodDef(m, this));
+			}
+			foreach (var m in staticMethods)
+			{
+				methodWrappers.Add(new ClassMethodDef(m, this));
+			}
+
+			// fix name clashes in method wrappers (caused by overloads from different interfaces)
+			foreach (var nameToFix in methodWrappers.GroupBy(m => m.Name).Where(g => g.Count() > 1))
+			{
+				// we expect that there is a single base name (modulo suffix numbers) for all clashing interfaces
+				string baseName = nameToFix.Select(n => n.WrappedMethod.DeclaringType.Name.TrimEnd('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')).Distinct().Single();
+				foreach (var m in nameToFix)
+				{
+					// so far this is always "2"
+					var nameSuffix = m.WrappedMethod.DeclaringType.Name.Replace(baseName, "");
+					m.FixupName(nameSuffix);
+				}
+			}
 		}
 
 		public override void Emit()
 		{
 			var classType = DefinitionName;
 			bool needClassID = false;
+
 			if (Type.Interfaces.Count > 0)
 			{
 				var dependsOnAssemblies = new List<string>(ForeignAssemblyDependencies.GroupBy(t => t.Module.Assembly.Name.Name).Select(g => g.Key));
@@ -64,6 +92,7 @@ namespace Generator.Types
 				if (!features.IsEmpty)
 				{
 					// if the aliased type is from a different assembly that is not included, just use IInspectable instead
+					// otherwise types depending on this class would transitively depend on the aliased type
 					Module.Append(@"
 		" + features.GetInvertedAttribute() + "RT_CLASS!{class " + DefinitionName + ": IInspectable}");
 				}
@@ -72,11 +101,12 @@ namespace Generator.Types
 				{
 					needClassID = true;
 					Module.Append(@"
-		impl ::RtActivatable<" + factory + "> for " + classType + " {}");
+		impl RtActivatable<" + factory + "> for " + classType + " {}");
 				}
 			}
 			else
 			{
+				Assert(!factories.Any());
 				Module.Append(@"
 		RT_CLASS!{static class " + DefinitionName + "}");
 			}
@@ -86,14 +116,22 @@ namespace Generator.Types
 				var staticName = Generator.GetTypeDefinition(staticType).DefinitionName;
 				needClassID = true;
 				Module.Append(@"
-		impl ::RtActivatable<" + staticName + "> for " + classType + " {}");
+		impl RtActivatable<" + staticName + "> for " + classType + " {}");
 			}
 
 			if (IsDefaultActivatable())
 			{
 				needClassID = true;
 				Module.Append(@"
-		impl ::RtActivatable<IActivationFactory> for " + classType + " {}");
+		impl RtActivatable<IActivationFactory> for " + classType + " {}");
+			}
+
+			if (methodWrappers.Any())
+			{
+				Module.Append(@"
+		impl " + DefinitionName + @" {
+			" + String.Join("\r\n\t\t\t", methodWrappers.Select(m => m.Emit())) + @"
+		}");
 			}
 
 			if (needClassID)

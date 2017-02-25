@@ -99,6 +99,7 @@ pub trait RtNamedClass {
 
 pub trait RtActivatable<Interface> : RtNamedClass {
     /// Returns a factory object to create instances of this class or to call static methods.
+    #[inline]
     fn get_activation_factory() -> ComPtr<Interface> where Interface: RtInterface + ComIid {
         let mut res = ptr::null_mut();
         let class_id = unsafe { HStringReference::from_utf16_unchecked(Self::name()) };
@@ -113,7 +114,8 @@ pub trait RtActivatable<Interface> : RtNamedClass {
     }
 
     /// Uses the default constructor to create an instance of this class.
-    fn activate_instance() -> ComPtr<Self> where Self: Sized + RtActivatable<IActivationFactory> + ComInterface {
+    #[inline]
+    fn new() -> ComPtr<Self> where Self: Sized + RtActivatable<IActivationFactory> + ComInterface {
         let factory: ComPtr<IActivationFactory> = Self::get_activation_factory();
         unsafe { factory.activate_instance().into_unchecked() }
     }

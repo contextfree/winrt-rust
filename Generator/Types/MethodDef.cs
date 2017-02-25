@@ -7,6 +7,31 @@ using Mono.Cecil;
 
 namespace Generator.Types
 {
+	public class MethodDetailsCache
+	{
+		public string WrappedName;
+		public string RawName;
+		public string[] InputParameterNames;
+		public Tuple<TypeReference, InputKind>[] InputParameterTypes;
+		public TypeReference[] OutTypes;
+		public string WrapperBody;
+
+		public string[] MakeInputParameters(Generator generator, ITypeRequestSource source)
+		{
+			return InputParameterNames.Zip(InputParameterTypes, (name, t) => name + ": " + TypeHelpers.GetInputTypeName(generator, source, t.Item1, t.Item2)).ToArray();
+		}
+
+		public string MakeOutType(Generator generator, ITypeRequestSource source)
+		{
+			string outType = String.Join(", ", OutTypes.Select(o => TypeHelpers.GetTypeName(generator, source, o, TypeUsage.Out)));
+			if (OutTypes.Count() != 1)
+			{
+				outType = "(" + outType + ")"; // also works for count == 0 (empty tuple)
+			}
+			return outType;
+		}
+	}
+
 	public class MethodDef : ITypeRequestSource
 	{
 		public TypeDef DeclaringType { get; private set; }
@@ -34,6 +59,19 @@ namespace Generator.Types
 			get
 			{
 				return dependencies.Where(t => t.Module.Assembly != this.DeclaringType.Module.Assembly && t.Module.Assembly.Name.Name != "Windows.Foundation");
+			}
+		}
+
+		private MethodDetailsCache details;
+		public MethodDetailsCache Details
+		{
+			get
+			{
+				if (details == null)
+				{
+					details = InitializeDetailsCache();
+				}
+				return details;
 			}
 		}
 
@@ -69,7 +107,7 @@ namespace Generator.Types
 		public string GetWrapperName(string rawName)
 		{
 			string name = NameHelpers.PreventKeywords(NameHelpers.CamelToSnakeCase(rawName.Replace("put_", "set_")));
-			if (rawName.Contains("_")) // name already contains '_' -> might result in a name clash after renaming
+			if (rawName.Contains("_")) // name already contains '_' -> might result in a name clash after renaming, e.g. caused by original names `get_Name` (property getter) and `GetName` (method)
 			{
 				if (DeclaringType.Methods.Select(mm => new Tuple<MethodDef, string>(mm, mm.GetRawName())).Where(mm => !mm.Item2.Contains("_")).Any(mm => mm.Item1.GetWrapperName(mm.Item2) == name))
 				{
@@ -80,6 +118,15 @@ namespace Generator.Types
 		}
 
 		public string GetWrapperDefinition()
+		{
+			var inputParameters = Details.MakeInputParameters(DeclaringType.Generator, this);
+			var outType = Details.MakeOutType(DeclaringType.Generator, this);
+
+			return "#[inline] pub unsafe fn " + Details.WrappedName + "(" + String.Join(", ", new string[] { "&mut self" }.Concat(inputParameters)) + ") -> Result<" + outType + @"> {" + Details.WrapperBody + @"
+			}";
+		}
+
+		private MethodDetailsCache InitializeDetailsCache()
 		{
 			string rawName = GetRawName();
 			string name = GetWrapperName(rawName);
@@ -140,12 +187,28 @@ namespace Generator.Types
 				output.Add(new Tuple<string, TypeReference>("out", Method.ReturnType));
 			}
 
-			string outType = String.Join(", ", output.Select(o => TypeHelpers.GetTypeName(DeclaringType.Generator, this, o.Item2, TypeUsage.Out)));
-			if (output.Count != 1)
+			var outTypes = output.Select(o => o.Item2).ToArray();
+
+			if (isGetMany)
 			{
-				outType = "(" + outType + ")"; // also works for count == 0 (empty tuple)
+				outTypes = new TypeReference[] { }; // GetMany has no return value
 			}
-			var inputParameters = new string[] { "&mut self" }.Concat(input.Select(i => i.Item1 + ": " + TypeHelpers.GetInputTypeName(DeclaringType.Generator, this, i.Item2, i.Item3)));
+
+			
+
+			return new MethodDetailsCache
+			{
+				WrappedName = name,
+				RawName = rawName,
+				InputParameterNames = input.Select(i => i.Item1).ToArray(),
+				InputParameterTypes = input.Select(i => Tuple.Create(i.Item2, i.Item3)).ToArray(),
+				OutTypes = outTypes.ToArray(),
+				WrapperBody = GetWrapperBody(rawName, isGetMany, getManyPname, output)
+			};
+		}
+
+		private string GetWrapperBody(string rawName, bool isGetMany, string getManyPname, List<Tuple<string, TypeReference>> output)
+		{
 			var rawParams = new List<string> { "self" };
 			foreach (var p in Method.Parameters)
 			{
@@ -213,15 +276,13 @@ namespace Generator.Types
 
 			if (isGetMany)
 			{
-				outType = "()";
 				outInit = "\r\n\t\t\t\tdebug_assert!(" + getManyPname + ".capacity() > 0, \"capacity of `" + getManyPname + "` must not be 0 (use Vec::with_capacity)\"); " + getManyPname + ".clear();" + outInit;
 				outWrap = getManyPname + ".set_len(out as usize); Ok(())";
 			}
 
-			return "#[inline] pub unsafe fn " + name + "(" + String.Join(", ", inputParameters) + ") -> Result<" + outType + @"> {" + outInit + @"
+			return outInit + @"
 				let hr = ((*self.lpVtbl)." + rawName + ")(" + String.Join(", ", rawParams) + ");" + @"
-				if hr == S_OK { " + outWrap + @" } else { err(hr) }
-			}";
+				if hr == S_OK { " + outWrap + @" } else { err(hr) }";
 		}
 
 		public string GetRawDeclaration()
