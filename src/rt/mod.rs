@@ -394,11 +394,11 @@ macro_rules! RT_DELEGATE {
         }}
 
         impl $interface {
-			#[inline] pub fn new<_F_>(f: _F_) -> ComPtr<$interface>
-				where _F_: 'static + Send + FnMut($($t),*) -> Result<()>, $interface: ComIid {
-				$imp::new(f).into_interface()
-    		}
-		}
+            #[inline] pub fn new<_F_>(f: _F_) -> ComPtr<$interface>
+                where _F_: 'static + Send + FnMut($($t),*) -> Result<()>, $interface: ComIid {
+                $imp::new(f).into_interface()
+            }
+        }
 
         struct $imp<_F_> where _F_: 'static + Send + FnMut($($t),*) -> Result<()> {
             invoke: _F_
@@ -460,11 +460,11 @@ macro_rules! RT_DELEGATE {
         }}
 
         impl<$($ht: RtType + 'static),+> $interface<$($ht),+> {
-			#[inline] pub fn new<_F_>(f: _F_) -> ComPtr<$interface<$($ht),+>>
-				where _F_: 'static + Send + FnMut($($t),*) -> Result<()>, $interface<$($ht),+>: ComIid {
-				$imp::new(f).into_interface()
-    		}
-		}
+            #[inline] pub fn new<_F_>(f: _F_) -> ComPtr<$interface<$($ht),+>>
+                where _F_: 'static + Send + FnMut($($t),*) -> Result<()>, $interface<$($ht),+>: ComIid {
+                $imp::new(f).into_interface()
+            }
+        }
 
         struct $imp<$($ht: RtType),+ , _F_> where _F_: 'static + Send + FnMut($($t),*) -> Result<()> {
             invoke: _F_,
@@ -613,9 +613,9 @@ macro_rules! RT_PINTERFACE {
         $b6:expr, $b7:expr, $b8:expr] as $iid:ident
     ) => {
         DEFINE_IID!($iid, $l,$w1,$w2,$b1,$b2,$b3,$b4,$b5,$b6,$b7,$b8);
-		impl ComIid for $t {
-			#[inline] fn iid() -> &'static ::Guid { &$iid }
-		}
+        impl ComIid for $t {
+            #[inline] fn iid() -> &'static ::Guid { &$iid }
+        }
     };
 }
 
