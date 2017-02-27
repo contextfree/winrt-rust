@@ -1,14 +1,14 @@
 extern crate winapi as w;
-extern crate winrt as wrt;
+extern crate winrt;
 // TODO: don't use functions from runtimeobject directly 
 extern crate runtimeobject;
 
 use std::ptr;
 
-use wrt::*;
-use wrt::windows::foundation::*;
-use wrt::windows::devices::enumeration::*;
-use wrt::windows::devices::midi::*;
+use winrt::*;
+use winrt::windows::foundation::*;
+use winrt::windows::devices::enumeration::*;
+use winrt::windows::devices::midi::*;
 
 fn main() {
     let rt = RuntimeContext::init();
@@ -19,10 +19,9 @@ fn main() {
 fn run() {
     use std::sync::{Arc, Mutex, Condvar};
 
-    let mut uri_factory = Uri::factory();
     let base = FastHString::new("https://github.com");
     let relative = FastHString::new("contextfree/winrt-rust");
-    let uri = unsafe { uri_factory.create_with_relative_uri(&base, &relative).unwrap() };
+    let uri = Uri::create_with_relative_uri(&base, &relative).unwrap();
     let to_string = unsafe { uri.query_interface::<IStringable>().unwrap().to_string().unwrap() };
     println!("{} -> {}", uri.get_runtime_class_name(), to_string);
     println!("TrustLevel: {:?}", uri.get_trust_level());
@@ -32,13 +31,11 @@ fn run() {
         println!("  [{}] = {:?}", i, iids[i]);
     }
 
-    let mut out_port_statics = IMidiOutPortStatics::factory();
+    //let mut out_port_statics = MidiOutPort::get_activation_factory();
     //println!("out_port_statics: {}", out_port_statics.get_runtime_class_name()); // this is not allowed (prevented statically)
     
-    let device_selector = unsafe { out_port_statics.get_device_selector().unwrap() };
+    let device_selector = MidiOutPort::get_device_selector().unwrap();
     println!("{}", device_selector);
-    
-    let mut device_information_statics = IDeviceInformationStatics::factory();
     
     unsafe {
         use runtimeobject::*;
@@ -46,7 +43,7 @@ fn run() {
 
         // Test some error reporting by using an invalid device selector
         let wrong_deviceselector: FastHString = "Foobar".into();
-        let res = device_information_statics.find_all_async_aqs_filter(&wrong_deviceselector);
+        let res = DeviceInformation::find_all_async_aqs_filter(&wrong_deviceselector);
         if let Err(e) = res {
             println!("HRESULT (FindAllAsyncAqsFilter) = {:?}", e.as_hresult());
             let mut error_info = {
@@ -68,8 +65,7 @@ fn run() {
         // NOTE: `res` is still null pointer at this point
     };
 
-    //let mut async_op = unsafe { device_information_statics.find_all_async_aqs_filter(device_selector.get_ref()).unwrap() };
-    let mut async_op = unsafe { device_information_statics.find_all_async().unwrap() };
+    let mut async_op = DeviceInformation::find_all_async().unwrap();
     
     println!("CLS: {}",  async_op.get_runtime_class_name());
     
@@ -151,7 +147,7 @@ fn run() {
     };
 
     let array = &mut [true, false, false, true];
-    let boxed_array = unsafe { IPropertyValueStatics::factory().create_boolean_array(array) };
+    let boxed_array = PropertyValue::create_boolean_array(array);
     let mut boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
     assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType_BooleanArray);
     let mut boxed_array = boxed_array.query_interface::<IReferenceArray<bool>>().unwrap();
@@ -162,7 +158,7 @@ fn run() {
     let str1 = FastHString::new("foo");
     let str2 = FastHString::new("bar");
     let array = &mut [&*str1, &*str2, &*str1, &*str2];
-    let boxed_array = unsafe { IPropertyValueStatics::factory().create_string_array(array) };
+    let boxed_array = PropertyValue::create_string_array(array);
     let mut boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
     assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType_StringArray);
     let mut boxed_array = boxed_array.query_interface::<IReferenceArray<HString>>().unwrap();

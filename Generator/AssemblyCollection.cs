@@ -44,5 +44,9 @@ namespace Generator
 		{
 			throw new NotImplementedException();
 		}
+
+		void IDisposable.Dispose()
+		{
+		}
 	}
 }

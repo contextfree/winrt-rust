@@ -102,14 +102,14 @@ namespace Generator.Types
 			{
 				Module.Append(@"
 		RT_INTERFACE!{" + prependStatic + "interface " + name + generic + "(" + name + "Vtbl): IInspectable(IInspectableVtbl) [IID_" + name + @"] {
-			" + String.Join(",\r\n			", rawMethodDeclarationsWithFeatures) + @"
+			" + String.Join(",\r\n\t\t\t", rawMethodDeclarationsWithFeatures) + @"
 		}}");
 			}
 			else
 			{
 				Module.Append(@"
 		RT_DELEGATE!{delegate " + name + generic + "(" + name + "Vtbl, " + name + "Impl) [IID_" + name + @"] {
-			" + String.Join(",\r\n			", rawMethodDeclarationsWithFeatures) + @"
+			" + String.Join(",\r\n\t\t\t", rawMethodDeclarationsWithFeatures) + @"
 		}}");
 			}
 
@@ -149,7 +149,7 @@ namespace Generator.Types
 				}
 			}
 
-			return candidates.Any(c => c.GetFactoryType() == t.Type || c.GetStaticTypes().Contains(t.Type));
+			return candidates.Any(c => c.GetFactoryTypes().Contains(t.Type) || c.GetStaticTypes().Contains(t.Type));
 		}
 	}
 }

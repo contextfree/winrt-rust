@@ -367,6 +367,11 @@ namespace Generator.Types
 				return "ComPtr::wrap(" + name + ")";
 			}
 		}
+
+		public static TypeReference GetDefaultInterface(TypeDefinition type)
+		{
+			return type.Interfaces.Single(i => i.CustomAttributes.Any(a => a.AttributeType.Name == "DefaultAttribute")).InterfaceType;
+		}
 	}
 
 	public enum TypeUsage
