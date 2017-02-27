@@ -140,10 +140,8 @@ namespace Generator
 			}
 			else if (def.Kind == TypeKind.Class)
 			{
-				var mainInterface = def.Type.Interfaces[0];
-				if (def.Type.CustomAttributes.Any(a => a.AttributeType.Name == "DefaultInterfaceAttribute"))
-					throw new NotImplementedException();
-				return "rc(" + def.Type.FullName + ";" + GetTypeIIDDescriptor(gen, mainInterface) + ")";
+				var defaultInterface = TypeHelpers.GetDefaultInterface(def.Type);
+				return "rc(" + def.Type.FullName + ";" + GetTypeIIDDescriptor(gen, defaultInterface) + ")";
 			}
 			else
 			{

@@ -165,7 +165,7 @@ namespace Generator.Types
 							else
 							{
 								//TODO: this should probably be a mutable, write-only, empty slice -> what type?
-								input.Add(new Tuple<string, TypeReference, InputKind>(pname + "Size", Method.Module.Import(typeof(uint)), InputKind.Default));
+								input.Add(new Tuple<string, TypeReference, InputKind>(pname + "Size", Method.Module.ImportReference(typeof(uint)), InputKind.Default));
 								input.Add(new Tuple<string, TypeReference, InputKind>(pname, p.ParameterType, InputKind.Raw));
 							}
 						}

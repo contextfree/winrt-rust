@@ -50,7 +50,7 @@ namespace Generator
 			var tyIReferenceArray = gen.GetTypeDefinition("Windows.Foundation.IReferenceArray`1");
 			var assembly = tyIReference.Module.Assembly; // we need just any assembly
 
-			var allBaseTypes = baseTypes.Select(t => assembly.MainModule.Import(t)).Concat(baseTypes2.Select(t => gen.GetTypeDefinition("Windows.Foundation." + t).Type));
+			var allBaseTypes = baseTypes.Select(t => assembly.MainModule.ImportReference(t)).Concat(baseTypes2.Select(t => gen.GetTypeDefinition("Windows.Foundation." + t).Type));
 
 			foreach (var baseType in allBaseTypes)
 			{
@@ -82,7 +82,7 @@ namespace Generator
 			}
 
 			// recursively add implemented interfaces	
-			foreach (var intf in def.Interfaces.Where(i => i.ContainsGenericParameter && i is GenericInstanceType).Cast<GenericInstanceType>())
+			foreach (var intf in def.Interfaces.Select(i => i.InterfaceType).Where(i => i.ContainsGenericParameter && i is GenericInstanceType).Cast<GenericInstanceType>())
 			{
 				var type = TypeHelpers.InstantiateType(intf, genericParameterMap);
 				if (type is GenericInstanceType)

@@ -47,8 +47,8 @@ namespace Generator.Types
 			
 			if (Type.Interfaces.Count > 0)
 			{
-				var mainInterface = Type.Interfaces[0];
-				aliasedType = TypeHelpers.GetTypeName(Generator, this, mainInterface, TypeUsage.Alias);
+				var defaultInterface = TypeHelpers.GetDefaultInterface(Type);
+				aliasedType = TypeHelpers.GetTypeName(Generator, this, defaultInterface, TypeUsage.Alias);
 			}
 
 			var factoryMethods = GetFactoryTypes().SelectMany(f => Generator.GetTypeDefinition(f).Methods).ToArray();
