@@ -602,6 +602,7 @@ macro_rules! RT_PINTERFACE {
 }
 
 pub mod handler;
+pub mod async;
 pub mod gen; // import auto-generated definitions (has to come after macro definitions)
 
 // FIXME: maybe better reexport from winapi?

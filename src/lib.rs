@@ -68,6 +68,7 @@ pub use cominterfaces::{ComInterface, ComIid, IUnknown, IRestrictedErrorInfo, IA
 
 mod rt;
 pub use rt::{RtInterface, RtClassInterface, RtNamedClass, RtValueType, RtType, RtActivatable, IInspectable, IInspectableVtbl, IActivationFactory, Char, RuntimeContext};
+pub use rt::async::{RtAsyncAction, RtAsyncOperation};
 
 mod result;
 pub use result::{Result, Error, HRESULT};
