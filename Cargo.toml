@@ -1,6 +1,6 @@
 [package]
 name = "winrt"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Patrick Reisert", "Max Strini"]
 description = "Automatically generated, (mostly) safe bindings for the Windows Runtime APIs"
 repository = "https://github.com/contextfree/winrt-rust"
@@ -8,6 +8,7 @@ homepage = "https://github.com/contextfree/winrt-rust"
 documentation = "https://docs.rs/winrt/*/x86_64-pc-windows-msvc/winrt/"
 readme = "README.md"
 keywords = ["winrt", "uwp", "windows", "runtime", "com"]
+categories = ["os::windows-apis", "api-bindings", "external-ffi-bindings"]
 license = "MIT OR Apache-2.0"
 exclude = ["Generator/**"]
 
