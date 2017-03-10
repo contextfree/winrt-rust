@@ -20,8 +20,8 @@ starting at `winrt::windows` (if the crate has not been renamed on import) for t
 All names have been adjusted to fit the Rust coding style, therefore module names are all in lower case and function names
 are converted to `snake_case`.
 
-Since it takes a long time to compile all generated definitions (the [generated file](https://github.com/contextfree/winrt-rust/blob/master/src/rt/gen.rs) has about 170k LOC),
-Cargo features have been introduced that correspond to the *WinMD* files. For example, to use the definitions from `Windows.Devices.winmd`, use the feature `windows_devices`.
+Since it takes a long time to compile all generated definitions (the [generated file](https://github.com/contextfree/winrt-rust/blob/master/src/rt/gen.rs) has about 190k LOC),
+Cargo features have been introduced that correspond to the *WinMD* files. For example, to use the definitions from `Windows.Devices.winmd`, use the feature `windows-devices`.
 There is no feature for definitions from `Windows.Foundation.winmd`, these are always available. Whenever a (method) definition references a type from a different *WinMD* file,
 it is also not available until you enable the corresponding features for all required type definitions.
 
@@ -46,6 +46,8 @@ fn main() {
     }
 }
 ```
+
+Because this example uses the `Windows.System` namespace, we have to build it with `--features "windows-system"`.
 
 Output:
 ```
