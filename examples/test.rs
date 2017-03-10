@@ -17,8 +17,6 @@ fn main() {
 }
 
 fn run() {
-    use std::sync::{Arc, Mutex, Condvar};
-
     let base = FastHString::new("https://github.com");
     let relative = FastHString::new("contextfree/winrt-rust");
     let uri = Uri::create_with_relative_uri(&base, &relative).unwrap();
@@ -80,35 +78,10 @@ fn run() {
     
     let id = unsafe { asi.get_id().unwrap() };
     println!("id: {:?}", id);
-    
     let status = unsafe { asi.get_status().unwrap() };
     println!("status: {:?}", status);
-    
-    let pair = Arc::new((Mutex::new(false), Condvar::new()));
-    {
-        let pair2 = pair.clone();
-        let mut my_handler = AsyncOperationCompletedHandler::new(move |_op, status| {
-            println!("Result handler invoked! Status: {:?}", status);
-            let &(ref lock, ref cvar) = &*pair2;
-            let mut started = lock.lock().unwrap();
-            *started = true;
-            cvar.notify_one();
-            Ok(())
-        });
-        unsafe { async_op.set_completed(&mut my_handler).unwrap() };
-        // local reference to my_handler is dropped here -> Release() is called
-    }
-    
-    println!("Waiting for results of async call ...");
-    
-    // use condvar to wait until handler has been called
-    let &(ref lock, ref cvar) = &*pair;
-    let mut started = lock.lock().unwrap();
-    while !*started {
-        started = cvar.wait(started).unwrap();
-    }
 
-    let mut device_information_collection = unsafe { async_op.get_results().unwrap() };
+    let mut device_information_collection = async_op.blocking_get();
     println!("CLS: {}", device_information_collection.get_runtime_class_name());
     let count = unsafe { device_information_collection.get_size().unwrap() };
     println!("Device Count: {}", count);
