@@ -387,6 +387,7 @@ macro_rules! RT_DELEGATE {
             $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> HRESULT
         }}
 
+        $(#[cfg($cond_attr)])*
         impl $interface {
             #[inline] pub fn new<_F_>(f: _F_) -> ComPtr<$interface>
                 where _F_: 'static + Send + FnMut($($t),*) -> Result<()>, $interface: ComIid {
@@ -394,10 +395,12 @@ macro_rules! RT_DELEGATE {
             }
         }
 
+        $(#[cfg($cond_attr)])*
         struct $imp<_F_> where _F_: 'static + Send + FnMut($($t),*) -> Result<()> {
             invoke: _F_
         }
 
+        $(#[cfg($cond_attr)])*
         impl<_F_> $imp<_F_>
             where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
@@ -409,6 +412,7 @@ macro_rules! RT_DELEGATE {
             }
         }
 
+        $(#[cfg($cond_attr)])*
         impl<_F_> ::rt::handler::ComClass<$interface> for $imp<_F_>
             where $interface: ComIid, _F_: 'static + Send + FnMut($($t),*) -> Result<()>
         {
