@@ -47,9 +47,14 @@ fn main() {
 }
 ```
 
-Because this example uses the `Windows.System` namespace, we have to build it with `--features "windows-system"`.
+Because this example uses the `Windows.System` namespace, we have to enable the `windows-system` feature in `Cargo.toml`:
+```toml
+[dependencies.winrt]
+version = "0.2.1"
+features = ["windows-system"]
+```
 
-Output:
+Running this example program should result in an output similar to the following:
 ```
 Currently executed processes (132):
 [4] System
