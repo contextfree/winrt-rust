@@ -9,7 +9,7 @@ Since we can not yet guarantee the safety of the generated wrappers, all methods
 Creating custom WinRT classes using inheritance is not yet supported, so it is currently not possible to create user interfaces using *XAML*. 
 
 ## Prerequisites
-Using this crate requires at least Rust 1.13 (after the removal of dropflags) and the MSVC toolchain (because there is a bug in one of MinGW's import libraries).
+Using this crate requires at least Rust 1.13 and the MSVC toolchain (because there is a bug in one of MinGW's import libraries).
 Additional nightly features (e.g. generating enum variants as associated constants) can be enabled with the `nightly` Cargo feature.
 
 ## Design

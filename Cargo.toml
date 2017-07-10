@@ -41,3 +41,7 @@ all = ["windows-applicationmodel", "windows-data", "windows-devices", "windows-g
        "windows-globalization", "windows-graphics", "windows-management", "windows-media",
        "windows-networking", "windows-perception", "windows-security", "windows-services",
        "windows-storage", "windows-system", "windows-ui", "windows-ui-xaml", "windows-web"]
+
+[package.metadata.docs.rs]
+features = ["all"] # Include all the namespaces when generating documentation
+default-target = "x86_64-pc-windows-msvc"
