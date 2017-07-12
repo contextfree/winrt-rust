@@ -11,9 +11,9 @@
 //!
 //! fn main() {
 //!     let rt = RuntimeContext::init(); // initialize the Windows Runtime
-//!     let mut infos = ProcessDiagnosticInfo::get_for_processes().unwrap();
+//!     let infos = ProcessDiagnosticInfo::get_for_processes().unwrap();
 //!     println!("Currently executed processes ({}):", unsafe { infos.get_size().unwrap() });
-//!     for mut p in infos.into_iter() {
+//!     for p in infos.into_iter() {
 //!         let pid = unsafe { p.get_process_id().unwrap() };
 //!         let exe = unsafe { p.get_executable_file_name().unwrap() };
 //!         println!("[{}] {}", pid, exe);

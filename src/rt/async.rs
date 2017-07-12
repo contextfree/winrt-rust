@@ -18,16 +18,16 @@ use ::windows::foundation::{
 };
 
 pub trait RtAsyncAction {
-    fn blocking_wait(&mut self);
+    fn blocking_wait(&self);
 }
 
 pub trait RtAsyncOperation: RtAsyncAction {
     type TResult;
     
-    fn get_results(&mut self) -> Self::TResult;
+    fn get_results(&self) -> Self::TResult;
 
     #[inline]
-    fn blocking_get(&mut self) -> Self::TResult {
+    fn blocking_get(&self) -> Self::TResult {
         self.blocking_wait();
         self.get_results()
     }
@@ -37,8 +37,8 @@ pub trait RtAsyncOperation: RtAsyncAction {
 macro_rules! impl_blocking_wait {
     ($handler:ident) => {
         #[inline]
-        fn blocking_wait(&mut self) {
-            let mut info = ::comptr::query_interface::<_, IAsyncInfo>(self).unwrap();
+        fn blocking_wait(&self) {
+            let info = ::comptr::query_interface::<_, IAsyncInfo>(self).unwrap();
             let status = unsafe { info.get_status().unwrap() };
             if status == ::windows::foundation::AsyncStatus_Completed {
                 return;
@@ -47,14 +47,14 @@ macro_rules! impl_blocking_wait {
             let pair = Arc::new((Mutex::new(false), Condvar::new()));
             {
                 let pair2 = pair.clone();
-                let mut handler = $handler::new(move |_op, _status| {
+                let handler = $handler::new(move |_op, _status| {
                     let &(ref lock, ref cvar) = &*pair2;
                     let mut completed = lock.lock().unwrap();
                     *completed = true;
                     cvar.notify_one();
                     Ok(())
                 });
-                unsafe { self.set_completed(&mut handler).unwrap() };
+                unsafe { self.set_completed(&handler).unwrap() };
                 // local reference to `handler` is dropped here -> Release() is called
             }
             
@@ -91,7 +91,7 @@ impl<T: RtType + 'static> RtAsyncOperation for IAsyncOperation<T>
     type TResult = <T as RtType>::Out;
 
     #[inline]
-    fn get_results(&mut self) -> Self::TResult {
+    fn get_results(&self) -> Self::TResult {
         unsafe { self.get_results().unwrap() }
     }
 }
@@ -108,7 +108,7 @@ impl<T: RtType + 'static, P: RtType + 'static> RtAsyncOperation for IAsyncOperat
     type TResult = <T as RtType>::Out;
 
     #[inline]
-    fn get_results(&mut self) -> Self::TResult {
+    fn get_results(&self) -> Self::TResult {
         unsafe { self.get_results().unwrap() }
     }
 }

@@ -17,10 +17,10 @@ fn main() {
 
 fn run() { unsafe {
     // Get a toast XML template
-    let mut toast_xml = ToastNotificationManager::get_template_content(ToastTemplateType_ToastText02).unwrap();
+    let toast_xml = ToastNotificationManager::get_template_content(ToastTemplateType_ToastText02).unwrap();
 
     // Fill in the text elements
-    let mut toast_text_elements = toast_xml.get_elements_by_tag_name(&FastHString::new("text")).unwrap();
+    let toast_text_elements = toast_xml.get_elements_by_tag_name(&FastHString::new("text")).unwrap();
     
     toast_text_elements.item(0).unwrap().append_child(&*toast_xml.create_text_node(&FastHString::new("Hello from Rust!")).unwrap().query_interface::<IXmlNode>().unwrap()).unwrap();
     toast_text_elements.item(1).unwrap().append_child(&*toast_xml.create_text_node(&FastHString::new("This is some more text.")).unwrap().query_interface::<IXmlNode>().unwrap()).unwrap();

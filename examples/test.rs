@@ -63,11 +63,11 @@ fn run() {
         // NOTE: `res` is still null pointer at this point
     };
 
-    let mut async_op = DeviceInformation::find_all_async().unwrap();
+    let async_op = DeviceInformation::find_all_async().unwrap();
     
     println!("CLS: {}",  async_op.get_runtime_class_name());
     
-    let mut asi = async_op.query_interface::<IAsyncInfo>().unwrap();
+    let asi = async_op.query_interface::<IAsyncInfo>().unwrap();
     println!("IAsyncInfo: {:p}, Iasync_operation: {:p}", asi, async_op);
     
     let unknown = async_op.query_interface::<IUnknown>().unwrap();
@@ -81,14 +81,14 @@ fn run() {
     let status = unsafe { asi.get_status().unwrap() };
     println!("status: {:?}", status);
 
-    let mut device_information_collection = async_op.blocking_get();
+    let device_information_collection = async_op.blocking_get();
     println!("CLS: {}", device_information_collection.get_runtime_class_name());
     let count = unsafe { device_information_collection.get_size().unwrap() };
     println!("Device Count: {}", count);
     
     let mut remember = None;
     let mut i = 0;
-    for mut current in device_information_collection.into_iter() {
+    for current in device_information_collection.into_iter() {
         let device_name = unsafe { current.get_name().unwrap() };
         println!("Device Name ({}): {}", i, device_name);
         if i == 100 {
@@ -121,9 +121,9 @@ fn run() {
 
     let array = &mut [true, false, false, true];
     let boxed_array = PropertyValue::create_boolean_array(array);
-    let mut boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
+    let boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
     assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType_BooleanArray);
-    let mut boxed_array = boxed_array.query_interface::<IReferenceArray<bool>>().unwrap();
+    let boxed_array = boxed_array.query_interface::<IReferenceArray<bool>>().unwrap();
     let returned_array = unsafe { boxed_array.get_value().unwrap() };
     println!("{:?} = {:?}", array, &returned_array[..]);
     assert_eq!(array, &returned_array[..]);
@@ -132,9 +132,9 @@ fn run() {
     let str2 = FastHString::new("bar");
     let array = &mut [&*str1, &*str2, &*str1, &*str2];
     let boxed_array = PropertyValue::create_string_array(array);
-    let mut boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
+    let boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
     assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType_StringArray);
-    let mut boxed_array = boxed_array.query_interface::<IReferenceArray<HString>>().unwrap();
+    let boxed_array = boxed_array.query_interface::<IReferenceArray<HString>>().unwrap();
     let returned_array = unsafe { boxed_array.get_value().unwrap() };
     assert_eq!(array.len(), returned_array.len());
     for i in 0..array.len() {

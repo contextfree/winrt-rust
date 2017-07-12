@@ -123,16 +123,16 @@ pub trait RtActivatable<Interface> : RtNamedClass {
 
 // We can also implement IntoIterator for IIterable<T> and IVectorView<T>
 // TODO: This should be extended to more types (at least IVector, IMap, IMapView, IObservableVector, IObservableMap)
-impl<'a, T> IntoIterator for &'a mut IIterable<T> where T: RtType
+impl<'a, T> IntoIterator for &'a IIterable<T> where T: RtType
 {
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
-    #[inline] fn into_iter(mut self) -> Self::IntoIter {
+    #[inline] fn into_iter(self) -> Self::IntoIter {
         unsafe { self.first().unwrap() }
     }
 }
 
-impl<'a, T> IntoIterator for &'a mut IVectorView<T> where T: RtType, IIterable<T>: ComIid
+impl<'a, T> IntoIterator for &'a IVectorView<T> where T: RtType, IIterable<T>: ComIid
 {
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
@@ -243,7 +243,7 @@ macro_rules! RT_INTERFACE {
     // version with methods, but without generic parameters
     ($(#[$attr:meta])* basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
-            $(#[cfg($cond_attr:meta)])* fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+            $(#[cfg($cond_attr:meta)])* fn $method:ident(&self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
@@ -291,7 +291,7 @@ macro_rules! RT_INTERFACE {
     // which is irrelevant at runtime (it is used to generate the IIDs of the parameterized interfaces).
     ($(#[$attr:meta])* basic $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
-            $(#[cfg($cond_attr:meta)])* fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+            $(#[cfg($cond_attr:meta)])* fn $method:ident(&self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
@@ -335,7 +335,7 @@ macro_rules! RT_INTERFACE {
 
     ($(#[$attr:meta])* basic $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
-            $(#[cfg($cond_attr:meta)])* fn $method:ident(&mut self $(,$p:ident : $t:ty)*) -> $rtr:ty
+            $(#[cfg($cond_attr:meta)])* fn $method:ident(&self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
@@ -381,10 +381,10 @@ macro_rules! RT_INTERFACE {
 macro_rules! RT_DELEGATE {
     // without generic parameters
     (delegate $interface:ident ($vtbl:ident, $imp:ident) [$iid:ident] {
-        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> HRESULT
+        $(#[cfg($cond_attr:meta)])* fn Invoke(&self $(,$p:ident : $t:ty)*) -> HRESULT
     }) => {
         RT_INTERFACE!{basic $interface($vtbl) : IUnknown(::w::IUnknownVtbl) [$iid] {
-            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> HRESULT
+            $(#[cfg($cond_attr)])* fn Invoke(&self $(,$p : $t)*) -> HRESULT
         }}
 
         $(#[cfg($cond_attr)])*
@@ -451,10 +451,10 @@ macro_rules! RT_DELEGATE {
 
     // with generic parameters
     (delegate $interface:ident<$($ht:ident),+> ($vtbl:ident, $imp:ident) [$iid:ident] {
-        $(#[cfg($cond_attr:meta)])* fn Invoke(&mut self $(,$p:ident : $t:ty)*) -> HRESULT
+        $(#[cfg($cond_attr:meta)])* fn Invoke(&self $(,$p:ident : $t:ty)*) -> HRESULT
     }) => {
         RT_INTERFACE!{basic $interface<$($ht),+>($vtbl) : IUnknown(::w::IUnknownVtbl) [$iid] {
-            $(#[cfg($cond_attr)])* fn Invoke(&mut self $(,$p : $t)*) -> HRESULT
+            $(#[cfg($cond_attr)])* fn Invoke(&self $(,$p : $t)*) -> HRESULT
         }}
 
         impl<$($ht: RtType + 'static),+> $interface<$($ht),+> {
@@ -614,9 +614,9 @@ DEFINE_IID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA
 RT_INTERFACE!{
 /// The `IInspectable` interface is the base interface for all Windows Runtime classes.
 interface IInspectable(IInspectableVtbl): IUnknown(::w::IUnknownVtbl) [IID_IInspectable]  {
-    fn GetIids(&mut self, iidCount: *mut ULONG, iids: *mut *mut IID) -> HRESULT,
-    fn GetRuntimeClassName(&mut self, className: *mut HSTRING) -> HRESULT,
-    fn GetTrustLevel(&mut self, trustLevel: *mut TrustLevel) -> HRESULT
+    fn GetIids(&self, iidCount: *mut ULONG, iids: *mut *mut IID) -> HRESULT,
+    fn GetRuntimeClassName(&self, className: *mut HSTRING) -> HRESULT,
+    fn GetTrustLevel(&self, trustLevel: *mut TrustLevel) -> HRESULT
 }}
 impl IInspectable {
     /// Returns the interfaces that are implemented by the current Windows Runtime object.
@@ -653,7 +653,7 @@ impl ::comptr::HiddenGetRuntimeClassName for IInspectable {
 DEFINE_IID!(IID_IActivationFactory, 0x00000035, 0x0000, 0x0000, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
 RT_INTERFACE!{
 interface IActivationFactory(IActivationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IActivationFactory]  {
-    fn ActivateInstance(&mut self, instance: *mut *mut IInspectable) -> HRESULT
+    fn ActivateInstance(&self, instance: *mut *mut IInspectable) -> HRESULT
 }}
 
 impl IActivationFactory {
