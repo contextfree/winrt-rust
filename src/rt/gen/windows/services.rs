@@ -942,12 +942,6 @@ impl MapManager {
     }}
 }
 DEFINE_CLSID!(MapManager(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,77,97,112,77,97,110,97,103,101,114,0]) [CLSID_MapManager]);
-RT_STRUCT! { struct LocalSearchContract {
-    
-}}
-RT_STRUCT! { struct GuidanceContract {
-    
-}}
 pub mod offlinemaps { // Windows.Services.Maps.OfflineMaps
 use ::prelude::*;
 RT_ENUM! { enum OfflineMapPackageQueryStatus: i32 {
@@ -2056,9 +2050,6 @@ impl IGuidanceLaneInfo {
 } // Windows.Services.Maps
 pub mod store { // Windows.Services.Store
 use ::prelude::*;
-RT_STRUCT! { struct StoreContract {
-    
-}}
 RT_ENUM! { enum StorePurchaseStatus: i32 {
     Succeeded (StorePurchaseStatus_Succeeded) = 0, AlreadyPurchased (StorePurchaseStatus_AlreadyPurchased) = 1, NotPurchased (StorePurchaseStatus_NotPurchased) = 2, NetworkError (StorePurchaseStatus_NetworkError) = 3, ServerError (StorePurchaseStatus_ServerError) = 4,
 }}
@@ -3129,9 +3120,6 @@ DEFINE_CLSID!(StoreRequestHelper(&[87,105,110,100,111,119,115,46,83,101,114,118,
 } // Windows.Services.Store
 pub mod targetedcontent { // Windows.Services.TargetedContent
 use ::prelude::*;
-RT_STRUCT! { struct TargetedContentContract {
-    
-}}
 RT_ENUM! { enum TargetedContentInteraction: i32 {
     Impression (TargetedContentInteraction_Impression) = 0, ClickThrough (TargetedContentInteraction_ClickThrough) = 1, Hover (TargetedContentInteraction_Hover) = 2, Like (TargetedContentInteraction_Like) = 3, Dislike (TargetedContentInteraction_Dislike) = 4, Dismiss (TargetedContentInteraction_Dismiss) = 5, Ineligible (TargetedContentInteraction_Ineligible) = 6, Accept (TargetedContentInteraction_Accept) = 7, Decline (TargetedContentInteraction_Decline) = 8, Defer (TargetedContentInteraction_Defer) = 9, Canceled (TargetedContentInteraction_Canceled) = 10, Conversion (TargetedContentInteraction_Conversion) = 11, Opportunity (TargetedContentInteraction_Opportunity) = 12,
 }}

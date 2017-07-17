@@ -1,7 +1,4 @@
 use ::prelude::*;
-RT_STRUCT! { struct GlobalizationJapanesePhoneticAnalyzerContract {
-    
-}}
 DEFINE_IID!(IID_IJapanesePhoneticAnalyzerStatics, 2292948624, 37854, 16818, 180, 213, 142, 219, 34, 127, 209, 194);
 RT_INTERFACE!{static interface IJapanesePhoneticAnalyzerStatics(IJapanesePhoneticAnalyzerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJapanesePhoneticAnalyzerStatics] {
     fn GetWords(&self, input: HSTRING, out: *mut *mut super::foundation::collections::IVectorView<JapanesePhoneme>) -> HRESULT,

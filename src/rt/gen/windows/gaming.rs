@@ -734,9 +734,6 @@ impl IUINavigationControllerStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct GamingInputPreviewContract {
-    
-}}
 pub mod custom { // Windows.Gaming.Input.Custom
 use ::prelude::*;
 RT_ENUM! { enum GipFirmwareUpdateStatus: i32 {
@@ -1386,9 +1383,6 @@ impl IGameChatOverlay {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct GameChatOverlayContract {
-    
-}}
 DEFINE_IID!(IID_IGameChatOverlayMessageSource, 504853399, 23035, 20303, 142, 154, 128, 172, 248, 23, 116, 60);
 RT_INTERFACE!{interface IGameChatOverlayMessageSource(IGameChatOverlayMessageSourceVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatOverlayMessageSource] {
     fn add_MessageReceived(&self, handler: *mut super::super::foundation::TypedEventHandler<GameChatOverlayMessageSource, GameChatMessageReceivedEventArgs>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
@@ -1451,10 +1445,6 @@ impl IGameChatMessageReceivedEventArgs {
 }
 } // Windows.Gaming.UI
 pub mod xboxlive { // Windows.Gaming.XboxLive
-use ::prelude::*;
-RT_STRUCT! { struct StorageApiContract {
-    
-}}
 pub mod storage { // Windows.Gaming.XboxLive.Storage
 use ::prelude::*;
 RT_ENUM! { enum GameSaveErrorStatus: i32 {
@@ -1775,10 +1765,6 @@ impl IGameSaveOperationResult {
 } // Windows.Gaming.XboxLive.Storage
 } // Windows.Gaming.XboxLive
 pub mod preview { // Windows.Gaming.Preview
-use ::prelude::*;
-RT_STRUCT! { struct GamesEnumerationContract {
-    
-}}
 pub mod gamesenumeration { // Windows.Gaming.Preview.GamesEnumeration
 use ::prelude::*;
 RT_ENUM! { enum GameListCategory: i32 {

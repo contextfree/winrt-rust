@@ -740,9 +740,6 @@ impl IPackageManagerDebugSettings {
 }
 pub mod preview { // Windows.Management.Deployment.Preview
 use ::prelude::*;
-RT_STRUCT! { struct DeploymentPreviewContract {
-    
-}}
 DEFINE_IID!(IID_IInstalledClassicAppInfo, 175979939, 26064, 16518, 128, 214, 6, 16, 215, 96, 32, 125);
 RT_INTERFACE!{interface IInstalledClassicAppInfo(IInstalledClassicAppInfoVtbl): IInspectable(IInspectableVtbl) [IID_IInstalledClassicAppInfo] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -993,9 +990,6 @@ impl MdmPolicy {
     }}
 }
 DEFINE_CLSID!(MdmPolicy(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,87,111,114,107,112,108,97,99,101,46,77,100,109,80,111,108,105,99,121,0]) [CLSID_MdmPolicy]);
-RT_STRUCT! { struct WorkplaceSettingsContract {
-    
-}}
 DEFINE_IID!(IID_IWorkplaceSettingsStatics, 3831984125, 11666, 19464, 186, 212, 246, 89, 11, 84, 166, 211);
 RT_INTERFACE!{static interface IWorkplaceSettingsStatics(IWorkplaceSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWorkplaceSettingsStatics] {
     fn get_IsMicrosoftAccountOptional(&self, out: *mut bool) -> HRESULT

@@ -160,9 +160,6 @@ impl ShutdownManager {
     }}
 }
 DEFINE_CLSID!(ShutdownManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,83,104,117,116,100,111,119,110,77,97,110,97,103,101,114,0]) [CLSID_ShutdownManager]);
-RT_STRUCT! { struct SystemManagementContract {
-    
-}}
 DEFINE_IID!(IID_ITimeZoneSettingsStatics, 2604346346, 41217, 16814, 159, 189, 2, 135, 40, 186, 183, 61);
 RT_INTERFACE!{static interface ITimeZoneSettingsStatics(ITimeZoneSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITimeZoneSettingsStatics] {
     fn get_CurrentTimeZoneDisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -1701,9 +1698,6 @@ impl FirstSignInSettings {
     }}
 }
 DEFINE_CLSID!(FirstSignInSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,70,105,114,115,116,83,105,103,110,73,110,83,101,116,116,105,110,103,115,0]) [CLSID_FirstSignInSettings]);
-RT_STRUCT! { struct UserProfileContract {
-    
-}}
 RT_ENUM! { enum AccountPictureKind: i32 {
     SmallImage (AccountPictureKind_SmallImage) = 0, LargeImage (AccountPictureKind_LargeImage) = 1, Video (AccountPictureKind_Video) = 2,
 }}
@@ -1862,9 +1856,6 @@ impl UserInformation {
     }}
 }
 DEFINE_CLSID!(UserInformation(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,85,115,101,114,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_UserInformation]);
-RT_STRUCT! { struct UserProfileLockScreenContract {
-    
-}}
 DEFINE_IID!(IID_ILockScreenStatics, 1055511469, 46599, 16558, 180, 38, 118, 49, 217, 130, 18, 105);
 RT_INTERFACE!{static interface ILockScreenStatics(ILockScreenStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILockScreenStatics] {
     fn get_OriginalImageFile(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
@@ -2101,9 +2092,6 @@ impl PlatformDiagnosticsAndUsageDataSettings {
     }}
 }
 DEFINE_CLSID!(PlatformDiagnosticsAndUsageDataSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,80,108,97,116,102,111,114,109,68,105,97,103,110,111,115,116,105,99,115,65,110,100,85,115,97,103,101,68,97,116,97,83,101,116,116,105,110,103,115,0]) [CLSID_PlatformDiagnosticsAndUsageDataSettings]);
-RT_STRUCT! { struct ProfileHardwareTokenContract {
-    
-}}
 DEFINE_IID!(IID_IHardwareToken, 687264960, 64274, 16548, 129, 103, 127, 78, 3, 210, 114, 76);
 RT_INTERFACE!{interface IHardwareToken(IHardwareTokenVtbl): IInspectable(IInspectableVtbl) [IID_IHardwareToken] {
     #[cfg(feature="windows-storage")] fn get_Id(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
@@ -2147,9 +2135,6 @@ impl HardwareIdentification {
     }}
 }
 DEFINE_CLSID!(HardwareIdentification(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,72,97,114,100,119,97,114,101,73,100,101,110,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_HardwareIdentification]);
-RT_STRUCT! { struct ProfileSharedModeContract {
-    
-}}
 DEFINE_IID!(IID_ISharedModeSettingsStatics, 2302538766, 51926, 19792, 140, 73, 111, 207, 192, 62, 219, 41);
 RT_INTERFACE!{static interface ISharedModeSettingsStatics(ISharedModeSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISharedModeSettingsStatics] {
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT
@@ -2184,9 +2169,6 @@ impl SharedModeSettings {
     }}
 }
 DEFINE_CLSID!(SharedModeSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,104,97,114,101,100,77,111,100,101,83,101,116,116,105,110,103,115,0]) [CLSID_SharedModeSettings]);
-RT_STRUCT! { struct ProfileRetailInfoContract {
-    
-}}
 DEFINE_IID!(IID_IRetailInfoStatics, 118671032, 35730, 20266, 132, 153, 3, 31, 23, 152, 214, 239);
 RT_INTERFACE!{static interface IRetailInfoStatics(IRetailInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRetailInfoStatics] {
     fn get_IsDemoModeEnabled(&self, out: *mut bool) -> HRESULT,
@@ -2425,9 +2407,6 @@ impl KnownRetailInfoProperties {
 DEFINE_CLSID!(KnownRetailInfoProperties(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,75,110,111,119,110,82,101,116,97,105,108,73,110,102,111,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownRetailInfoProperties]);
 pub mod systemmanufacturers { // Windows.System.Profile.SystemManufacturers
 use ::prelude::*;
-RT_STRUCT! { struct SystemManufacturersContract {
-    
-}}
 DEFINE_IID!(IID_ISmbiosInformationStatics, 135055996, 25468, 18628, 183, 40, 249, 39, 56, 18, 219, 142);
 RT_INTERFACE!{static interface ISmbiosInformationStatics(ISmbiosInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmbiosInformationStatics] {
     fn get_SerialNumber(&self, out: *mut HSTRING) -> HRESULT

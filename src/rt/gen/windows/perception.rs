@@ -1110,9 +1110,6 @@ RT_CLASS!{class HeadPose: IHeadPose}
 pub mod automation { // Windows.Perception.Automation
 pub mod core { // Windows.Perception.Automation.Core
 use ::prelude::*;
-RT_STRUCT! { struct PerceptionAutomationCoreContract {
-    
-}}
 DEFINE_IID!(IID_ICorePerceptionAutomationStatics, 196101441, 19682, 18723, 154, 118, 129, 135, 236, 197, 145, 18);
 RT_INTERFACE!{static interface ICorePerceptionAutomationStatics(ICorePerceptionAutomationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICorePerceptionAutomationStatics] {
     fn SetActivationFactoryProvider(&self, provider: *mut ::rt::gen::windows::foundation::IGetActivationFactory) -> HRESULT

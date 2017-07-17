@@ -929,9 +929,6 @@ impl<T: RtType> EventHandler<T> {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct FoundationContract {
-    
-}}
 DEFINE_IID!(IID_IMemoryBufferReference, 4223982889, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
 RT_INTERFACE!{interface IMemoryBufferReference(IMemoryBufferReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBufferReference] {
     fn get_Capacity(&self, out: *mut u32) -> HRESULT,
@@ -984,9 +981,6 @@ impl MemoryBuffer {
     }}
 }
 DEFINE_CLSID!(MemoryBuffer(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,77,101,109,111,114,121,66,117,102,102,101,114,0]) [CLSID_MemoryBuffer]);
-RT_STRUCT! { struct UniversalApiContract {
-    
-}}
 DEFINE_IID!(IID_IUriRuntimeClass, 2654363223, 18610, 16736, 149, 111, 199, 56, 81, 32, 187, 252);
 RT_INTERFACE!{interface IUriRuntimeClass(IUriRuntimeClassVtbl): IInspectable(IInspectableVtbl) [IID_IUriRuntimeClass] {
     fn get_AbsoluteUri(&self, out: *mut HSTRING) -> HRESULT,

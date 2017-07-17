@@ -16,6 +16,14 @@ namespace Generator.Types
             }
         }
 
+        public override bool CanBeSkipped
+        {
+            get
+            {
+                return !Type.Fields.Any();
+            }
+        }
+
         private List<string> fields;
 
         public StructDef(TypeDefinition t) : base(t) { }

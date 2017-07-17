@@ -2984,9 +2984,6 @@ impl IHttpTransferCodingHeaderValueCollection {
 } // Windows.Web.Http.Headers
 pub mod diagnostics { // Windows.Web.Http.Diagnostics
 use ::prelude::*;
-RT_STRUCT! { struct HttpDiagnosticsContract {
-    
-}}
 RT_ENUM! { enum HttpDiagnosticRequestInitiator: i32 {
     ParsedElement (HttpDiagnosticRequestInitiator_ParsedElement) = 0, Script (HttpDiagnosticRequestInitiator_Script) = 1, Image (HttpDiagnosticRequestInitiator_Image) = 2, Link (HttpDiagnosticRequestInitiator_Link) = 3, Style (HttpDiagnosticRequestInitiator_Style) = 4, XmlHttpRequest (HttpDiagnosticRequestInitiator_XmlHttpRequest) = 5, Media (HttpDiagnosticRequestInitiator_Media) = 6, HtmlDownload (HttpDiagnosticRequestInitiator_HtmlDownload) = 7, Prefetch (HttpDiagnosticRequestInitiator_Prefetch) = 8, Other (HttpDiagnosticRequestInitiator_Other) = 9, CrossOriginPreFlight (HttpDiagnosticRequestInitiator_CrossOriginPreFlight) = 10, Fetch (HttpDiagnosticRequestInitiator_Fetch) = 11, Beacon (HttpDiagnosticRequestInitiator_Beacon) = 12,
 }}

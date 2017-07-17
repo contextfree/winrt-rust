@@ -53557,9 +53557,6 @@ impl ElementCompositionPreview {
     }}
 }
 DEFINE_CLSID!(ElementCompositionPreview(&[87,105,110,100,111,119,115,46,85,73,46,88,97,109,108,46,72,111,115,116,105,110,103,46,69,108,101,109,101,110,116,67,111,109,112,111,115,105,116,105,111,110,80,114,101,118,105,101,119,0]) [CLSID_ElementCompositionPreview]);
-RT_STRUCT! { struct HostingContract {
-    
-}}
 DEFINE_IID!(IID_IXamlUIPresenterHost, 2868610253, 40813, 20352, 172, 44, 14, 108, 185, 243, 22, 89);
 RT_INTERFACE!{interface IXamlUIPresenterHost(IXamlUIPresenterHostVtbl): IInspectable(IInspectableVtbl) [IID_IXamlUIPresenterHost] {
     fn ResolveFileResource(&self, path: HSTRING, out: *mut HSTRING) -> HRESULT

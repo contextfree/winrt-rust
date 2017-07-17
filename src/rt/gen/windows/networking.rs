@@ -153,9 +153,6 @@ impl EndpointPair {
 DEFINE_CLSID!(EndpointPair(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,69,110,100,112,111,105,110,116,80,97,105,114,0]) [CLSID_EndpointPair]);
 pub mod connectivity { // Windows.Networking.Connectivity
 use ::prelude::*;
-RT_STRUCT! { struct WwanContract {
-    
-}}
 RT_ENUM! { enum WwanNetworkRegistrationState: i32 {
     None (WwanNetworkRegistrationState_None) = 0, Deregistered (WwanNetworkRegistrationState_Deregistered) = 1, Searching (WwanNetworkRegistrationState_Searching) = 2, Home (WwanNetworkRegistrationState_Home) = 3, Roaming (WwanNetworkRegistrationState_Roaming) = 4, Partner (WwanNetworkRegistrationState_Partner) = 5, Denied (WwanNetworkRegistrationState_Denied) = 6,
 }}
@@ -2949,9 +2946,6 @@ impl UssdSession {
     }}
 }
 DEFINE_CLSID!(UssdSession(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,85,115,115,100,83,101,115,115,105,111,110,0]) [CLSID_UssdSession]);
-RT_STRUCT! { struct LegacyNetworkOperatorsContract {
-    
-}}
 DEFINE_IID!(IID_INetworkOperatorNotificationEventDetails, 3160975825, 33505, 17544, 159, 44, 18, 118, 194, 70, 143, 172);
 RT_INTERFACE!{interface INetworkOperatorNotificationEventDetails(INetworkOperatorNotificationEventDetailsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorNotificationEventDetails] {
     fn get_NotificationType(&self, out: *mut NetworkOperatorEventMessageType) -> HRESULT,
@@ -6023,9 +6017,6 @@ impl WebSocketError {
 }
 DEFINE_CLSID!(WebSocketError(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,87,101,98,83,111,99,107,101,116,69,114,114,111,114,0]) [CLSID_WebSocketError]);
 RT_CLASS!{class SocketActivityTriggerDetails: ISocketActivityTriggerDetails}
-RT_STRUCT! { struct ControlChannelTriggerContract {
-    
-}}
 RT_ENUM! { enum ControlChannelTriggerStatus: i32 {
     HardwareSlotRequested (ControlChannelTriggerStatus_HardwareSlotRequested) = 0, SoftwareSlotAllocated (ControlChannelTriggerStatus_SoftwareSlotAllocated) = 1, HardwareSlotAllocated (ControlChannelTriggerStatus_HardwareSlotAllocated) = 2, PolicyError (ControlChannelTriggerStatus_PolicyError) = 3, SystemError (ControlChannelTriggerStatus_SystemError) = 4, TransportDisconnected (ControlChannelTriggerStatus_TransportDisconnected) = 5, ServiceUnavailable (ControlChannelTriggerStatus_ServiceUnavailable) = 6,
 }}
@@ -7987,9 +7978,6 @@ DEFINE_CLSID!(PushNotificationChannelManager(&[87,105,110,100,111,119,115,46,78,
 } // Windows.Networking.PushNotifications
 pub mod xboxlive { // Windows.Networking.XboxLive
 use ::prelude::*;
-RT_STRUCT! { struct XboxLiveSecureSocketsContract {
-    
-}}
 RT_ENUM! { enum XboxLiveNetworkAccessKind: i32 {
     Open (XboxLiveNetworkAccessKind_Open) = 0, Moderate (XboxLiveNetworkAccessKind_Moderate) = 1, Strict (XboxLiveNetworkAccessKind_Strict) = 2,
 }}

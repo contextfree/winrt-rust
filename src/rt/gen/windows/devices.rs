@@ -1,7 +1,4 @@
 use ::prelude::*;
-RT_STRUCT! { struct DevicesLowLevelContract {
-    
-}}
 DEFINE_IID!(IID_ILowLevelDevicesAggregateProvider, 2805880348, 43713, 20167, 168, 82, 71, 159, 112, 96, 208, 31);
 RT_INTERFACE!{interface ILowLevelDevicesAggregateProvider(ILowLevelDevicesAggregateProviderVtbl): IInspectable(IInspectableVtbl) [IID_ILowLevelDevicesAggregateProvider] {
     fn get_AdcControllerProvider(&self, out: *mut *mut adc::provider::IAdcControllerProvider) -> HRESULT,
@@ -1722,9 +1719,6 @@ impl ISpiDeviceProvider {
 } // Windows.Devices.Spi
 pub mod printers { // Windows.Devices.Printers
 use ::prelude::*;
-RT_STRUCT! { struct PrintersContract {
-    
-}}
 DEFINE_IID!(IID_IPrint3DDeviceStatics, 4259537418, 26573, 16823, 163, 68, 81, 80, 161, 253, 117, 181);
 RT_INTERFACE!{static interface IPrint3DDeviceStatics(IPrint3DDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DDeviceStatics] {
     fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<Print3DDevice>) -> HRESULT,
@@ -1891,9 +1885,6 @@ impl IPrint3DWorkflow2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct ExtensionsContract {
-    
-}}
 DEFINE_IID!(IID_IPrintTaskConfigurationSaveRequestedDeferral, 3914978664, 63273, 17572, 135, 29, 189, 6, 40, 105, 106, 51);
 RT_INTERFACE!{interface IPrintTaskConfigurationSaveRequestedDeferral(IPrintTaskConfigurationSaveRequestedDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskConfigurationSaveRequestedDeferral] {
     fn Complete(&self) -> HRESULT
@@ -2014,9 +2005,6 @@ DEFINE_CLSID!(PrintExtensionContext(&[87,105,110,100,111,119,115,46,68,101,118,1
 } // Windows.Devices.Printers
 pub mod custom { // Windows.Devices.Custom
 use ::prelude::*;
-RT_STRUCT! { struct CustomDeviceContract {
-    
-}}
 DEFINE_IID!(IID_IKnownDeviceTypesStatics, 3998513602, 21576, 17882, 173, 27, 36, 148, 140, 35, 144, 148);
 RT_INTERFACE!{static interface IKnownDeviceTypesStatics(IKnownDeviceTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownDeviceTypesStatics] {
     fn get_Unknown(&self, out: *mut u16) -> HRESULT
@@ -3638,9 +3626,6 @@ impl ISmsMessageRegistration {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct LegacySmsApiContract {
-    
-}}
 DEFINE_IID!(IID_ISmsMessage, 3980156456, 27012, 19207, 129, 29, 141, 89, 6, 237, 60, 234);
 RT_INTERFACE!{interface ISmsMessage(ISmsMessageVtbl): IInspectable(IInspectableVtbl) [IID_ISmsMessage] {
     fn get_Id(&self, out: *mut u32) -> HRESULT,
@@ -25700,9 +25685,6 @@ impl IWiFiDirectServiceSession {
 } // Windows.Devices.WiFiDirect
 pub mod portable { // Windows.Devices.Portable
 use ::prelude::*;
-RT_STRUCT! { struct PortableDeviceContract {
-    
-}}
 RT_ENUM! { enum ServiceDeviceType: i32 {
     CalendarService (ServiceDeviceType_CalendarService) = 0, ContactsService (ServiceDeviceType_ContactsService) = 1, DeviceStatusService (ServiceDeviceType_DeviceStatusService) = 2, NotesService (ServiceDeviceType_NotesService) = 3, RingtonesService (ServiceDeviceType_RingtonesService) = 4, SmsService (ServiceDeviceType_SmsService) = 5, TasksService (ServiceDeviceType_TasksService) = 6,
 }}
@@ -25766,9 +25748,6 @@ DEFINE_CLSID!(ServiceDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,10
 } // Windows.Devices.Portable
 pub mod scanners { // Windows.Devices.Scanners
 use ::prelude::*;
-RT_STRUCT! { struct ScannerDeviceContract {
-    
-}}
 RT_ENUM! { enum ImageScannerFormat: i32 {
     Jpeg (ImageScannerFormat_Jpeg) = 0, Png (ImageScannerFormat_Png) = 1, DeviceIndependentBitmap (ImageScannerFormat_DeviceIndependentBitmap) = 2, Tiff (ImageScannerFormat_Tiff) = 3, Xps (ImageScannerFormat_Xps) = 4, OpenXps (ImageScannerFormat_OpenXps) = 5, Pdf (ImageScannerFormat_Pdf) = 6,
 }}

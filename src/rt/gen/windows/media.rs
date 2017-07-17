@@ -1149,9 +1149,6 @@ impl VideoEffects {
     }}
 }
 DEFINE_CLSID!(VideoEffects(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,86,105,100,101,111,69,102,102,101,99,116,115,0]) [CLSID_VideoEffects]);
-RT_STRUCT! { struct MediaControlContract {
-    
-}}
 DEFINE_IID!(IID_IMediaControl, 2565995489, 31373, 17099, 182, 254, 143, 230, 152, 38, 79, 19);
 RT_INTERFACE!{static interface IMediaControl(IMediaControlVtbl): IInspectable(IInspectableVtbl) [IID_IMediaControl] {
     fn add_SoundLevelChanged(&self, handler: *mut super::foundation::EventHandler<IInspectable>, out: *mut super::foundation::EventRegistrationToken) -> HRESULT,
@@ -1445,9 +1442,6 @@ impl MediaControl {
 DEFINE_CLSID!(MediaControl(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,67,111,110,116,114,111,108,0]) [CLSID_MediaControl]);
 pub mod capture { // Windows.Media.Capture
 use ::prelude::*;
-RT_STRUCT! { struct AppCaptureContract {
-    
-}}
 RT_ENUM! { enum AppCaptureVideoEncodingBitrateMode: i32 {
     Custom (AppCaptureVideoEncodingBitrateMode_Custom) = 0, High (AppCaptureVideoEncodingBitrateMode_High) = 1, Standard (AppCaptureVideoEncodingBitrateMode_Standard) = 2,
 }}
@@ -3834,9 +3828,6 @@ impl IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct AppBroadcastContract {
-    
-}}
 RT_ENUM! { enum AppBroadcastCameraOverlayLocation: i32 {
     TopLeft (AppBroadcastCameraOverlayLocation_TopLeft) = 0, TopCenter (AppBroadcastCameraOverlayLocation_TopCenter) = 1, TopRight (AppBroadcastCameraOverlayLocation_TopRight) = 2, MiddleLeft (AppBroadcastCameraOverlayLocation_MiddleLeft) = 3, MiddleCenter (AppBroadcastCameraOverlayLocation_MiddleCenter) = 4, MiddleRight (AppBroadcastCameraOverlayLocation_MiddleRight) = 5, BottomLeft (AppBroadcastCameraOverlayLocation_BottomLeft) = 6, BottomCenter (AppBroadcastCameraOverlayLocation_BottomCenter) = 7, BottomRight (AppBroadcastCameraOverlayLocation_BottomRight) = 8,
 }}
@@ -5242,9 +5233,6 @@ RT_CLASS!{class AppBroadcastServices: IAppBroadcastServices}
 RT_ENUM! { enum GameBarServicesDisplayMode: i32 {
     Windowed (GameBarServicesDisplayMode_Windowed) = 0, FullScreenExclusive (GameBarServicesDisplayMode_FullScreenExclusive) = 1,
 }}
-RT_STRUCT! { struct CameraCaptureUIContract {
-    
-}}
 DEFINE_IID!(IID_ICameraOptionsUIStatics, 990731828, 14598, 19325, 148, 108, 123, 222, 132, 68, 153, 174);
 RT_INTERFACE!{static interface ICameraOptionsUIStatics(ICameraOptionsUIStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICameraOptionsUIStatics] {
     fn Show(&self, mediaCapture: *mut MediaCapture) -> HRESULT
@@ -5263,9 +5251,6 @@ impl CameraOptionsUI {
     }}
 }
 DEFINE_CLSID!(CameraOptionsUI(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,67,97,109,101,114,97,79,112,116,105,111,110,115,85,73,0]) [CLSID_CameraOptionsUI]);
-RT_STRUCT! { struct GameBarContract {
-    
-}}
 RT_ENUM! { enum GameBarCommand: i32 {
     OpenGameBar (GameBarCommand_OpenGameBar) = 0, RecordHistoricalBuffer (GameBarCommand_RecordHistoricalBuffer) = 1, ToggleStartStopRecord (GameBarCommand_ToggleStartStopRecord) = 2, StartRecord (GameBarCommand_StartRecord) = 3, StopRecord (GameBarCommand_StopRecord) = 4, TakeScreenshot (GameBarCommand_TakeScreenshot) = 5, StartBroadcast (GameBarCommand_StartBroadcast) = 6, StopBroadcast (GameBarCommand_StopBroadcast) = 7, PauseBroadcast (GameBarCommand_PauseBroadcast) = 8, ResumeBroadcast (GameBarCommand_ResumeBroadcast) = 9, ToggleStartStopBroadcast (GameBarCommand_ToggleStartStopBroadcast) = 10, ToggleMicrophoneCapture (GameBarCommand_ToggleMicrophoneCapture) = 11, ToggleCameraCapture (GameBarCommand_ToggleCameraCapture) = 12, ToggleRecordingIndicator (GameBarCommand_ToggleRecordingIndicator) = 13,
 }}
@@ -13202,9 +13187,6 @@ impl IPhotoConfirmationControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct CallControlContract {
-    
-}}
 RT_ENUM! { enum TelephonyKey: i32 {
     D0 (TelephonyKey_D0) = 0, D1 (TelephonyKey_D1) = 1, D2 (TelephonyKey_D2) = 2, D3 (TelephonyKey_D3) = 3, D4 (TelephonyKey_D4) = 4, D5 (TelephonyKey_D5) = 5, D6 (TelephonyKey_D6) = 6, D7 (TelephonyKey_D7) = 7, D8 (TelephonyKey_D8) = 8, D9 (TelephonyKey_D9) = 9, Star (TelephonyKey_Star) = 10, Pound (TelephonyKey_Pound) = 11, A (TelephonyKey_A) = 12, B (TelephonyKey_B) = 13, C (TelephonyKey_C) = 14, D (TelephonyKey_D) = 15,
 }}
@@ -20070,9 +20052,6 @@ impl IHdcpSession {
 RT_CLASS!{class HdcpSession: IHdcpSession}
 impl RtActivatable<IActivationFactory> for HdcpSession {}
 DEFINE_CLSID!(HdcpSession(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,72,100,99,112,83,101,115,115,105,111,110,0]) [CLSID_HdcpSession]);
-RT_STRUCT! { struct ProtectionRenewalContract {
-    
-}}
 RT_CLASS!{static class ComponentRenewal}
 impl RtActivatable<IComponentRenewalStatics> for ComponentRenewal {}
 impl ComponentRenewal {
@@ -24922,9 +24901,6 @@ DEFINE_CLSID!(RatedContentRestrictions(&[87,105,110,100,111,119,115,46,77,101,10
 } // Windows.Media.ContentRestrictions
 pub mod playlists { // Windows.Media.Playlists
 use ::prelude::*;
-RT_STRUCT! { struct PlaylistsContract {
-    
-}}
 RT_ENUM! { enum PlaylistFormat: i32 {
     WindowsMedia (PlaylistFormat_WindowsMedia) = 0, Zune (PlaylistFormat_Zune) = 1, M3u (PlaylistFormat_M3u) = 2,
 }}

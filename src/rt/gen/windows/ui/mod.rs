@@ -1325,9 +1325,6 @@ impl Colors {
 DEFINE_CLSID!(Colors(&[87,105,110,100,111,119,115,46,85,73,46,67,111,108,111,114,115,0]) [CLSID_Colors]);
 pub mod core { // Windows.UI.Core
 use ::prelude::*;
-RT_STRUCT! { struct CoreWindowDialogsContract {
-    
-}}
 DEFINE_IID!(IID_ICoreWindowPopupShowingEventArgs, 638934946, 23461, 20132, 163, 180, 45, 199, 214, 60, 142, 38);
 RT_INTERFACE!{interface ICoreWindowPopupShowingEventArgs(ICoreWindowPopupShowingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreWindowPopupShowingEventArgs] {
     fn SetDesiredSize(&self, value: super::super::foundation::Size) -> HRESULT
@@ -2895,9 +2892,6 @@ impl ISystemNavigationCloseRequestedPreviewEventArgs {
 } // Windows.UI.Core.Preview
 pub mod animationmetrics { // Windows.UI.Core.AnimationMetrics
 use ::prelude::*;
-RT_STRUCT! { struct AnimationMetricsContract {
-    
-}}
 RT_ENUM! { enum PropertyAnimationType: i32 {
     Scale (PropertyAnimationType_Scale) = 0, Translation (PropertyAnimationType_Translation) = 1, Opacity (PropertyAnimationType_Opacity) = 2,
 }}
@@ -10296,9 +10290,6 @@ impl IAccountsSettingsPane {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct ApplicationsSettingsContract {
-    
-}}
 DEFINE_IID!(IID_ISettingsPaneCommandsRequest, 1155474350, 23918, 16488, 161, 104, 244, 118, 67, 24, 33, 20);
 RT_INTERFACE!{interface ISettingsPaneCommandsRequest(ISettingsPaneCommandsRequestVtbl): IInspectable(IInspectableVtbl) [IID_ISettingsPaneCommandsRequest] {
     fn get_ApplicationCommands(&self, out: *mut *mut super::super::foundation::collections::IVector<SettingsCommand>) -> HRESULT
@@ -11569,9 +11560,6 @@ impl IUISettings4 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct ViewManagementViewScalingContract {
-    
-}}
 RT_CLASS!{class ApplicationViewScaling: IApplicationViewScaling}
 impl RtActivatable<IApplicationViewScalingStatics> for ApplicationViewScaling {}
 impl ApplicationViewScaling {

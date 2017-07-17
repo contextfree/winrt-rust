@@ -6253,9 +6253,6 @@ use ::prelude::*;
 RT_ENUM! { enum ProtectionPolicyEvaluationResult: i32 {
     Allowed (ProtectionPolicyEvaluationResult_Allowed) = 0, Blocked (ProtectionPolicyEvaluationResult_Blocked) = 1, ConsentRequired (ProtectionPolicyEvaluationResult_ConsentRequired) = 2,
 }}
-RT_STRUCT! { struct EnterpriseDataContract {
-    
-}}
 RT_ENUM! { enum FileProtectionStatus: i32 {
     Undetermined (FileProtectionStatus_Undetermined) = 0, Unknown (FileProtectionStatus_Unknown) = 0, Unprotected (FileProtectionStatus_Unprotected) = 1, Revoked (FileProtectionStatus_Revoked) = 2, Protected (FileProtectionStatus_Protected) = 3, ProtectedByOtherUser (FileProtectionStatus_ProtectedByOtherUser) = 4, ProtectedToOtherEnterprise (FileProtectionStatus_ProtectedToOtherEnterprise) = 5, NotProtectable (FileProtectionStatus_NotProtectable) = 6, ProtectedToOtherIdentity (FileProtectionStatus_ProtectedToOtherIdentity) = 7, LicenseExpired (FileProtectionStatus_LicenseExpired) = 8, AccessSuspended (FileProtectionStatus_AccessSuspended) = 9, FileInUse (FileProtectionStatus_FileInUse) = 10,
 }}
@@ -7285,9 +7282,6 @@ impl IEasClientDeviceInformation2 {
 RT_CLASS!{class EasClientDeviceInformation: IEasClientDeviceInformation}
 impl RtActivatable<IActivationFactory> for EasClientDeviceInformation {}
 DEFINE_CLSID!(EasClientDeviceInformation(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,120,99,104,97,110,103,101,65,99,116,105,118,101,83,121,110,99,80,114,111,118,105,115,105,111,110,105,110,103,46,69,97,115,67,108,105,101,110,116,68,101,118,105,99,101,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_EasClientDeviceInformation]);
-RT_STRUCT! { struct EasContract {
-    
-}}
 RT_ENUM! { enum EasRequireEncryptionResult: i32 {
     NotEvaluated (EasRequireEncryptionResult_NotEvaluated) = 0, Compliant (EasRequireEncryptionResult_Compliant) = 1, CanBeCompliant (EasRequireEncryptionResult_CanBeCompliant) = 2, NotProvisionedOnAllVolumes (EasRequireEncryptionResult_NotProvisionedOnAllVolumes) = 3, DeFixedDataNotSupported (EasRequireEncryptionResult_DeFixedDataNotSupported) = 4, FixedDataNotSupported (EasRequireEncryptionResult_FixedDataNotSupported) = 4, DeHardwareNotCompliant (EasRequireEncryptionResult_DeHardwareNotCompliant) = 5, HardwareNotCompliant (EasRequireEncryptionResult_HardwareNotCompliant) = 5, DeWinReNotConfigured (EasRequireEncryptionResult_DeWinReNotConfigured) = 6, LockNotConfigured (EasRequireEncryptionResult_LockNotConfigured) = 6, DeProtectionSuspended (EasRequireEncryptionResult_DeProtectionSuspended) = 7, ProtectionSuspended (EasRequireEncryptionResult_ProtectionSuspended) = 7, DeOsVolumeNotProtected (EasRequireEncryptionResult_DeOsVolumeNotProtected) = 8, OsVolumeNotProtected (EasRequireEncryptionResult_OsVolumeNotProtected) = 8, DeProtectionNotYetEnabled (EasRequireEncryptionResult_DeProtectionNotYetEnabled) = 9, ProtectionNotYetEnabled (EasRequireEncryptionResult_ProtectionNotYetEnabled) = 9, NoFeatureLicense (EasRequireEncryptionResult_NoFeatureLicense) = 10, OsNotProtected (EasRequireEncryptionResult_OsNotProtected) = 11, UnexpectedFailure (EasRequireEncryptionResult_UnexpectedFailure) = 12,
 }}

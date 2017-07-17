@@ -180,9 +180,6 @@ impl IPrint3DManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct Printing3DContract {
-    
-}}
 RT_ENUM! { enum Printing3DBufferFormat: i32 {
     Unknown (Printing3DBufferFormat_Unknown) = 0, R32G32B32A32Float (Printing3DBufferFormat_R32G32B32A32Float) = 2, R32G32B32A32UInt (Printing3DBufferFormat_R32G32B32A32UInt) = 3, R32G32B32Float (Printing3DBufferFormat_R32G32B32Float) = 6, R32G32B32UInt (Printing3DBufferFormat_R32G32B32UInt) = 7, Printing3DDouble (Printing3DBufferFormat_Printing3DDouble) = 500, Printing3DUInt (Printing3DBufferFormat_Printing3DUInt) = 501,
 }}

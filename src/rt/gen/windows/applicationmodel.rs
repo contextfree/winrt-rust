@@ -1,7 +1,4 @@
 use ::prelude::*;
-RT_STRUCT! { struct FullTrustAppContract {
-    
-}}
 DEFINE_IID!(IID_IFullTrustProcessLauncherStatics, 3615785855, 4352, 15467, 164, 85, 246, 38, 44, 195, 49, 182);
 RT_INTERFACE!{static interface IFullTrustProcessLauncherStatics(IFullTrustProcessLauncherStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFullTrustProcessLauncherStatics] {
     fn LaunchFullTrustProcessForCurrentAppAsync(&self, out: *mut *mut super::foundation::IAsyncAction) -> HRESULT,
@@ -941,9 +938,6 @@ impl IEnteredBackgroundEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct StartupTaskContract {
-    
-}}
 RT_ENUM! { enum StartupTaskState: i32 {
     Disabled (StartupTaskState_Disabled) = 0, DisabledByUser (StartupTaskState_DisabledByUser) = 1, Enabled (StartupTaskState_Enabled) = 2,
 }}
@@ -1005,9 +999,6 @@ impl StartupTask {
 DEFINE_CLSID!(StartupTask(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,97,114,116,117,112,84,97,115,107,0]) [CLSID_StartupTask]);
 pub mod socialinfo { // Windows.ApplicationModel.SocialInfo
 use ::prelude::*;
-RT_STRUCT! { struct SocialInfoContract {
-    
-}}
 RT_ENUM! { enum SocialItemBadgeStyle: i32 {
     Hidden (SocialItemBadgeStyle_Hidden) = 0, Visible (SocialItemBadgeStyle_Visible) = 1, VisibleWithCount (SocialItemBadgeStyle_VisibleWithCount) = 2,
 }}
@@ -1556,9 +1547,6 @@ DEFINE_CLSID!(SocialInfoProviderManager(&[87,105,110,100,111,119,115,46,65,112,1
 } // Windows.ApplicationModel.SocialInfo
 pub mod calls { // Windows.ApplicationModel.Calls
 use ::prelude::*;
-RT_STRUCT! { struct CallsVoipContract {
-    
-}}
 RT_ENUM! { enum VoipPhoneCallMedia: u32 {
     None (VoipPhoneCallMedia_None) = 0, Audio (VoipPhoneCallMedia_Audio) = 1, Video (VoipPhoneCallMedia_Video) = 2,
 }}
@@ -2268,9 +2256,6 @@ impl PhoneCallHistoryManager {
     }}
 }
 DEFINE_CLSID!(PhoneCallHistoryManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,97,108,108,115,46,80,104,111,110,101,67,97,108,108,72,105,115,116,111,114,121,77,97,110,97,103,101,114,0]) [CLSID_PhoneCallHistoryManager]);
-RT_STRUCT! { struct LockScreenCallContract {
-    
-}}
 DEFINE_IID!(IID_ILockScreenCallEndCallDeferral, 769125645, 39149, 16449, 150, 50, 80, 255, 129, 43, 119, 63);
 RT_INTERFACE!{interface ILockScreenCallEndCallDeferral(ILockScreenCallEndCallDeferralVtbl): IInspectable(IInspectableVtbl) [IID_ILockScreenCallEndCallDeferral] {
     fn Complete(&self) -> HRESULT
@@ -2346,9 +2331,6 @@ RT_CLASS!{class LockScreenCallUI: ILockScreenCallUI}
 RT_CLASS!{class LockScreenCallEndRequestedEventArgs: ILockScreenCallEndRequestedEventArgs}
 pub mod background { // Windows.ApplicationModel.Calls.Background
 use ::prelude::*;
-RT_STRUCT! { struct CallsBackgroundContract {
-    
-}}
 RT_ENUM! { enum PhoneCallBlockedReason: i32 {
     InCallBlockingList (PhoneCallBlockedReason_InCallBlockingList) = 0, PrivateNumber (PhoneCallBlockedReason_PrivateNumber) = 1, UnknownNumber (PhoneCallBlockedReason_UnknownNumber) = 2,
 }}
@@ -2632,9 +2614,6 @@ impl ISearchSuggestionsRequest {
 }
 RT_CLASS!{class SearchSuggestionsRequestDeferral: ISearchSuggestionsRequestDeferral}
 RT_CLASS!{class SearchSuggestionsRequest: ISearchSuggestionsRequest}
-RT_STRUCT! { struct SearchContract {
-    
-}}
 DEFINE_IID!(IID_ISearchPaneVisibilityChangedEventArgs, 1011691590, 44107, 18930, 151, 214, 2, 14, 97, 130, 203, 156);
 RT_INTERFACE!{interface ISearchPaneVisibilityChangedEventArgs(ISearchPaneVisibilityChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISearchPaneVisibilityChangedEventArgs] {
     fn get_Visible(&self, out: *mut bool) -> HRESULT
@@ -2937,9 +2916,6 @@ impl ISearchPane {
 }
 pub mod core { // Windows.ApplicationModel.Search.Core
 use ::prelude::*;
-RT_STRUCT! { struct SearchCoreContract {
-    
-}}
 RT_ENUM! { enum SearchSuggestionKind: i32 {
     Query (SearchSuggestionKind_Query) = 0, Result (SearchSuggestionKind_Result) = 1, Separator (SearchSuggestionKind_Separator) = 2,
 }}
@@ -5325,9 +5301,6 @@ impl IPhoneTrigger {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct BackgroundAlarmApplicationContract {
-    
-}}
 RT_ENUM! { enum AlarmAccessStatus: i32 {
     Unspecified (AlarmAccessStatus_Unspecified) = 0, AllowedWithWakeupCapability (AlarmAccessStatus_AllowedWithWakeupCapability) = 1, AllowedWithoutWakeupCapability (AlarmAccessStatus_AllowedWithoutWakeupCapability) = 2, Denied (AlarmAccessStatus_Denied) = 3,
 }}
@@ -8677,9 +8650,6 @@ impl IVoiceCommandActivatedEventArgs {
     }
 }
 RT_CLASS!{class VoiceCommandActivatedEventArgs: IVoiceCommandActivatedEventArgs}
-RT_STRUCT! { struct ActivatedEventsContract {
-    
-}}
 RT_CLASS!{class PrintTaskSettingsActivatedEventArgs: IPrintTaskSettingsActivatedEventArgs}
 RT_CLASS!{class Print3DWorkflowActivatedEventArgs: IPrint3DWorkflowActivatedEventArgs}
 RT_CLASS!{class LockScreenCallActivatedEventArgs: ILockScreenCallActivatedEventArgs}
@@ -8716,9 +8686,6 @@ impl ILockScreenCallActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct ActivationCameraSettingsContract {
-    
-}}
 RT_CLASS!{class CameraSettingsActivatedEventArgs: ICameraSettingsActivatedEventArgs}
 DEFINE_IID!(IID_ICameraSettingsActivatedEventArgs, 4217873672, 11693, 18698, 145, 112, 220, 160, 54, 235, 17, 75);
 RT_INTERFACE!{interface ICameraSettingsActivatedEventArgs(ICameraSettingsActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICameraSettingsActivatedEventArgs] {
@@ -8737,9 +8704,6 @@ impl ICameraSettingsActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct ContactActivatedEventsContract {
-    
-}}
 RT_CLASS!{class ContactPickerActivatedEventArgs: IContactPickerActivatedEventArgs}
 RT_CLASS!{class ContactCallActivatedEventArgs: IContactCallActivatedEventArgs}
 RT_CLASS!{class ContactMessageActivatedEventArgs: IContactMessageActivatedEventArgs}
@@ -8888,9 +8852,6 @@ impl IContactsProviderActivatedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct WebUISearchActivatedEventsContract {
-    
-}}
 RT_CLASS!{class WalletActionActivatedEventArgs: IWalletActionActivatedEventArgs}
 DEFINE_IID!(IID_IWalletActionActivatedEventArgs, 4244374139, 6682, 19746, 146, 63, 174, 111, 69, 250, 82, 217);
 RT_INTERFACE!{interface IWalletActionActivatedEventArgs(IWalletActionActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWalletActionActivatedEventArgs] {
@@ -23332,9 +23293,6 @@ RT_CLASS!{class ResourceContextLanguagesVectorView: ::rt::gen::windows::foundati
 } // Windows.ApplicationModel.Resources.Core
 pub mod management { // Windows.ApplicationModel.Resources.Management
 use ::prelude::*;
-RT_STRUCT! { struct ResourceIndexerContract {
-    
-}}
 RT_ENUM! { enum IndexedResourceType: i32 {
     String (IndexedResourceType_String) = 0, Path (IndexedResourceType_Path) = 1, EmbeddedData (IndexedResourceType_EmbeddedData) = 2,
 }}
@@ -25677,9 +25635,6 @@ DEFINE_CLSID!(HolographicApplicationPreview(&[87,105,110,100,111,119,115,46,65,1
 } // Windows.ApplicationModel.Preview.Holographic
 pub mod notes { // Windows.ApplicationModel.Preview.Notes
 use ::prelude::*;
-RT_STRUCT! { struct PreviewNotesContract {
-    
-}}
 DEFINE_IID!(IID_INotePlacementChangedPreviewEventArgs, 1226659767, 63360, 20095, 169, 57, 154, 76, 175, 150, 82, 20);
 RT_INTERFACE!{interface INotePlacementChangedPreviewEventArgs(INotePlacementChangedPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_INotePlacementChangedPreviewEventArgs] {
     fn get_ViewId(&self, out: *mut i32) -> HRESULT
@@ -25868,9 +25823,6 @@ impl INotesWindowManagerPreviewStatics {
 } // Windows.ApplicationModel.Preview.Notes
 pub mod inkworkspace { // Windows.ApplicationModel.Preview.InkWorkspace
 use ::prelude::*;
-RT_STRUCT! { struct PreviewInkWorkspaceContract {
-    
-}}
 DEFINE_IID!(IID_IInkWorkspaceHostedAppManager, 4262099344, 24153, 19383, 138, 99, 125, 33, 140, 217, 99, 0);
 RT_INTERFACE!{interface IInkWorkspaceHostedAppManager(IInkWorkspaceHostedAppManagerVtbl): IInspectable(IInspectableVtbl) [IID_IInkWorkspaceHostedAppManager] {
     #[cfg(feature="windows-graphics")] fn SetThumbnailAsync(&self, bitmap: *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> HRESULT
@@ -26625,9 +26577,6 @@ impl IWalletBarcodeFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_STRUCT! { struct WalletContract {
-    
-}}
 RT_ENUM! { enum WalletActionKind: i32 {
     OpenItem (WalletActionKind_OpenItem) = 0, Transaction (WalletActionKind_Transaction) = 1, MoreTransactions (WalletActionKind_MoreTransactions) = 2, Message (WalletActionKind_Message) = 3, Verb (WalletActionKind_Verb) = 4,
 }}
