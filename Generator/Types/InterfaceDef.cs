@@ -94,7 +94,7 @@ namespace Generator.Types
 				else
 				{
 					rawMethodDeclarationsWithFeatures.Insert(0, featureAttr + decl);
-					rawMethodDeclarationsWithFeatures.Insert(0, feature.GetInvertedAttribute() + "fn __Dummy" + i + "(&mut self) -> ()");
+					rawMethodDeclarationsWithFeatures.Insert(0, feature.GetInvertedAttribute() + "fn __Dummy" + i + "(&self) -> ()");
 				}
 			}
 

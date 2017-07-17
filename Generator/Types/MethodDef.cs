@@ -122,7 +122,7 @@ namespace Generator.Types
 			var inputParameters = Details.MakeInputParameters(DeclaringType.Generator, this);
 			var outType = Details.MakeOutType(DeclaringType.Generator, this);
 
-			return "#[inline] pub unsafe fn " + Details.WrappedName + "(" + String.Join(", ", new string[] { "&mut self" }.Concat(inputParameters)) + ") -> Result<" + outType + @"> {" + Details.WrapperBody + @"
+			return "#[inline] pub unsafe fn " + Details.WrappedName + "(" + String.Join(", ", new string[] { "&self" }.Concat(inputParameters)) + ") -> Result<" + outType + @"> {" + Details.WrapperBody + @"
 			}";
 		}
 
@@ -209,7 +209,7 @@ namespace Generator.Types
 
 		private string GetWrapperBody(string rawName, bool isGetMany, string getManyPname, List<Tuple<string, TypeReference>> output)
 		{
-			var rawParams = new List<string> { "self" };
+			var rawParams = new List<string> { "self as *const _ as *mut _" };
 			foreach (var p in Method.Parameters)
 			{
 				var pname = NameHelpers.PreventKeywords(NameHelpers.FirstToLower(p.Name));
@@ -293,7 +293,7 @@ namespace Generator.Types
 
 		public IEnumerable<string> GetParameterDeclarations()
 		{
-			yield return "&mut self";
+			yield return "&self";
 			foreach (var p in Method.Parameters)
 			{
 				Assert(!p.IsReturnValue);
