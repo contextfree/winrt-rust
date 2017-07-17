@@ -123,7 +123,7 @@ namespace Generator.Types
 			var outType = Details.MakeOutType(DeclaringType.Generator, this);
 
 			return "#[inline] pub unsafe fn " + Details.WrappedName + "(" + String.Join(", ", new string[] { "&self" }.Concat(inputParameters)) + ") -> Result<" + outType + @"> {" + Details.WrapperBody + @"
-			}";
+	}";
 		}
 
 		private MethodDetailsCache InitializeDetailsCache()
@@ -265,7 +265,7 @@ namespace Generator.Types
 			}
 
 			var outInit = String.Join(" ", output.SelectMany(o => TypeHelpers.CreateUninitializedOutputs(o.Item1, o.Item2)));
-			if (outInit != "") outInit = "\r\n\t\t\t\t" + outInit;
+			if (outInit != "") outInit = "\r\n        " + outInit;
 
 			var outWrap = String.Join(", ", output.Select(o => TypeHelpers.WrapOutputParameter(o.Item1, o.Item2)));
 			if (output.Count != 1)
@@ -276,13 +276,13 @@ namespace Generator.Types
 
 			if (isGetMany)
 			{
-				outInit = "\r\n\t\t\t\tdebug_assert!(" + getManyPname + ".capacity() > 0, \"capacity of `" + getManyPname + "` must not be 0 (use Vec::with_capacity)\"); " + getManyPname + ".clear();" + outInit;
+				outInit = "\r\n        debug_assert!(" + getManyPname + ".capacity() > 0, \"capacity of `" + getManyPname + "` must not be 0 (use Vec::with_capacity)\"); " + getManyPname + ".clear();" + outInit;
 				outWrap = getManyPname + ".set_len(out as usize); Ok(())";
 			}
 
 			return outInit + @"
-				let hr = ((*self.lpVtbl)." + rawName + ")(" + String.Join(", ", rawParams) + ");" + @"
-				if hr == S_OK { " + outWrap + @" } else { err(hr) }";
+		let hr = ((*self.lpVtbl)." + rawName + ")(" + String.Join(", ", rawParams) + ");" + @"
+		if hr == S_OK { " + outWrap + @" } else { err(hr) }";
 		}
 
 		public string GetRawDeclaration()

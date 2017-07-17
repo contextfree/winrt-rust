@@ -23,12 +23,10 @@ namespace Generator
 			generator.EmitTypes();
 			int pinterfaceCount = generator.EmitParametricInstances();
 			Console.WriteLine("Found and generated IIDs for {0} distinct generic instances.", pinterfaceCount);
-			Console.Write("Writing results to " + new FileInfo(args[0]).FullName + " ...");
-			using (var file = new StreamWriter(args[0]))
-			{
-				generator.WriteModuleTree(file);
-				Console.WriteLine(" done.");
-			}
+			var targetDirectory = new DirectoryInfo(args[0]);
+			Console.Write("Writing results to " + targetDirectory.FullName + " ...");
+			generator.WriteModuleTreeMultiFile(targetDirectory);
+			Console.WriteLine(" done.");
 		}
 
 		static void PrintStatistics(IEnumerable<TypeDef> types)

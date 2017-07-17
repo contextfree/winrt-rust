@@ -29,9 +29,9 @@ namespace Generator.Types
 		{
 			// TODO: derive(Eq) whenever possible?
 			Module.Append(@"
-		RT_STRUCT! { struct " + DefinitionName + @" {
-			" + string.Join(", ", fields) + (fields.Any() ? "," : "") + @"
-		}}");
+RT_STRUCT! { struct " + DefinitionName + @" {
+	" + string.Join(", ", fields) + (fields.Any() ? "," : "") + @"
+}}");
 		}
 
 		

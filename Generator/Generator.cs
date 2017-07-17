@@ -109,6 +109,9 @@ namespace Generator
 			return instances.Count;
 		}
 
+		/// <summary>
+		/// Write output (all modules) to a single file. This is not used anymore
+		/// </summary>
 		public void WriteModuleTree(StreamWriter file)
 		{
 			file.WriteLine("// DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED!");
@@ -143,6 +146,89 @@ namespace Generator
 				WriteModuleTree(child, file, newPath, mod.Assembly);
 			}
 			file.WriteLine("} // " + newPath);
+		}
+
+		/// <summary>
+		/// Write one output file per assembly.
+		/// </summary>
+		public void WriteModuleTreeMultiFile(DirectoryInfo directory)
+		{
+			directory.Create();
+			using (var file = new StreamWriter(Path.Combine(directory.FullName, "mod.rs")))
+			{
+				file.WriteLine("// DO NOT MODIFY THIS MODULE NOR ANY OF ITS CHILDREN - THEY ARE AUTOMATICALLY GENERATED!");
+				file.WriteLine(@"#![allow(non_camel_case_types, unused_imports)]");
+				foreach (var child in rootModule.Children.Values)
+				{
+					WriteModuleTreeMultiFile(child, directory, file);
+				}
+			}
+		}
+
+		private void WriteModuleTreeMultiFile(Module mod, DirectoryInfo directory, StreamWriter file, string path = null, AssemblyDefinition asm = null)
+		{
+			if (mod.IsEmpty) return;
+
+			const string IMPORTS = @"use ::prelude::*;";
+
+			string name = mod.Name.ToLower();
+			string newPath = path == null ? mod.Name : (path + "." + mod.Name);
+
+			bool isNewAssembly = (asm != mod.Assembly);
+
+			if (isNewAssembly && mod.Assembly.Name.Name != "Windows.Foundation")
+			{
+				var featureCond = new FeatureConditions(new string[] { mod.Assembly.Name.Name }).GetAttribute().TrimEnd();
+				file.Write(featureCond);
+				file.Write(" ");
+			}
+
+			if (isNewAssembly || path == null || mod.ContainsMoreThanOneAssembly)
+			{
+				// write module to separate file
+				file.WriteLine("pub mod " + name + "; // " + newPath);
+				DirectoryInfo childDir;
+				StreamWriter childFile;
+				if (mod.ContainsMoreThanOneAssembly)
+				{
+					childDir = directory.CreateSubdirectory(name);
+					childFile = new StreamWriter(Path.Combine(childDir.FullName, "mod.rs"));
+				}
+				else
+				{
+					childDir = directory;
+					childFile = new StreamWriter(Path.Combine(childDir.FullName, name + ".rs"));
+				}
+
+				var text = mod.Text.ToString();
+				if (!string.IsNullOrWhiteSpace(text))
+				{
+					childFile.Write(IMPORTS);
+					childFile.WriteLine(text);
+				}
+				foreach (var child in mod.Children.Values)
+				{
+					WriteModuleTreeMultiFile(child, childDir, childFile, newPath, mod.Assembly);
+				}
+
+				childFile.Close();
+			}
+			else
+			{
+				// write module inline
+				file.WriteLine("pub mod " + name + " { // " + newPath);
+				var text = mod.Text.ToString();
+				if (!string.IsNullOrWhiteSpace(text))
+				{
+					file.Write(IMPORTS);
+					file.WriteLine(text);
+				}
+				foreach (var child in mod.Children.Values)
+				{
+					WriteModuleTreeMultiFile(child, directory, file, newPath, mod.Assembly);
+				}
+				file.WriteLine("} // " + newPath);
+			}
 		}
 	}
 }

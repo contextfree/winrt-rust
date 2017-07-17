@@ -88,27 +88,27 @@ namespace Generator.Types
 				var features = new FeatureConditions(dependsOnAssemblies);
 
 				Module.Append(@"
-		" + features.GetAttribute() + "RT_CLASS!{class " + DefinitionName + ": " + aliasedType + "}");
+" + features.GetAttribute() + "RT_CLASS!{class " + DefinitionName + ": " + aliasedType + "}");
 				if (!features.IsEmpty)
 				{
 					// if the aliased type is from a different assembly that is not included, just use IInspectable instead
 					// otherwise types depending on this class would transitively depend on the aliased type
 					Module.Append(@"
-		" + features.GetInvertedAttribute() + "RT_CLASS!{class " + DefinitionName + ": IInspectable}");
+" + features.GetInvertedAttribute() + "RT_CLASS!{class " + DefinitionName + ": IInspectable}");
 				}
 
 				foreach (var factory in factories)
 				{
 					needClassID = true;
 					Module.Append(@"
-		impl RtActivatable<" + factory + "> for " + classType + " {}");
+impl RtActivatable<" + factory + "> for " + classType + " {}");
 				}
 			}
 			else
 			{
 				Assert(!factories.Any());
 				Module.Append(@"
-		RT_CLASS!{static class " + DefinitionName + "}");
+RT_CLASS!{static class " + DefinitionName + "}");
 			}
 
 			foreach (var staticType in statics)
@@ -116,28 +116,28 @@ namespace Generator.Types
 				var staticName = Generator.GetTypeDefinition(staticType).DefinitionName;
 				needClassID = true;
 				Module.Append(@"
-		impl RtActivatable<" + staticName + "> for " + classType + " {}");
+impl RtActivatable<" + staticName + "> for " + classType + " {}");
 			}
 
 			if (IsDefaultActivatable())
 			{
 				needClassID = true;
 				Module.Append(@"
-		impl RtActivatable<IActivationFactory> for " + classType + " {}");
+impl RtActivatable<IActivationFactory> for " + classType + " {}");
 			}
 
 			if (methodWrappers.Any())
 			{
 				Module.Append(@"
-		impl " + DefinitionName + @" {
-			" + String.Join("\r\n\t\t\t", methodWrappers.Select(m => m.Emit())) + @"
-		}");
+impl " + DefinitionName + @" {
+	" + String.Join("\r\n    ", methodWrappers.Select(m => m.Emit())) + @"
+}");
 			}
 
 			if (needClassID)
 			{
 				Module.Append(@"
-		DEFINE_CLSID!(" + classType + "(&[" + NameHelpers.StringToUTF16WithZero(Type.FullName) + @"]) [CLSID_" + classType + "]);");
+DEFINE_CLSID!(" + classType + "(&[" + NameHelpers.StringToUTF16WithZero(Type.FullName) + @"]) [CLSID_" + classType + "]);");
 			}
 		}
 	}

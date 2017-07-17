@@ -58,6 +58,14 @@ namespace Generator
 
 		public AssemblyDefinition Assembly { get; private set; }
 
+		public bool ContainsMoreThanOneAssembly
+		{
+			get
+			{
+				return Children.Values.Any(c => c.Assembly != this.Assembly || c.ContainsMoreThanOneAssembly);
+			}
+		}
+
 		public Module(Module parent, string name)
 		{
 			Parent = parent;

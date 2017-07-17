@@ -77,8 +77,8 @@ namespace Generator.Types
 			var features = new FeatureConditions(dependsOnAssemblies);
 
 			return features.GetAttribute() + "#[inline] pub fn " + Name + "(" + String.Join(", ", inputParameters) + ") -> Result<" + outType + @"> { unsafe {
-				<Self as RtActivatable<" + m.DeclaringType.Name + ">>::get_activation_factory()." + m.Details.WrappedName + "(" + String.Join(", ", m.Details.InputParameterNames) + @")
-			}}";
+		<Self as RtActivatable<" + m.DeclaringType.Name + ">>::get_activation_factory()." + m.Details.WrappedName + "(" + String.Join(", ", m.Details.InputParameterNames) + @")
+	}}";
 		}
 
 		public void AddDependency(TypeDef other)
