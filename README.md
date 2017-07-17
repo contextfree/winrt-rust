@@ -1,4 +1,4 @@
-# winrt-rust [![crates.io](https://img.shields.io/crates/v/winrt.svg)](https://crates.io/crates/winrt) [![docs.rs](https://docs.rs/winrt/badge.svg)](https://docs.rs/winrt/*/x86_64-pc-windows-msvc/winrt/)
+# winrt-rust [![crates.io](https://img.shields.io/crates/v/winrt.svg)](https://crates.io/crates/winrt) [![docs.rs](https://docs.rs/winrt/badge.svg)](https://docs.rs/winrt/)
 
 This crate provides type and method definitions to use the *Windows Runtime (WinRT)* APIs from Rust.
 
