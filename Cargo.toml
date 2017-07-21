@@ -1,6 +1,6 @@
 [package]
 name = "winrt"
-version = "0.2.1"
+version = "0.3.0"
 authors = ["Patrick Reisert", "Max Strini"]
 description = "Automatically generated, (mostly) safe bindings for the Windows Runtime APIs"
 repository = "https://github.com/contextfree/winrt-rust"
