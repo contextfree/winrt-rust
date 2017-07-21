@@ -575,6 +575,12 @@ macro_rules! RT_ENUM {
         #[allow(non_upper_case_globals)]
         pub struct $name(pub $t);
         $(pub const $longvariant: $name = $name($value);)+
+
+        // TODO:
+        // Associated constants will be stable in 1.20 (see https://github.com/rust-lang/rust/issues/29646).
+        // We should remove the "nightly" flag here and instead introduce a "compat" flag (name TBD)
+        // that can be enabled to build on older versions of Rust. That flag would disable the associated constants
+        // and enable the old "longvariant" constants (which should be disabled by default).
         #[cfg(feature = "nightly")]
         impl $name {
             $(pub const $variant: $name = $name($value);)+

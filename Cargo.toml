@@ -41,3 +41,9 @@ all = ["windows-applicationmodel", "windows-data", "windows-devices", "windows-g
        "windows-globalization", "windows-graphics", "windows-management", "windows-media",
        "windows-networking", "windows-perception", "windows-security", "windows-services",
        "windows-storage", "windows-system", "windows-ui", "windows-ui-xaml", "windows-web"]
+
+[package.metadata.docs.rs]
+# This could include "all", but that would result in a HUGE documentation, stressing docs.rs.
+# I don't want to be rude. Maybe it's more efficient after the rustdoc rewrite.
+features = ["nightly"]
+default-target = "x86_64-pc-windows-msvc"

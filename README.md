@@ -9,7 +9,7 @@ Since we can not yet guarantee the safety of the generated wrappers, all methods
 Creating custom WinRT classes using inheritance is not yet supported, so it is currently not possible to create user interfaces using *XAML*. 
 
 ## Prerequisites
-Using this crate requires at least Rust 1.13 (after the removal of dropflags) and the MSVC toolchain (because there is a bug in one of MinGW's import libraries).
+Using this crate requires at least Rust 1.13 and the MSVC toolchain (because there is a bug in one of MinGW's import libraries).
 Additional nightly features (e.g. generating enum variants as associated constants) can be enabled with the `nightly` Cargo feature.
 
 ## Design
@@ -20,7 +20,7 @@ starting at `winrt::windows` (if the crate has not been renamed on import) for t
 All names have been adjusted to fit the Rust coding style, therefore module names are all in lower case and function names
 are converted to `snake_case`.
 
-Since it takes a long time to compile all generated definitions (the [generated file](https://github.com/contextfree/winrt-rust/blob/master/src/rt/gen.rs) has about 190k LOC),
+Since it takes a long time to compile all generated definitions (the [generated files](https://github.com/contextfree/winrt-rust/blob/master/src/rt/gen/) amount to more than 15 MB),
 Cargo features have been introduced that correspond to the *WinMD* files. For example, to use the definitions from `Windows.Devices.winmd`, use the feature `windows-devices`.
 There is no feature for definitions from `Windows.Foundation.winmd`, these are always available. Whenever a (method) definition references a type from a different *WinMD* file,
 it is also not available until you enable the corresponding features for all required type definitions.
@@ -47,9 +47,14 @@ fn main() {
 }
 ```
 
-Because this example uses the `Windows.System` namespace, we have to build it with `--features "windows-system"`.
+Because this example uses the `Windows.System` namespace, we have to enable the `windows-system` feature in `Cargo.toml`:
+```toml
+[dependencies.winrt]
+version = "0.2.1"
+features = ["windows-system"]
+```
 
-Output:
+Running this example program should result in an output similar to the following:
 ```
 Currently executed processes (132):
 [4] System
