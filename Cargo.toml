@@ -5,7 +5,7 @@ authors = ["Patrick Reisert", "Max Strini"]
 description = "Automatically generated, (mostly) safe bindings for the Windows Runtime APIs"
 repository = "https://github.com/contextfree/winrt-rust"
 homepage = "https://github.com/contextfree/winrt-rust"
-documentation = "https://docs.rs/winrt/"
+documentation = "https://docs.rs/winrt/*/x86_64-pc-windows-msvc/winrt/"
 readme = "README.md"
 keywords = ["winrt", "uwp", "windows", "runtime", "com"]
 categories = ["os::windows-apis", "api-bindings", "external-ffi-bindings"]
@@ -43,5 +43,7 @@ all = ["windows-applicationmodel", "windows-data", "windows-devices", "windows-g
        "windows-storage", "windows-system", "windows-ui", "windows-ui-xaml", "windows-web"]
 
 [package.metadata.docs.rs]
-features = ["all", "nightly"] # Include all the namespaces when generating documentation
+# This could include "all", but that would result in a HUGE documentation, stressing docs.rs.
+# I don't want to be rude. Maybe it's more efficient after the rustdoc rewrite.
+features = ["nightly"]
 default-target = "x86_64-pc-windows-msvc"
