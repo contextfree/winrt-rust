@@ -50,7 +50,7 @@ fn main() {
 Because this example uses the `Windows.System` namespace, we have to enable the `windows-system` feature in `Cargo.toml`:
 ```toml
 [dependencies.winrt]
-version = "0.2.1"
+version = "0.3.0"
 features = ["windows-system"]
 ```
 
