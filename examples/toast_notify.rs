@@ -31,6 +31,6 @@ fn run() { unsafe {
     // Create the toast and attach event listeners
     let toast = ToastNotification::create_toast_notification(&*toast_xml).unwrap();
 
-    // Show the toast. Apparently the App ID does not need to be registered anywhere (contrary to official documentation).
-    ToastNotificationManager::create_toast_notifier_with_id(&FastHString::new("myrustapp.exe")).unwrap().show(&*toast).unwrap();
+    // Show the toast. Use PowerShell's App ID to circumvent the need to register one (this is only an example!).
+    ToastNotificationManager::create_toast_notifier_with_id(&FastHString::new("{1AC14E77-02E7-4E5D-B744-2EB1AE5198B7}\\WindowsPowerShell\\v1.0\\powershell.exe")).unwrap().show(&*toast).unwrap();
 }}
