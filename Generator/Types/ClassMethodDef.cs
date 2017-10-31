@@ -76,9 +76,9 @@ namespace Generator.Types
             var dependsOnAssemblies = new List<string>(ForeignAssemblyDependencies.GroupBy(t => t.Module.Assembly.Name.Name).Select(g => g.Key));
             var features = new FeatureConditions(dependsOnAssemblies);
 
-            return features.GetAttribute() + "#[inline] pub fn " + Name + "(" + String.Join(", ", inputParameters) + ") -> Result<" + outType + @"> { unsafe {
-        <Self as RtActivatable<" + m.DeclaringType.Name + ">>::get_activation_factory()." + m.Details.WrappedName + "(" + String.Join(", ", m.Details.InputParameterNames) + @")
-    }}";
+            return $@"{ features.GetAttribute() }#[inline] pub fn { Name }({ String.Join(", ", inputParameters) }) -> Result<{ outType }> {{ unsafe {{
+        <Self as RtActivatable<{ m.DeclaringType.Name }>>::get_activation_factory().{ m.Details.WrappedName }({ String.Join(", ", m.Details.InputParameterNames) })
+    }}}}";
         }
 
         public void AddDependency(TypeDef other)

@@ -36,10 +36,10 @@ namespace Generator.Types
         public override void Emit()
         {
             // TODO: derive(Eq) whenever possible?
-            Module.Append(@"
-RT_STRUCT! { struct " + DefinitionName + @" {
-    " + string.Join(", ", fields) + (fields.Any() ? "," : "") + @"
-}}");
+            Module.Append($@"
+RT_STRUCT! {{ struct { DefinitionName } {{
+    { string.Join(", ", fields) }{ (fields.Any() ? "," : "") }
+}}}}");
         }
 
         

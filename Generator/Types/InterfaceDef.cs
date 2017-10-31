@@ -64,8 +64,8 @@ namespace Generator.Types
 
             var name = DefinitionName;
 
-            Module.Append(@"
-DEFINE_IID!(IID_" + name + ", " + String.Join(", ", guid.ConstructorArguments.Select(a => a.Value)) + ");");
+            Module.Append($@"
+DEFINE_IID!(IID_{ name }, { String.Join(", ", guid.ConstructorArguments.Select(a => a.Value)) });");
 
             string generic = "";
             string genericWithBounds = "";
@@ -100,25 +100,25 @@ DEFINE_IID!(IID_" + name + ", " + String.Join(", ", guid.ConstructorArguments.Se
 
             if (!IsDelegate)
             {
-                Module.Append(@"
-RT_INTERFACE!{" + prependStatic + "interface " + name + generic + "(" + name + "Vtbl): IInspectable(IInspectableVtbl) [IID_" + name + @"] {
-    " + String.Join(",\r\n    ", rawMethodDeclarationsWithFeatures) + @"
-}}");
+                Module.Append($@"
+RT_INTERFACE!{{{ prependStatic }interface { name }{ generic }({ name }Vtbl): IInspectable(IInspectableVtbl) [IID_{ name }] {{
+    { String.Join(",\r\n    ", rawMethodDeclarationsWithFeatures) }
+}}}}");
             }
             else
             {
-                Module.Append(@"
-RT_DELEGATE!{delegate " + name + generic + "(" + name + "Vtbl, " + name + "Impl) [IID_" + name + @"] {
-    " + String.Join(",\r\n    ", rawMethodDeclarationsWithFeatures) + @"
-}}");
+                Module.Append($@"
+RT_DELEGATE!{{delegate { name }{ generic }({ name }Vtbl, { name }Impl) [IID_{ name }] {{
+    { String.Join(",\r\n    ", rawMethodDeclarationsWithFeatures) }
+}}}}");
             }
 
             if (wrapperMethodDeclarations.Any())
             {
-                Module.Append(@"
-impl" + genericWithBounds + " " + name + generic + @" {
-    " + String.Join("\r\n    ", wrapperMethodDeclarations.Zip(definitionFeatureConditions, (wrapper, feature) => feature.GetAttribute() + wrapper)) + @"
-}");
+                Module.Append($@"
+impl{ genericWithBounds } { name }{ generic } {{
+    { String.Join("\r\n    ", wrapperMethodDeclarations.Zip(definitionFeatureConditions, (wrapper, feature) => feature.GetAttribute() + wrapper)) }
+}}");
             }
         }
 

@@ -122,8 +122,8 @@ namespace Generator.Types
             var inputParameters = Details.MakeInputParameters(DeclaringType.Generator, this);
             var outType = Details.MakeOutType(DeclaringType.Generator, this);
 
-            return "#[inline] pub unsafe fn " + Details.WrappedName + "(" + String.Join(", ", new string[] { "&self" }.Concat(inputParameters)) + ") -> Result<" + outType + @"> {" + Details.WrapperBody + @"
-    }";
+            return $@"#[inline] pub unsafe fn { Details.WrappedName }({ String.Join(", ", new string[] { "&self" }.Concat(inputParameters)) }) -> Result<{ outType }> {{{ Details.WrapperBody }
+    }}";
         }
 
         private MethodDetailsCache InitializeDetailsCache()
@@ -276,19 +276,19 @@ namespace Generator.Types
 
             if (isGetMany)
             {
-                outInit = "\r\n        debug_assert!(" + getManyPname + ".capacity() > 0, \"capacity of `" + getManyPname + "` must not be 0 (use Vec::with_capacity)\"); " + getManyPname + ".clear();" + outInit;
-                outWrap = getManyPname + ".set_len(out as usize); Ok(())";
+                outInit = $"\r\n        debug_assert!({ getManyPname }.capacity() > 0, \"capacity of `{ getManyPname }` must not be 0 (use Vec::with_capacity)\"); { getManyPname }.clear();{ outInit }";
+                outWrap = $"{ getManyPname }.set_len(out as usize); Ok(())";
             }
 
-            return outInit + @"
-        let hr = ((*self.lpVtbl)." + rawName + ")(" + String.Join(", ", rawParams) + ");" + @"
-        if hr == S_OK { " + outWrap + @" } else { err(hr) }";
+            return outInit + $@"
+        let hr = ((*self.lpVtbl).{ rawName })({ String.Join(", ", rawParams) });
+        if hr == S_OK {{ { outWrap } }} else {{ err(hr) }}";
         }
 
         public string GetRawDeclaration()
         {
             var name = GetRawName();
-            return "fn " + name + "(" + String.Join(", ", GetParameterDeclarations()) + ") -> HRESULT";
+            return $"fn { name }({ String.Join(", ", GetParameterDeclarations()) }) -> HRESULT";
         }
 
         public IEnumerable<string> GetParameterDeclarations()

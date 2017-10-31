@@ -110,45 +110,6 @@ namespace Generator
         }
 
         /// <summary>
-        /// Write output (all modules) to a single file. This is not used anymore
-        /// </summary>
-        public void WriteModuleTree(StreamWriter file)
-        {
-            file.WriteLine("// DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED!");
-            file.WriteLine(@"#![allow(non_camel_case_types, unused_imports)]");
-            foreach (var child in rootModule.Children.Values)
-            {
-                WriteModuleTree(child, file);
-            }
-        }
-
-        private void WriteModuleTree(Module mod, StreamWriter file, string path = null, AssemblyDefinition asm = null)
-        {
-            if (mod.IsEmpty) return;
-
-            const string IMPORTS = @"use ::prelude::*;";
-
-            string name = mod.Name.ToLower();
-            string newPath = path == null ? mod.Name : (path + "." + mod.Name);
-            if (asm != mod.Assembly && mod.Assembly.Name.Name != "Windows.Foundation")
-            {
-                file.WriteLine(new FeatureConditions(new string[] { mod.Assembly.Name.Name }).GetAttribute().TrimEnd());
-            }
-            file.WriteLine("pub mod " + name + " { // " + newPath);
-            var text = mod.Text.ToString();
-            if (!string.IsNullOrWhiteSpace(text))
-            {
-                file.Write(IMPORTS);
-                file.WriteLine(text);
-            }
-            foreach (var child in mod.Children.Values)
-            {
-                WriteModuleTree(child, file, newPath, mod.Assembly);
-            }
-            file.WriteLine("} // " + newPath);
-        }
-
-        /// <summary>
         /// Write one output file per assembly.
         /// </summary>
         public void WriteModuleTreeMultiFile(DirectoryInfo directory)
@@ -169,7 +130,7 @@ namespace Generator
         {
             if (mod.IsEmpty) return;
 
-            const string IMPORTS = @"use ::prelude::*;";
+            const string IMPORTS = "use ::prelude::*;";
 
             string name = mod.Name.ToLower();
             string newPath = path == null ? mod.Name : (path + "." + mod.Name);
@@ -186,7 +147,7 @@ namespace Generator
             if (isNewAssembly || path == null || mod.ContainsMoreThanOneAssembly)
             {
                 // write module to separate file
-                file.WriteLine("pub mod " + name + "; // " + newPath);
+                file.WriteLine($"pub mod { name }; // { newPath }");
                 DirectoryInfo childDir;
                 StreamWriter childFile;
                 if (mod.ContainsMoreThanOneAssembly)
@@ -216,7 +177,7 @@ namespace Generator
             else
             {
                 // write module inline
-                file.WriteLine("pub mod " + name + " { // " + newPath);
+                file.WriteLine($"pub mod { name } {{ // { newPath }");
                 var text = mod.Text.ToString();
                 if (!string.IsNullOrWhiteSpace(text))
                 {
@@ -227,7 +188,7 @@ namespace Generator
                 {
                     WriteModuleTreeMultiFile(child, directory, file, newPath, mod.Assembly);
                 }
-                file.WriteLine("} // " + newPath);
+                file.WriteLine($"}} // { newPath }");
             }
         }
     }

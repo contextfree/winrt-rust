@@ -61,8 +61,8 @@ namespace Generator
             var features = new FeatureConditions(dependsOnAssemblies);
 
 
-            Module.Append(@"
-" + features.GetAttribute() + "RT_PINTERFACE!{ for " + Name + " => [" + guidStr + "] as " + iidName + " }");
+            Module.Append($@"
+{ features.GetAttribute() }RT_PINTERFACE!{{ for { Name } => [{ guidStr }] as { iidName } }}");
         }
 
         private static string GetTypeIIDDescriptor(Generator gen, TypeReference t)

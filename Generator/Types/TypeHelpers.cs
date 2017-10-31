@@ -42,9 +42,9 @@ namespace Generator.Types
             {
                 switch (usage)
                 {
-                    case TypeUsage.Raw: return t.Name + "::Abi";
-                    case TypeUsage.In: return "&" + t.Name + "::In";
-                    case TypeUsage.Out: return t.Name + "::Out";
+                    case TypeUsage.Raw: return $"{ t.Name }::Abi";
+                    case TypeUsage.In: return $"&{ t.Name }::In";
+                    case TypeUsage.Out: return $"{ t.Name }::Out";
                     case TypeUsage.GenericArg: return t.Name;
                     default: throw new NotSupportedException();
                 }
@@ -52,18 +52,18 @@ namespace Generator.Types
             if (t.IsByReference)
             {
                 var ty = (ByReferenceType)t;
-                return "*mut " + GetTypeName(gen, source, ty.ElementType, usage);
+                return $"*mut { GetTypeName(gen, source, ty.ElementType, usage) }";
             }
             else if (t.IsArray)
             {
                 var ty = (ArrayType)t;
                 if (usage == TypeUsage.Out)
                 {
-                    return "ComArray<" + GetTypeName(gen, source, ty.ElementType, TypeUsage.GenericArg) + ">";
+                    return $"ComArray<{ GetTypeName(gen, source, ty.ElementType, TypeUsage.GenericArg) }>";
                 }
                 else
                 {
-                    return "*mut " + GetTypeName(gen, source, ty.ElementType, usage);
+                    return $"*mut { GetTypeName(gen, source, ty.ElementType, usage) }";
                 }
             }
             else
@@ -152,14 +152,14 @@ namespace Generator.Types
                     {
                         gen.AddGenericInstance(ty);
                     }
-                    name += "<" + String.Join(", ", ty.GenericArguments.Select(a => GetTypeName(gen, source, a, TypeUsage.GenericArg))) + ">";
+                    name += $"<{ String.Join(", ", ty.GenericArguments.Select(a => GetTypeName(gen, source, a, TypeUsage.GenericArg))) }>";
                 }
 
                 if (!t.IsValueType)
                 {
                     if (usage == TypeUsage.In)
                     {
-                        name = "&" + name;
+                        name = $"&{ name }";
                     }
                     else if (usage == TypeUsage.GenericArg)
                     {
@@ -167,11 +167,11 @@ namespace Generator.Types
                     }
                     else if (usage == TypeUsage.Raw)
                     {
-                        name = "*mut " + name;
+                        name = $"*mut { name }";
                     }
                     else if (usage == TypeUsage.Out)
                     {
-                        name = "ComPtr<" + name + ">";
+                        name = $"ComPtr<{ name }>";
                     }
                 }
 
@@ -185,8 +185,8 @@ namespace Generator.Types
             {
                 case InputKind.Default: return GetTypeName(gen, source, t, TypeUsage.In);
                 case InputKind.Raw: return GetTypeName(gen, source, t, TypeUsage.Raw);
-                case InputKind.Slice: return "&[" + GetTypeName(gen, source, t, TypeUsage.In) + "]";
-                case InputKind.VecBuffer: return "&mut Vec<" + GetTypeName(gen, source, t, TypeUsage.Out) + ">";
+                case InputKind.Slice: return $"&[{ GetTypeName(gen, source, t, TypeUsage.In) }]";
+                case InputKind.VecBuffer: return $"&mut Vec<{ GetTypeName(gen, source, t, TypeUsage.Out) }>";
                 default: throw new InvalidOperationException();
             }
         }
@@ -195,7 +195,7 @@ namespace Generator.Types
         {
             if (t.IsGenericParameter)
             {
-                return t.Name + "::unwrap(" + name + ")";
+                return $"{ t.Name }::unwrap({ name })";
             }
             if (t.IsByReference)
             {
@@ -207,11 +207,11 @@ namespace Generator.Types
             }
             else if (t.FullName == "System.String")
             {
-                return name + ".get()";
+                return $"{ name }.get()";
             }
             else if (t.FullName == "System.Object")
             {
-                return name + " as *const _ as *mut _";
+                return $"{ name } as *const _ as *mut _";
             }
             else if (t.FullName == "System.Guid")
             {
@@ -243,7 +243,7 @@ namespace Generator.Types
             }
             else // reference type
             {
-                return name + " as *const _ as *mut _";
+                return $"{ name } as *const _ as *mut _";
             }
         }
 
@@ -251,16 +251,16 @@ namespace Generator.Types
         {
             if (t.IsArray)
             {
-                yield return "let mut " + name + "Size = 0;";
+                yield return $"let mut { name }Size = 0;";
             }
-            yield return "let mut " + name + " = " + CreateUninitializedOutput(t) + ";";
+            yield return $"let mut { name } = { CreateUninitializedOutput(t) };";
         }
 
         public static string CreateUninitializedOutput(TypeReference t)
         {
             if (t.IsGenericParameter)
             {
-                return t.Name + "::uninitialized()";
+                return $"{ t.Name }::uninitialized()";
             }
             if (t.IsByReference)
             {
@@ -316,7 +316,7 @@ namespace Generator.Types
         {
             if (t.IsGenericParameter)
             {
-                return t.Name + "::wrap(" + name + ")";
+                return $"{ t.Name }::wrap({ name })";
             }
             if (t.IsByReference)
             {
@@ -324,15 +324,15 @@ namespace Generator.Types
             }
             else if (t.IsArray)
             {
-                return "ComArray::from_raw(" + name + "Size, " + name + ")";
+                return $"ComArray::from_raw({ name }Size, { name })";
             }
             else if (t.FullName == "System.String")
             {
-                return "HString::wrap(" + name + ")";
+                return $"HString::wrap({ name })";
             }
             else if (t.FullName == "System.Object")
             {
-                return "ComPtr::wrap(" + name + ")";
+                return $"ComPtr::wrap({ name })";
             }
             else if (t.FullName == "System.Guid")
             {
@@ -364,7 +364,7 @@ namespace Generator.Types
             }
             else // reference type
             {
-                return "ComPtr::wrap(" + name + ")";
+                return $"ComPtr::wrap({ name })";
             }
         }
 

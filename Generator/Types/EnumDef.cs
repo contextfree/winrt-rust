@@ -31,10 +31,10 @@ namespace Generator.Types
 
         public override void Emit()
         {
-            Module.Append(@"
-RT_ENUM! { enum " + DefinitionName + ": " + UnderlyingTypeName + @" {
-    " + String.Join(", ", Type.Fields.Where(f => f.Name != "value__").Select(f => NameHelpers.PreventKeywords(f.Name) + " (" + Type.Name + "_" + f.Name + ") = " + f.Constant)) + @",
-}}");
+            Module.Append($@"
+RT_ENUM! {{ enum { DefinitionName }: { UnderlyingTypeName } {{
+    { String.Join(", ", Type.Fields.Where(f => f.Name != "value__").Select(f => $"{ NameHelpers.PreventKeywords(f.Name) } ({ Type.Name }_{ f.Name }) = { f.Constant }")) },
+}}}}");
         }
     }
 }

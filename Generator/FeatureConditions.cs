@@ -30,11 +30,11 @@ namespace Generator
             }
             else if (conditions.Count == 1)
             {
-                return "#[cfg(" + conditions.Single() + ")] ";
+                return $"#[cfg({ conditions.Single() })] ";
             }
             else
             {
-                return "#[cfg(all(" + string.Join(",", conditions) + "))] ";
+                return $"#[cfg(all({ string.Join(",", conditions) }))] ";
             }
         }
 
@@ -46,11 +46,11 @@ namespace Generator
             }
             else if (conditions.Count == 1)
             {
-                return "#[cfg(not(" + conditions.Single() + "))] ";
+                return $"#[cfg(not({ conditions.Single() }))] ";
             }
             else
             {
-                return "#[cfg(not(all(" + string.Join(",", conditions) + ")))] ";
+                return $"#[cfg(not(all({ string.Join(",", conditions) })))] ";
             }
         }
     }
