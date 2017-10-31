@@ -51,5 +51,17 @@ namespace Generator
         {
             return String.Join(",", str.Select(c => ((ushort)c).ToString()).Concat(new string[] { "0" }));
         }
+
+        public static Tuple<string, int> GetSortKeyIgnoringInterfacePrefix(string str)
+        {
+            if (str[0] == 'I' && char.IsUpper(str[1]))
+            {
+                return Tuple.Create(str.Substring(1), 0);
+            }
+            else
+            {
+                return Tuple.Create(str, 1);
+            }
+        }
     }
 }

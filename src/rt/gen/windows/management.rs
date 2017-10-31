@@ -1,10 +1,4 @@
 use ::prelude::*;
-RT_ENUM! { enum MdmAlertMark: i32 {
-    None (MdmAlertMark_None) = 0, Fatal (MdmAlertMark_Fatal) = 1, Critical (MdmAlertMark_Critical) = 2, Warning (MdmAlertMark_Warning) = 3, Informational (MdmAlertMark_Informational) = 4,
-}}
-RT_ENUM! { enum MdmAlertDataType: i32 {
-    String (MdmAlertDataType_String) = 0, Base64 (MdmAlertDataType_Base64) = 1, Boolean (MdmAlertDataType_Boolean) = 2, Integer (MdmAlertDataType_Integer) = 3,
-}}
 DEFINE_IID!(IID_IMdmAlert, 2969289511, 10433, 19282, 165, 72, 197, 128, 124, 175, 112, 182);
 RT_INTERFACE!{interface IMdmAlert(IMdmAlertVtbl): IInspectable(IInspectableVtbl) [IID_IMdmAlert] {
     fn get_Data(&self, out: *mut HSTRING) -> HRESULT,
@@ -82,8 +76,14 @@ impl IMdmAlert {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-RT_ENUM! { enum MdmSessionState: i32 {
-    NotStarted (MdmSessionState_NotStarted) = 0, Starting (MdmSessionState_Starting) = 1, Connecting (MdmSessionState_Connecting) = 2, Communicating (MdmSessionState_Communicating) = 3, AlertStatusAvailable (MdmSessionState_AlertStatusAvailable) = 4, Retrying (MdmSessionState_Retrying) = 5, Completed (MdmSessionState_Completed) = 6,
+RT_CLASS!{class MdmAlert: IMdmAlert}
+impl RtActivatable<IActivationFactory> for MdmAlert {}
+DEFINE_CLSID!(MdmAlert(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,77,100,109,65,108,101,114,116,0]) [CLSID_MdmAlert]);
+RT_ENUM! { enum MdmAlertDataType: i32 {
+    String (MdmAlertDataType_String) = 0, Base64 (MdmAlertDataType_Base64) = 1, Boolean (MdmAlertDataType_Boolean) = 2, Integer (MdmAlertDataType_Integer) = 3,
+}}
+RT_ENUM! { enum MdmAlertMark: i32 {
+    None (MdmAlertMark_None) = 0, Fatal (MdmAlertMark_Fatal) = 1, Critical (MdmAlertMark_Critical) = 2, Warning (MdmAlertMark_Warning) = 3, Informational (MdmAlertMark_Informational) = 4,
 }}
 DEFINE_IID!(IID_IMdmSession, 4270403916, 36708, 18327, 169, 215, 157, 136, 248, 106, 225, 102);
 RT_INTERFACE!{interface IMdmSession(IMdmSessionVtbl): IInspectable(IInspectableVtbl) [IID_IMdmSession] {
@@ -137,9 +137,24 @@ impl IMdmSession {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_CLASS!{class MdmAlert: IMdmAlert}
-impl RtActivatable<IActivationFactory> for MdmAlert {}
-DEFINE_CLSID!(MdmAlert(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,77,100,109,65,108,101,114,116,0]) [CLSID_MdmAlert]);
+RT_CLASS!{class MdmSession: IMdmSession}
+RT_CLASS!{static class MdmSessionManager}
+impl RtActivatable<IMdmSessionManagerStatics> for MdmSessionManager {}
+impl MdmSessionManager {
+    #[inline] pub fn get_session_ids() -> Result<ComPtr<super::foundation::collections::IVectorView<HString>>> { unsafe {
+        <Self as RtActivatable<IMdmSessionManagerStatics>>::get_activation_factory().get_session_ids()
+    }}
+    #[inline] pub fn try_create_session() -> Result<ComPtr<MdmSession>> { unsafe {
+        <Self as RtActivatable<IMdmSessionManagerStatics>>::get_activation_factory().try_create_session()
+    }}
+    #[inline] pub fn delete_session_by_id(sessionId: &HStringArg) -> Result<()> { unsafe {
+        <Self as RtActivatable<IMdmSessionManagerStatics>>::get_activation_factory().delete_session_by_id(sessionId)
+    }}
+    #[inline] pub fn get_session_by_id(sessionId: &HStringArg) -> Result<ComPtr<MdmSession>> { unsafe {
+        <Self as RtActivatable<IMdmSessionManagerStatics>>::get_activation_factory().get_session_by_id(sessionId)
+    }}
+}
+DEFINE_CLSID!(MdmSessionManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,77,100,109,83,101,115,115,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MdmSessionManager]);
 DEFINE_IID!(IID_IMdmSessionManagerStatics, 3477789017, 63301, 19321, 155, 92, 222, 11, 248, 239, 228, 75);
 RT_INTERFACE!{static interface IMdmSessionManagerStatics(IMdmSessionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMdmSessionManagerStatics] {
     fn get_SessionIds(&self, out: *mut *mut super::foundation::collections::IVectorView<HString>) -> HRESULT,
@@ -168,40 +183,22 @@ impl IMdmSessionManagerStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_CLASS!{class MdmSession: IMdmSession}
-RT_CLASS!{static class MdmSessionManager}
-impl RtActivatable<IMdmSessionManagerStatics> for MdmSessionManager {}
-impl MdmSessionManager {
-    #[inline] pub fn get_session_ids() -> Result<ComPtr<super::foundation::collections::IVectorView<HString>>> { unsafe {
-        <Self as RtActivatable<IMdmSessionManagerStatics>>::get_activation_factory().get_session_ids()
-    }}
-    #[inline] pub fn try_create_session() -> Result<ComPtr<MdmSession>> { unsafe {
-        <Self as RtActivatable<IMdmSessionManagerStatics>>::get_activation_factory().try_create_session()
-    }}
-    #[inline] pub fn delete_session_by_id(sessionId: &HStringArg) -> Result<()> { unsafe {
-        <Self as RtActivatable<IMdmSessionManagerStatics>>::get_activation_factory().delete_session_by_id(sessionId)
-    }}
-    #[inline] pub fn get_session_by_id(sessionId: &HStringArg) -> Result<ComPtr<MdmSession>> { unsafe {
-        <Self as RtActivatable<IMdmSessionManagerStatics>>::get_activation_factory().get_session_by_id(sessionId)
-    }}
-}
-DEFINE_CLSID!(MdmSessionManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,77,100,109,83,101,115,115,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MdmSessionManager]);
+RT_ENUM! { enum MdmSessionState: i32 {
+    NotStarted (MdmSessionState_NotStarted) = 0, Starting (MdmSessionState_Starting) = 1, Connecting (MdmSessionState_Connecting) = 2, Communicating (MdmSessionState_Communicating) = 3, AlertStatusAvailable (MdmSessionState_AlertStatusAvailable) = 4, Retrying (MdmSessionState_Retrying) = 5, Completed (MdmSessionState_Completed) = 6,
+}}
 pub mod deployment { // Windows.Management.Deployment
 use ::prelude::*;
-RT_ENUM! { enum DeploymentProgressState: i32 {
-    Queued (DeploymentProgressState_Queued) = 0, Processing (DeploymentProgressState_Processing) = 1,
-}}
-RT_STRUCT! { struct DeploymentProgress {
-    state: DeploymentProgressState, percentage: u32,
+RT_ENUM! { enum AddPackageByAppInstallerOptions: u32 {
+    None (AddPackageByAppInstallerOptions_None) = 0, InstallAllResources (AddPackageByAppInstallerOptions_InstallAllResources) = 32, ForceTargetAppShutdown (AddPackageByAppInstallerOptions_ForceTargetAppShutdown) = 64, RequiredContentGroupOnly (AddPackageByAppInstallerOptions_RequiredContentGroupOnly) = 256,
 }}
 RT_ENUM! { enum DeploymentOptions: u32 {
     None (DeploymentOptions_None) = 0, ForceApplicationShutdown (DeploymentOptions_ForceApplicationShutdown) = 1, DevelopmentMode (DeploymentOptions_DevelopmentMode) = 2, InstallAllResources (DeploymentOptions_InstallAllResources) = 32, ForceTargetApplicationShutdown (DeploymentOptions_ForceTargetApplicationShutdown) = 64, RequiredContentGroupOnly (DeploymentOptions_RequiredContentGroupOnly) = 256,
 }}
-RT_ENUM! { enum RemovalOptions: u32 {
-    None (RemovalOptions_None) = 0, PreserveApplicationData (RemovalOptions_PreserveApplicationData) = 4096,
+RT_STRUCT! { struct DeploymentProgress {
+    state: DeploymentProgressState, percentage: u32,
 }}
-RT_ENUM! { enum PackageTypes: u32 {
-    None (PackageTypes_None) = 0, Main (PackageTypes_Main) = 1, Framework (PackageTypes_Framework) = 2, Resource (PackageTypes_Resource) = 4, Bundle (PackageTypes_Bundle) = 8, Xap (PackageTypes_Xap) = 16, Optional (PackageTypes_Optional) = 32,
+RT_ENUM! { enum DeploymentProgressState: i32 {
+    Queued (DeploymentProgressState_Queued) = 0, Processing (DeploymentProgressState_Processing) = 1,
 }}
 DEFINE_IID!(IID_IDeploymentResult, 627292590, 46973, 19487, 138, 123, 32, 230, 173, 81, 94, 243);
 RT_INTERFACE!{interface IDeploymentResult(IDeploymentResultVtbl): IInspectable(IInspectableVtbl) [IID_IDeploymentResult] {
@@ -226,6 +223,7 @@ impl IDeploymentResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
 }
+RT_CLASS!{class DeploymentResult: IDeploymentResult}
 DEFINE_IID!(IID_IDeploymentResult2, 4228804956, 23041, 19415, 188, 241, 56, 28, 140, 130, 224, 74);
 RT_INTERFACE!{interface IDeploymentResult2(IDeploymentResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IDeploymentResult2] {
     fn get_IsRegistered(&self, out: *mut bool) -> HRESULT
@@ -237,33 +235,8 @@ impl IDeploymentResult2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
 }
-RT_CLASS!{class DeploymentResult: IDeploymentResult}
 RT_ENUM! { enum PackageInstallState: i32 {
     NotInstalled (PackageInstallState_NotInstalled) = 0, Staged (PackageInstallState_Staged) = 1, Installed (PackageInstallState_Installed) = 2, Paused (PackageInstallState_Paused) = 6,
-}}
-DEFINE_IID!(IID_IPackageUserInformation, 4130878499, 64009, 19644, 144, 85, 21, 202, 39, 94, 46, 126);
-RT_INTERFACE!{interface IPackageUserInformation(IPackageUserInformationVtbl): IInspectable(IInspectableVtbl) [IID_IPackageUserInformation] {
-    fn get_UserSecurityId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_InstallState(&self, out: *mut PackageInstallState) -> HRESULT
-}}
-impl IPackageUserInformation {
-    #[inline] pub unsafe fn get_user_security_id(&self) -> Result<HString> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UserSecurityId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_install_state(&self) -> Result<PackageInstallState> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_InstallState)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-}
-RT_CLASS!{class PackageUserInformation: IPackageUserInformation}
-RT_ENUM! { enum PackageState: i32 {
-    Normal (PackageState_Normal) = 0, LicenseInvalid (PackageState_LicenseInvalid) = 1, Modified (PackageState_Modified) = 2, Tampered (PackageState_Tampered) = 3,
-}}
-RT_ENUM! { enum PackageStatus: u32 {
-    OK (PackageStatus_OK) = 0, LicenseIssue (PackageStatus_LicenseIssue) = 1, Modified (PackageStatus_Modified) = 2, Tampered (PackageStatus_Tampered) = 4, Disabled (PackageStatus_Disabled) = 8,
 }}
 DEFINE_IID!(IID_IPackageManager, 2591902565, 24207, 20423, 162, 229, 127, 105, 37, 203, 139, 83);
 RT_INTERFACE!{interface IPackageManager(IPackageManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager] {
@@ -365,6 +338,9 @@ impl IPackageManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
+RT_CLASS!{class PackageManager: IPackageManager}
+impl RtActivatable<IActivationFactory> for PackageManager {}
+DEFINE_CLSID!(PackageManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,68,101,112,108,111,121,109,101,110,116,46,80,97,99,107,97,103,101,77,97,110,97,103,101,114,0]) [CLSID_PackageManager]);
 DEFINE_IID!(IID_IPackageManager2, 4155166861, 2112, 18162, 181, 216, 202, 212, 118, 147, 160, 149);
 RT_INTERFACE!{interface IPackageManager2(IPackageManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager2] {
     fn RemovePackageWithOptionsAsync(&self, packageFullName: HSTRING, removalOptions: RemovalOptions, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
@@ -528,7 +504,6 @@ impl IPackageManager3 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_CLASS!{class PackageVolume: IPackageVolume}
 DEFINE_IID!(IID_IPackageManager4, 1014077795, 47798, 18111, 143, 247, 218, 71, 25, 35, 10, 230);
 RT_INTERFACE!{interface IPackageManager4(IPackageManager4Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager4] {
     fn GetPackageVolumesAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<PackageVolume>>) -> HRESULT
@@ -569,7 +544,92 @@ impl IPackageManager5 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
+DEFINE_IID!(IID_IPackageManager6, 138930441, 21453, 20047, 131, 46, 87, 209, 128, 246, 228, 71);
+RT_INTERFACE!{interface IPackageManager6(IPackageManager6Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager6] {
+    fn ProvisionPackageForAllUsersAsync(&self, packageFamilyName: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn AddPackageByAppInstallerFileAsync(&self, appInstallerFileUri: *mut super::super::foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: *mut PackageVolume, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn RequestAddPackageByAppInstallerFileAsync(&self, appInstallerFileUri: *mut super::super::foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: *mut PackageVolume, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn AddPackageToVolumeAndRelatedSetAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, options: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut super::super::foundation::collections::IIterable<HString>, packageUrisToInstall: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, relatedPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn StagePackageToVolumeAndRelatedSetAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, options: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut super::super::foundation::collections::IIterable<HString>, packageUrisToInstall: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, relatedPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn RequestAddPackageAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut super::super::foundation::collections::IIterable<HString>, relatedPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT
+}}
+impl IPackageManager6 {
+    #[inline] pub unsafe fn provision_package_for_all_users_async(&self, packageFamilyName: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ProvisionPackageForAllUsersAsync)(self as *const _ as *mut _, packageFamilyName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn add_package_by_app_installer_file_async(&self, appInstallerFileUri: &super::super::foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: &PackageVolume) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AddPackageByAppInstallerFileAsync)(self as *const _ as *mut _, appInstallerFileUri as *const _ as *mut _, options, targetVolume as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn request_add_package_by_app_installer_file_async(&self, appInstallerFileUri: &super::super::foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: &PackageVolume) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAddPackageByAppInstallerFileAsync)(self as *const _ as *mut _, appInstallerFileUri as *const _ as *mut _, options, targetVolume as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn add_package_to_volume_and_related_set_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, options: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &super::super::foundation::collections::IIterable<HString>, packageUrisToInstall: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, relatedPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AddPackageToVolumeAndRelatedSetAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, options, targetVolume as *const _ as *mut _, optionalPackageFamilyNames as *const _ as *mut _, packageUrisToInstall as *const _ as *mut _, relatedPackageUris as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn stage_package_to_volume_and_related_set_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, options: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &super::super::foundation::collections::IIterable<HString>, packageUrisToInstall: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, relatedPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).StagePackageToVolumeAndRelatedSetAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, options, targetVolume as *const _ as *mut _, optionalPackageFamilyNames as *const _ as *mut _, packageUrisToInstall as *const _ as *mut _, relatedPackageUris as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn request_add_package_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &super::super::foundation::collections::IIterable<HString>, relatedPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAddPackageAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, targetVolume as *const _ as *mut _, optionalPackageFamilyNames as *const _ as *mut _, relatedPackageUris as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_IPackageManagerDebugSettings, 442570371, 43400, 20431, 143, 15, 206, 23, 88, 152, 232, 235);
+RT_INTERFACE!{interface IPackageManagerDebugSettings(IPackageManagerDebugSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IPackageManagerDebugSettings] {
+    #[cfg(feature="windows-applicationmodel")] fn SetContentGroupStateAsync(&self, package: *mut super::super::applicationmodel::Package, contentGroupName: HSTRING, state: super::super::applicationmodel::PackageContentGroupState, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn SetContentGroupStateWithPercentageAsync(&self, package: *mut super::super::applicationmodel::Package, contentGroupName: HSTRING, state: super::super::applicationmodel::PackageContentGroupState, completionPercentage: f64, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT
+}}
+impl IPackageManagerDebugSettings {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn set_content_group_state_async(&self, package: &super::super::applicationmodel::Package, contentGroupName: &HStringArg, state: super::super::applicationmodel::PackageContentGroupState) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SetContentGroupStateAsync)(self as *const _ as *mut _, package as *const _ as *mut _, contentGroupName.get(), state, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn set_content_group_state_with_percentage_async(&self, package: &super::super::applicationmodel::Package, contentGroupName: &HStringArg, state: super::super::applicationmodel::PackageContentGroupState, completionPercentage: f64) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SetContentGroupStateWithPercentageAsync)(self as *const _ as *mut _, package as *const _ as *mut _, contentGroupName.get(), state, completionPercentage, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
 RT_CLASS!{class PackageManagerDebugSettings: IPackageManagerDebugSettings}
+RT_ENUM! { enum PackageState: i32 {
+    Normal (PackageState_Normal) = 0, LicenseInvalid (PackageState_LicenseInvalid) = 1, Modified (PackageState_Modified) = 2, Tampered (PackageState_Tampered) = 3,
+}}
+RT_ENUM! { enum PackageStatus: u32 {
+    OK (PackageStatus_OK) = 0, LicenseIssue (PackageStatus_LicenseIssue) = 1, Modified (PackageStatus_Modified) = 2, Tampered (PackageStatus_Tampered) = 4, Disabled (PackageStatus_Disabled) = 8,
+}}
+RT_ENUM! { enum PackageTypes: u32 {
+    None (PackageTypes_None) = 0, Main (PackageTypes_Main) = 1, Framework (PackageTypes_Framework) = 2, Resource (PackageTypes_Resource) = 4, Bundle (PackageTypes_Bundle) = 8, Xap (PackageTypes_Xap) = 16, Optional (PackageTypes_Optional) = 32,
+}}
+DEFINE_IID!(IID_IPackageUserInformation, 4130878499, 64009, 19644, 144, 85, 21, 202, 39, 94, 46, 126);
+RT_INTERFACE!{interface IPackageUserInformation(IPackageUserInformationVtbl): IInspectable(IInspectableVtbl) [IID_IPackageUserInformation] {
+    fn get_UserSecurityId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_InstallState(&self, out: *mut PackageInstallState) -> HRESULT
+}}
+impl IPackageUserInformation {
+    #[inline] pub unsafe fn get_user_security_id(&self) -> Result<HString> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UserSecurityId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_install_state(&self) -> Result<PackageInstallState> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_InstallState)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+}
+RT_CLASS!{class PackageUserInformation: IPackageUserInformation}
 DEFINE_IID!(IID_IPackageVolume, 3475403459, 6720, 17488, 151, 57, 42, 206, 46, 137, 136, 83);
 RT_INTERFACE!{interface IPackageVolume(IPackageVolumeVtbl): IInspectable(IInspectableVtbl) [IID_IPackageVolume] {
     fn get_IsOffline(&self, out: *mut bool) -> HRESULT,
@@ -695,6 +755,7 @@ impl IPackageVolume {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
+RT_CLASS!{class PackageVolume: IPackageVolume}
 DEFINE_IID!(IID_IPackageVolume2, 1185664814, 40404, 18338, 171, 140, 198, 64, 131, 73, 188, 216);
 RT_INTERFACE!{interface IPackageVolume2(IPackageVolume2Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageVolume2] {
     fn get_IsFullTrustPackageSupported(&self, out: *mut bool) -> HRESULT,
@@ -718,28 +779,30 @@ impl IPackageVolume2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_CLASS!{class PackageManager: IPackageManager}
-impl RtActivatable<IActivationFactory> for PackageManager {}
-DEFINE_CLSID!(PackageManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,68,101,112,108,111,121,109,101,110,116,46,80,97,99,107,97,103,101,77,97,110,97,103,101,114,0]) [CLSID_PackageManager]);
-DEFINE_IID!(IID_IPackageManagerDebugSettings, 442570371, 43400, 20431, 143, 15, 206, 23, 88, 152, 232, 235);
-RT_INTERFACE!{interface IPackageManagerDebugSettings(IPackageManagerDebugSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IPackageManagerDebugSettings] {
-    #[cfg(feature="windows-applicationmodel")] fn SetContentGroupStateAsync(&self, package: *mut super::super::applicationmodel::Package, contentGroupName: HSTRING, state: super::super::applicationmodel::PackageContentGroupState, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn SetContentGroupStateWithPercentageAsync(&self, package: *mut super::super::applicationmodel::Package, contentGroupName: HSTRING, state: super::super::applicationmodel::PackageContentGroupState, completionPercentage: f64, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT
+RT_ENUM! { enum RemovalOptions: u32 {
+    None (RemovalOptions_None) = 0, PreserveApplicationData (RemovalOptions_PreserveApplicationData) = 4096,
 }}
-impl IPackageManagerDebugSettings {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn set_content_group_state_async(&self, package: &super::super::applicationmodel::Package, contentGroupName: &HStringArg, state: super::super::applicationmodel::PackageContentGroupState) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
+pub mod preview { // Windows.Management.Deployment.Preview
+use ::prelude::*;
+RT_CLASS!{static class ClassicAppManager}
+impl RtActivatable<IClassicAppManagerStatics> for ClassicAppManager {}
+impl ClassicAppManager {
+    #[inline] pub fn find_installed_app(appUninstallKey: &HStringArg) -> Result<ComPtr<InstalledClassicAppInfo>> { unsafe {
+        <Self as RtActivatable<IClassicAppManagerStatics>>::get_activation_factory().find_installed_app(appUninstallKey)
+    }}
+}
+DEFINE_CLSID!(ClassicAppManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,68,101,112,108,111,121,109,101,110,116,46,80,114,101,118,105,101,119,46,67,108,97,115,115,105,99,65,112,112,77,97,110,97,103,101,114,0]) [CLSID_ClassicAppManager]);
+DEFINE_IID!(IID_IClassicAppManagerStatics, 3808089704, 34860, 20275, 176, 53, 13, 247, 185, 13, 103, 230);
+RT_INTERFACE!{static interface IClassicAppManagerStatics(IClassicAppManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IClassicAppManagerStatics] {
+    fn FindInstalledApp(&self, appUninstallKey: HSTRING, out: *mut *mut InstalledClassicAppInfo) -> HRESULT
+}}
+impl IClassicAppManagerStatics {
+    #[inline] pub unsafe fn find_installed_app(&self, appUninstallKey: &HStringArg) -> Result<ComPtr<InstalledClassicAppInfo>> {
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetContentGroupStateAsync)(self as *const _ as *mut _, package as *const _ as *mut _, contentGroupName.get(), state, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn set_content_group_state_with_percentage_async(&self, package: &super::super::applicationmodel::Package, contentGroupName: &HStringArg, state: super::super::applicationmodel::PackageContentGroupState, completionPercentage: f64) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetContentGroupStateWithPercentageAsync)(self as *const _ as *mut _, package as *const _ as *mut _, contentGroupName.get(), state, completionPercentage, &mut out);
+        let hr = ((*self.lpVtbl).FindInstalledApp)(self as *const _ as *mut _, appUninstallKey.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-pub mod preview { // Windows.Management.Deployment.Preview
-use ::prelude::*;
 DEFINE_IID!(IID_IInstalledClassicAppInfo, 175979939, 26064, 16518, 128, 214, 6, 16, 215, 96, 32, 125);
 RT_INTERFACE!{interface IInstalledClassicAppInfo(IInstalledClassicAppInfoVtbl): IInspectable(IInspectableVtbl) [IID_IInstalledClassicAppInfo] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -758,40 +821,10 @@ impl IInstalledClassicAppInfo {
     }
 }
 RT_CLASS!{class InstalledClassicAppInfo: IInstalledClassicAppInfo}
-DEFINE_IID!(IID_IClassicAppManagerStatics, 3808089704, 34860, 20275, 176, 53, 13, 247, 185, 13, 103, 230);
-RT_INTERFACE!{static interface IClassicAppManagerStatics(IClassicAppManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IClassicAppManagerStatics] {
-    fn FindInstalledApp(&self, appUninstallKey: HSTRING, out: *mut *mut InstalledClassicAppInfo) -> HRESULT
-}}
-impl IClassicAppManagerStatics {
-    #[inline] pub unsafe fn find_installed_app(&self, appUninstallKey: &HStringArg) -> Result<ComPtr<InstalledClassicAppInfo>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindInstalledApp)(self as *const _ as *mut _, appUninstallKey.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-}
-RT_CLASS!{static class ClassicAppManager}
-impl RtActivatable<IClassicAppManagerStatics> for ClassicAppManager {}
-impl ClassicAppManager {
-    #[inline] pub fn find_installed_app(appUninstallKey: &HStringArg) -> Result<ComPtr<InstalledClassicAppInfo>> { unsafe {
-        <Self as RtActivatable<IClassicAppManagerStatics>>::get_activation_factory().find_installed_app(appUninstallKey)
-    }}
-}
-DEFINE_CLSID!(ClassicAppManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,68,101,112,108,111,121,109,101,110,116,46,80,114,101,118,105,101,119,46,67,108,97,115,115,105,99,65,112,112,77,97,110,97,103,101,114,0]) [CLSID_ClassicAppManager]);
 } // Windows.Management.Deployment.Preview
 } // Windows.Management.Deployment
 pub mod core { // Windows.Management.Core
 use ::prelude::*;
-DEFINE_IID!(IID_IApplicationDataManagerStatics, 504914659, 27022, 18849, 151, 82, 222, 233, 73, 37, 185, 179);
-RT_INTERFACE!{static interface IApplicationDataManagerStatics(IApplicationDataManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationDataManagerStatics] {
-    #[cfg(feature="windows-storage")] fn CreateForPackageFamily(&self, packageFamilyName: HSTRING, out: *mut *mut super::super::storage::ApplicationData) -> HRESULT
-}}
-impl IApplicationDataManagerStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_for_package_family(&self, packageFamilyName: &HStringArg) -> Result<ComPtr<super::super::storage::ApplicationData>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateForPackageFamily)(self as *const _ as *mut _, packageFamilyName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-}
 DEFINE_IID!(IID_IApplicationDataManager, 1959855154, 11929, 16384, 154, 58, 100, 48, 126, 133, 129, 41);
 RT_INTERFACE!{interface IApplicationDataManager(IApplicationDataManagerVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationDataManager] {
     
@@ -804,12 +837,31 @@ impl ApplicationDataManager {
     }}
 }
 DEFINE_CLSID!(ApplicationDataManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,67,111,114,101,46,65,112,112,108,105,99,97,116,105,111,110,68,97,116,97,77,97,110,97,103,101,114,0]) [CLSID_ApplicationDataManager]);
+DEFINE_IID!(IID_IApplicationDataManagerStatics, 504914659, 27022, 18849, 151, 82, 222, 233, 73, 37, 185, 179);
+RT_INTERFACE!{static interface IApplicationDataManagerStatics(IApplicationDataManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationDataManagerStatics] {
+    #[cfg(feature="windows-storage")] fn CreateForPackageFamily(&self, packageFamilyName: HSTRING, out: *mut *mut super::super::storage::ApplicationData) -> HRESULT
+}}
+impl IApplicationDataManagerStatics {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_for_package_family(&self, packageFamilyName: &HStringArg) -> Result<ComPtr<super::super::storage::ApplicationData>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateForPackageFamily)(self as *const _ as *mut _, packageFamilyName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
 } // Windows.Management.Core
 pub mod policies { // Windows.Management.Policies
 use ::prelude::*;
-RT_ENUM! { enum NamedPolicyKind: i32 {
-    Invalid (NamedPolicyKind_Invalid) = 0, Binary (NamedPolicyKind_Binary) = 1, Boolean (NamedPolicyKind_Boolean) = 2, Int32 (NamedPolicyKind_Int32) = 3, Int64 (NamedPolicyKind_Int64) = 4, String (NamedPolicyKind_String) = 5,
-}}
+RT_CLASS!{static class NamedPolicy}
+impl RtActivatable<INamedPolicyStatics> for NamedPolicy {}
+impl NamedPolicy {
+    #[inline] pub fn get_policy_from_path(area: &HStringArg, name: &HStringArg) -> Result<ComPtr<NamedPolicyData>> { unsafe {
+        <Self as RtActivatable<INamedPolicyStatics>>::get_activation_factory().get_policy_from_path(area, name)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_policy_from_path_for_user(user: &super::super::system::User, area: &HStringArg, name: &HStringArg) -> Result<ComPtr<NamedPolicyData>> { unsafe {
+        <Self as RtActivatable<INamedPolicyStatics>>::get_activation_factory().get_policy_from_path_for_user(user, area, name)
+    }}
+}
+DEFINE_CLSID!(NamedPolicy(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,80,111,108,105,99,105,101,115,46,78,97,109,101,100,80,111,108,105,99,121,0]) [CLSID_NamedPolicy]);
 DEFINE_IID!(IID_INamedPolicyData, 953987480, 38316, 16503, 166, 67, 128, 120, 202, 226, 100, 0);
 RT_INTERFACE!{interface INamedPolicyData(INamedPolicyDataVtbl): IInspectable(IInspectableVtbl) [IID_INamedPolicyData] {
     fn get_Area(&self, out: *mut HSTRING) -> HRESULT,
@@ -895,6 +947,9 @@ impl INamedPolicyData {
     }
 }
 RT_CLASS!{class NamedPolicyData: INamedPolicyData}
+RT_ENUM! { enum NamedPolicyKind: i32 {
+    Invalid (NamedPolicyKind_Invalid) = 0, Binary (NamedPolicyKind_Binary) = 1, Boolean (NamedPolicyKind_Boolean) = 2, Int32 (NamedPolicyKind_Int32) = 3, Int64 (NamedPolicyKind_Int64) = 4, String (NamedPolicyKind_String) = 5,
+}}
 DEFINE_IID!(IID_INamedPolicyStatics, 2138651623, 30404, 16472, 140, 173, 103, 102, 44, 208, 95, 13);
 RT_INTERFACE!{static interface INamedPolicyStatics(INamedPolicyStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INamedPolicyStatics] {
     fn GetPolicyFromPath(&self, area: HSTRING, name: HSTRING, out: *mut *mut NamedPolicyData) -> HRESULT,
@@ -912,17 +967,6 @@ impl INamedPolicyStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_CLASS!{static class NamedPolicy}
-impl RtActivatable<INamedPolicyStatics> for NamedPolicy {}
-impl NamedPolicy {
-    #[inline] pub fn get_policy_from_path(area: &HStringArg, name: &HStringArg) -> Result<ComPtr<NamedPolicyData>> { unsafe {
-        <Self as RtActivatable<INamedPolicyStatics>>::get_activation_factory().get_policy_from_path(area, name)
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_policy_from_path_for_user(user: &super::super::system::User, area: &HStringArg, name: &HStringArg) -> Result<ComPtr<NamedPolicyData>> { unsafe {
-        <Self as RtActivatable<INamedPolicyStatics>>::get_activation_factory().get_policy_from_path_for_user(user, area, name)
-    }}
-}
-DEFINE_CLSID!(NamedPolicy(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,80,111,108,105,99,105,101,115,46,78,97,109,101,100,80,111,108,105,99,121,0]) [CLSID_NamedPolicy]);
 } // Windows.Management.Policies
 pub mod workplace { // Windows.Management.Workplace
 use ::prelude::*;
@@ -955,27 +999,10 @@ impl IMdmAllowPolicyStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
 }
-RT_ENUM! { enum MessagingSyncPolicy: i32 {
-    Disallowed (MessagingSyncPolicy_Disallowed) = 0, Allowed (MessagingSyncPolicy_Allowed) = 1, Required (MessagingSyncPolicy_Required) = 2,
-}}
-DEFINE_IID!(IID_IMdmPolicyStatics2, 3382474022, 980, 18937, 169, 147, 67, 239, 204, 210, 101, 196);
-RT_INTERFACE!{static interface IMdmPolicyStatics2(IMdmPolicyStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IMdmPolicyStatics2] {
-    fn GetMessagingSyncPolicy(&self, out: *mut MessagingSyncPolicy) -> HRESULT
-}}
-impl IMdmPolicyStatics2 {
-    #[inline] pub unsafe fn get_messaging_sync_policy(&self) -> Result<MessagingSyncPolicy> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetMessagingSyncPolicy)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-}
 RT_CLASS!{static class MdmPolicy}
-impl RtActivatable<IMdmPolicyStatics2> for MdmPolicy {}
 impl RtActivatable<IMdmAllowPolicyStatics> for MdmPolicy {}
+impl RtActivatable<IMdmPolicyStatics2> for MdmPolicy {}
 impl MdmPolicy {
-    #[inline] pub fn get_messaging_sync_policy() -> Result<MessagingSyncPolicy> { unsafe {
-        <Self as RtActivatable<IMdmPolicyStatics2>>::get_activation_factory().get_messaging_sync_policy()
-    }}
     #[inline] pub fn is_browser_allowed() -> Result<bool> { unsafe {
         <Self as RtActivatable<IMdmAllowPolicyStatics>>::get_activation_factory().is_browser_allowed()
     }}
@@ -988,8 +1015,33 @@ impl MdmPolicy {
     #[inline] pub fn is_store_allowed() -> Result<bool> { unsafe {
         <Self as RtActivatable<IMdmAllowPolicyStatics>>::get_activation_factory().is_store_allowed()
     }}
+    #[inline] pub fn get_messaging_sync_policy() -> Result<MessagingSyncPolicy> { unsafe {
+        <Self as RtActivatable<IMdmPolicyStatics2>>::get_activation_factory().get_messaging_sync_policy()
+    }}
 }
 DEFINE_CLSID!(MdmPolicy(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,87,111,114,107,112,108,97,99,101,46,77,100,109,80,111,108,105,99,121,0]) [CLSID_MdmPolicy]);
+DEFINE_IID!(IID_IMdmPolicyStatics2, 3382474022, 980, 18937, 169, 147, 67, 239, 204, 210, 101, 196);
+RT_INTERFACE!{static interface IMdmPolicyStatics2(IMdmPolicyStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IMdmPolicyStatics2] {
+    fn GetMessagingSyncPolicy(&self, out: *mut MessagingSyncPolicy) -> HRESULT
+}}
+impl IMdmPolicyStatics2 {
+    #[inline] pub unsafe fn get_messaging_sync_policy(&self) -> Result<MessagingSyncPolicy> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetMessagingSyncPolicy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+}
+RT_ENUM! { enum MessagingSyncPolicy: i32 {
+    Disallowed (MessagingSyncPolicy_Disallowed) = 0, Allowed (MessagingSyncPolicy_Allowed) = 1, Required (MessagingSyncPolicy_Required) = 2,
+}}
+RT_CLASS!{static class WorkplaceSettings}
+impl RtActivatable<IWorkplaceSettingsStatics> for WorkplaceSettings {}
+impl WorkplaceSettings {
+    #[inline] pub fn get_is_microsoft_account_optional() -> Result<bool> { unsafe {
+        <Self as RtActivatable<IWorkplaceSettingsStatics>>::get_activation_factory().get_is_microsoft_account_optional()
+    }}
+}
+DEFINE_CLSID!(WorkplaceSettings(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,87,111,114,107,112,108,97,99,101,46,87,111,114,107,112,108,97,99,101,83,101,116,116,105,110,103,115,0]) [CLSID_WorkplaceSettings]);
 DEFINE_IID!(IID_IWorkplaceSettingsStatics, 3831984125, 11666, 19464, 186, 212, 246, 89, 11, 84, 166, 211);
 RT_INTERFACE!{static interface IWorkplaceSettingsStatics(IWorkplaceSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWorkplaceSettingsStatics] {
     fn get_IsMicrosoftAccountOptional(&self, out: *mut bool) -> HRESULT
@@ -1001,12 +1053,4 @@ impl IWorkplaceSettingsStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
 }
-RT_CLASS!{static class WorkplaceSettings}
-impl RtActivatable<IWorkplaceSettingsStatics> for WorkplaceSettings {}
-impl WorkplaceSettings {
-    #[inline] pub fn get_is_microsoft_account_optional() -> Result<bool> { unsafe {
-        <Self as RtActivatable<IWorkplaceSettingsStatics>>::get_activation_factory().get_is_microsoft_account_optional()
-    }}
-}
-DEFINE_CLSID!(WorkplaceSettings(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,87,111,114,107,112,108,97,99,101,46,87,111,114,107,112,108,97,99,101,83,101,116,116,105,110,103,115,0]) [CLSID_WorkplaceSettings]);
 } // Windows.Management.Workplace

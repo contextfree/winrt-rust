@@ -92,7 +92,7 @@ namespace Generator
 
         public void EmitTypes()
         {
-            foreach (var type in definitionsList.Values)
+            foreach (var type in definitionsList.Values.OrderBy(v => NameHelpers.GetSortKeyIgnoringInterfacePrefix(v.Name)))
             {
                 type.Emit();
             }

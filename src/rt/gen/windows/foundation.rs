@@ -1,4 +1,208 @@
 use ::prelude::*;
+DEFINE_IID!(IID_IAsyncAction, 1516535814, 33850, 19881, 134, 91, 157, 38, 229, 223, 173, 123);
+RT_INTERFACE!{interface IAsyncAction(IAsyncActionVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncAction] {
+    fn put_Completed(&self, handler: *mut AsyncActionCompletedHandler) -> HRESULT,
+    fn get_Completed(&self, out: *mut *mut AsyncActionCompletedHandler) -> HRESULT,
+    fn GetResults(&self) -> HRESULT
+}}
+impl IAsyncAction {
+    #[inline] pub unsafe fn set_completed(&self, handler: &AsyncActionCompletedHandler) -> Result<()> {
+        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_completed(&self) -> Result<ComPtr<AsyncActionCompletedHandler>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Completed)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_results(&self) -> Result<()> {
+        let hr = ((*self.lpVtbl).GetResults)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_AsyncActionCompletedHandler, 2767019137, 30409, 16573, 139, 230, 177, 217, 15, 178, 10, 231);
+RT_DELEGATE!{delegate AsyncActionCompletedHandler(AsyncActionCompletedHandlerVtbl, AsyncActionCompletedHandlerImpl) [IID_AsyncActionCompletedHandler] {
+    fn Invoke(&self, asyncInfo: *mut IAsyncAction, asyncStatus: AsyncStatus) -> HRESULT
+}}
+impl AsyncActionCompletedHandler {
+    #[inline] pub unsafe fn invoke(&self, asyncInfo: &IAsyncAction, asyncStatus: AsyncStatus) -> Result<()> {
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, asyncStatus);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_AsyncActionProgressHandler, 1837385816, 3327, 17808, 174, 137, 149, 165, 165, 200, 180, 184);
+RT_DELEGATE!{delegate AsyncActionProgressHandler<TProgress>(AsyncActionProgressHandlerVtbl, AsyncActionProgressHandlerImpl) [IID_AsyncActionProgressHandler] {
+    fn Invoke(&self, asyncInfo: *mut IAsyncActionWithProgress<TProgress>, progressInfo: TProgress::Abi) -> HRESULT
+}}
+impl<TProgress: RtType> AsyncActionProgressHandler<TProgress> {
+    #[inline] pub unsafe fn invoke(&self, asyncInfo: &IAsyncActionWithProgress<TProgress>, progressInfo: &TProgress::In) -> Result<()> {
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, TProgress::unwrap(progressInfo));
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_IAsyncActionWithProgress, 527282776, 59395, 18593, 149, 70, 235, 115, 83, 57, 136, 132);
+RT_INTERFACE!{interface IAsyncActionWithProgress<TProgress>(IAsyncActionWithProgressVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncActionWithProgress] {
+    fn put_Progress(&self, handler: *mut AsyncActionProgressHandler<TProgress>) -> HRESULT,
+    fn get_Progress(&self, out: *mut *mut AsyncActionProgressHandler<TProgress>) -> HRESULT,
+    fn put_Completed(&self, handler: *mut AsyncActionWithProgressCompletedHandler<TProgress>) -> HRESULT,
+    fn get_Completed(&self, out: *mut *mut AsyncActionWithProgressCompletedHandler<TProgress>) -> HRESULT,
+    fn GetResults(&self) -> HRESULT
+}}
+impl<TProgress: RtType> IAsyncActionWithProgress<TProgress> {
+    #[inline] pub unsafe fn set_progress(&self, handler: &AsyncActionProgressHandler<TProgress>) -> Result<()> {
+        let hr = ((*self.lpVtbl).put_Progress)(self as *const _ as *mut _, handler as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_progress(&self) -> Result<ComPtr<AsyncActionProgressHandler<TProgress>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn set_completed(&self, handler: &AsyncActionWithProgressCompletedHandler<TProgress>) -> Result<()> {
+        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_completed(&self) -> Result<ComPtr<AsyncActionWithProgressCompletedHandler<TProgress>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Completed)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_results(&self) -> Result<()> {
+        let hr = ((*self.lpVtbl).GetResults)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_AsyncActionWithProgressCompletedHandler, 2617417617, 52356, 17661, 172, 38, 10, 108, 78, 85, 82, 129);
+RT_DELEGATE!{delegate AsyncActionWithProgressCompletedHandler<TProgress>(AsyncActionWithProgressCompletedHandlerVtbl, AsyncActionWithProgressCompletedHandlerImpl) [IID_AsyncActionWithProgressCompletedHandler] {
+    fn Invoke(&self, asyncInfo: *mut IAsyncActionWithProgress<TProgress>, asyncStatus: AsyncStatus) -> HRESULT
+}}
+impl<TProgress: RtType> AsyncActionWithProgressCompletedHandler<TProgress> {
+    #[inline] pub unsafe fn invoke(&self, asyncInfo: &IAsyncActionWithProgress<TProgress>, asyncStatus: AsyncStatus) -> Result<()> {
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, asyncStatus);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_IAsyncInfo, 54, 0, 0, 192, 0, 0, 0, 0, 0, 0, 70);
+RT_INTERFACE!{interface IAsyncInfo(IAsyncInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncInfo] {
+    fn get_Id(&self, out: *mut u32) -> HRESULT,
+    fn get_Status(&self, out: *mut AsyncStatus) -> HRESULT,
+    fn get_ErrorCode(&self, out: *mut HResult) -> HRESULT,
+    fn Cancel(&self) -> HRESULT,
+    fn Close(&self) -> HRESULT
+}}
+impl IAsyncInfo {
+    #[inline] pub unsafe fn get_id(&self) -> Result<u32> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_status(&self) -> Result<AsyncStatus> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_error_code(&self) -> Result<HResult> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ErrorCode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn cancel(&self) -> Result<()> {
+        let hr = ((*self.lpVtbl).Cancel)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn close(&self) -> Result<()> {
+        let hr = ((*self.lpVtbl).Close)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_IAsyncOperation, 2680336571, 58438, 17634, 170, 97, 156, 171, 143, 99, 106, 242);
+RT_INTERFACE!{interface IAsyncOperation<TResult>(IAsyncOperationVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncOperation] {
+    fn put_Completed(&self, handler: *mut AsyncOperationCompletedHandler<TResult>) -> HRESULT,
+    fn get_Completed(&self, out: *mut *mut AsyncOperationCompletedHandler<TResult>) -> HRESULT,
+    fn GetResults(&self, out: *mut TResult::Abi) -> HRESULT
+}}
+impl<TResult: RtType> IAsyncOperation<TResult> {
+    #[inline] pub unsafe fn set_completed(&self, handler: &AsyncOperationCompletedHandler<TResult>) -> Result<()> {
+        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_completed(&self) -> Result<ComPtr<AsyncOperationCompletedHandler<TResult>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Completed)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_results(&self) -> Result<TResult::Out> {
+        let mut out = TResult::uninitialized();
+        let hr = ((*self.lpVtbl).GetResults)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(TResult::wrap(out)) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_AsyncOperationCompletedHandler, 4242337836, 58840, 17528, 145, 90, 77, 144, 183, 75, 131, 165);
+RT_DELEGATE!{delegate AsyncOperationCompletedHandler<TResult>(AsyncOperationCompletedHandlerVtbl, AsyncOperationCompletedHandlerImpl) [IID_AsyncOperationCompletedHandler] {
+    fn Invoke(&self, asyncInfo: *mut IAsyncOperation<TResult>, asyncStatus: AsyncStatus) -> HRESULT
+}}
+impl<TResult: RtType> AsyncOperationCompletedHandler<TResult> {
+    #[inline] pub unsafe fn invoke(&self, asyncInfo: &IAsyncOperation<TResult>, asyncStatus: AsyncStatus) -> Result<()> {
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, asyncStatus);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_AsyncOperationProgressHandler, 1432946946, 2731, 16922, 135, 120, 248, 206, 80, 38, 215, 88);
+RT_DELEGATE!{delegate AsyncOperationProgressHandler<TResult, TProgress>(AsyncOperationProgressHandlerVtbl, AsyncOperationProgressHandlerImpl) [IID_AsyncOperationProgressHandler] {
+    fn Invoke(&self, asyncInfo: *mut IAsyncOperationWithProgress<TResult, TProgress>, progressInfo: TProgress::Abi) -> HRESULT
+}}
+impl<TResult: RtType, TProgress: RtType> AsyncOperationProgressHandler<TResult, TProgress> {
+    #[inline] pub unsafe fn invoke(&self, asyncInfo: &IAsyncOperationWithProgress<TResult, TProgress>, progressInfo: &TProgress::In) -> Result<()> {
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, TProgress::unwrap(progressInfo));
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_IAsyncOperationWithProgress, 3050321623, 58007, 18831, 186, 96, 2, 137, 231, 110, 35, 221);
+RT_INTERFACE!{interface IAsyncOperationWithProgress<TResult, TProgress>(IAsyncOperationWithProgressVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncOperationWithProgress] {
+    fn put_Progress(&self, handler: *mut AsyncOperationProgressHandler<TResult, TProgress>) -> HRESULT,
+    fn get_Progress(&self, out: *mut *mut AsyncOperationProgressHandler<TResult, TProgress>) -> HRESULT,
+    fn put_Completed(&self, handler: *mut AsyncOperationWithProgressCompletedHandler<TResult, TProgress>) -> HRESULT,
+    fn get_Completed(&self, out: *mut *mut AsyncOperationWithProgressCompletedHandler<TResult, TProgress>) -> HRESULT,
+    fn GetResults(&self, out: *mut TResult::Abi) -> HRESULT
+}}
+impl<TResult: RtType, TProgress: RtType> IAsyncOperationWithProgress<TResult, TProgress> {
+    #[inline] pub unsafe fn set_progress(&self, handler: &AsyncOperationProgressHandler<TResult, TProgress>) -> Result<()> {
+        let hr = ((*self.lpVtbl).put_Progress)(self as *const _ as *mut _, handler as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_progress(&self) -> Result<ComPtr<AsyncOperationProgressHandler<TResult, TProgress>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn set_completed(&self, handler: &AsyncOperationWithProgressCompletedHandler<TResult, TProgress>) -> Result<()> {
+        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_completed(&self) -> Result<ComPtr<AsyncOperationWithProgressCompletedHandler<TResult, TProgress>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Completed)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_results(&self) -> Result<TResult::Out> {
+        let mut out = TResult::uninitialized();
+        let hr = ((*self.lpVtbl).GetResults)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(TResult::wrap(out)) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_AsyncOperationWithProgressCompletedHandler, 3898471453, 27303, 18147, 168, 226, 240, 9, 216, 64, 198, 39);
+RT_DELEGATE!{delegate AsyncOperationWithProgressCompletedHandler<TResult, TProgress>(AsyncOperationWithProgressCompletedHandlerVtbl, AsyncOperationWithProgressCompletedHandlerImpl) [IID_AsyncOperationWithProgressCompletedHandler] {
+    fn Invoke(&self, asyncInfo: *mut IAsyncOperationWithProgress<TResult, TProgress>, asyncStatus: AsyncStatus) -> HRESULT
+}}
+impl<TResult: RtType, TProgress: RtType> AsyncOperationWithProgressCompletedHandler<TResult, TProgress> {
+    #[inline] pub unsafe fn invoke(&self, asyncInfo: &IAsyncOperationWithProgress<TResult, TProgress>, asyncStatus: AsyncStatus) -> Result<()> {
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, asyncStatus);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+RT_ENUM! { enum AsyncStatus: i32 {
+    Canceled (AsyncStatus_Canceled) = 2, Completed (AsyncStatus_Completed) = 1, Error (AsyncStatus_Error) = 3, Started (AsyncStatus_Started) = 0,
+}}
 DEFINE_IID!(IID_IClosable, 819308585, 32676, 16422, 131, 187, 215, 91, 174, 78, 169, 158);
 RT_INTERFACE!{interface IClosable(IClosableVtbl): IInspectable(IInspectableVtbl) [IID_IClosable] {
     fn Close(&self) -> HRESULT
@@ -9,23 +213,132 @@ impl IClosable {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-RT_ENUM! { enum PropertyType: i32 {
-    Empty (PropertyType_Empty) = 0, UInt8 (PropertyType_UInt8) = 1, Int16 (PropertyType_Int16) = 2, UInt16 (PropertyType_UInt16) = 3, Int32 (PropertyType_Int32) = 4, UInt32 (PropertyType_UInt32) = 5, Int64 (PropertyType_Int64) = 6, UInt64 (PropertyType_UInt64) = 7, Single (PropertyType_Single) = 8, Double (PropertyType_Double) = 9, Char16 (PropertyType_Char16) = 10, Boolean (PropertyType_Boolean) = 11, String (PropertyType_String) = 12, Inspectable (PropertyType_Inspectable) = 13, DateTime (PropertyType_DateTime) = 14, TimeSpan (PropertyType_TimeSpan) = 15, Guid (PropertyType_Guid) = 16, Point (PropertyType_Point) = 17, Size (PropertyType_Size) = 18, Rect (PropertyType_Rect) = 19, OtherType (PropertyType_OtherType) = 20, UInt8Array (PropertyType_UInt8Array) = 1025, Int16Array (PropertyType_Int16Array) = 1026, UInt16Array (PropertyType_UInt16Array) = 1027, Int32Array (PropertyType_Int32Array) = 1028, UInt32Array (PropertyType_UInt32Array) = 1029, Int64Array (PropertyType_Int64Array) = 1030, UInt64Array (PropertyType_UInt64Array) = 1031, SingleArray (PropertyType_SingleArray) = 1032, DoubleArray (PropertyType_DoubleArray) = 1033, Char16Array (PropertyType_Char16Array) = 1034, BooleanArray (PropertyType_BooleanArray) = 1035, StringArray (PropertyType_StringArray) = 1036, InspectableArray (PropertyType_InspectableArray) = 1037, DateTimeArray (PropertyType_DateTimeArray) = 1038, TimeSpanArray (PropertyType_TimeSpanArray) = 1039, GuidArray (PropertyType_GuidArray) = 1040, PointArray (PropertyType_PointArray) = 1041, SizeArray (PropertyType_SizeArray) = 1042, RectArray (PropertyType_RectArray) = 1043, OtherTypeArray (PropertyType_OtherTypeArray) = 1044,
-}}
-RT_STRUCT! { struct Point {
-    X: f32, Y: f32,
-}}
-RT_STRUCT! { struct Size {
-    Width: f32, Height: f32,
-}}
-RT_STRUCT! { struct Rect {
-    X: f32, Y: f32, Width: f32, Height: f32,
-}}
 RT_STRUCT! { struct DateTime {
     UniversalTime: i64,
 }}
-RT_STRUCT! { struct TimeSpan {
-    Duration: i64,
+DEFINE_IID!(IID_IDeferral, 3592853298, 15231, 18087, 180, 11, 79, 220, 162, 162, 198, 147);
+RT_INTERFACE!{interface IDeferral(IDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IDeferral] {
+    fn Complete(&self) -> HRESULT
+}}
+impl IDeferral {
+    #[inline] pub unsafe fn complete(&self) -> Result<()> {
+        let hr = ((*self.lpVtbl).Complete)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+RT_CLASS!{class Deferral: IDeferral}
+impl RtActivatable<IDeferralFactory> for Deferral {}
+impl Deferral {
+    #[inline] pub fn create(handler: &DeferralCompletedHandler) -> Result<ComPtr<Deferral>> { unsafe {
+        <Self as RtActivatable<IDeferralFactory>>::get_activation_factory().create(handler)
+    }}
+}
+DEFINE_CLSID!(Deferral(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,101,102,101,114,114,97,108,0]) [CLSID_Deferral]);
+DEFINE_IID!(IID_DeferralCompletedHandler, 3979518834, 62408, 20394, 156, 251, 71, 1, 72, 218, 56, 136);
+RT_DELEGATE!{delegate DeferralCompletedHandler(DeferralCompletedHandlerVtbl, DeferralCompletedHandlerImpl) [IID_DeferralCompletedHandler] {
+    fn Invoke(&self) -> HRESULT
+}}
+impl DeferralCompletedHandler {
+    #[inline] pub unsafe fn invoke(&self) -> Result<()> {
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_IDeferralFactory, 1705110725, 16309, 18482, 140, 169, 240, 97, 178, 129, 209, 58);
+RT_INTERFACE!{static interface IDeferralFactory(IDeferralFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDeferralFactory] {
+    fn Create(&self, handler: *mut DeferralCompletedHandler, out: *mut *mut Deferral) -> HRESULT
+}}
+impl IDeferralFactory {
+    #[inline] pub unsafe fn create(&self, handler: &DeferralCompletedHandler) -> Result<ComPtr<Deferral>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_EventHandler, 2648818997, 27361, 4576, 132, 225, 24, 169, 5, 188, 197, 63);
+RT_DELEGATE!{delegate EventHandler<T>(EventHandlerVtbl, EventHandlerImpl) [IID_EventHandler] {
+    fn Invoke(&self, sender: *mut IInspectable, args: T::Abi) -> HRESULT
+}}
+impl<T: RtType> EventHandler<T> {
+    #[inline] pub unsafe fn invoke(&self, sender: &IInspectable, args: &T::In) -> Result<()> {
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, T::unwrap(args));
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+RT_STRUCT! { struct EventRegistrationToken {
+    Value: i64,
+}}
+DEFINE_IID!(IID_IGetActivationFactory, 1323011810, 38621, 18855, 148, 247, 70, 7, 221, 171, 142, 60);
+RT_INTERFACE!{interface IGetActivationFactory(IGetActivationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGetActivationFactory] {
+    fn GetActivationFactory(&self, activatableClassId: HSTRING, out: *mut *mut IInspectable) -> HRESULT
+}}
+impl IGetActivationFactory {
+    #[inline] pub unsafe fn get_activation_factory(&self, activatableClassId: &HStringArg) -> Result<ComPtr<IInspectable>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetActivationFactory)(self as *const _ as *mut _, activatableClassId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
+RT_STRUCT! { struct HResult {
+    Value: i32,
+}}
+DEFINE_IID!(IID_IMemoryBuffer, 4223982890, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
+RT_INTERFACE!{interface IMemoryBuffer(IMemoryBufferVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBuffer] {
+    fn CreateReference(&self, out: *mut *mut IMemoryBufferReference) -> HRESULT
+}}
+impl IMemoryBuffer {
+    #[inline] pub unsafe fn create_reference(&self) -> Result<ComPtr<IMemoryBufferReference>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateReference)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
+RT_CLASS!{class MemoryBuffer: IMemoryBuffer}
+impl RtActivatable<IMemoryBufferFactory> for MemoryBuffer {}
+impl MemoryBuffer {
+    #[inline] pub fn create(capacity: u32) -> Result<ComPtr<MemoryBuffer>> { unsafe {
+        <Self as RtActivatable<IMemoryBufferFactory>>::get_activation_factory().create(capacity)
+    }}
+}
+DEFINE_CLSID!(MemoryBuffer(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,77,101,109,111,114,121,66,117,102,102,101,114,0]) [CLSID_MemoryBuffer]);
+DEFINE_IID!(IID_IMemoryBufferFactory, 4223982891, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
+RT_INTERFACE!{static interface IMemoryBufferFactory(IMemoryBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBufferFactory] {
+    fn Create(&self, capacity: u32, out: *mut *mut MemoryBuffer) -> HRESULT
+}}
+impl IMemoryBufferFactory {
+    #[inline] pub unsafe fn create(&self, capacity: u32) -> Result<ComPtr<MemoryBuffer>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, capacity, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_IMemoryBufferReference, 4223982889, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
+RT_INTERFACE!{interface IMemoryBufferReference(IMemoryBufferReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBufferReference] {
+    fn get_Capacity(&self, out: *mut u32) -> HRESULT,
+    fn add_Closed(&self, handler: *mut TypedEventHandler<IMemoryBufferReference, IInspectable>, out: *mut EventRegistrationToken) -> HRESULT,
+    fn remove_Closed(&self, cookie: EventRegistrationToken) -> HRESULT
+}}
+impl IMemoryBufferReference {
+    #[inline] pub unsafe fn get_capacity(&self) -> Result<u32> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Capacity)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn add_closed(&self, handler: &TypedEventHandler<IMemoryBufferReference, IInspectable>) -> Result<EventRegistrationToken> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn remove_closed(&self, cookie: EventRegistrationToken) -> Result<()> {
+        let hr = ((*self.lpVtbl).remove_Closed)(self as *const _ as *mut _, cookie);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+RT_STRUCT! { struct Point {
+    X: f32, Y: f32,
+}}
+RT_ENUM! { enum PropertyType: i32 {
+    Empty (PropertyType_Empty) = 0, UInt8 (PropertyType_UInt8) = 1, Int16 (PropertyType_Int16) = 2, UInt16 (PropertyType_UInt16) = 3, Int32 (PropertyType_Int32) = 4, UInt32 (PropertyType_UInt32) = 5, Int64 (PropertyType_Int64) = 6, UInt64 (PropertyType_UInt64) = 7, Single (PropertyType_Single) = 8, Double (PropertyType_Double) = 9, Char16 (PropertyType_Char16) = 10, Boolean (PropertyType_Boolean) = 11, String (PropertyType_String) = 12, Inspectable (PropertyType_Inspectable) = 13, DateTime (PropertyType_DateTime) = 14, TimeSpan (PropertyType_TimeSpan) = 15, Guid (PropertyType_Guid) = 16, Point (PropertyType_Point) = 17, Size (PropertyType_Size) = 18, Rect (PropertyType_Rect) = 19, OtherType (PropertyType_OtherType) = 20, UInt8Array (PropertyType_UInt8Array) = 1025, Int16Array (PropertyType_Int16Array) = 1026, UInt16Array (PropertyType_UInt16Array) = 1027, Int32Array (PropertyType_Int32Array) = 1028, UInt32Array (PropertyType_UInt32Array) = 1029, Int64Array (PropertyType_Int64Array) = 1030, UInt64Array (PropertyType_UInt64Array) = 1031, SingleArray (PropertyType_SingleArray) = 1032, DoubleArray (PropertyType_DoubleArray) = 1033, Char16Array (PropertyType_Char16Array) = 1034, BooleanArray (PropertyType_BooleanArray) = 1035, StringArray (PropertyType_StringArray) = 1036, InspectableArray (PropertyType_InspectableArray) = 1037, DateTimeArray (PropertyType_DateTimeArray) = 1038, TimeSpanArray (PropertyType_TimeSpanArray) = 1039, GuidArray (PropertyType_GuidArray) = 1040, PointArray (PropertyType_PointArray) = 1041, SizeArray (PropertyType_SizeArray) = 1042, RectArray (PropertyType_RectArray) = 1043, OtherTypeArray (PropertyType_OtherTypeArray) = 1044,
 }}
 DEFINE_IID!(IID_IPropertyValue, 1272349405, 30036, 16617, 154, 155, 130, 101, 78, 222, 126, 98);
 RT_INTERFACE!{interface IPropertyValue(IPropertyValueVtbl): IInspectable(IInspectableVtbl) [IID_IPropertyValue] {
@@ -266,6 +579,128 @@ impl IPropertyValue {
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }
 }
+RT_CLASS!{static class PropertyValue}
+impl RtActivatable<IPropertyValueStatics> for PropertyValue {}
+impl PropertyValue {
+    #[inline] pub fn create_empty() -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_empty()
+    }}
+    #[inline] pub fn create_uint8(value: u8) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint8(value)
+    }}
+    #[inline] pub fn create_int16(value: i16) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int16(value)
+    }}
+    #[inline] pub fn create_uint16(value: u16) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint16(value)
+    }}
+    #[inline] pub fn create_int32(value: i32) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int32(value)
+    }}
+    #[inline] pub fn create_uint32(value: u32) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint32(value)
+    }}
+    #[inline] pub fn create_int64(value: i64) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int64(value)
+    }}
+    #[inline] pub fn create_uint64(value: u64) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint64(value)
+    }}
+    #[inline] pub fn create_single(value: f32) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_single(value)
+    }}
+    #[inline] pub fn create_double(value: f64) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_double(value)
+    }}
+    #[inline] pub fn create_char16(value: Char) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_char16(value)
+    }}
+    #[inline] pub fn create_boolean(value: bool) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_boolean(value)
+    }}
+    #[inline] pub fn create_string(value: &HStringArg) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_string(value)
+    }}
+    #[inline] pub fn create_inspectable(value: &IInspectable) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_inspectable(value)
+    }}
+    #[inline] pub fn create_guid(value: Guid) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_guid(value)
+    }}
+    #[inline] pub fn create_date_time(value: DateTime) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_date_time(value)
+    }}
+    #[inline] pub fn create_time_span(value: TimeSpan) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_time_span(value)
+    }}
+    #[inline] pub fn create_point(value: Point) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_point(value)
+    }}
+    #[inline] pub fn create_size(value: Size) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_size(value)
+    }}
+    #[inline] pub fn create_rect(value: Rect) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_rect(value)
+    }}
+    #[inline] pub fn create_uint8_array(value: &[u8]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint8_array(value)
+    }}
+    #[inline] pub fn create_int16_array(value: &[i16]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int16_array(value)
+    }}
+    #[inline] pub fn create_uint16_array(value: &[u16]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint16_array(value)
+    }}
+    #[inline] pub fn create_int32_array(value: &[i32]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int32_array(value)
+    }}
+    #[inline] pub fn create_uint32_array(value: &[u32]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint32_array(value)
+    }}
+    #[inline] pub fn create_int64_array(value: &[i64]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int64_array(value)
+    }}
+    #[inline] pub fn create_uint64_array(value: &[u64]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint64_array(value)
+    }}
+    #[inline] pub fn create_single_array(value: &[f32]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_single_array(value)
+    }}
+    #[inline] pub fn create_double_array(value: &[f64]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_double_array(value)
+    }}
+    #[inline] pub fn create_char16_array(value: &[Char]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_char16_array(value)
+    }}
+    #[inline] pub fn create_boolean_array(value: &[bool]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_boolean_array(value)
+    }}
+    #[inline] pub fn create_string_array(value: &[&HStringArg]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_string_array(value)
+    }}
+    #[inline] pub fn create_inspectable_array(value: &[&IInspectable]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_inspectable_array(value)
+    }}
+    #[inline] pub fn create_guid_array(value: &[Guid]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_guid_array(value)
+    }}
+    #[inline] pub fn create_date_time_array(value: &[DateTime]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_date_time_array(value)
+    }}
+    #[inline] pub fn create_time_span_array(value: &[TimeSpan]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_time_span_array(value)
+    }}
+    #[inline] pub fn create_point_array(value: &[Point]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_point_array(value)
+    }}
+    #[inline] pub fn create_size_array(value: &[Size]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_size_array(value)
+    }}
+    #[inline] pub fn create_rect_array(value: &[Rect]) -> Result<ComPtr<IInspectable>> { unsafe {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_rect_array(value)
+    }}
+}
+DEFINE_CLSID!(PropertyValue(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,80,114,111,112,101,114,116,121,86,97,108,117,101,0]) [CLSID_PropertyValue]);
 DEFINE_IID!(IID_IPropertyValueStatics, 1654381512, 55602, 20468, 150, 185, 141, 150, 197, 193, 232, 88);
 RT_INTERFACE!{static interface IPropertyValueStatics(IPropertyValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPropertyValueStatics] {
     fn CreateEmpty(&self, out: *mut *mut IInspectable) -> HRESULT,
@@ -505,388 +940,9 @@ impl IPropertyValueStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_CLASS!{static class PropertyValue}
-impl RtActivatable<IPropertyValueStatics> for PropertyValue {}
-impl PropertyValue {
-    #[inline] pub fn create_empty() -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_empty()
-    }}
-    #[inline] pub fn create_uint8(value: u8) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint8(value)
-    }}
-    #[inline] pub fn create_int16(value: i16) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int16(value)
-    }}
-    #[inline] pub fn create_uint16(value: u16) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint16(value)
-    }}
-    #[inline] pub fn create_int32(value: i32) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int32(value)
-    }}
-    #[inline] pub fn create_uint32(value: u32) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint32(value)
-    }}
-    #[inline] pub fn create_int64(value: i64) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int64(value)
-    }}
-    #[inline] pub fn create_uint64(value: u64) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint64(value)
-    }}
-    #[inline] pub fn create_single(value: f32) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_single(value)
-    }}
-    #[inline] pub fn create_double(value: f64) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_double(value)
-    }}
-    #[inline] pub fn create_char16(value: Char) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_char16(value)
-    }}
-    #[inline] pub fn create_boolean(value: bool) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_boolean(value)
-    }}
-    #[inline] pub fn create_string(value: &HStringArg) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_string(value)
-    }}
-    #[inline] pub fn create_inspectable(value: &IInspectable) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_inspectable(value)
-    }}
-    #[inline] pub fn create_guid(value: Guid) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_guid(value)
-    }}
-    #[inline] pub fn create_date_time(value: DateTime) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_date_time(value)
-    }}
-    #[inline] pub fn create_time_span(value: TimeSpan) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_time_span(value)
-    }}
-    #[inline] pub fn create_point(value: Point) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_point(value)
-    }}
-    #[inline] pub fn create_size(value: Size) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_size(value)
-    }}
-    #[inline] pub fn create_rect(value: Rect) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_rect(value)
-    }}
-    #[inline] pub fn create_uint8_array(value: &[u8]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint8_array(value)
-    }}
-    #[inline] pub fn create_int16_array(value: &[i16]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int16_array(value)
-    }}
-    #[inline] pub fn create_uint16_array(value: &[u16]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint16_array(value)
-    }}
-    #[inline] pub fn create_int32_array(value: &[i32]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int32_array(value)
-    }}
-    #[inline] pub fn create_uint32_array(value: &[u32]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint32_array(value)
-    }}
-    #[inline] pub fn create_int64_array(value: &[i64]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int64_array(value)
-    }}
-    #[inline] pub fn create_uint64_array(value: &[u64]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint64_array(value)
-    }}
-    #[inline] pub fn create_single_array(value: &[f32]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_single_array(value)
-    }}
-    #[inline] pub fn create_double_array(value: &[f64]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_double_array(value)
-    }}
-    #[inline] pub fn create_char16_array(value: &[Char]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_char16_array(value)
-    }}
-    #[inline] pub fn create_boolean_array(value: &[bool]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_boolean_array(value)
-    }}
-    #[inline] pub fn create_string_array(value: &[&HStringArg]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_string_array(value)
-    }}
-    #[inline] pub fn create_inspectable_array(value: &[&IInspectable]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_inspectable_array(value)
-    }}
-    #[inline] pub fn create_guid_array(value: &[Guid]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_guid_array(value)
-    }}
-    #[inline] pub fn create_date_time_array(value: &[DateTime]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_date_time_array(value)
-    }}
-    #[inline] pub fn create_time_span_array(value: &[TimeSpan]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_time_span_array(value)
-    }}
-    #[inline] pub fn create_point_array(value: &[Point]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_point_array(value)
-    }}
-    #[inline] pub fn create_size_array(value: &[Size]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_size_array(value)
-    }}
-    #[inline] pub fn create_rect_array(value: &[Rect]) -> Result<ComPtr<IInspectable>> { unsafe {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_rect_array(value)
-    }}
-}
-DEFINE_CLSID!(PropertyValue(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,80,114,111,112,101,114,116,121,86,97,108,117,101,0]) [CLSID_PropertyValue]);
-DEFINE_IID!(IID_IStringable, 2520162132, 36534, 18672, 171, 206, 193, 178, 17, 230, 39, 195);
-RT_INTERFACE!{interface IStringable(IStringableVtbl): IInspectable(IInspectableVtbl) [IID_IStringable] {
-    fn ToString(&self, out: *mut HSTRING) -> HRESULT
+RT_STRUCT! { struct Rect {
+    X: f32, Y: f32, Width: f32, Height: f32,
 }}
-impl IStringable {
-    #[inline] pub unsafe fn to_string(&self) -> Result<HString> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ToString)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_AsyncActionCompletedHandler, 2767019137, 30409, 16573, 139, 230, 177, 217, 15, 178, 10, 231);
-RT_DELEGATE!{delegate AsyncActionCompletedHandler(AsyncActionCompletedHandlerVtbl, AsyncActionCompletedHandlerImpl) [IID_AsyncActionCompletedHandler] {
-    fn Invoke(&self, asyncInfo: *mut IAsyncAction, asyncStatus: AsyncStatus) -> HRESULT
-}}
-impl AsyncActionCompletedHandler {
-    #[inline] pub unsafe fn invoke(&self, asyncInfo: &IAsyncAction, asyncStatus: AsyncStatus) -> Result<()> {
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, asyncStatus);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IDeferral, 3592853298, 15231, 18087, 180, 11, 79, 220, 162, 162, 198, 147);
-RT_INTERFACE!{interface IDeferral(IDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IDeferral] {
-    fn Complete(&self) -> HRESULT
-}}
-impl IDeferral {
-    #[inline] pub unsafe fn complete(&self) -> Result<()> {
-        let hr = ((*self.lpVtbl).Complete)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_DeferralCompletedHandler, 3979518834, 62408, 20394, 156, 251, 71, 1, 72, 218, 56, 136);
-RT_DELEGATE!{delegate DeferralCompletedHandler(DeferralCompletedHandlerVtbl, DeferralCompletedHandlerImpl) [IID_DeferralCompletedHandler] {
-    fn Invoke(&self) -> HRESULT
-}}
-impl DeferralCompletedHandler {
-    #[inline] pub unsafe fn invoke(&self) -> Result<()> {
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IDeferralFactory, 1705110725, 16309, 18482, 140, 169, 240, 97, 178, 129, 209, 58);
-RT_INTERFACE!{static interface IDeferralFactory(IDeferralFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDeferralFactory] {
-    fn Create(&self, handler: *mut DeferralCompletedHandler, out: *mut *mut Deferral) -> HRESULT
-}}
-impl IDeferralFactory {
-    #[inline] pub unsafe fn create(&self, handler: &DeferralCompletedHandler) -> Result<ComPtr<Deferral>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-}
-RT_CLASS!{class Deferral: IDeferral}
-impl RtActivatable<IDeferralFactory> for Deferral {}
-impl Deferral {
-    #[inline] pub fn create(handler: &DeferralCompletedHandler) -> Result<ComPtr<Deferral>> { unsafe {
-        <Self as RtActivatable<IDeferralFactory>>::get_activation_factory().create(handler)
-    }}
-}
-DEFINE_CLSID!(Deferral(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,101,102,101,114,114,97,108,0]) [CLSID_Deferral]);
-RT_ENUM! { enum AsyncStatus: i32 {
-    Canceled (AsyncStatus_Canceled) = 2, Completed (AsyncStatus_Completed) = 1, Error (AsyncStatus_Error) = 3, Started (AsyncStatus_Started) = 0,
-}}
-RT_STRUCT! { struct EventRegistrationToken {
-    Value: i64,
-}}
-RT_STRUCT! { struct HResult {
-    Value: i32,
-}}
-DEFINE_IID!(IID_IAsyncInfo, 54, 0, 0, 192, 0, 0, 0, 0, 0, 0, 70);
-RT_INTERFACE!{interface IAsyncInfo(IAsyncInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncInfo] {
-    fn get_Id(&self, out: *mut u32) -> HRESULT,
-    fn get_Status(&self, out: *mut AsyncStatus) -> HRESULT,
-    fn get_ErrorCode(&self, out: *mut HResult) -> HRESULT,
-    fn Cancel(&self) -> HRESULT,
-    fn Close(&self) -> HRESULT
-}}
-impl IAsyncInfo {
-    #[inline] pub unsafe fn get_id(&self) -> Result<u32> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_status(&self) -> Result<AsyncStatus> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_error_code(&self) -> Result<HResult> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ErrorCode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn cancel(&self) -> Result<()> {
-        let hr = ((*self.lpVtbl).Cancel)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn close(&self) -> Result<()> {
-        let hr = ((*self.lpVtbl).Close)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IAsyncAction, 1516535814, 33850, 19881, 134, 91, 157, 38, 229, 223, 173, 123);
-RT_INTERFACE!{interface IAsyncAction(IAsyncActionVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncAction] {
-    fn put_Completed(&self, handler: *mut AsyncActionCompletedHandler) -> HRESULT,
-    fn get_Completed(&self, out: *mut *mut AsyncActionCompletedHandler) -> HRESULT,
-    fn GetResults(&self) -> HRESULT
-}}
-impl IAsyncAction {
-    #[inline] pub unsafe fn set_completed(&self, handler: &AsyncActionCompletedHandler) -> Result<()> {
-        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_completed(&self) -> Result<ComPtr<AsyncActionCompletedHandler>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Completed)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_results(&self) -> Result<()> {
-        let hr = ((*self.lpVtbl).GetResults)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_AsyncOperationWithProgressCompletedHandler, 3898471453, 27303, 18147, 168, 226, 240, 9, 216, 64, 198, 39);
-RT_DELEGATE!{delegate AsyncOperationWithProgressCompletedHandler<TResult, TProgress>(AsyncOperationWithProgressCompletedHandlerVtbl, AsyncOperationWithProgressCompletedHandlerImpl) [IID_AsyncOperationWithProgressCompletedHandler] {
-    fn Invoke(&self, asyncInfo: *mut IAsyncOperationWithProgress<TResult, TProgress>, asyncStatus: AsyncStatus) -> HRESULT
-}}
-impl<TResult: RtType, TProgress: RtType> AsyncOperationWithProgressCompletedHandler<TResult, TProgress> {
-    #[inline] pub unsafe fn invoke(&self, asyncInfo: &IAsyncOperationWithProgress<TResult, TProgress>, asyncStatus: AsyncStatus) -> Result<()> {
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, asyncStatus);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IAsyncOperationWithProgress, 3050321623, 58007, 18831, 186, 96, 2, 137, 231, 110, 35, 221);
-RT_INTERFACE!{interface IAsyncOperationWithProgress<TResult, TProgress>(IAsyncOperationWithProgressVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncOperationWithProgress] {
-    fn put_Progress(&self, handler: *mut AsyncOperationProgressHandler<TResult, TProgress>) -> HRESULT,
-    fn get_Progress(&self, out: *mut *mut AsyncOperationProgressHandler<TResult, TProgress>) -> HRESULT,
-    fn put_Completed(&self, handler: *mut AsyncOperationWithProgressCompletedHandler<TResult, TProgress>) -> HRESULT,
-    fn get_Completed(&self, out: *mut *mut AsyncOperationWithProgressCompletedHandler<TResult, TProgress>) -> HRESULT,
-    fn GetResults(&self, out: *mut TResult::Abi) -> HRESULT
-}}
-impl<TResult: RtType, TProgress: RtType> IAsyncOperationWithProgress<TResult, TProgress> {
-    #[inline] pub unsafe fn set_progress(&self, handler: &AsyncOperationProgressHandler<TResult, TProgress>) -> Result<()> {
-        let hr = ((*self.lpVtbl).put_Progress)(self as *const _ as *mut _, handler as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_progress(&self) -> Result<ComPtr<AsyncOperationProgressHandler<TResult, TProgress>>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn set_completed(&self, handler: &AsyncOperationWithProgressCompletedHandler<TResult, TProgress>) -> Result<()> {
-        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_completed(&self) -> Result<ComPtr<AsyncOperationWithProgressCompletedHandler<TResult, TProgress>>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Completed)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_results(&self) -> Result<TResult::Out> {
-        let mut out = TResult::uninitialized();
-        let hr = ((*self.lpVtbl).GetResults)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(TResult::wrap(out)) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_AsyncOperationCompletedHandler, 4242337836, 58840, 17528, 145, 90, 77, 144, 183, 75, 131, 165);
-RT_DELEGATE!{delegate AsyncOperationCompletedHandler<TResult>(AsyncOperationCompletedHandlerVtbl, AsyncOperationCompletedHandlerImpl) [IID_AsyncOperationCompletedHandler] {
-    fn Invoke(&self, asyncInfo: *mut IAsyncOperation<TResult>, asyncStatus: AsyncStatus) -> HRESULT
-}}
-impl<TResult: RtType> AsyncOperationCompletedHandler<TResult> {
-    #[inline] pub unsafe fn invoke(&self, asyncInfo: &IAsyncOperation<TResult>, asyncStatus: AsyncStatus) -> Result<()> {
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, asyncStatus);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IAsyncOperation, 2680336571, 58438, 17634, 170, 97, 156, 171, 143, 99, 106, 242);
-RT_INTERFACE!{interface IAsyncOperation<TResult>(IAsyncOperationVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncOperation] {
-    fn put_Completed(&self, handler: *mut AsyncOperationCompletedHandler<TResult>) -> HRESULT,
-    fn get_Completed(&self, out: *mut *mut AsyncOperationCompletedHandler<TResult>) -> HRESULT,
-    fn GetResults(&self, out: *mut TResult::Abi) -> HRESULT
-}}
-impl<TResult: RtType> IAsyncOperation<TResult> {
-    #[inline] pub unsafe fn set_completed(&self, handler: &AsyncOperationCompletedHandler<TResult>) -> Result<()> {
-        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_completed(&self) -> Result<ComPtr<AsyncOperationCompletedHandler<TResult>>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Completed)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_results(&self) -> Result<TResult::Out> {
-        let mut out = TResult::uninitialized();
-        let hr = ((*self.lpVtbl).GetResults)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(TResult::wrap(out)) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_AsyncActionWithProgressCompletedHandler, 2617417617, 52356, 17661, 172, 38, 10, 108, 78, 85, 82, 129);
-RT_DELEGATE!{delegate AsyncActionWithProgressCompletedHandler<TProgress>(AsyncActionWithProgressCompletedHandlerVtbl, AsyncActionWithProgressCompletedHandlerImpl) [IID_AsyncActionWithProgressCompletedHandler] {
-    fn Invoke(&self, asyncInfo: *mut IAsyncActionWithProgress<TProgress>, asyncStatus: AsyncStatus) -> HRESULT
-}}
-impl<TProgress: RtType> AsyncActionWithProgressCompletedHandler<TProgress> {
-    #[inline] pub unsafe fn invoke(&self, asyncInfo: &IAsyncActionWithProgress<TProgress>, asyncStatus: AsyncStatus) -> Result<()> {
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, asyncStatus);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IAsyncActionWithProgress, 527282776, 59395, 18593, 149, 70, 235, 115, 83, 57, 136, 132);
-RT_INTERFACE!{interface IAsyncActionWithProgress<TProgress>(IAsyncActionWithProgressVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncActionWithProgress] {
-    fn put_Progress(&self, handler: *mut AsyncActionProgressHandler<TProgress>) -> HRESULT,
-    fn get_Progress(&self, out: *mut *mut AsyncActionProgressHandler<TProgress>) -> HRESULT,
-    fn put_Completed(&self, handler: *mut AsyncActionWithProgressCompletedHandler<TProgress>) -> HRESULT,
-    fn get_Completed(&self, out: *mut *mut AsyncActionWithProgressCompletedHandler<TProgress>) -> HRESULT,
-    fn GetResults(&self) -> HRESULT
-}}
-impl<TProgress: RtType> IAsyncActionWithProgress<TProgress> {
-    #[inline] pub unsafe fn set_progress(&self, handler: &AsyncActionProgressHandler<TProgress>) -> Result<()> {
-        let hr = ((*self.lpVtbl).put_Progress)(self as *const _ as *mut _, handler as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_progress(&self) -> Result<ComPtr<AsyncActionProgressHandler<TProgress>>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn set_completed(&self, handler: &AsyncActionWithProgressCompletedHandler<TProgress>) -> Result<()> {
-        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_completed(&self) -> Result<ComPtr<AsyncActionWithProgressCompletedHandler<TProgress>>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Completed)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_results(&self) -> Result<()> {
-        let hr = ((*self.lpVtbl).GetResults)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_AsyncOperationProgressHandler, 1432946946, 2731, 16922, 135, 120, 248, 206, 80, 38, 215, 88);
-RT_DELEGATE!{delegate AsyncOperationProgressHandler<TResult, TProgress>(AsyncOperationProgressHandlerVtbl, AsyncOperationProgressHandlerImpl) [IID_AsyncOperationProgressHandler] {
-    fn Invoke(&self, asyncInfo: *mut IAsyncOperationWithProgress<TResult, TProgress>, progressInfo: TProgress::Abi) -> HRESULT
-}}
-impl<TResult: RtType, TProgress: RtType> AsyncOperationProgressHandler<TResult, TProgress> {
-    #[inline] pub unsafe fn invoke(&self, asyncInfo: &IAsyncOperationWithProgress<TResult, TProgress>, progressInfo: &TProgress::In) -> Result<()> {
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, TProgress::unwrap(progressInfo));
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_AsyncActionProgressHandler, 1837385816, 3327, 17808, 174, 137, 149, 165, 165, 200, 180, 184);
-RT_DELEGATE!{delegate AsyncActionProgressHandler<TProgress>(AsyncActionProgressHandlerVtbl, AsyncActionProgressHandlerImpl) [IID_AsyncActionProgressHandler] {
-    fn Invoke(&self, asyncInfo: *mut IAsyncActionWithProgress<TProgress>, progressInfo: TProgress::Abi) -> HRESULT
-}}
-impl<TProgress: RtType> AsyncActionProgressHandler<TProgress> {
-    #[inline] pub unsafe fn invoke(&self, asyncInfo: &IAsyncActionWithProgress<TProgress>, progressInfo: &TProgress::In) -> Result<()> {
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, TProgress::unwrap(progressInfo));
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
 DEFINE_IID!(IID_IReference, 1640068870, 11621, 4576, 154, 232, 212, 133, 100, 1, 84, 114);
 RT_INTERFACE!{interface IReference<T>(IReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IReference] {
     fn get_Value(&self, out: *mut T::Abi) -> HRESULT
@@ -909,6 +965,23 @@ impl<T: RtType> IReferenceArray<T> {
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }
 }
+RT_STRUCT! { struct Size {
+    Width: f32, Height: f32,
+}}
+DEFINE_IID!(IID_IStringable, 2520162132, 36534, 18672, 171, 206, 193, 178, 17, 230, 39, 195);
+RT_INTERFACE!{interface IStringable(IStringableVtbl): IInspectable(IInspectableVtbl) [IID_IStringable] {
+    fn ToString(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IStringable {
+    #[inline] pub unsafe fn to_string(&self) -> Result<HString> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ToString)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }
+}
+RT_STRUCT! { struct TimeSpan {
+    Duration: i64,
+}}
 DEFINE_IID!(IID_TypedEventHandler, 2648818996, 27361, 4576, 132, 225, 24, 169, 5, 188, 197, 63);
 RT_DELEGATE!{delegate TypedEventHandler<TSender, TResult>(TypedEventHandlerVtbl, TypedEventHandlerImpl) [IID_TypedEventHandler] {
     fn Invoke(&self, sender: TSender::Abi, args: TResult::Abi) -> HRESULT
@@ -919,68 +992,41 @@ impl<TSender: RtType, TResult: RtType> TypedEventHandler<TSender, TResult> {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-DEFINE_IID!(IID_EventHandler, 2648818997, 27361, 4576, 132, 225, 24, 169, 5, 188, 197, 63);
-RT_DELEGATE!{delegate EventHandler<T>(EventHandlerVtbl, EventHandlerImpl) [IID_EventHandler] {
-    fn Invoke(&self, sender: *mut IInspectable, args: T::Abi) -> HRESULT
-}}
-impl<T: RtType> EventHandler<T> {
-    #[inline] pub unsafe fn invoke(&self, sender: &IInspectable, args: &T::In) -> Result<()> {
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, T::unwrap(args));
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IMemoryBufferReference, 4223982889, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
-RT_INTERFACE!{interface IMemoryBufferReference(IMemoryBufferReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBufferReference] {
-    fn get_Capacity(&self, out: *mut u32) -> HRESULT,
-    fn add_Closed(&self, handler: *mut TypedEventHandler<IMemoryBufferReference, IInspectable>, out: *mut EventRegistrationToken) -> HRESULT,
-    fn remove_Closed(&self, cookie: EventRegistrationToken) -> HRESULT
-}}
-impl IMemoryBufferReference {
-    #[inline] pub unsafe fn get_capacity(&self) -> Result<u32> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Capacity)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn add_closed(&self, handler: &TypedEventHandler<IMemoryBufferReference, IInspectable>) -> Result<EventRegistrationToken> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn remove_closed(&self, cookie: EventRegistrationToken) -> Result<()> {
-        let hr = ((*self.lpVtbl).remove_Closed)(self as *const _ as *mut _, cookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IMemoryBuffer, 4223982890, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
-RT_INTERFACE!{interface IMemoryBuffer(IMemoryBufferVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBuffer] {
-    fn CreateReference(&self, out: *mut *mut IMemoryBufferReference) -> HRESULT
-}}
-impl IMemoryBuffer {
-    #[inline] pub unsafe fn create_reference(&self) -> Result<ComPtr<IMemoryBufferReference>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateReference)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IMemoryBufferFactory, 4223982891, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
-RT_INTERFACE!{static interface IMemoryBufferFactory(IMemoryBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBufferFactory] {
-    fn Create(&self, capacity: u32, out: *mut *mut MemoryBuffer) -> HRESULT
-}}
-impl IMemoryBufferFactory {
-    #[inline] pub unsafe fn create(&self, capacity: u32) -> Result<ComPtr<MemoryBuffer>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, capacity, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-}
-RT_CLASS!{class MemoryBuffer: IMemoryBuffer}
-impl RtActivatable<IMemoryBufferFactory> for MemoryBuffer {}
-impl MemoryBuffer {
-    #[inline] pub fn create(capacity: u32) -> Result<ComPtr<MemoryBuffer>> { unsafe {
-        <Self as RtActivatable<IMemoryBufferFactory>>::get_activation_factory().create(capacity)
+RT_CLASS!{class Uri: IUriRuntimeClass}
+impl RtActivatable<IUriRuntimeClassFactory> for Uri {}
+impl RtActivatable<IUriEscapeStatics> for Uri {}
+impl Uri {
+    #[inline] pub fn create_uri(uri: &HStringArg) -> Result<ComPtr<Uri>> { unsafe {
+        <Self as RtActivatable<IUriRuntimeClassFactory>>::get_activation_factory().create_uri(uri)
+    }}
+    #[inline] pub fn create_with_relative_uri(baseUri: &HStringArg, relativeUri: &HStringArg) -> Result<ComPtr<Uri>> { unsafe {
+        <Self as RtActivatable<IUriRuntimeClassFactory>>::get_activation_factory().create_with_relative_uri(baseUri, relativeUri)
+    }}
+    #[inline] pub fn unescape_component(toUnescape: &HStringArg) -> Result<HString> { unsafe {
+        <Self as RtActivatable<IUriEscapeStatics>>::get_activation_factory().unescape_component(toUnescape)
+    }}
+    #[inline] pub fn escape_component(toEscape: &HStringArg) -> Result<HString> { unsafe {
+        <Self as RtActivatable<IUriEscapeStatics>>::get_activation_factory().escape_component(toEscape)
     }}
 }
-DEFINE_CLSID!(MemoryBuffer(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,77,101,109,111,114,121,66,117,102,102,101,114,0]) [CLSID_MemoryBuffer]);
+DEFINE_CLSID!(Uri(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,85,114,105,0]) [CLSID_Uri]);
+DEFINE_IID!(IID_IUriEscapeStatics, 3251909306, 51236, 17490, 167, 253, 81, 43, 195, 187, 233, 161);
+RT_INTERFACE!{static interface IUriEscapeStatics(IUriEscapeStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUriEscapeStatics] {
+    fn UnescapeComponent(&self, toUnescape: HSTRING, out: *mut HSTRING) -> HRESULT,
+    fn EscapeComponent(&self, toEscape: HSTRING, out: *mut HSTRING) -> HRESULT
+}}
+impl IUriEscapeStatics {
+    #[inline] pub unsafe fn unescape_component(&self, toUnescape: &HStringArg) -> Result<HString> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).UnescapeComponent)(self as *const _ as *mut _, toUnescape.get(), &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn escape_component(&self, toEscape: &HStringArg) -> Result<HString> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).EscapeComponent)(self as *const _ as *mut _, toEscape.get(), &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }
+}
 DEFINE_IID!(IID_IUriRuntimeClass, 2654363223, 18610, 16736, 149, 111, 199, 56, 81, 32, 187, 252);
 RT_INTERFACE!{interface IUriRuntimeClass(IUriRuntimeClassVtbl): IInspectable(IInspectableVtbl) [IID_IUriRuntimeClass] {
     fn get_AbsoluteUri(&self, out: *mut HSTRING) -> HRESULT,
@@ -1088,66 +1134,6 @@ impl IUriRuntimeClass {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_CLASS!{class WwwFormUrlDecoder: IWwwFormUrlDecoderRuntimeClass}
-impl RtActivatable<IWwwFormUrlDecoderRuntimeClassFactory> for WwwFormUrlDecoder {}
-impl WwwFormUrlDecoder {
-    #[inline] pub fn create_www_form_url_decoder(query: &HStringArg) -> Result<ComPtr<WwwFormUrlDecoder>> { unsafe {
-        <Self as RtActivatable<IWwwFormUrlDecoderRuntimeClassFactory>>::get_activation_factory().create_www_form_url_decoder(query)
-    }}
-}
-DEFINE_CLSID!(WwwFormUrlDecoder(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,87,119,119,70,111,114,109,85,114,108,68,101,99,111,100,101,114,0]) [CLSID_WwwFormUrlDecoder]);
-RT_CLASS!{class Uri: IUriRuntimeClass}
-impl RtActivatable<IUriRuntimeClassFactory> for Uri {}
-impl RtActivatable<IUriEscapeStatics> for Uri {}
-impl Uri {
-    #[inline] pub fn create_uri(uri: &HStringArg) -> Result<ComPtr<Uri>> { unsafe {
-        <Self as RtActivatable<IUriRuntimeClassFactory>>::get_activation_factory().create_uri(uri)
-    }}
-    #[inline] pub fn create_with_relative_uri(baseUri: &HStringArg, relativeUri: &HStringArg) -> Result<ComPtr<Uri>> { unsafe {
-        <Self as RtActivatable<IUriRuntimeClassFactory>>::get_activation_factory().create_with_relative_uri(baseUri, relativeUri)
-    }}
-    #[inline] pub fn unescape_component(toUnescape: &HStringArg) -> Result<HString> { unsafe {
-        <Self as RtActivatable<IUriEscapeStatics>>::get_activation_factory().unescape_component(toUnescape)
-    }}
-    #[inline] pub fn escape_component(toEscape: &HStringArg) -> Result<HString> { unsafe {
-        <Self as RtActivatable<IUriEscapeStatics>>::get_activation_factory().escape_component(toEscape)
-    }}
-}
-DEFINE_CLSID!(Uri(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,85,114,105,0]) [CLSID_Uri]);
-DEFINE_IID!(IID_IUriRuntimeClassWithAbsoluteCanonicalUri, 1972213345, 8732, 18447, 163, 57, 80, 101, 102, 115, 244, 111);
-RT_INTERFACE!{interface IUriRuntimeClassWithAbsoluteCanonicalUri(IUriRuntimeClassWithAbsoluteCanonicalUriVtbl): IInspectable(IInspectableVtbl) [IID_IUriRuntimeClassWithAbsoluteCanonicalUri] {
-    fn get_AbsoluteCanonicalUri(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_DisplayIri(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl IUriRuntimeClassWithAbsoluteCanonicalUri {
-    #[inline] pub unsafe fn get_absolute_canonical_uri(&self) -> Result<HString> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AbsoluteCanonicalUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_display_iri(&self) -> Result<HString> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayIri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IUriEscapeStatics, 3251909306, 51236, 17490, 167, 253, 81, 43, 195, 187, 233, 161);
-RT_INTERFACE!{static interface IUriEscapeStatics(IUriEscapeStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUriEscapeStatics] {
-    fn UnescapeComponent(&self, toUnescape: HSTRING, out: *mut HSTRING) -> HRESULT,
-    fn EscapeComponent(&self, toEscape: HSTRING, out: *mut HSTRING) -> HRESULT
-}}
-impl IUriEscapeStatics {
-    #[inline] pub unsafe fn unescape_component(&self, toUnescape: &HStringArg) -> Result<HString> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnescapeComponent)(self as *const _ as *mut _, toUnescape.get(), &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn escape_component(&self, toEscape: &HStringArg) -> Result<HString> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).EscapeComponent)(self as *const _ as *mut _, toEscape.get(), &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }
-}
 DEFINE_IID!(IID_IUriRuntimeClassFactory, 1151957359, 29246, 20447, 162, 24, 3, 62, 117, 176, 192, 132);
 RT_INTERFACE!{static interface IUriRuntimeClassFactory(IUriRuntimeClassFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUriRuntimeClassFactory] {
     fn CreateUri(&self, uri: HSTRING, out: *mut *mut Uri) -> HRESULT,
@@ -1165,6 +1151,31 @@ impl IUriRuntimeClassFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
+DEFINE_IID!(IID_IUriRuntimeClassWithAbsoluteCanonicalUri, 1972213345, 8732, 18447, 163, 57, 80, 101, 102, 115, 244, 111);
+RT_INTERFACE!{interface IUriRuntimeClassWithAbsoluteCanonicalUri(IUriRuntimeClassWithAbsoluteCanonicalUriVtbl): IInspectable(IInspectableVtbl) [IID_IUriRuntimeClassWithAbsoluteCanonicalUri] {
+    fn get_AbsoluteCanonicalUri(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_DisplayIri(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IUriRuntimeClassWithAbsoluteCanonicalUri {
+    #[inline] pub unsafe fn get_absolute_canonical_uri(&self) -> Result<HString> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AbsoluteCanonicalUri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_display_iri(&self) -> Result<HString> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayIri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }
+}
+RT_CLASS!{class WwwFormUrlDecoder: IWwwFormUrlDecoderRuntimeClass}
+impl RtActivatable<IWwwFormUrlDecoderRuntimeClassFactory> for WwwFormUrlDecoder {}
+impl WwwFormUrlDecoder {
+    #[inline] pub fn create_www_form_url_decoder(query: &HStringArg) -> Result<ComPtr<WwwFormUrlDecoder>> { unsafe {
+        <Self as RtActivatable<IWwwFormUrlDecoderRuntimeClassFactory>>::get_activation_factory().create_www_form_url_decoder(query)
+    }}
+}
+DEFINE_CLSID!(WwwFormUrlDecoder(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,87,119,119,70,111,114,109,85,114,108,68,101,99,111,100,101,114,0]) [CLSID_WwwFormUrlDecoder]);
 DEFINE_IID!(IID_IWwwFormUrlDecoderEntry, 308180017, 63096, 20110, 182, 112, 32, 169, 176, 108, 81, 45);
 RT_INTERFACE!{interface IWwwFormUrlDecoderEntry(IWwwFormUrlDecoderEntryVtbl): IInspectable(IInspectableVtbl) [IID_IWwwFormUrlDecoderEntry] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -1182,6 +1193,7 @@ impl IWwwFormUrlDecoderEntry {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
 }
+RT_CLASS!{class WwwFormUrlDecoderEntry: IWwwFormUrlDecoderEntry}
 DEFINE_IID!(IID_IWwwFormUrlDecoderRuntimeClass, 3562669137, 61989, 17730, 146, 150, 14, 29, 245, 210, 84, 223);
 RT_INTERFACE!{interface IWwwFormUrlDecoderRuntimeClass(IWwwFormUrlDecoderRuntimeClassVtbl): IInspectable(IInspectableVtbl) [IID_IWwwFormUrlDecoderRuntimeClass] {
     fn GetFirstValueByName(&self, name: HSTRING, out: *mut HSTRING) -> HRESULT
@@ -1204,18 +1216,6 @@ impl IWwwFormUrlDecoderRuntimeClassFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_CLASS!{class WwwFormUrlDecoderEntry: IWwwFormUrlDecoderEntry}
-DEFINE_IID!(IID_IGetActivationFactory, 1323011810, 38621, 18855, 148, 247, 70, 7, 221, 171, 142, 60);
-RT_INTERFACE!{interface IGetActivationFactory(IGetActivationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGetActivationFactory] {
-    fn GetActivationFactory(&self, activatableClassId: HSTRING, out: *mut *mut IInspectable) -> HRESULT
-}}
-impl IGetActivationFactory {
-    #[inline] pub unsafe fn get_activation_factory(&self, activatableClassId: &HStringArg) -> Result<ComPtr<IInspectable>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetActivationFactory)(self as *const _ as *mut _, activatableClassId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-}
 RT_PINTERFACE!{ for AsyncActionProgressHandler<f64> => [0x44825c7c,0x0da9,0x5691,0xb2,0xb4,0x91,0x4f,0x23,0x1e,0xec,0xed] as IID_AsyncActionProgressHandler_1_System_Double }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for AsyncActionProgressHandler<super::web::syndication::TransferProgress> => [0xc1610085,0x94d0,0x5706,0x9a,0xc6,0x10,0x17,0x9d,0x7d,0xeb,0x92] as IID_AsyncActionProgressHandler_1_Windows_Web_Syndication_TransferProgress }
 RT_PINTERFACE!{ for AsyncActionProgressHandler<u64> => [0x55e233ca,0xf243,0x5ae2,0x85,0x3b,0xf9,0xcc,0x7c,0x0a,0xe0,0xcf] as IID_AsyncActionProgressHandler_1_System_UInt64 }
@@ -1223,6 +1223,7 @@ RT_PINTERFACE!{ for AsyncActionWithProgressCompletedHandler<f64> => [0x94d64ac6,
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for AsyncActionWithProgressCompletedHandler<super::web::syndication::TransferProgress> => [0xf1c031c8,0x90bf,0x5cae,0xad,0xf6,0x15,0x5b,0x4a,0xed,0xfb,0x60] as IID_AsyncActionWithProgressCompletedHandler_1_Windows_Web_Syndication_TransferProgress }
 RT_PINTERFACE!{ for AsyncActionWithProgressCompletedHandler<u64> => [0xe6ff857b,0xf160,0x571a,0xa9,0x34,0x2c,0x61,0xf9,0x8c,0x86,0x2d] as IID_AsyncActionWithProgressCompletedHandler_1_System_UInt64 }
 RT_PINTERFACE!{ for AsyncOperationCompletedHandler<bool> => [0xc1d3d1a2,0xae17,0x5a5f,0xb5,0xa2,0xbd,0xcc,0x88,0x44,0x88,0x9a] as IID_AsyncOperationCompletedHandler_1_System_Boolean }
+RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IMap<HString, HString>> => [0x39bb624e,0xb5c6,0x5785,0xba,0x46,0x3f,0x45,0xaa,0xf3,0xef,0x35] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IMap_2_System_String_System_String }
 RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IMap<HString, IInspectable>> => [0x7344f356,0x8399,0x5756,0xa2,0xf8,0xab,0xd5,0x0c,0x41,0x46,0xff] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IMap_2_System_String_System_Object }
 RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IMapView<HString, IInspectable>> => [0x89981889,0x1207,0x5ae6,0x9b,0x28,0xcc,0xc5,0x8f,0x3a,0xac,0x6e] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IMapView_2_System_String_System_Object }
 #[cfg(feature="windows-perception")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IMapView<HString, super::perception::spatial::SpatialAnchor>> => [0x3a950aa3,0x9c65,0x586e,0xaf,0x75,0x1a,0xcf,0x07,0x19,0x0e,0x90] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IMapView_2_System_String_Windows_Perception_Spatial_SpatialAnchor }
@@ -1289,6 +1290,7 @@ RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<IIns
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::devices::sensors::ActivitySensorReading>> => [0x179fb953,0x2d58,0x5991,0x8f,0x5b,0xac,0x64,0x21,0x9a,0x11,0x01] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Sensors_ActivitySensorReading }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::devices::sensors::PedometerReading>> => [0x5bbff840,0x59f2,0x5108,0x92,0x05,0xa0,0xbb,0xf8,0xf9,0xba,0x68] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Sensors_PedometerReading }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::devices::smartcards::SmartCard>> => [0xbfea3fad,0x411e,0x5721,0x88,0xf5,0x92,0xc9,0xb9,0xfb,0xbe,0x14] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_SmartCards_SmartCard }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::devices::smartcards::SmartCardAppletIdGroupRegistration>> => [0xdddeb324,0x2853,0x5e3c,0xa4,0xd9,0x1c,0xa8,0xc5,0x77,0xc0,0x2e] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_SmartCards_SmartCardAppletIdGroupRegistration }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::devices::spi::provider::ISpiControllerProvider>> => [0xe9e2ae03,0x42d6,0x5211,0xab,0x52,0x32,0x5e,0x72,0x2e,0x26,0x11] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Spi_Provider_ISpiControllerProvider }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::devices::spi::SpiController>> => [0xc8afc9cb,0x6807,0x57ec,0x84,0xc9,0x9f,0x3d,0xbc,0x00,0x34,0x50] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Spi_SpiController }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::devices::wifi::WiFiAdapter>> => [0x92902a07,0x2f18,0x56e9,0x87,0xfb,0x24,0xfe,0x19,0xf7,0x06,0x88] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_WiFi_WiFiAdapter }
@@ -1304,6 +1306,7 @@ RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<IIns
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::networking::connectivity::ConnectionProfile>> => [0xc523d9dd,0x4ea6,0x5115,0x80,0xe9,0x4e,0x7a,0xd4,0x76,0x97,0x98] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_Connectivity_ConnectionProfile }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::networking::connectivity::ConnectivityInterval>> => [0xb475014c,0x95f1,0x5310,0xb5,0xd1,0xc2,0x30,0x9d,0x94,0x44,0x40] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_Connectivity_ConnectivityInterval }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::networking::connectivity::NetworkUsage>> => [0xe31d7e7e,0x4173,0x5c71,0xb0,0x4b,0xa0,0x96,0x58,0x00,0x25,0x90] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_Connectivity_NetworkUsage }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::networking::connectivity::ProviderNetworkUsage>> => [0xc310276b,0x3932,0x5da9,0x9a,0x3b,0xc5,0xc4,0x23,0x58,0x6b,0x42] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_Connectivity_ProviderNetworkUsage }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::networking::EndpointPair>> => [0x20d6faab,0x3b8e,0x5a1f,0x83,0x97,0xb0,0x1c,0xb2,0x19,0xa1,0x8d] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_EndpointPair }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::networking::proximity::PeerInformation>> => [0xecf90f2c,0xe3f4,0x5b62,0xa0,0x66,0x8b,0x9c,0x81,0x8f,0xd4,0x1a] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_Proximity_PeerInformation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<collections::IVectorView<super::networking::vpn::IVpnProfile>> => [0xdac6dd72,0xa5d1,0x56d4,0xaf,0xc4,0x98,0x9f,0x84,0xdc,0xb2,0xb3] as IID_AsyncOperationCompletedHandler_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_Vpn_IVpnProfile }
@@ -1368,6 +1371,7 @@ RT_PINTERFACE!{ for AsyncOperationCompletedHandler<IReference<TimeSpan>> => [0xe
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::contacts::ContactList> => [0xd4678af2,0x2cc4,0x5890,0xb3,0xa2,0x03,0xa5,0xab,0x7b,0xb8,0xf8] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_Contacts_ContactList }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::contacts::ContactStore> => [0xd123e7f2,0x0b5b,0x590a,0xb2,0x34,0xa1,0x21,0xac,0x1e,0x0b,0xab] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_Contacts_ContactStore }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::contacts::PinnedContactIdsQueryResult> => [0x930a23a2,0x28cf,0x5606,0x82,0xf1,0x65,0xdf,0xee,0x22,0x87,0x35] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_Contacts_PinnedContactIdsQueryResult }
+#[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::core::AppRestartFailureReason> => [0xdcec478a,0x9f27,0x5c5d,0xaf,0xdb,0xc9,0x1a,0xee,0x4f,0x1f,0x02] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_Core_AppRestartFailureReason }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::datatransfer::DataPackage> => [0xa93a3b99,0xe946,0x57ce,0xaa,0xd9,0xc2,0x3d,0x13,0x8c,0x35,0x3e] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_DataTransfer_DataPackage }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::datatransfer::DataPackageOperation> => [0xadd21d46,0x17df,0x5a43,0xa6,0x85,0x32,0x62,0xfc,0xe8,0x46,0x43] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_DataTransfer_DataPackageOperation }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::email::EmailConversation> => [0x0294c89d,0x8d98,0x5342,0xb8,0x2f,0x01,0x10,0x24,0x15,0xc8,0x70] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_Email_EmailConversation }
@@ -1385,7 +1389,9 @@ RT_PINTERFACE!{ for AsyncOperationCompletedHandler<IReference<TimeSpan>> => [0xe
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::extendedexecution::ExtendedExecutionResult> => [0x873c5c7a,0xc638,0x5a33,0x9b,0x03,0x21,0x5c,0x72,0x47,0x16,0x63] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_ExtendedExecution_ExtendedExecutionResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::extendedexecution::foreground::ExtendedExecutionForegroundResult> => [0x07e1dc01,0x18ba,0x596a,0xb7,0x45,0x79,0xf9,0xcd,0xe4,0x4c,0xcc] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_ExtendedExecution_Foreground_ExtendedExecutionForegroundResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::PackageCatalogAddOptionalPackageResult> => [0x6c5f9b5d,0x3c24,0x5087,0xae,0x15,0x6a,0xb4,0x94,0x2c,0x46,0x39] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_PackageCatalogAddOptionalPackageResult }
+#[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::PackageCatalogRemoveOptionalPackagesResult> => [0xf168612c,0x6882,0x5c8c,0xa4,0x64,0x7e,0xa2,0x5e,0x26,0x98,0x76] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_PackageCatalogRemoveOptionalPackagesResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::PackageContentGroup> => [0x2253dc38,0x9a1a,0x5364,0x9a,0x3b,0x03,0xa7,0xda,0x61,0x54,0x99] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_PackageContentGroup }
+#[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::payments::PaymentCanMakePaymentResult> => [0x89ae5b89,0x6d05,0x5842,0x9c,0xdf,0xf4,0xcb,0xf7,0x06,0xdc,0x5e] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_Payments_PaymentCanMakePaymentResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::payments::PaymentRequestChangedResult> => [0xbec8b726,0x9056,0x5e47,0xb2,0x2a,0x0d,0xa0,0x9a,0xa8,0x4a,0xfe] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_Payments_PaymentRequestChangedResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::payments::PaymentRequestSubmitResult> => [0xcbcd07a6,0xae2a,0x5a70,0xbc,0x0b,0x91,0x20,0x56,0x08,0x25,0xd1] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_Payments_PaymentRequestSubmitResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::payments::provider::PaymentTransaction> => [0xbd5b92e5,0x1086,0x5c3d,0x9d,0xe1,0x99,0x82,0xe7,0x76,0xd1,0x93] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_Payments_Provider_PaymentTransaction }
@@ -1401,6 +1407,7 @@ RT_PINTERFACE!{ for AsyncOperationCompletedHandler<IReference<TimeSpan>> => [0xe
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::store::preview::installcontrol::GetEntitlementResult> => [0x62559e90,0x1c0a,0x5708,0x92,0x30,0x03,0xa6,0x58,0x65,0x2d,0xb3] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_Store_Preview_InstallControl_GetEntitlementResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::store::preview::StorePreviewPurchaseResults> => [0xb1ea16e7,0x8268,0x51ff,0x81,0x29,0xdc,0xef,0xd4,0x93,0xf3,0x5f] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_Store_Preview_StorePreviewPurchaseResults }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::store::PurchaseResults> => [0x24b6922a,0xfdb1,0x5003,0xae,0x89,0xc8,0xbf,0x16,0xca,0x01,0x43] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_Store_PurchaseResults }
+#[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::useractivities::UserActivity> => [0x652507c7,0x0bc6,0x5d0b,0x82,0xbe,0x97,0xad,0x22,0x57,0xb6,0x85] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_UserActivities_UserActivity }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::userdataaccounts::systemaccess::DeviceAccountConfiguration> => [0xcbee2c48,0xe3ed,0x5ebd,0xa4,0xae,0x56,0x58,0x33,0x88,0xa4,0x9a] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_UserDataAccounts_SystemAccess_DeviceAccountConfiguration }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::userdataaccounts::UserDataAccount> => [0xab92e426,0x2ac6,0x5ffb,0x88,0xca,0xcb,0xdd,0x91,0xdf,0x39,0x27] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_UserDataAccounts_UserDataAccount }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::applicationmodel::userdataaccounts::UserDataAccountStore> => [0x264c2ca9,0x29b4,0x5035,0xb4,0x60,0x8c,0x8d,0x0e,0x8f,0xbc,0xd9] as IID_AsyncOperationCompletedHandler_1_Windows_ApplicationModel_UserDataAccounts_UserDataAccountStore }
@@ -1454,6 +1461,7 @@ RT_PINTERFACE!{ for AsyncOperationCompletedHandler<IReference<TimeSpan>> => [0xe
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::geolocation::GeolocationAccessStatus> => [0xf3524c93,0xe5c7,0x5b88,0xbe,0xdb,0xd3,0xe6,0x37,0xcf,0xf2,0x71] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Geolocation_GeolocationAccessStatus }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::geolocation::Geopoint> => [0x4b5f2f60,0x19b1,0x5566,0x9d,0xf6,0x92,0xa4,0x22,0x35,0xcb,0xf9] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Geolocation_Geopoint }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::geolocation::Geoposition> => [0x7668a704,0x244e,0x5e12,0x8d,0xcb,0x92,0xa3,0x29,0x9e,0xba,0x26] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Geolocation_Geoposition }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::geolocation::Geovisit> => [0xb9bce8cb,0x2e04,0x5269,0x9b,0x03,0x16,0x14,0xd0,0xc0,0x0b,0x01] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Geolocation_Geovisit }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::gpio::GpioController> => [0x370167c0,0x0f7b,0x5e77,0x9b,0xae,0xd3,0x50,0x89,0xa3,0xdb,0x75] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Gpio_GpioController }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::haptics::VibrationAccessStatus> => [0xa38b59db,0x4ef1,0x5bd2,0x89,0xef,0xf1,0xd9,0xf1,0xfa,0xca,0x96] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Haptics_VibrationAccessStatus }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::haptics::VibrationDevice> => [0x4e22a135,0xf59a,0x546d,0x9f,0xcf,0x82,0xde,0xb8,0x33,0xd9,0x68] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Haptics_VibrationDevice }
@@ -1482,6 +1490,9 @@ RT_PINTERFACE!{ for AsyncOperationCompletedHandler<IReference<TimeSpan>> => [0xe
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::pointofservice::ClaimedMagneticStripeReader> => [0x946c2d64,0x22d4,0x552d,0xab,0xfb,0x9e,0xb3,0x41,0xbd,0x67,0xf3] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_PointOfService_ClaimedMagneticStripeReader }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::pointofservice::ClaimedPosPrinter> => [0x01eb0dc3,0x3c30,0x5eea,0x9f,0xce,0xef,0xb3,0x98,0xe0,0xbe,0x34] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_PointOfService_ClaimedPosPrinter }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::pointofservice::LineDisplay> => [0xb5c4d476,0x4f46,0x53c4,0x8a,0x45,0x89,0xdb,0xe6,0xd6,0xf2,0x86] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_PointOfService_LineDisplay }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::pointofservice::LineDisplayPowerStatus> => [0xabba6d19,0xd81f,0x5d85,0xa9,0x00,0x66,0xb9,0x6b,0x6d,0x2b,0x32] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_PointOfService_LineDisplayPowerStatus }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::pointofservice::LineDisplayStoredBitmap> => [0xa576fa69,0x9988,0x5a23,0x84,0x4c,0xf8,0xa6,0x9f,0x48,0xa4,0x29] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_PointOfService_LineDisplayStoredBitmap }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::pointofservice::LineDisplayWindow> => [0xe4d37b02,0xb65a,0x5aec,0xa2,0x19,0xd1,0xe0,0xb7,0xf3,0xf9,0x12] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_PointOfService_LineDisplayWindow }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::pointofservice::MagneticStripeReader> => [0x32c55f7b,0x8ee3,0x555d,0x99,0x8b,0x78,0xc9,0x8a,0xa9,0x62,0x7b] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_PointOfService_MagneticStripeReader }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::pointofservice::PosPrinter> => [0x5e8dbbc8,0x8b60,0x5881,0x8b,0x6e,0xf6,0x99,0xb4,0x94,0x9d,0xba] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_PointOfService_PosPrinter }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::power::Battery> => [0x97f82115,0x3822,0x507b,0x82,0xe6,0x27,0x77,0xb3,0x36,0xe9,0x8e] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Power_Battery }
@@ -1491,13 +1502,31 @@ RT_PINTERFACE!{ for AsyncOperationCompletedHandler<IReference<TimeSpan>> => [0xe
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::radios::RadioAccessStatus> => [0xbd248e73,0xf05f,0x574c,0xae,0x3d,0x9b,0x95,0xc4,0xbf,0x28,0x2a] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Radios_RadioAccessStatus }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::scanners::ImageScanner> => [0xb35ad6b4,0x0da0,0x5241,0x87,0xff,0xee,0xf3,0xa1,0x88,0x32,0x43] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Scanners_ImageScanner }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::scanners::ImageScannerPreviewResult> => [0xc054a410,0xac3c,0x5353,0xb1,0xee,0xe8,0x5e,0x78,0xfa,0xf3,0xf1] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Scanners_ImageScannerPreviewResult }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::sensors::Accelerometer> => [0xc7c339b6,0x7527,0x502a,0x8a,0x4c,0xcb,0x9b,0xef,0xe1,0x58,0x40] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sensors_Accelerometer }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::sensors::ActivitySensor> => [0xfb0594f4,0x93d9,0x5c2f,0xb8,0xeb,0x90,0xf1,0xe9,0x25,0x8f,0xdc] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sensors_ActivitySensor }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::sensors::ActivitySensorReading> => [0xadc48d5d,0xb343,0x5a58,0x84,0x54,0x6e,0x2b,0xc2,0xe0,0x47,0x5c] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sensors_ActivitySensorReading }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::sensors::Barometer> => [0xa15e21d6,0x5467,0x590c,0xaf,0xe1,0x9c,0x81,0x32,0xdc,0xd8,0xa4] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sensors_Barometer }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::sensors::Compass> => [0x0cf1e460,0xbc2c,0x587c,0x98,0x22,0x42,0x0b,0xa0,0x4d,0x05,0x51] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sensors_Compass }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::sensors::custom::CustomSensor> => [0x808b62d7,0x6e02,0x5680,0xa5,0x9e,0x11,0x8a,0x98,0xa4,0xe7,0x0f] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sensors_Custom_CustomSensor }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::sensors::Gyrometer> => [0x15799501,0x958e,0x5315,0xa2,0x4a,0x0d,0x7d,0x7a,0xcb,0xc7,0x9c] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sensors_Gyrometer }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::sensors::Inclinometer> => [0x8f0ede2a,0x2d0f,0x55f6,0x95,0x66,0x3c,0x21,0x38,0x5f,0xae,0x64] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sensors_Inclinometer }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::sensors::LightSensor> => [0x5d04e2bf,0x5163,0x5238,0x8f,0x23,0xce,0x47,0x0b,0x30,0x34,0x0d] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sensors_LightSensor }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::sensors::Magnetometer> => [0x46e0a768,0x9645,0x51a6,0xb6,0xa7,0x1e,0x5f,0x4b,0x40,0xe1,0xf3] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sensors_Magnetometer }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::sensors::OrientationSensor> => [0x8330b323,0x6695,0x53d4,0xac,0xd7,0xb6,0x0c,0x24,0xc1,0xb8,0x79] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sensors_OrientationSensor }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::sensors::Pedometer> => [0xa62dbe4e,0x51de,0x5a13,0xba,0x21,0xe7,0x6d,0xf3,0xbc,0x13,0x96] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_Sensors_Pedometer }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::serialcommunication::SerialDevice> => [0x84a34b33,0x06fc,0x5e63,0x8e,0xe2,0xea,0xb4,0xff,0x69,0xac,0xb7] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SerialCommunication_SerialDevice }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardActivationPolicyChangeResult> => [0x9528f94b,0x047b,0x5e2a,0x8f,0xc0,0x70,0x17,0xf5,0xda,0xdd,0xff] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardActivationPolicyChangeResult }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardAppletIdGroupRegistration> => [0x371045fb,0x4994,0x5413,0x89,0xbe,0xba,0x4e,0x97,0xad,0x82,0xa0] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardAppletIdGroupRegistration }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardChallengeContext> => [0x96b172f6,0xdedb,0x5f3e,0xaf,0x90,0x7b,0x0f,0x10,0x21,0x93,0x52] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardChallengeContext }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardConnection> => [0xc71f00e6,0xaf26,0x5e5c,0x91,0x3d,0x0e,0xfe,0xb7,0xd0,0x8e,0xf7] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardConnection }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardCryptogramGenerator> => [0x25cc9462,0x46a1,0x50a6,0xad,0x14,0x9a,0x97,0x18,0x37,0x20,0x05] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardCryptogramGenerator }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardCryptogramGeneratorOperationStatus> => [0xc6c447c7,0xa60d,0x500a,0x9b,0xfe,0x59,0xf2,0x5c,0x33,0xe9,0x79] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardCryptogramGeneratorOperationStatus }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult> => [0x45cffa0a,0xb354,0x50c3,0x8f,0x24,0x3d,0xd4,0xf1,0x67,0x7f,0xbe] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult> => [0xcd50ac04,0xe836,0x5525,0x9e,0xdb,0x06,0x6d,0x62,0x05,0xa2,0xa7] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult> => [0xc960993d,0xb328,0x5e86,0xb0,0xa3,0x25,0xf0,0x9f,0x7e,0x45,0xdf] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardCryptogramMaterialPossessionProof> => [0xcaf2474e,0x8810,0x5b17,0x95,0xd6,0x81,0x75,0x8a,0xe5,0x19,0x85] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialPossessionProof }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardCryptogramStorageKeyInfo> => [0x3f34e667,0x0a36,0x5414,0x88,0xab,0x63,0x71,0xd1,0xb3,0xb0,0x7e] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardCryptogramStorageKeyInfo }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardEmulator> => [0x4982e406,0x052c,0x5782,0xa5,0x7d,0x54,0xf9,0xf4,0x4f,0x84,0x12] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardEmulator }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardProvisioning> => [0x7a2e58dc,0x22ee,0x5cb8,0x83,0xcc,0xa7,0xa6,0x1b,0x9d,0xcd,0x2c] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardProvisioning }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardReader> => [0x20d3244d,0x375a,0x5f7d,0x89,0x44,0x16,0x4f,0xdf,0xed,0x42,0x39] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardReader }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::smartcards::SmartCardReaderStatus> => [0x3d7e6ea9,0xe739,0x555c,0x9c,0x02,0x07,0x39,0x6c,0x53,0x21,0xf5] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_SmartCards_SmartCardReaderStatus }
@@ -1511,11 +1540,14 @@ RT_PINTERFACE!{ for AsyncOperationCompletedHandler<IReference<TimeSpan>> => [0xe
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::wifi::WiFiAccessStatus> => [0x65e889ca,0xf6c9,0x5c75,0xbe,0xf9,0x05,0xab,0x88,0xa4,0x9a,0x54] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_WiFi_WiFiAccessStatus }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::wifi::WiFiAdapter> => [0x35362f75,0x6aae,0x560d,0xb3,0xd0,0x3f,0xae,0x9c,0x72,0x60,0xa8] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_WiFi_WiFiAdapter }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::wifi::WiFiConnectionResult> => [0xf380eb8d,0x1e52,0x5350,0xa2,0x88,0x86,0x1c,0x96,0x3a,0x84,0xf0] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_WiFi_WiFiConnectionResult }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::wifi::WiFiWpsConfigurationResult> => [0x33fa345b,0x28cd,0x58a8,0xbc,0xfc,0xbe,0x4c,0xfd,0x10,0x8e,0x91] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_WiFi_WiFiWpsConfigurationResult }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::wifidirect::services::WiFiDirectService> => [0xf505a3c8,0x4837,0x5e0e,0x8a,0x4d,0x1e,0x2a,0xf5,0x47,0x7e,0x5c] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_WiFiDirect_Services_WiFiDirectService }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::wifidirect::services::WiFiDirectServiceProvisioningInfo> => [0x94cb9568,0x040a,0x5186,0xa3,0xc9,0x52,0x68,0x0e,0xe1,0x79,0x84] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceProvisioningInfo }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::wifidirect::services::WiFiDirectServiceSession> => [0xb29de711,0x60b8,0x59da,0x8f,0x4d,0xfc,0x79,0xd8,0xcc,0xd4,0x22] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceSession }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::devices::wifidirect::WiFiDirectDevice> => [0xd34abe17,0xfb19,0x57be,0xbc,0x41,0x0e,0xb8,0x3d,0xea,0x15,0x1c] as IID_AsyncOperationCompletedHandler_1_Windows_Devices_WiFiDirect_WiFiDirectDevice }
 #[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::gaming::input::forcefeedback::ForceFeedbackLoadEffectResult> => [0xf8220a41,0xf738,0x51e8,0x89,0xba,0x76,0xbb,0xd6,0x61,0x58,0xcb] as IID_AsyncOperationCompletedHandler_1_Windows_Gaming_Input_ForceFeedback_ForceFeedbackLoadEffectResult }
+#[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::gaming::preview::gamesenumeration::GameListEntry> => [0xa77293e0,0xd508,0x5582,0xac,0x76,0x8c,0x96,0x05,0xfa,0x1d,0xe9] as IID_AsyncOperationCompletedHandler_1_Windows_Gaming_Preview_GamesEnumeration_GameListEntry }
+#[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::gaming::ui::GameMonitoringPermission> => [0xb30d8404,0x94e7,0x5267,0x9c,0x7a,0xbd,0x79,0x72,0x7b,0x81,0x5a] as IID_AsyncOperationCompletedHandler_1_Windows_Gaming_UI_GameMonitoringPermission }
 #[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::gaming::xboxlive::storage::GameSaveBlobGetResult> => [0x9d96282c,0xb6ab,0x5cd3,0x99,0x1b,0xa3,0x58,0xc5,0x31,0xbc,0xb6] as IID_AsyncOperationCompletedHandler_1_Windows_Gaming_XboxLive_Storage_GameSaveBlobGetResult }
 #[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::gaming::xboxlive::storage::GameSaveBlobInfoGetResult> => [0x9331e53a,0xa414,0x51e7,0xbf,0xbc,0x77,0x84,0xdf,0x83,0xdc,0x8e] as IID_AsyncOperationCompletedHandler_1_Windows_Gaming_XboxLive_Storage_GameSaveBlobInfoGetResult }
 #[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::gaming::xboxlive::storage::GameSaveContainerInfoGetResult> => [0x05f86a80,0xbe5b,0x5e7e,0xb9,0x77,0x82,0x57,0xc5,0xe4,0x8a,0xcc] as IID_AsyncOperationCompletedHandler_1_Windows_Gaming_XboxLive_Storage_GameSaveContainerInfoGetResult }
@@ -1528,10 +1560,14 @@ RT_PINTERFACE!{ for AsyncOperationCompletedHandler<IReference<TimeSpan>> => [0xe
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::graphics::imaging::ImageStream> => [0x29bb8288,0x4462,0x516e,0xa6,0x75,0x8c,0x92,0x35,0xc4,0x29,0x94] as IID_AsyncOperationCompletedHandler_1_Windows_Graphics_Imaging_ImageStream }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::graphics::imaging::PixelDataProvider> => [0x37bdf4be,0x2f39,0x592c,0xa4,0xf7,0xd1,0x6a,0x09,0xd2,0xb2,0xdb] as IID_AsyncOperationCompletedHandler_1_Windows_Graphics_Imaging_PixelDataProvider }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::graphics::imaging::SoftwareBitmap> => [0xb699b653,0x33ed,0x5e2d,0xa7,0x5f,0x02,0xbf,0x90,0xe3,0x26,0x19] as IID_AsyncOperationCompletedHandler_1_Windows_Graphics_Imaging_SoftwareBitmap }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::graphics::printing::printticket::WorkflowPrintTicket> => [0xd486c08d,0x8e7c,0x5f8d,0x87,0xab,0x0d,0xf7,0xba,0x06,0xc5,0xe3] as IID_AsyncOperationCompletedHandler_1_Windows_Graphics_Printing_PrintTicket_WorkflowPrintTicket }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::graphics::printing::printticket::WorkflowPrintTicketValidationResult> => [0x3b0bfff8,0x0d4b,0x51eb,0xb0,0x40,0x49,0x3d,0xe1,0xad,0xda,0xb9] as IID_AsyncOperationCompletedHandler_1_Windows_Graphics_Printing_PrintTicket_WorkflowPrintTicketValidationResult }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::graphics::printing3d::Printing3D3MFPackage> => [0x28b6b208,0x85a7,0x53f1,0x83,0xae,0x57,0x7a,0x7d,0xe6,0x6a,0x9b] as IID_AsyncOperationCompletedHandler_1_Windows_Graphics_Printing3D_Printing3D3MFPackage }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::graphics::printing3d::Printing3DMeshVerificationResult> => [0x186bae17,0x5896,0x56de,0xbf,0xf4,0x4f,0x17,0x6b,0x3e,0x61,0x94] as IID_AsyncOperationCompletedHandler_1_Windows_Graphics_Printing3D_Printing3DMeshVerificationResult }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::graphics::printing3d::Printing3DModel> => [0x26f4d34c,0xa11d,0x5b09,0x99,0x08,0xad,0xe8,0xb1,0xb1,0x35,0x55] as IID_AsyncOperationCompletedHandler_1_Windows_Graphics_Printing3D_Printing3DModel }
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::management::deployment::PackageVolume> => [0x35fee361,0x6cea,0x5e5c,0x8e,0xda,0x34,0xb3,0xf2,0x2d,0xf4,0xe7] as IID_AsyncOperationCompletedHandler_1_Windows_Management_Deployment_PackageVolume }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::media::apprecording::AppRecordingResult> => [0x1f6f478f,0x6cab,0x58e5,0x81,0x94,0x98,0x08,0x3c,0x72,0xdd,0xfc] as IID_AsyncOperationCompletedHandler_1_Windows_Media_AppRecording_AppRecordingResult }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::media::apprecording::AppRecordingSaveScreenshotResult> => [0x8e2047c3,0x4cdd,0x5404,0x9f,0x68,0x52,0x9d,0x0a,0x35,0xbe,0x65] as IID_AsyncOperationCompletedHandler_1_Windows_Media_AppRecording_AppRecordingSaveScreenshotResult }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::media::audio::CreateAudioDeviceInputNodeResult> => [0x6cc56450,0xe4e8,0x59c9,0x83,0xd8,0x63,0xe4,0x6e,0xac,0xb2,0x0b] as IID_AsyncOperationCompletedHandler_1_Windows_Media_Audio_CreateAudioDeviceInputNodeResult }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::media::audio::CreateAudioDeviceOutputNodeResult> => [0xedbc9b59,0x7cae,0x513f,0xb0,0xdc,0x17,0x66,0x6d,0x37,0xba,0x77] as IID_AsyncOperationCompletedHandler_1_Windows_Media_Audio_CreateAudioDeviceOutputNodeResult }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::media::audio::CreateAudioFileInputNodeResult> => [0x504d1efd,0xc11c,0x506e,0xb8,0xc9,0xaf,0x17,0xc7,0x71,0xef,0xb5] as IID_AsyncOperationCompletedHandler_1_Windows_Media_Audio_CreateAudioFileInputNodeResult }
@@ -1592,8 +1628,10 @@ RT_PINTERFACE!{ for AsyncOperationCompletedHandler<IReference<TimeSpan>> => [0xe
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::networking::connectivity::ConnectionSession> => [0x3bc680d8,0x9e83,0x5086,0x8f,0x49,0x7a,0x29,0xbf,0xb1,0xc7,0xe1] as IID_AsyncOperationCompletedHandler_1_Windows_Networking_Connectivity_ConnectionSession }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::networking::connectivity::ProxyConfiguration> => [0x035b2567,0xefb9,0x5bc3,0xb6,0x09,0xf9,0xa8,0xc2,0x0b,0x70,0x01] as IID_AsyncOperationCompletedHandler_1_Windows_Networking_Connectivity_ProxyConfiguration }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::networking::networkoperators::HotspotCredentialsAuthenticationResult> => [0x7f254beb,0x471f,0x5000,0x94,0xce,0x10,0x2c,0xc3,0x33,0x05,0x5f] as IID_AsyncOperationCompletedHandler_1_Windows_Networking_NetworkOperators_HotspotCredentialsAuthenticationResult }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::networking::networkoperators::MobileBroadbandCellsInfo> => [0x98f9a3f7,0x92a2,0x5431,0x90,0x2f,0x9b,0xf0,0x10,0x67,0xab,0x60] as IID_AsyncOperationCompletedHandler_1_Windows_Networking_NetworkOperators_MobileBroadbandCellsInfo }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::networking::networkoperators::MobileBroadbandDeviceServiceCommandResult> => [0x21f0ce4f,0x8f33,0x5e71,0xa4,0x57,0xdd,0xa5,0x53,0xb0,0xd6,0xbb] as IID_AsyncOperationCompletedHandler_1_Windows_Networking_NetworkOperators_MobileBroadbandDeviceServiceCommandResult }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::networking::networkoperators::MobileBroadbandModemConfiguration> => [0xc11e0649,0x8237,0x5c93,0xbb,0xdb,0x2e,0xda,0x52,0x16,0xfd,0x3f] as IID_AsyncOperationCompletedHandler_1_Windows_Networking_NetworkOperators_MobileBroadbandModemConfiguration }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::networking::networkoperators::MobileBroadbandModemStatus> => [0xb8628318,0xee4f,0x5af4,0x9e,0x3b,0xaf,0x99,0x4f,0xa9,0x6c,0x51] as IID_AsyncOperationCompletedHandler_1_Windows_Networking_NetworkOperators_MobileBroadbandModemStatus }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::networking::networkoperators::MobileBroadbandPinOperationResult> => [0x595ad094,0x60e3,0x5349,0x8f,0xe6,0xea,0x8e,0xcb,0xbb,0x25,0x41] as IID_AsyncOperationCompletedHandler_1_Windows_Networking_NetworkOperators_MobileBroadbandPinOperationResult }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::networking::networkoperators::MobileBroadbandUiccAppReadRecordResult> => [0xb81892b3,0x4ca9,0x5ec4,0x89,0x71,0x2f,0xbc,0x19,0xb5,0x6c,0xa9] as IID_AsyncOperationCompletedHandler_1_Windows_Networking_NetworkOperators_MobileBroadbandUiccAppReadRecordResult }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::networking::networkoperators::MobileBroadbandUiccAppRecordDetailsResult> => [0xd0b53858,0x0e54,0x5791,0x82,0xed,0x33,0x13,0xdc,0x75,0xda,0x45] as IID_AsyncOperationCompletedHandler_1_Windows_Networking_NetworkOperators_MobileBroadbandUiccAppRecordDetailsResult }
@@ -1681,6 +1719,7 @@ RT_PINTERFACE!{ for AsyncOperationCompletedHandler<IReference<TimeSpan>> => [0xe
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::storage::streams::IRandomAccessStreamReference> => [0x60847289,0xea0b,0x5df6,0x89,0xdf,0xf2,0xc6,0x2c,0xba,0x96,0x93] as IID_AsyncOperationCompletedHandler_1_Windows_Storage_Streams_IRandomAccessStreamReference }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::storage::streams::IRandomAccessStreamWithContentType> => [0x3dddecf4,0x1d39,0x58e8,0x83,0xb1,0xdb,0xed,0x54,0x1c,0x7f,0x35] as IID_AsyncOperationCompletedHandler_1_Windows_Storage_Streams_IRandomAccessStreamWithContentType }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::storage::streams::RandomAccessStreamReference> => [0x3d203732,0xded7,0x5d32,0x87,0xe6,0xc1,0x79,0x78,0x1f,0x79,0x1f] as IID_AsyncOperationCompletedHandler_1_Windows_Storage_Streams_RandomAccessStreamReference }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::system::DiagnosticAccessStatus> => [0x5d1302d7,0x5497,0x5a92,0xbf,0x43,0xeb,0x8b,0x50,0x67,0x9a,0xab] as IID_AsyncOperationCompletedHandler_1_Windows_System_DiagnosticAccessStatus }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::system::LaunchQuerySupportStatus> => [0x198cac52,0xabcd,0x5529,0x93,0x3f,0x07,0x1c,0xc9,0x3f,0xd6,0x35] as IID_AsyncOperationCompletedHandler_1_Windows_System_LaunchQuerySupportStatus }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::system::LaunchUriResult> => [0x70a97bf8,0xe0a5,0x59bb,0x91,0x74,0x81,0x2a,0x13,0x1d,0x85,0xa0] as IID_AsyncOperationCompletedHandler_1_Windows_System_LaunchUriResult }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::system::LaunchUriStatus> => [0x520aa58e,0x40d6,0x5a57,0xa6,0xdc,0xcb,0x5f,0xae,0xa5,0xcc,0xa5] as IID_AsyncOperationCompletedHandler_1_Windows_System_LaunchUriStatus }
@@ -1701,8 +1740,10 @@ RT_PINTERFACE!{ for AsyncOperationCompletedHandler<IReference<TimeSpan>> => [0xe
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::ui::popups::IUICommand> => [0xdd33fd5b,0xa24d,0x5a44,0x91,0xfe,0xdd,0x64,0x41,0x77,0x01,0x03] as IID_AsyncOperationCompletedHandler_1_Windows_UI_Popups_IUICommand }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::ui::startscreen::JumpList> => [0x3c047c6a,0xc55b,0x5485,0xb6,0x73,0x8d,0x4b,0xd7,0xc3,0x42,0xe2] as IID_AsyncOperationCompletedHandler_1_Windows_UI_StartScreen_JumpList }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::ui::xaml::controls::ContentDialogResult> => [0x45c7a306,0xe330,0x54d6,0xa9,0xba,0x61,0xc9,0x1f,0x93,0xf5,0x3b] as IID_AsyncOperationCompletedHandler_1_Windows_UI_Xaml_Controls_ContentDialogResult }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::ui::xaml::controls::maps::MapModel3D> => [0x60ef194b,0xdbe0,0x5911,0xb7,0x25,0xec,0xc5,0xde,0x29,0x87,0x82] as IID_AsyncOperationCompletedHandler_1_Windows_UI_Xaml_Controls_Maps_MapModel3D }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::ui::xaml::controls::maps::StreetsidePanorama> => [0xf6f3b17c,0x4527,0x5528,0x86,0xaa,0x1c,0xf1,0xfb,0x78,0xa5,0xeb] as IID_AsyncOperationCompletedHandler_1_Windows_UI_Xaml_Controls_Maps_StreetsidePanorama }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::ui::xaml::data::LoadMoreItemsResult> => [0x10fb738b,0xa63b,0x506e,0x9e,0xd7,0x2e,0xab,0x37,0x91,0x52,0x21] as IID_AsyncOperationCompletedHandler_1_Windows_UI_Xaml_Data_LoadMoreItemsResult }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::ui::xaml::hosting::DesignerAppView> => [0xaeeb272e,0xa814,0x5981,0xa2,0xc3,0x62,0x3e,0x22,0x6e,0x4a,0x71] as IID_AsyncOperationCompletedHandler_1_Windows_UI_Xaml_Hosting_DesignerAppView }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for AsyncOperationCompletedHandler<super::ui::xaml::media::imaging::SvgImageSourceLoadStatus> => [0x7c8bc668,0x4e0b,0x5924,0xb7,0xe7,0x23,0x4a,0x11,0xd6,0x3d,0x61] as IID_AsyncOperationCompletedHandler_1_Windows_UI_Xaml_Media_Imaging_SvgImageSourceLoadStatus }
 RT_PINTERFACE!{ for AsyncOperationCompletedHandler<u32> => [0x9343b6e7,0xe3d2,0x5e4a,0xab,0x2d,0x2b,0xce,0x49,0x19,0xa6,0xa4] as IID_AsyncOperationCompletedHandler_1_System_UInt32 }
 RT_PINTERFACE!{ for AsyncOperationCompletedHandler<u64> => [0xee8aeb02,0xfb00,0x51fa,0x8f,0x57,0x32,0x58,0x3e,0xa2,0x41,0xf9] as IID_AsyncOperationCompletedHandler_1_System_UInt64 }
@@ -1714,6 +1755,7 @@ RT_PINTERFACE!{ for AsyncOperationProgressHandler<HString, u64> => [0x14da7de7,0
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::devices::scanners::ImageScannerScanResult, u32> => [0xd1662baa,0x4f20,0x5d18,0x97,0xf1,0xa0,0x1a,0x6d,0x0d,0xd9,0x80] as IID_AsyncOperationProgressHandler_2_Windows_Devices_Scanners_ImageScannerScanResult_System_UInt32 }
 #[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::gaming::input::custom::GipFirmwareUpdateResult, super::gaming::input::custom::GipFirmwareUpdateProgress> => [0x065c16af,0x49dc,0x5c94,0xaf,0xe2,0x93,0x85,0x93,0x7f,0xac,0xc9] as IID_AsyncOperationProgressHandler_2_Windows_Gaming_Input_Custom_GipFirmwareUpdateResult_Windows_Gaming_Input_Custom_GipFirmwareUpdateProgress }
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::management::deployment::DeploymentResult, super::management::deployment::DeploymentProgress> => [0xf1b926d1,0x1796,0x597a,0x9b,0xea,0x6c,0x64,0x49,0xd0,0x3e,0xef] as IID_AsyncOperationProgressHandler_2_Windows_Management_Deployment_DeploymentResult_Windows_Management_Deployment_DeploymentProgress }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::media::core::LowLightFusionResult, f64> => [0x79337bbf,0x7b7f,0x5f88,0xa2,0xea,0x8d,0xf1,0x4a,0xe3,0x1d,0xe4] as IID_AsyncOperationProgressHandler_2_Windows_Media_Core_LowLightFusionResult_System_Double }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::media::import::PhotoImportDeleteImportedItemsFromSourceResult, f64> => [0xac6e425d,0x49e8,0x50d7,0x98,0x8c,0xcd,0x5e,0x42,0x03,0x85,0x77] as IID_AsyncOperationProgressHandler_2_Windows_Media_Import_PhotoImportDeleteImportedItemsFromSourceResult_System_Double }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::media::import::PhotoImportFindItemsResult, u32> => [0x91190f62,0x7956,0x5e8f,0x83,0xf1,0x84,0xf9,0xfe,0x01,0x1b,0x21] as IID_AsyncOperationProgressHandler_2_Windows_Media_Import_PhotoImportFindItemsResult_System_UInt32 }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::media::import::PhotoImportImportItemsResult, super::media::import::PhotoImportProgress> => [0xacd8a978,0xb2e1,0x55d0,0xbb,0xf6,0x8d,0xc5,0x08,0x8d,0x72,0x8a] as IID_AsyncOperationProgressHandler_2_Windows_Media_Import_PhotoImportImportItemsResult_Windows_Media_Import_PhotoImportProgress }
@@ -1728,6 +1770,7 @@ RT_PINTERFACE!{ for AsyncOperationProgressHandler<HString, u64> => [0x14da7de7,0
 #[cfg(all(feature="windows-storage",feature="windows-web"))] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::storage::streams::IInputStream, super::web::http::HttpProgress> => [0x04682e89,0x6e8b,0x54b1,0xa4,0x66,0x43,0x2e,0x13,0x0c,0xf9,0xa6] as IID_AsyncOperationProgressHandler_2_Windows_Storage_Streams_IInputStream_Windows_Web_Http_HttpProgress }
 #[cfg(all(feature="windows-storage",feature="windows-web"))] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::storage::streams::IInputStream, super::web::syndication::RetrievalProgress> => [0x6136b327,0x4152,0x54e3,0xaa,0x34,0x38,0xa0,0xc1,0x21,0xdc,0x4d] as IID_AsyncOperationProgressHandler_2_Windows_Storage_Streams_IInputStream_Windows_Web_Syndication_RetrievalProgress }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::storage::streams::IInputStream, u64> => [0xf9b2e7f6,0x762f,0x50db,0x95,0xdd,0x7f,0x6c,0x6e,0xc4,0x70,0x90] as IID_AsyncOperationProgressHandler_2_Windows_Storage_Streams_IInputStream_System_UInt64 }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::system::diagnostics::DiagnosticActionResult, super::system::diagnostics::DiagnosticActionState> => [0xa0422898,0xb50a,0x52e3,0xb4,0x61,0x53,0x98,0x93,0x08,0xbe,0x12] as IID_AsyncOperationProgressHandler_2_Windows_System_Diagnostics_DiagnosticActionResult_Windows_System_Diagnostics_DiagnosticActionState }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::web::atompub::ServiceDocument, super::web::syndication::RetrievalProgress> => [0xdd2a6d54,0x55aa,0x5d09,0xb7,0x90,0x95,0x20,0xd4,0xeb,0x4f,0x19] as IID_AsyncOperationProgressHandler_2_Windows_Web_AtomPub_ServiceDocument_Windows_Web_Syndication_RetrievalProgress }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::web::http::HttpResponseMessage, super::web::http::HttpProgress> => [0x68e4606a,0x76ec,0x5816,0xb2,0xfe,0xa0,0x4e,0xcd,0xe4,0x12,0x6a] as IID_AsyncOperationProgressHandler_2_Windows_Web_Http_HttpResponseMessage_Windows_Web_Http_HttpProgress }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for AsyncOperationProgressHandler<super::web::syndication::SyndicationFeed, super::web::syndication::RetrievalProgress> => [0x1017bbe0,0x9d10,0x543e,0x8f,0x03,0x88,0x51,0x22,0xa0,0x82,0xf3] as IID_AsyncOperationProgressHandler_2_Windows_Web_Syndication_SyndicationFeed_Windows_Web_Syndication_RetrievalProgress }
@@ -1742,6 +1785,7 @@ RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<HString, u64> => 
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::devices::scanners::ImageScannerScanResult, u32> => [0xbd8bdbd8,0x459a,0x52dc,0xb1,0x01,0x75,0xb3,0x98,0xa6,0x1a,0xef] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Devices_Scanners_ImageScannerScanResult_System_UInt32 }
 #[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::gaming::input::custom::GipFirmwareUpdateResult, super::gaming::input::custom::GipFirmwareUpdateProgress> => [0x61b95949,0xa027,0x51d8,0x9f,0x33,0x37,0x92,0x74,0x51,0x50,0x2b] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Gaming_Input_Custom_GipFirmwareUpdateResult_Windows_Gaming_Input_Custom_GipFirmwareUpdateProgress }
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::management::deployment::DeploymentResult, super::management::deployment::DeploymentProgress> => [0x6e1c7129,0x61e0,0x5d88,0x9f,0xd4,0xf3,0xce,0x65,0xa0,0x57,0x19] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Management_Deployment_DeploymentResult_Windows_Management_Deployment_DeploymentProgress }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::media::core::LowLightFusionResult, f64> => [0x4a952fc2,0xefce,0x5275,0x90,0xd0,0x36,0x89,0xbe,0x26,0xf6,0x66] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Media_Core_LowLightFusionResult_System_Double }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::media::import::PhotoImportDeleteImportedItemsFromSourceResult, f64> => [0x5e24e7c1,0xf356,0x59c1,0xb0,0xe5,0xb2,0xdf,0xb2,0x25,0xeb,0x4e] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Media_Import_PhotoImportDeleteImportedItemsFromSourceResult_System_Double }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::media::import::PhotoImportFindItemsResult, u32> => [0xdd7a69d4,0x2456,0x5250,0x96,0x53,0x31,0xbd,0x2d,0x48,0x71,0x04] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Media_Import_PhotoImportFindItemsResult_System_UInt32 }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::media::import::PhotoImportImportItemsResult, super::media::import::PhotoImportProgress> => [0x0d141ec2,0xee90,0x53a0,0x93,0x18,0x10,0xf0,0xab,0x7f,0x2d,0x17] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Media_Import_PhotoImportImportItemsResult_Windows_Media_Import_PhotoImportProgress }
@@ -1756,6 +1800,7 @@ RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<HString, u64> => 
 #[cfg(all(feature="windows-storage",feature="windows-web"))] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::storage::streams::IInputStream, super::web::http::HttpProgress> => [0x504a34ec,0x5499,0x5a16,0xbf,0xfc,0x3c,0xcb,0x64,0xa3,0x54,0x7a] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Storage_Streams_IInputStream_Windows_Web_Http_HttpProgress }
 #[cfg(all(feature="windows-storage",feature="windows-web"))] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::storage::streams::IInputStream, super::web::syndication::RetrievalProgress> => [0x76772ec1,0xc26f,0x5f6e,0x8d,0x3b,0x83,0x14,0x10,0x7c,0xef,0xeb] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Storage_Streams_IInputStream_Windows_Web_Syndication_RetrievalProgress }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::storage::streams::IInputStream, u64> => [0x8db69706,0x3dd1,0x5a28,0x98,0x6a,0x93,0xbe,0x07,0x76,0xd9,0xc3] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Storage_Streams_IInputStream_System_UInt64 }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::system::diagnostics::DiagnosticActionResult, super::system::diagnostics::DiagnosticActionState> => [0x390b0091,0xcaf7,0x5b64,0x83,0x9d,0x49,0x90,0xae,0x7f,0x75,0x3c] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_System_Diagnostics_DiagnosticActionResult_Windows_System_Diagnostics_DiagnosticActionState }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::web::atompub::ServiceDocument, super::web::syndication::RetrievalProgress> => [0x5f03b1d3,0x470d,0x5be7,0x81,0x76,0x1c,0x9a,0x46,0x01,0x09,0x00] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Web_AtomPub_ServiceDocument_Windows_Web_Syndication_RetrievalProgress }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::web::http::HttpResponseMessage, super::web::http::HttpProgress> => [0xbeadb572,0xf9a3,0x5e93,0xb6,0xca,0xe3,0x11,0xb6,0x59,0x33,0xfc] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Web_Http_HttpResponseMessage_Windows_Web_Http_HttpProgress }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for AsyncOperationWithProgressCompletedHandler<super::web::syndication::SyndicationFeed, super::web::syndication::RetrievalProgress> => [0x0e3d7f70,0x4e8c,0x5260,0xa7,0xe5,0x78,0x6e,0x05,0xbd,0xed,0x99] as IID_AsyncOperationWithProgressCompletedHandler_2_Windows_Web_Syndication_SyndicationFeed_Windows_Web_Syndication_RetrievalProgress }
@@ -1795,6 +1840,7 @@ RT_PINTERFACE!{ for IAsyncActionWithProgress<f64> => [0x4f1430a6,0xa825,0x56ca,0
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IAsyncActionWithProgress<super::web::syndication::TransferProgress> => [0xb7eb83f5,0xa746,0x50f2,0xb9,0x1f,0x31,0x80,0x31,0x61,0xcc,0xc7] as IID_IAsyncActionWithProgress_1_Windows_Web_Syndication_TransferProgress }
 RT_PINTERFACE!{ for IAsyncActionWithProgress<u64> => [0x43f713d0,0xc49d,0x5e55,0xae,0xbf,0xaf,0x39,0x57,0x68,0x35,0x1e] as IID_IAsyncActionWithProgress_1_System_UInt64 }
 RT_PINTERFACE!{ for IAsyncOperation<bool> => [0xcdb5efb3,0x5788,0x509d,0x9b,0xe1,0x71,0xcc,0xb8,0xa3,0x36,0x2a] as IID_IAsyncOperation_1_System_Boolean }
+RT_PINTERFACE!{ for IAsyncOperation<collections::IMap<HString, HString>> => [0x84e30b9c,0x351d,0x5fcb,0x8b,0x0a,0xbc,0x14,0x54,0x07,0xf9,0x15] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IMap_2_System_String_System_String }
 RT_PINTERFACE!{ for IAsyncOperation<collections::IMap<HString, IInspectable>> => [0x127e39c7,0x07c1,0x58e5,0xb4,0x8e,0x3a,0x47,0x29,0x83,0x9f,0xec] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IMap_2_System_String_System_Object }
 RT_PINTERFACE!{ for IAsyncOperation<collections::IMapView<HString, IInspectable>> => [0x5dcbee48,0x9965,0x51da,0xa4,0x61,0x17,0x7c,0x88,0x5b,0xe7,0xe5] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IMapView_2_System_String_System_Object }
 #[cfg(feature="windows-perception")] RT_PINTERFACE!{ for IAsyncOperation<collections::IMapView<HString, super::perception::spatial::SpatialAnchor>> => [0xbbe07728,0xda33,0x52c5,0xaa,0xe0,0xa5,0xe7,0x4c,0xdf,0x04,0x71] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IMapView_2_System_String_Windows_Perception_Spatial_SpatialAnchor }
@@ -1861,6 +1907,7 @@ RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<IInspectable>> => [
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::devices::sensors::ActivitySensorReading>> => [0xcd781b82,0x7900,0x51a3,0x80,0xce,0x90,0x3e,0x2e,0x0a,0x4f,0x0e] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Sensors_ActivitySensorReading }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::devices::sensors::PedometerReading>> => [0x2aeac503,0xa3a8,0x57b3,0xa8,0xa9,0xe1,0x6b,0x0c,0xd4,0xc0,0xa4] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Sensors_PedometerReading }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::devices::smartcards::SmartCard>> => [0x3b2691b2,0xfc5e,0x59ff,0x8c,0x6f,0xe6,0xdd,0x29,0xa9,0x67,0xfc] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_SmartCards_SmartCard }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::devices::smartcards::SmartCardAppletIdGroupRegistration>> => [0x045e34b9,0xf153,0x5920,0x99,0xde,0xed,0x91,0x2e,0xa3,0x8b,0x1a] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_SmartCards_SmartCardAppletIdGroupRegistration }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::devices::spi::provider::ISpiControllerProvider>> => [0xb3af3490,0xdede,0x59d1,0xb5,0x62,0x1f,0x6b,0xe7,0x1a,0xe1,0x39] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Spi_Provider_ISpiControllerProvider }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::devices::spi::SpiController>> => [0x89624331,0xf802,0x56f7,0x9b,0x33,0x17,0xc6,0x16,0xec,0xbc,0xfa] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_Spi_SpiController }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::devices::wifi::WiFiAdapter>> => [0x3140802b,0x987c,0x5c56,0xa4,0x30,0x90,0xfb,0xc1,0x89,0x8d,0xda] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Devices_WiFi_WiFiAdapter }
@@ -1876,6 +1923,7 @@ RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<IInspectable>> => [
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::networking::connectivity::ConnectionProfile>> => [0xc0023294,0xc2cb,0x52f0,0xa9,0xf4,0x21,0x91,0x60,0x32,0xf6,0x9d] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_Connectivity_ConnectionProfile }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::networking::connectivity::ConnectivityInterval>> => [0xaf96d70b,0x41c7,0x5dc6,0x98,0x95,0xea,0x04,0x3a,0x88,0x5d,0x8d] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_Connectivity_ConnectivityInterval }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::networking::connectivity::NetworkUsage>> => [0x05c9e081,0x6229,0x5049,0x8e,0xea,0xa4,0x98,0x40,0x7c,0x00,0xd5] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_Connectivity_NetworkUsage }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::networking::connectivity::ProviderNetworkUsage>> => [0x7eba5a8f,0xe4fd,0x5201,0xa4,0xf4,0x95,0x67,0x59,0x6f,0x21,0x3c] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_Connectivity_ProviderNetworkUsage }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::networking::EndpointPair>> => [0xafc2ff8e,0xe393,0x566a,0x89,0xc4,0xd0,0x43,0xe9,0x40,0x05,0x0d] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_EndpointPair }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::networking::proximity::PeerInformation>> => [0xa36ec4bc,0x607a,0x5180,0xa7,0x85,0x40,0x42,0xf8,0x79,0x5c,0x8b] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_Proximity_PeerInformation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<collections::IVectorView<super::networking::vpn::IVpnProfile>> => [0x69d957be,0x045e,0x538f,0x98,0xf6,0x1a,0xa6,0x5c,0xee,0x24,0x4a] as IID_IAsyncOperation_1_Windows_Foundation_Collections_IVectorView_1_Windows_Networking_Vpn_IVpnProfile }
@@ -1940,6 +1988,7 @@ RT_PINTERFACE!{ for IAsyncOperation<IReference<TimeSpan>> => [0x24a901ad,0x910f,
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::contacts::ContactList> => [0xae816b3d,0x57a8,0x50a7,0x80,0x7e,0x2c,0x76,0x8a,0x36,0x4a,0x4f] as IID_IAsyncOperation_1_Windows_ApplicationModel_Contacts_ContactList }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::contacts::ContactStore> => [0x235e0791,0x9a3e,0x5723,0x87,0xf0,0x44,0xff,0xb7,0x86,0xc9,0xe1] as IID_IAsyncOperation_1_Windows_ApplicationModel_Contacts_ContactStore }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::contacts::PinnedContactIdsQueryResult> => [0x031adb6c,0x3aa3,0x5b09,0xa8,0xfb,0x92,0xea,0x01,0x45,0xdc,0x40] as IID_IAsyncOperation_1_Windows_ApplicationModel_Contacts_PinnedContactIdsQueryResult }
+#[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::core::AppRestartFailureReason> => [0x0938905d,0x54c0,0x572f,0x84,0x51,0x4b,0xfd,0x2b,0x52,0xed,0xda] as IID_IAsyncOperation_1_Windows_ApplicationModel_Core_AppRestartFailureReason }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::datatransfer::DataPackage> => [0xa16f2d07,0xead3,0x53e4,0x94,0x90,0x75,0xbd,0xba,0xeb,0x7a,0x5b] as IID_IAsyncOperation_1_Windows_ApplicationModel_DataTransfer_DataPackage }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::datatransfer::DataPackageOperation> => [0x8b98aea9,0x64f0,0x5672,0xb3,0x0e,0xdf,0xd9,0xc2,0xe4,0xf6,0xfe] as IID_IAsyncOperation_1_Windows_ApplicationModel_DataTransfer_DataPackageOperation }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::email::EmailConversation> => [0x6885966c,0x13b9,0x59cc,0xb3,0x58,0xad,0xf8,0x2e,0xec,0x84,0x2a] as IID_IAsyncOperation_1_Windows_ApplicationModel_Email_EmailConversation }
@@ -1957,7 +2006,9 @@ RT_PINTERFACE!{ for IAsyncOperation<IReference<TimeSpan>> => [0x24a901ad,0x910f,
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::extendedexecution::ExtendedExecutionResult> => [0x1dbb1bc9,0x6cd7,0x5947,0x8c,0xd1,0x29,0x63,0x2b,0x5a,0xa9,0x50] as IID_IAsyncOperation_1_Windows_ApplicationModel_ExtendedExecution_ExtendedExecutionResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::extendedexecution::foreground::ExtendedExecutionForegroundResult> => [0xb18ea00f,0x8c20,0x5ac2,0x92,0x46,0x3e,0xf4,0x05,0x27,0x1f,0x1a] as IID_IAsyncOperation_1_Windows_ApplicationModel_ExtendedExecution_Foreground_ExtendedExecutionForegroundResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::PackageCatalogAddOptionalPackageResult> => [0x59b2497f,0x86eb,0x542f,0xbe,0xa6,0x1b,0xe5,0x3e,0x93,0xe1,0x3d] as IID_IAsyncOperation_1_Windows_ApplicationModel_PackageCatalogAddOptionalPackageResult }
+#[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::PackageCatalogRemoveOptionalPackagesResult> => [0xcfc179aa,0xfb98,0x54ef,0x8e,0xa8,0x64,0x49,0x93,0x47,0xb7,0xf7] as IID_IAsyncOperation_1_Windows_ApplicationModel_PackageCatalogRemoveOptionalPackagesResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::PackageContentGroup> => [0xbbd292e3,0xdb9f,0x5802,0xa4,0x88,0x40,0xf1,0x56,0x33,0x2c,0x04] as IID_IAsyncOperation_1_Windows_ApplicationModel_PackageContentGroup }
+#[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::payments::PaymentCanMakePaymentResult> => [0xa467410a,0x11de,0x5090,0xb9,0x05,0x96,0xa5,0x62,0xd8,0x5d,0xe5] as IID_IAsyncOperation_1_Windows_ApplicationModel_Payments_PaymentCanMakePaymentResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::payments::PaymentRequestChangedResult> => [0x0cc32025,0xac67,0x57e2,0xa0,0xf6,0x3a,0x8e,0x11,0x6c,0xef,0x4c] as IID_IAsyncOperation_1_Windows_ApplicationModel_Payments_PaymentRequestChangedResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::payments::PaymentRequestSubmitResult> => [0xcf290deb,0x5549,0x57c3,0x8a,0xbd,0x53,0xb7,0x6c,0x64,0x3c,0xca] as IID_IAsyncOperation_1_Windows_ApplicationModel_Payments_PaymentRequestSubmitResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::payments::provider::PaymentTransaction> => [0xe09a3f7d,0x6ad0,0x58cf,0xab,0x4c,0x2e,0x4c,0x9c,0x79,0x18,0x73] as IID_IAsyncOperation_1_Windows_ApplicationModel_Payments_Provider_PaymentTransaction }
@@ -1973,6 +2024,7 @@ RT_PINTERFACE!{ for IAsyncOperation<IReference<TimeSpan>> => [0x24a901ad,0x910f,
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::store::preview::installcontrol::GetEntitlementResult> => [0x4c24d7ee,0x4b92,0x5cea,0xa4,0xf4,0x7a,0x5d,0x6e,0x91,0x90,0x62] as IID_IAsyncOperation_1_Windows_ApplicationModel_Store_Preview_InstallControl_GetEntitlementResult }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::store::preview::StorePreviewPurchaseResults> => [0x9aa2af80,0x0dcb,0x5ec1,0x84,0x35,0x0b,0x68,0x7e,0xd3,0x74,0xa5] as IID_IAsyncOperation_1_Windows_ApplicationModel_Store_Preview_StorePreviewPurchaseResults }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::store::PurchaseResults> => [0x241f6b10,0x6af6,0x5164,0x85,0xeb,0xba,0xe6,0xbd,0xae,0x0b,0xe8] as IID_IAsyncOperation_1_Windows_ApplicationModel_Store_PurchaseResults }
+#[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::useractivities::UserActivity> => [0x35095983,0x7790,0x5974,0xa6,0x60,0x1c,0x2d,0xbd,0xd2,0xef,0xa7] as IID_IAsyncOperation_1_Windows_ApplicationModel_UserActivities_UserActivity }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::userdataaccounts::systemaccess::DeviceAccountConfiguration> => [0x469859f3,0x6b7b,0x5399,0x8a,0x8c,0xfe,0x61,0x5b,0x95,0xae,0x07] as IID_IAsyncOperation_1_Windows_ApplicationModel_UserDataAccounts_SystemAccess_DeviceAccountConfiguration }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::userdataaccounts::UserDataAccount> => [0xf0aeb2af,0xa69b,0x5caa,0xa2,0x83,0x32,0xe6,0x97,0xa6,0x5d,0x31] as IID_IAsyncOperation_1_Windows_ApplicationModel_UserDataAccounts_UserDataAccount }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IAsyncOperation<super::applicationmodel::userdataaccounts::UserDataAccountStore> => [0x06b68f1e,0x9937,0x5296,0xa5,0x5e,0xd4,0x3d,0xd8,0xa7,0x54,0x5c] as IID_IAsyncOperation_1_Windows_ApplicationModel_UserDataAccounts_UserDataAccountStore }
@@ -2026,6 +2078,7 @@ RT_PINTERFACE!{ for IAsyncOperation<IReference<TimeSpan>> => [0x24a901ad,0x910f,
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::geolocation::GeolocationAccessStatus> => [0xde2b24d0,0xb726,0x57b1,0xa7,0xc5,0xe5,0xa1,0x39,0x32,0xb7,0xde] as IID_IAsyncOperation_1_Windows_Devices_Geolocation_GeolocationAccessStatus }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::geolocation::Geopoint> => [0x3723e070,0xc2ae,0x538f,0x84,0x6e,0x0f,0x9d,0x28,0x03,0x10,0xc0] as IID_IAsyncOperation_1_Windows_Devices_Geolocation_Geopoint }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::geolocation::Geoposition> => [0xee73ecf0,0x099d,0x57e5,0x84,0x07,0x5b,0x32,0xe5,0xaf,0x1c,0xc4] as IID_IAsyncOperation_1_Windows_Devices_Geolocation_Geoposition }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::geolocation::Geovisit> => [0x8d1c950a,0xefb9,0x5440,0xa6,0xa7,0x82,0x0a,0x83,0x9b,0xe0,0x7b] as IID_IAsyncOperation_1_Windows_Devices_Geolocation_Geovisit }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::gpio::GpioController> => [0xed045917,0x96c7,0x5735,0xb4,0xbe,0xd7,0x96,0x19,0xd4,0x83,0x5e] as IID_IAsyncOperation_1_Windows_Devices_Gpio_GpioController }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::haptics::VibrationAccessStatus> => [0x076b2611,0x5614,0x55a5,0x9c,0x58,0xf9,0xd1,0x7a,0x8f,0x0b,0x79] as IID_IAsyncOperation_1_Windows_Devices_Haptics_VibrationAccessStatus }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::haptics::VibrationDevice> => [0x44193494,0xe331,0x50ca,0xbb,0x61,0x6a,0x71,0xbd,0x9b,0x01,0xc4] as IID_IAsyncOperation_1_Windows_Devices_Haptics_VibrationDevice }
@@ -2054,6 +2107,9 @@ RT_PINTERFACE!{ for IAsyncOperation<IReference<TimeSpan>> => [0x24a901ad,0x910f,
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::pointofservice::ClaimedMagneticStripeReader> => [0x41630bd4,0xf45a,0x590d,0x8a,0x4e,0xf7,0x0c,0x9e,0x49,0xad,0x01] as IID_IAsyncOperation_1_Windows_Devices_PointOfService_ClaimedMagneticStripeReader }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::pointofservice::ClaimedPosPrinter> => [0xb4476f95,0x355a,0x503d,0xb8,0x44,0x17,0x56,0xc8,0xcf,0xda,0x98] as IID_IAsyncOperation_1_Windows_Devices_PointOfService_ClaimedPosPrinter }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::pointofservice::LineDisplay> => [0x40ffdae9,0xe7c1,0x5c44,0x91,0xb4,0xbd,0x84,0xeb,0xf8,0x53,0x9b] as IID_IAsyncOperation_1_Windows_Devices_PointOfService_LineDisplay }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::pointofservice::LineDisplayPowerStatus> => [0x363eedcd,0x7922,0x5503,0x90,0x09,0x1c,0x63,0x1c,0x9e,0x36,0x53] as IID_IAsyncOperation_1_Windows_Devices_PointOfService_LineDisplayPowerStatus }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::pointofservice::LineDisplayStoredBitmap> => [0xdda5d77d,0xb7a1,0x541d,0xa4,0x80,0x3d,0x46,0xbe,0xd9,0x8e,0x9d] as IID_IAsyncOperation_1_Windows_Devices_PointOfService_LineDisplayStoredBitmap }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::pointofservice::LineDisplayWindow> => [0x9755f05b,0x64cc,0x5051,0x83,0x50,0x4a,0xcf,0x1f,0xfc,0xbe,0x58] as IID_IAsyncOperation_1_Windows_Devices_PointOfService_LineDisplayWindow }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::pointofservice::MagneticStripeReader> => [0x93726e09,0x817c,0x5f33,0xbe,0xe4,0x09,0x0d,0xe7,0x07,0x4f,0x19] as IID_IAsyncOperation_1_Windows_Devices_PointOfService_MagneticStripeReader }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::pointofservice::PosPrinter> => [0x024f77ce,0x51c3,0x5afc,0x9f,0x30,0x24,0xb3,0xc0,0xf3,0xb2,0x5a] as IID_IAsyncOperation_1_Windows_Devices_PointOfService_PosPrinter }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::power::Battery> => [0xdaa3d556,0x1529,0x56d2,0xa5,0xf8,0xbf,0xb6,0xc2,0x2a,0x3d,0xfe] as IID_IAsyncOperation_1_Windows_Devices_Power_Battery }
@@ -2063,13 +2119,31 @@ RT_PINTERFACE!{ for IAsyncOperation<IReference<TimeSpan>> => [0x24a901ad,0x910f,
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::radios::RadioAccessStatus> => [0x21fb30ef,0x072f,0x502c,0x98,0x98,0xd0,0xc3,0xb2,0xcd,0x9a,0xc5] as IID_IAsyncOperation_1_Windows_Devices_Radios_RadioAccessStatus }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::scanners::ImageScanner> => [0x75d78736,0x6c52,0x551e,0xab,0x5f,0x50,0x67,0x4f,0x32,0x34,0x31] as IID_IAsyncOperation_1_Windows_Devices_Scanners_ImageScanner }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::scanners::ImageScannerPreviewResult> => [0x2f74576f,0x0498,0x5348,0xbc,0x3b,0xa7,0x0d,0x1a,0x77,0x17,0x18] as IID_IAsyncOperation_1_Windows_Devices_Scanners_ImageScannerPreviewResult }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::sensors::Accelerometer> => [0xfc761d3b,0x5e4d,0x5148,0xa6,0x18,0x7b,0x67,0x70,0x59,0xd0,0xb8] as IID_IAsyncOperation_1_Windows_Devices_Sensors_Accelerometer }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::sensors::ActivitySensor> => [0xc33003ae,0xe7ae,0x572b,0x8d,0x55,0x7d,0xb1,0x97,0x35,0x6c,0x30] as IID_IAsyncOperation_1_Windows_Devices_Sensors_ActivitySensor }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::sensors::ActivitySensorReading> => [0x79a87969,0x327f,0x5b7a,0xa0,0xd3,0x73,0xea,0xb1,0x6d,0xe2,0x1c] as IID_IAsyncOperation_1_Windows_Devices_Sensors_ActivitySensorReading }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::sensors::Barometer> => [0x51876037,0x9f36,0x5c86,0x85,0x5d,0x3d,0xdd,0x25,0x1d,0xf9,0xa8] as IID_IAsyncOperation_1_Windows_Devices_Sensors_Barometer }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::sensors::Compass> => [0x5297c24c,0xa6fb,0x5e03,0xa4,0xf8,0xee,0x14,0x3c,0x43,0x5d,0xf8] as IID_IAsyncOperation_1_Windows_Devices_Sensors_Compass }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::sensors::custom::CustomSensor> => [0x7fbfbe55,0x9674,0x54e3,0xa2,0x69,0x9c,0xaa,0x82,0x0e,0xd2,0x3c] as IID_IAsyncOperation_1_Windows_Devices_Sensors_Custom_CustomSensor }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::sensors::Gyrometer> => [0xfcee7abf,0x1dcf,0x50cc,0xb9,0x1b,0x7a,0x1f,0x59,0xe0,0xc2,0x8b] as IID_IAsyncOperation_1_Windows_Devices_Sensors_Gyrometer }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::sensors::Inclinometer> => [0x84ebb496,0xb69a,0x53cd,0xb6,0x90,0xa4,0x61,0x89,0x82,0x2b,0x01] as IID_IAsyncOperation_1_Windows_Devices_Sensors_Inclinometer }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::sensors::LightSensor> => [0x380e592c,0x47a0,0x5df4,0x8d,0xe2,0xb2,0xee,0xfa,0x9d,0xb8,0xad] as IID_IAsyncOperation_1_Windows_Devices_Sensors_LightSensor }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::sensors::Magnetometer> => [0xb0455443,0xe790,0x5aa3,0x87,0x67,0x49,0x32,0x03,0x22,0x74,0xee] as IID_IAsyncOperation_1_Windows_Devices_Sensors_Magnetometer }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::sensors::OrientationSensor> => [0x8ef36aa8,0x6f6d,0x538b,0xa4,0x2b,0x37,0xaf,0x73,0x69,0x04,0x9e] as IID_IAsyncOperation_1_Windows_Devices_Sensors_OrientationSensor }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::sensors::Pedometer> => [0x9414388f,0x1b3e,0x55f5,0x81,0x9b,0xab,0x38,0x33,0x64,0x60,0x55] as IID_IAsyncOperation_1_Windows_Devices_Sensors_Pedometer }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::serialcommunication::SerialDevice> => [0x44ef26ed,0xc1ff,0x546a,0xa4,0x6b,0x6a,0x37,0xde,0x91,0x87,0xfb] as IID_IAsyncOperation_1_Windows_Devices_SerialCommunication_SerialDevice }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardActivationPolicyChangeResult> => [0xb8f15d35,0x2f3d,0x53aa,0xb5,0xc6,0xfa,0xca,0x4c,0x7f,0xf1,0x6e] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardActivationPolicyChangeResult }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardAppletIdGroupRegistration> => [0xd8030032,0x5f3c,0x50e8,0x91,0xb8,0x69,0x1c,0x45,0x46,0x09,0xe8] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardAppletIdGroupRegistration }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardChallengeContext> => [0x1c650663,0x3f68,0x599b,0xb9,0xd4,0xc3,0x50,0xf1,0x3e,0xe4,0xe4] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardChallengeContext }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardConnection> => [0x779bbc5b,0xa75c,0x5988,0x97,0x8f,0x34,0xdb,0xc6,0x29,0xd5,0x76] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardConnection }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardCryptogramGenerator> => [0x5dfde47d,0x9770,0x5f44,0xa9,0x83,0xf2,0xfe,0xe4,0x30,0x76,0x8e] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardCryptogramGenerator }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardCryptogramGeneratorOperationStatus> => [0xf5b0e1b0,0x57a7,0x5ab3,0xae,0xaa,0xd6,0xb6,0x35,0x25,0x78,0x66] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardCryptogramGeneratorOperationStatus }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult> => [0x001a0095,0x2adc,0x54c2,0x85,0x94,0x3a,0x36,0xba,0x16,0xfd,0x86] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult> => [0x2cab81a8,0x3c29,0x50d1,0x97,0x61,0x5f,0x39,0x27,0xc9,0x6d,0xca] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult> => [0x8110f6e1,0x3520,0x5cd2,0xba,0xb5,0x08,0x31,0x18,0x5d,0x2c,0x2e] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardCryptogramMaterialPossessionProof> => [0x6f2eea36,0xde40,0x55b4,0x90,0xc3,0x25,0x56,0x73,0xf7,0x1b,0x2e] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialPossessionProof }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardCryptogramStorageKeyInfo> => [0x2187f5a4,0x691c,0x50e1,0xbf,0x4f,0xdd,0xed,0xc3,0xe6,0x84,0xb8] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardCryptogramStorageKeyInfo }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardEmulator> => [0x1dd898f0,0xc825,0x5bf3,0x95,0x64,0x47,0x08,0x93,0x2f,0x95,0x5f] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardEmulator }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardProvisioning> => [0x6184fc80,0xb752,0x5ce8,0xa1,0x36,0xf5,0x71,0x74,0xbb,0x93,0x09] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardProvisioning }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardReader> => [0x036a830d,0xbbca,0x5cb9,0x97,0x7f,0xb2,0x9e,0xa3,0x04,0x21,0x49] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardReader }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::smartcards::SmartCardReaderStatus> => [0x5ae402fa,0x1f22,0x5570,0xa0,0xc8,0xb2,0x32,0x0a,0xde,0xdb,0x81] as IID_IAsyncOperation_1_Windows_Devices_SmartCards_SmartCardReaderStatus }
@@ -2083,11 +2157,14 @@ RT_PINTERFACE!{ for IAsyncOperation<IReference<TimeSpan>> => [0x24a901ad,0x910f,
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::wifi::WiFiAccessStatus> => [0xf8c75a3a,0x739a,0x57aa,0x98,0x6d,0x1f,0x76,0x04,0xd7,0xe3,0x86] as IID_IAsyncOperation_1_Windows_Devices_WiFi_WiFiAccessStatus }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::wifi::WiFiAdapter> => [0x1dcf739d,0x10b7,0x59e9,0xab,0x47,0x8b,0x02,0x77,0xe2,0x01,0x93] as IID_IAsyncOperation_1_Windows_Devices_WiFi_WiFiAdapter }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::wifi::WiFiConnectionResult> => [0xffa41f49,0x4c30,0x50d3,0x95,0x49,0xe4,0xf0,0x55,0xb4,0x17,0xb4] as IID_IAsyncOperation_1_Windows_Devices_WiFi_WiFiConnectionResult }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::wifi::WiFiWpsConfigurationResult> => [0x4b721d74,0x0289,0x583c,0xa8,0x1d,0xf3,0xbe,0x03,0xea,0x59,0x6d] as IID_IAsyncOperation_1_Windows_Devices_WiFi_WiFiWpsConfigurationResult }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::wifidirect::services::WiFiDirectService> => [0xc4fa2ae8,0x4ff7,0x5aa0,0xaf,0x97,0xed,0x85,0xea,0x66,0xf9,0xae] as IID_IAsyncOperation_1_Windows_Devices_WiFiDirect_Services_WiFiDirectService }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::wifidirect::services::WiFiDirectServiceProvisioningInfo> => [0xd7fa4dc4,0x4730,0x506e,0xbf,0xf0,0x80,0x1e,0xb4,0xa8,0x31,0xa8] as IID_IAsyncOperation_1_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceProvisioningInfo }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::wifidirect::services::WiFiDirectServiceSession> => [0xc2da4e97,0x728b,0x5401,0xa9,0xd9,0x3a,0x01,0x85,0x45,0x0a,0xf2] as IID_IAsyncOperation_1_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceSession }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperation<super::devices::wifidirect::WiFiDirectDevice> => [0xdad01b61,0xa82d,0x566c,0xba,0x82,0x22,0x4c,0x11,0x50,0x06,0x69] as IID_IAsyncOperation_1_Windows_Devices_WiFiDirect_WiFiDirectDevice }
 #[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for IAsyncOperation<super::gaming::input::forcefeedback::ForceFeedbackLoadEffectResult> => [0x21f834fc,0xe845,0x5ab9,0xbf,0x85,0x95,0x34,0xe2,0x39,0x77,0x98] as IID_IAsyncOperation_1_Windows_Gaming_Input_ForceFeedback_ForceFeedbackLoadEffectResult }
+#[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for IAsyncOperation<super::gaming::preview::gamesenumeration::GameListEntry> => [0x37bcb2e2,0x9c6f,0x5658,0xa4,0x3b,0xed,0x28,0xfe,0x0c,0x84,0x58] as IID_IAsyncOperation_1_Windows_Gaming_Preview_GamesEnumeration_GameListEntry }
+#[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for IAsyncOperation<super::gaming::ui::GameMonitoringPermission> => [0x5a3bf49f,0xd58f,0x58c3,0xa7,0xe1,0x1e,0xd0,0x54,0x70,0xba,0xa6] as IID_IAsyncOperation_1_Windows_Gaming_UI_GameMonitoringPermission }
 #[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for IAsyncOperation<super::gaming::xboxlive::storage::GameSaveBlobGetResult> => [0x7023b023,0x7aed,0x526c,0xb3,0xbc,0xbe,0x12,0xe3,0x5c,0xe1,0xcf] as IID_IAsyncOperation_1_Windows_Gaming_XboxLive_Storage_GameSaveBlobGetResult }
 #[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for IAsyncOperation<super::gaming::xboxlive::storage::GameSaveBlobInfoGetResult> => [0xd7b7f3b4,0x6028,0x522f,0x84,0x9d,0xa6,0x94,0x95,0xe4,0xdc,0xd0] as IID_IAsyncOperation_1_Windows_Gaming_XboxLive_Storage_GameSaveBlobInfoGetResult }
 #[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for IAsyncOperation<super::gaming::xboxlive::storage::GameSaveContainerInfoGetResult> => [0xcff8afeb,0x5a18,0x5f51,0xb6,0x1b,0x94,0x38,0x87,0xf7,0x29,0xee] as IID_IAsyncOperation_1_Windows_Gaming_XboxLive_Storage_GameSaveContainerInfoGetResult }
@@ -2100,10 +2177,14 @@ RT_PINTERFACE!{ for IAsyncOperation<IReference<TimeSpan>> => [0x24a901ad,0x910f,
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IAsyncOperation<super::graphics::imaging::ImageStream> => [0x684165be,0x0011,0x56d6,0xbe,0xbf,0x43,0x00,0x16,0xd5,0x1b,0x7a] as IID_IAsyncOperation_1_Windows_Graphics_Imaging_ImageStream }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IAsyncOperation<super::graphics::imaging::PixelDataProvider> => [0x8c2dfeb0,0x6c22,0x5863,0x88,0xd8,0x85,0xc1,0xfb,0xc7,0x56,0x97] as IID_IAsyncOperation_1_Windows_Graphics_Imaging_PixelDataProvider }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IAsyncOperation<super::graphics::imaging::SoftwareBitmap> => [0xc4a10980,0x714b,0x5501,0x8d,0xa2,0xdb,0xda,0xcc,0xe7,0x0f,0x73] as IID_IAsyncOperation_1_Windows_Graphics_Imaging_SoftwareBitmap }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IAsyncOperation<super::graphics::printing::printticket::WorkflowPrintTicket> => [0x26aedf79,0x0659,0x5a5d,0x9a,0xcf,0xb4,0x42,0x3e,0xef,0xde,0xbb] as IID_IAsyncOperation_1_Windows_Graphics_Printing_PrintTicket_WorkflowPrintTicket }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IAsyncOperation<super::graphics::printing::printticket::WorkflowPrintTicketValidationResult> => [0xf47c8f81,0x23ef,0x5a68,0x88,0x40,0x70,0x07,0x47,0xb1,0x09,0x99] as IID_IAsyncOperation_1_Windows_Graphics_Printing_PrintTicket_WorkflowPrintTicketValidationResult }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IAsyncOperation<super::graphics::printing3d::Printing3D3MFPackage> => [0x6cf2eb38,0xe068,0x5558,0x94,0xb0,0x01,0x61,0x19,0x2c,0x5f,0x19] as IID_IAsyncOperation_1_Windows_Graphics_Printing3D_Printing3D3MFPackage }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IAsyncOperation<super::graphics::printing3d::Printing3DMeshVerificationResult> => [0x0f9eb6c4,0x19f5,0x5be9,0x9a,0xdb,0x64,0xf2,0x4a,0xf1,0x15,0xd8] as IID_IAsyncOperation_1_Windows_Graphics_Printing3D_Printing3DMeshVerificationResult }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IAsyncOperation<super::graphics::printing3d::Printing3DModel> => [0x1b27900b,0x10d5,0x53ff,0x9a,0x34,0x4b,0x31,0xf3,0x15,0x82,0xb0] as IID_IAsyncOperation_1_Windows_Graphics_Printing3D_Printing3DModel }
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for IAsyncOperation<super::management::deployment::PackageVolume> => [0x0315edb6,0xdc58,0x51cc,0xa5,0x19,0x44,0x90,0x1a,0xd2,0xcf,0x15] as IID_IAsyncOperation_1_Windows_Management_Deployment_PackageVolume }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for IAsyncOperation<super::media::apprecording::AppRecordingResult> => [0x2c72c716,0x30ea,0x552c,0xaa,0xca,0x51,0xd1,0x23,0x23,0x4e,0xe3] as IID_IAsyncOperation_1_Windows_Media_AppRecording_AppRecordingResult }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for IAsyncOperation<super::media::apprecording::AppRecordingSaveScreenshotResult> => [0xa048c53e,0xe624,0x512b,0x8e,0x07,0xac,0x4e,0x64,0x39,0x1b,0x2a] as IID_IAsyncOperation_1_Windows_Media_AppRecording_AppRecordingSaveScreenshotResult }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IAsyncOperation<super::media::audio::CreateAudioDeviceInputNodeResult> => [0x71ab4481,0xec4a,0x5ee9,0xa3,0x42,0x3a,0x31,0x74,0x78,0x29,0xb8] as IID_IAsyncOperation_1_Windows_Media_Audio_CreateAudioDeviceInputNodeResult }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IAsyncOperation<super::media::audio::CreateAudioDeviceOutputNodeResult> => [0xf810d730,0xde15,0x58e0,0xa5,0xf4,0xc1,0x59,0xf7,0x36,0x69,0xed] as IID_IAsyncOperation_1_Windows_Media_Audio_CreateAudioDeviceOutputNodeResult }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IAsyncOperation<super::media::audio::CreateAudioFileInputNodeResult> => [0x473b06bf,0x387b,0x56ca,0xbe,0xe1,0x52,0x74,0x80,0x27,0x2b,0x0f] as IID_IAsyncOperation_1_Windows_Media_Audio_CreateAudioFileInputNodeResult }
@@ -2164,8 +2245,10 @@ RT_PINTERFACE!{ for IAsyncOperation<IReference<TimeSpan>> => [0x24a901ad,0x910f,
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<super::networking::connectivity::ConnectionSession> => [0x94fc6211,0x4702,0x5d24,0x81,0xbf,0x17,0x0c,0xa7,0x81,0x89,0x95] as IID_IAsyncOperation_1_Windows_Networking_Connectivity_ConnectionSession }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<super::networking::connectivity::ProxyConfiguration> => [0x1e7651f6,0x6562,0x59c7,0x9a,0xf3,0x87,0x56,0x63,0x6e,0xee,0xe2] as IID_IAsyncOperation_1_Windows_Networking_Connectivity_ProxyConfiguration }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<super::networking::networkoperators::HotspotCredentialsAuthenticationResult> => [0x522781d8,0x29c8,0x5d89,0x89,0x37,0x1d,0x1c,0x20,0x32,0xf0,0xc8] as IID_IAsyncOperation_1_Windows_Networking_NetworkOperators_HotspotCredentialsAuthenticationResult }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<super::networking::networkoperators::MobileBroadbandCellsInfo> => [0xba1101d2,0x7219,0x5421,0xa0,0x87,0x4c,0xc5,0xf1,0xf2,0x5f,0xc4] as IID_IAsyncOperation_1_Windows_Networking_NetworkOperators_MobileBroadbandCellsInfo }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<super::networking::networkoperators::MobileBroadbandDeviceServiceCommandResult> => [0x2c673aa8,0x6a35,0x50fd,0x94,0x22,0x36,0x15,0xa1,0xc2,0x8c,0xcb] as IID_IAsyncOperation_1_Windows_Networking_NetworkOperators_MobileBroadbandDeviceServiceCommandResult }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<super::networking::networkoperators::MobileBroadbandModemConfiguration> => [0xcdbe0003,0xdaaa,0x5c89,0x92,0xe6,0xa4,0x7f,0xfc,0x24,0x18,0xa2] as IID_IAsyncOperation_1_Windows_Networking_NetworkOperators_MobileBroadbandModemConfiguration }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<super::networking::networkoperators::MobileBroadbandModemStatus> => [0xab0d25ab,0x68cd,0x54ab,0xb1,0x9c,0x62,0x47,0x11,0x65,0x9d,0x3d] as IID_IAsyncOperation_1_Windows_Networking_NetworkOperators_MobileBroadbandModemStatus }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<super::networking::networkoperators::MobileBroadbandPinOperationResult> => [0x2f76661c,0x2f74,0x5ce2,0x99,0xf9,0x47,0xd1,0xa3,0xa1,0x36,0x33] as IID_IAsyncOperation_1_Windows_Networking_NetworkOperators_MobileBroadbandPinOperationResult }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<super::networking::networkoperators::MobileBroadbandUiccAppReadRecordResult> => [0x27fc8483,0x30d8,0x5be3,0xbc,0x1e,0x8c,0xca,0x0b,0x24,0x1d,0xf3] as IID_IAsyncOperation_1_Windows_Networking_NetworkOperators_MobileBroadbandUiccAppReadRecordResult }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IAsyncOperation<super::networking::networkoperators::MobileBroadbandUiccAppRecordDetailsResult> => [0x0774f4a6,0xbdbe,0x59ff,0xaa,0x1c,0xa6,0x2e,0x3c,0x6f,0x9d,0x37] as IID_IAsyncOperation_1_Windows_Networking_NetworkOperators_MobileBroadbandUiccAppRecordDetailsResult }
@@ -2253,6 +2336,7 @@ RT_PINTERFACE!{ for IAsyncOperation<IReference<TimeSpan>> => [0x24a901ad,0x910f,
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IAsyncOperation<super::storage::streams::IRandomAccessStreamReference> => [0x65178d50,0xe6a2,0x5d16,0xb2,0x44,0x65,0xe9,0x72,0x5e,0x5a,0x0c] as IID_IAsyncOperation_1_Windows_Storage_Streams_IRandomAccessStreamReference }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IAsyncOperation<super::storage::streams::IRandomAccessStreamWithContentType> => [0xc4a57c5e,0x32b0,0x55b3,0xad,0x13,0xce,0x1c,0x23,0x04,0x1e,0xd6] as IID_IAsyncOperation_1_Windows_Storage_Streams_IRandomAccessStreamWithContentType }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IAsyncOperation<super::storage::streams::RandomAccessStreamReference> => [0xd90442ca,0x543c,0x504b,0x9e,0xb9,0x29,0x4b,0xca,0xd8,0xa2,0x83] as IID_IAsyncOperation_1_Windows_Storage_Streams_RandomAccessStreamReference }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for IAsyncOperation<super::system::DiagnosticAccessStatus> => [0x61c11bbe,0x2618,0x588a,0xa7,0xca,0xf6,0x06,0x91,0x27,0x23,0x24] as IID_IAsyncOperation_1_Windows_System_DiagnosticAccessStatus }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IAsyncOperation<super::system::LaunchQuerySupportStatus> => [0xe7539992,0x2220,0x5d2d,0x82,0xc4,0x3d,0x44,0xf8,0x75,0x0d,0x91] as IID_IAsyncOperation_1_Windows_System_LaunchQuerySupportStatus }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IAsyncOperation<super::system::LaunchUriResult> => [0x7f97fc15,0x1cd6,0x54b7,0xa2,0x90,0xac,0xb6,0x0d,0xba,0x81,0xa1] as IID_IAsyncOperation_1_Windows_System_LaunchUriResult }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IAsyncOperation<super::system::LaunchUriStatus> => [0xab3d721b,0xa4f3,0x5861,0xb0,0x34,0x03,0x0b,0x15,0x23,0x3c,0x52] as IID_IAsyncOperation_1_Windows_System_LaunchUriStatus }
@@ -2273,8 +2357,10 @@ RT_PINTERFACE!{ for IAsyncOperation<IReference<TimeSpan>> => [0x24a901ad,0x910f,
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IAsyncOperation<super::ui::popups::IUICommand> => [0xb8770535,0x6a4b,0x52b1,0xb5,0x78,0xf3,0xcd,0xc5,0x00,0x7a,0x1f] as IID_IAsyncOperation_1_Windows_UI_Popups_IUICommand }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IAsyncOperation<super::ui::startscreen::JumpList> => [0x1c008c58,0x733b,0x5b42,0x96,0x2a,0xb3,0x33,0x28,0x23,0x6c,0xd3] as IID_IAsyncOperation_1_Windows_UI_StartScreen_JumpList }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IAsyncOperation<super::ui::xaml::controls::ContentDialogResult> => [0x1f23bdd1,0x06dc,0x5be9,0x9a,0x60,0x0b,0x4d,0x94,0xd4,0xd7,0x2c] as IID_IAsyncOperation_1_Windows_UI_Xaml_Controls_ContentDialogResult }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IAsyncOperation<super::ui::xaml::controls::maps::MapModel3D> => [0x0cf0240f,0x7f78,0x535b,0x85,0x0c,0xfe,0x62,0x31,0x75,0x90,0x64] as IID_IAsyncOperation_1_Windows_UI_Xaml_Controls_Maps_MapModel3D }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IAsyncOperation<super::ui::xaml::controls::maps::StreetsidePanorama> => [0x6ad8ea47,0x6670,0x51d8,0xa1,0xdb,0x33,0xfe,0x75,0x49,0x1f,0x0c] as IID_IAsyncOperation_1_Windows_UI_Xaml_Controls_Maps_StreetsidePanorama }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IAsyncOperation<super::ui::xaml::data::LoadMoreItemsResult> => [0xc788089d,0x37ab,0x5ba2,0xb8,0x65,0x5a,0x30,0x9a,0xcd,0xfc,0x4d] as IID_IAsyncOperation_1_Windows_UI_Xaml_Data_LoadMoreItemsResult }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IAsyncOperation<super::ui::xaml::hosting::DesignerAppView> => [0x49c6c658,0x1bd2,0x581e,0xa3,0x85,0x6e,0xb3,0xfd,0x9b,0xfe,0xe3] as IID_IAsyncOperation_1_Windows_UI_Xaml_Hosting_DesignerAppView }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IAsyncOperation<super::ui::xaml::media::imaging::SvgImageSourceLoadStatus> => [0xf19df5c2,0x2b78,0x53a9,0x8d,0x38,0x5c,0xa8,0xdb,0xb5,0xdb,0xc6] as IID_IAsyncOperation_1_Windows_UI_Xaml_Media_Imaging_SvgImageSourceLoadStatus }
 RT_PINTERFACE!{ for IAsyncOperation<u32> => [0xef60385f,0xbe78,0x584b,0xaa,0xef,0x78,0x29,0xad,0xa2,0xb0,0xde] as IID_IAsyncOperation_1_System_UInt32 }
 RT_PINTERFACE!{ for IAsyncOperation<u64> => [0x2a70d630,0x0767,0x5f0a,0xa1,0xc2,0xde,0xb0,0x81,0x26,0xe2,0x6e] as IID_IAsyncOperation_1_System_UInt64 }
@@ -2286,6 +2372,7 @@ RT_PINTERFACE!{ for IAsyncOperationWithProgress<HString, u64> => [0xc8bbcb29,0x6
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::devices::scanners::ImageScannerScanResult, u32> => [0x6e6e228a,0xf618,0x5d33,0x85,0x23,0x02,0xd1,0x66,0x72,0x66,0x5b] as IID_IAsyncOperationWithProgress_2_Windows_Devices_Scanners_ImageScannerScanResult_System_UInt32 }
 #[cfg(feature="windows-gaming")] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::gaming::input::custom::GipFirmwareUpdateResult, super::gaming::input::custom::GipFirmwareUpdateProgress> => [0xbfaa48bd,0x155f,0x5112,0xbd,0x86,0xe0,0x1d,0x6f,0x7c,0xd4,0x05] as IID_IAsyncOperationWithProgress_2_Windows_Gaming_Input_Custom_GipFirmwareUpdateResult_Windows_Gaming_Input_Custom_GipFirmwareUpdateProgress }
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::management::deployment::DeploymentResult, super::management::deployment::DeploymentProgress> => [0x5a97aab7,0xb6ea,0x55ac,0xa5,0xdc,0xd5,0xb1,0x64,0xd9,0x4e,0x94] as IID_IAsyncOperationWithProgress_2_Windows_Management_Deployment_DeploymentResult_Windows_Management_Deployment_DeploymentProgress }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::media::core::LowLightFusionResult, f64> => [0xa2302c2d,0x66b5,0x59c7,0xab,0x97,0x3f,0x57,0x93,0xe2,0x1d,0x43] as IID_IAsyncOperationWithProgress_2_Windows_Media_Core_LowLightFusionResult_System_Double }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::media::import::PhotoImportDeleteImportedItemsFromSourceResult, f64> => [0x3e2371a9,0x281a,0x5226,0xae,0x85,0xca,0xa5,0x5c,0x0d,0x61,0xde] as IID_IAsyncOperationWithProgress_2_Windows_Media_Import_PhotoImportDeleteImportedItemsFromSourceResult_System_Double }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::media::import::PhotoImportFindItemsResult, u32> => [0x6e6f9b4e,0xc6e1,0x5364,0xa6,0x50,0x11,0xc3,0x52,0x11,0xbe,0xad] as IID_IAsyncOperationWithProgress_2_Windows_Media_Import_PhotoImportFindItemsResult_System_UInt32 }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::media::import::PhotoImportImportItemsResult, super::media::import::PhotoImportProgress> => [0xd874ec64,0x0951,0x5459,0xa0,0xdd,0x0f,0x8b,0xf3,0x91,0x7e,0xb1] as IID_IAsyncOperationWithProgress_2_Windows_Media_Import_PhotoImportImportItemsResult_Windows_Media_Import_PhotoImportProgress }
@@ -2300,6 +2387,7 @@ RT_PINTERFACE!{ for IAsyncOperationWithProgress<HString, u64> => [0xc8bbcb29,0x6
 #[cfg(all(feature="windows-storage",feature="windows-web"))] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::storage::streams::IInputStream, super::web::http::HttpProgress> => [0x0b97c784,0xdf17,0x571f,0x83,0x37,0x44,0x7d,0xff,0x06,0x8a,0x9c] as IID_IAsyncOperationWithProgress_2_Windows_Storage_Streams_IInputStream_Windows_Web_Http_HttpProgress }
 #[cfg(all(feature="windows-storage",feature="windows-web"))] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::storage::streams::IInputStream, super::web::syndication::RetrievalProgress> => [0xf71cff65,0xe737,0x5345,0xb3,0x8f,0xfd,0x44,0x5d,0x2d,0xc7,0xe2] as IID_IAsyncOperationWithProgress_2_Windows_Storage_Streams_IInputStream_Windows_Web_Syndication_RetrievalProgress }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::storage::streams::IInputStream, u64> => [0x455aa601,0xf13e,0x5dee,0xb9,0xcb,0x16,0xb5,0x31,0x99,0x63,0x27] as IID_IAsyncOperationWithProgress_2_Windows_Storage_Streams_IInputStream_System_UInt64 }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::system::diagnostics::DiagnosticActionResult, super::system::diagnostics::DiagnosticActionState> => [0xbb5d493e,0x74e9,0x57a1,0x8c,0x4c,0x92,0x3e,0x0d,0xc4,0x56,0x5b] as IID_IAsyncOperationWithProgress_2_Windows_System_Diagnostics_DiagnosticActionResult_Windows_System_Diagnostics_DiagnosticActionState }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::web::atompub::ServiceDocument, super::web::syndication::RetrievalProgress> => [0xda07abf4,0x91fa,0x5c96,0x84,0xcb,0x45,0x9e,0xa9,0x7b,0x93,0x4d] as IID_IAsyncOperationWithProgress_2_Windows_Web_AtomPub_ServiceDocument_Windows_Web_Syndication_RetrievalProgress }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::web::http::HttpResponseMessage, super::web::http::HttpProgress> => [0x5d144364,0x77d7,0x5eca,0x8b,0x09,0x93,0x6a,0x69,0x44,0x66,0x52] as IID_IAsyncOperationWithProgress_2_Windows_Web_Http_HttpResponseMessage_Windows_Web_Http_HttpProgress }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IAsyncOperationWithProgress<super::web::syndication::SyndicationFeed, super::web::syndication::RetrievalProgress> => [0x92eaf151,0x415e,0x5f87,0x80,0x95,0x78,0x16,0x23,0xc8,0x89,0x98] as IID_IAsyncOperationWithProgress_2_Windows_Web_Syndication_SyndicationFeed_Windows_Web_Syndication_RetrievalProgress }
@@ -2321,6 +2409,7 @@ RT_PINTERFACE!{ for IReference<i8> => [0x95500129,0xfbf6,0x5afc,0x89,0xdf,0x70,0
 RT_PINTERFACE!{ for IReference<IInspectable> => [0x06dccc90,0xa058,0x5c88,0x87,0xb7,0x6f,0x33,0x60,0xa2,0xfc,0x16] as IID_IReference_1_System_Object }
 RT_PINTERFACE!{ for IReference<numerics::Matrix4x4> => [0xdacbffdc,0x68ef,0x5fd0,0xb6,0x57,0x78,0x2d,0x0a,0xc9,0x80,0x7e] as IID_IReference_1_Windows_Foundation_Numerics_Matrix4x4 }
 RT_PINTERFACE!{ for IReference<numerics::Quaternion> => [0xb27004bb,0xc014,0x5dce,0x9a,0x21,0x79,0x9c,0x5a,0x3c,0x14,0x61] as IID_IReference_1_Windows_Foundation_Numerics_Quaternion }
+RT_PINTERFACE!{ for IReference<numerics::Vector2> => [0x48f6a69e,0x8465,0x57ae,0x94,0x00,0x97,0x64,0x08,0x7f,0x65,0xad] as IID_IReference_1_Windows_Foundation_Numerics_Vector2 }
 RT_PINTERFACE!{ for IReference<numerics::Vector3> => [0x1ee770ff,0xc954,0x59ca,0xa7,0x54,0x61,0x99,0xa9,0xbe,0x28,0x2c] as IID_IReference_1_Windows_Foundation_Numerics_Vector3 }
 RT_PINTERFACE!{ for IReference<Point> => [0x84f14c22,0xa00a,0x5272,0x8d,0x3d,0x82,0x11,0x2e,0x66,0xdf,0x00] as IID_IReference_1_Windows_Foundation_Point }
 RT_PINTERFACE!{ for IReference<Rect> => [0x80423f11,0x054f,0x5eac,0xaf,0xd3,0x63,0xb6,0xce,0x15,0xe7,0x7b] as IID_IReference_1_Windows_Foundation_Rect }
@@ -2333,17 +2422,20 @@ RT_PINTERFACE!{ for IReference<Size> => [0x61723086,0x8e53,0x5276,0x9f,0x36,0x2a
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IReference<super::devices::geolocation::BasicGeoposition> => [0xe4d5dda6,0xf57c,0x57cc,0xb6,0x7f,0x29,0x39,0xa9,0x01,0xda,0xbe] as IID_IReference_1_Windows_Devices_Geolocation_BasicGeoposition }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IReference<super::graphics::holographic::HolographicStereoTransform> => [0x6e67ce78,0xcc67,0x52c0,0xb6,0x35,0x99,0x1d,0xb0,0xbf,0xf5,0xca] as IID_IReference_1_Windows_Graphics_Holographic_HolographicStereoTransform }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IReference<super::media::capture::WhiteBalanceGain> => [0x79c7838a,0x39e2,0x5287,0xac,0x3b,0xb1,0x18,0xdb,0x25,0x10,0x02] as IID_IReference_1_Windows_Media_Capture_WhiteBalanceGain }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for IReference<super::media::core::MseTimeRange> => [0x2fffd101,0x16f8,0x596d,0xa8,0x8e,0x65,0x9b,0x6f,0x58,0x46,0x41] as IID_IReference_1_Windows_Media_Core_MseTimeRange }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IReference<super::media::devices::CaptureSceneMode> => [0xe20596aa,0x0bbe,0x5203,0xbe,0x6b,0x6b,0x71,0xff,0x5b,0x08,0x43] as IID_IReference_1_Windows_Media_Devices_CaptureSceneMode }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IReference<super::media::devices::ManualFocusDistance> => [0xb0060b8a,0x1105,0x5ad4,0x96,0x3d,0xf6,0xcf,0x19,0x05,0xd3,0x49] as IID_IReference_1_Windows_Media_Devices_ManualFocusDistance }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IReference<super::media::devices::MediaCaptureFocusState> => [0x58820185,0x5da0,0x5faa,0x86,0xda,0x9b,0xd9,0xf0,0x39,0x74,0xfa] as IID_IReference_1_Windows_Media_Devices_MediaCaptureFocusState }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IReference<super::media::protection::HdcpProtection> => [0x8e330979,0x2fef,0x5d68,0x88,0xaa,0xa9,0xee,0x66,0x97,0xd1,0x17] as IID_IReference_1_Windows_Media_Protection_HdcpProtection }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IReference<super::media::streaming::adaptive::AdaptiveMediaSourceResourceType> => [0x74c8c3aa,0xde03,0x5bf0,0xaa,0xe8,0xaa,0x8b,0x69,0x20,0x66,0xb3] as IID_IReference_1_Windows_Media_Streaming_Adaptive_AdaptiveMediaSourceResourceType }
+#[cfg(feature="windows-perception")] RT_PINTERFACE!{ for IReference<super::perception::spatial::SpatialBoundingBox> => [0xab3274d9,0x9b82,0x5396,0xbb,0x00,0xd7,0x0c,0x53,0x97,0x96,0xb3] as IID_IReference_1_Windows_Perception_Spatial_SpatialBoundingBox }
 #[cfg(feature="windows-perception")] RT_PINTERFACE!{ for IReference<super::perception::spatial::SpatialBoundingFrustum> => [0xf434face,0x0c36,0x5749,0xa8,0xa0,0x0b,0xb6,0xce,0x78,0xa6,0x14] as IID_IReference_1_Windows_Perception_Spatial_SpatialBoundingFrustum }
 #[cfg(feature="windows-perception")] RT_PINTERFACE!{ for IReference<super::perception::spatial::SpatialBoundingOrientedBox> => [0x09f88309,0x9f81,0x5207,0xbd,0xb2,0xab,0xef,0x92,0x6d,0xb1,0x8f] as IID_IReference_1_Windows_Perception_Spatial_SpatialBoundingOrientedBox }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IReference<super::ui::Color> => [0xab8e5d11,0xb0c1,0x5a21,0x95,0xae,0xf1,0x6b,0xf3,0xa3,0x76,0x24] as IID_IReference_1_Windows_UI_Color }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IReference<super::ui::text::UnderlineType> => [0x1b63ec17,0x7b2b,0x59fe,0xab,0x9d,0xb6,0x0e,0xa4,0xf9,0xc9,0xb8] as IID_IReference_1_Windows_UI_Text_UnderlineType }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IReference<super::ui::viewmanagement::UIElementType> => [0xe17e08c9,0x7deb,0x51d1,0x84,0x87,0x33,0x4e,0xb3,0xfe,0x46,0x91] as IID_IReference_1_Windows_UI_ViewManagement_UIElementType }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IReference<super::ui::xaml::Thickness> => [0xa19f7ba8,0xd8cd,0x5df2,0xab,0x44,0xfe,0xfd,0x26,0x64,0x44,0x84] as IID_IReference_1_Windows_UI_Xaml_Thickness }
+#[cfg(feature="windows-web")] RT_PINTERFACE!{ for IReference<super::web::WebErrorStatus> => [0xf2b26336,0x6a9d,0x54de,0x8e,0xca,0x00,0xd6,0xc8,0x71,0xe4,0x69] as IID_IReference_1_Windows_Web_WebErrorStatus }
 RT_PINTERFACE!{ for IReference<TimeSpan> => [0x604d0c4c,0x91de,0x5c2a,0x93,0x5f,0x36,0x2f,0x13,0xea,0xf8,0x00] as IID_IReference_1_Windows_Foundation_TimeSpan }
 RT_PINTERFACE!{ for IReference<u16> => [0x5ab7d2c3,0x6b62,0x5e71,0xa4,0xb6,0x2d,0x49,0xc4,0xf2,0x38,0xfd] as IID_IReference_1_System_UInt16 }
 RT_PINTERFACE!{ for IReference<u32> => [0x513ef3af,0xe784,0x5325,0xa9,0x1e,0x97,0xc2,0xb8,0x11,0x1c,0xf3] as IID_IReference_1_System_UInt32 }
@@ -2419,6 +2511,8 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for TypedEventHandler<super::applicationmodel::contacts::ContactPanel, super::applicationmodel::contacts::ContactPanelClosingEventArgs> => [0x4357954b,0xbce6,0x5456,0xa5,0x11,0xfe,0x89,0x04,0xe8,0x09,0x0b] as IID_TypedEventHandler_2_Windows_ApplicationModel_Contacts_ContactPanel_Windows_ApplicationModel_Contacts_ContactPanelClosingEventArgs }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for TypedEventHandler<super::applicationmodel::contacts::ContactPanel, super::applicationmodel::contacts::ContactPanelLaunchFullAppRequestedEventArgs> => [0xc4030df2,0xad34,0x5575,0xa3,0x69,0x56,0x16,0x57,0x78,0x78,0xeb] as IID_TypedEventHandler_2_Windows_ApplicationModel_Contacts_ContactPanel_Windows_ApplicationModel_Contacts_ContactPanelLaunchFullAppRequestedEventArgs }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for TypedEventHandler<super::applicationmodel::contacts::ContactStore, super::applicationmodel::contacts::ContactChangedEventArgs> => [0x5da35e68,0x7513,0x5ead,0xaa,0xd4,0xcd,0xd3,0xde,0x4e,0x5a,0xe7] as IID_TypedEventHandler_2_Windows_ApplicationModel_Contacts_ContactStore_Windows_ApplicationModel_Contacts_ContactChangedEventArgs }
+#[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for TypedEventHandler<super::applicationmodel::contacts::dataprovider::ContactDataProviderConnection, super::applicationmodel::contacts::dataprovider::ContactListCreateOrUpdateContactRequestEventArgs> => [0x9b90aab6,0x7ba3,0x5169,0xb7,0x3c,0x7e,0x64,0x13,0xd2,0xbd,0x57] as IID_TypedEventHandler_2_Windows_ApplicationModel_Contacts_DataProvider_ContactDataProviderConnection_Windows_ApplicationModel_Contacts_DataProvider_ContactListCreateOrUpdateContactRequestEventArgs }
+#[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for TypedEventHandler<super::applicationmodel::contacts::dataprovider::ContactDataProviderConnection, super::applicationmodel::contacts::dataprovider::ContactListDeleteContactRequestEventArgs> => [0x9ff3c767,0xb488,0x53e2,0xa4,0x94,0x32,0x70,0x61,0x61,0xca,0x01] as IID_TypedEventHandler_2_Windows_ApplicationModel_Contacts_DataProvider_ContactDataProviderConnection_Windows_ApplicationModel_Contacts_DataProvider_ContactListDeleteContactRequestEventArgs }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for TypedEventHandler<super::applicationmodel::contacts::dataprovider::ContactDataProviderConnection, super::applicationmodel::contacts::dataprovider::ContactListServerSearchReadBatchRequestEventArgs> => [0xbaee1b2f,0xa5b6,0x5a03,0xae,0x59,0xfb,0x18,0xf3,0xe0,0x25,0xb7] as IID_TypedEventHandler_2_Windows_ApplicationModel_Contacts_DataProvider_ContactDataProviderConnection_Windows_ApplicationModel_Contacts_DataProvider_ContactListServerSearchReadBatchRequestEventArgs }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for TypedEventHandler<super::applicationmodel::contacts::dataprovider::ContactDataProviderConnection, super::applicationmodel::contacts::dataprovider::ContactListSyncManagerSyncRequestEventArgs> => [0xbb9f410f,0xa739,0x5280,0x9b,0xb7,0xb6,0xa9,0x38,0xc7,0xa6,0x20] as IID_TypedEventHandler_2_Windows_ApplicationModel_Contacts_DataProvider_ContactDataProviderConnection_Windows_ApplicationModel_Contacts_DataProvider_ContactListSyncManagerSyncRequestEventArgs }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for TypedEventHandler<super::applicationmodel::contacts::provider::ContactPickerUI, super::applicationmodel::contacts::provider::ContactRemovedEventArgs> => [0xa39aeb7e,0x765c,0x5e83,0xb2,0x31,0x84,0xbe,0xad,0x98,0xe9,0xa0] as IID_TypedEventHandler_2_Windows_ApplicationModel_Contacts_Provider_ContactPickerUI_Windows_ApplicationModel_Contacts_Provider_ContactRemovedEventArgs }
@@ -2520,6 +2614,7 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::geolocation::geofencing::GeofenceMonitor, IInspectable> => [0xecc5af2c,0xe47a,0x59ce,0x86,0xbe,0x9c,0x30,0x66,0xfe,0x26,0xf7] as IID_TypedEventHandler_2_Windows_Devices_Geolocation_Geofencing_GeofenceMonitor_System_Object }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::geolocation::Geolocator, super::devices::geolocation::PositionChangedEventArgs> => [0xdf3c6164,0x4e7b,0x5e8e,0x9a,0x7e,0x13,0xda,0x05,0x9d,0xec,0x1e] as IID_TypedEventHandler_2_Windows_Devices_Geolocation_Geolocator_Windows_Devices_Geolocation_PositionChangedEventArgs }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::geolocation::Geolocator, super::devices::geolocation::StatusChangedEventArgs> => [0x97fcf582,0xde6b,0x5cd3,0x96,0x90,0xe2,0xec,0xbb,0x66,0xda,0x4d] as IID_TypedEventHandler_2_Windows_Devices_Geolocation_Geolocator_Windows_Devices_Geolocation_StatusChangedEventArgs }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::geolocation::GeovisitMonitor, super::devices::geolocation::GeovisitStateChangedEventArgs> => [0x76abc5ea,0xee4f,0x5391,0x9b,0x50,0xde,0xca,0x5d,0x43,0x11,0xc9] as IID_TypedEventHandler_2_Windows_Devices_Geolocation_GeovisitMonitor_Windows_Devices_Geolocation_GeovisitStateChangedEventArgs }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::gpio::GpioPin, super::devices::gpio::GpioPinValueChangedEventArgs> => [0x44ba689b,0x7d42,0x5374,0xad,0xd9,0xab,0x41,0xe8,0x77,0xa3,0x4b] as IID_TypedEventHandler_2_Windows_Devices_Gpio_GpioPin_Windows_Devices_Gpio_GpioPinValueChangedEventArgs }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::gpio::provider::IGpioPinProvider, super::devices::gpio::provider::GpioPinProviderValueChangedEventArgs> => [0xaf259d89,0x9e01,0x529e,0xa8,0x79,0xc6,0x76,0x31,0x42,0xd1,0x60] as IID_TypedEventHandler_2_Windows_Devices_Gpio_Provider_IGpioPinProvider_Windows_Devices_Gpio_Provider_GpioPinProviderValueChangedEventArgs }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::humaninterfacedevice::HidDevice, super::devices::humaninterfacedevice::HidInputReportReceivedEventArgs> => [0x31e757c8,0x8f6a,0x540b,0x93,0x8b,0xab,0xa7,0x9b,0x6f,0x03,0xec] as IID_TypedEventHandler_2_Windows_Devices_HumanInterfaceDevice_HidDevice_Windows_Devices_HumanInterfaceDevice_HidInputReportReceivedEventArgs }
@@ -2555,6 +2650,7 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::pointofservice::ClaimedBarcodeScanner, super::devices::pointofservice::BarcodeScannerImagePreviewReceivedEventArgs> => [0xfba116af,0x2a39,0x516f,0xa5,0x79,0xcc,0x3e,0xaf,0x36,0xa3,0x4b] as IID_TypedEventHandler_2_Windows_Devices_PointOfService_ClaimedBarcodeScanner_Windows_Devices_PointOfService_BarcodeScannerImagePreviewReceivedEventArgs }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::pointofservice::ClaimedCashDrawer, IInspectable> => [0xdb886581,0x2462,0x5c81,0x88,0x0c,0x06,0x11,0x2c,0xa7,0x00,0x12] as IID_TypedEventHandler_2_Windows_Devices_PointOfService_ClaimedCashDrawer_System_Object }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::pointofservice::ClaimedLineDisplay, IInspectable> => [0xc997782b,0x46e9,0x5d92,0xac,0x84,0xee,0x9d,0x7d,0x07,0x3a,0xb5] as IID_TypedEventHandler_2_Windows_Devices_PointOfService_ClaimedLineDisplay_System_Object }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::pointofservice::ClaimedLineDisplay, super::devices::pointofservice::LineDisplayStatusUpdatedEventArgs> => [0x25d178ff,0x3069,0x536c,0xa0,0xc2,0x88,0xe0,0x25,0x0e,0x8a,0x29] as IID_TypedEventHandler_2_Windows_Devices_PointOfService_ClaimedLineDisplay_Windows_Devices_PointOfService_LineDisplayStatusUpdatedEventArgs }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::pointofservice::ClaimedMagneticStripeReader, super::devices::pointofservice::MagneticStripeReaderAamvaCardDataReceivedEventArgs> => [0x29e08f92,0xc3ab,0x57ea,0xaa,0xba,0x78,0x9f,0x79,0x2d,0x7a,0x46] as IID_TypedEventHandler_2_Windows_Devices_PointOfService_ClaimedMagneticStripeReader_Windows_Devices_PointOfService_MagneticStripeReaderAamvaCardDataReceivedEventArgs }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::pointofservice::ClaimedMagneticStripeReader, super::devices::pointofservice::MagneticStripeReaderBankCardDataReceivedEventArgs> => [0x6a41d015,0x245e,0x51ba,0xbd,0x6c,0x44,0x77,0x5d,0x70,0xbf,0xa2] as IID_TypedEventHandler_2_Windows_Devices_PointOfService_ClaimedMagneticStripeReader_Windows_Devices_PointOfService_MagneticStripeReaderBankCardDataReceivedEventArgs }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::pointofservice::ClaimedMagneticStripeReader, super::devices::pointofservice::MagneticStripeReaderErrorOccurredEventArgs> => [0x1464a1e6,0x9d92,0x547e,0xb4,0xac,0xf2,0x55,0xac,0x85,0xf9,0x50] as IID_TypedEventHandler_2_Windows_Devices_PointOfService_ClaimedMagneticStripeReader_Windows_Devices_PointOfService_MagneticStripeReaderErrorOccurredEventArgs }
@@ -2584,6 +2680,8 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::sensors::SimpleOrientationSensor, super::devices::sensors::SimpleOrientationSensorOrientationChangedEventArgs> => [0x92437fa7,0xea7b,0x5fc5,0x8e,0xcf,0x1b,0x91,0x1b,0xea,0x2b,0xfc] as IID_TypedEventHandler_2_Windows_Devices_Sensors_SimpleOrientationSensor_Windows_Devices_Sensors_SimpleOrientationSensorOrientationChangedEventArgs }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::serialcommunication::SerialDevice, super::devices::serialcommunication::ErrorReceivedEventArgs> => [0xd92ea323,0xb7bf,0x5e02,0xb9,0xfb,0xc6,0x1f,0x97,0xd0,0x80,0xe9] as IID_TypedEventHandler_2_Windows_Devices_SerialCommunication_SerialDevice_Windows_Devices_SerialCommunication_ErrorReceivedEventArgs }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::serialcommunication::SerialDevice, super::devices::serialcommunication::PinChangedEventArgs> => [0xe496c3ef,0x5802,0x5ac4,0xac,0x2e,0x96,0xbc,0x23,0xfa,0x94,0x47] as IID_TypedEventHandler_2_Windows_Devices_SerialCommunication_SerialDevice_Windows_Devices_SerialCommunication_PinChangedEventArgs }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::smartcards::SmartCardEmulator, super::devices::smartcards::SmartCardEmulatorApduReceivedEventArgs> => [0x146f9403,0x42f4,0x59a2,0xa8,0x5a,0x82,0x94,0xaf,0x3e,0x3e,0x78] as IID_TypedEventHandler_2_Windows_Devices_SmartCards_SmartCardEmulator_Windows_Devices_SmartCards_SmartCardEmulatorApduReceivedEventArgs }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::smartcards::SmartCardEmulator, super::devices::smartcards::SmartCardEmulatorConnectionDeactivatedEventArgs> => [0xcb9840cb,0xcc46,0x5c37,0xab,0x00,0xdd,0x23,0xd7,0x7b,0x26,0x3b] as IID_TypedEventHandler_2_Windows_Devices_SmartCards_SmartCardEmulator_Windows_Devices_SmartCards_SmartCardEmulatorConnectionDeactivatedEventArgs }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::smartcards::SmartCardReader, super::devices::smartcards::CardAddedEventArgs> => [0xd36f2db9,0x5674,0x5f74,0x9f,0x69,0x3c,0xdc,0x45,0x59,0x99,0x9f] as IID_TypedEventHandler_2_Windows_Devices_SmartCards_SmartCardReader_Windows_Devices_SmartCards_CardAddedEventArgs }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::smartcards::SmartCardReader, super::devices::smartcards::CardRemovedEventArgs> => [0x69da07c6,0xb266,0x5a1c,0x93,0x7c,0xd8,0x2b,0x4a,0x82,0x32,0xc6] as IID_TypedEventHandler_2_Windows_Devices_SmartCards_SmartCardReader_Windows_Devices_SmartCards_CardRemovedEventArgs }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for TypedEventHandler<super::devices::sms::SmsDevice2, IInspectable> => [0x3f3808e6,0x3dee,0x57a6,0xa8,0x8d,0xba,0xcf,0xb0,0x66,0xc7,0xfb] as IID_TypedEventHandler_2_Windows_Devices_Sms_SmsDevice2_System_Object }
@@ -2613,11 +2711,16 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for TypedEventHandler<super::graphics::printing::PrintTask, IInspectable> => [0x4cc141d4,0xc0d9,0x5220,0xb1,0xce,0x80,0xff,0xf3,0xbd,0x2d,0x44] as IID_TypedEventHandler_2_Windows_Graphics_Printing_PrintTask_System_Object }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for TypedEventHandler<super::graphics::printing::PrintTask, super::graphics::printing::PrintTaskCompletedEventArgs> => [0xb0b02549,0xb9ad,0x5226,0x89,0x8a,0x7b,0x56,0x3b,0x46,0x64,0x0c] as IID_TypedEventHandler_2_Windows_Graphics_Printing_PrintTask_Windows_Graphics_Printing_PrintTaskCompletedEventArgs }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for TypedEventHandler<super::graphics::printing::PrintTask, super::graphics::printing::PrintTaskProgressingEventArgs> => [0xc08d0524,0x5899,0x536c,0x8f,0x46,0x55,0xfd,0xaa,0x4c,0xf7,0x8b] as IID_TypedEventHandler_2_Windows_Graphics_Printing_PrintTask_Windows_Graphics_Printing_PrintTaskProgressingEventArgs }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for TypedEventHandler<super::graphics::printing::workflow::PrintWorkflowBackgroundSession, super::graphics::printing::workflow::PrintWorkflowBackgroundSetupRequestedEventArgs> => [0xbb5c0591,0x4b11,0x511c,0x8e,0xf3,0x18,0x22,0xcb,0x71,0x42,0x7c] as IID_TypedEventHandler_2_Windows_Graphics_Printing_Workflow_PrintWorkflowBackgroundSession_Windows_Graphics_Printing_Workflow_PrintWorkflowBackgroundSetupRequestedEventArgs }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for TypedEventHandler<super::graphics::printing::workflow::PrintWorkflowBackgroundSession, super::graphics::printing::workflow::PrintWorkflowSubmittedEventArgs> => [0x9ec7b563,0x5044,0x5df3,0x98,0xb5,0x3a,0x56,0x43,0xfc,0x59,0xfe] as IID_TypedEventHandler_2_Windows_Graphics_Printing_Workflow_PrintWorkflowBackgroundSession_Windows_Graphics_Printing_Workflow_PrintWorkflowSubmittedEventArgs }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for TypedEventHandler<super::graphics::printing::workflow::PrintWorkflowForegroundSession, super::graphics::printing::workflow::PrintWorkflowForegroundSetupRequestedEventArgs> => [0xd85b48f0,0x960b,0x5f65,0x98,0xb1,0x5f,0x9b,0x09,0xfe,0xb2,0xf6] as IID_TypedEventHandler_2_Windows_Graphics_Printing_Workflow_PrintWorkflowForegroundSession_Windows_Graphics_Printing_Workflow_PrintWorkflowForegroundSetupRequestedEventArgs }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for TypedEventHandler<super::graphics::printing::workflow::PrintWorkflowForegroundSession, super::graphics::printing::workflow::PrintWorkflowXpsDataAvailableEventArgs> => [0x6d38ab29,0x2bb3,0x5849,0x80,0xcd,0xec,0xe1,0x3a,0x58,0x9d,0x13] as IID_TypedEventHandler_2_Windows_Graphics_Printing_Workflow_PrintWorkflowForegroundSession_Windows_Graphics_Printing_Workflow_PrintWorkflowXpsDataAvailableEventArgs }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for TypedEventHandler<super::graphics::printing3d::Print3DManager, super::graphics::printing3d::Print3DTaskRequestedEventArgs> => [0x77c464a3,0xa7c6,0x5512,0x98,0x59,0x41,0x2d,0xb3,0xf6,0x6a,0xc4] as IID_TypedEventHandler_2_Windows_Graphics_Printing3D_Print3DManager_Windows_Graphics_Printing3D_Print3DTaskRequestedEventArgs }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for TypedEventHandler<super::graphics::printing3d::Print3DTask, IInspectable> => [0xc0081611,0x7485,0x58a8,0x88,0xbe,0x82,0xe7,0x12,0xd8,0xc1,0xba] as IID_TypedEventHandler_2_Windows_Graphics_Printing3D_Print3DTask_System_Object }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for TypedEventHandler<super::graphics::printing3d::Print3DTask, super::graphics::printing3d::Print3DTaskCompletedEventArgs> => [0xbccf7095,0xbc8e,0x5ff5,0x83,0xc0,0xd5,0x69,0x1e,0x0a,0xa2,0x4d] as IID_TypedEventHandler_2_Windows_Graphics_Printing3D_Print3DTask_Windows_Graphics_Printing3D_Print3DTaskCompletedEventArgs }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for TypedEventHandler<super::graphics::printing3d::Print3DTask, super::graphics::printing3d::Print3DTaskSourceChangedEventArgs> => [0x58d36055,0x0241,0x555d,0xaf,0x7b,0x9f,0x05,0xe5,0xda,0xa4,0x12] as IID_TypedEventHandler_2_Windows_Graphics_Printing3D_Print3DTask_Windows_Graphics_Printing3D_Print3DTaskSourceChangedEventArgs }
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for TypedEventHandler<super::management::policies::NamedPolicyData, IInspectable> => [0x791a3c00,0x5aa2,0x5f0e,0xbb,0x17,0x34,0x80,0xbc,0x2d,0x96,0xcc] as IID_TypedEventHandler_2_Windows_Management_Policies_NamedPolicyData_System_Object }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::appbroadcasting::AppBroadcastingMonitor, IInspectable> => [0xdc64118b,0x04f9,0x5161,0xa7,0xc0,0xe6,0xa9,0x60,0x70,0xa8,0xd1] as IID_TypedEventHandler_2_Windows_Media_AppBroadcasting_AppBroadcastingMonitor_System_Object }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::audio::AudioFileInputNode, IInspectable> => [0x4481085b,0x8b8b,0x5520,0x98,0x25,0xe9,0x67,0x1d,0xa2,0xa8,0x9f] as IID_TypedEventHandler_2_Windows_Media_Audio_AudioFileInputNode_System_Object }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::audio::AudioFrameInputNode, super::media::audio::AudioFrameCompletedEventArgs> => [0xad59dcfe,0x71b0,0x5e16,0x99,0xc2,0xcd,0x90,0x64,0x4d,0x8e,0xe8] as IID_TypedEventHandler_2_Windows_Media_Audio_AudioFrameInputNode_Windows_Media_Audio_AudioFrameCompletedEventArgs }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::audio::AudioFrameInputNode, super::media::audio::FrameInputNodeQuantumStartedEventArgs> => [0x4530d121,0xbb9a,0x57fe,0x92,0x2f,0xa9,0x8e,0xee,0xdf,0x59,0xaf] as IID_TypedEventHandler_2_Windows_Media_Audio_AudioFrameInputNode_Windows_Media_Audio_FrameInputNodeQuantumStartedEventArgs }
@@ -2625,7 +2728,9 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::audio::AudioGraph, super::media::audio::AudioGraphUnrecoverableErrorOccurredEventArgs> => [0x899670c9,0xdd7f,0x5f12,0x98,0xcb,0x8b,0x17,0xfe,0x80,0xa4,0x7f] as IID_TypedEventHandler_2_Windows_Media_Audio_AudioGraph_Windows_Media_Audio_AudioGraphUnrecoverableErrorOccurredEventArgs }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AdvancedPhotoCapture, IInspectable> => [0x5cb4a98f,0xabf1,0x5518,0x90,0x94,0x26,0xdb,0x32,0x6a,0x5f,0x4e] as IID_TypedEventHandler_2_Windows_Media_Capture_AdvancedPhotoCapture_System_Object }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AdvancedPhotoCapture, super::media::capture::OptionalReferencePhotoCapturedEventArgs> => [0x843e69ba,0x5702,0x5d97,0xab,0x81,0xef,0x07,0x8d,0xe3,0xf9,0xb1] as IID_TypedEventHandler_2_Windows_Media_Capture_AdvancedPhotoCapture_Windows_Media_Capture_OptionalReferencePhotoCapturedEventArgs }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AppBroadcastBackgroundService, IInspectable> => [0x6e820f00,0xe1e0,0x5c73,0xaf,0xd8,0xa4,0x7b,0x9b,0x1c,0x1b,0xed] as IID_TypedEventHandler_2_Windows_Media_Capture_AppBroadcastBackgroundService_System_Object }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AppBroadcastBackgroundService, super::media::capture::AppBroadcastHeartbeatRequestedEventArgs> => [0x633c91ca,0x4fde,0x5160,0x92,0x09,0x3f,0xd3,0xa4,0x03,0xa9,0x17] as IID_TypedEventHandler_2_Windows_Media_Capture_AppBroadcastBackgroundService_Windows_Media_Capture_AppBroadcastHeartbeatRequestedEventArgs }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AppBroadcastBackgroundServiceSignInInfo, IInspectable> => [0xf8715188,0xefc7,0x575c,0xad,0x9d,0x69,0x5e,0xb2,0x04,0x45,0x24] as IID_TypedEventHandler_2_Windows_Media_Capture_AppBroadcastBackgroundServiceSignInInfo_System_Object }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AppBroadcastBackgroundServiceSignInInfo, super::media::capture::AppBroadcastSignInStateChangedEventArgs> => [0xe2672c1a,0xa3d9,0x56f3,0x8a,0x77,0x20,0xd3,0x08,0x73,0xce,0x87] as IID_TypedEventHandler_2_Windows_Media_Capture_AppBroadcastBackgroundServiceSignInInfo_Windows_Media_Capture_AppBroadcastSignInStateChangedEventArgs }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AppBroadcastBackgroundServiceStreamInfo, IInspectable> => [0x73c8ec4b,0xf104,0x5536,0xb8,0xb4,0x4d,0x9a,0xad,0x61,0xc9,0xb4] as IID_TypedEventHandler_2_Windows_Media_Capture_AppBroadcastBackgroundServiceStreamInfo_System_Object }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AppBroadcastBackgroundServiceStreamInfo, super::media::capture::AppBroadcastStreamStateChangedEventArgs> => [0x0c110cb8,0xb08a,0x5c07,0xb2,0x95,0x22,0x90,0x49,0xa4,0x6c,0x22] as IID_TypedEventHandler_2_Windows_Media_Capture_AppBroadcastBackgroundServiceStreamInfo_Windows_Media_Capture_AppBroadcastStreamStateChangedEventArgs }
@@ -2639,6 +2744,7 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AppBroadcastState, super::media::capture::AppBroadcastViewerCountChangedEventArgs> => [0x16a22a27,0x61c2,0x56c2,0x93,0xe5,0x18,0xd6,0x68,0x1c,0xee,0xb4] as IID_TypedEventHandler_2_Windows_Media_Capture_AppBroadcastState_Windows_Media_Capture_AppBroadcastViewerCountChangedEventArgs }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AppBroadcastStreamReader, IInspectable> => [0x66d1378b,0x0e04,0x5801,0x8b,0xdd,0xfe,0xb1,0x08,0x1b,0xbe,0xcb] as IID_TypedEventHandler_2_Windows_Media_Capture_AppBroadcastStreamReader_System_Object }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AppCapture, IInspectable> => [0xf5cb24b5,0xff00,0x58df,0xb4,0x60,0x17,0xbb,0xf2,0xcd,0x64,0xd3] as IID_TypedEventHandler_2_Windows_Media_Capture_AppCapture_System_Object }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AppCaptureMetadataWriter, IInspectable> => [0x1aaed84c,0xed87,0x5f38,0xa9,0xd1,0x35,0x53,0x12,0x8d,0x4a,0x62] as IID_TypedEventHandler_2_Windows_Media_Capture_AppCaptureMetadataWriter_System_Object }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AppCaptureRecordOperation, super::media::capture::AppCaptureDurationGeneratedEventArgs> => [0xab6419b5,0x9917,0x5275,0x98,0x76,0x9e,0x46,0xb9,0xab,0xad,0xa7] as IID_TypedEventHandler_2_Windows_Media_Capture_AppCaptureRecordOperation_Windows_Media_Capture_AppCaptureDurationGeneratedEventArgs }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AppCaptureRecordOperation, super::media::capture::AppCaptureFileGeneratedEventArgs> => [0xf00f69e5,0x9ee6,0x5119,0x9c,0x39,0xf2,0x79,0xf9,0xff,0xd9,0x08] as IID_TypedEventHandler_2_Windows_Media_Capture_AppCaptureRecordOperation_Windows_Media_Capture_AppCaptureFileGeneratedEventArgs }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::capture::AppCaptureRecordOperation, super::media::capture::AppCaptureRecordingStateChangedEventArgs> => [0x227cbf02,0x2dfb,0x5425,0x85,0xb1,0x0d,0x62,0xce,0x5d,0x12,0x43] as IID_TypedEventHandler_2_Windows_Media_Capture_AppCaptureRecordOperation_Windows_Media_Capture_AppCaptureRecordingStateChangedEventArgs }
@@ -2667,6 +2773,7 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::core::MediaBindingEventArgs, IInspectable> => [0x3f3b10e2,0xb2e9,0x55c6,0xab,0xb3,0x4a,0x25,0x80,0x72,0xeb,0xb9] as IID_TypedEventHandler_2_Windows_Media_Core_MediaBindingEventArgs_System_Object }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::core::MediaSource, super::media::core::MediaSourceOpenOperationCompletedEventArgs> => [0x425d53e3,0xfba6,0x5ea3,0xb7,0x13,0xdb,0x4d,0x70,0x78,0x74,0x36] as IID_TypedEventHandler_2_Windows_Media_Core_MediaSource_Windows_Media_Core_MediaSourceOpenOperationCompletedEventArgs }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::core::MediaSource, super::media::core::MediaSourceStateChangedEventArgs> => [0x2274d3a6,0x1ba0,0x5230,0xbb,0x86,0xde,0x90,0x05,0x8b,0x64,0x03] as IID_TypedEventHandler_2_Windows_Media_Core_MediaSource_Windows_Media_Core_MediaSourceStateChangedEventArgs }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::core::MediaSourceAppServiceConnection, super::media::core::InitializeMediaStreamSourceRequestedEventArgs> => [0xf6f1b895,0x9c61,0x5e2a,0x88,0x83,0x9f,0xf8,0xcc,0x8b,0x3d,0x76] as IID_TypedEventHandler_2_Windows_Media_Core_MediaSourceAppServiceConnection_Windows_Media_Core_InitializeMediaStreamSourceRequestedEventArgs }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::core::MediaStreamSample, IInspectable> => [0xd4dc5ef1,0xc1cb,0x5c32,0x80,0x3d,0xf2,0xf9,0xa7,0xad,0x99,0x16] as IID_TypedEventHandler_2_Windows_Media_Core_MediaStreamSample_System_Object }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::core::MediaStreamSource, IInspectable> => [0x6fd6ded7,0x421b,0x5ef5,0x8b,0xf5,0xed,0xea,0x45,0x40,0x16,0x65] as IID_TypedEventHandler_2_Windows_Media_Core_MediaStreamSource_System_Object }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::core::MediaStreamSource, super::media::core::MediaStreamSourceClosedEventArgs> => [0x238cc251,0xd0b8,0x5a34,0x81,0xd4,0x0d,0xd1,0xf9,0x36,0xa2,0x0d] as IID_TypedEventHandler_2_Windows_Media_Core_MediaStreamSource_Windows_Media_Core_MediaStreamSourceClosedEventArgs }
@@ -2753,10 +2860,12 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::SystemMediaTransportControls, super::media::ShuffleEnabledChangeRequestedEventArgs> => [0x17ecea80,0x27e4,0x5dae,0xab,0xb4,0xc8,0x58,0xad,0x1c,0x53,0x07] as IID_TypedEventHandler_2_Windows_Media_SystemMediaTransportControls_Windows_Media_ShuffleEnabledChangeRequestedEventArgs }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::SystemMediaTransportControls, super::media::SystemMediaTransportControlsButtonPressedEventArgs> => [0x0557e996,0x7b23,0x5bae,0xaa,0x81,0xea,0x0d,0x67,0x11,0x43,0xa4] as IID_TypedEventHandler_2_Windows_Media_SystemMediaTransportControls_Windows_Media_SystemMediaTransportControlsButtonPressedEventArgs }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for TypedEventHandler<super::media::SystemMediaTransportControls, super::media::SystemMediaTransportControlsPropertyChangedEventArgs> => [0x9fd61dad,0x1746,0x5fa1,0xa9,0x08,0xef,0x7c,0xb4,0x60,0x3c,0x85] as IID_TypedEventHandler_2_Windows_Media_SystemMediaTransportControls_Windows_Media_SystemMediaTransportControlsPropertyChangedEventArgs }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for TypedEventHandler<super::networking::backgroundtransfer::DownloadOperation, super::networking::backgroundtransfer::BackgroundTransferRangesDownloadedEventArgs> => [0x93a20d85,0xbdfc,0x5195,0x90,0xd9,0x8c,0xb5,0x6c,0xbc,0xb3,0xd8] as IID_TypedEventHandler_2_Windows_Networking_BackgroundTransfer_DownloadOperation_Windows_Networking_BackgroundTransfer_BackgroundTransferRangesDownloadedEventArgs }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for TypedEventHandler<super::networking::networkoperators::MobileBroadbandAccountWatcher, IInspectable> => [0xe4dc9cfc,0xf462,0x5afd,0x85,0x6d,0x04,0xac,0xe2,0x29,0xd0,0x0e] as IID_TypedEventHandler_2_Windows_Networking_NetworkOperators_MobileBroadbandAccountWatcher_System_Object }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for TypedEventHandler<super::networking::networkoperators::MobileBroadbandAccountWatcher, super::networking::networkoperators::MobileBroadbandAccountEventArgs> => [0x423cc41e,0xfe8c,0x5a7d,0x9f,0xee,0xaa,0xe0,0x4e,0xf8,0x57,0x00] as IID_TypedEventHandler_2_Windows_Networking_NetworkOperators_MobileBroadbandAccountWatcher_Windows_Networking_NetworkOperators_MobileBroadbandAccountEventArgs }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for TypedEventHandler<super::networking::networkoperators::MobileBroadbandAccountWatcher, super::networking::networkoperators::MobileBroadbandAccountUpdatedEventArgs> => [0x0e865096,0x1ffa,0x5792,0x8d,0x4f,0x86,0x23,0xe3,0xc7,0x7f,0x56] as IID_TypedEventHandler_2_Windows_Networking_NetworkOperators_MobileBroadbandAccountWatcher_Windows_Networking_NetworkOperators_MobileBroadbandAccountUpdatedEventArgs }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for TypedEventHandler<super::networking::networkoperators::MobileBroadbandDeviceServiceDataSession, super::networking::networkoperators::MobileBroadbandDeviceServiceDataReceivedEventArgs> => [0x31f89ca6,0xdd7f,0x5325,0x90,0x20,0x62,0x7d,0x8b,0x47,0xea,0x02] as IID_TypedEventHandler_2_Windows_Networking_NetworkOperators_MobileBroadbandDeviceServiceDataSession_Windows_Networking_NetworkOperators_MobileBroadbandDeviceServiceDataReceivedEventArgs }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for TypedEventHandler<super::networking::networkoperators::MobileBroadbandSarManager, super::networking::networkoperators::MobileBroadbandTransmissionStateChangedEventArgs> => [0x540c4534,0xcd85,0x5abe,0x80,0x13,0x13,0xcb,0x14,0x0e,0xd1,0x8b] as IID_TypedEventHandler_2_Windows_Networking_NetworkOperators_MobileBroadbandSarManager_Windows_Networking_NetworkOperators_MobileBroadbandTransmissionStateChangedEventArgs }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for TypedEventHandler<super::networking::proximity::PeerWatcher, IInspectable> => [0xf4979ea1,0x7e06,0x50a8,0x88,0xdc,0x3f,0x29,0x52,0x4e,0x4f,0xdb] as IID_TypedEventHandler_2_Windows_Networking_Proximity_PeerWatcher_System_Object }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for TypedEventHandler<super::networking::proximity::PeerWatcher, super::networking::proximity::PeerInformation> => [0xad674bbf,0x6281,0x5943,0x97,0x72,0xe0,0xfd,0x76,0x64,0xd4,0xe1] as IID_TypedEventHandler_2_Windows_Networking_Proximity_PeerWatcher_Windows_Networking_Proximity_PeerInformation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for TypedEventHandler<super::networking::pushnotifications::PushNotificationChannel, super::networking::pushnotifications::PushNotificationReceivedEventArgs> => [0x55fa217d,0x1fc3,0x5863,0xb9,0x80,0x70,0x94,0xd4,0x37,0x96,0x94] as IID_TypedEventHandler_2_Windows_Networking_PushNotifications_PushNotificationChannel_Windows_Networking_PushNotifications_PushNotificationReceivedEventArgs }
@@ -2804,8 +2913,16 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for TypedEventHandler<super::storage::provider::CachedFileUpdaterUI, super::storage::provider::FileUpdateRequestedEventArgs> => [0xed56ab72,0xebd3,0x52c8,0xb0,0xac,0x98,0x7d,0x30,0x09,0x03,0x51] as IID_TypedEventHandler_2_Windows_Storage_Provider_CachedFileUpdaterUI_Windows_Storage_Provider_FileUpdateRequestedEventArgs }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for TypedEventHandler<super::storage::search::IStorageQueryResultBase, IInspectable> => [0x4ba22861,0x00c4,0x597f,0xb6,0xbf,0x3a,0xf5,0x16,0xf3,0xb8,0x70] as IID_TypedEventHandler_2_Windows_Storage_Search_IStorageQueryResultBase_System_Object }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for TypedEventHandler<super::storage::StorageLibrary, IInspectable> => [0xedc09538,0xbbae,0x5b2b,0x9e,0x81,0xb4,0x49,0xea,0x7e,0x48,0xfe] as IID_TypedEventHandler_2_Windows_Storage_StorageLibrary_System_Object }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for TypedEventHandler<super::system::AppDiagnosticInfoWatcher, IInspectable> => [0x895dee2f,0xe0f2,0x5304,0xa4,0x0e,0x1c,0x67,0xa2,0xc0,0x58,0xaa] as IID_TypedEventHandler_2_Windows_System_AppDiagnosticInfoWatcher_System_Object }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for TypedEventHandler<super::system::AppDiagnosticInfoWatcher, super::system::AppDiagnosticInfoWatcherEventArgs> => [0x7c8c6f9f,0xd6bf,0x5566,0xb0,0x13,0x39,0xc1,0x41,0xe0,0xff,0x8c] as IID_TypedEventHandler_2_Windows_System_AppDiagnosticInfoWatcher_Windows_System_AppDiagnosticInfoWatcherEventArgs }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for TypedEventHandler<super::system::AppResourceGroupInfoWatcher, IInspectable> => [0xe23a2901,0x197a,0x5867,0x87,0x28,0x9c,0x9d,0xb9,0x49,0x8d,0x76] as IID_TypedEventHandler_2_Windows_System_AppResourceGroupInfoWatcher_System_Object }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for TypedEventHandler<super::system::AppResourceGroupInfoWatcher, super::system::AppResourceGroupInfoWatcherEventArgs> => [0xa7e14bae,0xc778,0x5661,0xa4,0x1c,0x1a,0xc3,0xac,0x63,0x5f,0x79] as IID_TypedEventHandler_2_Windows_System_AppResourceGroupInfoWatcher_Windows_System_AppResourceGroupInfoWatcherEventArgs }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for TypedEventHandler<super::system::AppResourceGroupInfoWatcher, super::system::AppResourceGroupInfoWatcherExecutionStateChangedEventArgs> => [0x93f9724c,0x17f8,0x5df5,0xa6,0xcf,0x2f,0x0a,0xb9,0x0c,0x0a,0x27] as IID_TypedEventHandler_2_Windows_System_AppResourceGroupInfoWatcher_Windows_System_AppResourceGroupInfoWatcherExecutionStateChangedEventArgs }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for TypedEventHandler<super::system::diagnostics::deviceportal::DevicePortalConnection, super::system::diagnostics::deviceportal::DevicePortalConnectionClosedEventArgs> => [0x2aad93a8,0x52fa,0x54b3,0x95,0x56,0x15,0xd6,0x51,0x20,0x8b,0x3f] as IID_TypedEventHandler_2_Windows_System_Diagnostics_DevicePortal_DevicePortalConnection_Windows_System_Diagnostics_DevicePortal_DevicePortalConnectionClosedEventArgs }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for TypedEventHandler<super::system::diagnostics::deviceportal::DevicePortalConnection, super::system::diagnostics::deviceportal::DevicePortalConnectionRequestReceivedEventArgs> => [0xd8e33ff8,0x8ac4,0x5fd9,0xb1,0x84,0x8a,0xe8,0x7d,0x82,0x8e,0xb9] as IID_TypedEventHandler_2_Windows_System_Diagnostics_DevicePortal_DevicePortalConnection_Windows_System_Diagnostics_DevicePortal_DevicePortalConnectionRequestReceivedEventArgs }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for TypedEventHandler<super::system::DispatcherQueue, IInspectable> => [0xfe79f855,0x2f40,0x5b88,0xa0,0xc3,0x4c,0x04,0x2a,0x05,0xdd,0x05] as IID_TypedEventHandler_2_Windows_System_DispatcherQueue_System_Object }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for TypedEventHandler<super::system::DispatcherQueue, super::system::DispatcherQueueShutdownStartingEventArgs> => [0xb58b5e24,0xe1c6,0x528e,0x9d,0x99,0x07,0xec,0x88,0x29,0xde,0xa5] as IID_TypedEventHandler_2_Windows_System_DispatcherQueue_Windows_System_DispatcherQueueShutdownStartingEventArgs }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for TypedEventHandler<super::system::DispatcherQueueTimer, IInspectable> => [0x8b5644c8,0x8b57,0x50ce,0x89,0x33,0x7a,0xb2,0xcc,0x5a,0x14,0xef] as IID_TypedEventHandler_2_Windows_System_DispatcherQueueTimer_System_Object }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for TypedEventHandler<super::system::remotesystems::RemoteSystemSession, super::system::remotesystems::RemoteSystemSessionDisconnectedEventArgs> => [0xfba14773,0x5038,0x511a,0x95,0xa3,0x4b,0xa4,0x53,0x49,0x10,0x0a] as IID_TypedEventHandler_2_Windows_System_RemoteSystems_RemoteSystemSession_Windows_System_RemoteSystems_RemoteSystemSessionDisconnectedEventArgs }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for TypedEventHandler<super::system::remotesystems::RemoteSystemSessionController, super::system::remotesystems::RemoteSystemSessionJoinRequestedEventArgs> => [0xd8e04916,0xb452,0x5322,0xae,0xc9,0xe3,0xd4,0xd5,0x81,0xc7,0x72] as IID_TypedEventHandler_2_Windows_System_RemoteSystems_RemoteSystemSessionController_Windows_System_RemoteSystems_RemoteSystemSessionJoinRequestedEventArgs }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for TypedEventHandler<super::system::remotesystems::RemoteSystemSessionInvitationListener, super::system::remotesystems::RemoteSystemSessionInvitationReceivedEventArgs> => [0x18a242bb,0xd338,0x56c4,0x95,0x59,0x56,0x8d,0x5c,0x2c,0x3e,0x93] as IID_TypedEventHandler_2_Windows_System_RemoteSystems_RemoteSystemSessionInvitationListener_Windows_System_RemoteSystems_RemoteSystemSessionInvitationReceivedEventArgs }
@@ -2903,6 +3020,7 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::viewmanagement::AccessibilitySettings, IInspectable> => [0xf5917e6f,0x5abf,0x5e65,0xb5,0xb4,0x1b,0x9c,0x8d,0x94,0xe7,0x88] as IID_TypedEventHandler_2_Windows_UI_ViewManagement_AccessibilitySettings_System_Object }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::viewmanagement::ApplicationView, IInspectable> => [0x00c1f983,0xc836,0x565c,0x8b,0xbf,0x70,0x53,0x05,0x5b,0xdb,0x4c] as IID_TypedEventHandler_2_Windows_UI_ViewManagement_ApplicationView_System_Object }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::viewmanagement::ApplicationView, super::ui::viewmanagement::ApplicationViewConsolidatedEventArgs> => [0x463c606a,0x8c82,0x5a29,0xa2,0xbd,0x04,0x07,0x81,0xf2,0x53,0x48] as IID_TypedEventHandler_2_Windows_UI_ViewManagement_ApplicationView_Windows_UI_ViewManagement_ApplicationViewConsolidatedEventArgs }
+#[cfg(feature="windows-ui")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::viewmanagement::core::CoreInputView, super::ui::viewmanagement::core::CoreInputViewOcclusionsChangedEventArgs> => [0x5adecf04,0xedd1,0x5133,0xab,0xc7,0x58,0x2a,0x02,0x7f,0x09,0xbb] as IID_TypedEventHandler_2_Windows_UI_ViewManagement_Core_CoreInputView_Windows_UI_ViewManagement_Core_CoreInputViewOcclusionsChangedEventArgs }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::viewmanagement::InputPane, super::ui::viewmanagement::InputPaneVisibilityEventArgs> => [0xb813d684,0xd953,0x5a8a,0x9b,0x30,0x78,0xb7,0x9f,0xb9,0x14,0x7b] as IID_TypedEventHandler_2_Windows_UI_ViewManagement_InputPane_Windows_UI_ViewManagement_InputPaneVisibilityEventArgs }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::viewmanagement::UISettings, IInspectable> => [0x2dbdba9d,0x20da,0x519d,0x90,0x78,0x09,0xf8,0x35,0xbc,0x5b,0xc7] as IID_TypedEventHandler_2_Windows_UI_ViewManagement_UISettings_System_Object }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::AutoSuggestBox, super::ui::xaml::controls::AutoSuggestBoxQuerySubmittedEventArgs> => [0x1fa5f243,0x7045,0x56cb,0xbf,0x2d,0xf5,0xa4,0x25,0x02,0x5c,0x21] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_AutoSuggestBox_Windows_UI_Xaml_Controls_AutoSuggestBoxQuerySubmittedEventArgs }
@@ -2911,6 +3029,7 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::CalendarDatePicker, super::ui::xaml::controls::CalendarDatePickerDateChangedEventArgs> => [0x5ff44775,0x026e,0x51db,0xb4,0x62,0x44,0xc1,0x9c,0x45,0xa7,0x77] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_CalendarDatePicker_Windows_UI_Xaml_Controls_CalendarDatePickerDateChangedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::CalendarView, super::ui::xaml::controls::CalendarViewDayItemChangingEventArgs> => [0x6a74874e,0xf6b3,0x5c39,0x9e,0x5f,0x17,0x51,0xb7,0x82,0xbb,0x32] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_CalendarView_Windows_UI_Xaml_Controls_CalendarViewDayItemChangingEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::CalendarView, super::ui::xaml::controls::CalendarViewSelectedDatesChangedEventArgs> => [0xd22361ee,0x5234,0x5d25,0xa5,0x3b,0x79,0xa5,0xff,0x6a,0x03,0xb8] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_CalendarView_Windows_UI_Xaml_Controls_CalendarViewSelectedDatesChangedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::ColorPicker, super::ui::xaml::controls::ColorChangedEventArgs> => [0xe162d9c5,0x40b6,0x5662,0x82,0xb0,0x4d,0x24,0x04,0xd3,0x71,0x6b] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_ColorPicker_Windows_UI_Xaml_Controls_ColorChangedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::CommandBar, super::ui::xaml::controls::DynamicOverflowItemsChangingEventArgs> => [0x758990cd,0xa4a5,0x5c0a,0xac,0xa5,0x64,0xa6,0x29,0xaf,0xdb,0xcc] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_CommandBar_Windows_UI_Xaml_Controls_DynamicOverflowItemsChangingEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::ContentDialog, super::ui::xaml::controls::ContentDialogButtonClickEventArgs> => [0x4b00de1a,0xffed,0x57b4,0xbd,0x6e,0x8c,0x7a,0xab,0x2c,0x53,0xff] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_ContentDialog_Windows_UI_Xaml_Controls_ContentDialogButtonClickEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::ContentDialog, super::ui::xaml::controls::ContentDialogClosedEventArgs> => [0xb040eb41,0xb4f5,0x5d9f,0x83,0xc7,0x9c,0x93,0x9c,0x48,0xc8,0x90] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_ContentDialog_Windows_UI_Xaml_Controls_ContentDialogClosedEventArgs }
@@ -2949,17 +3068,31 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::maps::MapControl, super::ui::xaml::controls::maps::MapInputEventArgs> => [0xb92f6816,0x4d0a,0x52c2,0x98,0x68,0x94,0xb5,0xc9,0x42,0x00,0x7e] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_Maps_MapControl_Windows_UI_Xaml_Controls_Maps_MapInputEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::maps::MapControl, super::ui::xaml::controls::maps::MapRightTappedEventArgs> => [0xefc52f2d,0xad6b,0x59af,0xa0,0xf0,0x22,0x53,0xd4,0x34,0x41,0x4f] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_Maps_MapControl_Windows_UI_Xaml_Controls_Maps_MapRightTappedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::maps::MapControl, super::ui::xaml::controls::maps::MapTargetCameraChangedEventArgs> => [0x2671c2dd,0xe212,0x5e43,0x80,0xe2,0xab,0x6f,0xf3,0xf3,0x08,0x6c] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_Maps_MapControl_Windows_UI_Xaml_Controls_Maps_MapTargetCameraChangedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::maps::MapElementsLayer, super::ui::xaml::controls::maps::MapElementsLayerClickEventArgs> => [0xd3ee3faa,0x6a6f,0x576a,0x99,0x00,0x52,0x8e,0x8e,0xba,0x92,0x86] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_Maps_MapElementsLayer_Windows_UI_Xaml_Controls_Maps_MapElementsLayerClickEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::maps::MapElementsLayer, super::ui::xaml::controls::maps::MapElementsLayerContextRequestedEventArgs> => [0xd4c7eced,0x5053,0x5d3c,0x8c,0xfa,0xfb,0x19,0xdb,0xde,0x4a,0x3a] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_Maps_MapElementsLayer_Windows_UI_Xaml_Controls_Maps_MapElementsLayerContextRequestedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::maps::MapElementsLayer, super::ui::xaml::controls::maps::MapElementsLayerPointerEnteredEventArgs> => [0x3622cf53,0x117c,0x5605,0xb1,0x42,0xfe,0x47,0xd8,0x74,0xe2,0x6b] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_Maps_MapElementsLayer_Windows_UI_Xaml_Controls_Maps_MapElementsLayerPointerEnteredEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::maps::MapElementsLayer, super::ui::xaml::controls::maps::MapElementsLayerPointerExitedEventArgs> => [0xd54471d2,0x03dd,0x5698,0xa9,0x2f,0x5f,0xac,0x8a,0x5e,0x76,0x68] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_Maps_MapElementsLayer_Windows_UI_Xaml_Controls_Maps_MapElementsLayerPointerExitedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::maps::MapScene, super::ui::xaml::controls::maps::MapTargetCameraChangedEventArgs> => [0x766ed4a8,0xe810,0x5f78,0xbc,0x96,0x9a,0xff,0x9f,0x58,0xcf,0xca] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_Maps_MapScene_Windows_UI_Xaml_Controls_Maps_MapTargetCameraChangedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::MediaElement, super::ui::xaml::media::PartialMediaFailureDetectedEventArgs> => [0xb402b0ca,0xbeca,0x5537,0x81,0x92,0x8f,0x30,0xf7,0xcb,0x5d,0x0e] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_MediaElement_Windows_UI_Xaml_Media_PartialMediaFailureDetectedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::MediaTransportControls, super::ui::xaml::media::MediaTransportControlsThumbnailRequestedEventArgs> => [0xc2925ff8,0x71f0,0x59d3,0xba,0x13,0x86,0x2b,0x22,0x6e,0xeb,0xa2] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_MediaTransportControls_Windows_UI_Xaml_Media_MediaTransportControlsThumbnailRequestedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::NavigationView, super::ui::xaml::controls::NavigationViewDisplayModeChangedEventArgs> => [0x10a54ac4,0x84cf,0x580b,0xa6,0x3d,0x51,0xaa,0x3a,0x6a,0x3c,0x0a] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_NavigationView_Windows_UI_Xaml_Controls_NavigationViewDisplayModeChangedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::NavigationView, super::ui::xaml::controls::NavigationViewItemInvokedEventArgs> => [0x15ec8ec2,0xc8b3,0x53e7,0x89,0x3c,0x0c,0xfb,0x68,0x54,0x9b,0x77] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_NavigationView_Windows_UI_Xaml_Controls_NavigationViewItemInvokedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::NavigationView, super::ui::xaml::controls::NavigationViewSelectionChangedEventArgs> => [0x17c78c17,0x2850,0x5dd4,0x83,0xd6,0xd4,0x70,0x32,0x3c,0x21,0xc7] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_NavigationView_Windows_UI_Xaml_Controls_NavigationViewSelectionChangedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::PasswordBox, super::ui::xaml::controls::PasswordBoxPasswordChangingEventArgs> => [0xc3bc2f43,0x1d73,0x5aac,0xae,0xd4,0xb4,0xe0,0x86,0x03,0xe9,0xf0] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_PasswordBox_Windows_UI_Xaml_Controls_PasswordBoxPasswordChangingEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::PickerFlyout, super::ui::xaml::controls::PickerConfirmedEventArgs> => [0x22cde5b7,0x4eb7,0x5ee4,0x8d,0x28,0x1f,0x1c,0xbc,0xf6,0x8f,0xb0] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_PickerFlyout_Windows_UI_Xaml_Controls_PickerConfirmedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::Pivot, super::ui::xaml::controls::PivotItemEventArgs> => [0x6b0c4ca2,0x7feb,0x5e4e,0xbf,0x5c,0xde,0x9f,0x3a,0xc4,0x22,0x1c] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_Pivot_Windows_UI_Xaml_Controls_PivotItemEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::primitives::ColorSpectrum, super::ui::xaml::controls::ColorChangedEventArgs> => [0x650cfa09,0x70c2,0x5151,0xa2,0xcd,0x27,0x57,0x0f,0xb9,0x55,0x6b] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_Primitives_ColorSpectrum_Windows_UI_Xaml_Controls_ColorChangedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::primitives::FlyoutBase, super::ui::xaml::controls::primitives::FlyoutBaseClosingEventArgs> => [0x96e17fbc,0x78c7,0x5560,0xac,0x3a,0x58,0x7f,0x46,0xdb,0x70,0xd6] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_Primitives_FlyoutBase_Windows_UI_Xaml_Controls_Primitives_FlyoutBaseClosingEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::RatingControl, IInspectable> => [0x180be111,0xc600,0x5e5d,0x82,0x66,0xfb,0x29,0xb9,0x65,0x6a,0xf4] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_RatingControl_System_Object }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::RichEditBox, super::ui::xaml::controls::CandidateWindowBoundsChangedEventArgs> => [0xb0b3c248,0x7604,0x5108,0xae,0xc9,0x6f,0x3a,0xec,0xca,0x27,0x37] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_RichEditBox_Windows_UI_Xaml_Controls_CandidateWindowBoundsChangedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::RichEditBox, super::ui::xaml::controls::RichEditBoxTextChangingEventArgs> => [0xfad2ffb9,0xd2d9,0x563c,0x88,0xca,0x13,0x23,0xb1,0x33,0xfb,0xf3] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_RichEditBox_Windows_UI_Xaml_Controls_RichEditBoxTextChangingEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::RichEditBox, super::ui::xaml::controls::TextCompositionChangedEventArgs> => [0xc080b01b,0xeec0,0x542c,0xb1,0xf1,0xd0,0x0e,0x20,0x7e,0xe1,0xe0] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_RichEditBox_Windows_UI_Xaml_Controls_TextCompositionChangedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::RichEditBox, super::ui::xaml::controls::TextCompositionEndedEventArgs> => [0xe6750b95,0x305f,0x52fd,0xbb,0x80,0xcf,0xcf,0x72,0xbc,0x54,0x21] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_RichEditBox_Windows_UI_Xaml_Controls_TextCompositionEndedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::RichEditBox, super::ui::xaml::controls::TextCompositionStartedEventArgs> => [0x297dde84,0xd0c7,0x5d21,0xb1,0xed,0xf9,0x6c,0x4e,0xa4,0x77,0x2f] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_RichEditBox_Windows_UI_Xaml_Controls_TextCompositionStartedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::RichEditBox, super::ui::xaml::controls::TextControlCopyingToClipboardEventArgs> => [0xb8cb973a,0x91c4,0x5ae4,0x8b,0x4e,0x01,0xb9,0x68,0xdc,0x1a,0x57] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_RichEditBox_Windows_UI_Xaml_Controls_TextControlCopyingToClipboardEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::RichEditBox, super::ui::xaml::controls::TextControlCuttingToClipboardEventArgs> => [0xc3feed97,0xc386,0x5d87,0xa3,0x20,0xe9,0x5c,0xcb,0x36,0x5a,0x6b] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_RichEditBox_Windows_UI_Xaml_Controls_TextControlCuttingToClipboardEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::RichTextBlock, super::ui::xaml::controls::IsTextTrimmedChangedEventArgs> => [0x1e9d65a8,0x7312,0x5d13,0xa3,0xb9,0x27,0xa9,0x1b,0x90,0x63,0x24] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_RichTextBlock_Windows_UI_Xaml_Controls_IsTextTrimmedChangedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::RichTextBlockOverflow, super::ui::xaml::controls::IsTextTrimmedChangedEventArgs> => [0x8f4572d1,0x9348,0x56b3,0xb0,0x45,0xcb,0x42,0xf9,0x8a,0x43,0xa4] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_RichTextBlockOverflow_Windows_UI_Xaml_Controls_IsTextTrimmedChangedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::SearchBox, super::ui::xaml::controls::SearchBoxQueryChangedEventArgs> => [0xb15ccc28,0x40f3,0x52da,0x90,0x11,0x87,0x62,0x1e,0x9c,0x60,0xea] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_SearchBox_Windows_UI_Xaml_Controls_SearchBoxQueryChangedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::SearchBox, super::ui::xaml::controls::SearchBoxQuerySubmittedEventArgs> => [0x56d6c824,0xa5b2,0x51f4,0x8a,0xf7,0x7b,0x8e,0xe5,0x82,0xc0,0x29] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_SearchBox_Windows_UI_Xaml_Controls_SearchBoxQuerySubmittedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::SearchBox, super::ui::xaml::controls::SearchBoxResultSuggestionChosenEventArgs> => [0x8d18767b,0xa4b8,0x52fc,0x87,0x67,0xf8,0x7d,0x05,0xb5,0x17,0x2e] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_SearchBox_Windows_UI_Xaml_Controls_SearchBoxResultSuggestionChosenEventArgs }
@@ -2968,11 +3101,16 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::SplitView, IInspectable> => [0xe277bfe5,0x10c1,0x5472,0x9b,0xc6,0x1a,0xe3,0x9a,0xeb,0xfc,0x86] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_SplitView_System_Object }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::SplitView, super::ui::xaml::controls::SplitViewPaneClosingEventArgs> => [0xc674a1de,0xc3d9,0x5e39,0xbc,0x39,0x12,0x1f,0xc3,0xcc,0x7d,0x41] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_SplitView_Windows_UI_Xaml_Controls_SplitViewPaneClosingEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::SwapChainPanel, IInspectable> => [0xa8bbf146,0xb687,0x5c03,0x9a,0x42,0x2a,0xe2,0xd5,0x5b,0xfb,0xb4] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_SwapChainPanel_System_Object }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::SwipeItem, super::ui::xaml::controls::SwipeItemInvokedEventArgs> => [0x3397b4eb,0xce58,0x5d81,0xa2,0x5f,0xe8,0xe6,0x31,0x98,0xb3,0x68] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_SwipeItem_Windows_UI_Xaml_Controls_SwipeItemInvokedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::TextBlock, super::ui::xaml::controls::IsTextTrimmedChangedEventArgs> => [0x4f8ad0d6,0x06e6,0x5c3d,0xb2,0x53,0x8e,0x23,0x99,0x1f,0x4e,0x80] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_TextBlock_Windows_UI_Xaml_Controls_IsTextTrimmedChangedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::TextBox, super::ui::xaml::controls::CandidateWindowBoundsChangedEventArgs> => [0xb6b53bf8,0x1ac8,0x51c4,0xba,0xfc,0x95,0xf8,0xe0,0x16,0x37,0xb0] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_TextBox_Windows_UI_Xaml_Controls_CandidateWindowBoundsChangedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::TextBox, super::ui::xaml::controls::TextBoxBeforeTextChangingEventArgs> => [0x40c0c57b,0x7c67,0x52f4,0xb3,0x18,0xbe,0xa8,0xfd,0x03,0x36,0x10] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_TextBox_Windows_UI_Xaml_Controls_TextBoxBeforeTextChangingEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::TextBox, super::ui::xaml::controls::TextBoxTextChangingEventArgs> => [0x1e65e112,0xe634,0x55c3,0xbe,0xfb,0xdb,0xf5,0xcf,0xcb,0x30,0xb1] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_TextBox_Windows_UI_Xaml_Controls_TextBoxTextChangingEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::TextBox, super::ui::xaml::controls::TextCompositionChangedEventArgs> => [0x61107067,0x2cfb,0x5de1,0x92,0xb6,0xd3,0x32,0xc1,0x7f,0x75,0x6e] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_TextBox_Windows_UI_Xaml_Controls_TextCompositionChangedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::TextBox, super::ui::xaml::controls::TextCompositionEndedEventArgs> => [0xb9ac0e9e,0x5b32,0x52b7,0xa8,0xf9,0xb8,0x5e,0x4b,0xe1,0x4b,0x16] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_TextBox_Windows_UI_Xaml_Controls_TextCompositionEndedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::TextBox, super::ui::xaml::controls::TextCompositionStartedEventArgs> => [0x98fee2a4,0x211d,0x5a3d,0xa8,0x32,0xc5,0xdd,0xeb,0x84,0x44,0xa9] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_TextBox_Windows_UI_Xaml_Controls_TextCompositionStartedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::TextBox, super::ui::xaml::controls::TextControlCopyingToClipboardEventArgs> => [0x50c332f2,0x58d1,0x5228,0xa3,0xa9,0x1c,0xcb,0xde,0xd7,0x05,0x37] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_TextBox_Windows_UI_Xaml_Controls_TextControlCopyingToClipboardEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::TextBox, super::ui::xaml::controls::TextControlCuttingToClipboardEventArgs> => [0xc1033f73,0xf81a,0x50d8,0x8d,0x3a,0x07,0xb3,0x8d,0x8d,0x17,0x7e] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_TextBox_Windows_UI_Xaml_Controls_TextControlCuttingToClipboardEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::TimePickerFlyout, super::ui::xaml::controls::TimePickedEventArgs> => [0x7d77980b,0xa0df,0x51b1,0x87,0x9b,0xc2,0x3d,0x2d,0xe0,0xab,0xbe] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_TimePickerFlyout_Windows_UI_Xaml_Controls_TimePickedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::WebView, IInspectable> => [0xd9f52e0d,0x21fb,0x5a0b,0xb4,0xc6,0x7d,0x16,0x2a,0xf7,0xfb,0x9c] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_WebView_System_Object }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::controls::WebView, super::ui::xaml::controls::WebViewContentLoadingEventArgs> => [0xe7b42a9a,0xf140,0x52ad,0xa6,0x58,0xe2,0x37,0xb9,0xa3,0xdc,0xca] as IID_TypedEventHandler_2_Windows_UI_Xaml_Controls_WebView_Windows_UI_Xaml_Controls_WebViewContentLoadingEventArgs }
@@ -2990,6 +3128,8 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::documents::TextElement, super::ui::xaml::input::AccessKeyInvokedEventArgs> => [0xa72c6b01,0x2e3c,0x57b5,0x9e,0xc4,0x94,0x8f,0x6c,0x6d,0x93,0x0a] as IID_TypedEventHandler_2_Windows_UI_Xaml_Documents_TextElement_Windows_UI_Xaml_Input_AccessKeyInvokedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::FrameworkElement, IInspectable> => [0xc229f252,0xdede,0x5d42,0xa0,0x1a,0x84,0x79,0xd5,0x6a,0x7d,0x2f] as IID_TypedEventHandler_2_Windows_UI_Xaml_FrameworkElement_System_Object }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::FrameworkElement, super::ui::xaml::DataContextChangedEventArgs> => [0xb01c8a21,0xde6f,0x5edd,0x87,0x96,0x30,0x0e,0x3f,0xe6,0x63,0x82] as IID_TypedEventHandler_2_Windows_UI_Xaml_FrameworkElement_Windows_UI_Xaml_DataContextChangedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::hosting::DesignerAppManager, super::ui::xaml::hosting::DesignerAppExitedEventArgs> => [0x3772ce98,0x9ba0,0x504b,0x8a,0x0d,0x36,0xb7,0xf8,0x16,0xa1,0xc2] as IID_TypedEventHandler_2_Windows_UI_Xaml_Hosting_DesignerAppManager_Windows_UI_Xaml_Hosting_DesignerAppExitedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::input::KeyboardAccelerator, super::ui::xaml::input::KeyboardAcceleratorInvokedEventArgs> => [0xf763f3ae,0xb1eb,0x5592,0xa0,0x91,0xd5,0x08,0xf3,0x2b,0x0b,0x2c] as IID_TypedEventHandler_2_Windows_UI_Xaml_Input_KeyboardAccelerator_Windows_UI_Xaml_Input_KeyboardAcceleratorInvokedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::media::animation::ConnectedAnimation, IInspectable> => [0x44caa9ea,0x7598,0x517a,0xb7,0x8e,0xab,0xd2,0x0d,0x93,0xd5,0x87] as IID_TypedEventHandler_2_Windows_UI_Xaml_Media_Animation_ConnectedAnimation_System_Object }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::media::imaging::SvgImageSource, super::ui::xaml::media::imaging::SvgImageSourceFailedEventArgs> => [0xd723938d,0xefee,0x5a0c,0xab,0x3e,0x1e,0x1d,0xb3,0xc9,0xa2,0x16] as IID_TypedEventHandler_2_Windows_UI_Xaml_Media_Imaging_SvgImageSource_Windows_UI_Xaml_Media_Imaging_SvgImageSourceFailedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::media::imaging::SvgImageSource, super::ui::xaml::media::imaging::SvgImageSourceOpenedEventArgs> => [0x9e321151,0x8b27,0x5e18,0x9e,0xa3,0x50,0x52,0x0a,0xce,0xb7,0xef] as IID_TypedEventHandler_2_Windows_UI_Xaml_Media_Imaging_SvgImageSource_Windows_UI_Xaml_Media_Imaging_SvgImageSourceOpenedEventArgs }
@@ -2999,10 +3139,12 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::UIElement, super::ui::xaml::input::AccessKeyDisplayDismissedEventArgs> => [0x2831903f,0x655e,0x5464,0x82,0x8c,0x56,0xa8,0xb4,0xc6,0x5f,0x1e] as IID_TypedEventHandler_2_Windows_UI_Xaml_UIElement_Windows_UI_Xaml_Input_AccessKeyDisplayDismissedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::UIElement, super::ui::xaml::input::AccessKeyDisplayRequestedEventArgs> => [0x5871821a,0x2491,0x5cec,0xa4,0x57,0x21,0x99,0x6c,0xa4,0xef,0xaf] as IID_TypedEventHandler_2_Windows_UI_Xaml_UIElement_Windows_UI_Xaml_Input_AccessKeyDisplayRequestedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::UIElement, super::ui::xaml::input::AccessKeyInvokedEventArgs> => [0xa5c9a137,0xf716,0x5d8d,0x92,0xc4,0x02,0xf1,0x71,0x93,0x6f,0xa1] as IID_TypedEventHandler_2_Windows_UI_Xaml_UIElement_Windows_UI_Xaml_Input_AccessKeyInvokedEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::UIElement, super::ui::xaml::input::CharacterReceivedRoutedEventArgs> => [0x24330117,0x55d4,0x5789,0x8a,0xa2,0x6c,0xab,0x1d,0x06,0x62,0xa0] as IID_TypedEventHandler_2_Windows_UI_Xaml_UIElement_Windows_UI_Xaml_Input_CharacterReceivedRoutedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::UIElement, super::ui::xaml::input::ContextRequestedEventArgs> => [0x41d66b93,0xd17b,0x59b2,0xb9,0x16,0x8e,0x81,0x3f,0xec,0xb9,0xbd] as IID_TypedEventHandler_2_Windows_UI_Xaml_UIElement_Windows_UI_Xaml_Input_ContextRequestedEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::UIElement, super::ui::xaml::input::GettingFocusEventArgs> => [0x34f34b77,0xec52,0x5eb6,0xaf,0xfc,0x22,0x0c,0xb5,0x2c,0xa0,0x93] as IID_TypedEventHandler_2_Windows_UI_Xaml_UIElement_Windows_UI_Xaml_Input_GettingFocusEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::UIElement, super::ui::xaml::input::LosingFocusEventArgs> => [0xa0f49f5f,0xc366,0x569a,0x89,0x5a,0x3a,0x82,0xd8,0x80,0x1f,0xe4] as IID_TypedEventHandler_2_Windows_UI_Xaml_UIElement_Windows_UI_Xaml_Input_LosingFocusEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::UIElement, super::ui::xaml::input::NoFocusCandidateFoundEventArgs> => [0xd5de4415,0xb53c,0x5312,0x9e,0x1b,0xac,0x2a,0x19,0xf0,0x4e,0x71] as IID_TypedEventHandler_2_Windows_UI_Xaml_UIElement_Windows_UI_Xaml_Input_NoFocusCandidateFoundEventArgs }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::UIElement, super::ui::xaml::input::ProcessKeyboardAcceleratorEventArgs> => [0xc134d249,0x476a,0x5146,0xb5,0xd4,0x6c,0x98,0xf4,0xe8,0x14,0x61] as IID_TypedEventHandler_2_Windows_UI_Xaml_UIElement_Windows_UI_Xaml_Input_ProcessKeyboardAcceleratorEventArgs }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for TypedEventHandler<super::ui::xaml::UIElement, super::ui::xaml::RoutedEventArgs> => [0x657f28aa,0x8c76,0x501f,0xb0,0x32,0xd8,0xdc,0x93,0x59,0x5e,0x76] as IID_TypedEventHandler_2_Windows_UI_Xaml_UIElement_Windows_UI_Xaml_RoutedEventArgs }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for TypedEventHandler<super::web::http::diagnostics::HttpDiagnosticProvider, super::web::http::diagnostics::HttpDiagnosticProviderRequestResponseCompletedEventArgs> => [0x2281ad23,0x9c8d,0x5d82,0x9b,0x20,0xbc,0xf1,0x57,0xb0,0x4f,0xd9] as IID_TypedEventHandler_2_Windows_Web_Http_Diagnostics_HttpDiagnosticProvider_Windows_Web_Http_Diagnostics_HttpDiagnosticProviderRequestResponseCompletedEventArgs }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for TypedEventHandler<super::web::http::diagnostics::HttpDiagnosticProvider, super::web::http::diagnostics::HttpDiagnosticProviderRequestSentEventArgs> => [0xf8e10321,0x47bd,0x526a,0xa9,0xb2,0x3b,0xf1,0x2f,0x72,0x5f,0x8b] as IID_TypedEventHandler_2_Windows_Web_Http_Diagnostics_HttpDiagnosticProvider_Windows_Web_Http_Diagnostics_HttpDiagnosticProviderRequestSentEventArgs }
@@ -3013,36 +3155,6 @@ use ::prelude::*;
 RT_ENUM! { enum CollectionChange: i32 {
     Reset (CollectionChange_Reset) = 0, ItemInserted (CollectionChange_ItemInserted) = 1, ItemRemoved (CollectionChange_ItemRemoved) = 2, ItemChanged (CollectionChange_ItemChanged) = 3,
 }}
-DEFINE_IID!(IID_IVectorChangedEventArgs, 1465463775, 13566, 17536, 175, 21, 7, 105, 31, 61, 93, 155);
-RT_INTERFACE!{interface IVectorChangedEventArgs(IVectorChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVectorChangedEventArgs] {
-    fn get_CollectionChange(&self, out: *mut CollectionChange) -> HRESULT,
-    fn get_Index(&self, out: *mut u32) -> HRESULT
-}}
-impl IVectorChangedEventArgs {
-    #[inline] pub unsafe fn get_collection_change(&self) -> Result<CollectionChange> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CollectionChange)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_index(&self) -> Result<u32> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Index)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IPropertySet, 2319707551, 62694, 17441, 172, 249, 29, 171, 41, 134, 130, 12);
-RT_INTERFACE!{interface IPropertySet(IPropertySetVtbl): IInspectable(IInspectableVtbl) [IID_IPropertySet] {
-    
-}}
-RT_CLASS!{class PropertySet: IPropertySet}
-impl RtActivatable<IActivationFactory> for PropertySet {}
-DEFINE_CLSID!(PropertySet(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,67,111,108,108,101,99,116,105,111,110,115,46,80,114,111,112,101,114,116,121,83,101,116,0]) [CLSID_PropertySet]);
-RT_CLASS!{class ValueSet: IPropertySet}
-impl RtActivatable<IActivationFactory> for ValueSet {}
-DEFINE_CLSID!(ValueSet(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,67,111,108,108,101,99,116,105,111,110,115,46,86,97,108,117,101,83,101,116,0]) [CLSID_ValueSet]);
-RT_CLASS!{class StringMap: IMap<HString, HString>}
-impl RtActivatable<IActivationFactory> for StringMap {}
-DEFINE_CLSID!(StringMap(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,67,111,108,108,101,99,116,105,111,110,115,46,83,116,114,105,110,103,77,97,112,0]) [CLSID_StringMap]);
 DEFINE_IID!(IID_IIterable, 4205151722, 25108, 16919, 175, 218, 127, 70, 222, 88, 105, 179);
 RT_INTERFACE!{interface IIterable<T>(IIterableVtbl): IInspectable(IInspectableVtbl) [IID_IIterable] {
     fn First(&self, out: *mut *mut IIterator<T>) -> HRESULT
@@ -3084,36 +3196,169 @@ impl<T: RtType> IIterator<T> {
         if hr == S_OK { items.set_len(out as usize); Ok(()) } else { err(hr) }
     }
 }
-DEFINE_IID!(IID_IVectorView, 3152149068, 45283, 17795, 186, 239, 31, 27, 46, 72, 62, 86);
-RT_INTERFACE!{interface IVectorView<T>(IVectorViewVtbl): IInspectable(IInspectableVtbl) [IID_IVectorView] {
-    fn GetAt(&self, index: u32, out: *mut T::Abi) -> HRESULT,
-    fn get_Size(&self, out: *mut u32) -> HRESULT,
-    fn IndexOf(&self, value: T::Abi, index: *mut u32, out: *mut bool) -> HRESULT,
-    fn GetMany(&self, startIndex: u32, itemsSize: u32, items: *mut T::Abi, out: *mut u32) -> HRESULT
+DEFINE_IID!(IID_IKeyValuePair, 45422889, 49604, 19070, 137, 64, 3, 18, 181, 193, 133, 0);
+RT_INTERFACE!{interface IKeyValuePair<K, V>(IKeyValuePairVtbl): IInspectable(IInspectableVtbl) [IID_IKeyValuePair] {
+    fn get_Key(&self, out: *mut K::Abi) -> HRESULT,
+    fn get_Value(&self, out: *mut V::Abi) -> HRESULT
 }}
-impl<T: RtType> IVectorView<T> {
-    #[inline] pub unsafe fn get_at(&self, index: u32) -> Result<T::Out> {
-        let mut out = T::uninitialized();
-        let hr = ((*self.lpVtbl).GetAt)(self as *const _ as *mut _, index, &mut out);
-        if hr == S_OK { Ok(T::wrap(out)) } else { err(hr) }
+impl<K: RtType, V: RtType> IKeyValuePair<K, V> {
+    #[inline] pub unsafe fn get_key(&self) -> Result<K::Out> {
+        let mut out = K::uninitialized();
+        let hr = ((*self.lpVtbl).get_Key)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(K::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_value(&self) -> Result<V::Out> {
+        let mut out = V::uninitialized();
+        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(V::wrap(out)) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_IMap, 1009329662, 34073, 17857, 170, 121, 25, 123, 103, 24, 193, 193);
+RT_INTERFACE!{interface IMap<K, V>(IMapVtbl): IInspectable(IInspectableVtbl) [IID_IMap] {
+    fn Lookup(&self, key: K::Abi, out: *mut V::Abi) -> HRESULT,
+    fn get_Size(&self, out: *mut u32) -> HRESULT,
+    fn HasKey(&self, key: K::Abi, out: *mut bool) -> HRESULT,
+    fn GetView(&self, out: *mut *mut IMapView<K, V>) -> HRESULT,
+    fn Insert(&self, key: K::Abi, value: V::Abi, out: *mut bool) -> HRESULT,
+    fn Remove(&self, key: K::Abi) -> HRESULT,
+    fn Clear(&self) -> HRESULT
+}}
+impl<K: RtType, V: RtType> IMap<K, V> {
+    #[inline] pub unsafe fn lookup(&self, key: &K::In) -> Result<V::Out> {
+        let mut out = V::uninitialized();
+        let hr = ((*self.lpVtbl).Lookup)(self as *const _ as *mut _, K::unwrap(key), &mut out);
+        if hr == S_OK { Ok(V::wrap(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_size(&self) -> Result<u32> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn index_of(&self, value: &T::In) -> Result<(u32, bool)> {
-        let mut index = zeroed(); let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IndexOf)(self as *const _ as *mut _, T::unwrap(value), &mut index, &mut out);
-        if hr == S_OK { Ok((index, out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_many(&self, startIndex: u32, items: &mut Vec<T::Out>) -> Result<()> {
-        debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
+    #[inline] pub unsafe fn has_key(&self, key: &K::In) -> Result<bool> {
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetMany)(self as *const _ as *mut _, startIndex, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
-        if hr == S_OK { items.set_len(out as usize); Ok(()) } else { err(hr) }
+        let hr = ((*self.lpVtbl).HasKey)(self as *const _ as *mut _, K::unwrap(key), &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_view(&self) -> Result<ComPtr<IMapView<K, V>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetView)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn insert(&self, key: &K::In, value: &V::In) -> Result<bool> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).Insert)(self as *const _ as *mut _, K::unwrap(key), V::unwrap(value), &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn remove(&self, key: &K::In) -> Result<()> {
+        let hr = ((*self.lpVtbl).Remove)(self as *const _ as *mut _, K::unwrap(key));
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn clear(&self) -> Result<()> {
+        let hr = ((*self.lpVtbl).Clear)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
+DEFINE_IID!(IID_IMapChangedEventArgs, 2570712287, 1290, 19471, 170, 96, 119, 7, 95, 156, 71, 119);
+RT_INTERFACE!{interface IMapChangedEventArgs<K>(IMapChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMapChangedEventArgs] {
+    fn get_CollectionChange(&self, out: *mut CollectionChange) -> HRESULT,
+    fn get_Key(&self, out: *mut K::Abi) -> HRESULT
+}}
+impl<K: RtType> IMapChangedEventArgs<K> {
+    #[inline] pub unsafe fn get_collection_change(&self) -> Result<CollectionChange> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CollectionChange)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_key(&self) -> Result<K::Out> {
+        let mut out = K::uninitialized();
+        let hr = ((*self.lpVtbl).get_Key)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(K::wrap(out)) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_MapChangedEventHandler, 395646963, 38126, 16888, 189, 220, 118, 138, 137, 85, 68, 243);
+RT_DELEGATE!{delegate MapChangedEventHandler<K, V>(MapChangedEventHandlerVtbl, MapChangedEventHandlerImpl) [IID_MapChangedEventHandler] {
+    fn Invoke(&self, sender: *mut IObservableMap<K, V>, event: *mut IMapChangedEventArgs<K>) -> HRESULT
+}}
+impl<K: RtType, V: RtType> MapChangedEventHandler<K, V> {
+    #[inline] pub unsafe fn invoke(&self, sender: &IObservableMap<K, V>, event: &IMapChangedEventArgs<K>) -> Result<()> {
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, event as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_IMapView, 3833646656, 41784, 19162, 173, 207, 39, 34, 114, 228, 140, 185);
+RT_INTERFACE!{interface IMapView<K, V>(IMapViewVtbl): IInspectable(IInspectableVtbl) [IID_IMapView] {
+    fn Lookup(&self, key: K::Abi, out: *mut V::Abi) -> HRESULT,
+    fn get_Size(&self, out: *mut u32) -> HRESULT,
+    fn HasKey(&self, key: K::Abi, out: *mut bool) -> HRESULT,
+    fn Split(&self, first: *mut *mut IMapView<K, V>, second: *mut *mut IMapView<K, V>) -> HRESULT
+}}
+impl<K: RtType, V: RtType> IMapView<K, V> {
+    #[inline] pub unsafe fn lookup(&self, key: &K::In) -> Result<V::Out> {
+        let mut out = V::uninitialized();
+        let hr = ((*self.lpVtbl).Lookup)(self as *const _ as *mut _, K::unwrap(key), &mut out);
+        if hr == S_OK { Ok(V::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_size(&self) -> Result<u32> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn has_key(&self, key: &K::In) -> Result<bool> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).HasKey)(self as *const _ as *mut _, K::unwrap(key), &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn split(&self) -> Result<(ComPtr<IMapView<K, V>>, ComPtr<IMapView<K, V>>)> {
+        let mut first = null_mut(); let mut second = null_mut();
+        let hr = ((*self.lpVtbl).Split)(self as *const _ as *mut _, &mut first, &mut second);
+        if hr == S_OK { Ok((ComPtr::wrap(first), ComPtr::wrap(second))) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_IObservableMap, 1709124597, 48953, 16821, 174, 188, 90, 157, 134, 94, 71, 43);
+RT_INTERFACE!{interface IObservableMap<K, V>(IObservableMapVtbl): IInspectable(IInspectableVtbl) [IID_IObservableMap] {
+    fn add_MapChanged(&self, vhnd: *mut MapChangedEventHandler<K, V>, out: *mut super::EventRegistrationToken) -> HRESULT,
+    fn remove_MapChanged(&self, token: super::EventRegistrationToken) -> HRESULT
+}}
+impl<K: RtType, V: RtType> IObservableMap<K, V> {
+    #[inline] pub unsafe fn add_map_changed(&self, vhnd: &MapChangedEventHandler<K, V>) -> Result<super::EventRegistrationToken> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_MapChanged)(self as *const _ as *mut _, vhnd as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn remove_map_changed(&self, token: super::EventRegistrationToken) -> Result<()> {
+        let hr = ((*self.lpVtbl).remove_MapChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_IObservableVector, 1494739795, 20660, 18957, 179, 9, 101, 134, 43, 63, 29, 188);
+RT_INTERFACE!{interface IObservableVector<T>(IObservableVectorVtbl): IInspectable(IInspectableVtbl) [IID_IObservableVector] {
+    fn add_VectorChanged(&self, vhnd: *mut VectorChangedEventHandler<T>, out: *mut super::EventRegistrationToken) -> HRESULT,
+    fn remove_VectorChanged(&self, token: super::EventRegistrationToken) -> HRESULT
+}}
+impl<T: RtType> IObservableVector<T> {
+    #[inline] pub unsafe fn add_vector_changed(&self, vhnd: &VectorChangedEventHandler<T>) -> Result<super::EventRegistrationToken> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_VectorChanged)(self as *const _ as *mut _, vhnd as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn remove_vector_changed(&self, token: super::EventRegistrationToken) -> Result<()> {
+        let hr = ((*self.lpVtbl).remove_VectorChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_IPropertySet, 2319707551, 62694, 17441, 172, 249, 29, 171, 41, 134, 130, 12);
+RT_INTERFACE!{interface IPropertySet(IPropertySetVtbl): IInspectable(IInspectableVtbl) [IID_IPropertySet] {
+    
+}}
+RT_CLASS!{class PropertySet: IPropertySet}
+impl RtActivatable<IActivationFactory> for PropertySet {}
+DEFINE_CLSID!(PropertySet(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,67,111,108,108,101,99,116,105,111,110,115,46,80,114,111,112,101,114,116,121,83,101,116,0]) [CLSID_PropertySet]);
+RT_CLASS!{class StringMap: IMap<HString, HString>}
+impl RtActivatable<IActivationFactory> for StringMap {}
+DEFINE_CLSID!(StringMap(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,67,111,108,108,101,99,116,105,111,110,115,46,83,116,114,105,110,103,77,97,112,0]) [CLSID_StringMap]);
+RT_CLASS!{class ValueSet: IPropertySet}
+impl RtActivatable<IActivationFactory> for ValueSet {}
+DEFINE_CLSID!(ValueSet(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,67,111,108,108,101,99,116,105,111,110,115,46,86,97,108,117,101,83,101,116,0]) [CLSID_ValueSet]);
 DEFINE_IID!(IID_IVector, 2436052969, 4513, 17221, 163, 162, 78, 127, 149, 110, 34, 45);
 RT_INTERFACE!{interface IVector<T>(IVectorVtbl): IInspectable(IInspectableVtbl) [IID_IVector] {
     fn GetAt(&self, index: u32, out: *mut T::Abi) -> HRESULT,
@@ -3185,95 +3430,21 @@ impl<T: RtType> IVector<T> {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-DEFINE_IID!(IID_IKeyValuePair, 45422889, 49604, 19070, 137, 64, 3, 18, 181, 193, 133, 0);
-RT_INTERFACE!{interface IKeyValuePair<K, V>(IKeyValuePairVtbl): IInspectable(IInspectableVtbl) [IID_IKeyValuePair] {
-    fn get_Key(&self, out: *mut K::Abi) -> HRESULT,
-    fn get_Value(&self, out: *mut V::Abi) -> HRESULT
+DEFINE_IID!(IID_IVectorChangedEventArgs, 1465463775, 13566, 17536, 175, 21, 7, 105, 31, 61, 93, 155);
+RT_INTERFACE!{interface IVectorChangedEventArgs(IVectorChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVectorChangedEventArgs] {
+    fn get_CollectionChange(&self, out: *mut CollectionChange) -> HRESULT,
+    fn get_Index(&self, out: *mut u32) -> HRESULT
 }}
-impl<K: RtType, V: RtType> IKeyValuePair<K, V> {
-    #[inline] pub unsafe fn get_key(&self) -> Result<K::Out> {
-        let mut out = K::uninitialized();
-        let hr = ((*self.lpVtbl).get_Key)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(K::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_value(&self) -> Result<V::Out> {
-        let mut out = V::uninitialized();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(V::wrap(out)) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IMap, 1009329662, 34073, 17857, 170, 121, 25, 123, 103, 24, 193, 193);
-RT_INTERFACE!{interface IMap<K, V>(IMapVtbl): IInspectable(IInspectableVtbl) [IID_IMap] {
-    fn Lookup(&self, key: K::Abi, out: *mut V::Abi) -> HRESULT,
-    fn get_Size(&self, out: *mut u32) -> HRESULT,
-    fn HasKey(&self, key: K::Abi, out: *mut bool) -> HRESULT,
-    fn GetView(&self, out: *mut *mut IMapView<K, V>) -> HRESULT,
-    fn Insert(&self, key: K::Abi, value: V::Abi, out: *mut bool) -> HRESULT,
-    fn Remove(&self, key: K::Abi) -> HRESULT,
-    fn Clear(&self) -> HRESULT
-}}
-impl<K: RtType, V: RtType> IMap<K, V> {
-    #[inline] pub unsafe fn lookup(&self, key: &K::In) -> Result<V::Out> {
-        let mut out = V::uninitialized();
-        let hr = ((*self.lpVtbl).Lookup)(self as *const _ as *mut _, K::unwrap(key), &mut out);
-        if hr == S_OK { Ok(V::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_size(&self) -> Result<u32> {
+impl IVectorChangedEventArgs {
+    #[inline] pub unsafe fn get_collection_change(&self) -> Result<CollectionChange> {
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_CollectionChange)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn has_key(&self, key: &K::In) -> Result<bool> {
+    #[inline] pub unsafe fn get_index(&self) -> Result<u32> {
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).HasKey)(self as *const _ as *mut _, K::unwrap(key), &mut out);
+        let hr = ((*self.lpVtbl).get_Index)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_view(&self) -> Result<ComPtr<IMapView<K, V>>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn insert(&self, key: &K::In, value: &V::In) -> Result<bool> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).Insert)(self as *const _ as *mut _, K::unwrap(key), V::unwrap(value), &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn remove(&self, key: &K::In) -> Result<()> {
-        let hr = ((*self.lpVtbl).Remove)(self as *const _ as *mut _, K::unwrap(key));
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn clear(&self) -> Result<()> {
-        let hr = ((*self.lpVtbl).Clear)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IMapView, 3833646656, 41784, 19162, 173, 207, 39, 34, 114, 228, 140, 185);
-RT_INTERFACE!{interface IMapView<K, V>(IMapViewVtbl): IInspectable(IInspectableVtbl) [IID_IMapView] {
-    fn Lookup(&self, key: K::Abi, out: *mut V::Abi) -> HRESULT,
-    fn get_Size(&self, out: *mut u32) -> HRESULT,
-    fn HasKey(&self, key: K::Abi, out: *mut bool) -> HRESULT,
-    fn Split(&self, first: *mut *mut IMapView<K, V>, second: *mut *mut IMapView<K, V>) -> HRESULT
-}}
-impl<K: RtType, V: RtType> IMapView<K, V> {
-    #[inline] pub unsafe fn lookup(&self, key: &K::In) -> Result<V::Out> {
-        let mut out = V::uninitialized();
-        let hr = ((*self.lpVtbl).Lookup)(self as *const _ as *mut _, K::unwrap(key), &mut out);
-        if hr == S_OK { Ok(V::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_size(&self) -> Result<u32> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn has_key(&self, key: &K::In) -> Result<bool> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).HasKey)(self as *const _ as *mut _, K::unwrap(key), &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn split(&self) -> Result<(ComPtr<IMapView<K, V>>, ComPtr<IMapView<K, V>>)> {
-        let mut first = null_mut(); let mut second = null_mut();
-        let hr = ((*self.lpVtbl).Split)(self as *const _ as *mut _, &mut first, &mut second);
-        if hr == S_OK { Ok((ComPtr::wrap(first), ComPtr::wrap(second))) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_VectorChangedEventHandler, 201660242, 40895, 19568, 170, 12, 14, 76, 130, 217, 167, 97);
@@ -3286,63 +3457,34 @@ impl<T: RtType> VectorChangedEventHandler<T> {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-DEFINE_IID!(IID_IObservableVector, 1494739795, 20660, 18957, 179, 9, 101, 134, 43, 63, 29, 188);
-RT_INTERFACE!{interface IObservableVector<T>(IObservableVectorVtbl): IInspectable(IInspectableVtbl) [IID_IObservableVector] {
-    fn add_VectorChanged(&self, vhnd: *mut VectorChangedEventHandler<T>, out: *mut super::EventRegistrationToken) -> HRESULT,
-    fn remove_VectorChanged(&self, token: super::EventRegistrationToken) -> HRESULT
+DEFINE_IID!(IID_IVectorView, 3152149068, 45283, 17795, 186, 239, 31, 27, 46, 72, 62, 86);
+RT_INTERFACE!{interface IVectorView<T>(IVectorViewVtbl): IInspectable(IInspectableVtbl) [IID_IVectorView] {
+    fn GetAt(&self, index: u32, out: *mut T::Abi) -> HRESULT,
+    fn get_Size(&self, out: *mut u32) -> HRESULT,
+    fn IndexOf(&self, value: T::Abi, index: *mut u32, out: *mut bool) -> HRESULT,
+    fn GetMany(&self, startIndex: u32, itemsSize: u32, items: *mut T::Abi, out: *mut u32) -> HRESULT
 }}
-impl<T: RtType> IObservableVector<T> {
-    #[inline] pub unsafe fn add_vector_changed(&self, vhnd: &VectorChangedEventHandler<T>) -> Result<super::EventRegistrationToken> {
+impl<T: RtType> IVectorView<T> {
+    #[inline] pub unsafe fn get_at(&self, index: u32) -> Result<T::Out> {
+        let mut out = T::uninitialized();
+        let hr = ((*self.lpVtbl).GetAt)(self as *const _ as *mut _, index, &mut out);
+        if hr == S_OK { Ok(T::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_size(&self) -> Result<u32> {
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_VectorChanged)(self as *const _ as *mut _, vhnd as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_vector_changed(&self, token: super::EventRegistrationToken) -> Result<()> {
-        let hr = ((*self.lpVtbl).remove_VectorChanged)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
+    #[inline] pub unsafe fn index_of(&self, value: &T::In) -> Result<(u32, bool)> {
+        let mut index = zeroed(); let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IndexOf)(self as *const _ as *mut _, T::unwrap(value), &mut index, &mut out);
+        if hr == S_OK { Ok((index, out)) } else { err(hr) }
     }
-}
-DEFINE_IID!(IID_IMapChangedEventArgs, 2570712287, 1290, 19471, 170, 96, 119, 7, 95, 156, 71, 119);
-RT_INTERFACE!{interface IMapChangedEventArgs<K>(IMapChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMapChangedEventArgs] {
-    fn get_CollectionChange(&self, out: *mut CollectionChange) -> HRESULT,
-    fn get_Key(&self, out: *mut K::Abi) -> HRESULT
-}}
-impl<K: RtType> IMapChangedEventArgs<K> {
-    #[inline] pub unsafe fn get_collection_change(&self) -> Result<CollectionChange> {
+    #[inline] pub unsafe fn get_many(&self, startIndex: u32, items: &mut Vec<T::Out>) -> Result<()> {
+        debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CollectionChange)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_key(&self) -> Result<K::Out> {
-        let mut out = K::uninitialized();
-        let hr = ((*self.lpVtbl).get_Key)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(K::wrap(out)) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_MapChangedEventHandler, 395646963, 38126, 16888, 189, 220, 118, 138, 137, 85, 68, 243);
-RT_DELEGATE!{delegate MapChangedEventHandler<K, V>(MapChangedEventHandlerVtbl, MapChangedEventHandlerImpl) [IID_MapChangedEventHandler] {
-    fn Invoke(&self, sender: *mut IObservableMap<K, V>, event: *mut IMapChangedEventArgs<K>) -> HRESULT
-}}
-impl<K: RtType, V: RtType> MapChangedEventHandler<K, V> {
-    #[inline] pub unsafe fn invoke(&self, sender: &IObservableMap<K, V>, event: &IMapChangedEventArgs<K>) -> Result<()> {
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, event as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IObservableMap, 1709124597, 48953, 16821, 174, 188, 90, 157, 134, 94, 71, 43);
-RT_INTERFACE!{interface IObservableMap<K, V>(IObservableMapVtbl): IInspectable(IInspectableVtbl) [IID_IObservableMap] {
-    fn add_MapChanged(&self, vhnd: *mut MapChangedEventHandler<K, V>, out: *mut super::EventRegistrationToken) -> HRESULT,
-    fn remove_MapChanged(&self, token: super::EventRegistrationToken) -> HRESULT
-}}
-impl<K: RtType, V: RtType> IObservableMap<K, V> {
-    #[inline] pub unsafe fn add_map_changed(&self, vhnd: &MapChangedEventHandler<K, V>) -> Result<super::EventRegistrationToken> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MapChanged)(self as *const _ as *mut _, vhnd as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn remove_map_changed(&self, token: super::EventRegistrationToken) -> Result<()> {
-        let hr = ((*self.lpVtbl).remove_MapChanged)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
+        let hr = ((*self.lpVtbl).GetMany)(self as *const _ as *mut _, startIndex, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
+        if hr == S_OK { items.set_len(out as usize); Ok(()) } else { err(hr) }
     }
 }
 RT_PINTERFACE!{ for IIterable<bool> => [0x30160817,0x1d7d,0x54e9,0x99,0xdb,0xd7,0x63,0x62,0x66,0xa4,0x76] as IID_IIterable_1_System_Boolean }
@@ -3391,6 +3533,7 @@ RT_PINTERFACE!{ for IIterable<IKeyValuePair<IInspectable, IInspectable>> => [0x3
 RT_PINTERFACE!{ for IIterable<IMapView<HString, IInspectable>> => [0xe1670fae,0x49cd,0x5c47,0xa8,0xc8,0xf6,0xfa,0x2c,0x65,0x0c,0x6c] as IID_IIterable_1_Windows_Foundation_Collections_IMapView_2_System_String_System_Object }
 RT_PINTERFACE!{ for IIterable<super::DateTime> => [0x576a207d,0x977c,0x5b36,0xb5,0x4d,0x62,0x4e,0xc8,0x6c,0x53,0xa3] as IID_IIterable_1_Windows_Foundation_DateTime }
 RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0xc5,0x67,0xb8,0x3e,0xbd,0xe4,0x1d] as IID_IIterable_1_Windows_Foundation_Point }
+RT_PINTERFACE!{ for IIterable<super::Size> => [0xc9df55c3,0x4d41,0x5e90,0xba,0x76,0xe8,0x9e,0xd5,0x64,0x44,0x6b] as IID_IIterable_1_Windows_Foundation_Size }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IIterable<super::super::applicationmodel::appextensions::AppExtension> => [0x3b4fe356,0x1b13,0x59cb,0xab,0x1f,0xc4,0x66,0x7a,0x74,0x75,0x6b] as IID_IIterable_1_Windows_ApplicationModel_AppExtensions_AppExtension }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IIterable<super::super::applicationmodel::AppInfo> => [0x63d0bffe,0x0e34,0x55b3,0x83,0xd5,0x31,0x4c,0xaf,0xf2,0xb1,0x37] as IID_IIterable_1_Windows_ApplicationModel_AppInfo }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IIterable<super::super::applicationmodel::appointments::Appointment> => [0xb9802bba,0xff53,0x5d37,0x8c,0xd7,0xe5,0x61,0x62,0xf1,0x21,0x56] as IID_IIterable_1_Windows_ApplicationModel_Appointments_Appointment }
@@ -3504,9 +3647,11 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::geolocation::Geopath> => [0x246fcfbd,0xa881,0x5e8e,0x99,0x08,0xc1,0xb9,0xeb,0xdf,0xec,0x78] as IID_IIterable_1_Windows_Devices_Geolocation_Geopath }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::geolocation::Geopoint> => [0xe7617fc9,0x2cc7,0x5bd1,0xbc,0x5a,0xf4,0x72,0x60,0x83,0x4e,0xd8] as IID_IIterable_1_Windows_Devices_Geolocation_Geopoint }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::geolocation::Geoposition> => [0x135ed72d,0x75b1,0x5881,0xbe,0x41,0x6f,0xfe,0xaa,0x20,0x20,0x44] as IID_IIterable_1_Windows_Devices_Geolocation_Geoposition }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::geolocation::Geovisit> => [0xd5800189,0x0f3f,0x54a0,0xa7,0x49,0x60,0x00,0xc1,0xe1,0x2e,0x58] as IID_IIterable_1_Windows_Devices_Geolocation_Geovisit }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::gpio::GpioChangeRecord> => [0xb4afbf4f,0x620e,0x5725,0x87,0x8a,0x78,0xc6,0xed,0x10,0x37,0x4e] as IID_IIterable_1_Windows_Devices_Gpio_GpioChangeRecord }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::gpio::GpioController> => [0x415c3794,0xb2b6,0x5f5c,0x9a,0x05,0xae,0x92,0x68,0x51,0x47,0x26] as IID_IIterable_1_Windows_Devices_Gpio_GpioController }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::gpio::provider::IGpioControllerProvider> => [0x09212bd4,0x851b,0x52bd,0xb8,0x2c,0x42,0x1b,0xf3,0xd6,0xf5,0x11] as IID_IIterable_1_Windows_Devices_Gpio_Provider_IGpioControllerProvider }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::haptics::SimpleHapticsController> => [0xb50da692,0x4a2b,0x5c8a,0x8e,0x14,0x04,0x39,0xc0,0xb1,0xdb,0xa4] as IID_IIterable_1_Windows_Devices_Haptics_SimpleHapticsController }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::haptics::SimpleHapticsControllerFeedback> => [0x8894a0df,0x33b0,0x57b0,0xaa,0x1a,0x92,0x55,0xee,0xe7,0x2d,0xd5] as IID_IIterable_1_Windows_Devices_Haptics_SimpleHapticsControllerFeedback }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::haptics::VibrationDevice> => [0x1a40c994,0x8810,0x5688,0x93,0x62,0xc4,0xbb,0x51,0x01,0x85,0x52] as IID_IIterable_1_Windows_Devices_Haptics_VibrationDevice }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::humaninterfacedevice::HidBooleanControl> => [0x1111e585,0x5ab0,0x5d2b,0x8a,0xed,0xb6,0xd6,0x18,0x6d,0x1c,0x3f] as IID_IIterable_1_Windows_Devices_HumanInterfaceDevice_HidBooleanControl }
@@ -3532,6 +3677,17 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::sensors::PedometerReading> => [0xbbb61a5c,0x98c3,0x5718,0x88,0xfe,0x53,0x92,0xa7,0x45,0x1e,0x2d] as IID_IIterable_1_Windows_Devices_Sensors_PedometerReading }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::sensors::ProximitySensorReading> => [0x301ebccf,0x11ab,0x5e90,0x98,0xee,0xbd,0x99,0xc0,0xe3,0xbb,0x76] as IID_IIterable_1_Windows_Devices_Sensors_ProximitySensorReading }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::smartcards::SmartCard> => [0xa32c5202,0xd113,0x535f,0x88,0x0e,0x50,0xf3,0xe5,0x12,0x1e,0xf8] as IID_IIterable_1_Windows_Devices_SmartCards_SmartCard }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::smartcards::SmartCardAppletIdGroupRegistration> => [0x4d153aad,0x915c,0x59c9,0x98,0xb9,0xa9,0x7b,0xf3,0xa5,0x70,0xad] as IID_IIterable_1_Windows_Devices_SmartCards_SmartCardAppletIdGroupRegistration }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::smartcards::SmartCardAutomaticResponseApdu> => [0xdb52d376,0x027e,0x5270,0xa4,0x57,0xfb,0x8b,0x4a,0xe8,0x95,0x8c] as IID_IIterable_1_Windows_Devices_SmartCards_SmartCardAutomaticResponseApdu }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::smartcards::SmartCardCryptogramAlgorithm> => [0x8e0de0e9,0x0742,0x559e,0x9b,0x1b,0x46,0x02,0x68,0x62,0x2c,0x1f] as IID_IIterable_1_Windows_Devices_SmartCards_SmartCardCryptogramAlgorithm }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::smartcards::SmartCardCryptogramMaterialCharacteristics> => [0x92058349,0xb443,0x52d8,0x8e,0x46,0x9c,0xf3,0x81,0x5d,0xd1,0x5a] as IID_IIterable_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialCharacteristics }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::smartcards::SmartCardCryptogramMaterialPackageCharacteristics> => [0xab1dac61,0x1bd9,0x54a6,0xb4,0x07,0x1d,0xc4,0xe5,0xb1,0xa1,0x97] as IID_IIterable_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialPackageCharacteristics }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::smartcards::SmartCardCryptogramMaterialPackageConfirmationResponseFormat> => [0xc40c4451,0x4ebb,0x5635,0x9c,0x7d,0x33,0xc8,0xc5,0xd3,0x7a,0x09] as IID_IIterable_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialPackageConfirmationResponseFormat }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::smartcards::SmartCardCryptogramMaterialPackageFormat> => [0x3e241acc,0x1745,0x57ce,0x93,0x68,0x21,0xba,0x21,0x30,0xc3,0xc1] as IID_IIterable_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialPackageFormat }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::smartcards::SmartCardCryptogramMaterialType> => [0x2d379f84,0x389c,0x5809,0xa2,0xc6,0x91,0x9b,0x47,0xca,0xab,0x88] as IID_IIterable_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialType }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::smartcards::SmartCardCryptogramPlacementStep> => [0x234ab631,0xed5f,0x51bc,0x8a,0x8a,0xd5,0xf3,0x49,0x5f,0x32,0xde] as IID_IIterable_1_Windows_Devices_SmartCards_SmartCardCryptogramPlacementStep }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::smartcards::SmartCardCryptogramStorageKeyCapabilities> => [0x983619f1,0x45b9,0x5557,0x98,0x00,0xea,0xa2,0xbc,0xa6,0xda,0x57] as IID_IIterable_1_Windows_Devices_SmartCards_SmartCardCryptogramStorageKeyCapabilities }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::smartcards::SmartCardCryptogramStorageKeyCharacteristics> => [0x16d5cc89,0x2f6a,0x5779,0x8e,0xf8,0x2d,0x5a,0x20,0x07,0x81,0x50] as IID_IIterable_1_Windows_Devices_SmartCards_SmartCardCryptogramStorageKeyCharacteristics }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::sms::ISmsBinaryMessage> => [0x5678a6a5,0x4d5a,0x51c2,0xa1,0x33,0x4b,0x83,0xbf,0x25,0xd9,0x87] as IID_IIterable_1_Windows_Devices_Sms_ISmsBinaryMessage }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::sms::ISmsMessage> => [0xecabfd70,0x9601,0x5e38,0x83,0xcf,0xb1,0x04,0x60,0x22,0xa2,0x44] as IID_IIterable_1_Windows_Devices_Sms_ISmsMessage }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::sms::SmsBroadcastType> => [0x12276b75,0x173e,0x514b,0x98,0xf0,0x8a,0x79,0x27,0xa9,0x20,0x6c] as IID_IIterable_1_Windows_Devices_Sms_SmsBroadcastType }
@@ -3552,6 +3708,7 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::usb::UsbInterruptOutPipe> => [0xe61a011e,0x4abe,0x53f2,0x83,0xb3,0xed,0x4a,0x94,0x9d,0x2e,0x3f] as IID_IIterable_1_Windows_Devices_Usb_UsbInterruptOutPipe }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::wifi::WiFiAdapter> => [0xe0bc76c4,0x8d0c,0x53fc,0xbc,0xd4,0x22,0x8f,0x47,0x21,0x0a,0xce] as IID_IIterable_1_Windows_Devices_WiFi_WiFiAdapter }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::wifi::WiFiAvailableNetwork> => [0xf17484ea,0xc71e,0x5d3e,0xb7,0x4c,0x3a,0x0e,0x61,0xdd,0x9c,0x20] as IID_IIterable_1_Windows_Devices_WiFi_WiFiAvailableNetwork }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::wifi::WiFiWpsKind> => [0x41e16513,0xa8f2,0x55ed,0x9b,0xe4,0x56,0x65,0x16,0x7d,0x49,0xd7] as IID_IIterable_1_Windows_Devices_WiFi_WiFiWpsKind }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::wifidirect::services::WiFiDirectServiceConfigurationMethod> => [0xd9773b1a,0xa148,0x58bf,0x9c,0x4b,0xaf,0xea,0xc9,0xbe,0x3a,0xb4] as IID_IIterable_1_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceConfigurationMethod }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::wifidirect::WiFiDirectConfigurationMethod> => [0x794f12da,0x2dc6,0x5277,0x82,0xdc,0xb0,0x78,0x16,0x10,0x53,0x7b] as IID_IIterable_1_Windows_Devices_WiFiDirect_WiFiDirectConfigurationMethod }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterable<super::super::devices::wifidirect::WiFiDirectInformationElement> => [0x19c1ca4e,0x9561,0x5253,0x96,0xd9,0xdb,0xaf,0x28,0xd4,0x7d,0x89] as IID_IIterable_1_Windows_Devices_WiFiDirect_WiFiDirectInformationElement }
@@ -3572,9 +3729,12 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterable<super::super::graphics::display::core::HdmiDisplayMode> => [0x497e3d51,0x0ea1,0x5be0,0x8d,0xba,0x8f,0x7f,0x4c,0xe4,0xfb,0x33] as IID_IIterable_1_Windows_Graphics_Display_Core_HdmiDisplayMode }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterable<super::super::graphics::holographic::HolographicCamera> => [0xb2afd154,0x8db0,0x5bb2,0xad,0x7a,0x68,0x4a,0xfd,0x47,0x92,0x64] as IID_IIterable_1_Windows_Graphics_Holographic_HolographicCamera }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterable<super::super::graphics::holographic::HolographicCameraPose> => [0x92111aff,0x8dcc,0x538e,0xae,0x3d,0x31,0xfd,0x25,0x2a,0x0a,0xd5] as IID_IIterable_1_Windows_Graphics_Holographic_HolographicCameraPose }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterable<super::super::graphics::holographic::HolographicQuadLayer> => [0x84744661,0x94de,0x5866,0xa1,0x5d,0x9e,0xfb,0x19,0xa9,0x9a,0x54] as IID_IIterable_1_Windows_Graphics_Holographic_HolographicQuadLayer }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterable<super::super::graphics::imaging::BitmapCodecInformation> => [0x2b6bdb90,0xa4eb,0x5142,0xb5,0x82,0x3c,0xcb,0x1e,0xdc,0x57,0x89] as IID_IIterable_1_Windows_Graphics_Imaging_BitmapCodecInformation }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterable<super::super::graphics::imaging::BitmapPixelFormat> => [0xe924d9ed,0xa13e,0x5bdb,0x9e,0xd8,0x65,0xa1,0x47,0x4d,0xc2,0x74] as IID_IIterable_1_Windows_Graphics_Imaging_BitmapPixelFormat }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterable<super::super::graphics::imaging::ImageStream> => [0x034ea0c4,0xc20e,0x5c0c,0xba,0x31,0x64,0x21,0x2f,0x28,0xe6,0x50] as IID_IIterable_1_Windows_Graphics_Imaging_ImageStream }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterable<super::super::graphics::imaging::SoftwareBitmap> => [0x22d3a30f,0x0898,0x5e94,0x99,0xa3,0xaf,0xa5,0x95,0x1d,0xfc,0xd4] as IID_IIterable_1_Windows_Graphics_Imaging_SoftwareBitmap }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterable<super::super::graphics::printing::printticket::PrintTicketOption> => [0x5c7e6676,0x9046,0x5b6a,0x9e,0xb0,0xc6,0xa9,0x54,0xe8,0x22,0x6b] as IID_IIterable_1_Windows_Graphics_Printing_PrintTicket_PrintTicketOption }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterable<super::super::graphics::printing3d::Printing3DBaseMaterial> => [0x9a6bd130,0x6f22,0x559c,0xb9,0x2c,0x14,0xf9,0xf8,0xdd,0xda,0x47] as IID_IIterable_1_Windows_Graphics_Printing3D_Printing3DBaseMaterial }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterable<super::super::graphics::printing3d::Printing3DBaseMaterialGroup> => [0xc08f8e70,0xf6ef,0x5469,0x80,0x6a,0x7c,0xb6,0x01,0xdd,0xdb,0x67] as IID_IIterable_1_Windows_Graphics_Printing3D_Printing3DBaseMaterialGroup }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterable<super::super::graphics::printing3d::Printing3DColorMaterial> => [0xc77d4f28,0x7882,0x52b4,0xb3,0xc9,0x7d,0x58,0xc8,0x83,0x65,0x73] as IID_IIterable_1_Windows_Graphics_Printing3D_Printing3DColorMaterial }
@@ -3593,6 +3753,7 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for IIterable<super::super::management::deployment::PackageUserInformation> => [0x341348b9,0x52c8,0x5b57,0x9e,0x91,0xf1,0x9f,0x2a,0x05,0xb1,0x88] as IID_IIterable_1_Windows_Management_Deployment_PackageUserInformation }
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for IIterable<super::super::management::deployment::PackageVolume> => [0xa6199162,0xb163,0x56a1,0x99,0x80,0xdb,0x0c,0x3f,0x4e,0x92,0x84] as IID_IIterable_1_Windows_Management_Deployment_PackageVolume }
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for IIterable<super::super::management::MdmAlert> => [0xa0a617dc,0x210c,0x529f,0xb5,0xe9,0x29,0xae,0xce,0xeb,0xb5,0xa8] as IID_IIterable_1_Windows_Management_MdmAlert }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for IIterable<super::super::media::apprecording::AppRecordingSavedScreenshotInfo> => [0xdd170424,0x794d,0x5158,0xa9,0xaf,0x68,0x24,0x35,0x3f,0x91,0xb2] as IID_IIterable_1_Windows_Media_AppRecording_AppRecordingSavedScreenshotInfo }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IIterable<super::super::media::audio::AudioGraphConnection> => [0x96168d06,0xa51a,0x5480,0x94,0x03,0xfb,0xd7,0x63,0x1e,0x3b,0x3c] as IID_IIterable_1_Windows_Media_Audio_AudioGraphConnection }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IIterable<super::super::media::audio::EqualizerBand> => [0x6f76d148,0x023e,0x565a,0x9f,0x09,0x4a,0xd4,0xa3,0x2a,0xd7,0x4f] as IID_IIterable_1_Windows_Media_Audio_EqualizerBand }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IIterable<super::super::media::capture::AppBroadcastPlugIn> => [0xc531c5b0,0x0223,0x5c9e,0xa8,0xfb,0x20,0xf5,0x2e,0xa5,0x8d,0x75] as IID_IIterable_1_Windows_Media_Capture_AppBroadcastPlugIn }
@@ -3660,6 +3821,7 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IIterable<super::super::media::speechrecognition::SpeechRecognitionResult> => [0x0d9b7b48,0x98a1,0x5b22,0x9a,0x66,0x6f,0x81,0x2f,0x59,0x47,0xaa] as IID_IIterable_1_Windows_Media_SpeechRecognition_SpeechRecognitionResult }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IIterable<super::super::media::speechsynthesis::VoiceInformation> => [0x3c33bb52,0xbd98,0x5c8c,0xad,0xee,0xee,0x8d,0xa0,0x62,0x8e,0xfc] as IID_IIterable_1_Windows_Media_SpeechSynthesis_VoiceInformation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::backgroundtransfer::BackgroundTransferContentPart> => [0xcf303199,0xde3b,0x5dac,0xa7,0x03,0x6c,0x57,0xd8,0x08,0x21,0xc4] as IID_IIterable_1_Windows_Networking_BackgroundTransfer_BackgroundTransferContentPart }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::backgroundtransfer::BackgroundTransferFileRange> => [0x2cc2d499,0x974c,0x5078,0x89,0xae,0x2d,0x4e,0xe1,0x13,0x97,0x21] as IID_IIterable_1_Windows_Networking_BackgroundTransfer_BackgroundTransferFileRange }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::backgroundtransfer::DownloadOperation> => [0xf6fd69cb,0xe6e7,0x56d5,0x9b,0xe6,0xe0,0xdc,0x46,0x83,0xfa,0x80] as IID_IIterable_1_Windows_Networking_BackgroundTransfer_DownloadOperation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::backgroundtransfer::UploadOperation> => [0x79778799,0x38cc,0x5b67,0x9c,0xd0,0x04,0x3f,0xc4,0x7a,0x9e,0xf7] as IID_IIterable_1_Windows_Networking_BackgroundTransfer_UploadOperation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::connectivity::AttributedNetworkUsage> => [0xd061dcb9,0x6854,0x5ef9,0x8e,0x03,0x00,0x8a,0x7a,0x70,0x4c,0x48] as IID_IIterable_1_Windows_Networking_Connectivity_AttributedNetworkUsage }
@@ -3667,8 +3829,15 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::connectivity::ConnectivityInterval> => [0x58051a8b,0xb259,0x5414,0x9b,0x9a,0xca,0xa0,0x78,0x9e,0x83,0x3e] as IID_IIterable_1_Windows_Networking_Connectivity_ConnectivityInterval }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::connectivity::LanIdentifier> => [0xaccef3cd,0x5d92,0x5c01,0x8a,0xc4,0x79,0xfe,0x74,0xcd,0x73,0x3e] as IID_IIterable_1_Windows_Networking_Connectivity_LanIdentifier }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::connectivity::NetworkUsage> => [0xdd2656b1,0x8360,0x5772,0xb2,0x72,0xc4,0x7f,0x7f,0x0f,0xc7,0xa6] as IID_IIterable_1_Windows_Networking_Connectivity_NetworkUsage }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::connectivity::ProviderNetworkUsage> => [0xf79bc7ba,0x01df,0x51ec,0xbf,0xaf,0xfd,0x88,0x3f,0x69,0x8e,0x07] as IID_IIterable_1_Windows_Networking_Connectivity_ProviderNetworkUsage }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::EndpointPair> => [0xd7ec83c4,0xa17b,0x51bf,0x89,0x97,0xaa,0x33,0xb9,0x10,0x2d,0xc9] as IID_IIterable_1_Windows_Networking_EndpointPair }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::HostName> => [0x9e5f3ed0,0xcf1c,0x5d38,0x83,0x2c,0xac,0xea,0x61,0x64,0xbf,0x5c] as IID_IIterable_1_Windows_Networking_HostName }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::networkoperators::MobileBroadbandAntennaSar> => [0xfd66b9ac,0x40dc,0x5ac7,0xaa,0xf1,0x2d,0x34,0x03,0xe5,0xfc,0xbb] as IID_IIterable_1_Windows_Networking_NetworkOperators_MobileBroadbandAntennaSar }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::networkoperators::MobileBroadbandCellCdma> => [0x46e83a22,0x4c40,0x5f27,0xbb,0xcd,0x25,0x5d,0xfd,0x97,0xea,0x93] as IID_IIterable_1_Windows_Networking_NetworkOperators_MobileBroadbandCellCdma }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::networkoperators::MobileBroadbandCellGsm> => [0x83e5eae8,0x3887,0x599e,0xbe,0xbf,0x8c,0x51,0x36,0x2d,0xb4,0x4c] as IID_IIterable_1_Windows_Networking_NetworkOperators_MobileBroadbandCellGsm }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::networkoperators::MobileBroadbandCellLte> => [0x45d961d3,0xe228,0x5afd,0xb1,0x8c,0xd4,0xcf,0xa3,0x90,0x34,0x32] as IID_IIterable_1_Windows_Networking_NetworkOperators_MobileBroadbandCellLte }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::networkoperators::MobileBroadbandCellTdscdma> => [0x6e1e543f,0x1cf0,0x5cb3,0xb3,0xfc,0xb5,0x59,0x21,0x3c,0x58,0xe2] as IID_IIterable_1_Windows_Networking_NetworkOperators_MobileBroadbandCellTdscdma }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::networkoperators::MobileBroadbandCellUmts> => [0x20392566,0x69cb,0x5eda,0xb6,0x41,0x55,0x10,0xe7,0xed,0x1a,0x12] as IID_IIterable_1_Windows_Networking_NetworkOperators_MobileBroadbandCellUmts }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::networkoperators::MobileBroadbandDeviceServiceInformation> => [0x88511855,0x6fe6,0x5694,0x83,0xa7,0x99,0x1e,0x29,0x03,0x3d,0xe5] as IID_IIterable_1_Windows_Networking_NetworkOperators_MobileBroadbandDeviceServiceInformation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::networkoperators::MobileBroadbandNetworkRegistrationStateChange> => [0x0b90bb30,0x660c,0x51c6,0x9b,0x8c,0x31,0xdd,0x84,0x86,0xe1,0x0e] as IID_IIterable_1_Windows_Networking_NetworkOperators_MobileBroadbandNetworkRegistrationStateChange }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterable<super::super::networking::networkoperators::MobileBroadbandPinLockStateChange> => [0xaa4a8700,0x9943,0x59a3,0x86,0x47,0xd3,0x73,0xfd,0x5e,0x0e,0x2b] as IID_IIterable_1_Windows_Networking_NetworkOperators_MobileBroadbandPinLockStateChange }
@@ -3737,6 +3906,9 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterable<super::super::storage::bulkaccess::IStorageItemInformation> => [0x43bc252e,0xa3d6,0x5f00,0xa1,0x2c,0xb0,0x88,0xd3,0xb9,0x12,0xd4] as IID_IIterable_1_Windows_Storage_BulkAccess_IStorageItemInformation }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterable<super::super::storage::IStorageFile> => [0x76d43c7e,0xfd09,0x5908,0xa2,0xb9,0xa4,0x9b,0x48,0x48,0x29,0x4b] as IID_IIterable_1_Windows_Storage_IStorageFile }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterable<super::super::storage::IStorageItem> => [0xbb8b8418,0x65d1,0x544b,0xb0,0x83,0x6d,0x17,0x2f,0x56,0x8c,0x73] as IID_IIterable_1_Windows_Storage_IStorageItem }
+#[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterable<super::super::storage::provider::StorageProviderItemProperty> => [0x4584cb69,0xee26,0x59e0,0xb0,0x5d,0xc9,0xa7,0x85,0x1a,0x73,0x17] as IID_IIterable_1_Windows_Storage_Provider_StorageProviderItemProperty }
+#[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterable<super::super::storage::provider::StorageProviderItemPropertyDefinition> => [0x41e78b90,0x1a7f,0x5dab,0xa1,0x23,0x7d,0x5f,0x50,0x11,0xdf,0xeb] as IID_IIterable_1_Windows_Storage_Provider_StorageProviderItemPropertyDefinition }
+#[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterable<super::super::storage::provider::StorageProviderSyncRootInfo> => [0x62ba69a0,0xf65c,0x502c,0x97,0x82,0xb4,0xbc,0x25,0x19,0x4d,0x11] as IID_IIterable_1_Windows_Storage_Provider_StorageProviderSyncRootInfo }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterable<super::super::storage::search::IIndexableContent> => [0x4a6edbfe,0x0c41,0x5042,0xac,0x58,0xa8,0x85,0xa8,0xfc,0x79,0x28] as IID_IIterable_1_Windows_Storage_Search_IIndexableContent }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterable<super::super::storage::search::SortEntry> => [0x35aff6f9,0xef75,0x5280,0xbb,0x84,0xa2,0xbf,0x83,0x17,0xcf,0x35] as IID_IIterable_1_Windows_Storage_Search_SortEntry }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterable<super::super::storage::StorageFile> => [0x9ac00304,0x83ea,0x5688,0x87,0xb6,0xae,0x38,0xaa,0xb6,0x5d,0x0b] as IID_IIterable_1_Windows_Storage_StorageFile }
@@ -3746,6 +3918,8 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterable<super::super::storage::streams::IBuffer> => [0x902972bf,0xa984,0x5443,0xb1,0xc5,0x2f,0x04,0xa9,0x9e,0x1f,0xca] as IID_IIterable_1_Windows_Storage_Streams_IBuffer }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterable<super::super::storage::streams::IRandomAccessStream> => [0xba666a00,0x1555,0x5df4,0x81,0xa5,0x07,0xd2,0x3f,0x7f,0xfc,0xeb] as IID_IIterable_1_Windows_Storage_Streams_IRandomAccessStream }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IIterable<super::super::system::AppDiagnosticInfo> => [0x8118de8f,0x3ae3,0x55e1,0x80,0xa8,0x25,0x45,0x3c,0xdb,0xa8,0x94] as IID_IIterable_1_Windows_System_AppDiagnosticInfo }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for IIterable<super::super::system::AppResourceGroupBackgroundTaskReport> => [0x3e7dcbca,0x1804,0x5672,0xad,0x3b,0x58,0xd9,0x44,0xbb,0x04,0x4c] as IID_IIterable_1_Windows_System_AppResourceGroupBackgroundTaskReport }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for IIterable<super::super::system::AppResourceGroupInfo> => [0x8b640948,0xc0d3,0x5b7e,0xa9,0x9c,0x59,0x56,0x19,0x0d,0x54,0x08] as IID_IIterable_1_Windows_System_AppResourceGroupInfo }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IIterable<super::super::system::diagnostics::ProcessDiagnosticInfo> => [0x97b73627,0xb296,0x5076,0xb8,0xcd,0x6b,0xd8,0xa2,0x40,0xe9,0x66] as IID_IIterable_1_Windows_System_Diagnostics_ProcessDiagnosticInfo }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IIterable<super::super::system::diagnostics::tracereporting::PlatformDiagnosticTraceInfo> => [0xecb0c107,0xc97b,0x52fe,0xa5,0xe6,0xa3,0x3e,0x93,0x49,0x37,0x69] as IID_IIterable_1_Windows_System_Diagnostics_TraceReporting_PlatformDiagnosticTraceInfo }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IIterable<super::super::system::remotesystems::IRemoteSystemFilter> => [0x13966c92,0xa8de,0x50c0,0xb1,0x6b,0x00,0xc2,0xc4,0x8f,0x5f,0x37] as IID_IIterable_1_Windows_System_RemoteSystems_IRemoteSystemFilter }
@@ -3758,6 +3932,7 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterable<super::super::ui::Color> => [0x932eef5e,0x2c2f,0x5eae,0x92,0x9a,0x74,0xe9,0x73,0xb5,0x7c,0x27] as IID_IIterable_1_Windows_UI_Color }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterable<super::super::ui::composition::interactions::CompositionConditionalValue> => [0xb268447b,0xf519,0x5ce5,0x89,0xcd,0xb7,0xe1,0xbc,0x56,0x52,0xee] as IID_IIterable_1_Windows_UI_Composition_Interactions_CompositionConditionalValue }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterable<super::super::ui::composition::interactions::InteractionTrackerInertiaModifier> => [0x9a245c40,0xaae6,0x59fb,0x87,0xf5,0x4b,0xb0,0x55,0x99,0xf0,0xb1] as IID_IIterable_1_Windows_UI_Composition_Interactions_InteractionTrackerInertiaModifier }
+#[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterable<super::super::ui::composition::interactions::InteractionTrackerVector2InertiaModifier> => [0x3aeacfd8,0xc7f1,0x580c,0xa2,0x3b,0x99,0x66,0x6e,0x42,0xe6,0x2b] as IID_IIterable_1_Windows_UI_Composition_Interactions_InteractionTrackerVector2InertiaModifier }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterable<super::super::ui::core::animationmetrics::IPropertyAnimation> => [0xc75f1bd1,0xa3c1,0x5881,0x9d,0xa0,0x1e,0xcd,0xb8,0xe5,0x1b,0xc3] as IID_IIterable_1_Windows_UI_Core_AnimationMetrics_IPropertyAnimation }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterable<super::super::ui::input::inking::analysis::IInkAnalysisNode> => [0x784f069e,0xbadd,0x5258,0xbd,0x8f,0x42,0xce,0x20,0x5c,0xc9,0x5a] as IID_IIterable_1_Windows_UI_Input_Inking_Analysis_IInkAnalysisNode }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterable<super::super::ui::input::inking::InkPoint> => [0x0630c0ef,0xa4e2,0x5af6,0xb2,0xe9,0x8e,0x04,0x2e,0x29,0x4e,0x17] as IID_IIterable_1_Windows_UI_Input_Inking_InkPoint }
@@ -3785,6 +3960,7 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterable<super::super::ui::startscreen::SecondaryTile> => [0x75651af0,0x014a,0x5593,0xbc,0x48,0x83,0x6b,0xa3,0xd1,0xd5,0xd4] as IID_IIterable_1_Windows_UI_StartScreen_SecondaryTile }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterable<super::super::ui::startscreen::SecondaryTileVisualElements> => [0x6ef7c354,0xf153,0x5b53,0x99,0xc2,0xe0,0x45,0xc7,0x8c,0xce,0x08] as IID_IIterable_1_Windows_UI_StartScreen_SecondaryTileVisualElements }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterable<super::super::ui::text::core::CoreTextCompositionSegment> => [0x38372bd2,0xd3fe,0x5ad2,0x9d,0x39,0xd1,0x66,0xb6,0x8e,0x78,0xe7] as IID_IIterable_1_Windows_UI_Text_Core_CoreTextCompositionSegment }
+#[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterable<super::super::ui::viewmanagement::core::CoreInputViewOcclusion> => [0x0a11958b,0x63da,0x5566,0x91,0x3a,0x18,0x05,0x50,0xda,0xd2,0x6a] as IID_IIterable_1_Windows_UI_ViewManagement_Core_CoreInputViewOcclusion }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::automation::AutomationAnnotation> => [0xc6e210cb,0x1c7b,0x5e6a,0x93,0x6b,0x61,0xd4,0xe5,0x36,0xa2,0x91] as IID_IIterable_1_Windows_UI_Xaml_Automation_AutomationAnnotation }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::automation::peers::AutomationPeer> => [0x7f67a4e2,0x96e0,0x522b,0x87,0x10,0x14,0xc4,0x2d,0x83,0x4f,0x1e] as IID_IIterable_1_Windows_UI_Xaml_Automation_Peers_AutomationPeer }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::automation::peers::AutomationPeerAnnotation> => [0xdd28ff94,0xd11e,0x5ae7,0xb8,0x19,0x61,0x77,0xc1,0x59,0x93,0x13] as IID_IIterable_1_Windows_UI_Xaml_Automation_Peers_AutomationPeerAnnotation }
@@ -3793,6 +3969,7 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::controls::HubSection> => [0x558c4082,0x463a,0x5c3d,0xb5,0x1e,0x10,0x92,0x1b,0x4a,0x4d,0x6c] as IID_IIterable_1_Windows_UI_Xaml_Controls_HubSection }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::controls::ICommandBarElement> => [0xd4c5a8e7,0x0d5e,0x5922,0xa7,0xb4,0x59,0xb5,0xe6,0x34,0xd3,0x35] as IID_IIterable_1_Windows_UI_Xaml_Controls_ICommandBarElement }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::controls::maps::MapElement> => [0x81d25c25,0xa4b3,0x5d0d,0x92,0xab,0x26,0x36,0x0c,0x2a,0x7f,0xac] as IID_IIterable_1_Windows_UI_Xaml_Controls_Maps_MapElement }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::controls::maps::MapLayer> => [0x508e2ce9,0x1984,0x5fc8,0xa4,0x91,0x62,0xe8,0x88,0x95,0x39,0xf4] as IID_IIterable_1_Windows_UI_Xaml_Controls_Maps_MapLayer }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::controls::maps::MapRouteView> => [0x090ad4b3,0x8fce,0x502d,0x86,0x65,0x18,0x65,0x0c,0x51,0xbe,0xa9] as IID_IIterable_1_Windows_UI_Xaml_Controls_Maps_MapRouteView }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::controls::maps::MapStyleSheet> => [0x05483d88,0x841c,0x5a0e,0xb9,0xc7,0x5d,0x82,0x8d,0x9f,0x2a,0xff] as IID_IIterable_1_Windows_UI_Xaml_Controls_Maps_MapStyleSheet }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::controls::maps::MapTileSource> => [0x6d8a73f7,0xabd7,0x56c4,0x99,0xa7,0x06,0xc1,0xfa,0x77,0xdc,0xd2] as IID_IIterable_1_Windows_UI_Xaml_Controls_Maps_MapTileSource }
@@ -3804,7 +3981,10 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::DependencyObject> => [0xf66c6bd3,0x55b4,0x5bbb,0xb8,0x2a,0x6d,0x9c,0xe3,0x83,0x09,0x1a] as IID_IIterable_1_Windows_UI_Xaml_DependencyObject }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::documents::Block> => [0xf7023b9a,0xe6d1,0x5e2d,0x8f,0x41,0xb2,0x8c,0x33,0x32,0x3e,0x04] as IID_IIterable_1_Windows_UI_Xaml_Documents_Block }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::documents::Inline> => [0xe1d2b910,0x18c2,0x5906,0x8f,0x8a,0xd6,0x2a,0x63,0xf9,0x3f,0x18] as IID_IIterable_1_Windows_UI_Xaml_Documents_Inline }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::documents::TextHighlighter> => [0x4d7e043f,0x6697,0x599a,0xa1,0x3b,0x8d,0xde,0x71,0xd5,0x53,0x7d] as IID_IIterable_1_Windows_UI_Xaml_Documents_TextHighlighter }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::documents::TextRange> => [0x2ad42fdb,0x56db,0x500b,0x8e,0xa8,0x3d,0x57,0xed,0xfa,0xdf,0xc6] as IID_IIterable_1_Windows_UI_Xaml_Documents_TextRange }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::input::InputScopeName> => [0x81416296,0x95d0,0x5100,0xb5,0x9b,0xbe,0xa1,0xc2,0x7d,0x20,0x02] as IID_IIterable_1_Windows_UI_Xaml_Input_InputScopeName }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::input::KeyboardAccelerator> => [0xaf1e5ff1,0xd518,0x5521,0xb4,0x0e,0x6f,0x52,0x4d,0x04,0xc1,0x29] as IID_IIterable_1_Windows_UI_Xaml_Input_KeyboardAccelerator }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::input::Pointer> => [0x6cf9f859,0x2234,0x510d,0x86,0x0a,0xdb,0x32,0x80,0x30,0xcb,0xcc] as IID_IIterable_1_Windows_UI_Xaml_Input_Pointer }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::media::animation::ColorKeyFrame> => [0x1859dd08,0x582d,0x51dc,0x82,0xa1,0x46,0x61,0x11,0xca,0xf9,0x44] as IID_IIterable_1_Windows_UI_Xaml_Media_Animation_ColorKeyFrame }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterable<super::super::ui::xaml::media::animation::DoubleKeyFrame> => [0x5f1676da,0xa405,0x5b7a,0xba,0xf1,0x96,0x8d,0xe4,0x39,0x1f,0xb7] as IID_IIterable_1_Windows_UI_Xaml_Media_Animation_DoubleKeyFrame }
@@ -3840,6 +4020,7 @@ RT_PINTERFACE!{ for IIterable<super::Point> => [0xc192280d,0x3a09,0x5423,0x9d,0x
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IIterable<super::super::web::syndication::SyndicationItem> => [0x55463eef,0xecb8,0x59cd,0x8d,0x6b,0x74,0xda,0xac,0xbe,0x7d,0x19] as IID_IIterable_1_Windows_Web_Syndication_SyndicationItem }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IIterable<super::super::web::syndication::SyndicationLink> => [0xc6919f6a,0x66d9,0x556a,0x96,0x32,0x87,0xd3,0x9a,0xf1,0x46,0x38] as IID_IIterable_1_Windows_Web_Syndication_SyndicationLink }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IIterable<super::super::web::syndication::SyndicationPerson> => [0xe58e7844,0xeb34,0x5284,0xb0,0x9e,0xde,0x67,0x62,0xd5,0x48,0xca] as IID_IIterable_1_Windows_Web_Syndication_SyndicationPerson }
+#[cfg(feature="windows-web")] RT_PINTERFACE!{ for IIterable<super::super::web::WebErrorStatus> => [0x7b7f182e,0xa6ce,0x556b,0x9a,0x2e,0xef,0x97,0x66,0x2f,0x2a,0xee] as IID_IIterable_1_Windows_Web_WebErrorStatus }
 RT_PINTERFACE!{ for IIterable<super::TimeSpan> => [0xe9f78726,0x829a,0x5f67,0x8d,0x19,0x95,0xef,0x15,0x4b,0x77,0x42] as IID_IIterable_1_Windows_Foundation_TimeSpan }
 RT_PINTERFACE!{ for IIterable<super::Uri> => [0xb0d63b78,0x78ad,0x5e31,0xb6,0xd8,0xe3,0x2a,0x0e,0x16,0xc4,0x47] as IID_IIterable_1_Windows_Foundation_Uri }
 RT_PINTERFACE!{ for IIterable<u32> => [0x421d4b91,0xb13b,0x5f37,0xae,0x54,0xb5,0x24,0x9b,0xd8,0x05,0x39] as IID_IIterable_1_System_UInt32 }
@@ -3891,6 +4072,7 @@ RT_PINTERFACE!{ for IIterator<IKeyValuePair<IInspectable, IInspectable>> => [0x3
 RT_PINTERFACE!{ for IIterator<IMapView<HString, IInspectable>> => [0x53a2e825,0x9bf1,0x5083,0x8a,0x7b,0x9d,0x94,0xf3,0x12,0xda,0xde] as IID_IIterator_1_Windows_Foundation_Collections_IMapView_2_System_String_System_Object }
 RT_PINTERFACE!{ for IIterator<super::DateTime> => [0xf56158df,0x8947,0x5480,0x96,0xed,0x36,0xc1,0x05,0x78,0x77,0xea] as IID_IIterator_1_Windows_Foundation_DateTime }
 RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x78,0x2b,0x56,0x45,0x85,0x27,0x8d] as IID_IIterator_1_Windows_Foundation_Point }
+RT_PINTERFACE!{ for IIterator<super::Size> => [0xa3508ee0,0x3527,0x5144,0x89,0x4d,0x42,0x2e,0xad,0xef,0x43,0xd7] as IID_IIterator_1_Windows_Foundation_Size }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IIterator<super::super::applicationmodel::appextensions::AppExtension> => [0x8e80ca83,0x3cd3,0x5f9c,0x83,0xe4,0x84,0x34,0x7c,0xa5,0x49,0x8c] as IID_IIterator_1_Windows_ApplicationModel_AppExtensions_AppExtension }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IIterator<super::super::applicationmodel::AppInfo> => [0x69cec62c,0x41eb,0x5d69,0xa4,0x75,0x29,0xee,0x22,0x32,0x3d,0xd8] as IID_IIterator_1_Windows_ApplicationModel_AppInfo }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IIterator<super::super::applicationmodel::appointments::Appointment> => [0x386a5922,0x49fc,0x53b6,0x8b,0xed,0x4c,0x9f,0xf9,0xfe,0x6e,0x01] as IID_IIterator_1_Windows_ApplicationModel_Appointments_Appointment }
@@ -4004,9 +4186,11 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::geolocation::Geopath> => [0xcf1d4402,0x4754,0x57e7,0xaa,0xe0,0x69,0xca,0x42,0xcb,0xd8,0xf2] as IID_IIterator_1_Windows_Devices_Geolocation_Geopath }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::geolocation::Geopoint> => [0x88225b39,0x8be9,0x5c03,0x97,0x14,0x8f,0x16,0x42,0xd8,0xa4,0x3f] as IID_IIterator_1_Windows_Devices_Geolocation_Geopoint }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::geolocation::Geoposition> => [0xa99b4206,0x263e,0x5308,0x82,0xf2,0x31,0x31,0x5c,0x65,0x13,0x5c] as IID_IIterator_1_Windows_Devices_Geolocation_Geoposition }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::geolocation::Geovisit> => [0xf525fc34,0xb058,0x5345,0x8e,0x28,0x3e,0x69,0xe5,0xf5,0x90,0x70] as IID_IIterator_1_Windows_Devices_Geolocation_Geovisit }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::gpio::GpioChangeRecord> => [0xa4c620b9,0xcb89,0x5a25,0xbf,0x16,0x5f,0x41,0x2c,0x1a,0x33,0x88] as IID_IIterator_1_Windows_Devices_Gpio_GpioChangeRecord }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::gpio::GpioController> => [0x67944db0,0x6c56,0x5a2f,0x9e,0x7b,0x63,0xca,0x1a,0xa8,0xc4,0x11] as IID_IIterator_1_Windows_Devices_Gpio_GpioController }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::gpio::provider::IGpioControllerProvider> => [0x6ac0edb9,0xe3c9,0x5840,0x8a,0xa8,0x1b,0xc4,0x53,0x66,0xf6,0xca] as IID_IIterator_1_Windows_Devices_Gpio_Provider_IGpioControllerProvider }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::haptics::SimpleHapticsController> => [0x3c501ba4,0xeda4,0x5238,0xbd,0xb7,0xd1,0x0b,0xa3,0x50,0xcd,0x83] as IID_IIterator_1_Windows_Devices_Haptics_SimpleHapticsController }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::haptics::SimpleHapticsControllerFeedback> => [0xb7d297d6,0x9666,0x5c9e,0x9d,0xcc,0x5c,0x38,0x2e,0xae,0x67,0x50] as IID_IIterator_1_Windows_Devices_Haptics_SimpleHapticsControllerFeedback }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::haptics::VibrationDevice> => [0x24e9b323,0xeef1,0x533f,0xad,0x38,0xde,0x8f,0xc8,0xca,0x56,0x92] as IID_IIterator_1_Windows_Devices_Haptics_VibrationDevice }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::humaninterfacedevice::HidBooleanControl> => [0x5cde3c23,0xd054,0x53d6,0xab,0xf1,0x41,0xe7,0x33,0x79,0xb4,0x72] as IID_IIterator_1_Windows_Devices_HumanInterfaceDevice_HidBooleanControl }
@@ -4032,6 +4216,17 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::sensors::PedometerReading> => [0x0ac70ed3,0x8553,0x5ef3,0x92,0xf8,0x43,0x86,0x09,0x62,0x30,0x87] as IID_IIterator_1_Windows_Devices_Sensors_PedometerReading }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::sensors::ProximitySensorReading> => [0x1d4f08df,0x7f49,0x573b,0x93,0x6a,0x6d,0x4d,0x4e,0x61,0x09,0x30] as IID_IIterator_1_Windows_Devices_Sensors_ProximitySensorReading }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::smartcards::SmartCard> => [0x86b29903,0x916e,0x5817,0xbc,0x96,0xdf,0x32,0x44,0x75,0xe3,0x1a] as IID_IIterator_1_Windows_Devices_SmartCards_SmartCard }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::smartcards::SmartCardAppletIdGroupRegistration> => [0xd3777a61,0x2106,0x505f,0xbc,0xfa,0xb3,0xcc,0x8e,0x14,0x12,0xe1] as IID_IIterator_1_Windows_Devices_SmartCards_SmartCardAppletIdGroupRegistration }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::smartcards::SmartCardAutomaticResponseApdu> => [0x78eb5c52,0x9dd2,0x5e35,0xa8,0x68,0xf6,0x49,0x19,0xeb,0xa6,0xb6] as IID_IIterator_1_Windows_Devices_SmartCards_SmartCardAutomaticResponseApdu }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::smartcards::SmartCardCryptogramAlgorithm> => [0x4f1e0492,0xdab2,0x53c3,0xb5,0xfb,0xc4,0xb4,0x37,0x3b,0x1e,0xc2] as IID_IIterator_1_Windows_Devices_SmartCards_SmartCardCryptogramAlgorithm }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::smartcards::SmartCardCryptogramMaterialCharacteristics> => [0xe2a912a1,0x6133,0x571c,0xb0,0xa9,0x2a,0xaa,0xb2,0x83,0xa0,0x7a] as IID_IIterator_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialCharacteristics }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::smartcards::SmartCardCryptogramMaterialPackageCharacteristics> => [0xb78e40b2,0x70f0,0x5e34,0xaa,0x8c,0xca,0x75,0xa1,0xb3,0xb1,0xbf] as IID_IIterator_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialPackageCharacteristics }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::smartcards::SmartCardCryptogramMaterialPackageConfirmationResponseFormat> => [0x9d1091ae,0xbe37,0x5be7,0x8e,0xdf,0x60,0xc5,0x16,0x48,0x80,0xb6] as IID_IIterator_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialPackageConfirmationResponseFormat }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::smartcards::SmartCardCryptogramMaterialPackageFormat> => [0x7bf75a02,0xee7e,0x513a,0x80,0xf8,0xf7,0xd8,0xf0,0x04,0xc9,0x07] as IID_IIterator_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialPackageFormat }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::smartcards::SmartCardCryptogramMaterialType> => [0x97e1414d,0x439a,0x5dc2,0x81,0xfc,0xd9,0x88,0xe3,0x2c,0x8d,0xab] as IID_IIterator_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialType }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::smartcards::SmartCardCryptogramPlacementStep> => [0x81a62a70,0x8acd,0x598c,0x8d,0x0a,0xa2,0x7d,0x23,0xe6,0xcb,0x1e] as IID_IIterator_1_Windows_Devices_SmartCards_SmartCardCryptogramPlacementStep }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::smartcards::SmartCardCryptogramStorageKeyCapabilities> => [0xc858d7a0,0xc54e,0x513c,0xa0,0x97,0xa4,0x2f,0xd3,0xd5,0x69,0xaf] as IID_IIterator_1_Windows_Devices_SmartCards_SmartCardCryptogramStorageKeyCapabilities }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::smartcards::SmartCardCryptogramStorageKeyCharacteristics> => [0xc65f0917,0x372c,0x5157,0x80,0xe2,0x2c,0xfb,0xd6,0x5e,0x8f,0xea] as IID_IIterator_1_Windows_Devices_SmartCards_SmartCardCryptogramStorageKeyCharacteristics }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::sms::ISmsBinaryMessage> => [0x13e60d89,0xea0a,0x5b01,0x9c,0x2f,0x0e,0x5b,0x43,0x50,0x58,0xe0] as IID_IIterator_1_Windows_Devices_Sms_ISmsBinaryMessage }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::sms::ISmsMessage> => [0xeed04f5c,0xb2b2,0x5c83,0x8b,0x13,0xc7,0x8a,0xf6,0xca,0x3a,0x18] as IID_IIterator_1_Windows_Devices_Sms_ISmsMessage }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::sms::SmsBroadcastType> => [0x6448ddea,0xc1cd,0x5143,0xa4,0x22,0x5f,0xe4,0xf0,0x08,0xcc,0x92] as IID_IIterator_1_Windows_Devices_Sms_SmsBroadcastType }
@@ -4052,6 +4247,7 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::usb::UsbInterruptOutPipe> => [0xcbd8d8a8,0x2286,0x5cbd,0xa6,0xe4,0x96,0x27,0x42,0xff,0xd9,0x1a] as IID_IIterator_1_Windows_Devices_Usb_UsbInterruptOutPipe }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::wifi::WiFiAdapter> => [0x144136c6,0xb502,0x5a52,0x90,0xfc,0x22,0xa0,0x93,0x18,0xf9,0x32] as IID_IIterator_1_Windows_Devices_WiFi_WiFiAdapter }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::wifi::WiFiAvailableNetwork> => [0x468677c4,0xebb9,0x5196,0x83,0x6d,0x72,0xfa,0xa9,0xfe,0x67,0x3e] as IID_IIterator_1_Windows_Devices_WiFi_WiFiAvailableNetwork }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::wifi::WiFiWpsKind> => [0x9b19593c,0x602d,0x57d9,0xa8,0x52,0xa4,0x8a,0x82,0x04,0xff,0x42] as IID_IIterator_1_Windows_Devices_WiFi_WiFiWpsKind }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::wifidirect::services::WiFiDirectServiceConfigurationMethod> => [0x19889f5e,0x49ae,0x5e31,0xb0,0x59,0x08,0x3f,0x9f,0x15,0x32,0xc3] as IID_IIterator_1_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceConfigurationMethod }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::wifidirect::WiFiDirectConfigurationMethod> => [0x201940f9,0xa368,0x57f4,0x9e,0xf2,0x3f,0x64,0xe2,0x43,0xe0,0xa4] as IID_IIterator_1_Windows_Devices_WiFiDirect_WiFiDirectConfigurationMethod }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IIterator<super::super::devices::wifidirect::WiFiDirectInformationElement> => [0xcf806026,0xc915,0x553e,0xaf,0x3c,0x8d,0xa4,0x38,0x71,0xb6,0x93] as IID_IIterator_1_Windows_Devices_WiFiDirect_WiFiDirectInformationElement }
@@ -4072,9 +4268,12 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterator<super::super::graphics::display::core::HdmiDisplayMode> => [0xd66eb831,0xe22c,0x5ee3,0xaf,0x45,0xe1,0xc0,0x3d,0xe4,0xbc,0x62] as IID_IIterator_1_Windows_Graphics_Display_Core_HdmiDisplayMode }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterator<super::super::graphics::holographic::HolographicCamera> => [0x6acc8576,0x2fea,0x561d,0x84,0xdd,0x4a,0x1a,0xb0,0x5f,0xc7,0xed] as IID_IIterator_1_Windows_Graphics_Holographic_HolographicCamera }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterator<super::super::graphics::holographic::HolographicCameraPose> => [0x93e27fb4,0x332b,0x591e,0xae,0x6b,0x61,0x92,0xfa,0x0a,0x10,0x09] as IID_IIterator_1_Windows_Graphics_Holographic_HolographicCameraPose }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterator<super::super::graphics::holographic::HolographicQuadLayer> => [0x85765170,0x495b,0x541c,0xae,0xf0,0x74,0x92,0x85,0x6d,0xe3,0xdf] as IID_IIterator_1_Windows_Graphics_Holographic_HolographicQuadLayer }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterator<super::super::graphics::imaging::BitmapCodecInformation> => [0x4ff2b2db,0x9326,0x537f,0xb8,0xdc,0x4c,0x93,0xd7,0x7f,0xbb,0x84] as IID_IIterator_1_Windows_Graphics_Imaging_BitmapCodecInformation }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterator<super::super::graphics::imaging::BitmapPixelFormat> => [0x7fc2e293,0x1084,0x5d45,0xb8,0xb8,0x93,0xe1,0x06,0x92,0xbc,0xc8] as IID_IIterator_1_Windows_Graphics_Imaging_BitmapPixelFormat }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterator<super::super::graphics::imaging::ImageStream> => [0x4a10752d,0x6b1a,0x5fec,0xa5,0x9c,0x70,0x38,0x9b,0xf1,0x62,0xa2] as IID_IIterator_1_Windows_Graphics_Imaging_ImageStream }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterator<super::super::graphics::imaging::SoftwareBitmap> => [0xcd12e4c3,0x8ca8,0x5be6,0xb6,0x4b,0x20,0x4a,0x01,0x4f,0xc6,0x20] as IID_IIterator_1_Windows_Graphics_Imaging_SoftwareBitmap }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterator<super::super::graphics::printing::printticket::PrintTicketOption> => [0xc92a35e2,0x829d,0x5adf,0x87,0x4e,0x4d,0x74,0x5b,0x4e,0xf0,0xaa] as IID_IIterator_1_Windows_Graphics_Printing_PrintTicket_PrintTicketOption }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterator<super::super::graphics::printing3d::Printing3DBaseMaterial> => [0xdad4dd0d,0x59ab,0x501f,0x9d,0x6b,0xa2,0x09,0xc7,0xd5,0x46,0x49] as IID_IIterator_1_Windows_Graphics_Printing3D_Printing3DBaseMaterial }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterator<super::super::graphics::printing3d::Printing3DBaseMaterialGroup> => [0xa34dc709,0xe2a7,0x5254,0x9d,0xc1,0xcd,0x47,0xe8,0x5e,0x25,0x04] as IID_IIterator_1_Windows_Graphics_Printing3D_Printing3DBaseMaterialGroup }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IIterator<super::super::graphics::printing3d::Printing3DColorMaterial> => [0x5a54a4a1,0x4d97,0x58d3,0xbd,0xcc,0x1b,0xf3,0x8b,0x43,0x8d,0x6d] as IID_IIterator_1_Windows_Graphics_Printing3D_Printing3DColorMaterial }
@@ -4093,6 +4292,7 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for IIterator<super::super::management::deployment::PackageUserInformation> => [0x75660566,0xae43,0x5858,0xad,0xa6,0xd5,0x7d,0xda,0xe9,0x02,0x77] as IID_IIterator_1_Windows_Management_Deployment_PackageUserInformation }
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for IIterator<super::super::management::deployment::PackageVolume> => [0xa8d5b736,0x4e68,0x5ef1,0x9f,0x07,0xf0,0x68,0x37,0x98,0x8c,0x73] as IID_IIterator_1_Windows_Management_Deployment_PackageVolume }
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for IIterator<super::super::management::MdmAlert> => [0xb4a6ebea,0xb19f,0x5da5,0xb3,0xd1,0xe8,0x59,0xf1,0xf4,0xdf,0x17] as IID_IIterator_1_Windows_Management_MdmAlert }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for IIterator<super::super::media::apprecording::AppRecordingSavedScreenshotInfo> => [0x3c407016,0x1940,0x5e2b,0x88,0x30,0xc5,0x4b,0xec,0xbb,0xe0,0xda] as IID_IIterator_1_Windows_Media_AppRecording_AppRecordingSavedScreenshotInfo }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IIterator<super::super::media::audio::AudioGraphConnection> => [0x4af6a8fc,0xe7fb,0x5957,0x91,0xc1,0x2d,0xf9,0x60,0x0b,0x22,0xeb] as IID_IIterator_1_Windows_Media_Audio_AudioGraphConnection }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IIterator<super::super::media::audio::EqualizerBand> => [0xeb4f8b6a,0x7928,0x5f2f,0xb7,0xf2,0x7b,0x90,0xc0,0x84,0x35,0x6f] as IID_IIterator_1_Windows_Media_Audio_EqualizerBand }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IIterator<super::super::media::capture::AppBroadcastPlugIn> => [0xcf667b1a,0x3bb9,0x57ce,0xa3,0x8b,0x1e,0x81,0x47,0x1f,0x8c,0xf8] as IID_IIterator_1_Windows_Media_Capture_AppBroadcastPlugIn }
@@ -4160,6 +4360,7 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IIterator<super::super::media::speechrecognition::SpeechRecognitionResult> => [0x20756dd2,0x6d3f,0x5409,0x84,0x6a,0x0f,0x0f,0x01,0xd7,0xbf,0x9a] as IID_IIterator_1_Windows_Media_SpeechRecognition_SpeechRecognitionResult }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IIterator<super::super::media::speechsynthesis::VoiceInformation> => [0x12d40a27,0xae8d,0x5fb0,0x8f,0xed,0x00,0x16,0x5d,0x59,0xc6,0xab] as IID_IIterator_1_Windows_Media_SpeechSynthesis_VoiceInformation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::backgroundtransfer::BackgroundTransferContentPart> => [0x07fbc351,0x781d,0x52c7,0x95,0x58,0xa4,0x53,0xe5,0x70,0x3f,0x29] as IID_IIterator_1_Windows_Networking_BackgroundTransfer_BackgroundTransferContentPart }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::backgroundtransfer::BackgroundTransferFileRange> => [0xa753d778,0x8cbb,0x524a,0xb8,0xc4,0x70,0xc5,0x15,0xa4,0x27,0x82] as IID_IIterator_1_Windows_Networking_BackgroundTransfer_BackgroundTransferFileRange }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::backgroundtransfer::DownloadOperation> => [0x2ab61055,0x2d0a,0x59cb,0x8c,0xbd,0x05,0x6f,0x2d,0x7f,0xb4,0x54] as IID_IIterator_1_Windows_Networking_BackgroundTransfer_DownloadOperation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::backgroundtransfer::UploadOperation> => [0xcaa85133,0x73d7,0x5f96,0xab,0x2d,0xfb,0xb4,0xfa,0x00,0xf7,0x15] as IID_IIterator_1_Windows_Networking_BackgroundTransfer_UploadOperation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::connectivity::AttributedNetworkUsage> => [0x4070c40f,0xab2f,0x56f2,0xb5,0x4c,0x82,0x32,0xae,0x86,0xaa,0xcd] as IID_IIterator_1_Windows_Networking_Connectivity_AttributedNetworkUsage }
@@ -4167,8 +4368,15 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::connectivity::ConnectivityInterval> => [0x741cea48,0x651c,0x5fd9,0x93,0x1e,0x4f,0x91,0xb5,0x21,0xe1,0x82] as IID_IIterator_1_Windows_Networking_Connectivity_ConnectivityInterval }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::connectivity::LanIdentifier> => [0x2c5d2f7e,0xce9c,0x5253,0xa0,0xf4,0x01,0xe5,0xbd,0xc1,0x19,0x88] as IID_IIterator_1_Windows_Networking_Connectivity_LanIdentifier }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::connectivity::NetworkUsage> => [0x5fafb57b,0x9c82,0x50a1,0x99,0x70,0x69,0xf9,0xcb,0x06,0x96,0x95] as IID_IIterator_1_Windows_Networking_Connectivity_NetworkUsage }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::connectivity::ProviderNetworkUsage> => [0xd7090752,0xab5f,0x506f,0x8f,0x15,0x56,0xb3,0x75,0x52,0xfb,0xea] as IID_IIterator_1_Windows_Networking_Connectivity_ProviderNetworkUsage }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::EndpointPair> => [0xc899ff9f,0xe6f5,0x5673,0x81,0x0c,0x04,0xe2,0xff,0x98,0x70,0x4f] as IID_IIterator_1_Windows_Networking_EndpointPair }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::HostName> => [0x557bf83c,0xa428,0x5dbd,0xa0,0xfe,0x05,0xf6,0xee,0x54,0x3d,0x45] as IID_IIterator_1_Windows_Networking_HostName }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::networkoperators::MobileBroadbandAntennaSar> => [0x03327f15,0xe40f,0x52d1,0xbb,0x6c,0xbe,0xbb,0xd8,0x15,0x51,0x34] as IID_IIterator_1_Windows_Networking_NetworkOperators_MobileBroadbandAntennaSar }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::networkoperators::MobileBroadbandCellCdma> => [0xb86379f2,0x5369,0x508f,0xa2,0xdf,0xde,0xb3,0xb7,0x2c,0x33,0x78] as IID_IIterator_1_Windows_Networking_NetworkOperators_MobileBroadbandCellCdma }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::networkoperators::MobileBroadbandCellGsm> => [0x8be60634,0x4021,0x5ac2,0xbd,0x8a,0xa9,0x69,0xb0,0x90,0xb5,0x8d] as IID_IIterator_1_Windows_Networking_NetworkOperators_MobileBroadbandCellGsm }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::networkoperators::MobileBroadbandCellLte> => [0x186b9d0b,0xef0c,0x540a,0x8f,0xe7,0x4d,0xbc,0x5c,0x1d,0x14,0xda] as IID_IIterator_1_Windows_Networking_NetworkOperators_MobileBroadbandCellLte }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::networkoperators::MobileBroadbandCellTdscdma> => [0xdd0aeb24,0x0efe,0x5548,0x84,0x48,0xe1,0x53,0xd4,0x90,0x3d,0xf7] as IID_IIterator_1_Windows_Networking_NetworkOperators_MobileBroadbandCellTdscdma }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::networkoperators::MobileBroadbandCellUmts> => [0xdc24cdb5,0x15f5,0x5a1d,0xa6,0x0b,0xae,0x12,0xf9,0xf4,0x2f,0x06] as IID_IIterator_1_Windows_Networking_NetworkOperators_MobileBroadbandCellUmts }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::networkoperators::MobileBroadbandDeviceServiceInformation> => [0xd8d776f6,0x4692,0x5461,0x91,0x55,0x81,0x6e,0x63,0xba,0xc8,0x74] as IID_IIterator_1_Windows_Networking_NetworkOperators_MobileBroadbandDeviceServiceInformation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::networkoperators::MobileBroadbandNetworkRegistrationStateChange> => [0x9cb0f858,0xe589,0x57a7,0x9d,0x01,0x2c,0x62,0x91,0x56,0x7c,0xc7] as IID_IIterator_1_Windows_Networking_NetworkOperators_MobileBroadbandNetworkRegistrationStateChange }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IIterator<super::super::networking::networkoperators::MobileBroadbandPinLockStateChange> => [0xe61b479f,0x7bd9,0x5550,0xbc,0x69,0xf9,0xc2,0xf7,0x1c,0x6a,0x05] as IID_IIterator_1_Windows_Networking_NetworkOperators_MobileBroadbandPinLockStateChange }
@@ -4237,6 +4445,9 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterator<super::super::storage::bulkaccess::IStorageItemInformation> => [0x3da6401d,0x1279,0x55a1,0x96,0x2c,0x25,0xcd,0x23,0xb9,0x9b,0x27] as IID_IIterator_1_Windows_Storage_BulkAccess_IStorageItemInformation }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterator<super::super::storage::IStorageFile> => [0x314d2318,0x74ee,0x535c,0xb3,0x61,0x21,0x44,0xdb,0xc5,0x73,0xa0] as IID_IIterator_1_Windows_Storage_IStorageFile }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterator<super::super::storage::IStorageItem> => [0x05b487c2,0x3830,0x5d3c,0x98,0xda,0x25,0xfa,0x11,0x54,0x2d,0xbd] as IID_IIterator_1_Windows_Storage_IStorageItem }
+#[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterator<super::super::storage::provider::StorageProviderItemProperty> => [0x0c6dddde,0x1aa3,0x54f5,0xb1,0x39,0xe4,0xa2,0x37,0xdc,0x1c,0x5f] as IID_IIterator_1_Windows_Storage_Provider_StorageProviderItemProperty }
+#[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterator<super::super::storage::provider::StorageProviderItemPropertyDefinition> => [0x55e5719d,0x2bda,0x521f,0x8c,0x60,0x69,0x21,0xd9,0x0b,0x0b,0xb1] as IID_IIterator_1_Windows_Storage_Provider_StorageProviderItemPropertyDefinition }
+#[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterator<super::super::storage::provider::StorageProviderSyncRootInfo> => [0xf73f72c9,0x6bf9,0x5f24,0x95,0xaf,0x72,0x64,0xe5,0x51,0x64,0x23] as IID_IIterator_1_Windows_Storage_Provider_StorageProviderSyncRootInfo }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterator<super::super::storage::search::IIndexableContent> => [0x6cdb32ba,0x2361,0x57a8,0xa3,0x9d,0xbe,0x1d,0xf0,0x41,0xbd,0xb8] as IID_IIterator_1_Windows_Storage_Search_IIndexableContent }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterator<super::super::storage::search::SortEntry> => [0x520434a2,0xacf7,0x58c9,0xb4,0x7a,0x27,0x41,0xf2,0xfa,0xc2,0xc2] as IID_IIterator_1_Windows_Storage_Search_SortEntry }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterator<super::super::storage::StorageFile> => [0x43e29f53,0x0298,0x55aa,0xa6,0xc8,0x4e,0xdd,0x32,0x3d,0x95,0x98] as IID_IIterator_1_Windows_Storage_StorageFile }
@@ -4246,6 +4457,8 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterator<super::super::storage::streams::IBuffer> => [0xafee38e0,0xf882,0x5f10,0x96,0x55,0x1f,0xc9,0x8c,0xc8,0xcc,0xe5] as IID_IIterator_1_Windows_Storage_Streams_IBuffer }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IIterator<super::super::storage::streams::IRandomAccessStream> => [0xc875446a,0x587f,0x58da,0x89,0x7e,0x3b,0xbe,0x5e,0xc7,0xc3,0x0b] as IID_IIterator_1_Windows_Storage_Streams_IRandomAccessStream }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IIterator<super::super::system::AppDiagnosticInfo> => [0x183f1e4a,0x2224,0x5fe4,0xb0,0x64,0x68,0x86,0x9c,0x53,0xe3,0x61] as IID_IIterator_1_Windows_System_AppDiagnosticInfo }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for IIterator<super::super::system::AppResourceGroupBackgroundTaskReport> => [0x00c2180a,0x08e5,0x5eed,0xa0,0x8d,0x56,0xa3,0x56,0xcc,0x00,0x4f] as IID_IIterator_1_Windows_System_AppResourceGroupBackgroundTaskReport }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for IIterator<super::super::system::AppResourceGroupInfo> => [0xe44d5851,0xe4bc,0x50b9,0xa8,0x98,0x69,0x03,0x13,0x7d,0x8a,0x99] as IID_IIterator_1_Windows_System_AppResourceGroupInfo }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IIterator<super::super::system::diagnostics::ProcessDiagnosticInfo> => [0xa89b4418,0x4c3b,0x5f49,0xb9,0x57,0x78,0x56,0x97,0xc9,0x9a,0xbf] as IID_IIterator_1_Windows_System_Diagnostics_ProcessDiagnosticInfo }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IIterator<super::super::system::diagnostics::tracereporting::PlatformDiagnosticTraceInfo> => [0x1af4598d,0x98bb,0x5e51,0x84,0x2b,0xcf,0x69,0x19,0x25,0xb6,0xc2] as IID_IIterator_1_Windows_System_Diagnostics_TraceReporting_PlatformDiagnosticTraceInfo }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IIterator<super::super::system::remotesystems::IRemoteSystemFilter> => [0x6a2c5aef,0x9f30,0x58ae,0xa6,0xcb,0x9a,0xc9,0xc8,0x09,0x2a,0x41] as IID_IIterator_1_Windows_System_RemoteSystems_IRemoteSystemFilter }
@@ -4258,6 +4471,7 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterator<super::super::ui::Color> => [0xc4310b12,0x7ac2,0x5e5b,0xb5,0x11,0xe5,0x46,0xee,0xa4,0x73,0xb4] as IID_IIterator_1_Windows_UI_Color }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterator<super::super::ui::composition::interactions::CompositionConditionalValue> => [0x8a75b02d,0x3991,0x55a6,0xbf,0xe2,0x82,0xcb,0x7d,0xd6,0x5b,0x98] as IID_IIterator_1_Windows_UI_Composition_Interactions_CompositionConditionalValue }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterator<super::super::ui::composition::interactions::InteractionTrackerInertiaModifier> => [0x46617d87,0x2cd2,0x5e31,0x9a,0x30,0xea,0x86,0xf8,0xaa,0x7c,0xa1] as IID_IIterator_1_Windows_UI_Composition_Interactions_InteractionTrackerInertiaModifier }
+#[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterator<super::super::ui::composition::interactions::InteractionTrackerVector2InertiaModifier> => [0x7762caab,0x5b42,0x5958,0x9f,0x49,0x06,0xae,0xfd,0x43,0xad,0x75] as IID_IIterator_1_Windows_UI_Composition_Interactions_InteractionTrackerVector2InertiaModifier }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterator<super::super::ui::core::animationmetrics::IPropertyAnimation> => [0xbb6799d3,0x9f1a,0x5a4e,0xa9,0x40,0x94,0x5f,0x1a,0xb8,0xc4,0xfe] as IID_IIterator_1_Windows_UI_Core_AnimationMetrics_IPropertyAnimation }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterator<super::super::ui::input::inking::analysis::IInkAnalysisNode> => [0xad35ed5c,0x5f8c,0x5a68,0xa6,0xe1,0x67,0xf2,0x09,0xa0,0x5e,0xa7] as IID_IIterator_1_Windows_UI_Input_Inking_Analysis_IInkAnalysisNode }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterator<super::super::ui::input::inking::InkPoint> => [0x47415452,0xdb79,0x567e,0x84,0xd5,0xe9,0x91,0x23,0x30,0xf9,0x44] as IID_IIterator_1_Windows_UI_Input_Inking_InkPoint }
@@ -4285,6 +4499,7 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterator<super::super::ui::startscreen::SecondaryTile> => [0x391f7579,0xa90e,0x5352,0x9d,0x01,0xfd,0xa9,0x95,0xd7,0x91,0x2f] as IID_IIterator_1_Windows_UI_StartScreen_SecondaryTile }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterator<super::super::ui::startscreen::SecondaryTileVisualElements> => [0xbbc6e16c,0xcace,0x5230,0x88,0x04,0x22,0x98,0x37,0x51,0x68,0xac] as IID_IIterator_1_Windows_UI_StartScreen_SecondaryTileVisualElements }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterator<super::super::ui::text::core::CoreTextCompositionSegment> => [0x39b4528d,0x2370,0x57fa,0xb5,0xd4,0xb5,0xa2,0x07,0x9a,0x7c,0xea] as IID_IIterator_1_Windows_UI_Text_Core_CoreTextCompositionSegment }
+#[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IIterator<super::super::ui::viewmanagement::core::CoreInputViewOcclusion> => [0x5bb57354,0x4f40,0x5ef3,0xa5,0xd1,0x6a,0x60,0x49,0xf9,0x05,0xa1] as IID_IIterator_1_Windows_UI_ViewManagement_Core_CoreInputViewOcclusion }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::automation::AutomationAnnotation> => [0x7ed32ba3,0xdb0c,0x5a54,0xab,0x43,0x30,0x62,0x8a,0xfb,0xc2,0xd8] as IID_IIterator_1_Windows_UI_Xaml_Automation_AutomationAnnotation }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::automation::peers::AutomationPeer> => [0x1f93cd7a,0x8075,0x5ba9,0xbc,0x3e,0xb0,0x4a,0x94,0xe1,0x4b,0xc0] as IID_IIterator_1_Windows_UI_Xaml_Automation_Peers_AutomationPeer }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::automation::peers::AutomationPeerAnnotation> => [0x3b415733,0x48f2,0x58b0,0x98,0x84,0x6f,0x0d,0x0e,0x35,0xdc,0x1a] as IID_IIterator_1_Windows_UI_Xaml_Automation_Peers_AutomationPeerAnnotation }
@@ -4293,6 +4508,7 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::controls::HubSection> => [0x4f845272,0xf53e,0x5652,0xb0,0x08,0xa8,0xfb,0xf1,0xe0,0x91,0xef] as IID_IIterator_1_Windows_UI_Xaml_Controls_HubSection }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::controls::ICommandBarElement> => [0xcddb0380,0xe9d7,0x5264,0xab,0x5c,0xd7,0x2b,0x64,0x28,0x74,0xc9] as IID_IIterator_1_Windows_UI_Xaml_Controls_ICommandBarElement }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::controls::maps::MapElement> => [0xf916b428,0x3b74,0x5ad4,0x9d,0x97,0x1b,0x0a,0x38,0x7a,0xec,0xb5] as IID_IIterator_1_Windows_UI_Xaml_Controls_Maps_MapElement }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::controls::maps::MapLayer> => [0xaf2283ff,0x250e,0x56d1,0x96,0xd4,0x9f,0x78,0xe1,0x64,0xcb,0xc6] as IID_IIterator_1_Windows_UI_Xaml_Controls_Maps_MapLayer }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::controls::maps::MapRouteView> => [0xaf256095,0x4144,0x55a7,0x91,0x39,0x89,0x84,0x3b,0x57,0x2d,0xb7] as IID_IIterator_1_Windows_UI_Xaml_Controls_Maps_MapRouteView }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::controls::maps::MapStyleSheet> => [0xe6c727e5,0x6a18,0x5333,0xaa,0x6a,0x26,0x6e,0x8c,0x8b,0xdd,0x51] as IID_IIterator_1_Windows_UI_Xaml_Controls_Maps_MapStyleSheet }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::controls::maps::MapTileSource> => [0xe5c7eba6,0x7c75,0x50bc,0x8b,0x36,0x2d,0x8c,0xa1,0xfa,0x53,0x8b] as IID_IIterator_1_Windows_UI_Xaml_Controls_Maps_MapTileSource }
@@ -4304,7 +4520,10 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::DependencyObject> => [0x29f8d454,0x905d,0x587e,0xb9,0xd8,0xbf,0xd4,0x18,0x80,0x5a,0x65] as IID_IIterator_1_Windows_UI_Xaml_DependencyObject }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::documents::Block> => [0x798d518e,0xa9f8,0x5fc7,0x8c,0xcc,0x2a,0x49,0x06,0x9a,0xba,0x05] as IID_IIterator_1_Windows_UI_Xaml_Documents_Block }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::documents::Inline> => [0xf80dc964,0x2542,0x5c6a,0xba,0x65,0xb0,0x48,0x24,0xb5,0xed,0x75] as IID_IIterator_1_Windows_UI_Xaml_Documents_Inline }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::documents::TextHighlighter> => [0xfe6f1eed,0xe66f,0x5236,0xa4,0x1f,0x81,0x75,0x44,0xe1,0xe7,0xbd] as IID_IIterator_1_Windows_UI_Xaml_Documents_TextHighlighter }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::documents::TextRange> => [0x71f63622,0xc0fe,0x5423,0x91,0x4e,0xd3,0x19,0xd2,0x5b,0xcc,0x84] as IID_IIterator_1_Windows_UI_Xaml_Documents_TextRange }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::input::InputScopeName> => [0x7ac16ff4,0x5857,0x5001,0xb8,0x7f,0x32,0x70,0x93,0xf6,0x83,0x92] as IID_IIterator_1_Windows_UI_Xaml_Input_InputScopeName }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::input::KeyboardAccelerator> => [0x8b6ac198,0xeaa0,0x50e6,0x9a,0x35,0x32,0xdf,0xdf,0x1f,0x59,0xe1] as IID_IIterator_1_Windows_UI_Xaml_Input_KeyboardAccelerator }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::input::Pointer> => [0x8cb1347d,0x8888,0x5fb3,0xbf,0xfd,0xe6,0xca,0xf6,0x1b,0x4f,0x03] as IID_IIterator_1_Windows_UI_Xaml_Input_Pointer }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::media::animation::ColorKeyFrame> => [0x36a6440d,0xaa86,0x5bce,0x8d,0xf2,0x5d,0xe9,0x92,0x06,0xf1,0x51] as IID_IIterator_1_Windows_UI_Xaml_Media_Animation_ColorKeyFrame }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IIterator<super::super::ui::xaml::media::animation::DoubleKeyFrame> => [0xca007bbd,0x84a1,0x512f,0x97,0x7f,0x9b,0xd7,0x28,0xe1,0xe7,0x3f] as IID_IIterator_1_Windows_UI_Xaml_Media_Animation_DoubleKeyFrame }
@@ -4340,6 +4559,7 @@ RT_PINTERFACE!{ for IIterator<super::Point> => [0xc602b59e,0x0a8e,0x5e99,0xb4,0x
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IIterator<super::super::web::syndication::SyndicationItem> => [0xd5692aa3,0xd785,0x5db4,0xac,0x5c,0xb3,0x83,0x20,0x82,0xe6,0x29] as IID_IIterator_1_Windows_Web_Syndication_SyndicationItem }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IIterator<super::super::web::syndication::SyndicationLink> => [0x901642b7,0x6ca4,0x5b57,0xb8,0xf1,0x73,0x20,0x83,0x42,0xba,0x4a] as IID_IIterator_1_Windows_Web_Syndication_SyndicationLink }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IIterator<super::super::web::syndication::SyndicationPerson> => [0x1745e807,0xf209,0x5da6,0x88,0x55,0x7f,0x99,0xe2,0x5e,0xb1,0xfc] as IID_IIterator_1_Windows_Web_Syndication_SyndicationPerson }
+#[cfg(feature="windows-web")] RT_PINTERFACE!{ for IIterator<super::super::web::WebErrorStatus> => [0xfa704929,0x0761,0x5dd6,0x96,0x75,0x05,0x2a,0x8c,0x61,0xe2,0xc2] as IID_IIterator_1_Windows_Web_WebErrorStatus }
 RT_PINTERFACE!{ for IIterator<super::TimeSpan> => [0x67e9eadb,0x324b,0x5661,0xa4,0x05,0xde,0xd8,0x44,0x5b,0x1e,0xea] as IID_IIterator_1_Windows_Foundation_TimeSpan }
 RT_PINTERFACE!{ for IIterator<super::Uri> => [0x1c157d0f,0x5efe,0x5cec,0xbb,0xd6,0x0c,0x6c,0xe9,0xaf,0x07,0xa5] as IID_IIterator_1_Windows_Foundation_Uri }
 RT_PINTERFACE!{ for IIterator<u32> => [0xf06a2739,0x9443,0x5ef0,0xb2,0x84,0xdc,0x5a,0xff,0x3e,0x7d,0x10] as IID_IIterator_1_System_UInt32 }
@@ -4486,6 +4706,7 @@ RT_PINTERFACE!{ for IVector<super::Point> => [0xc0d513a9,0xec4a,0x5a5d,0xb6,0xd5
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVector<super::super::devices::wifidirect::services::WiFiDirectServiceConfigurationMethod> => [0xf6a6f91c,0x0579,0x565d,0xbe,0x07,0x45,0x38,0xa5,0x56,0x90,0xbe] as IID_IVector_1_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceConfigurationMethod }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVector<super::super::devices::wifidirect::WiFiDirectConfigurationMethod> => [0x9b498bc0,0xb474,0x5587,0xb6,0x5c,0xe6,0x00,0x96,0x5f,0x8f,0xd0] as IID_IVector_1_Windows_Devices_WiFiDirect_WiFiDirectConfigurationMethod }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVector<super::super::devices::wifidirect::WiFiDirectInformationElement> => [0xb8c55492,0xe4de,0x5ba7,0x84,0x76,0xd3,0xba,0xb5,0x57,0xcd,0xd6] as IID_IVector_1_Windows_Devices_WiFiDirect_WiFiDirectInformationElement }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVector<super::super::graphics::holographic::HolographicQuadLayer> => [0xda24dfcc,0x4c54,0x5193,0x92,0x1d,0xc6,0x85,0xb5,0x7d,0xe5,0x59] as IID_IVector_1_Windows_Graphics_Holographic_HolographicQuadLayer }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVector<super::super::graphics::printing3d::Printing3DBaseMaterial> => [0x6a5aa59f,0xfe10,0x517b,0xb1,0xa9,0xc6,0x85,0xec,0xce,0x16,0x44] as IID_IVector_1_Windows_Graphics_Printing3D_Printing3DBaseMaterial }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVector<super::super::graphics::printing3d::Printing3DBaseMaterialGroup> => [0x2b80d2cf,0x5449,0x5c81,0x82,0x26,0xeb,0xfc,0x7d,0x72,0xf5,0x79] as IID_IVector_1_Windows_Graphics_Printing3D_Printing3DBaseMaterialGroup }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVector<super::super::graphics::printing3d::Printing3DColorMaterial> => [0x606166fd,0x6bf5,0x53a1,0xb1,0xae,0xc3,0x48,0x92,0xef,0x16,0x63] as IID_IVector_1_Windows_Graphics_Printing3D_Printing3DColorMaterial }
@@ -4519,6 +4740,7 @@ RT_PINTERFACE!{ for IVector<super::Point> => [0xc0d513a9,0xec4a,0x5a5d,0xb6,0xd5
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IVector<super::super::media::playback::MediaPlaybackItem> => [0xe1504f46,0xc4a6,0x5a29,0x8f,0xc9,0xa9,0x34,0xd1,0x2d,0x72,0x42] as IID_IVector_1_Windows_Media_Playback_MediaPlaybackItem }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IVector<super::super::media::protection::RevocationAndRenewalItem> => [0x3623cc0c,0xc765,0x57fb,0x96,0x7d,0xc7,0xcb,0x60,0x97,0xbd,0x78] as IID_IVector_1_Windows_Media_Protection_RevocationAndRenewalItem }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IVector<super::super::media::speechrecognition::ISpeechRecognitionConstraint> => [0x2691d763,0x561e,0x5060,0xbb,0xc9,0x7b,0x07,0x36,0x1a,0xcc,0x95] as IID_IVector_1_Windows_Media_SpeechRecognition_ISpeechRecognitionConstraint }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVector<super::super::networking::backgroundtransfer::BackgroundTransferFileRange> => [0xc73ceef0,0x854a,0x5947,0x9e,0x7c,0x52,0x7e,0x39,0x15,0xd3,0x35] as IID_IVector_1_Windows_Networking_BackgroundTransfer_BackgroundTransferFileRange }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVector<super::super::networking::HostName> => [0x90c71c29,0xa9b5,0x5267,0xa5,0xad,0x8b,0x75,0x67,0x36,0x31,0x7c] as IID_IVector_1_Windows_Networking_HostName }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVector<super::super::networking::vpn::VpnAppId> => [0x89097d58,0xedb8,0x5ad4,0xab,0xc5,0x60,0x3f,0x21,0xdd,0x4b,0x15] as IID_IVector_1_Windows_Networking_Vpn_VpnAppId }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVector<super::super::networking::vpn::VpnDomainNameInfo> => [0x8179b6f2,0x7273,0x5ca3,0xa8,0x1b,0x53,0xe9,0x02,0xca,0x20,0x9b] as IID_IVector_1_Windows_Networking_Vpn_VpnDomainNameInfo }
@@ -4532,11 +4754,16 @@ RT_PINTERFACE!{ for IVector<super::Point> => [0xc0d513a9,0xec4a,0x5a5d,0xb6,0xd5
 #[cfg(feature="windows-security")] RT_PINTERFACE!{ for IVector<super::super::security::cryptography::certificates::CertificateExtension> => [0x4c2523e8,0x9773,0x50fe,0xb8,0x70,0x48,0x3f,0xd8,0xb9,0x06,0xdc] as IID_IVector_1_Windows_Security_Cryptography_Certificates_CertificateExtension }
 #[cfg(feature="windows-security")] RT_PINTERFACE!{ for IVector<super::super::security::cryptography::certificates::ChainValidationResult> => [0xd7828cf7,0x4301,0x58d3,0xaa,0xb5,0x06,0xe5,0xee,0xfc,0xf7,0x9f] as IID_IVector_1_Windows_Security_Cryptography_Certificates_ChainValidationResult }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVector<super::super::storage::IStorageItem> => [0x802508e2,0x9c2c,0x5b91,0x89,0xa8,0x39,0xbc,0xf7,0x22,0x33,0x44] as IID_IVector_1_Windows_Storage_IStorageItem }
+#[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVector<super::super::storage::provider::StorageProviderItemPropertyDefinition> => [0xf839fcff,0x87df,0x53a7,0x94,0xd4,0xb5,0x07,0x10,0x1e,0x7e,0x63] as IID_IVector_1_Windows_Storage_Provider_StorageProviderItemPropertyDefinition }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVector<super::super::storage::search::SortEntry> => [0xd8ea401b,0x47b3,0x5254,0x84,0xf4,0xee,0xa1,0x0c,0x4c,0xf0,0x68] as IID_IVector_1_Windows_Storage_Search_SortEntry }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVector<super::super::storage::StorageFile> => [0xfcbc8b8b,0x6103,0x5b4e,0xba,0x00,0x4b,0xc2,0xce,0xdb,0x6a,0x35] as IID_IVector_1_Windows_Storage_StorageFile }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVector<super::super::storage::StorageFolder> => [0x6c26b7be,0x5f01,0x5a60,0x9d,0xd7,0xfd,0x17,0xbe,0x3a,0x9d,0xd6] as IID_IVector_1_Windows_Storage_StorageFolder }
+#[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVector<super::super::storage::streams::IBuffer> => [0x308fe894,0xcc06,0x5007,0xbc,0x85,0xcb,0xe9,0x4a,0xc1,0xa7,0x0c] as IID_IVector_1_Windows_Storage_Streams_IBuffer }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVector<super::super::storage::streams::IRandomAccessStream> => [0x2736b66b,0xdaa3,0x5e0c,0x98,0x42,0x6a,0x0f,0x44,0xb5,0x44,0x0b] as IID_IVector_1_Windows_Storage_Streams_IRandomAccessStream }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IVector<super::super::system::AppDiagnosticInfo> => [0x9cffa2c3,0x7eeb,0x599c,0xb9,0x4d,0xc7,0x94,0xb1,0x1f,0x80,0x7f] as IID_IVector_1_Windows_System_AppDiagnosticInfo }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for IVector<super::super::system::AppResourceGroupBackgroundTaskReport> => [0x80f1820a,0xdb02,0x5cb2,0xa1,0x28,0x51,0x72,0x15,0x1d,0x14,0x44] as IID_IVector_1_Windows_System_AppResourceGroupBackgroundTaskReport }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for IVector<super::super::system::AppResourceGroupInfo> => [0xbd7d69a0,0x0d57,0x5148,0x8b,0x23,0x49,0xa0,0x86,0x54,0xf0,0xc7] as IID_IVector_1_Windows_System_AppResourceGroupInfo }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for IVector<super::super::system::diagnostics::ProcessDiagnosticInfo> => [0xf62e2d01,0xc1dd,0x5b60,0xb5,0xda,0x16,0x51,0x8c,0xba,0x0b,0xb0] as IID_IVector_1_Windows_System_Diagnostics_ProcessDiagnosticInfo }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IVector<super::super::ui::applicationsettings::CredentialCommand> => [0xb6af1cb5,0xf60e,0x5b08,0xb3,0x12,0x2e,0xb5,0x11,0x35,0xcf,0xc6] as IID_IVector_1_Windows_UI_ApplicationSettings_CredentialCommand }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IVector<super::super::ui::applicationsettings::SettingsCommand> => [0x10bd9cdd,0x3767,0x5e96,0x90,0x22,0xf0,0x0f,0x9c,0xbd,0x62,0x41] as IID_IVector_1_Windows_UI_ApplicationSettings_SettingsCommand }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IVector<super::super::ui::applicationsettings::WebAccountCommand> => [0x64e864c8,0x7fef,0x5df5,0xa6,0x24,0x50,0xb5,0x77,0xf4,0x85,0x54] as IID_IVector_1_Windows_UI_ApplicationSettings_WebAccountCommand }
@@ -4555,6 +4782,7 @@ RT_PINTERFACE!{ for IVector<super::Point> => [0xc0d513a9,0xec4a,0x5a5d,0xb6,0xd5
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::controls::HubSection> => [0x8e47087a,0x3ce3,0x57dc,0xa5,0x83,0x7d,0xb9,0xbf,0x18,0x8f,0xc4] as IID_IVector_1_Windows_UI_Xaml_Controls_HubSection }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::controls::ICommandBarElement> => [0x18ad7c66,0xa127,0x550f,0x83,0x25,0x8c,0xf1,0x78,0x91,0x76,0xc1] as IID_IVector_1_Windows_UI_Xaml_Controls_ICommandBarElement }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::controls::maps::MapElement> => [0x02773f2d,0xbb17,0x56fd,0x96,0xcc,0x89,0xf1,0xc4,0x7f,0x9e,0x11] as IID_IVector_1_Windows_UI_Xaml_Controls_Maps_MapElement }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::controls::maps::MapLayer> => [0x62782500,0xa9cc,0x57f1,0xb8,0x1b,0x6e,0xbc,0xc9,0x21,0x22,0x45] as IID_IVector_1_Windows_UI_Xaml_Controls_Maps_MapLayer }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::controls::maps::MapRouteView> => [0x8ce513b4,0x0a7d,0x5553,0xb7,0x35,0x79,0xcd,0x5a,0x7f,0xee,0x3f] as IID_IVector_1_Windows_UI_Xaml_Controls_Maps_MapRouteView }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::controls::maps::MapTileSource> => [0x19f78a46,0x2c65,0x5f94,0xbf,0x5b,0x96,0x33,0x47,0xa0,0xa3,0x18] as IID_IVector_1_Windows_UI_Xaml_Controls_Maps_MapTileSource }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::controls::MenuFlyoutItemBase> => [0xf7f1c37b,0xb4df,0x5128,0xa4,0x76,0xfc,0x83,0x99,0xbc,0x10,0xaf] as IID_IVector_1_Windows_UI_Xaml_Controls_MenuFlyoutItemBase }
@@ -4563,7 +4791,10 @@ RT_PINTERFACE!{ for IVector<super::Point> => [0xc0d513a9,0xec4a,0x5a5d,0xb6,0xd5
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::DependencyObject> => [0x771b857e,0xab5c,0x5db8,0xa0,0x21,0x39,0x7c,0x92,0xcd,0xc4,0x4c] as IID_IVector_1_Windows_UI_Xaml_DependencyObject }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::documents::Block> => [0x3ee78a34,0x160e,0x50ff,0xb5,0xaa,0x09,0xf2,0x63,0xa6,0x69,0xf8] as IID_IVector_1_Windows_UI_Xaml_Documents_Block }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::documents::Inline> => [0x92ec9252,0x8ee3,0x55d6,0x84,0xb4,0x30,0xb6,0x35,0x07,0x77,0x78] as IID_IVector_1_Windows_UI_Xaml_Documents_Inline }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::documents::TextHighlighter> => [0x64905558,0xd062,0x5f31,0x84,0xaf,0x4a,0x5f,0xa8,0x96,0xae,0x50] as IID_IVector_1_Windows_UI_Xaml_Documents_TextHighlighter }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::documents::TextRange> => [0xee9d4cda,0x0750,0x5c1f,0x93,0xaa,0x59,0xad,0xd8,0xc1,0x42,0x1b] as IID_IVector_1_Windows_UI_Xaml_Documents_TextRange }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::input::InputScopeName> => [0x703fe123,0xd766,0x562f,0xb2,0x10,0x19,0x80,0xbb,0x2a,0x0d,0x33] as IID_IVector_1_Windows_UI_Xaml_Input_InputScopeName }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::input::KeyboardAccelerator> => [0xe4927feb,0x1e4a,0x5be3,0xbd,0xa3,0x62,0xcf,0x4e,0x52,0x02,0x58] as IID_IVector_1_Windows_UI_Xaml_Input_KeyboardAccelerator }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::media::animation::ColorKeyFrame> => [0x92d24fb8,0xaf54,0x5180,0x98,0x88,0x57,0x56,0x56,0x6a,0x13,0xff] as IID_IVector_1_Windows_UI_Xaml_Media_Animation_ColorKeyFrame }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::media::animation::DoubleKeyFrame> => [0xd7cbde22,0x86bf,0x572f,0x84,0x73,0x07,0x9d,0x15,0x07,0x6c,0x3e] as IID_IVector_1_Windows_UI_Xaml_Media_Animation_DoubleKeyFrame }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVector<super::super::ui::xaml::media::animation::ObjectKeyFrame> => [0x5f733d3f,0x72a6,0x5303,0x97,0x27,0x2b,0x03,0xea,0xe7,0xdd,0x4c] as IID_IVector_1_Windows_UI_Xaml_Media_Animation_ObjectKeyFrame }
@@ -4595,6 +4826,7 @@ RT_PINTERFACE!{ for IVector<super::Point> => [0xc0d513a9,0xec4a,0x5a5d,0xb6,0xd5
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IVector<super::super::web::syndication::SyndicationItem> => [0xaa01130b,0x4631,0x5117,0x8c,0x48,0xdc,0x21,0xb0,0x29,0x50,0x96] as IID_IVector_1_Windows_Web_Syndication_SyndicationItem }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IVector<super::super::web::syndication::SyndicationLink> => [0xb8fb25a5,0x01c3,0x5207,0x81,0x4e,0x89,0x2b,0x2b,0x53,0x43,0xf7] as IID_IVector_1_Windows_Web_Syndication_SyndicationLink }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IVector<super::super::web::syndication::SyndicationPerson> => [0xab772cd6,0x8ce7,0x5db9,0x83,0xac,0x0d,0xb9,0xe4,0x4a,0x1b,0x0c] as IID_IVector_1_Windows_Web_Syndication_SyndicationPerson }
+#[cfg(feature="windows-web")] RT_PINTERFACE!{ for IVector<super::super::web::WebErrorStatus> => [0x61bc06e3,0xb752,0x5b56,0x83,0x74,0x3b,0x45,0xa2,0x14,0x69,0x3f] as IID_IVector_1_Windows_Web_WebErrorStatus }
 RT_PINTERFACE!{ for IVector<super::Uri> => [0x0d82bd8d,0xfe62,0x5d67,0xa7,0xb9,0x78,0x86,0xdd,0x75,0xbc,0x4e] as IID_IVector_1_Windows_Foundation_Uri }
 RT_PINTERFACE!{ for IVector<u32> => [0x534832ed,0x2a03,0x5604,0x89,0x0d,0x5a,0x92,0x8c,0xd4,0x27,0xb9] as IID_IVector_1_System_UInt32 }
 RT_PINTERFACE!{ for IVectorView<bool> => [0x243a09cb,0x6f40,0x56af,0xa4,0x42,0xfe,0x81,0x43,0x1f,0xbe,0xf5] as IID_IVectorView_1_System_Boolean }
@@ -4607,6 +4839,7 @@ RT_PINTERFACE!{ for IVectorView<IInspectable> => [0xa6487363,0xb074,0x5c60,0xab,
 RT_PINTERFACE!{ for IVectorView<IMapView<HString, IInspectable>> => [0x172a655b,0xb3b8,0x5eae,0xbc,0x2e,0xa6,0xa1,0xf1,0x70,0x8b,0x4b] as IID_IVectorView_1_Windows_Foundation_Collections_IMapView_2_System_String_System_Object }
 RT_PINTERFACE!{ for IVectorView<super::DateTime> => [0x135a5f72,0xa818,0x54a8,0xb9,0x55,0xdf,0xf2,0x59,0x3a,0x3b,0xf5] as IID_IVectorView_1_Windows_Foundation_DateTime }
 RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,0xdb,0x42,0xb1,0xaa,0xc3,0x0c,0xad] as IID_IVectorView_1_Windows_Foundation_Point }
+RT_PINTERFACE!{ for IVectorView<super::Size> => [0xcb5037fd,0x660b,0x51f5,0x9d,0x28,0x87,0xf4,0x08,0x78,0x26,0x8d] as IID_IVectorView_1_Windows_Foundation_Size }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IVectorView<super::super::applicationmodel::appextensions::AppExtension> => [0x94520810,0x7e9b,0x5efd,0xb7,0x4d,0xe9,0xd4,0x17,0x5f,0xd9,0x4a] as IID_IVectorView_1_Windows_ApplicationModel_AppExtensions_AppExtension }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IVectorView<super::super::applicationmodel::AppInfo> => [0x8246ed12,0x33e8,0x52b3,0xa5,0xc5,0x19,0x77,0x9d,0xe9,0x99,0x9e] as IID_IVectorView_1_Windows_ApplicationModel_AppInfo }
 #[cfg(feature="windows-applicationmodel")] RT_PINTERFACE!{ for IVectorView<super::super::applicationmodel::appointments::Appointment> => [0x61021758,0x9e37,0x5a86,0xa8,0x32,0xaa,0xb3,0x1f,0x32,0x69,0x2b] as IID_IVectorView_1_Windows_ApplicationModel_Appointments_Appointment }
@@ -4717,9 +4950,11 @@ RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::geolocation::geofencing::GeofenceStateChangeReport> => [0xea91593d,0xecf4,0x5041,0x86,0xf2,0x83,0x7a,0x28,0x2c,0x4d,0x94] as IID_IVectorView_1_Windows_Devices_Geolocation_Geofencing_GeofenceStateChangeReport }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::geolocation::Geopath> => [0xa83321cb,0x1b54,0x5f68,0x92,0x34,0x4a,0x82,0x4d,0x33,0xe3,0x71] as IID_IVectorView_1_Windows_Devices_Geolocation_Geopath }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::geolocation::Geoposition> => [0xd572ccf3,0x0c60,0x553f,0xa6,0x24,0xc7,0x16,0x48,0xaf,0x8e,0x7a] as IID_IVectorView_1_Windows_Devices_Geolocation_Geoposition }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::geolocation::Geovisit> => [0x90ad35e9,0xf1de,0x5ba7,0xab,0xbf,0x04,0xa2,0x19,0x76,0xd3,0x62] as IID_IVectorView_1_Windows_Devices_Geolocation_Geovisit }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::gpio::GpioChangeRecord> => [0xd30ab625,0x1264,0x539e,0xac,0xef,0x30,0x6d,0xd2,0x14,0xdc,0x3b] as IID_IVectorView_1_Windows_Devices_Gpio_GpioChangeRecord }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::gpio::GpioController> => [0x7fc72a82,0x2c57,0x5c01,0xa6,0x52,0xa8,0xbd,0xac,0x68,0x5d,0x30] as IID_IVectorView_1_Windows_Devices_Gpio_GpioController }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::gpio::provider::IGpioControllerProvider> => [0xf429355f,0x7a16,0x5dcf,0xa5,0x75,0xdb,0x7d,0x2a,0x20,0xec,0xed] as IID_IVectorView_1_Windows_Devices_Gpio_Provider_IGpioControllerProvider }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::haptics::SimpleHapticsController> => [0x5390f01e,0xc701,0x5382,0x97,0xcc,0x94,0xea,0xac,0x4b,0x6c,0xbf] as IID_IVectorView_1_Windows_Devices_Haptics_SimpleHapticsController }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::haptics::SimpleHapticsControllerFeedback> => [0x51f54b04,0xbb9d,0x5c7b,0x8f,0x5f,0x67,0xf8,0xca,0xf4,0xb0,0x03] as IID_IVectorView_1_Windows_Devices_Haptics_SimpleHapticsControllerFeedback }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::haptics::VibrationDevice> => [0x485aa8a6,0x2d29,0x5d34,0xb8,0xd9,0xb0,0xc9,0x61,0xc1,0x7f,0x7f] as IID_IVectorView_1_Windows_Devices_Haptics_VibrationDevice }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::humaninterfacedevice::HidBooleanControl> => [0x0e417dac,0x591a,0x5de0,0xaf,0xd6,0x0b,0x2c,0x04,0xc3,0x04,0xe7] as IID_IVectorView_1_Windows_Devices_HumanInterfaceDevice_HidBooleanControl }
@@ -4745,6 +4980,15 @@ RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::sensors::PedometerReading> => [0x52076f5c,0x7838,0x54d9,0x95,0x17,0x55,0x11,0xeb,0x62,0x79,0x52] as IID_IVectorView_1_Windows_Devices_Sensors_PedometerReading }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::sensors::ProximitySensorReading> => [0x7a09d76c,0x8ced,0x5e30,0xb7,0xfe,0x1f,0xf7,0x4d,0x4d,0x98,0x14] as IID_IVectorView_1_Windows_Devices_Sensors_ProximitySensorReading }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::smartcards::SmartCard> => [0x4bee6991,0x3508,0x5f03,0xa2,0xf4,0x90,0xa5,0xdd,0xb2,0x6b,0xd8] as IID_IVectorView_1_Windows_Devices_SmartCards_SmartCard }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::smartcards::SmartCardAppletIdGroupRegistration> => [0xb24324ba,0x192b,0x568b,0x81,0xcf,0x9a,0xc3,0x83,0x40,0x6e,0xd9] as IID_IVectorView_1_Windows_Devices_SmartCards_SmartCardAppletIdGroupRegistration }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::smartcards::SmartCardCryptogramAlgorithm> => [0xa9df831c,0xc22b,0x5d30,0xa8,0x6c,0x5a,0x31,0xfe,0x19,0x24,0x33] as IID_IVectorView_1_Windows_Devices_SmartCards_SmartCardCryptogramAlgorithm }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::smartcards::SmartCardCryptogramMaterialCharacteristics> => [0x6e5e4447,0x1552,0x591b,0xaf,0xa0,0x38,0x7b,0x26,0xb7,0xac,0x93] as IID_IVectorView_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialCharacteristics }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::smartcards::SmartCardCryptogramMaterialPackageCharacteristics> => [0x94d937e9,0x0edc,0x5dad,0xa3,0xad,0xb2,0xeb,0x5a,0xb8,0x86,0x71] as IID_IVectorView_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialPackageCharacteristics }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::smartcards::SmartCardCryptogramMaterialPackageConfirmationResponseFormat> => [0x3a4176a2,0xd221,0x5a9f,0xa4,0xc2,0xa5,0xb8,0x73,0x6d,0xa2,0xd8] as IID_IVectorView_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialPackageConfirmationResponseFormat }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::smartcards::SmartCardCryptogramMaterialPackageFormat> => [0xb7cce3f2,0x9889,0x586c,0xbe,0xb1,0x68,0xfe,0xdd,0xb7,0xcb,0x15] as IID_IVectorView_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialPackageFormat }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::smartcards::SmartCardCryptogramMaterialType> => [0x394bc0cc,0xc621,0x5ba3,0xb4,0xf0,0x71,0x2f,0xcf,0x59,0x13,0x92] as IID_IVectorView_1_Windows_Devices_SmartCards_SmartCardCryptogramMaterialType }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::smartcards::SmartCardCryptogramStorageKeyCapabilities> => [0x9c0dfca0,0x4b62,0x56a8,0x8a,0xf3,0x83,0x76,0x89,0x8a,0x15,0xbc] as IID_IVectorView_1_Windows_Devices_SmartCards_SmartCardCryptogramStorageKeyCapabilities }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::smartcards::SmartCardCryptogramStorageKeyCharacteristics> => [0xf14872b9,0x7f4c,0x58f8,0x8b,0xfa,0xaf,0x76,0x7f,0x58,0x97,0x1a] as IID_IVectorView_1_Windows_Devices_SmartCards_SmartCardCryptogramStorageKeyCharacteristics }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::sms::ISmsBinaryMessage> => [0x6ea176ea,0x99ea,0x5c79,0x87,0x6a,0xf4,0xc4,0x37,0xb8,0x3d,0xf6] as IID_IVectorView_1_Windows_Devices_Sms_ISmsBinaryMessage }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::sms::ISmsMessage> => [0xd3acc5b1,0x6f85,0x507e,0xb4,0x0a,0x69,0x50,0x74,0x9b,0x42,0x6f] as IID_IVectorView_1_Windows_Devices_Sms_ISmsMessage }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::sms::SmsBroadcastType> => [0x4063e791,0xda2d,0x5e4c,0x91,0x13,0x5b,0x6b,0xa0,0xa7,0xc5,0x95] as IID_IVectorView_1_Windows_Devices_Sms_SmsBroadcastType }
@@ -4765,6 +5009,7 @@ RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::usb::UsbInterruptOutPipe> => [0x748196c8,0x83bf,0x5ec3,0x8d,0x28,0xa3,0x11,0x2b,0x3e,0xe3,0xcc] as IID_IVectorView_1_Windows_Devices_Usb_UsbInterruptOutPipe }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::wifi::WiFiAdapter> => [0x670a3c41,0xecc8,0x55c2,0x84,0xd4,0x51,0x86,0x44,0x96,0xa3,0x28] as IID_IVectorView_1_Windows_Devices_WiFi_WiFiAdapter }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::wifi::WiFiAvailableNetwork> => [0x7c65d286,0x7285,0x5d63,0xbd,0xea,0x5e,0xf9,0x51,0xbd,0xf6,0x18] as IID_IVectorView_1_Windows_Devices_WiFi_WiFiAvailableNetwork }
+#[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::wifi::WiFiWpsKind> => [0xaae7e5e5,0x27f0,0x5b28,0x8c,0x58,0x90,0x39,0x35,0x6d,0x3d,0xc7] as IID_IVectorView_1_Windows_Devices_WiFi_WiFiWpsKind }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::wifidirect::services::WiFiDirectServiceConfigurationMethod> => [0xdc710fe1,0x7f04,0x515b,0x8a,0xc1,0x1c,0x5d,0x3c,0x0d,0x2b,0x28] as IID_IVectorView_1_Windows_Devices_WiFiDirect_Services_WiFiDirectServiceConfigurationMethod }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::wifidirect::WiFiDirectConfigurationMethod> => [0x61a32670,0x04d3,0x551d,0xad,0x66,0xbd,0x04,0xe9,0xef,0x5c,0x78] as IID_IVectorView_1_Windows_Devices_WiFiDirect_WiFiDirectConfigurationMethod }
 #[cfg(feature="windows-devices")] RT_PINTERFACE!{ for IVectorView<super::super::devices::wifidirect::WiFiDirectInformationElement> => [0x6dcffadb,0x04c5,0x535e,0xad,0xd4,0x13,0x89,0xb3,0xbe,0x6e,0xca] as IID_IVectorView_1_Windows_Devices_WiFiDirect_WiFiDirectInformationElement }
@@ -4785,9 +5030,11 @@ RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVectorView<super::super::graphics::display::core::HdmiDisplayMode> => [0x7d0e7c64,0xdf0e,0x539a,0xab,0x5f,0x3c,0x26,0x00,0x26,0xc5,0xce] as IID_IVectorView_1_Windows_Graphics_Display_Core_HdmiDisplayMode }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVectorView<super::super::graphics::holographic::HolographicCamera> => [0x01d6c0ae,0xada5,0x50b0,0x85,0x62,0x41,0xfb,0x12,0x05,0xbb,0x4a] as IID_IVectorView_1_Windows_Graphics_Holographic_HolographicCamera }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVectorView<super::super::graphics::holographic::HolographicCameraPose> => [0x17c5dfb1,0x6e87,0x5a17,0xa7,0x91,0xac,0x07,0xf8,0xee,0x92,0x92] as IID_IVectorView_1_Windows_Graphics_Holographic_HolographicCameraPose }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVectorView<super::super::graphics::holographic::HolographicQuadLayer> => [0x1f51ecdf,0xcf2d,0x5b7e,0xaa,0xe9,0xd6,0x62,0x8a,0x51,0x8d,0xbe] as IID_IVectorView_1_Windows_Graphics_Holographic_HolographicQuadLayer }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVectorView<super::super::graphics::imaging::BitmapCodecInformation> => [0x97dfde96,0xff1d,0x5aa1,0x86,0x3a,0x90,0x11,0x6a,0x31,0xb8,0x6b] as IID_IVectorView_1_Windows_Graphics_Imaging_BitmapCodecInformation }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVectorView<super::super::graphics::imaging::BitmapPixelFormat> => [0x76ac4bc2,0xc19c,0x559c,0xb2,0x87,0x16,0x94,0xc0,0xdc,0x3a,0x0d] as IID_IVectorView_1_Windows_Graphics_Imaging_BitmapPixelFormat }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVectorView<super::super::graphics::imaging::ImageStream> => [0xab10f3e5,0x2a3e,0x5f81,0xb5,0xe8,0x8d,0xdd,0xdc,0x23,0xcc,0xa2] as IID_IVectorView_1_Windows_Graphics_Imaging_ImageStream }
+#[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVectorView<super::super::graphics::printing::printticket::PrintTicketOption> => [0xc80b48ef,0x2a4c,0x5685,0xb7,0xa4,0x88,0xcc,0x79,0x6c,0xa2,0x74] as IID_IVectorView_1_Windows_Graphics_Printing_PrintTicket_PrintTicketOption }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVectorView<super::super::graphics::printing3d::Printing3DBaseMaterial> => [0xccc6f0a2,0x4dd9,0x550d,0x85,0x78,0x33,0x0e,0x13,0x8a,0xda,0x07] as IID_IVectorView_1_Windows_Graphics_Printing3D_Printing3DBaseMaterial }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVectorView<super::super::graphics::printing3d::Printing3DBaseMaterialGroup> => [0x5c686c2e,0xcd88,0x5255,0xa9,0x61,0x5b,0x4f,0x2b,0xf1,0x3c,0x70] as IID_IVectorView_1_Windows_Graphics_Printing3D_Printing3DBaseMaterialGroup }
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVectorView<super::super::graphics::printing3d::Printing3DColorMaterial> => [0x80da978e,0x7cc2,0x531f,0x81,0x6b,0xfa,0x68,0xaa,0x44,0x6e,0x8c] as IID_IVectorView_1_Windows_Graphics_Printing3D_Printing3DColorMaterial }
@@ -4805,6 +5052,7 @@ RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,
 #[cfg(feature="windows-graphics")] RT_PINTERFACE!{ for IVectorView<super::super::graphics::printing3d::Printing3DTextureResource> => [0x0a4964cd,0xd387,0x5d71,0xa7,0x1d,0x4f,0x0a,0x55,0xb9,0xb6,0x89] as IID_IVectorView_1_Windows_Graphics_Printing3D_Printing3DTextureResource }
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for IVectorView<super::super::management::deployment::PackageVolume> => [0x50b5715a,0xf077,0x53d1,0x89,0x6d,0xb1,0x32,0xc4,0x87,0x01,0xf4] as IID_IVectorView_1_Windows_Management_Deployment_PackageVolume }
 #[cfg(feature="windows-management")] RT_PINTERFACE!{ for IVectorView<super::super::management::MdmAlert> => [0x2b94038c,0x24aa,0x5261,0x80,0xd8,0xc9,0x0f,0x79,0x70,0x64,0x4a] as IID_IVectorView_1_Windows_Management_MdmAlert }
+#[cfg(feature="windows-media")] RT_PINTERFACE!{ for IVectorView<super::super::media::apprecording::AppRecordingSavedScreenshotInfo> => [0x43c83783,0xb36d,0x5a8e,0xb9,0x93,0xe1,0x9c,0x82,0x3e,0x6c,0x1a] as IID_IVectorView_1_Windows_Media_AppRecording_AppRecordingSavedScreenshotInfo }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IVectorView<super::super::media::audio::AudioGraphConnection> => [0x8485aed1,0x9b0c,0x59d2,0xa2,0x06,0x69,0x9b,0xf7,0x46,0xc3,0xff] as IID_IVectorView_1_Windows_Media_Audio_AudioGraphConnection }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IVectorView<super::super::media::audio::EqualizerBand> => [0x48f26053,0xea7d,0x59e1,0x95,0x2b,0xfb,0x78,0xaf,0x42,0xd2,0xe2] as IID_IVectorView_1_Windows_Media_Audio_EqualizerBand }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IVectorView<super::super::media::capture::AppBroadcastPlugIn> => [0x05afee04,0x1168,0x5677,0xa0,0x5e,0x98,0x54,0xb4,0x6b,0x31,0x9b] as IID_IVectorView_1_Windows_Media_Capture_AppBroadcastPlugIn }
@@ -4866,6 +5114,7 @@ RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IVectorView<super::super::media::speechrecognition::ISpeechRecognitionConstraint> => [0x341dee1d,0x6ac2,0x5d06,0x90,0x26,0xb3,0x0a,0xda,0x20,0x56,0x65] as IID_IVectorView_1_Windows_Media_SpeechRecognition_ISpeechRecognitionConstraint }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IVectorView<super::super::media::speechrecognition::SpeechRecognitionResult> => [0x0e37810f,0x1de6,0x5199,0x83,0x3f,0x5a,0x6b,0x0b,0xd9,0x1e,0x23] as IID_IVectorView_1_Windows_Media_SpeechRecognition_SpeechRecognitionResult }
 #[cfg(feature="windows-media")] RT_PINTERFACE!{ for IVectorView<super::super::media::speechsynthesis::VoiceInformation> => [0xee8d63ce,0x51ac,0x5984,0x89,0x1b,0xd2,0x32,0xfa,0x7f,0x64,0x53] as IID_IVectorView_1_Windows_Media_SpeechSynthesis_VoiceInformation }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::backgroundtransfer::BackgroundTransferFileRange> => [0x5be7934b,0xd9fc,0x540a,0x8f,0xfe,0x5f,0xb9,0xc8,0x8c,0x65,0x58] as IID_IVectorView_1_Windows_Networking_BackgroundTransfer_BackgroundTransferFileRange }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::backgroundtransfer::DownloadOperation> => [0xf87d9755,0x2a7d,0x59fc,0xbc,0x92,0xb4,0x86,0x36,0xf4,0xd9,0x55] as IID_IVectorView_1_Windows_Networking_BackgroundTransfer_DownloadOperation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::backgroundtransfer::UploadOperation> => [0x8e96d4b0,0xf0ae,0x51cb,0xb7,0xc4,0x02,0x42,0x51,0xbd,0x16,0xd8] as IID_IVectorView_1_Windows_Networking_BackgroundTransfer_UploadOperation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::connectivity::AttributedNetworkUsage> => [0x6e7c44ad,0x7753,0x5437,0x9f,0x79,0x97,0x0d,0x39,0x1f,0xf7,0xc4] as IID_IVectorView_1_Windows_Networking_Connectivity_AttributedNetworkUsage }
@@ -4873,8 +5122,15 @@ RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::connectivity::ConnectivityInterval> => [0xa3d0d117,0x9e21,0x5919,0xb7,0xa0,0xc8,0x19,0x0b,0xd5,0x5a,0xc5] as IID_IVectorView_1_Windows_Networking_Connectivity_ConnectivityInterval }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::connectivity::LanIdentifier> => [0x41286159,0xb91d,0x5736,0xad,0x8b,0xe1,0x6f,0xcf,0x8a,0xce,0xd0] as IID_IVectorView_1_Windows_Networking_Connectivity_LanIdentifier }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::connectivity::NetworkUsage> => [0xb3853391,0x40b6,0x5cf5,0x8f,0x46,0x48,0x82,0x69,0x1d,0x1f,0xf7] as IID_IVectorView_1_Windows_Networking_Connectivity_NetworkUsage }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::connectivity::ProviderNetworkUsage> => [0xe66ad09c,0xeb37,0x54c7,0x9b,0x2d,0x73,0x4e,0x0e,0x93,0x93,0x05] as IID_IVectorView_1_Windows_Networking_Connectivity_ProviderNetworkUsage }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::EndpointPair> => [0x8780a851,0x6d48,0x5006,0x92,0x88,0x81,0xf3,0xd7,0x04,0x5a,0x96] as IID_IVectorView_1_Windows_Networking_EndpointPair }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::HostName> => [0xf4706ab1,0x55a3,0x5270,0xaf,0xb2,0x73,0x29,0x88,0xfe,0x82,0x27] as IID_IVectorView_1_Windows_Networking_HostName }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::networkoperators::MobileBroadbandAntennaSar> => [0x8a4ad36c,0x8b24,0x5f2c,0xad,0x6f,0x6a,0x93,0x6a,0x17,0xbf,0xc6] as IID_IVectorView_1_Windows_Networking_NetworkOperators_MobileBroadbandAntennaSar }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::networkoperators::MobileBroadbandCellCdma> => [0x2896bc34,0x7401,0x5d22,0xbf,0x9f,0xdb,0x82,0x5d,0x09,0xc9,0x51] as IID_IVectorView_1_Windows_Networking_NetworkOperators_MobileBroadbandCellCdma }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::networkoperators::MobileBroadbandCellGsm> => [0xf77a0168,0x0396,0x5111,0xa4,0x87,0xa7,0x95,0xf2,0x46,0x46,0xb7] as IID_IVectorView_1_Windows_Networking_NetworkOperators_MobileBroadbandCellGsm }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::networkoperators::MobileBroadbandCellLte> => [0x2270ad53,0x49a0,0x55b3,0x93,0x56,0x00,0x7c,0x3b,0x8c,0x2d,0xe3] as IID_IVectorView_1_Windows_Networking_NetworkOperators_MobileBroadbandCellLte }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::networkoperators::MobileBroadbandCellTdscdma> => [0x4ae9135f,0x6029,0x54af,0x8a,0xe6,0x43,0x2c,0x12,0xaf,0xce,0xdf] as IID_IVectorView_1_Windows_Networking_NetworkOperators_MobileBroadbandCellTdscdma }
+#[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::networkoperators::MobileBroadbandCellUmts> => [0xb0e94bd2,0x2dd2,0x532d,0x96,0x0f,0x4d,0x1a,0x81,0x85,0xb0,0x21] as IID_IVectorView_1_Windows_Networking_NetworkOperators_MobileBroadbandCellUmts }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::networkoperators::MobileBroadbandDeviceServiceInformation> => [0xaca7ee14,0x414a,0x509c,0x9d,0x63,0x36,0x1e,0x66,0x31,0xfc,0x84] as IID_IVectorView_1_Windows_Networking_NetworkOperators_MobileBroadbandDeviceServiceInformation }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::networkoperators::MobileBroadbandNetworkRegistrationStateChange> => [0x077679f5,0x6948,0x5328,0x8a,0xb4,0x72,0xe6,0x3a,0x75,0x29,0xbd] as IID_IVectorView_1_Windows_Networking_NetworkOperators_MobileBroadbandNetworkRegistrationStateChange }
 #[cfg(feature="windows-networking")] RT_PINTERFACE!{ for IVectorView<super::super::networking::networkoperators::MobileBroadbandPinLockStateChange> => [0x2078b5f0,0x9fa1,0x5056,0x81,0xc7,0x49,0x02,0x46,0xa5,0xbc,0x13] as IID_IVectorView_1_Windows_Networking_NetworkOperators_MobileBroadbandPinLockStateChange }
@@ -4938,6 +5194,8 @@ RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVectorView<super::super::storage::bulkaccess::FolderInformation> => [0x506f1329,0xdbdc,0x5a37,0x91,0xd5,0xb0,0x47,0xcb,0x24,0x27,0x6d] as IID_IVectorView_1_Windows_Storage_BulkAccess_FolderInformation }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVectorView<super::super::storage::bulkaccess::IStorageItemInformation> => [0xda3a4ef8,0xd315,0x529b,0xa7,0x3b,0x52,0x44,0x90,0x57,0x3f,0x7e] as IID_IVectorView_1_Windows_Storage_BulkAccess_IStorageItemInformation }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVectorView<super::super::storage::IStorageItem> => [0x85575a41,0x06cb,0x58d0,0xb9,0x8a,0x7c,0x8f,0x06,0xe6,0xe9,0xd7] as IID_IVectorView_1_Windows_Storage_IStorageItem }
+#[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVectorView<super::super::storage::provider::StorageProviderItemPropertyDefinition> => [0x327544ca,0x45dc,0x5c83,0xb0,0x54,0x0a,0x91,0xe5,0xfa,0x0a,0x29] as IID_IVectorView_1_Windows_Storage_Provider_StorageProviderItemPropertyDefinition }
+#[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVectorView<super::super::storage::provider::StorageProviderSyncRootInfo> => [0x211521e5,0x217c,0x5ff3,0xbf,0x9e,0x8d,0xc4,0xd6,0x75,0x17,0x7f] as IID_IVectorView_1_Windows_Storage_Provider_StorageProviderSyncRootInfo }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVectorView<super::super::storage::search::IIndexableContent> => [0xf4512416,0x6bb8,0x5c6f,0xb8,0x3a,0xbf,0x8a,0x27,0x88,0xce,0x9f] as IID_IVectorView_1_Windows_Storage_Search_IIndexableContent }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVectorView<super::super::storage::search::SortEntry> => [0x823c7604,0xb37b,0x5465,0xa1,0x69,0x29,0x49,0x78,0x93,0xcd,0xb9] as IID_IVectorView_1_Windows_Storage_Search_SortEntry }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVectorView<super::super::storage::StorageFile> => [0x80646519,0x5e2a,0x595d,0xa8,0xcd,0x2a,0x24,0xb4,0x06,0x7f,0x1b] as IID_IVectorView_1_Windows_Storage_StorageFile }
@@ -4946,6 +5204,8 @@ RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVectorView<super::super::storage::streams::IBuffer> => [0xfd944562,0x11d6,0x5eab,0xbd,0x72,0x70,0x19,0x93,0xb6,0x8f,0xac] as IID_IVectorView_1_Windows_Storage_Streams_IBuffer }
 #[cfg(feature="windows-storage")] RT_PINTERFACE!{ for IVectorView<super::super::storage::streams::IRandomAccessStream> => [0x92cd0a46,0x2266,0x5cd6,0x92,0x93,0xe1,0x11,0x29,0x9f,0x27,0x93] as IID_IVectorView_1_Windows_Storage_Streams_IRandomAccessStream }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IVectorView<super::super::system::AppDiagnosticInfo> => [0xb0c2c7a4,0x78ba,0x50fd,0x84,0xfe,0x00,0xe0,0x2a,0x6c,0x1d,0x42] as IID_IVectorView_1_Windows_System_AppDiagnosticInfo }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for IVectorView<super::super::system::AppResourceGroupBackgroundTaskReport> => [0x4e917da3,0x45ab,0x51c3,0xb9,0xe1,0xe7,0xd4,0xe7,0xa1,0xb4,0xe5] as IID_IVectorView_1_Windows_System_AppResourceGroupBackgroundTaskReport }
+#[cfg(feature="windows-system")] RT_PINTERFACE!{ for IVectorView<super::super::system::AppResourceGroupInfo> => [0x0480079c,0xfd03,0x59e3,0xab,0xa3,0x96,0xf9,0xf9,0x20,0x60,0x70] as IID_IVectorView_1_Windows_System_AppResourceGroupInfo }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IVectorView<super::super::system::diagnostics::ProcessDiagnosticInfo> => [0x74ab2473,0x9624,0x5a06,0x90,0x25,0x6d,0x91,0xe6,0x22,0xbf,0x8e] as IID_IVectorView_1_Windows_System_Diagnostics_ProcessDiagnosticInfo }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IVectorView<super::super::system::diagnostics::tracereporting::PlatformDiagnosticTraceInfo> => [0x8f1b3397,0x4dc3,0x5b72,0x91,0xfa,0x0f,0xdc,0x91,0x5d,0x95,0x0c] as IID_IVectorView_1_Windows_System_Diagnostics_TraceReporting_PlatformDiagnosticTraceInfo }
 #[cfg(feature="windows-system")] RT_PINTERFACE!{ for IVectorView<super::super::system::User> => [0x8cbd762a,0x1222,0x5ee5,0xb7,0x45,0x48,0x9e,0x7a,0x42,0xc6,0xec] as IID_IVectorView_1_Windows_System_User }
@@ -4976,6 +5236,7 @@ RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IVectorView<super::super::ui::startscreen::SecondaryTile> => [0x16f89727,0xd811,0x5051,0x9a,0xb5,0x0c,0xb8,0x6a,0x0f,0x0a,0xc3] as IID_IVectorView_1_Windows_UI_StartScreen_SecondaryTile }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IVectorView<super::super::ui::startscreen::SecondaryTileVisualElements> => [0x1cd2cc9b,0xa41c,0x5dc7,0x9d,0x95,0x4c,0xef,0x69,0xa2,0x93,0xf4] as IID_IVectorView_1_Windows_UI_StartScreen_SecondaryTileVisualElements }
 #[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IVectorView<super::super::ui::text::core::CoreTextCompositionSegment> => [0x214b64ff,0xcf4d,0x5dd4,0x93,0x2a,0x7b,0xc6,0x6e,0x69,0x03,0x6e] as IID_IVectorView_1_Windows_UI_Text_Core_CoreTextCompositionSegment }
+#[cfg(feature="windows-ui")] RT_PINTERFACE!{ for IVectorView<super::super::ui::viewmanagement::core::CoreInputViewOcclusion> => [0xe0963578,0xa246,0x5680,0x86,0xd1,0x27,0x51,0x94,0x23,0xe2,0x12] as IID_IVectorView_1_Windows_UI_ViewManagement_Core_CoreInputViewOcclusion }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::automation::AutomationAnnotation> => [0xa4b8a26c,0x9009,0x5394,0x98,0xc8,0x98,0x10,0x7e,0x80,0xdb,0x61] as IID_IVectorView_1_Windows_UI_Xaml_Automation_AutomationAnnotation }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::automation::peers::AutomationPeer> => [0xb56a6076,0x19e2,0x50c1,0x93,0x0f,0x82,0x5b,0xfc,0x39,0x63,0x5c] as IID_IVectorView_1_Windows_UI_Xaml_Automation_Peers_AutomationPeer }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::automation::peers::AutomationPeerAnnotation> => [0x00775c79,0x589b,0x5c36,0xae,0x72,0x2e,0x7a,0xab,0x02,0x70,0xc6] as IID_IVectorView_1_Windows_UI_Xaml_Automation_Peers_AutomationPeerAnnotation }
@@ -4984,6 +5245,7 @@ RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::controls::HubSection> => [0x19452449,0x44eb,0x54a4,0x92,0xf5,0x12,0x16,0x1e,0xda,0x9b,0xd7] as IID_IVectorView_1_Windows_UI_Xaml_Controls_HubSection }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::controls::ICommandBarElement> => [0xa38e89ec,0xf1a4,0x5d7b,0x97,0xc3,0x8a,0xef,0xb6,0x4a,0x5f,0x43] as IID_IVectorView_1_Windows_UI_Xaml_Controls_ICommandBarElement }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::controls::maps::MapElement> => [0xcec120d8,0xea73,0x5aa3,0x91,0x4a,0x37,0xdd,0x25,0x54,0xf6,0x86] as IID_IVectorView_1_Windows_UI_Xaml_Controls_Maps_MapElement }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::controls::maps::MapLayer> => [0x963326b9,0x6770,0x52f1,0xb6,0xc6,0x51,0x94,0x41,0xf8,0x73,0xc3] as IID_IVectorView_1_Windows_UI_Xaml_Controls_Maps_MapLayer }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::controls::maps::MapRouteView> => [0xbdbb45ea,0x0c73,0x56bc,0xa3,0x75,0x3f,0x2a,0x7b,0xeb,0x6f,0x2e] as IID_IVectorView_1_Windows_UI_Xaml_Controls_Maps_MapRouteView }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::controls::maps::MapTileSource> => [0xde7aa182,0x8e17,0x5565,0x9a,0x9d,0x94,0xa4,0xff,0x25,0x36,0x4a] as IID_IVectorView_1_Windows_UI_Xaml_Controls_Maps_MapTileSource }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::controls::MenuFlyoutItemBase> => [0xa59e9e24,0xf5a6,0x5272,0xa9,0x7b,0x7d,0xd0,0x1a,0x3e,0xfd,0xd0] as IID_IVectorView_1_Windows_UI_Xaml_Controls_MenuFlyoutItemBase }
@@ -4994,7 +5256,10 @@ RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::DependencyObject> => [0xfe750d77,0x1307,0x5df2,0xa0,0x21,0x1c,0x7a,0x8d,0x6b,0x80,0xad] as IID_IVectorView_1_Windows_UI_Xaml_DependencyObject }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::documents::Block> => [0x995f73c4,0x7cf8,0x5b59,0xa0,0xfb,0x7e,0x0c,0x64,0x77,0x17,0x2e] as IID_IVectorView_1_Windows_UI_Xaml_Documents_Block }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::documents::Inline> => [0xc2dd082f,0x8cb4,0x51d6,0xb9,0x1b,0x7e,0x23,0x77,0x78,0x0c,0xee] as IID_IVectorView_1_Windows_UI_Xaml_Documents_Inline }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::documents::TextHighlighter> => [0xa74372d7,0x45e1,0x55f0,0xa2,0x9c,0x15,0xca,0x09,0x92,0xeb,0x78] as IID_IVectorView_1_Windows_UI_Xaml_Documents_TextHighlighter }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::documents::TextRange> => [0xc824d1d0,0x771a,0x5123,0x90,0xcc,0x52,0x28,0x1f,0x0f,0x28,0x7a] as IID_IVectorView_1_Windows_UI_Xaml_Documents_TextRange }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::input::InputScopeName> => [0xfcd65a82,0x5328,0x53bc,0xa8,0x84,0xc2,0x09,0xaa,0xfa,0xbf,0x78] as IID_IVectorView_1_Windows_UI_Xaml_Input_InputScopeName }
+#[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::input::KeyboardAccelerator> => [0x4d5e3d08,0xe27c,0x5d05,0xa1,0xdc,0x98,0x85,0xa5,0x1c,0x37,0x21] as IID_IVectorView_1_Windows_UI_Xaml_Input_KeyboardAccelerator }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::input::Pointer> => [0x6250f79f,0x7668,0x51e9,0x86,0xa3,0x38,0x21,0x21,0x7a,0x66,0x31] as IID_IVectorView_1_Windows_UI_Xaml_Input_Pointer }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::media::animation::ColorKeyFrame> => [0x8d66a3ca,0x480c,0x5a76,0x98,0xa2,0x90,0x36,0xc0,0x3e,0xd7,0xbd] as IID_IVectorView_1_Windows_UI_Xaml_Media_Animation_ColorKeyFrame }
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for IVectorView<super::super::ui::xaml::media::animation::DoubleKeyFrame> => [0xc12407b6,0x145f,0x5420,0x9e,0x16,0xd0,0xa2,0x0b,0xf1,0x31,0x76] as IID_IVectorView_1_Windows_UI_Xaml_Media_Animation_DoubleKeyFrame }
@@ -5030,6 +5295,7 @@ RT_PINTERFACE!{ for IVectorView<super::Point> => [0x0b7b4c9d,0x182f,0x582a,0xbd,
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IVectorView<super::super::web::syndication::SyndicationItem> => [0x9496279b,0x567e,0x5652,0xb9,0x42,0xf6,0xfb,0x70,0xc3,0x41,0x73] as IID_IVectorView_1_Windows_Web_Syndication_SyndicationItem }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IVectorView<super::super::web::syndication::SyndicationLink> => [0xeb8b7ff6,0xfa64,0x576a,0x8b,0xe4,0xa0,0x55,0xf7,0xa0,0x4a,0x73] as IID_IVectorView_1_Windows_Web_Syndication_SyndicationLink }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for IVectorView<super::super::web::syndication::SyndicationPerson> => [0x0e450d3d,0xe750,0x5787,0x88,0x5b,0x48,0x8a,0xbc,0x72,0xb5,0xb9] as IID_IVectorView_1_Windows_Web_Syndication_SyndicationPerson }
+#[cfg(feature="windows-web")] RT_PINTERFACE!{ for IVectorView<super::super::web::WebErrorStatus> => [0xf5d10d42,0xa776,0x533a,0x8f,0x4b,0x2e,0x1c,0x6e,0x5b,0xbf,0x24] as IID_IVectorView_1_Windows_Web_WebErrorStatus }
 RT_PINTERFACE!{ for IVectorView<super::Uri> => [0x4b8385bd,0xa2cd,0x5ff1,0xbf,0x74,0x7e,0xa5,0x80,0x42,0x3e,0x50] as IID_IVectorView_1_Windows_Foundation_Uri }
 RT_PINTERFACE!{ for IVectorView<u32> => [0xe5ce1a07,0x8d33,0x5007,0xba,0x64,0x7d,0x25,0x08,0xcc,0xf8,0x5c] as IID_IVectorView_1_System_UInt32 }
 RT_PINTERFACE!{ for IVectorView<u8> => [0x6d05fb29,0x7885,0x544e,0x93,0x82,0xa1,0xad,0x39,0x1a,0x3f,0xa4] as IID_IVectorView_1_System_Byte }
@@ -5046,9 +5312,41 @@ RT_PINTERFACE!{ for VectorChangedEventHandler<IInspectable> => [0xb423a801,0xd35
 } // Windows.Foundation.Collections
 pub mod metadata { // Windows.Foundation.Metadata
 use ::prelude::*;
-RT_ENUM! { enum GCPressureAmount: i32 {
-    Low (GCPressureAmount_Low) = 0, Medium (GCPressureAmount_Medium) = 1, High (GCPressureAmount_High) = 2,
-}}
+RT_CLASS!{static class ApiInformation}
+impl RtActivatable<IApiInformationStatics> for ApiInformation {}
+impl ApiInformation {
+    #[inline] pub fn is_type_present(typeName: &HStringArg) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_type_present(typeName)
+    }}
+    #[inline] pub fn is_method_present(typeName: &HStringArg, methodName: &HStringArg) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_method_present(typeName, methodName)
+    }}
+    #[inline] pub fn is_method_present_with_arity(typeName: &HStringArg, methodName: &HStringArg, inputParameterCount: u32) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_method_present_with_arity(typeName, methodName, inputParameterCount)
+    }}
+    #[inline] pub fn is_event_present(typeName: &HStringArg, eventName: &HStringArg) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_event_present(typeName, eventName)
+    }}
+    #[inline] pub fn is_property_present(typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_property_present(typeName, propertyName)
+    }}
+    #[inline] pub fn is_read_only_property_present(typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_read_only_property_present(typeName, propertyName)
+    }}
+    #[inline] pub fn is_writeable_property_present(typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_writeable_property_present(typeName, propertyName)
+    }}
+    #[inline] pub fn is_enum_named_value_present(enumTypeName: &HStringArg, valueName: &HStringArg) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_enum_named_value_present(enumTypeName, valueName)
+    }}
+    #[inline] pub fn is_api_contract_present_by_major(contractName: &HStringArg, majorVersion: u16) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_api_contract_present_by_major(contractName, majorVersion)
+    }}
+    #[inline] pub fn is_api_contract_present_by_major_and_minor(contractName: &HStringArg, majorVersion: u16, minorVersion: u16) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_api_contract_present_by_major_and_minor(contractName, majorVersion, minorVersion)
+    }}
+}
+DEFINE_CLSID!(ApiInformation(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,77,101,116,97,100,97,116,97,46,65,112,105,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_ApiInformation]);
 DEFINE_IID!(IID_IApiInformationStatics, 2574531070, 63105, 18961, 180, 22, 193, 58, 71, 232, 186, 54);
 RT_INTERFACE!{static interface IApiInformationStatics(IApiInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApiInformationStatics] {
     fn IsTypePresent(&self, typeName: HSTRING, out: *mut bool) -> HRESULT,
@@ -5114,94 +5412,59 @@ impl IApiInformationStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
 }
-RT_CLASS!{static class ApiInformation}
-impl RtActivatable<IApiInformationStatics> for ApiInformation {}
-impl ApiInformation {
-    #[inline] pub fn is_type_present(typeName: &HStringArg) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_type_present(typeName)
-    }}
-    #[inline] pub fn is_method_present(typeName: &HStringArg, methodName: &HStringArg) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_method_present(typeName, methodName)
-    }}
-    #[inline] pub fn is_method_present_with_arity(typeName: &HStringArg, methodName: &HStringArg, inputParameterCount: u32) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_method_present_with_arity(typeName, methodName, inputParameterCount)
-    }}
-    #[inline] pub fn is_event_present(typeName: &HStringArg, eventName: &HStringArg) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_event_present(typeName, eventName)
-    }}
-    #[inline] pub fn is_property_present(typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_property_present(typeName, propertyName)
-    }}
-    #[inline] pub fn is_read_only_property_present(typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_read_only_property_present(typeName, propertyName)
-    }}
-    #[inline] pub fn is_writeable_property_present(typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_writeable_property_present(typeName, propertyName)
-    }}
-    #[inline] pub fn is_enum_named_value_present(enumTypeName: &HStringArg, valueName: &HStringArg) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_enum_named_value_present(enumTypeName, valueName)
-    }}
-    #[inline] pub fn is_api_contract_present_by_major(contractName: &HStringArg, majorVersion: u16) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_api_contract_present_by_major(contractName, majorVersion)
-    }}
-    #[inline] pub fn is_api_contract_present_by_major_and_minor(contractName: &HStringArg, majorVersion: u16, minorVersion: u16) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_api_contract_present_by_major_and_minor(contractName, majorVersion, minorVersion)
-    }}
-}
-DEFINE_CLSID!(ApiInformation(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,77,101,116,97,100,97,116,97,46,65,112,105,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_ApiInformation]);
-RT_ENUM! { enum Platform: i32 {
-    Windows (Platform_Windows) = 0, WindowsPhone (Platform_WindowsPhone) = 1,
-}}
 RT_ENUM! { enum AttributeTargets: u32 {
     All (AttributeTargets_All) = 4294967295, Delegate (AttributeTargets_Delegate) = 1, Enum (AttributeTargets_Enum) = 2, Event (AttributeTargets_Event) = 4, Field (AttributeTargets_Field) = 8, Interface (AttributeTargets_Interface) = 16, Method (AttributeTargets_Method) = 64, Parameter (AttributeTargets_Parameter) = 128, Property (AttributeTargets_Property) = 256, RuntimeClass (AttributeTargets_RuntimeClass) = 512, Struct (AttributeTargets_Struct) = 1024, InterfaceImpl (AttributeTargets_InterfaceImpl) = 2048, ApiContract (AttributeTargets_ApiContract) = 8192,
-}}
-RT_ENUM! { enum FeatureStage: i32 {
-    AlwaysDisabled (FeatureStage_AlwaysDisabled) = 0, DisabledByDefault (FeatureStage_DisabledByDefault) = 1, EnabledByDefault (FeatureStage_EnabledByDefault) = 2, AlwaysEnabled (FeatureStage_AlwaysEnabled) = 3,
 }}
 RT_ENUM! { enum CompositionType: i32 {
     Protected (CompositionType_Protected) = 1, Public (CompositionType_Public) = 2,
 }}
-RT_ENUM! { enum ThreadingModel: i32 {
-    STA (ThreadingModel_STA) = 1, MTA (ThreadingModel_MTA) = 2, Both (ThreadingModel_Both) = 3, InvalidThreading (ThreadingModel_InvalidThreading) = 0,
+RT_ENUM! { enum DeprecationType: i32 {
+    Deprecate (DeprecationType_Deprecate) = 0, Remove (DeprecationType_Remove) = 1,
+}}
+RT_ENUM! { enum FeatureStage: i32 {
+    AlwaysDisabled (FeatureStage_AlwaysDisabled) = 0, DisabledByDefault (FeatureStage_DisabledByDefault) = 1, EnabledByDefault (FeatureStage_EnabledByDefault) = 2, AlwaysEnabled (FeatureStage_AlwaysEnabled) = 3,
+}}
+RT_ENUM! { enum GCPressureAmount: i32 {
+    Low (GCPressureAmount_Low) = 0, Medium (GCPressureAmount_Medium) = 1, High (GCPressureAmount_High) = 2,
 }}
 RT_ENUM! { enum MarshalingType: i32 {
     None (MarshalingType_None) = 1, Agile (MarshalingType_Agile) = 2, Standard (MarshalingType_Standard) = 3, InvalidMarshaling (MarshalingType_InvalidMarshaling) = 0,
 }}
-RT_ENUM! { enum DeprecationType: i32 {
-    Deprecate (DeprecationType_Deprecate) = 0, Remove (DeprecationType_Remove) = 1,
+RT_ENUM! { enum Platform: i32 {
+    Windows (Platform_Windows) = 0, WindowsPhone (Platform_WindowsPhone) = 1,
+}}
+RT_ENUM! { enum ThreadingModel: i32 {
+    STA (ThreadingModel_STA) = 1, MTA (ThreadingModel_MTA) = 2, Both (ThreadingModel_Both) = 3, InvalidThreading (ThreadingModel_InvalidThreading) = 0,
 }}
 } // Windows.Foundation.Metadata
 pub mod diagnostics { // Windows.Foundation.Diagnostics
 use ::prelude::*;
-RT_ENUM! { enum CausalityTraceLevel: i32 {
-    Required (CausalityTraceLevel_Required) = 0, Important (CausalityTraceLevel_Important) = 1, Verbose (CausalityTraceLevel_Verbose) = 2,
-}}
-RT_ENUM! { enum CausalitySource: i32 {
-    Application (CausalitySource_Application) = 0, Library (CausalitySource_Library) = 1, System (CausalitySource_System) = 2,
-}}
-RT_ENUM! { enum CausalityRelation: i32 {
-    AssignDelegate (CausalityRelation_AssignDelegate) = 0, Join (CausalityRelation_Join) = 1, Choice (CausalityRelation_Choice) = 2, Cancel (CausalityRelation_Cancel) = 3, Error (CausalityRelation_Error) = 4,
-}}
-RT_ENUM! { enum CausalitySynchronousWork: i32 {
-    CompletionNotification (CausalitySynchronousWork_CompletionNotification) = 0, ProgressNotification (CausalitySynchronousWork_ProgressNotification) = 1, Execution (CausalitySynchronousWork_Execution) = 2,
-}}
-DEFINE_IID!(IID_ITracingStatusChangedEventArgs, 1091270417, 65339, 18303, 156, 154, 210, 239, 218, 48, 45, 195);
-RT_INTERFACE!{interface ITracingStatusChangedEventArgs(ITracingStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITracingStatusChangedEventArgs] {
-    fn get_Enabled(&self, out: *mut bool) -> HRESULT,
-    fn get_TraceLevel(&self, out: *mut CausalityTraceLevel) -> HRESULT
-}}
-impl ITracingStatusChangedEventArgs {
-    #[inline] pub unsafe fn get_enabled(&self) -> Result<bool> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Enabled)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_trace_level(&self) -> Result<CausalityTraceLevel> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TraceLevel)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
+RT_CLASS!{static class AsyncCausalityTracer}
+impl RtActivatable<IAsyncCausalityTracerStatics> for AsyncCausalityTracer {}
+impl AsyncCausalityTracer {
+    #[inline] pub fn trace_operation_creation(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, operationName: &HStringArg, relatedContext: u64) -> Result<()> { unsafe {
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_operation_creation(traceLevel, source, platformId, operationId, operationName, relatedContext)
+    }}
+    #[inline] pub fn trace_operation_completion(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, status: super::AsyncStatus) -> Result<()> { unsafe {
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_operation_completion(traceLevel, source, platformId, operationId, status)
+    }}
+    #[inline] pub fn trace_operation_relation(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, relation: CausalityRelation) -> Result<()> { unsafe {
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_operation_relation(traceLevel, source, platformId, operationId, relation)
+    }}
+    #[inline] pub fn trace_synchronous_work_start(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, work: CausalitySynchronousWork) -> Result<()> { unsafe {
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_synchronous_work_start(traceLevel, source, platformId, operationId, work)
+    }}
+    #[inline] pub fn trace_synchronous_work_completion(traceLevel: CausalityTraceLevel, source: CausalitySource, work: CausalitySynchronousWork) -> Result<()> { unsafe {
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_synchronous_work_completion(traceLevel, source, work)
+    }}
+    #[inline] pub fn add_tracing_status_changed(handler: &super::EventHandler<TracingStatusChangedEventArgs>) -> Result<super::EventRegistrationToken> { unsafe {
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().add_tracing_status_changed(handler)
+    }}
+    #[inline] pub fn remove_tracing_status_changed(cookie: super::EventRegistrationToken) -> Result<()> { unsafe {
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().remove_tracing_status_changed(cookie)
+    }}
 }
+DEFINE_CLSID!(AsyncCausalityTracer(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,65,115,121,110,99,67,97,117,115,97,108,105,116,121,84,114,97,99,101,114,0]) [CLSID_AsyncCausalityTracer]);
 DEFINE_IID!(IID_IAsyncCausalityTracerStatics, 1350896422, 9854, 17691, 168, 144, 171, 106, 55, 2, 69, 238);
 RT_INTERFACE!{static interface IAsyncCausalityTracerStatics(IAsyncCausalityTracerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncCausalityTracerStatics] {
     fn TraceOperationCreation(&self, traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, operationName: HSTRING, relatedContext: u64) -> HRESULT,
@@ -5243,74 +5506,18 @@ impl IAsyncCausalityTracerStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
-RT_CLASS!{class TracingStatusChangedEventArgs: ITracingStatusChangedEventArgs}
-RT_CLASS!{static class AsyncCausalityTracer}
-impl RtActivatable<IAsyncCausalityTracerStatics> for AsyncCausalityTracer {}
-impl AsyncCausalityTracer {
-    #[inline] pub fn trace_operation_creation(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, operationName: &HStringArg, relatedContext: u64) -> Result<()> { unsafe {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_operation_creation(traceLevel, source, platformId, operationId, operationName, relatedContext)
-    }}
-    #[inline] pub fn trace_operation_completion(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, status: super::AsyncStatus) -> Result<()> { unsafe {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_operation_completion(traceLevel, source, platformId, operationId, status)
-    }}
-    #[inline] pub fn trace_operation_relation(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, relation: CausalityRelation) -> Result<()> { unsafe {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_operation_relation(traceLevel, source, platformId, operationId, relation)
-    }}
-    #[inline] pub fn trace_synchronous_work_start(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, work: CausalitySynchronousWork) -> Result<()> { unsafe {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_synchronous_work_start(traceLevel, source, platformId, operationId, work)
-    }}
-    #[inline] pub fn trace_synchronous_work_completion(traceLevel: CausalityTraceLevel, source: CausalitySource, work: CausalitySynchronousWork) -> Result<()> { unsafe {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_synchronous_work_completion(traceLevel, source, work)
-    }}
-    #[inline] pub fn add_tracing_status_changed(handler: &super::EventHandler<TracingStatusChangedEventArgs>) -> Result<super::EventRegistrationToken> { unsafe {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().add_tracing_status_changed(handler)
-    }}
-    #[inline] pub fn remove_tracing_status_changed(cookie: super::EventRegistrationToken) -> Result<()> { unsafe {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().remove_tracing_status_changed(cookie)
-    }}
-}
-DEFINE_CLSID!(AsyncCausalityTracer(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,65,115,121,110,99,67,97,117,115,97,108,105,116,121,84,114,97,99,101,114,0]) [CLSID_AsyncCausalityTracer]);
-RT_ENUM! { enum ErrorOptions: u32 {
-    None (ErrorOptions_None) = 0, SuppressExceptions (ErrorOptions_SuppressExceptions) = 1, ForceExceptions (ErrorOptions_ForceExceptions) = 2, UseSetErrorInfo (ErrorOptions_UseSetErrorInfo) = 4, SuppressSetErrorInfo (ErrorOptions_SuppressSetErrorInfo) = 8,
+RT_ENUM! { enum CausalityRelation: i32 {
+    AssignDelegate (CausalityRelation_AssignDelegate) = 0, Join (CausalityRelation_Join) = 1, Choice (CausalityRelation_Choice) = 2, Cancel (CausalityRelation_Cancel) = 3, Error (CausalityRelation_Error) = 4,
 }}
-DEFINE_IID!(IID_IErrorReportingSettings, 372676498, 45118, 19361, 139, 184, 210, 143, 74, 180, 210, 192);
-RT_INTERFACE!{interface IErrorReportingSettings(IErrorReportingSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorReportingSettings] {
-    fn SetErrorOptions(&self, value: ErrorOptions) -> HRESULT,
-    fn GetErrorOptions(&self, out: *mut ErrorOptions) -> HRESULT
+RT_ENUM! { enum CausalitySource: i32 {
+    Application (CausalitySource_Application) = 0, Library (CausalitySource_Library) = 1, System (CausalitySource_System) = 2,
 }}
-impl IErrorReportingSettings {
-    #[inline] pub unsafe fn set_error_options(&self, value: ErrorOptions) -> Result<()> {
-        let hr = ((*self.lpVtbl).SetErrorOptions)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_error_options(&self) -> Result<ErrorOptions> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetErrorOptions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-}
-RT_CLASS!{class RuntimeBrokerErrorSettings: IErrorReportingSettings}
-impl RtActivatable<IActivationFactory> for RuntimeBrokerErrorSettings {}
-DEFINE_CLSID!(RuntimeBrokerErrorSettings(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,82,117,110,116,105,109,101,66,114,111,107,101,114,69,114,114,111,114,83,101,116,116,105,110,103,115,0]) [CLSID_RuntimeBrokerErrorSettings]);
-DEFINE_IID!(IID_IErrorDetailsStatics, 3077584720, 2845, 18120, 170, 14, 75, 129, 120, 228, 252, 233);
-RT_INTERFACE!{static interface IErrorDetailsStatics(IErrorDetailsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorDetailsStatics] {
-    fn CreateFromHResultAsync(&self, errorCode: i32, out: *mut *mut super::IAsyncOperation<ErrorDetails>) -> HRESULT
+RT_ENUM! { enum CausalitySynchronousWork: i32 {
+    CompletionNotification (CausalitySynchronousWork_CompletionNotification) = 0, ProgressNotification (CausalitySynchronousWork_ProgressNotification) = 1, Execution (CausalitySynchronousWork_Execution) = 2,
 }}
-impl IErrorDetailsStatics {
-    #[inline] pub unsafe fn create_from_hresult_async(&self, errorCode: i32) -> Result<ComPtr<super::IAsyncOperation<ErrorDetails>>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromHResultAsync)(self as *const _ as *mut _, errorCode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-}
-RT_CLASS!{class ErrorDetails: IErrorDetails}
-impl RtActivatable<IErrorDetailsStatics> for ErrorDetails {}
-impl ErrorDetails {
-    #[inline] pub fn create_from_hresult_async(errorCode: i32) -> Result<ComPtr<super::IAsyncOperation<ErrorDetails>>> { unsafe {
-        <Self as RtActivatable<IErrorDetailsStatics>>::get_activation_factory().create_from_hresult_async(errorCode)
-    }}
-}
-DEFINE_CLSID!(ErrorDetails(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,69,114,114,111,114,68,101,116,97,105,108,115,0]) [CLSID_ErrorDetails]);
+RT_ENUM! { enum CausalityTraceLevel: i32 {
+    Required (CausalityTraceLevel_Required) = 0, Important (CausalityTraceLevel_Important) = 1, Verbose (CausalityTraceLevel_Verbose) = 2,
+}}
 DEFINE_IID!(IID_IErrorDetails, 931969793, 11465, 17039, 140, 85, 44, 153, 13, 70, 62, 143);
 RT_INTERFACE!{interface IErrorDetails(IErrorDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorDetails] {
     fn get_Description(&self, out: *mut HSTRING) -> HRESULT,
@@ -5334,106 +5541,298 @@ impl IErrorDetails {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_ENUM! { enum LoggingLevel: i32 {
-    Verbose (LoggingLevel_Verbose) = 0, Information (LoggingLevel_Information) = 1, Warning (LoggingLevel_Warning) = 2, Error (LoggingLevel_Error) = 3, Critical (LoggingLevel_Critical) = 4,
-}}
-RT_ENUM! { enum LoggingOpcode: i32 {
-    Info (LoggingOpcode_Info) = 0, Start (LoggingOpcode_Start) = 1, Stop (LoggingOpcode_Stop) = 2, Reply (LoggingOpcode_Reply) = 6, Resume (LoggingOpcode_Resume) = 7, Suspend (LoggingOpcode_Suspend) = 8, Send (LoggingOpcode_Send) = 9,
-}}
-RT_ENUM! { enum LoggingFieldFormat: i32 {
-    Default (LoggingFieldFormat_Default) = 0, Hidden (LoggingFieldFormat_Hidden) = 1, String (LoggingFieldFormat_String) = 2, Boolean (LoggingFieldFormat_Boolean) = 3, Hexadecimal (LoggingFieldFormat_Hexadecimal) = 4, ProcessId (LoggingFieldFormat_ProcessId) = 5, ThreadId (LoggingFieldFormat_ThreadId) = 6, Port (LoggingFieldFormat_Port) = 7, Ipv4Address (LoggingFieldFormat_Ipv4Address) = 8, Ipv6Address (LoggingFieldFormat_Ipv6Address) = 9, SocketAddress (LoggingFieldFormat_SocketAddress) = 10, Xml (LoggingFieldFormat_Xml) = 11, Json (LoggingFieldFormat_Json) = 12, Win32Error (LoggingFieldFormat_Win32Error) = 13, NTStatus (LoggingFieldFormat_NTStatus) = 14, HResult (LoggingFieldFormat_HResult) = 15, FileTime (LoggingFieldFormat_FileTime) = 16, Signed (LoggingFieldFormat_Signed) = 17, Unsigned (LoggingFieldFormat_Unsigned) = 18,
-}}
-DEFINE_IID!(IID_ILoggingOptions, 2428270672, 402, 20317, 172, 38, 0, 106, 218, 202, 18, 216);
-RT_INTERFACE!{interface ILoggingOptions(ILoggingOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingOptions] {
-    fn get_Keywords(&self, out: *mut i64) -> HRESULT,
-    fn put_Keywords(&self, value: i64) -> HRESULT,
-    fn get_Tags(&self, out: *mut i32) -> HRESULT,
-    fn put_Tags(&self, value: i32) -> HRESULT,
-    fn get_Task(&self, out: *mut i16) -> HRESULT,
-    fn put_Task(&self, value: i16) -> HRESULT,
-    fn get_Opcode(&self, out: *mut LoggingOpcode) -> HRESULT,
-    fn put_Opcode(&self, value: LoggingOpcode) -> HRESULT,
-    fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
-    fn put_ActivityId(&self, value: Guid) -> HRESULT,
-    fn get_RelatedActivityId(&self, out: *mut Guid) -> HRESULT,
-    fn put_RelatedActivityId(&self, value: Guid) -> HRESULT
-}}
-impl ILoggingOptions {
-    #[inline] pub unsafe fn get_keywords(&self) -> Result<i64> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Keywords)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn set_keywords(&self, value: i64) -> Result<()> {
-        let hr = ((*self.lpVtbl).put_Keywords)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_tags(&self) -> Result<i32> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Tags)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn set_tags(&self, value: i32) -> Result<()> {
-        let hr = ((*self.lpVtbl).put_Tags)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_task(&self) -> Result<i16> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Task)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn set_task(&self, value: i16) -> Result<()> {
-        let hr = ((*self.lpVtbl).put_Task)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_opcode(&self) -> Result<LoggingOpcode> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Opcode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn set_opcode(&self, value: LoggingOpcode) -> Result<()> {
-        let hr = ((*self.lpVtbl).put_Opcode)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_activity_id(&self) -> Result<Guid> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ActivityId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn set_activity_id(&self, value: Guid) -> Result<()> {
-        let hr = ((*self.lpVtbl).put_ActivityId)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_related_activity_id(&self) -> Result<Guid> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_RelatedActivityId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn set_related_activity_id(&self, value: Guid) -> Result<()> {
-        let hr = ((*self.lpVtbl).put_RelatedActivityId)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
+RT_CLASS!{class ErrorDetails: IErrorDetails}
+impl RtActivatable<IErrorDetailsStatics> for ErrorDetails {}
+impl ErrorDetails {
+    #[inline] pub fn create_from_hresult_async(errorCode: i32) -> Result<ComPtr<super::IAsyncOperation<ErrorDetails>>> { unsafe {
+        <Self as RtActivatable<IErrorDetailsStatics>>::get_activation_factory().create_from_hresult_async(errorCode)
+    }}
 }
-DEFINE_IID!(IID_ILoggingOptionsFactory, 3608397515, 39083, 17995, 159, 34, 163, 38, 132, 120, 54, 138);
-RT_INTERFACE!{static interface ILoggingOptionsFactory(ILoggingOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingOptionsFactory] {
-    fn CreateWithKeywords(&self, keywords: i64, out: *mut *mut LoggingOptions) -> HRESULT
+DEFINE_CLSID!(ErrorDetails(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,69,114,114,111,114,68,101,116,97,105,108,115,0]) [CLSID_ErrorDetails]);
+DEFINE_IID!(IID_IErrorDetailsStatics, 3077584720, 2845, 18120, 170, 14, 75, 129, 120, 228, 252, 233);
+RT_INTERFACE!{static interface IErrorDetailsStatics(IErrorDetailsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorDetailsStatics] {
+    fn CreateFromHResultAsync(&self, errorCode: i32, out: *mut *mut super::IAsyncOperation<ErrorDetails>) -> HRESULT
 }}
-impl ILoggingOptionsFactory {
-    #[inline] pub unsafe fn create_with_keywords(&self, keywords: i64) -> Result<ComPtr<LoggingOptions>> {
+impl IErrorDetailsStatics {
+    #[inline] pub unsafe fn create_from_hresult_async(&self, errorCode: i32) -> Result<ComPtr<super::IAsyncOperation<ErrorDetails>>> {
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithKeywords)(self as *const _ as *mut _, keywords, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromHResultAsync)(self as *const _ as *mut _, errorCode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_CLASS!{class LoggingOptions: ILoggingOptions}
-impl RtActivatable<ILoggingOptionsFactory> for LoggingOptions {}
-impl RtActivatable<IActivationFactory> for LoggingOptions {}
-impl LoggingOptions {
-    #[inline] pub fn create_with_keywords(keywords: i64) -> Result<ComPtr<LoggingOptions>> { unsafe {
-        <Self as RtActivatable<ILoggingOptionsFactory>>::get_activation_factory().create_with_keywords(keywords)
+RT_ENUM! { enum ErrorOptions: u32 {
+    None (ErrorOptions_None) = 0, SuppressExceptions (ErrorOptions_SuppressExceptions) = 1, ForceExceptions (ErrorOptions_ForceExceptions) = 2, UseSetErrorInfo (ErrorOptions_UseSetErrorInfo) = 4, SuppressSetErrorInfo (ErrorOptions_SuppressSetErrorInfo) = 8,
+}}
+DEFINE_IID!(IID_IErrorReportingSettings, 372676498, 45118, 19361, 139, 184, 210, 143, 74, 180, 210, 192);
+RT_INTERFACE!{interface IErrorReportingSettings(IErrorReportingSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorReportingSettings] {
+    fn SetErrorOptions(&self, value: ErrorOptions) -> HRESULT,
+    fn GetErrorOptions(&self, out: *mut ErrorOptions) -> HRESULT
+}}
+impl IErrorReportingSettings {
+    #[inline] pub unsafe fn set_error_options(&self, value: ErrorOptions) -> Result<()> {
+        let hr = ((*self.lpVtbl).SetErrorOptions)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_error_options(&self) -> Result<ErrorOptions> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetErrorOptions)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_IFileLoggingSession, 617038358, 65234, 16460, 137, 95, 31, 150, 153, 203, 2, 247);
+RT_INTERFACE!{interface IFileLoggingSession(IFileLoggingSessionVtbl): IInspectable(IInspectableVtbl) [IID_IFileLoggingSession] {
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn AddLoggingChannel(&self, loggingChannel: *mut ILoggingChannel) -> HRESULT,
+    fn AddLoggingChannelWithLevel(&self, loggingChannel: *mut ILoggingChannel, maxLevel: LoggingLevel) -> HRESULT,
+    fn RemoveLoggingChannel(&self, loggingChannel: *mut ILoggingChannel) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
+    #[cfg(feature="windows-storage")] fn CloseAndSaveToFileAsync(&self, out: *mut *mut super::IAsyncOperation<super::super::storage::StorageFile>) -> HRESULT,
+    fn add_LogFileGenerated(&self, handler: *mut super::TypedEventHandler<IFileLoggingSession, LogFileGeneratedEventArgs>, out: *mut super::EventRegistrationToken) -> HRESULT,
+    fn remove_LogFileGenerated(&self, token: super::EventRegistrationToken) -> HRESULT
+}}
+impl IFileLoggingSession {
+    #[inline] pub unsafe fn get_name(&self) -> Result<HString> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn add_logging_channel(&self, loggingChannel: &ILoggingChannel) -> Result<()> {
+        let hr = ((*self.lpVtbl).AddLoggingChannel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn add_logging_channel_with_level(&self, loggingChannel: &ILoggingChannel, maxLevel: LoggingLevel) -> Result<()> {
+        let hr = ((*self.lpVtbl).AddLoggingChannelWithLevel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _, maxLevel);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn remove_logging_channel(&self, loggingChannel: &ILoggingChannel) -> Result<()> {
+        let hr = ((*self.lpVtbl).RemoveLoggingChannel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn close_and_save_to_file_async(&self) -> Result<ComPtr<super::IAsyncOperation<super::super::storage::StorageFile>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CloseAndSaveToFileAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn add_log_file_generated(&self, handler: &super::TypedEventHandler<IFileLoggingSession, LogFileGeneratedEventArgs>) -> Result<super::EventRegistrationToken> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_LogFileGenerated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn remove_log_file_generated(&self, token: super::EventRegistrationToken) -> Result<()> {
+        let hr = ((*self.lpVtbl).remove_LogFileGenerated)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+RT_CLASS!{class FileLoggingSession: IFileLoggingSession}
+impl RtActivatable<IFileLoggingSessionFactory> for FileLoggingSession {}
+impl FileLoggingSession {
+    #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<FileLoggingSession>> { unsafe {
+        <Self as RtActivatable<IFileLoggingSessionFactory>>::get_activation_factory().create(name)
     }}
 }
-DEFINE_CLSID!(LoggingOptions(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,79,112,116,105,111,110,115,0]) [CLSID_LoggingOptions]);
+DEFINE_CLSID!(FileLoggingSession(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,70,105,108,101,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]) [CLSID_FileLoggingSession]);
+DEFINE_IID!(IID_IFileLoggingSessionFactory, 4003499470, 33863, 19882, 145, 51, 18, 235, 70, 246, 151, 212);
+RT_INTERFACE!{static interface IFileLoggingSessionFactory(IFileLoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileLoggingSessionFactory] {
+    fn Create(&self, name: HSTRING, out: *mut *mut FileLoggingSession) -> HRESULT
+}}
+impl IFileLoggingSessionFactory {
+    #[inline] pub unsafe fn create(&self, name: &HStringArg) -> Result<ComPtr<FileLoggingSession>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, name.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_ILogFileGeneratedEventArgs, 647927663, 3384, 19482, 181, 63, 179, 149, 216, 129, 223, 132);
+RT_INTERFACE!{interface ILogFileGeneratedEventArgs(ILogFileGeneratedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ILogFileGeneratedEventArgs] {
+    #[cfg(feature="windows-storage")] fn get_File(&self, out: *mut *mut super::super::storage::StorageFile) -> HRESULT
+}}
+impl ILogFileGeneratedEventArgs {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<ComPtr<super::super::storage::StorageFile>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_File)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
+RT_CLASS!{class LogFileGeneratedEventArgs: ILogFileGeneratedEventArgs}
+DEFINE_IID!(IID_ILoggingActivity, 3154323777, 46950, 19637, 152, 72, 151, 172, 107, 166, 214, 12);
+RT_INTERFACE!{interface ILoggingActivity(ILoggingActivityVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivity] {
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Id(&self, out: *mut Guid) -> HRESULT
+}}
+impl ILoggingActivity {
+    #[inline] pub unsafe fn get_name(&self) -> Result<HString> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_id(&self) -> Result<Guid> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+}
+RT_CLASS!{class LoggingActivity: ILoggingActivity}
+impl RtActivatable<ILoggingActivityFactory> for LoggingActivity {}
+impl LoggingActivity {
+    #[inline] pub fn create_logging_activity(activityName: &HStringArg, loggingChannel: &ILoggingChannel) -> Result<ComPtr<LoggingActivity>> { unsafe {
+        <Self as RtActivatable<ILoggingActivityFactory>>::get_activation_factory().create_logging_activity(activityName, loggingChannel)
+    }}
+    #[inline] pub fn create_logging_activity_with_level(activityName: &HStringArg, loggingChannel: &ILoggingChannel, level: LoggingLevel) -> Result<ComPtr<LoggingActivity>> { unsafe {
+        <Self as RtActivatable<ILoggingActivityFactory>>::get_activation_factory().create_logging_activity_with_level(activityName, loggingChannel, level)
+    }}
+}
+DEFINE_CLSID!(LoggingActivity(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,65,99,116,105,118,105,116,121,0]) [CLSID_LoggingActivity]);
+DEFINE_IID!(IID_ILoggingActivity2, 650287112, 25378, 17770, 175, 130, 128, 200, 100, 47, 23, 139);
+RT_INTERFACE!{interface ILoggingActivity2(ILoggingActivity2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivity2] {
+    fn get_Channel(&self, out: *mut *mut LoggingChannel) -> HRESULT,
+    fn StopActivity(&self, stopEventName: HSTRING) -> HRESULT,
+    fn StopActivityWithFields(&self, stopEventName: HSTRING, fields: *mut LoggingFields) -> HRESULT,
+    fn StopActivityWithFieldsAndOptions(&self, stopEventName: HSTRING, fields: *mut LoggingFields, options: *mut LoggingOptions) -> HRESULT
+}}
+impl ILoggingActivity2 {
+    #[inline] pub unsafe fn get_channel(&self) -> Result<ComPtr<LoggingChannel>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Channel)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn stop_activity(&self, stopEventName: &HStringArg) -> Result<()> {
+        let hr = ((*self.lpVtbl).StopActivity)(self as *const _ as *mut _, stopEventName.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn stop_activity_with_fields(&self, stopEventName: &HStringArg, fields: &LoggingFields) -> Result<()> {
+        let hr = ((*self.lpVtbl).StopActivityWithFields)(self as *const _ as *mut _, stopEventName.get(), fields as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn stop_activity_with_fields_and_options(&self, stopEventName: &HStringArg, fields: &LoggingFields, options: &LoggingOptions) -> Result<()> {
+        let hr = ((*self.lpVtbl).StopActivityWithFieldsAndOptions)(self as *const _ as *mut _, stopEventName.get(), fields as *const _ as *mut _, options as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_ILoggingActivityFactory, 1798550659, 57610, 19544, 151, 213, 16, 251, 69, 16, 116, 251);
+RT_INTERFACE!{static interface ILoggingActivityFactory(ILoggingActivityFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivityFactory] {
+    fn CreateLoggingActivity(&self, activityName: HSTRING, loggingChannel: *mut ILoggingChannel, out: *mut *mut LoggingActivity) -> HRESULT,
+    fn CreateLoggingActivityWithLevel(&self, activityName: HSTRING, loggingChannel: *mut ILoggingChannel, level: LoggingLevel, out: *mut *mut LoggingActivity) -> HRESULT
+}}
+impl ILoggingActivityFactory {
+    #[inline] pub unsafe fn create_logging_activity(&self, activityName: &HStringArg, loggingChannel: &ILoggingChannel) -> Result<ComPtr<LoggingActivity>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateLoggingActivity)(self as *const _ as *mut _, activityName.get(), loggingChannel as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn create_logging_activity_with_level(&self, activityName: &HStringArg, loggingChannel: &ILoggingChannel, level: LoggingLevel) -> Result<ComPtr<LoggingActivity>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateLoggingActivityWithLevel)(self as *const _ as *mut _, activityName.get(), loggingChannel as *const _ as *mut _, level, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_ILoggingChannel, 3919905603, 4567, 20225, 181, 202, 207, 73, 82, 120, 192, 168);
+RT_INTERFACE!{interface ILoggingChannel(ILoggingChannelVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannel] {
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Enabled(&self, out: *mut bool) -> HRESULT,
+    fn get_Level(&self, out: *mut LoggingLevel) -> HRESULT,
+    fn LogMessage(&self, eventString: HSTRING) -> HRESULT,
+    fn LogMessageWithLevel(&self, eventString: HSTRING, level: LoggingLevel) -> HRESULT,
+    fn LogValuePair(&self, value1: HSTRING, value2: i32) -> HRESULT,
+    fn LogValuePairWithLevel(&self, value1: HSTRING, value2: i32, level: LoggingLevel) -> HRESULT,
+    fn add_LoggingEnabled(&self, handler: *mut super::TypedEventHandler<ILoggingChannel, IInspectable>, out: *mut super::EventRegistrationToken) -> HRESULT,
+    fn remove_LoggingEnabled(&self, token: super::EventRegistrationToken) -> HRESULT
+}}
+impl ILoggingChannel {
+    #[inline] pub unsafe fn get_name(&self) -> Result<HString> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_enabled(&self) -> Result<bool> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Enabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_level(&self) -> Result<LoggingLevel> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Level)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn log_message(&self, eventString: &HStringArg) -> Result<()> {
+        let hr = ((*self.lpVtbl).LogMessage)(self as *const _ as *mut _, eventString.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn log_message_with_level(&self, eventString: &HStringArg, level: LoggingLevel) -> Result<()> {
+        let hr = ((*self.lpVtbl).LogMessageWithLevel)(self as *const _ as *mut _, eventString.get(), level);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn log_value_pair(&self, value1: &HStringArg, value2: i32) -> Result<()> {
+        let hr = ((*self.lpVtbl).LogValuePair)(self as *const _ as *mut _, value1.get(), value2);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn log_value_pair_with_level(&self, value1: &HStringArg, value2: i32, level: LoggingLevel) -> Result<()> {
+        let hr = ((*self.lpVtbl).LogValuePairWithLevel)(self as *const _ as *mut _, value1.get(), value2, level);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn add_logging_enabled(&self, handler: &super::TypedEventHandler<ILoggingChannel, IInspectable>) -> Result<super::EventRegistrationToken> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_LoggingEnabled)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn remove_logging_enabled(&self, token: super::EventRegistrationToken) -> Result<()> {
+        let hr = ((*self.lpVtbl).remove_LoggingEnabled)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+RT_CLASS!{class LoggingChannel: ILoggingChannel}
+impl RtActivatable<ILoggingChannelFactory> for LoggingChannel {}
+impl RtActivatable<ILoggingChannelFactory2> for LoggingChannel {}
+impl LoggingChannel {
+    #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<LoggingChannel>> { unsafe {
+        <Self as RtActivatable<ILoggingChannelFactory>>::get_activation_factory().create(name)
+    }}
+    #[inline] pub fn create_with_options(name: &HStringArg, options: &LoggingChannelOptions) -> Result<ComPtr<LoggingChannel>> { unsafe {
+        <Self as RtActivatable<ILoggingChannelFactory2>>::get_activation_factory().create_with_options(name, options)
+    }}
+    #[inline] pub fn create_with_options_and_id(name: &HStringArg, options: &LoggingChannelOptions, id: Guid) -> Result<ComPtr<LoggingChannel>> { unsafe {
+        <Self as RtActivatable<ILoggingChannelFactory2>>::get_activation_factory().create_with_options_and_id(name, options, id)
+    }}
+}
+DEFINE_CLSID!(LoggingChannel(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,0]) [CLSID_LoggingChannel]);
+DEFINE_IID!(IID_ILoggingChannel2, 2672573683, 2988, 17829, 158, 51, 186, 243, 243, 162, 70, 165);
+RT_INTERFACE!{interface ILoggingChannel2(ILoggingChannel2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannel2] {
+    fn get_Id(&self, out: *mut Guid) -> HRESULT
+}}
+impl ILoggingChannel2 {
+    #[inline] pub unsafe fn get_id(&self) -> Result<Guid> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_ILoggingChannelFactory, 1323064220, 44928, 19099, 176, 220, 57, 143, 154, 229, 32, 123);
+RT_INTERFACE!{static interface ILoggingChannelFactory(ILoggingChannelFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory] {
+    fn Create(&self, name: HSTRING, out: *mut *mut LoggingChannel) -> HRESULT
+}}
+impl ILoggingChannelFactory {
+    #[inline] pub unsafe fn create(&self, name: &HStringArg) -> Result<ComPtr<LoggingChannel>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, name.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_ILoggingChannelFactory2, 1282340317, 15143, 19913, 153, 240, 41, 156, 110, 70, 3, 161);
+RT_INTERFACE!{static interface ILoggingChannelFactory2(ILoggingChannelFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory2] {
+    fn CreateWithOptions(&self, name: HSTRING, options: *mut LoggingChannelOptions, out: *mut *mut LoggingChannel) -> HRESULT,
+    fn CreateWithOptionsAndId(&self, name: HSTRING, options: *mut LoggingChannelOptions, id: Guid, out: *mut *mut LoggingChannel) -> HRESULT
+}}
+impl ILoggingChannelFactory2 {
+    #[inline] pub unsafe fn create_with_options(&self, name: &HStringArg, options: &LoggingChannelOptions) -> Result<ComPtr<LoggingChannel>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithOptions)(self as *const _ as *mut _, name.get(), options as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn create_with_options_and_id(&self, name: &HStringArg, options: &LoggingChannelOptions, id: Guid) -> Result<ComPtr<LoggingChannel>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithOptionsAndId)(self as *const _ as *mut _, name.get(), options as *const _ as *mut _, id, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
 DEFINE_IID!(IID_ILoggingChannelOptions, 3286779903, 3771, 19027, 140, 84, 222, 194, 73, 38, 203, 44);
 RT_INTERFACE!{interface ILoggingChannelOptions(ILoggingChannelOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelOptions] {
     fn get_Group(&self, out: *mut Guid) -> HRESULT,
@@ -5450,6 +5849,15 @@ impl ILoggingChannelOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
+RT_CLASS!{class LoggingChannelOptions: ILoggingChannelOptions}
+impl RtActivatable<ILoggingChannelOptionsFactory> for LoggingChannelOptions {}
+impl RtActivatable<IActivationFactory> for LoggingChannelOptions {}
+impl LoggingChannelOptions {
+    #[inline] pub fn create(group: Guid) -> Result<ComPtr<LoggingChannelOptions>> { unsafe {
+        <Self as RtActivatable<ILoggingChannelOptionsFactory>>::get_activation_factory().create(group)
+    }}
+}
+DEFINE_CLSID!(LoggingChannelOptions(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,79,112,116,105,111,110,115,0]) [CLSID_LoggingChannelOptions]);
 DEFINE_IID!(IID_ILoggingChannelOptionsFactory, 2838581722, 32687, 16785, 135, 85, 94, 134, 220, 101, 216, 150);
 RT_INTERFACE!{static interface ILoggingChannelOptionsFactory(ILoggingChannelOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelOptionsFactory] {
     fn Create(&self, group: Guid, out: *mut *mut LoggingChannelOptions) -> HRESULT
@@ -5461,15 +5869,9 @@ impl ILoggingChannelOptionsFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_CLASS!{class LoggingChannelOptions: ILoggingChannelOptions}
-impl RtActivatable<ILoggingChannelOptionsFactory> for LoggingChannelOptions {}
-impl RtActivatable<IActivationFactory> for LoggingChannelOptions {}
-impl LoggingChannelOptions {
-    #[inline] pub fn create(group: Guid) -> Result<ComPtr<LoggingChannelOptions>> { unsafe {
-        <Self as RtActivatable<ILoggingChannelOptionsFactory>>::get_activation_factory().create(group)
-    }}
-}
-DEFINE_CLSID!(LoggingChannelOptions(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,79,112,116,105,111,110,115,0]) [CLSID_LoggingChannelOptions]);
+RT_ENUM! { enum LoggingFieldFormat: i32 {
+    Default (LoggingFieldFormat_Default) = 0, Hidden (LoggingFieldFormat_Hidden) = 1, String (LoggingFieldFormat_String) = 2, Boolean (LoggingFieldFormat_Boolean) = 3, Hexadecimal (LoggingFieldFormat_Hexadecimal) = 4, ProcessId (LoggingFieldFormat_ProcessId) = 5, ThreadId (LoggingFieldFormat_ThreadId) = 6, Port (LoggingFieldFormat_Port) = 7, Ipv4Address (LoggingFieldFormat_Ipv4Address) = 8, Ipv6Address (LoggingFieldFormat_Ipv6Address) = 9, SocketAddress (LoggingFieldFormat_SocketAddress) = 10, Xml (LoggingFieldFormat_Xml) = 11, Json (LoggingFieldFormat_Json) = 12, Win32Error (LoggingFieldFormat_Win32Error) = 13, NTStatus (LoggingFieldFormat_NTStatus) = 14, HResult (LoggingFieldFormat_HResult) = 15, FileTime (LoggingFieldFormat_FileTime) = 16, Signed (LoggingFieldFormat_Signed) = 17, Unsigned (LoggingFieldFormat_Unsigned) = 18,
+}}
 DEFINE_IID!(IID_ILoggingFields, 3623270319, 30253, 17785, 131, 189, 82, 194, 59, 195, 51, 188);
 RT_INTERFACE!{interface ILoggingFields(ILoggingFieldsVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingFields] {
     fn Clear(&self) -> HRESULT,
@@ -6053,6 +6455,155 @@ impl ILoggingFields {
 RT_CLASS!{class LoggingFields: ILoggingFields}
 impl RtActivatable<IActivationFactory> for LoggingFields {}
 DEFINE_CLSID!(LoggingFields(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,70,105,101,108,100,115,0]) [CLSID_LoggingFields]);
+RT_ENUM! { enum LoggingLevel: i32 {
+    Verbose (LoggingLevel_Verbose) = 0, Information (LoggingLevel_Information) = 1, Warning (LoggingLevel_Warning) = 2, Error (LoggingLevel_Error) = 3, Critical (LoggingLevel_Critical) = 4,
+}}
+RT_ENUM! { enum LoggingOpcode: i32 {
+    Info (LoggingOpcode_Info) = 0, Start (LoggingOpcode_Start) = 1, Stop (LoggingOpcode_Stop) = 2, Reply (LoggingOpcode_Reply) = 6, Resume (LoggingOpcode_Resume) = 7, Suspend (LoggingOpcode_Suspend) = 8, Send (LoggingOpcode_Send) = 9,
+}}
+DEFINE_IID!(IID_ILoggingOptions, 2428270672, 402, 20317, 172, 38, 0, 106, 218, 202, 18, 216);
+RT_INTERFACE!{interface ILoggingOptions(ILoggingOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingOptions] {
+    fn get_Keywords(&self, out: *mut i64) -> HRESULT,
+    fn put_Keywords(&self, value: i64) -> HRESULT,
+    fn get_Tags(&self, out: *mut i32) -> HRESULT,
+    fn put_Tags(&self, value: i32) -> HRESULT,
+    fn get_Task(&self, out: *mut i16) -> HRESULT,
+    fn put_Task(&self, value: i16) -> HRESULT,
+    fn get_Opcode(&self, out: *mut LoggingOpcode) -> HRESULT,
+    fn put_Opcode(&self, value: LoggingOpcode) -> HRESULT,
+    fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
+    fn put_ActivityId(&self, value: Guid) -> HRESULT,
+    fn get_RelatedActivityId(&self, out: *mut Guid) -> HRESULT,
+    fn put_RelatedActivityId(&self, value: Guid) -> HRESULT
+}}
+impl ILoggingOptions {
+    #[inline] pub unsafe fn get_keywords(&self) -> Result<i64> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Keywords)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn set_keywords(&self, value: i64) -> Result<()> {
+        let hr = ((*self.lpVtbl).put_Keywords)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_tags(&self) -> Result<i32> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Tags)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn set_tags(&self, value: i32) -> Result<()> {
+        let hr = ((*self.lpVtbl).put_Tags)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_task(&self) -> Result<i16> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Task)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn set_task(&self, value: i16) -> Result<()> {
+        let hr = ((*self.lpVtbl).put_Task)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_opcode(&self) -> Result<LoggingOpcode> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Opcode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn set_opcode(&self, value: LoggingOpcode) -> Result<()> {
+        let hr = ((*self.lpVtbl).put_Opcode)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_activity_id(&self) -> Result<Guid> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ActivityId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn set_activity_id(&self, value: Guid) -> Result<()> {
+        let hr = ((*self.lpVtbl).put_ActivityId)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn get_related_activity_id(&self) -> Result<Guid> {
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_RelatedActivityId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn set_related_activity_id(&self, value: Guid) -> Result<()> {
+        let hr = ((*self.lpVtbl).put_RelatedActivityId)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+RT_CLASS!{class LoggingOptions: ILoggingOptions}
+impl RtActivatable<ILoggingOptionsFactory> for LoggingOptions {}
+impl RtActivatable<IActivationFactory> for LoggingOptions {}
+impl LoggingOptions {
+    #[inline] pub fn create_with_keywords(keywords: i64) -> Result<ComPtr<LoggingOptions>> { unsafe {
+        <Self as RtActivatable<ILoggingOptionsFactory>>::get_activation_factory().create_with_keywords(keywords)
+    }}
+}
+DEFINE_CLSID!(LoggingOptions(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,79,112,116,105,111,110,115,0]) [CLSID_LoggingOptions]);
+DEFINE_IID!(IID_ILoggingOptionsFactory, 3608397515, 39083, 17995, 159, 34, 163, 38, 132, 120, 54, 138);
+RT_INTERFACE!{static interface ILoggingOptionsFactory(ILoggingOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingOptionsFactory] {
+    fn CreateWithKeywords(&self, keywords: i64, out: *mut *mut LoggingOptions) -> HRESULT
+}}
+impl ILoggingOptionsFactory {
+    #[inline] pub unsafe fn create_with_keywords(&self, keywords: i64) -> Result<ComPtr<LoggingOptions>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithKeywords)(self as *const _ as *mut _, keywords, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
+DEFINE_IID!(IID_ILoggingSession, 1646392070, 37760, 19159, 186, 245, 65, 234, 147, 16, 215, 104);
+RT_INTERFACE!{interface ILoggingSession(ILoggingSessionVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingSession] {
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-storage")] fn SaveToFileAsync(&self, folder: *mut super::super::storage::IStorageFolder, fileName: HSTRING, out: *mut *mut super::IAsyncOperation<super::super::storage::StorageFile>) -> HRESULT,
+    fn AddLoggingChannel(&self, loggingChannel: *mut ILoggingChannel) -> HRESULT,
+    fn AddLoggingChannelWithLevel(&self, loggingChannel: *mut ILoggingChannel, maxLevel: LoggingLevel) -> HRESULT,
+    fn RemoveLoggingChannel(&self, loggingChannel: *mut ILoggingChannel) -> HRESULT
+}}
+impl ILoggingSession {
+    #[inline] pub unsafe fn get_name(&self) -> Result<HString> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn save_to_file_async(&self, folder: &super::super::storage::IStorageFolder, fileName: &HStringArg) -> Result<ComPtr<super::IAsyncOperation<super::super::storage::StorageFile>>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SaveToFileAsync)(self as *const _ as *mut _, folder as *const _ as *mut _, fileName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn add_logging_channel(&self, loggingChannel: &ILoggingChannel) -> Result<()> {
+        let hr = ((*self.lpVtbl).AddLoggingChannel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn add_logging_channel_with_level(&self, loggingChannel: &ILoggingChannel, maxLevel: LoggingLevel) -> Result<()> {
+        let hr = ((*self.lpVtbl).AddLoggingChannelWithLevel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _, maxLevel);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+    #[inline] pub unsafe fn remove_logging_channel(&self, loggingChannel: &ILoggingChannel) -> Result<()> {
+        let hr = ((*self.lpVtbl).RemoveLoggingChannel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }
+}
+RT_CLASS!{class LoggingSession: ILoggingSession}
+impl RtActivatable<ILoggingSessionFactory> for LoggingSession {}
+impl LoggingSession {
+    #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<LoggingSession>> { unsafe {
+        <Self as RtActivatable<ILoggingSessionFactory>>::get_activation_factory().create(name)
+    }}
+}
+DEFINE_CLSID!(LoggingSession(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]) [CLSID_LoggingSession]);
+DEFINE_IID!(IID_ILoggingSessionFactory, 1318289125, 22781, 17888, 140, 47, 161, 50, 239, 249, 92, 30);
+RT_INTERFACE!{static interface ILoggingSessionFactory(ILoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingSessionFactory] {
+    fn Create(&self, name: HSTRING, out: *mut *mut LoggingSession) -> HRESULT
+}}
+impl ILoggingSessionFactory {
+    #[inline] pub unsafe fn create(&self, name: &HStringArg) -> Result<ComPtr<LoggingSession>> {
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, name.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }
+}
 DEFINE_IID!(IID_ILoggingTarget, 1710320693, 58248, 20006, 177, 122, 245, 28, 211, 168, 57, 22);
 RT_INTERFACE!{interface ILoggingTarget(ILoggingTargetVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingTarget] {
     fn IsEnabled(&self, out: *mut bool) -> HRESULT,
@@ -6120,324 +6671,30 @@ impl ILoggingTarget {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
-RT_CLASS!{class LoggingActivity: ILoggingActivity}
-impl RtActivatable<ILoggingActivityFactory> for LoggingActivity {}
-impl LoggingActivity {
-    #[inline] pub fn create_logging_activity(activityName: &HStringArg, loggingChannel: &ILoggingChannel) -> Result<ComPtr<LoggingActivity>> { unsafe {
-        <Self as RtActivatable<ILoggingActivityFactory>>::get_activation_factory().create_logging_activity(activityName, loggingChannel)
-    }}
-    #[inline] pub fn create_logging_activity_with_level(activityName: &HStringArg, loggingChannel: &ILoggingChannel, level: LoggingLevel) -> Result<ComPtr<LoggingActivity>> { unsafe {
-        <Self as RtActivatable<ILoggingActivityFactory>>::get_activation_factory().create_logging_activity_with_level(activityName, loggingChannel, level)
-    }}
-}
-DEFINE_CLSID!(LoggingActivity(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,65,99,116,105,118,105,116,121,0]) [CLSID_LoggingActivity]);
-DEFINE_IID!(IID_ILoggingChannel, 3919905603, 4567, 20225, 181, 202, 207, 73, 82, 120, 192, 168);
-RT_INTERFACE!{interface ILoggingChannel(ILoggingChannelVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannel] {
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+RT_CLASS!{class RuntimeBrokerErrorSettings: IErrorReportingSettings}
+impl RtActivatable<IActivationFactory> for RuntimeBrokerErrorSettings {}
+DEFINE_CLSID!(RuntimeBrokerErrorSettings(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,82,117,110,116,105,109,101,66,114,111,107,101,114,69,114,114,111,114,83,101,116,116,105,110,103,115,0]) [CLSID_RuntimeBrokerErrorSettings]);
+DEFINE_IID!(IID_ITracingStatusChangedEventArgs, 1091270417, 65339, 18303, 156, 154, 210, 239, 218, 48, 45, 195);
+RT_INTERFACE!{interface ITracingStatusChangedEventArgs(ITracingStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITracingStatusChangedEventArgs] {
     fn get_Enabled(&self, out: *mut bool) -> HRESULT,
-    fn get_Level(&self, out: *mut LoggingLevel) -> HRESULT,
-    fn LogMessage(&self, eventString: HSTRING) -> HRESULT,
-    fn LogMessageWithLevel(&self, eventString: HSTRING, level: LoggingLevel) -> HRESULT,
-    fn LogValuePair(&self, value1: HSTRING, value2: i32) -> HRESULT,
-    fn LogValuePairWithLevel(&self, value1: HSTRING, value2: i32, level: LoggingLevel) -> HRESULT,
-    fn add_LoggingEnabled(&self, handler: *mut super::TypedEventHandler<ILoggingChannel, IInspectable>, out: *mut super::EventRegistrationToken) -> HRESULT,
-    fn remove_LoggingEnabled(&self, token: super::EventRegistrationToken) -> HRESULT
+    fn get_TraceLevel(&self, out: *mut CausalityTraceLevel) -> HRESULT
 }}
-impl ILoggingChannel {
-    #[inline] pub unsafe fn get_name(&self) -> Result<HString> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }
+impl ITracingStatusChangedEventArgs {
     #[inline] pub unsafe fn get_enabled(&self) -> Result<bool> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Enabled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_level(&self) -> Result<LoggingLevel> {
+    #[inline] pub unsafe fn get_trace_level(&self) -> Result<CausalityTraceLevel> {
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Level)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn log_message(&self, eventString: &HStringArg) -> Result<()> {
-        let hr = ((*self.lpVtbl).LogMessage)(self as *const _ as *mut _, eventString.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn log_message_with_level(&self, eventString: &HStringArg, level: LoggingLevel) -> Result<()> {
-        let hr = ((*self.lpVtbl).LogMessageWithLevel)(self as *const _ as *mut _, eventString.get(), level);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn log_value_pair(&self, value1: &HStringArg, value2: i32) -> Result<()> {
-        let hr = ((*self.lpVtbl).LogValuePair)(self as *const _ as *mut _, value1.get(), value2);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn log_value_pair_with_level(&self, value1: &HStringArg, value2: i32, level: LoggingLevel) -> Result<()> {
-        let hr = ((*self.lpVtbl).LogValuePairWithLevel)(self as *const _ as *mut _, value1.get(), value2, level);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn add_logging_enabled(&self, handler: &super::TypedEventHandler<ILoggingChannel, IInspectable>) -> Result<super::EventRegistrationToken> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_LoggingEnabled)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn remove_logging_enabled(&self, token: super::EventRegistrationToken) -> Result<()> {
-        let hr = ((*self.lpVtbl).remove_LoggingEnabled)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_ILoggingChannel2, 2672573683, 2988, 17829, 158, 51, 186, 243, 243, 162, 70, 165);
-RT_INTERFACE!{interface ILoggingChannel2(ILoggingChannel2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannel2] {
-    fn get_Id(&self, out: *mut Guid) -> HRESULT
-}}
-impl ILoggingChannel2 {
-    #[inline] pub unsafe fn get_id(&self) -> Result<Guid> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_TraceLevel)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
 }
-DEFINE_IID!(IID_ILoggingChannelFactory, 1323064220, 44928, 19099, 176, 220, 57, 143, 154, 229, 32, 123);
-RT_INTERFACE!{static interface ILoggingChannelFactory(ILoggingChannelFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory] {
-    fn Create(&self, name: HSTRING, out: *mut *mut LoggingChannel) -> HRESULT
-}}
-impl ILoggingChannelFactory {
-    #[inline] pub unsafe fn create(&self, name: &HStringArg) -> Result<ComPtr<LoggingChannel>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-}
-RT_CLASS!{class LoggingChannel: ILoggingChannel}
-impl RtActivatable<ILoggingChannelFactory2> for LoggingChannel {}
-impl RtActivatable<ILoggingChannelFactory> for LoggingChannel {}
-impl LoggingChannel {
-    #[inline] pub fn create_with_options(name: &HStringArg, options: &LoggingChannelOptions) -> Result<ComPtr<LoggingChannel>> { unsafe {
-        <Self as RtActivatable<ILoggingChannelFactory2>>::get_activation_factory().create_with_options(name, options)
-    }}
-    #[inline] pub fn create_with_options_and_id(name: &HStringArg, options: &LoggingChannelOptions, id: Guid) -> Result<ComPtr<LoggingChannel>> { unsafe {
-        <Self as RtActivatable<ILoggingChannelFactory2>>::get_activation_factory().create_with_options_and_id(name, options, id)
-    }}
-    #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<LoggingChannel>> { unsafe {
-        <Self as RtActivatable<ILoggingChannelFactory>>::get_activation_factory().create(name)
-    }}
-}
-DEFINE_CLSID!(LoggingChannel(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,0]) [CLSID_LoggingChannel]);
-DEFINE_IID!(IID_ILoggingChannelFactory2, 1282340317, 15143, 19913, 153, 240, 41, 156, 110, 70, 3, 161);
-RT_INTERFACE!{static interface ILoggingChannelFactory2(ILoggingChannelFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory2] {
-    fn CreateWithOptions(&self, name: HSTRING, options: *mut LoggingChannelOptions, out: *mut *mut LoggingChannel) -> HRESULT,
-    fn CreateWithOptionsAndId(&self, name: HSTRING, options: *mut LoggingChannelOptions, id: Guid, out: *mut *mut LoggingChannel) -> HRESULT
-}}
-impl ILoggingChannelFactory2 {
-    #[inline] pub unsafe fn create_with_options(&self, name: &HStringArg, options: &LoggingChannelOptions) -> Result<ComPtr<LoggingChannel>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithOptions)(self as *const _ as *mut _, name.get(), options as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn create_with_options_and_id(&self, name: &HStringArg, options: &LoggingChannelOptions, id: Guid) -> Result<ComPtr<LoggingChannel>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithOptionsAndId)(self as *const _ as *mut _, name.get(), options as *const _ as *mut _, id, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_ILoggingActivity, 3154323777, 46950, 19637, 152, 72, 151, 172, 107, 166, 214, 12);
-RT_INTERFACE!{interface ILoggingActivity(ILoggingActivityVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivity] {
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Id(&self, out: *mut Guid) -> HRESULT
-}}
-impl ILoggingActivity {
-    #[inline] pub unsafe fn get_name(&self) -> Result<HString> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn get_id(&self) -> Result<Guid> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_ILoggingActivity2, 650287112, 25378, 17770, 175, 130, 128, 200, 100, 47, 23, 139);
-RT_INTERFACE!{interface ILoggingActivity2(ILoggingActivity2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivity2] {
-    fn get_Channel(&self, out: *mut *mut LoggingChannel) -> HRESULT,
-    fn StopActivity(&self, stopEventName: HSTRING) -> HRESULT,
-    fn StopActivityWithFields(&self, stopEventName: HSTRING, fields: *mut LoggingFields) -> HRESULT,
-    fn StopActivityWithFieldsAndOptions(&self, stopEventName: HSTRING, fields: *mut LoggingFields, options: *mut LoggingOptions) -> HRESULT
-}}
-impl ILoggingActivity2 {
-    #[inline] pub unsafe fn get_channel(&self) -> Result<ComPtr<LoggingChannel>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Channel)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn stop_activity(&self, stopEventName: &HStringArg) -> Result<()> {
-        let hr = ((*self.lpVtbl).StopActivity)(self as *const _ as *mut _, stopEventName.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn stop_activity_with_fields(&self, stopEventName: &HStringArg, fields: &LoggingFields) -> Result<()> {
-        let hr = ((*self.lpVtbl).StopActivityWithFields)(self as *const _ as *mut _, stopEventName.get(), fields as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn stop_activity_with_fields_and_options(&self, stopEventName: &HStringArg, fields: &LoggingFields, options: &LoggingOptions) -> Result<()> {
-        let hr = ((*self.lpVtbl).StopActivityWithFieldsAndOptions)(self as *const _ as *mut _, stopEventName.get(), fields as *const _ as *mut _, options as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_ILoggingActivityFactory, 1798550659, 57610, 19544, 151, 213, 16, 251, 69, 16, 116, 251);
-RT_INTERFACE!{static interface ILoggingActivityFactory(ILoggingActivityFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivityFactory] {
-    fn CreateLoggingActivity(&self, activityName: HSTRING, loggingChannel: *mut ILoggingChannel, out: *mut *mut LoggingActivity) -> HRESULT,
-    fn CreateLoggingActivityWithLevel(&self, activityName: HSTRING, loggingChannel: *mut ILoggingChannel, level: LoggingLevel, out: *mut *mut LoggingActivity) -> HRESULT
-}}
-impl ILoggingActivityFactory {
-    #[inline] pub unsafe fn create_logging_activity(&self, activityName: &HStringArg, loggingChannel: &ILoggingChannel) -> Result<ComPtr<LoggingActivity>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateLoggingActivity)(self as *const _ as *mut _, activityName.get(), loggingChannel as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn create_logging_activity_with_level(&self, activityName: &HStringArg, loggingChannel: &ILoggingChannel, level: LoggingLevel) -> Result<ComPtr<LoggingActivity>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateLoggingActivityWithLevel)(self as *const _ as *mut _, activityName.get(), loggingChannel as *const _ as *mut _, level, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_ILoggingSession, 1646392070, 37760, 19159, 186, 245, 65, 234, 147, 16, 215, 104);
-RT_INTERFACE!{interface ILoggingSession(ILoggingSessionVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingSession] {
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn SaveToFileAsync(&self, folder: *mut super::super::storage::IStorageFolder, fileName: HSTRING, out: *mut *mut super::IAsyncOperation<super::super::storage::StorageFile>) -> HRESULT,
-    fn AddLoggingChannel(&self, loggingChannel: *mut ILoggingChannel) -> HRESULT,
-    fn AddLoggingChannelWithLevel(&self, loggingChannel: *mut ILoggingChannel, maxLevel: LoggingLevel) -> HRESULT,
-    fn RemoveLoggingChannel(&self, loggingChannel: *mut ILoggingChannel) -> HRESULT
-}}
-impl ILoggingSession {
-    #[inline] pub unsafe fn get_name(&self) -> Result<HString> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn save_to_file_async(&self, folder: &super::super::storage::IStorageFolder, fileName: &HStringArg) -> Result<ComPtr<super::IAsyncOperation<super::super::storage::StorageFile>>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveToFileAsync)(self as *const _ as *mut _, folder as *const _ as *mut _, fileName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn add_logging_channel(&self, loggingChannel: &ILoggingChannel) -> Result<()> {
-        let hr = ((*self.lpVtbl).AddLoggingChannel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn add_logging_channel_with_level(&self, loggingChannel: &ILoggingChannel, maxLevel: LoggingLevel) -> Result<()> {
-        let hr = ((*self.lpVtbl).AddLoggingChannelWithLevel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _, maxLevel);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn remove_logging_channel(&self, loggingChannel: &ILoggingChannel) -> Result<()> {
-        let hr = ((*self.lpVtbl).RemoveLoggingChannel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_ILoggingSessionFactory, 1318289125, 22781, 17888, 140, 47, 161, 50, 239, 249, 92, 30);
-RT_INTERFACE!{static interface ILoggingSessionFactory(ILoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingSessionFactory] {
-    fn Create(&self, name: HSTRING, out: *mut *mut LoggingSession) -> HRESULT
-}}
-impl ILoggingSessionFactory {
-    #[inline] pub unsafe fn create(&self, name: &HStringArg) -> Result<ComPtr<LoggingSession>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-}
-RT_CLASS!{class LoggingSession: ILoggingSession}
-impl RtActivatable<ILoggingSessionFactory> for LoggingSession {}
-impl LoggingSession {
-    #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<LoggingSession>> { unsafe {
-        <Self as RtActivatable<ILoggingSessionFactory>>::get_activation_factory().create(name)
-    }}
-}
-DEFINE_CLSID!(LoggingSession(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]) [CLSID_LoggingSession]);
-DEFINE_IID!(IID_ILogFileGeneratedEventArgs, 647927663, 3384, 19482, 181, 63, 179, 149, 216, 129, 223, 132);
-RT_INTERFACE!{interface ILogFileGeneratedEventArgs(ILogFileGeneratedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ILogFileGeneratedEventArgs] {
-    #[cfg(feature="windows-storage")] fn get_File(&self, out: *mut *mut super::super::storage::StorageFile) -> HRESULT
-}}
-impl ILogFileGeneratedEventArgs {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<ComPtr<super::super::storage::StorageFile>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_File)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-}
-RT_CLASS!{class LogFileGeneratedEventArgs: ILogFileGeneratedEventArgs}
-DEFINE_IID!(IID_IFileLoggingSession, 617038358, 65234, 16460, 137, 95, 31, 150, 153, 203, 2, 247);
-RT_INTERFACE!{interface IFileLoggingSession(IFileLoggingSessionVtbl): IInspectable(IInspectableVtbl) [IID_IFileLoggingSession] {
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn AddLoggingChannel(&self, loggingChannel: *mut ILoggingChannel) -> HRESULT,
-    fn AddLoggingChannelWithLevel(&self, loggingChannel: *mut ILoggingChannel, maxLevel: LoggingLevel) -> HRESULT,
-    fn RemoveLoggingChannel(&self, loggingChannel: *mut ILoggingChannel) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-storage")] fn CloseAndSaveToFileAsync(&self, out: *mut *mut super::IAsyncOperation<super::super::storage::StorageFile>) -> HRESULT,
-    fn add_LogFileGenerated(&self, handler: *mut super::TypedEventHandler<IFileLoggingSession, LogFileGeneratedEventArgs>, out: *mut super::EventRegistrationToken) -> HRESULT,
-    fn remove_LogFileGenerated(&self, token: super::EventRegistrationToken) -> HRESULT
-}}
-impl IFileLoggingSession {
-    #[inline] pub unsafe fn get_name(&self) -> Result<HString> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn add_logging_channel(&self, loggingChannel: &ILoggingChannel) -> Result<()> {
-        let hr = ((*self.lpVtbl).AddLoggingChannel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn add_logging_channel_with_level(&self, loggingChannel: &ILoggingChannel, maxLevel: LoggingLevel) -> Result<()> {
-        let hr = ((*self.lpVtbl).AddLoggingChannelWithLevel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _, maxLevel);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn remove_logging_channel(&self, loggingChannel: &ILoggingChannel) -> Result<()> {
-        let hr = ((*self.lpVtbl).RemoveLoggingChannel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn close_and_save_to_file_async(&self) -> Result<ComPtr<super::IAsyncOperation<super::super::storage::StorageFile>>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CloseAndSaveToFileAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn add_log_file_generated(&self, handler: &super::TypedEventHandler<IFileLoggingSession, LogFileGeneratedEventArgs>) -> Result<super::EventRegistrationToken> {
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_LogFileGenerated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }
-    #[inline] pub unsafe fn remove_log_file_generated(&self, token: super::EventRegistrationToken) -> Result<()> {
-        let hr = ((*self.lpVtbl).remove_LogFileGenerated)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }
-}
-DEFINE_IID!(IID_IFileLoggingSessionFactory, 4003499470, 33863, 19882, 145, 51, 18, 235, 70, 246, 151, 212);
-RT_INTERFACE!{static interface IFileLoggingSessionFactory(IFileLoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileLoggingSessionFactory] {
-    fn Create(&self, name: HSTRING, out: *mut *mut FileLoggingSession) -> HRESULT
-}}
-impl IFileLoggingSessionFactory {
-    #[inline] pub unsafe fn create(&self, name: &HStringArg) -> Result<ComPtr<FileLoggingSession>> {
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }
-}
-RT_CLASS!{class FileLoggingSession: IFileLoggingSession}
-impl RtActivatable<IFileLoggingSessionFactory> for FileLoggingSession {}
-impl FileLoggingSession {
-    #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<FileLoggingSession>> { unsafe {
-        <Self as RtActivatable<IFileLoggingSessionFactory>>::get_activation_factory().create(name)
-    }}
-}
-DEFINE_CLSID!(FileLoggingSession(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,70,105,108,101,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]) [CLSID_FileLoggingSession]);
+RT_CLASS!{class TracingStatusChangedEventArgs: ITracingStatusChangedEventArgs}
 } // Windows.Foundation.Diagnostics
 pub mod numerics { // Windows.Foundation.Numerics
 use ::prelude::*;
-RT_STRUCT! { struct Vector2 {
-    X: f32, Y: f32,
-}}
-RT_STRUCT! { struct Vector3 {
-    X: f32, Y: f32, Z: f32,
-}}
-RT_STRUCT! { struct Vector4 {
-    X: f32, Y: f32, Z: f32, W: f32,
-}}
 RT_STRUCT! { struct Matrix3x2 {
     M11: f32, M12: f32, M21: f32, M22: f32, M31: f32, M32: f32,
 }}
@@ -6448,6 +6705,15 @@ RT_STRUCT! { struct Plane {
     Normal: Vector3, D: f32,
 }}
 RT_STRUCT! { struct Quaternion {
+    X: f32, Y: f32, Z: f32, W: f32,
+}}
+RT_STRUCT! { struct Vector2 {
+    X: f32, Y: f32,
+}}
+RT_STRUCT! { struct Vector3 {
+    X: f32, Y: f32, Z: f32,
+}}
+RT_STRUCT! { struct Vector4 {
     X: f32, Y: f32, Z: f32, W: f32,
 }}
 } // Windows.Foundation.Numerics
