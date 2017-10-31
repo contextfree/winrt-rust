@@ -64,7 +64,7 @@ impl DesignMode {
         <Self as RtActivatable<IDesignModeStatics2>>::get_activation_factory().get_design_mode2_enabled()
     }}
 }
-DEFINE_CLSID!(DesignMode(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,101,115,105,103,110,77,111,100,101,0]) [CLSID_DesignMode]);
+DEFINE_CLSID!(DesignMode: "Windows.ApplicationModel.DesignMode");
 DEFINE_IID!(IID_IDesignModeStatics, 741905356, 63514, 20090, 184, 87, 118, 168, 8, 135, 225, 133);
 RT_INTERFACE!{static interface IDesignModeStatics(IDesignModeStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDesignModeStatics] {
     fn get_DesignModeEnabled(&self, out: *mut bool) -> HRESULT
@@ -115,7 +115,7 @@ impl FullTrustProcessLauncher {
         <Self as RtActivatable<IFullTrustProcessLauncherStatics>>::get_activation_factory().launch_full_trust_process_for_app_with_parameters_async(fullTrustPackageRelativeAppId, parameterGroupId)
     }}
 }
-DEFINE_CLSID!(FullTrustProcessLauncher(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,70,117,108,108,84,114,117,115,116,80,114,111,99,101,115,115,76,97,117,110,99,104,101,114,0]) [CLSID_FullTrustProcessLauncher]);
+DEFINE_CLSID!(FullTrustProcessLauncher: "Windows.ApplicationModel.FullTrustProcessLauncher");
 DEFINE_IID!(IID_IFullTrustProcessLauncherStatics, 3615785855, 4352, 15467, 164, 85, 246, 38, 44, 195, 49, 182);
 RT_INTERFACE!{static interface IFullTrustProcessLauncherStatics(IFullTrustProcessLauncherStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFullTrustProcessLauncherStatics] {
     fn LaunchFullTrustProcessForCurrentAppAsync(&self, out: *mut *mut super::foundation::IAsyncAction) -> HRESULT,
@@ -194,7 +194,7 @@ impl Package {
         <Self as RtActivatable<IPackageStatics>>::get_activation_factory().get_current()
     }}
 }
-DEFINE_CLSID!(Package(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,99,107,97,103,101,0]) [CLSID_Package]);
+DEFINE_CLSID!(Package: "Windows.ApplicationModel.Package");
 DEFINE_IID!(IID_IPackage2, 2791387062, 30344, 19150, 149, 251, 53, 149, 56, 231, 170, 1);
 RT_INTERFACE!{interface IPackage2(IPackage2Vtbl): IInspectable(IInspectableVtbl) [IID_IPackage2] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -393,7 +393,7 @@ impl PackageCatalog {
         <Self as RtActivatable<IPackageCatalogStatics>>::get_activation_factory().open_for_current_user()
     }}
 }
-DEFINE_CLSID!(PackageCatalog(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,99,107,97,103,101,67,97,116,97,108,111,103,0]) [CLSID_PackageCatalog]);
+DEFINE_CLSID!(PackageCatalog: "Windows.ApplicationModel.PackageCatalog");
 DEFINE_IID!(IID_IPackageCatalog2, 2527464502, 36855, 17220, 182, 191, 238, 100, 194, 32, 126, 210);
 RT_INTERFACE!{interface IPackageCatalog2(IPackageCatalog2Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageCatalog2] {
     fn add_PackageContentGroupStaging(&self, handler: *mut super::foundation::TypedEventHandler<PackageCatalog, PackageContentGroupStagingEventArgs>, out: *mut super::foundation::EventRegistrationToken) -> HRESULT,
@@ -516,7 +516,7 @@ impl PackageContentGroup {
         <Self as RtActivatable<IPackageContentGroupStatics>>::get_activation_factory().get_required_group_name()
     }}
 }
-DEFINE_CLSID!(PackageContentGroup(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,99,107,97,103,101,67,111,110,116,101,110,116,71,114,111,117,112,0]) [CLSID_PackageContentGroup]);
+DEFINE_CLSID!(PackageContentGroup: "Windows.ApplicationModel.PackageContentGroup");
 DEFINE_IID!(IID_IPackageContentGroupStagingEventArgs, 1031520894, 28455, 17516, 152, 110, 212, 115, 61, 77, 145, 19);
 RT_INTERFACE!{interface IPackageContentGroupStagingEventArgs(IPackageContentGroupStagingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPackageContentGroupStagingEventArgs] {
     fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
@@ -979,7 +979,7 @@ impl StartupTask {
         <Self as RtActivatable<IStartupTaskStatics>>::get_activation_factory().get_async(taskId)
     }}
 }
-DEFINE_CLSID!(StartupTask(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,97,114,116,117,112,84,97,115,107,0]) [CLSID_StartupTask]);
+DEFINE_CLSID!(StartupTask: "Windows.ApplicationModel.StartupTask");
 RT_ENUM! { enum StartupTaskState: i32 {
     Disabled (StartupTaskState_Disabled) = 0, DisabledByUser (StartupTaskState_DisabledByUser) = 1, Enabled (StartupTaskState_Enabled) = 2, DisabledByPolicy (StartupTaskState_DisabledByPolicy) = 3,
 }}
@@ -1359,7 +1359,7 @@ impl IPhoneCallHistoryEntry {
 }
 RT_CLASS!{class PhoneCallHistoryEntry: IPhoneCallHistoryEntry}
 impl RtActivatable<IActivationFactory> for PhoneCallHistoryEntry {}
-DEFINE_CLSID!(PhoneCallHistoryEntry(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,97,108,108,115,46,80,104,111,110,101,67,97,108,108,72,105,115,116,111,114,121,69,110,116,114,121,0]) [CLSID_PhoneCallHistoryEntry]);
+DEFINE_CLSID!(PhoneCallHistoryEntry: "Windows.ApplicationModel.Calls.PhoneCallHistoryEntry");
 DEFINE_IID!(IID_IPhoneCallHistoryEntryAddress, 821123546, 14677, 16450, 132, 230, 102, 238, 191, 130, 230, 127);
 RT_INTERFACE!{interface IPhoneCallHistoryEntryAddress(IPhoneCallHistoryEntryAddressVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneCallHistoryEntryAddress] {
     fn get_ContactId(&self, out: *mut HSTRING) -> HRESULT,
@@ -1417,7 +1417,7 @@ impl PhoneCallHistoryEntryAddress {
         <Self as RtActivatable<IPhoneCallHistoryEntryAddressFactory>>::get_activation_factory().create(rawAddress, rawAddressKind)
     }}
 }
-DEFINE_CLSID!(PhoneCallHistoryEntryAddress(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,97,108,108,115,46,80,104,111,110,101,67,97,108,108,72,105,115,116,111,114,121,69,110,116,114,121,65,100,100,114,101,115,115,0]) [CLSID_PhoneCallHistoryEntryAddress]);
+DEFINE_CLSID!(PhoneCallHistoryEntryAddress: "Windows.ApplicationModel.Calls.PhoneCallHistoryEntryAddress");
 DEFINE_IID!(IID_IPhoneCallHistoryEntryAddressFactory, 4212108730, 51184, 19382, 159, 107, 186, 93, 115, 32, 154, 202);
 RT_INTERFACE!{static interface IPhoneCallHistoryEntryAddressFactory(IPhoneCallHistoryEntryAddressFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneCallHistoryEntryAddressFactory] {
     fn Create(&self, rawAddress: HSTRING, rawAddressKind: PhoneCallHistoryEntryRawAddressKind, out: *mut *mut PhoneCallHistoryEntryAddress) -> HRESULT
@@ -1462,7 +1462,7 @@ impl IPhoneCallHistoryEntryQueryOptions {
 }
 RT_CLASS!{class PhoneCallHistoryEntryQueryOptions: IPhoneCallHistoryEntryQueryOptions}
 impl RtActivatable<IActivationFactory> for PhoneCallHistoryEntryQueryOptions {}
-DEFINE_CLSID!(PhoneCallHistoryEntryQueryOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,97,108,108,115,46,80,104,111,110,101,67,97,108,108,72,105,115,116,111,114,121,69,110,116,114,121,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_PhoneCallHistoryEntryQueryOptions]);
+DEFINE_CLSID!(PhoneCallHistoryEntryQueryOptions: "Windows.ApplicationModel.Calls.PhoneCallHistoryEntryQueryOptions");
 RT_ENUM! { enum PhoneCallHistoryEntryRawAddressKind: i32 {
     PhoneNumber (PhoneCallHistoryEntryRawAddressKind_PhoneNumber) = 0, Custom (PhoneCallHistoryEntryRawAddressKind_Custom) = 1,
 }}
@@ -1489,7 +1489,7 @@ impl PhoneCallHistoryManager {
         <Self as RtActivatable<IPhoneCallHistoryManagerStatics2>>::get_activation_factory().get_for_user(user)
     }}
 }
-DEFINE_CLSID!(PhoneCallHistoryManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,97,108,108,115,46,80,104,111,110,101,67,97,108,108,72,105,115,116,111,114,121,77,97,110,97,103,101,114,0]) [CLSID_PhoneCallHistoryManager]);
+DEFINE_CLSID!(PhoneCallHistoryManager: "Windows.ApplicationModel.Calls.PhoneCallHistoryManager");
 DEFINE_IID!(IID_IPhoneCallHistoryManagerForUser, 3643131171, 62815, 17235, 157, 180, 2, 5, 165, 38, 90, 85);
 RT_INTERFACE!{interface IPhoneCallHistoryManagerForUser(IPhoneCallHistoryManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneCallHistoryManagerForUser] {
     fn RequestStoreAsync(&self, accessType: PhoneCallHistoryStoreAccessType, out: *mut *mut super::super::foundation::IAsyncOperation<PhoneCallHistoryStore>) -> HRESULT,
@@ -1687,7 +1687,7 @@ impl VoipCallCoordinator {
         <Self as RtActivatable<IVoipCallCoordinatorStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(VoipCallCoordinator(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,97,108,108,115,46,86,111,105,112,67,97,108,108,67,111,111,114,100,105,110,97,116,111,114,0]) [CLSID_VoipCallCoordinator]);
+DEFINE_CLSID!(VoipCallCoordinator: "Windows.ApplicationModel.Calls.VoipCallCoordinator");
 DEFINE_IID!(IID_IVoipCallCoordinator2, 3199511027, 50948, 16948, 137, 206, 232, 140, 192, 210, 143, 190);
 RT_INTERFACE!{interface IVoipCallCoordinator2(IVoipCallCoordinator2Vtbl): IInspectable(IInspectableVtbl) [IID_IVoipCallCoordinator2] {
     fn SetupNewAcceptedCall(&self, context: HSTRING, contactName: HSTRING, contactNumber: HSTRING, serviceName: HSTRING, media: VoipPhoneCallMedia, out: *mut *mut VoipPhoneCall) -> HRESULT
@@ -2018,7 +2018,7 @@ impl ISocialFeedChildItem {
 }
 RT_CLASS!{class SocialFeedChildItem: ISocialFeedChildItem}
 impl RtActivatable<IActivationFactory> for SocialFeedChildItem {}
-DEFINE_CLSID!(SocialFeedChildItem(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,111,99,105,97,108,73,110,102,111,46,83,111,99,105,97,108,70,101,101,100,67,104,105,108,100,73,116,101,109,0]) [CLSID_SocialFeedChildItem]);
+DEFINE_CLSID!(SocialFeedChildItem: "Windows.ApplicationModel.SocialInfo.SocialFeedChildItem");
 DEFINE_IID!(IID_ISocialFeedContent, 2721375273, 15929, 18765, 163, 124, 244, 98, 162, 73, 69, 20);
 RT_INTERFACE!{interface ISocialFeedContent(ISocialFeedContentVtbl): IInspectable(IInspectableVtbl) [IID_ISocialFeedContent] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
@@ -2177,7 +2177,7 @@ impl ISocialFeedItem {
 }
 RT_CLASS!{class SocialFeedItem: ISocialFeedItem}
 impl RtActivatable<IActivationFactory> for SocialFeedItem {}
-DEFINE_CLSID!(SocialFeedItem(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,111,99,105,97,108,73,110,102,111,46,83,111,99,105,97,108,70,101,101,100,73,116,101,109,0]) [CLSID_SocialFeedItem]);
+DEFINE_CLSID!(SocialFeedItem: "Windows.ApplicationModel.SocialInfo.SocialFeedItem");
 RT_ENUM! { enum SocialFeedItemStyle: i32 {
     Default (SocialFeedItemStyle_Default) = 0, Photo (SocialFeedItemStyle_Photo) = 1,
 }}
@@ -2241,7 +2241,7 @@ impl ISocialFeedSharedItem {
 }
 RT_CLASS!{class SocialFeedSharedItem: ISocialFeedSharedItem}
 impl RtActivatable<IActivationFactory> for SocialFeedSharedItem {}
-DEFINE_CLSID!(SocialFeedSharedItem(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,111,99,105,97,108,73,110,102,111,46,83,111,99,105,97,108,70,101,101,100,83,104,97,114,101,100,73,116,101,109,0]) [CLSID_SocialFeedSharedItem]);
+DEFINE_CLSID!(SocialFeedSharedItem: "Windows.ApplicationModel.SocialInfo.SocialFeedSharedItem");
 RT_ENUM! { enum SocialFeedUpdateMode: i32 {
     Append (SocialFeedUpdateMode_Append) = 0, Replace (SocialFeedUpdateMode_Replace) = 1,
 }}
@@ -2296,7 +2296,7 @@ impl ISocialItemThumbnail {
 }
 RT_CLASS!{class SocialItemThumbnail: ISocialItemThumbnail}
 impl RtActivatable<IActivationFactory> for SocialItemThumbnail {}
-DEFINE_CLSID!(SocialItemThumbnail(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,111,99,105,97,108,73,110,102,111,46,83,111,99,105,97,108,73,116,101,109,84,104,117,109,98,110,97,105,108,0]) [CLSID_SocialItemThumbnail]);
+DEFINE_CLSID!(SocialItemThumbnail: "Windows.ApplicationModel.SocialInfo.SocialItemThumbnail");
 DEFINE_IID!(IID_ISocialUserInfo, 2656967633, 37072, 19997, 149, 84, 132, 77, 70, 96, 127, 97);
 RT_INTERFACE!{interface ISocialUserInfo(ISocialUserInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISocialUserInfo] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -2458,7 +2458,7 @@ impl SocialInfoProviderManager {
         <Self as RtActivatable<ISocialInfoProviderManagerStatics>>::get_activation_factory().deprovision_async()
     }}
 }
-DEFINE_CLSID!(SocialInfoProviderManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,111,99,105,97,108,73,110,102,111,46,80,114,111,118,105,100,101,114,46,83,111,99,105,97,108,73,110,102,111,80,114,111,118,105,100,101,114,77,97,110,97,103,101,114,0]) [CLSID_SocialInfoProviderManager]);
+DEFINE_CLSID!(SocialInfoProviderManager: "Windows.ApplicationModel.SocialInfo.Provider.SocialInfoProviderManager");
 DEFINE_IID!(IID_ISocialInfoProviderManagerStatics, 461956395, 30599, 18646, 170, 18, 216, 232, 244, 122, 184, 90);
 RT_INTERFACE!{static interface ISocialInfoProviderManagerStatics(ISocialInfoProviderManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISocialInfoProviderManagerStatics] {
     fn CreateSocialFeedUpdaterAsync(&self, kind: super::SocialFeedKind, mode: super::SocialFeedUpdateMode, ownerRemoteId: HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<SocialFeedUpdater>) -> HRESULT,
@@ -2544,7 +2544,7 @@ impl ILocalContentSuggestionSettings {
 }
 RT_CLASS!{class LocalContentSuggestionSettings: ILocalContentSuggestionSettings}
 impl RtActivatable<IActivationFactory> for LocalContentSuggestionSettings {}
-DEFINE_CLSID!(LocalContentSuggestionSettings(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,101,97,114,99,104,46,76,111,99,97,108,67,111,110,116,101,110,116,83,117,103,103,101,115,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_LocalContentSuggestionSettings]);
+DEFINE_CLSID!(LocalContentSuggestionSettings: "Windows.ApplicationModel.Search.LocalContentSuggestionSettings");
 DEFINE_IID!(IID_ISearchPane, 4255968312, 14080, 19827, 145, 161, 47, 153, 134, 116, 35, 138);
 RT_INTERFACE!{interface ISearchPane(ISearchPaneVtbl): IInspectable(IInspectableVtbl) [IID_ISearchPane] {
     fn put_SearchHistoryEnabled(&self, value: bool) -> HRESULT,
@@ -2699,7 +2699,7 @@ impl SearchPane {
         <Self as RtActivatable<ISearchPaneStaticsWithHideThisApplication>>::get_activation_factory().hide_this_application()
     }}
 }
-DEFINE_CLSID!(SearchPane(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,101,97,114,99,104,46,83,101,97,114,99,104,80,97,110,101,0]) [CLSID_SearchPane]);
+DEFINE_CLSID!(SearchPane: "Windows.ApplicationModel.Search.SearchPane");
 DEFINE_IID!(IID_ISearchPaneQueryChangedEventArgs, 1007046633, 9041, 16968, 165, 41, 113, 16, 244, 100, 167, 133);
 RT_INTERFACE!{interface ISearchPaneQueryChangedEventArgs(ISearchPaneQueryChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISearchPaneQueryChangedEventArgs] {
     fn get_QueryText(&self, out: *mut HSTRING) -> HRESULT,
@@ -2899,7 +2899,7 @@ impl SearchQueryLinguisticDetails {
         <Self as RtActivatable<ISearchQueryLinguisticDetailsFactory>>::get_activation_factory().create_instance(queryTextAlternatives, queryTextCompositionStart, queryTextCompositionLength)
     }}
 }
-DEFINE_CLSID!(SearchQueryLinguisticDetails(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,101,97,114,99,104,46,83,101,97,114,99,104,81,117,101,114,121,76,105,110,103,117,105,115,116,105,99,68,101,116,97,105,108,115,0]) [CLSID_SearchQueryLinguisticDetails]);
+DEFINE_CLSID!(SearchQueryLinguisticDetails: "Windows.ApplicationModel.Search.SearchQueryLinguisticDetails");
 DEFINE_IID!(IID_ISearchQueryLinguisticDetailsFactory, 3402023864, 15460, 19965, 173, 159, 71, 158, 77, 64, 101, 164);
 RT_INTERFACE!{static interface ISearchQueryLinguisticDetailsFactory(ISearchQueryLinguisticDetailsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISearchQueryLinguisticDetailsFactory] {
     fn CreateInstance(&self, queryTextAlternatives: *mut super::super::foundation::collections::IIterable<HString>, queryTextCompositionStart: u32, queryTextCompositionLength: u32, out: *mut *mut SearchQueryLinguisticDetails) -> HRESULT
@@ -3124,7 +3124,7 @@ impl ISearchSuggestionManager {
 }
 RT_CLASS!{class SearchSuggestionManager: ISearchSuggestionManager}
 impl RtActivatable<IActivationFactory> for SearchSuggestionManager {}
-DEFINE_CLSID!(SearchSuggestionManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,101,97,114,99,104,46,67,111,114,101,46,83,101,97,114,99,104,83,117,103,103,101,115,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_SearchSuggestionManager]);
+DEFINE_CLSID!(SearchSuggestionManager: "Windows.ApplicationModel.Search.Core.SearchSuggestionManager");
 DEFINE_IID!(IID_ISearchSuggestionsRequestedEventArgs, 1876236773, 40574, 19124, 139, 227, 199, 107, 27, 212, 52, 74);
 RT_INTERFACE!{interface ISearchSuggestionsRequestedEventArgs(ISearchSuggestionsRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISearchSuggestionsRequestedEventArgs] {
     fn get_QueryText(&self, out: *mut HSTRING) -> HRESULT,
@@ -3197,7 +3197,7 @@ impl ActivitySensorTrigger {
         <Self as RtActivatable<IActivitySensorTriggerFactory>>::get_activation_factory().create(reportIntervalInMilliseconds)
     }}
 }
-DEFINE_CLSID!(ActivitySensorTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,99,116,105,118,105,116,121,83,101,110,115,111,114,84,114,105,103,103,101,114,0]) [CLSID_ActivitySensorTrigger]);
+DEFINE_CLSID!(ActivitySensorTrigger: "Windows.ApplicationModel.Background.ActivitySensorTrigger");
 DEFINE_IID!(IID_IActivitySensorTriggerFactory, 2804322755, 14391, 17655, 131, 27, 1, 50, 204, 135, 43, 195);
 RT_INTERFACE!{static interface IActivitySensorTriggerFactory(IActivitySensorTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IActivitySensorTriggerFactory] {
     fn Create(&self, reportIntervalInMilliseconds: u32, out: *mut *mut ActivitySensorTrigger) -> HRESULT
@@ -3222,7 +3222,7 @@ impl AlarmApplicationManager {
         <Self as RtActivatable<IAlarmApplicationManagerStatics>>::get_activation_factory().get_access_status()
     }}
 }
-DEFINE_CLSID!(AlarmApplicationManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,108,97,114,109,65,112,112,108,105,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_AlarmApplicationManager]);
+DEFINE_CLSID!(AlarmApplicationManager: "Windows.ApplicationModel.Background.AlarmApplicationManager");
 DEFINE_IID!(IID_IAlarmApplicationManagerStatics, 3389258299, 52454, 19938, 176, 155, 150, 40, 189, 51, 187, 190);
 RT_INTERFACE!{static interface IAlarmApplicationManagerStatics(IAlarmApplicationManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAlarmApplicationManagerStatics] {
     fn RequestAccessAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<AlarmAccessStatus>) -> HRESULT,
@@ -3263,7 +3263,7 @@ impl AppBroadcastTrigger {
         <Self as RtActivatable<IAppBroadcastTriggerFactory>>::get_activation_factory().create_app_broadcast_trigger(providerKey)
     }}
 }
-DEFINE_CLSID!(AppBroadcastTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,112,112,66,114,111,97,100,99,97,115,116,84,114,105,103,103,101,114,0]) [CLSID_AppBroadcastTrigger]);
+DEFINE_CLSID!(AppBroadcastTrigger: "Windows.ApplicationModel.Background.AppBroadcastTrigger");
 DEFINE_IID!(IID_IAppBroadcastTriggerFactory, 671850308, 8948, 17944, 160, 46, 231, 228, 17, 235, 114, 56);
 RT_INTERFACE!{static interface IAppBroadcastTriggerFactory(IAppBroadcastTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastTriggerFactory] {
     fn CreateAppBroadcastTrigger(&self, providerKey: HSTRING, out: *mut *mut AppBroadcastTrigger) -> HRESULT
@@ -3366,7 +3366,7 @@ impl IApplicationTrigger {
 }
 RT_CLASS!{class ApplicationTrigger: IApplicationTrigger}
 impl RtActivatable<IActivationFactory> for ApplicationTrigger {}
-DEFINE_CLSID!(ApplicationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,112,112,108,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ApplicationTrigger]);
+DEFINE_CLSID!(ApplicationTrigger: "Windows.ApplicationModel.Background.ApplicationTrigger");
 DEFINE_IID!(IID_IApplicationTriggerDetails, 2547804850, 8729, 19102, 156, 94, 65, 208, 71, 247, 110, 130);
 RT_INTERFACE!{interface IApplicationTriggerDetails(IApplicationTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationTriggerDetails] {
     fn get_Arguments(&self, out: *mut *mut super::super::foundation::collections::ValueSet) -> HRESULT
@@ -3388,7 +3388,7 @@ RT_INTERFACE!{interface IAppointmentStoreNotificationTrigger(IAppointmentStoreNo
 }}
 RT_CLASS!{class AppointmentStoreNotificationTrigger: IAppointmentStoreNotificationTrigger}
 impl RtActivatable<IActivationFactory> for AppointmentStoreNotificationTrigger {}
-DEFINE_CLSID!(AppointmentStoreNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,112,112,111,105,110,116,109,101,110,116,83,116,111,114,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_AppointmentStoreNotificationTrigger]);
+DEFINE_CLSID!(AppointmentStoreNotificationTrigger: "Windows.ApplicationModel.Background.AppointmentStoreNotificationTrigger");
 RT_ENUM! { enum BackgroundAccessStatus: i32 {
     Unspecified (BackgroundAccessStatus_Unspecified) = 0, AllowedWithAlwaysOnRealTimeConnectivity (BackgroundAccessStatus_AllowedWithAlwaysOnRealTimeConnectivity) = 1, AllowedMayUseActiveRealTimeConnectivity (BackgroundAccessStatus_AllowedMayUseActiveRealTimeConnectivity) = 2, Denied (BackgroundAccessStatus_Denied) = 3, AlwaysAllowed (BackgroundAccessStatus_AlwaysAllowed) = 4, AllowedSubjectToSystemPolicy (BackgroundAccessStatus_AllowedSubjectToSystemPolicy) = 5, DeniedBySystemPolicy (BackgroundAccessStatus_DeniedBySystemPolicy) = 6, DeniedByUser (BackgroundAccessStatus_DeniedByUser) = 7,
 }}
@@ -3418,7 +3418,7 @@ impl BackgroundExecutionManager {
         <Self as RtActivatable<IBackgroundExecutionManagerStatics>>::get_activation_factory().get_access_status_for_application(applicationId)
     }}
 }
-DEFINE_CLSID!(BackgroundExecutionManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,69,120,101,99,117,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_BackgroundExecutionManager]);
+DEFINE_CLSID!(BackgroundExecutionManager: "Windows.ApplicationModel.Background.BackgroundExecutionManager");
 DEFINE_IID!(IID_IBackgroundExecutionManagerStatics, 3894864472, 26281, 19777, 131, 212, 180, 193, 140, 135, 184, 70);
 RT_INTERFACE!{static interface IBackgroundExecutionManagerStatics(IBackgroundExecutionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundExecutionManagerStatics] {
     fn RequestAccessAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<BackgroundAccessStatus>) -> HRESULT,
@@ -3513,7 +3513,7 @@ impl IBackgroundTaskBuilder {
 }
 RT_CLASS!{class BackgroundTaskBuilder: IBackgroundTaskBuilder}
 impl RtActivatable<IActivationFactory> for BackgroundTaskBuilder {}
-DEFINE_CLSID!(BackgroundTaskBuilder(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,84,97,115,107,66,117,105,108,100,101,114,0]) [CLSID_BackgroundTaskBuilder]);
+DEFINE_CLSID!(BackgroundTaskBuilder: "Windows.ApplicationModel.Background.BackgroundTaskBuilder");
 DEFINE_IID!(IID_IBackgroundTaskBuilder2, 1793576881, 4175, 16493, 141, 182, 132, 74, 87, 15, 66, 187);
 RT_INTERFACE!{interface IBackgroundTaskBuilder2(IBackgroundTaskBuilder2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskBuilder2] {
     fn put_CancelOnConditionLoss(&self, value: bool) -> HRESULT,
@@ -3778,7 +3778,7 @@ impl BackgroundTaskRegistration {
         <Self as RtActivatable<IBackgroundTaskRegistrationStatics2>>::get_activation_factory().get_task_group(groupId)
     }}
 }
-DEFINE_CLSID!(BackgroundTaskRegistration(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,84,97,115,107,82,101,103,105,115,116,114,97,116,105,111,110,0]) [CLSID_BackgroundTaskRegistration]);
+DEFINE_CLSID!(BackgroundTaskRegistration: "Windows.ApplicationModel.Background.BackgroundTaskRegistration");
 DEFINE_IID!(IID_IBackgroundTaskRegistration2, 1631110915, 48006, 16658, 175, 195, 127, 147, 155, 22, 110, 59);
 RT_INTERFACE!{interface IBackgroundTaskRegistration2(IBackgroundTaskRegistration2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistration2] {
     fn get_Trigger(&self, out: *mut *mut IBackgroundTrigger) -> HRESULT
@@ -3845,7 +3845,7 @@ impl BackgroundTaskRegistrationGroup {
         <Self as RtActivatable<IBackgroundTaskRegistrationGroupFactory>>::get_activation_factory().create_with_name(id, name)
     }}
 }
-DEFINE_CLSID!(BackgroundTaskRegistrationGroup(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,84,97,115,107,82,101,103,105,115,116,114,97,116,105,111,110,71,114,111,117,112,0]) [CLSID_BackgroundTaskRegistrationGroup]);
+DEFINE_CLSID!(BackgroundTaskRegistrationGroup: "Windows.ApplicationModel.Background.BackgroundTaskRegistrationGroup");
 DEFINE_IID!(IID_IBackgroundTaskRegistrationGroupFactory, 2212047721, 17615, 17969, 151, 64, 3, 199, 216, 116, 27, 197);
 RT_INTERFACE!{static interface IBackgroundTaskRegistrationGroupFactory(IBackgroundTaskRegistrationGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistrationGroupFactory] {
     fn Create(&self, id: HSTRING, out: *mut *mut BackgroundTaskRegistrationGroup) -> HRESULT,
@@ -3905,7 +3905,7 @@ impl BackgroundWorkCost {
         <Self as RtActivatable<IBackgroundWorkCostStatics>>::get_activation_factory().get_current_background_work_cost()
     }}
 }
-DEFINE_CLSID!(BackgroundWorkCost(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,87,111,114,107,67,111,115,116,0]) [CLSID_BackgroundWorkCost]);
+DEFINE_CLSID!(BackgroundWorkCost: "Windows.ApplicationModel.Background.BackgroundWorkCost");
 DEFINE_IID!(IID_IBackgroundWorkCostStatics, 3342902882, 49936, 19330, 179, 227, 59, 207, 185, 228, 199, 125);
 RT_INTERFACE!{static interface IBackgroundWorkCostStatics(IBackgroundWorkCostStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundWorkCostStatics] {
     fn get_CurrentBackgroundWorkCost(&self, out: *mut BackgroundWorkCostValue) -> HRESULT
@@ -3933,7 +3933,7 @@ impl IBluetoothLEAdvertisementPublisherTrigger {
 }
 RT_CLASS!{class BluetoothLEAdvertisementPublisherTrigger: IBluetoothLEAdvertisementPublisherTrigger}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementPublisherTrigger {}
-DEFINE_CLSID!(BluetoothLEAdvertisementPublisherTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,80,117,98,108,105,115,104,101,114,84,114,105,103,103,101,114,0]) [CLSID_BluetoothLEAdvertisementPublisherTrigger]);
+DEFINE_CLSID!(BluetoothLEAdvertisementPublisherTrigger: "Windows.ApplicationModel.Background.BluetoothLEAdvertisementPublisherTrigger");
 DEFINE_IID!(IID_IBluetoothLEAdvertisementWatcherTrigger, 447420441, 48353, 18667, 168, 39, 89, 251, 124, 238, 82, 166);
 RT_INTERFACE!{interface IBluetoothLEAdvertisementWatcherTrigger(IBluetoothLEAdvertisementWatcherTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementWatcherTrigger] {
     fn get_MinSamplingInterval(&self, out: *mut super::super::foundation::TimeSpan) -> HRESULT,
@@ -3987,14 +3987,14 @@ impl IBluetoothLEAdvertisementWatcherTrigger {
 }
 RT_CLASS!{class BluetoothLEAdvertisementWatcherTrigger: IBluetoothLEAdvertisementWatcherTrigger}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementWatcherTrigger {}
-DEFINE_CLSID!(BluetoothLEAdvertisementWatcherTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,87,97,116,99,104,101,114,84,114,105,103,103,101,114,0]) [CLSID_BluetoothLEAdvertisementWatcherTrigger]);
+DEFINE_CLSID!(BluetoothLEAdvertisementWatcherTrigger: "Windows.ApplicationModel.Background.BluetoothLEAdvertisementWatcherTrigger");
 DEFINE_IID!(IID_ICachedFileUpdaterTrigger, 3793530603, 13042, 19761, 181, 83, 185, 224, 27, 222, 55, 224);
 RT_INTERFACE!{interface ICachedFileUpdaterTrigger(ICachedFileUpdaterTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterTrigger] {
     
 }}
 RT_CLASS!{class CachedFileUpdaterTrigger: ICachedFileUpdaterTrigger}
 impl RtActivatable<IActivationFactory> for CachedFileUpdaterTrigger {}
-DEFINE_CLSID!(CachedFileUpdaterTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,97,99,104,101,100,70,105,108,101,85,112,100,97,116,101,114,84,114,105,103,103,101,114,0]) [CLSID_CachedFileUpdaterTrigger]);
+DEFINE_CLSID!(CachedFileUpdaterTrigger: "Windows.ApplicationModel.Background.CachedFileUpdaterTrigger");
 DEFINE_IID!(IID_ICachedFileUpdaterTriggerDetails, 1904446483, 4884, 18356, 149, 151, 220, 126, 36, 140, 23, 204);
 RT_INTERFACE!{interface ICachedFileUpdaterTriggerDetails(ICachedFileUpdaterTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterTriggerDetails] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -4027,21 +4027,21 @@ RT_INTERFACE!{interface IChatMessageNotificationTrigger(IChatMessageNotification
 }}
 RT_CLASS!{class ChatMessageNotificationTrigger: IChatMessageNotificationTrigger}
 impl RtActivatable<IActivationFactory> for ChatMessageNotificationTrigger {}
-DEFINE_CLSID!(ChatMessageNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,104,97,116,77,101,115,115,97,103,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ChatMessageNotificationTrigger]);
+DEFINE_CLSID!(ChatMessageNotificationTrigger: "Windows.ApplicationModel.Background.ChatMessageNotificationTrigger");
 DEFINE_IID!(IID_IChatMessageReceivedNotificationTrigger, 1050899982, 47861, 16503, 136, 233, 6, 12, 246, 240, 198, 213);
 RT_INTERFACE!{interface IChatMessageReceivedNotificationTrigger(IChatMessageReceivedNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageReceivedNotificationTrigger] {
     
 }}
 RT_CLASS!{class ChatMessageReceivedNotificationTrigger: IChatMessageReceivedNotificationTrigger}
 impl RtActivatable<IActivationFactory> for ChatMessageReceivedNotificationTrigger {}
-DEFINE_CLSID!(ChatMessageReceivedNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,104,97,116,77,101,115,115,97,103,101,82,101,99,101,105,118,101,100,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ChatMessageReceivedNotificationTrigger]);
+DEFINE_CLSID!(ChatMessageReceivedNotificationTrigger: "Windows.ApplicationModel.Background.ChatMessageReceivedNotificationTrigger");
 DEFINE_IID!(IID_IContactStoreNotificationTrigger, 3358802331, 18181, 17777, 154, 22, 6, 185, 151, 191, 156, 150);
 RT_INTERFACE!{interface IContactStoreNotificationTrigger(IContactStoreNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IContactStoreNotificationTrigger] {
     
 }}
 RT_CLASS!{class ContactStoreNotificationTrigger: IContactStoreNotificationTrigger}
 impl RtActivatable<IActivationFactory> for ContactStoreNotificationTrigger {}
-DEFINE_CLSID!(ContactStoreNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,111,110,116,97,99,116,83,116,111,114,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ContactStoreNotificationTrigger]);
+DEFINE_CLSID!(ContactStoreNotificationTrigger: "Windows.ApplicationModel.Background.ContactStoreNotificationTrigger");
 DEFINE_IID!(IID_IContentPrefetchTrigger, 1896228846, 1274, 17419, 128, 192, 23, 50, 2, 25, 158, 93);
 RT_INTERFACE!{interface IContentPrefetchTrigger(IContentPrefetchTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetchTrigger] {
     fn get_WaitInterval(&self, out: *mut super::super::foundation::TimeSpan) -> HRESULT
@@ -4061,7 +4061,7 @@ impl ContentPrefetchTrigger {
         <Self as RtActivatable<IContentPrefetchTriggerFactory>>::get_activation_factory().create(waitInterval)
     }}
 }
-DEFINE_CLSID!(ContentPrefetchTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,111,110,116,101,110,116,80,114,101,102,101,116,99,104,84,114,105,103,103,101,114,0]) [CLSID_ContentPrefetchTrigger]);
+DEFINE_CLSID!(ContentPrefetchTrigger: "Windows.ApplicationModel.Background.ContentPrefetchTrigger");
 DEFINE_IID!(IID_IContentPrefetchTriggerFactory, 3261349594, 35331, 16542, 184, 196, 136, 129, 76, 40, 204, 182);
 RT_INTERFACE!{static interface IContentPrefetchTriggerFactory(IContentPrefetchTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetchTriggerFactory] {
     fn Create(&self, waitInterval: super::super::foundation::TimeSpan, out: *mut *mut ContentPrefetchTrigger) -> HRESULT
@@ -4108,7 +4108,7 @@ impl DeviceConnectionChangeTrigger {
         <Self as RtActivatable<IDeviceConnectionChangeTriggerStatics>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(DeviceConnectionChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,67,111,110,110,101,99,116,105,111,110,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_DeviceConnectionChangeTrigger]);
+DEFINE_CLSID!(DeviceConnectionChangeTrigger: "Windows.ApplicationModel.Background.DeviceConnectionChangeTrigger");
 DEFINE_IID!(IID_IDeviceConnectionChangeTriggerStatics, 3286901866, 20221, 17560, 170, 96, 164, 228, 227, 177, 122, 185);
 RT_INTERFACE!{static interface IDeviceConnectionChangeTriggerStatics(IDeviceConnectionChangeTriggerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceConnectionChangeTriggerStatics] {
     fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<DeviceConnectionChangeTrigger>) -> HRESULT
@@ -4144,7 +4144,7 @@ impl DeviceManufacturerNotificationTrigger {
         <Self as RtActivatable<IDeviceManufacturerNotificationTriggerFactory>>::get_activation_factory().create(triggerQualifier, oneShot)
     }}
 }
-DEFINE_CLSID!(DeviceManufacturerNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,77,97,110,117,102,97,99,116,117,114,101,114,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_DeviceManufacturerNotificationTrigger]);
+DEFINE_CLSID!(DeviceManufacturerNotificationTrigger: "Windows.ApplicationModel.Background.DeviceManufacturerNotificationTrigger");
 DEFINE_IID!(IID_IDeviceManufacturerNotificationTriggerFactory, 2035670645, 9659, 16723, 161, 162, 48, 41, 252, 171, 182, 82);
 RT_INTERFACE!{static interface IDeviceManufacturerNotificationTriggerFactory(IDeviceManufacturerNotificationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceManufacturerNotificationTriggerFactory] {
     fn Create(&self, triggerQualifier: HSTRING, oneShot: bool, out: *mut *mut DeviceManufacturerNotificationTrigger) -> HRESULT
@@ -4175,7 +4175,7 @@ impl IDeviceServicingTrigger {
 }
 RT_CLASS!{class DeviceServicingTrigger: IDeviceServicingTrigger}
 impl RtActivatable<IActivationFactory> for DeviceServicingTrigger {}
-DEFINE_CLSID!(DeviceServicingTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,83,101,114,118,105,99,105,110,103,84,114,105,103,103,101,114,0]) [CLSID_DeviceServicingTrigger]);
+DEFINE_CLSID!(DeviceServicingTrigger: "Windows.ApplicationModel.Background.DeviceServicingTrigger");
 RT_ENUM! { enum DeviceTriggerResult: i32 {
     Allowed (DeviceTriggerResult_Allowed) = 0, DeniedByUser (DeviceTriggerResult_DeniedByUser) = 1, DeniedBySystem (DeviceTriggerResult_DeniedBySystem) = 2, LowBattery (DeviceTriggerResult_LowBattery) = 3,
 }}
@@ -4198,7 +4198,7 @@ impl IDeviceUseTrigger {
 }
 RT_CLASS!{class DeviceUseTrigger: IDeviceUseTrigger}
 impl RtActivatable<IActivationFactory> for DeviceUseTrigger {}
-DEFINE_CLSID!(DeviceUseTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,85,115,101,84,114,105,103,103,101,114,0]) [CLSID_DeviceUseTrigger]);
+DEFINE_CLSID!(DeviceUseTrigger: "Windows.ApplicationModel.Background.DeviceUseTrigger");
 DEFINE_IID!(IID_IDeviceWatcherTrigger, 2757853149, 34163, 16992, 190, 252, 91, 236, 137, 203, 105, 61);
 RT_INTERFACE!{interface IDeviceWatcherTrigger(IDeviceWatcherTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceWatcherTrigger] {
     
@@ -4210,7 +4210,7 @@ RT_INTERFACE!{interface IEmailStoreNotificationTrigger(IEmailStoreNotificationTr
 }}
 RT_CLASS!{class EmailStoreNotificationTrigger: IEmailStoreNotificationTrigger}
 impl RtActivatable<IActivationFactory> for EmailStoreNotificationTrigger {}
-DEFINE_CLSID!(EmailStoreNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,69,109,97,105,108,83,116,111,114,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_EmailStoreNotificationTrigger]);
+DEFINE_CLSID!(EmailStoreNotificationTrigger: "Windows.ApplicationModel.Background.EmailStoreNotificationTrigger");
 DEFINE_IID!(IID_IGattCharacteristicNotificationTrigger, 3797913544, 1686, 18255, 167, 50, 242, 146, 176, 206, 188, 93);
 RT_INTERFACE!{interface IGattCharacteristicNotificationTrigger(IGattCharacteristicNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicNotificationTrigger] {
     #[cfg(feature="windows-devices")] fn get_Characteristic(&self, out: *mut *mut super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic) -> HRESULT
@@ -4233,7 +4233,7 @@ impl GattCharacteristicNotificationTrigger {
         <Self as RtActivatable<IGattCharacteristicNotificationTriggerFactory2>>::get_activation_factory().create_with_event_triggering_mode(characteristic, eventTriggeringMode)
     }}
 }
-DEFINE_CLSID!(GattCharacteristicNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,71,97,116,116,67,104,97,114,97,99,116,101,114,105,115,116,105,99,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_GattCharacteristicNotificationTrigger]);
+DEFINE_CLSID!(GattCharacteristicNotificationTrigger: "Windows.ApplicationModel.Background.GattCharacteristicNotificationTrigger");
 DEFINE_IID!(IID_IGattCharacteristicNotificationTrigger2, 2468520644, 44558, 17138, 178, 140, 245, 19, 114, 230, 146, 69);
 RT_INTERFACE!{interface IGattCharacteristicNotificationTrigger2(IGattCharacteristicNotificationTrigger2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicNotificationTrigger2] {
     #[cfg(feature="windows-devices")] fn get_EventTriggeringMode(&self, out: *mut super::super::devices::bluetooth::background::BluetoothEventTriggeringMode) -> HRESULT
@@ -4302,7 +4302,7 @@ impl GattServiceProviderTrigger {
         <Self as RtActivatable<IGattServiceProviderTriggerStatics>>::get_activation_factory().create_async(triggerId, serviceUuid)
     }}
 }
-DEFINE_CLSID!(GattServiceProviderTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,71,97,116,116,83,101,114,118,105,99,101,80,114,111,118,105,100,101,114,84,114,105,103,103,101,114,0]) [CLSID_GattServiceProviderTrigger]);
+DEFINE_CLSID!(GattServiceProviderTrigger: "Windows.ApplicationModel.Background.GattServiceProviderTrigger");
 DEFINE_IID!(IID_IGattServiceProviderTriggerResult, 1011257777, 45464, 20100, 186, 212, 207, 74, 210, 153, 237, 58);
 RT_INTERFACE!{interface IGattServiceProviderTriggerResult(IGattServiceProviderTriggerResultVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProviderTriggerResult] {
     fn get_Trigger(&self, out: *mut *mut GattServiceProviderTrigger) -> HRESULT,
@@ -4350,7 +4350,7 @@ impl IGeovisitTrigger {
 }
 RT_CLASS!{class GeovisitTrigger: IGeovisitTrigger}
 impl RtActivatable<IActivationFactory> for GeovisitTrigger {}
-DEFINE_CLSID!(GeovisitTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,71,101,111,118,105,115,105,116,84,114,105,103,103,101,114,0]) [CLSID_GeovisitTrigger]);
+DEFINE_CLSID!(GeovisitTrigger: "Windows.ApplicationModel.Background.GeovisitTrigger");
 DEFINE_IID!(IID_ILocationTrigger, 1197894172, 26743, 18462, 128, 38, 255, 126, 20, 168, 17, 160);
 RT_INTERFACE!{interface ILocationTrigger(ILocationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ILocationTrigger] {
     fn get_TriggerType(&self, out: *mut LocationTriggerType) -> HRESULT
@@ -4369,7 +4369,7 @@ impl LocationTrigger {
         <Self as RtActivatable<ILocationTriggerFactory>>::get_activation_factory().create(triggerType)
     }}
 }
-DEFINE_CLSID!(LocationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,76,111,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_LocationTrigger]);
+DEFINE_CLSID!(LocationTrigger: "Windows.ApplicationModel.Background.LocationTrigger");
 DEFINE_IID!(IID_ILocationTriggerFactory, 285653767, 65385, 19977, 170, 139, 19, 132, 234, 71, 94, 152);
 RT_INTERFACE!{static interface ILocationTriggerFactory(ILocationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILocationTriggerFactory] {
     fn Create(&self, triggerType: LocationTriggerType, out: *mut *mut LocationTrigger) -> HRESULT
@@ -4408,7 +4408,7 @@ impl MaintenanceTrigger {
         <Self as RtActivatable<IMaintenanceTriggerFactory>>::get_activation_factory().create(freshnessTime, oneShot)
     }}
 }
-DEFINE_CLSID!(MaintenanceTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,97,105,110,116,101,110,97,110,99,101,84,114,105,103,103,101,114,0]) [CLSID_MaintenanceTrigger]);
+DEFINE_CLSID!(MaintenanceTrigger: "Windows.ApplicationModel.Background.MaintenanceTrigger");
 DEFINE_IID!(IID_IMaintenanceTriggerFactory, 1262345006, 38877, 17961, 136, 176, 176, 108, 249, 72, 42, 229);
 RT_INTERFACE!{static interface IMaintenanceTriggerFactory(IMaintenanceTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMaintenanceTriggerFactory] {
     fn Create(&self, freshnessTime: u32, oneShot: bool, out: *mut *mut MaintenanceTrigger) -> HRESULT
@@ -4439,29 +4439,29 @@ impl IMediaProcessingTrigger {
 }
 RT_CLASS!{class MediaProcessingTrigger: IMediaProcessingTrigger}
 impl RtActivatable<IActivationFactory> for MediaProcessingTrigger {}
-DEFINE_CLSID!(MediaProcessingTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,101,100,105,97,80,114,111,99,101,115,115,105,110,103,84,114,105,103,103,101,114,0]) [CLSID_MediaProcessingTrigger]);
+DEFINE_CLSID!(MediaProcessingTrigger: "Windows.ApplicationModel.Background.MediaProcessingTrigger");
 RT_ENUM! { enum MediaProcessingTriggerResult: i32 {
     Allowed (MediaProcessingTriggerResult_Allowed) = 0, CurrentlyRunning (MediaProcessingTriggerResult_CurrentlyRunning) = 1, DisabledByPolicy (MediaProcessingTriggerResult_DisabledByPolicy) = 2, UnknownError (MediaProcessingTriggerResult_UnknownError) = 3,
 }}
 RT_CLASS!{class MobileBroadbandDeviceServiceNotificationTrigger: IBackgroundTrigger}
 impl RtActivatable<IActivationFactory> for MobileBroadbandDeviceServiceNotificationTrigger {}
-DEFINE_CLSID!(MobileBroadbandDeviceServiceNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,68,101,118,105,99,101,83,101,114,118,105,99,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandDeviceServiceNotificationTrigger]);
+DEFINE_CLSID!(MobileBroadbandDeviceServiceNotificationTrigger: "Windows.ApplicationModel.Background.MobileBroadbandDeviceServiceNotificationTrigger");
 RT_CLASS!{class MobileBroadbandPinLockStateChangeTrigger: IBackgroundTrigger}
 impl RtActivatable<IActivationFactory> for MobileBroadbandPinLockStateChangeTrigger {}
-DEFINE_CLSID!(MobileBroadbandPinLockStateChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,80,105,110,76,111,99,107,83,116,97,116,101,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandPinLockStateChangeTrigger]);
+DEFINE_CLSID!(MobileBroadbandPinLockStateChangeTrigger: "Windows.ApplicationModel.Background.MobileBroadbandPinLockStateChangeTrigger");
 RT_CLASS!{class MobileBroadbandRadioStateChangeTrigger: IBackgroundTrigger}
 impl RtActivatable<IActivationFactory> for MobileBroadbandRadioStateChangeTrigger {}
-DEFINE_CLSID!(MobileBroadbandRadioStateChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,82,97,100,105,111,83,116,97,116,101,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandRadioStateChangeTrigger]);
+DEFINE_CLSID!(MobileBroadbandRadioStateChangeTrigger: "Windows.ApplicationModel.Background.MobileBroadbandRadioStateChangeTrigger");
 RT_CLASS!{class MobileBroadbandRegistrationStateChangeTrigger: IBackgroundTrigger}
 impl RtActivatable<IActivationFactory> for MobileBroadbandRegistrationStateChangeTrigger {}
-DEFINE_CLSID!(MobileBroadbandRegistrationStateChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,82,101,103,105,115,116,114,97,116,105,111,110,83,116,97,116,101,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandRegistrationStateChangeTrigger]);
+DEFINE_CLSID!(MobileBroadbandRegistrationStateChangeTrigger: "Windows.ApplicationModel.Background.MobileBroadbandRegistrationStateChangeTrigger");
 DEFINE_IID!(IID_INetworkOperatorHotspotAuthenticationTrigger, 3881224081, 12289, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
 RT_INTERFACE!{interface INetworkOperatorHotspotAuthenticationTrigger(INetworkOperatorHotspotAuthenticationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorHotspotAuthenticationTrigger] {
     
 }}
 RT_CLASS!{class NetworkOperatorHotspotAuthenticationTrigger: INetworkOperatorHotspotAuthenticationTrigger}
 impl RtActivatable<IActivationFactory> for NetworkOperatorHotspotAuthenticationTrigger {}
-DEFINE_CLSID!(NetworkOperatorHotspotAuthenticationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,72,111,116,115,112,111,116,65,117,116,104,101,110,116,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_NetworkOperatorHotspotAuthenticationTrigger]);
+DEFINE_CLSID!(NetworkOperatorHotspotAuthenticationTrigger: "Windows.ApplicationModel.Background.NetworkOperatorHotspotAuthenticationTrigger");
 DEFINE_IID!(IID_INetworkOperatorNotificationTrigger, 2416483526, 25549, 18444, 149, 209, 110, 106, 239, 128, 30, 74);
 RT_INTERFACE!{interface INetworkOperatorNotificationTrigger(INetworkOperatorNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorNotificationTrigger] {
     fn get_NetworkAccountId(&self, out: *mut HSTRING) -> HRESULT
@@ -4480,7 +4480,7 @@ impl NetworkOperatorNotificationTrigger {
         <Self as RtActivatable<INetworkOperatorNotificationTriggerFactory>>::get_activation_factory().create(networkAccountId)
     }}
 }
-DEFINE_CLSID!(NetworkOperatorNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_NetworkOperatorNotificationTrigger]);
+DEFINE_CLSID!(NetworkOperatorNotificationTrigger: "Windows.ApplicationModel.Background.NetworkOperatorNotificationTrigger");
 DEFINE_IID!(IID_INetworkOperatorNotificationTriggerFactory, 170016256, 10199, 17235, 173, 185, 146, 101, 170, 234, 87, 157);
 RT_INTERFACE!{static interface INetworkOperatorNotificationTriggerFactory(INetworkOperatorNotificationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorNotificationTriggerFactory] {
     fn Create(&self, networkAccountId: HSTRING, out: *mut *mut NetworkOperatorNotificationTrigger) -> HRESULT
@@ -4494,7 +4494,7 @@ impl INetworkOperatorNotificationTriggerFactory {
 }
 RT_CLASS!{class PaymentAppCanMakePaymentTrigger: IBackgroundTrigger}
 impl RtActivatable<IActivationFactory> for PaymentAppCanMakePaymentTrigger {}
-DEFINE_CLSID!(PaymentAppCanMakePaymentTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,80,97,121,109,101,110,116,65,112,112,67,97,110,77,97,107,101,80,97,121,109,101,110,116,84,114,105,103,103,101,114,0]) [CLSID_PaymentAppCanMakePaymentTrigger]);
+DEFINE_CLSID!(PaymentAppCanMakePaymentTrigger: "Windows.ApplicationModel.Background.PaymentAppCanMakePaymentTrigger");
 DEFINE_IID!(IID_IPhoneTrigger, 2379213211, 54469, 18929, 183, 211, 130, 232, 122, 14, 157, 222);
 RT_INTERFACE!{interface IPhoneTrigger(IPhoneTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneTrigger] {
     fn get_OneShot(&self, out: *mut bool) -> HRESULT,
@@ -4519,7 +4519,7 @@ impl PhoneTrigger {
         <Self as RtActivatable<IPhoneTriggerFactory>>::get_activation_factory().create(type_, oneShot)
     }}
 }
-DEFINE_CLSID!(PhoneTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,80,104,111,110,101,84,114,105,103,103,101,114,0]) [CLSID_PhoneTrigger]);
+DEFINE_CLSID!(PhoneTrigger: "Windows.ApplicationModel.Background.PhoneTrigger");
 DEFINE_IID!(IID_IPhoneTriggerFactory, 2698591450, 24513, 18683, 165, 70, 50, 38, 32, 64, 21, 123);
 RT_INTERFACE!{static interface IPhoneTriggerFactory(IPhoneTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneTriggerFactory] {
     fn Create(&self, type_: super::calls::background::PhoneTriggerType, oneShot: bool, out: *mut *mut PhoneTrigger) -> HRESULT
@@ -4539,7 +4539,7 @@ impl PushNotificationTrigger {
         <Self as RtActivatable<IPushNotificationTriggerFactory>>::get_activation_factory().create(applicationId)
     }}
 }
-DEFINE_CLSID!(PushNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,80,117,115,104,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_PushNotificationTrigger]);
+DEFINE_CLSID!(PushNotificationTrigger: "Windows.ApplicationModel.Background.PushNotificationTrigger");
 DEFINE_IID!(IID_IPushNotificationTriggerFactory, 1842933019, 17806, 20418, 188, 46, 213, 102, 79, 119, 237, 25);
 RT_INTERFACE!{static interface IPushNotificationTriggerFactory(IPushNotificationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationTriggerFactory] {
     fn Create(&self, applicationId: HSTRING, out: *mut *mut PushNotificationTrigger) -> HRESULT
@@ -4557,7 +4557,7 @@ RT_INTERFACE!{interface IRcsEndUserMessageAvailableTrigger(IRcsEndUserMessageAva
 }}
 RT_CLASS!{class RcsEndUserMessageAvailableTrigger: IRcsEndUserMessageAvailableTrigger}
 impl RtActivatable<IActivationFactory> for RcsEndUserMessageAvailableTrigger {}
-DEFINE_CLSID!(RcsEndUserMessageAvailableTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,82,99,115,69,110,100,85,115,101,114,77,101,115,115,97,103,101,65,118,97,105,108,97,98,108,101,84,114,105,103,103,101,114,0]) [CLSID_RcsEndUserMessageAvailableTrigger]);
+DEFINE_CLSID!(RcsEndUserMessageAvailableTrigger: "Windows.ApplicationModel.Background.RcsEndUserMessageAvailableTrigger");
 DEFINE_IID!(IID_IRfcommConnectionTrigger, 3905211106, 2899, 17508, 147, 148, 253, 135, 86, 84, 222, 100);
 RT_INTERFACE!{interface IRfcommConnectionTrigger(IRfcommConnectionTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommConnectionTrigger] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
@@ -4612,14 +4612,14 @@ impl IRfcommConnectionTrigger {
 }
 RT_CLASS!{class RfcommConnectionTrigger: IRfcommConnectionTrigger}
 impl RtActivatable<IActivationFactory> for RfcommConnectionTrigger {}
-DEFINE_CLSID!(RfcommConnectionTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,82,102,99,111,109,109,67,111,110,110,101,99,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_RfcommConnectionTrigger]);
+DEFINE_CLSID!(RfcommConnectionTrigger: "Windows.ApplicationModel.Background.RfcommConnectionTrigger");
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationTrigger, 4063752999, 20865, 20260, 150, 167, 112, 10, 78, 95, 172, 98);
 RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationTrigger(ISecondaryAuthenticationFactorAuthenticationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationTrigger] {
     
 }}
 RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationTrigger: ISecondaryAuthenticationFactorAuthenticationTrigger}
 impl RtActivatable<IActivationFactory> for SecondaryAuthenticationFactorAuthenticationTrigger {}
-DEFINE_CLSID!(SecondaryAuthenticationFactorAuthenticationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_SecondaryAuthenticationFactorAuthenticationTrigger]);
+DEFINE_CLSID!(SecondaryAuthenticationFactorAuthenticationTrigger: "Windows.ApplicationModel.Background.SecondaryAuthenticationFactorAuthenticationTrigger");
 DEFINE_IID!(IID_ISensorDataThresholdTrigger, 1539371890, 54411, 19327, 171, 236, 21, 249, 186, 204, 18, 226);
 RT_INTERFACE!{interface ISensorDataThresholdTrigger(ISensorDataThresholdTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISensorDataThresholdTrigger] {
     
@@ -4631,7 +4631,7 @@ impl SensorDataThresholdTrigger {
         <Self as RtActivatable<ISensorDataThresholdTriggerFactory>>::get_activation_factory().create(threshold)
     }}
 }
-DEFINE_CLSID!(SensorDataThresholdTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,101,110,115,111,114,68,97,116,97,84,104,114,101,115,104,111,108,100,84,114,105,103,103,101,114,0]) [CLSID_SensorDataThresholdTrigger]);
+DEFINE_CLSID!(SensorDataThresholdTrigger: "Windows.ApplicationModel.Background.SensorDataThresholdTrigger");
 DEFINE_IID!(IID_ISensorDataThresholdTriggerFactory, 2451564149, 32240, 19875, 151, 179, 229, 68, 238, 133, 127, 230);
 RT_INTERFACE!{static interface ISensorDataThresholdTriggerFactory(ISensorDataThresholdTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISensorDataThresholdTriggerFactory] {
     #[cfg(feature="windows-devices")] fn Create(&self, threshold: *mut super::super::devices::sensors::ISensorDataThreshold, out: *mut *mut SensorDataThresholdTrigger) -> HRESULT
@@ -4661,7 +4661,7 @@ impl SmartCardTrigger {
         <Self as RtActivatable<ISmartCardTriggerFactory>>::get_activation_factory().create(triggerType)
     }}
 }
-DEFINE_CLSID!(SmartCardTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,109,97,114,116,67,97,114,100,84,114,105,103,103,101,114,0]) [CLSID_SmartCardTrigger]);
+DEFINE_CLSID!(SmartCardTrigger: "Windows.ApplicationModel.Background.SmartCardTrigger");
 DEFINE_IID!(IID_ISmartCardTriggerFactory, 1673483459, 35265, 19968, 169, 211, 151, 198, 41, 38, 157, 173);
 RT_INTERFACE!{static interface ISmartCardTriggerFactory(ISmartCardTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardTriggerFactory] {
     #[cfg(feature="windows-devices")] fn Create(&self, triggerType: super::super::devices::smartcards::SmartCardTriggerType, out: *mut *mut SmartCardTrigger) -> HRESULT
@@ -4680,7 +4680,7 @@ impl SmsMessageReceivedTrigger {
         <Self as RtActivatable<ISmsMessageReceivedTriggerFactory>>::get_activation_factory().create(filterRules)
     }}
 }
-DEFINE_CLSID!(SmsMessageReceivedTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,109,115,77,101,115,115,97,103,101,82,101,99,101,105,118,101,100,84,114,105,103,103,101,114,0]) [CLSID_SmsMessageReceivedTrigger]);
+DEFINE_CLSID!(SmsMessageReceivedTrigger: "Windows.ApplicationModel.Background.SmsMessageReceivedTrigger");
 DEFINE_IID!(IID_ISmsMessageReceivedTriggerFactory, 3929725128, 27556, 19122, 141, 33, 188, 107, 9, 199, 117, 100);
 RT_INTERFACE!{static interface ISmsMessageReceivedTriggerFactory(ISmsMessageReceivedTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmsMessageReceivedTriggerFactory] {
     #[cfg(feature="windows-devices")] fn Create(&self, filterRules: *mut super::super::devices::sms::SmsFilterRules, out: *mut *mut SmsMessageReceivedTrigger) -> HRESULT
@@ -4705,7 +4705,7 @@ impl ISocketActivityTrigger {
 }
 RT_CLASS!{class SocketActivityTrigger: IBackgroundTrigger}
 impl RtActivatable<IActivationFactory> for SocketActivityTrigger {}
-DEFINE_CLSID!(SocketActivityTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,111,99,107,101,116,65,99,116,105,118,105,116,121,84,114,105,103,103,101,114,0]) [CLSID_SocketActivityTrigger]);
+DEFINE_CLSID!(SocketActivityTrigger: "Windows.ApplicationModel.Background.SocketActivityTrigger");
 DEFINE_IID!(IID_IStorageLibraryContentChangedTrigger, 372760743, 33436, 17852, 146, 155, 161, 231, 234, 120, 216, 155);
 RT_INTERFACE!{interface IStorageLibraryContentChangedTrigger(IStorageLibraryContentChangedTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryContentChangedTrigger] {
     
@@ -4720,7 +4720,7 @@ impl StorageLibraryContentChangedTrigger {
         <Self as RtActivatable<IStorageLibraryContentChangedTriggerStatics>>::get_activation_factory().create_from_libraries(storageLibraries)
     }}
 }
-DEFINE_CLSID!(StorageLibraryContentChangedTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,116,111,114,97,103,101,76,105,98,114,97,114,121,67,111,110,116,101,110,116,67,104,97,110,103,101,100,84,114,105,103,103,101,114,0]) [CLSID_StorageLibraryContentChangedTrigger]);
+DEFINE_CLSID!(StorageLibraryContentChangedTrigger: "Windows.ApplicationModel.Background.StorageLibraryContentChangedTrigger");
 DEFINE_IID!(IID_IStorageLibraryContentChangedTriggerStatics, 2141133625, 24464, 19986, 145, 78, 167, 216, 224, 187, 251, 24);
 RT_INTERFACE!{static interface IStorageLibraryContentChangedTriggerStatics(IStorageLibraryContentChangedTriggerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryContentChangedTriggerStatics] {
     #[cfg(feature="windows-storage")] fn Create(&self, storageLibrary: *mut super::super::storage::StorageLibrary, out: *mut *mut StorageLibraryContentChangedTrigger) -> HRESULT,
@@ -4756,7 +4756,7 @@ impl SystemCondition {
         <Self as RtActivatable<ISystemConditionFactory>>::get_activation_factory().create(conditionType)
     }}
 }
-DEFINE_CLSID!(SystemCondition(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,121,115,116,101,109,67,111,110,100,105,116,105,111,110,0]) [CLSID_SystemCondition]);
+DEFINE_CLSID!(SystemCondition: "Windows.ApplicationModel.Background.SystemCondition");
 DEFINE_IID!(IID_ISystemConditionFactory, 3530150385, 1447, 18862, 135, 215, 22, 178, 184, 185, 165, 83);
 RT_INTERFACE!{static interface ISystemConditionFactory(ISystemConditionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISystemConditionFactory] {
     fn Create(&self, conditionType: SystemConditionType, out: *mut *mut SystemCondition) -> HRESULT
@@ -4795,7 +4795,7 @@ impl SystemTrigger {
         <Self as RtActivatable<ISystemTriggerFactory>>::get_activation_factory().create(triggerType, oneShot)
     }}
 }
-DEFINE_CLSID!(SystemTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,121,115,116,101,109,84,114,105,103,103,101,114,0]) [CLSID_SystemTrigger]);
+DEFINE_CLSID!(SystemTrigger: "Windows.ApplicationModel.Background.SystemTrigger");
 DEFINE_IID!(IID_ISystemTriggerFactory, 3892585428, 34705, 17785, 129, 38, 135, 236, 138, 170, 64, 122);
 RT_INTERFACE!{static interface ISystemTriggerFactory(ISystemTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISystemTriggerFactory] {
     fn Create(&self, triggerType: SystemTriggerType, oneShot: bool, out: *mut *mut SystemTrigger) -> HRESULT
@@ -4834,7 +4834,7 @@ impl TimeTrigger {
         <Self as RtActivatable<ITimeTriggerFactory>>::get_activation_factory().create(freshnessTime, oneShot)
     }}
 }
-DEFINE_CLSID!(TimeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,84,105,109,101,84,114,105,103,103,101,114,0]) [CLSID_TimeTrigger]);
+DEFINE_CLSID!(TimeTrigger: "Windows.ApplicationModel.Background.TimeTrigger");
 DEFINE_IID!(IID_ITimeTriggerFactory, 952533758, 39764, 17894, 178, 243, 38, 155, 135, 166, 247, 52);
 RT_INTERFACE!{static interface ITimeTriggerFactory(ITimeTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITimeTriggerFactory] {
     fn Create(&self, freshnessTime: u32, oneShot: bool, out: *mut *mut TimeTrigger) -> HRESULT
@@ -4854,7 +4854,7 @@ impl ToastNotificationActionTrigger {
         <Self as RtActivatable<IToastNotificationActionTriggerFactory>>::get_activation_factory().create(applicationId)
     }}
 }
-DEFINE_CLSID!(ToastNotificationActionTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,84,111,97,115,116,78,111,116,105,102,105,99,97,116,105,111,110,65,99,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ToastNotificationActionTrigger]);
+DEFINE_CLSID!(ToastNotificationActionTrigger: "Windows.ApplicationModel.Background.ToastNotificationActionTrigger");
 DEFINE_IID!(IID_IToastNotificationActionTriggerFactory, 2963143719, 25728, 17225, 129, 37, 151, 179, 239, 170, 10, 58);
 RT_INTERFACE!{static interface IToastNotificationActionTriggerFactory(IToastNotificationActionTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IToastNotificationActionTriggerFactory] {
     fn Create(&self, applicationId: HSTRING, out: *mut *mut ToastNotificationActionTrigger) -> HRESULT
@@ -4874,7 +4874,7 @@ impl ToastNotificationHistoryChangedTrigger {
         <Self as RtActivatable<IToastNotificationHistoryChangedTriggerFactory>>::get_activation_factory().create(applicationId)
     }}
 }
-DEFINE_CLSID!(ToastNotificationHistoryChangedTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,84,111,97,115,116,78,111,116,105,102,105,99,97,116,105,111,110,72,105,115,116,111,114,121,67,104,97,110,103,101,100,84,114,105,103,103,101,114,0]) [CLSID_ToastNotificationHistoryChangedTrigger]);
+DEFINE_CLSID!(ToastNotificationHistoryChangedTrigger: "Windows.ApplicationModel.Background.ToastNotificationHistoryChangedTrigger");
 DEFINE_IID!(IID_IToastNotificationHistoryChangedTriggerFactory, 2177301165, 34711, 18309, 129, 180, 176, 204, 203, 115, 209, 217);
 RT_INTERFACE!{static interface IToastNotificationHistoryChangedTriggerFactory(IToastNotificationHistoryChangedTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IToastNotificationHistoryChangedTriggerFactory] {
     fn Create(&self, applicationId: HSTRING, out: *mut *mut ToastNotificationHistoryChangedTrigger) -> HRESULT
@@ -4893,7 +4893,7 @@ impl UserNotificationChangedTrigger {
         <Self as RtActivatable<IUserNotificationChangedTriggerFactory>>::get_activation_factory().create(notificationKinds)
     }}
 }
-DEFINE_CLSID!(UserNotificationChangedTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,85,115,101,114,78,111,116,105,102,105,99,97,116,105,111,110,67,104,97,110,103,101,100,84,114,105,103,103,101,114,0]) [CLSID_UserNotificationChangedTrigger]);
+DEFINE_CLSID!(UserNotificationChangedTrigger: "Windows.ApplicationModel.Background.UserNotificationChangedTrigger");
 DEFINE_IID!(IID_IUserNotificationChangedTriggerFactory, 3402908524, 27051, 19992, 164, 138, 94, 210, 172, 67, 89, 87);
 RT_INTERFACE!{static interface IUserNotificationChangedTriggerFactory(IUserNotificationChangedTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUserNotificationChangedTriggerFactory] {
     #[cfg(feature="windows-ui")] fn Create(&self, notificationKinds: super::super::ui::notifications::NotificationKinds, out: *mut *mut UserNotificationChangedTrigger) -> HRESULT
@@ -5097,7 +5097,7 @@ impl CoreApplication {
         <Self as RtActivatable<ICoreImmersiveApplication3>>::get_activation_factory().create_new_view_with_view_source(viewSource)
     }}
 }
-DEFINE_CLSID!(CoreApplication(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,114,101,46,67,111,114,101,65,112,112,108,105,99,97,116,105,111,110,0]) [CLSID_CoreApplication]);
+DEFINE_CLSID!(CoreApplication: "Windows.ApplicationModel.Core.CoreApplication");
 DEFINE_IID!(IID_ICoreApplication2, 2575729147, 6838, 19327, 190, 74, 154, 6, 69, 34, 76, 4);
 RT_INTERFACE!{static interface ICoreApplication2(ICoreApplication2Vtbl): IInspectable(IInspectableVtbl) [IID_ICoreApplication2] {
     fn add_BackgroundActivated(&self, handler: *mut super::super::foundation::EventHandler<super::activation::BackgroundActivatedEventArgs>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
@@ -5508,7 +5508,7 @@ impl AppServiceCatalog {
         <Self as RtActivatable<IAppServiceCatalogStatics>>::get_activation_factory().find_app_service_providers_async(appServiceName)
     }}
 }
-DEFINE_CLSID!(AppServiceCatalog(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,83,101,114,118,105,99,101,46,65,112,112,83,101,114,118,105,99,101,67,97,116,97,108,111,103,0]) [CLSID_AppServiceCatalog]);
+DEFINE_CLSID!(AppServiceCatalog: "Windows.ApplicationModel.AppService.AppServiceCatalog");
 DEFINE_IID!(IID_IAppServiceCatalogStatics, 4010616071, 53554, 19589, 131, 149, 60, 49, 213, 161, 233, 65);
 RT_INTERFACE!{static interface IAppServiceCatalogStatics(IAppServiceCatalogStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppServiceCatalogStatics] {
     fn FindAppServiceProvidersAsync(&self, appServiceName: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<super::AppInfo>>) -> HRESULT
@@ -5598,7 +5598,7 @@ impl IAppServiceConnection {
 }
 RT_CLASS!{class AppServiceConnection: IAppServiceConnection}
 impl RtActivatable<IActivationFactory> for AppServiceConnection {}
-DEFINE_CLSID!(AppServiceConnection(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,83,101,114,118,105,99,101,46,65,112,112,83,101,114,118,105,99,101,67,111,110,110,101,99,116,105,111,110,0]) [CLSID_AppServiceConnection]);
+DEFINE_CLSID!(AppServiceConnection: "Windows.ApplicationModel.AppService.AppServiceConnection");
 DEFINE_IID!(IID_IAppServiceConnection2, 2346700127, 8962, 20413, 128, 97, 82, 81, 28, 47, 139, 249);
 RT_INTERFACE!{interface IAppServiceConnection2(IAppServiceConnection2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppServiceConnection2] {
     #[cfg(feature="windows-system")] fn OpenRemoteAsync(&self, remoteSystemConnectionRequest: *mut super::super::system::remotesystems::RemoteSystemConnectionRequest, out: *mut *mut super::super::foundation::IAsyncOperation<AppServiceConnectionStatus>) -> HRESULT,
@@ -5886,7 +5886,7 @@ impl IAppointment {
 }
 RT_CLASS!{class Appointment: IAppointment}
 impl RtActivatable<IActivationFactory> for Appointment {}
-DEFINE_CLSID!(Appointment(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,65,112,112,111,105,110,116,109,101,110,116,0]) [CLSID_Appointment]);
+DEFINE_CLSID!(Appointment: "Windows.ApplicationModel.Appointments.Appointment");
 DEFINE_IID!(IID_IAppointment2, 1585813564, 21519, 13394, 155, 92, 13, 215, 173, 76, 101, 162);
 RT_INTERFACE!{interface IAppointment2(IAppointment2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppointment2] {
     fn get_LocalId(&self, out: *mut HSTRING) -> HRESULT,
@@ -6506,7 +6506,7 @@ impl IAppointmentInvitee {
 }
 RT_CLASS!{class AppointmentInvitee: IAppointmentInvitee}
 impl RtActivatable<IActivationFactory> for AppointmentInvitee {}
-DEFINE_CLSID!(AppointmentInvitee(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,65,112,112,111,105,110,116,109,101,110,116,73,110,118,105,116,101,101,0]) [CLSID_AppointmentInvitee]);
+DEFINE_CLSID!(AppointmentInvitee: "Windows.ApplicationModel.Appointments.AppointmentInvitee");
 RT_CLASS!{static class AppointmentManager}
 impl RtActivatable<IAppointmentManagerStatics> for AppointmentManager {}
 impl RtActivatable<IAppointmentManagerStatics2> for AppointmentManager {}
@@ -6555,7 +6555,7 @@ impl AppointmentManager {
         <Self as RtActivatable<IAppointmentManagerStatics3>>::get_activation_factory().get_for_user(user)
     }}
 }
-DEFINE_CLSID!(AppointmentManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,65,112,112,111,105,110,116,109,101,110,116,77,97,110,97,103,101,114,0]) [CLSID_AppointmentManager]);
+DEFINE_CLSID!(AppointmentManager: "Windows.ApplicationModel.Appointments.AppointmentManager");
 DEFINE_IID!(IID_IAppointmentManagerForUser, 1881543715, 29644, 18016, 179, 24, 176, 19, 101, 48, 42, 3);
 RT_INTERFACE!{interface IAppointmentManagerForUser(IAppointmentManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentManagerForUser] {
     fn ShowAddAppointmentAsync(&self, appointment: *mut Appointment, selection: super::super::foundation::Rect, out: *mut *mut super::super::foundation::IAsyncOperation<HString>) -> HRESULT,
@@ -6757,7 +6757,7 @@ impl IAppointmentManagerStatics3 {
 }
 RT_CLASS!{class AppointmentOrganizer: IAppointmentParticipant}
 impl RtActivatable<IActivationFactory> for AppointmentOrganizer {}
-DEFINE_CLSID!(AppointmentOrganizer(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,65,112,112,111,105,110,116,109,101,110,116,79,114,103,97,110,105,122,101,114,0]) [CLSID_AppointmentOrganizer]);
+DEFINE_CLSID!(AppointmentOrganizer: "Windows.ApplicationModel.Appointments.AppointmentOrganizer");
 DEFINE_IID!(IID_IAppointmentParticipant, 1633560834, 38680, 18043, 131, 251, 178, 147, 161, 145, 33, 222);
 RT_INTERFACE!{interface IAppointmentParticipant(IAppointmentParticipantVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentParticipant] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -6874,7 +6874,7 @@ impl AppointmentProperties {
         <Self as RtActivatable<IAppointmentPropertiesStatics2>>::get_activation_factory().get_details_kind()
     }}
 }
-DEFINE_CLSID!(AppointmentProperties(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,65,112,112,111,105,110,116,109,101,110,116,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_AppointmentProperties]);
+DEFINE_CLSID!(AppointmentProperties: "Windows.ApplicationModel.Appointments.AppointmentProperties");
 DEFINE_IID!(IID_IAppointmentPropertiesStatics, 622075881, 26798, 15022, 133, 95, 188, 68, 65, 202, 162, 52);
 RT_INTERFACE!{static interface IAppointmentPropertiesStatics(IAppointmentPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentPropertiesStatics] {
     fn get_Subject(&self, out: *mut HSTRING) -> HRESULT,
@@ -7136,7 +7136,7 @@ impl IAppointmentRecurrence {
 }
 RT_CLASS!{class AppointmentRecurrence: IAppointmentRecurrence}
 impl RtActivatable<IActivationFactory> for AppointmentRecurrence {}
-DEFINE_CLSID!(AppointmentRecurrence(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,65,112,112,111,105,110,116,109,101,110,116,82,101,99,117,114,114,101,110,99,101,0]) [CLSID_AppointmentRecurrence]);
+DEFINE_CLSID!(AppointmentRecurrence: "Windows.ApplicationModel.Appointments.AppointmentRecurrence");
 DEFINE_IID!(IID_IAppointmentRecurrence2, 1039377120, 1447, 20304, 159, 134, 176, 63, 148, 54, 37, 77);
 RT_INTERFACE!{interface IAppointmentRecurrence2(IAppointmentRecurrence2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentRecurrence2] {
     fn get_RecurrenceType(&self, out: *mut RecurrenceType) -> HRESULT,
@@ -7511,7 +7511,7 @@ impl IFindAppointmentsOptions {
 }
 RT_CLASS!{class FindAppointmentsOptions: IFindAppointmentsOptions}
 impl RtActivatable<IActivationFactory> for FindAppointmentsOptions {}
-DEFINE_CLSID!(FindAppointmentsOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,70,105,110,100,65,112,112,111,105,110,116,109,101,110,116,115,79,112,116,105,111,110,115,0]) [CLSID_FindAppointmentsOptions]);
+DEFINE_CLSID!(FindAppointmentsOptions: "Windows.ApplicationModel.Appointments.FindAppointmentsOptions");
 RT_ENUM! { enum RecurrenceType: i32 {
     Master (RecurrenceType_Master) = 0, Instance (RecurrenceType_Instance) = 1, ExceptionInstance (RecurrenceType_ExceptionInstance) = 2,
 }}
@@ -7575,7 +7575,7 @@ impl AppointmentsProviderLaunchActionVerbs {
         <Self as RtActivatable<IAppointmentsProviderLaunchActionVerbsStatics2>>::get_activation_factory().get_show_appointment_details()
     }}
 }
-DEFINE_CLSID!(AppointmentsProviderLaunchActionVerbs(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,65,112,112,111,105,110,116,109,101,110,116,115,80,114,111,118,105,100,101,114,46,65,112,112,111,105,110,116,109,101,110,116,115,80,114,111,118,105,100,101,114,76,97,117,110,99,104,65,99,116,105,111,110,86,101,114,98,115,0]) [CLSID_AppointmentsProviderLaunchActionVerbs]);
+DEFINE_CLSID!(AppointmentsProviderLaunchActionVerbs: "Windows.ApplicationModel.Appointments.AppointmentsProvider.AppointmentsProviderLaunchActionVerbs");
 DEFINE_IID!(IID_IAppointmentsProviderLaunchActionVerbsStatics, 920369704, 40494, 18886, 142, 247, 58, 183, 165, 220, 200, 184);
 RT_INTERFACE!{static interface IAppointmentsProviderLaunchActionVerbsStatics(IAppointmentsProviderLaunchActionVerbsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentsProviderLaunchActionVerbsStatics] {
     fn get_AddAppointment(&self, out: *mut HSTRING) -> HRESULT,
@@ -9183,7 +9183,7 @@ impl ChatCapabilitiesManager {
         <Self as RtActivatable<IChatCapabilitiesManagerStatics>>::get_activation_factory().get_capabilities_from_network_async(address)
     }}
 }
-DEFINE_CLSID!(ChatCapabilitiesManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,67,97,112,97,98,105,108,105,116,105,101,115,77,97,110,97,103,101,114,0]) [CLSID_ChatCapabilitiesManager]);
+DEFINE_CLSID!(ChatCapabilitiesManager: "Windows.ApplicationModel.Chat.ChatCapabilitiesManager");
 DEFINE_IID!(IID_IChatCapabilitiesManagerStatics, 3044683568, 28737, 17806, 176, 207, 124, 13, 159, 234, 51, 58);
 RT_INTERFACE!{static interface IChatCapabilitiesManagerStatics(IChatCapabilitiesManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IChatCapabilitiesManagerStatics] {
     fn GetCachedCapabilitiesAsync(&self, address: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<ChatCapabilities>) -> HRESULT,
@@ -9401,7 +9401,7 @@ impl IChatConversationThreadingInfo {
 }
 RT_CLASS!{class ChatConversationThreadingInfo: IChatConversationThreadingInfo}
 impl RtActivatable<IActivationFactory> for ChatConversationThreadingInfo {}
-DEFINE_CLSID!(ChatConversationThreadingInfo(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,67,111,110,118,101,114,115,97,116,105,111,110,84,104,114,101,97,100,105,110,103,73,110,102,111,0]) [CLSID_ChatConversationThreadingInfo]);
+DEFINE_CLSID!(ChatConversationThreadingInfo: "Windows.ApplicationModel.Chat.ChatConversationThreadingInfo");
 RT_ENUM! { enum ChatConversationThreadingKind: i32 {
     Participants (ChatConversationThreadingKind_Participants) = 0, ContactId (ChatConversationThreadingKind_ContactId) = 1, ConversationId (ChatConversationThreadingKind_ConversationId) = 2, Custom (ChatConversationThreadingKind_Custom) = 3,
 }}
@@ -9526,7 +9526,7 @@ impl IChatMessage {
 }
 RT_CLASS!{class ChatMessage: IChatMessage}
 impl RtActivatable<IActivationFactory> for ChatMessage {}
-DEFINE_CLSID!(ChatMessage(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,77,101,115,115,97,103,101,0]) [CLSID_ChatMessage]);
+DEFINE_CLSID!(ChatMessage: "Windows.ApplicationModel.Chat.ChatMessage");
 DEFINE_IID!(IID_IChatMessage2, 2254865202, 21567, 18933, 172, 113, 108, 42, 252, 101, 101, 253);
 RT_INTERFACE!{interface IChatMessage2(IChatMessage2Vtbl): IInspectable(IInspectableVtbl) [IID_IChatMessage2] {
     fn get_EstimatedDownloadSize(&self, out: *mut u64) -> HRESULT,
@@ -9768,7 +9768,7 @@ impl ChatMessageAttachment {
         <Self as RtActivatable<IChatMessageAttachmentFactory>>::get_activation_factory().create_chat_message_attachment(mimeType, dataStreamReference)
     }}
 }
-DEFINE_CLSID!(ChatMessageAttachment(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,77,101,115,115,97,103,101,65,116,116,97,99,104,109,101,110,116,0]) [CLSID_ChatMessageAttachment]);
+DEFINE_CLSID!(ChatMessageAttachment: "Windows.ApplicationModel.Chat.ChatMessageAttachment");
 DEFINE_IID!(IID_IChatMessageAttachment2, 1591317104, 32209, 19079, 168, 206, 172, 221, 135, 216, 13, 200);
 RT_INTERFACE!{interface IChatMessageAttachment2(IChatMessageAttachment2Vtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageAttachment2] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -9827,7 +9827,7 @@ impl ChatMessageBlocking {
         <Self as RtActivatable<IChatMessageBlockingStatic>>::get_activation_factory().mark_message_as_blocked_async(localChatMessageId, blocked)
     }}
 }
-DEFINE_CLSID!(ChatMessageBlocking(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,77,101,115,115,97,103,101,66,108,111,99,107,105,110,103,0]) [CLSID_ChatMessageBlocking]);
+DEFINE_CLSID!(ChatMessageBlocking: "Windows.ApplicationModel.Chat.ChatMessageBlocking");
 DEFINE_IID!(IID_IChatMessageBlockingStatic, 4139361152, 52714, 4580, 136, 48, 8, 0, 32, 12, 154, 102);
 RT_INTERFACE!{static interface IChatMessageBlockingStatic(IChatMessageBlockingStaticVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageBlockingStatic] {
     fn MarkMessageAsBlockedAsync(&self, localChatMessageId: HSTRING, blocked: bool, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT
@@ -9957,7 +9957,7 @@ impl ChatMessageManager {
         <Self as RtActivatable<IChatMessageManagerStatics3>>::get_activation_factory().request_sync_manager_async()
     }}
 }
-DEFINE_CLSID!(ChatMessageManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,77,101,115,115,97,103,101,77,97,110,97,103,101,114,0]) [CLSID_ChatMessageManager]);
+DEFINE_CLSID!(ChatMessageManager: "Windows.ApplicationModel.Chat.ChatMessageManager");
 DEFINE_IID!(IID_IChatMessageManager2Statics, 491075855, 40783, 20021, 150, 78, 27, 156, 166, 26, 192, 68);
 RT_INTERFACE!{static interface IChatMessageManager2Statics(IChatMessageManager2StaticsVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageManager2Statics] {
     fn RegisterTransportAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<HString>) -> HRESULT,
@@ -10440,7 +10440,7 @@ impl IChatQueryOptions {
 }
 RT_CLASS!{class ChatQueryOptions: IChatQueryOptions}
 impl RtActivatable<IActivationFactory> for ChatQueryOptions {}
-DEFINE_CLSID!(ChatQueryOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_ChatQueryOptions]);
+DEFINE_CLSID!(ChatQueryOptions: "Windows.ApplicationModel.Chat.ChatQueryOptions");
 DEFINE_IID!(IID_IChatRecipientDeliveryInfo, 4291277474, 10300, 19466, 138, 14, 140, 51, 189, 191, 5, 69);
 RT_INTERFACE!{interface IChatRecipientDeliveryInfo(IChatRecipientDeliveryInfoVtbl): IInspectable(IInspectableVtbl) [IID_IChatRecipientDeliveryInfo] {
     fn get_TransportAddress(&self, out: *mut HSTRING) -> HRESULT,
@@ -10511,7 +10511,7 @@ impl IChatRecipientDeliveryInfo {
 }
 RT_CLASS!{class ChatRecipientDeliveryInfo: IChatRecipientDeliveryInfo}
 impl RtActivatable<IActivationFactory> for ChatRecipientDeliveryInfo {}
-DEFINE_CLSID!(ChatRecipientDeliveryInfo(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,82,101,99,105,112,105,101,110,116,68,101,108,105,118,101,114,121,73,110,102,111,0]) [CLSID_ChatRecipientDeliveryInfo]);
+DEFINE_CLSID!(ChatRecipientDeliveryInfo: "Windows.ApplicationModel.Chat.ChatRecipientDeliveryInfo");
 RT_ENUM! { enum ChatRestoreHistorySpan: i32 {
     LastMonth (ChatRestoreHistorySpan_LastMonth) = 0, LastYear (ChatRestoreHistorySpan_LastYear) = 1, AnyTime (ChatRestoreHistorySpan_AnyTime) = 2,
 }}
@@ -10742,7 +10742,7 @@ impl RcsManager {
         <Self as RtActivatable<IRcsManagerStatics>>::get_activation_factory().leave_conversation_async(conversation)
     }}
 }
-DEFINE_CLSID!(RcsManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,82,99,115,77,97,110,97,103,101,114,0]) [CLSID_RcsManager]);
+DEFINE_CLSID!(RcsManager: "Windows.ApplicationModel.Chat.RcsManager");
 DEFINE_IID!(IID_IRcsManagerStatics, 2099710661, 2749, 20273, 155, 153, 165, 158, 113, 167, 183, 49);
 RT_INTERFACE!{static interface IRcsManagerStatics(IRcsManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRcsManagerStatics] {
     fn GetEndUserMessageManager(&self, out: *mut *mut RcsEndUserMessageManager) -> HRESULT,
@@ -10993,7 +10993,7 @@ impl IContact {
 }
 RT_CLASS!{class Contact: IContact}
 impl RtActivatable<IActivationFactory> for Contact {}
-DEFINE_CLSID!(Contact(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,0]) [CLSID_Contact]);
+DEFINE_CLSID!(Contact: "Windows.ApplicationModel.Contacts.Contact");
 DEFINE_IID!(IID_IContact2, 4078105445, 47991, 19604, 128, 45, 131, 40, 206, 228, 12, 8);
 RT_INTERFACE!{interface IContact2(IContact2Vtbl): IInspectable(IInspectableVtbl) [IID_IContact2] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -11305,7 +11305,7 @@ impl IContactAddress {
 }
 RT_CLASS!{class ContactAddress: IContactAddress}
 impl RtActivatable<IActivationFactory> for ContactAddress {}
-DEFINE_CLSID!(ContactAddress(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,65,100,100,114,101,115,115,0]) [CLSID_ContactAddress]);
+DEFINE_CLSID!(ContactAddress: "Windows.ApplicationModel.Contacts.ContactAddress");
 RT_ENUM! { enum ContactAddressKind: i32 {
     Home (ContactAddressKind_Home) = 0, Work (ContactAddressKind_Work) = 1, Other (ContactAddressKind_Other) = 2,
 }}
@@ -11373,7 +11373,7 @@ impl IContactAnnotation {
 }
 RT_CLASS!{class ContactAnnotation: IContactAnnotation}
 impl RtActivatable<IActivationFactory> for ContactAnnotation {}
-DEFINE_CLSID!(ContactAnnotation(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,65,110,110,111,116,97,116,105,111,110,0]) [CLSID_ContactAnnotation]);
+DEFINE_CLSID!(ContactAnnotation: "Windows.ApplicationModel.Contacts.ContactAnnotation");
 DEFINE_IID!(IID_IContactAnnotation2, 3063016691, 19127, 18975, 153, 65, 12, 156, 243, 23, 27, 117);
 RT_INTERFACE!{interface IContactAnnotation2(IContactAnnotation2Vtbl): IInspectable(IInspectableVtbl) [IID_IContactAnnotation2] {
     fn get_ContactListId(&self, out: *mut HSTRING) -> HRESULT,
@@ -11585,7 +11585,7 @@ impl IContactCardOptions {
 }
 RT_CLASS!{class ContactCardOptions: IContactCardOptions}
 impl RtActivatable<IActivationFactory> for ContactCardOptions {}
-DEFINE_CLSID!(ContactCardOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,67,97,114,100,79,112,116,105,111,110,115,0]) [CLSID_ContactCardOptions]);
+DEFINE_CLSID!(ContactCardOptions: "Windows.ApplicationModel.Contacts.ContactCardOptions");
 DEFINE_IID!(IID_IContactCardOptions2, 2401704864, 55115, 19654, 159, 83, 27, 14, 181, 209, 39, 60);
 RT_INTERFACE!{interface IContactCardOptions2(IContactCardOptions2Vtbl): IInspectable(IInspectableVtbl) [IID_IContactCardOptions2] {
     fn get_ServerSearchContactListIds(&self, out: *mut *mut super::super::foundation::collections::IVector<HString>) -> HRESULT
@@ -11728,7 +11728,7 @@ impl IContactConnectedServiceAccount {
 }
 RT_CLASS!{class ContactConnectedServiceAccount: IContactConnectedServiceAccount}
 impl RtActivatable<IActivationFactory> for ContactConnectedServiceAccount {}
-DEFINE_CLSID!(ContactConnectedServiceAccount(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,67,111,110,110,101,99,116,101,100,83,101,114,118,105,99,101,65,99,99,111,117,110,116,0]) [CLSID_ContactConnectedServiceAccount]);
+DEFINE_CLSID!(ContactConnectedServiceAccount: "Windows.ApplicationModel.Contacts.ContactConnectedServiceAccount");
 DEFINE_IID!(IID_IContactDate, 4271418982, 45573, 18740, 145, 116, 15, 242, 176, 86, 87, 7);
 RT_INTERFACE!{interface IContactDate(IContactDateVtbl): IInspectable(IInspectableVtbl) [IID_IContactDate] {
     fn get_Day(&self, out: *mut *mut super::super::foundation::IReference<u32>) -> HRESULT,
@@ -11791,7 +11791,7 @@ impl IContactDate {
 }
 RT_CLASS!{class ContactDate: IContactDate}
 impl RtActivatable<IActivationFactory> for ContactDate {}
-DEFINE_CLSID!(ContactDate(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,68,97,116,101,0]) [CLSID_ContactDate]);
+DEFINE_CLSID!(ContactDate: "Windows.ApplicationModel.Contacts.ContactDate");
 RT_ENUM! { enum ContactDateKind: i32 {
     Birthday (ContactDateKind_Birthday) = 0, Anniversary (ContactDateKind_Anniversary) = 1, Other (ContactDateKind_Other) = 2,
 }}
@@ -11835,7 +11835,7 @@ impl IContactEmail {
 }
 RT_CLASS!{class ContactEmail: IContactEmail}
 impl RtActivatable<IActivationFactory> for ContactEmail {}
-DEFINE_CLSID!(ContactEmail(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,69,109,97,105,108,0]) [CLSID_ContactEmail]);
+DEFINE_CLSID!(ContactEmail: "Windows.ApplicationModel.Contacts.ContactEmail");
 RT_ENUM! { enum ContactEmailKind: i32 {
     Personal (ContactEmailKind_Personal) = 0, Work (ContactEmailKind_Work) = 1, Other (ContactEmailKind_Other) = 2,
 }}
@@ -11881,7 +11881,7 @@ impl ContactField {
         <Self as RtActivatable<IContactFieldFactory>>::get_activation_factory().create_field_custom(name, value, type_, category)
     }}
 }
-DEFINE_CLSID!(ContactField(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,70,105,101,108,100,0]) [CLSID_ContactField]);
+DEFINE_CLSID!(ContactField: "Windows.ApplicationModel.Contacts.ContactField");
 RT_ENUM! { enum ContactFieldCategory: i32 {
     None (ContactFieldCategory_None) = 0, Home (ContactFieldCategory_Home) = 1, Work (ContactFieldCategory_Work) = 2, Mobile (ContactFieldCategory_Mobile) = 3, Other (ContactFieldCategory_Other) = 4,
 }}
@@ -11910,7 +11910,7 @@ impl IContactFieldFactory {
 }
 RT_CLASS!{class ContactFieldFactory: IContactFieldFactory}
 impl RtActivatable<IActivationFactory> for ContactFieldFactory {}
-DEFINE_CLSID!(ContactFieldFactory(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,70,105,101,108,100,70,97,99,116,111,114,121,0]) [CLSID_ContactFieldFactory]);
+DEFINE_CLSID!(ContactFieldFactory: "Windows.ApplicationModel.Contacts.ContactFieldFactory");
 RT_ENUM! { enum ContactFieldType: i32 {
     Email (ContactFieldType_Email) = 0, PhoneNumber (ContactFieldType_PhoneNumber) = 1, Location (ContactFieldType_Location) = 2, InstantMessage (ContactFieldType_InstantMessage) = 3, Custom (ContactFieldType_Custom) = 4, ConnectedServiceAccount (ContactFieldType_ConnectedServiceAccount) = 5, ImportantDate (ContactFieldType_ImportantDate) = 6, Address (ContactFieldType_Address) = 7, SignificantOther (ContactFieldType_SignificantOther) = 8, Notes (ContactFieldType_Notes) = 9, Website (ContactFieldType_Website) = 10, JobInfo (ContactFieldType_JobInfo) = 11,
 }}
@@ -12016,7 +12016,7 @@ impl ContactInstantMessageField {
         <Self as RtActivatable<IContactInstantMessageFieldFactory>>::get_activation_factory().create_instant_message_all(userName, category, service, displayText, verb)
     }}
 }
-DEFINE_CLSID!(ContactInstantMessageField(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,73,110,115,116,97,110,116,77,101,115,115,97,103,101,70,105,101,108,100,0]) [CLSID_ContactInstantMessageField]);
+DEFINE_CLSID!(ContactInstantMessageField: "Windows.ApplicationModel.Contacts.ContactInstantMessageField");
 DEFINE_IID!(IID_IContactInstantMessageFieldFactory, 3121309588, 37283, 19378, 177, 185, 105, 165, 223, 240, 186, 9);
 RT_INTERFACE!{static interface IContactInstantMessageFieldFactory(IContactInstantMessageFieldFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IContactInstantMessageFieldFactory] {
     fn CreateInstantMessage_Default(&self, userName: HSTRING, out: *mut *mut ContactInstantMessageField) -> HRESULT,
@@ -12135,7 +12135,7 @@ impl IContactJobInfo {
 }
 RT_CLASS!{class ContactJobInfo: IContactJobInfo}
 impl RtActivatable<IActivationFactory> for ContactJobInfo {}
-DEFINE_CLSID!(ContactJobInfo(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,74,111,98,73,110,102,111,0]) [CLSID_ContactJobInfo]);
+DEFINE_CLSID!(ContactJobInfo: "Windows.ApplicationModel.Contacts.ContactJobInfo");
 RT_CLASS!{static class ContactLaunchActionVerbs}
 impl RtActivatable<IContactLaunchActionVerbsStatics> for ContactLaunchActionVerbs {}
 impl ContactLaunchActionVerbs {
@@ -12155,7 +12155,7 @@ impl ContactLaunchActionVerbs {
         <Self as RtActivatable<IContactLaunchActionVerbsStatics>>::get_activation_factory().get_video_call()
     }}
 }
-DEFINE_CLSID!(ContactLaunchActionVerbs(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,76,97,117,110,99,104,65,99,116,105,111,110,86,101,114,98,115,0]) [CLSID_ContactLaunchActionVerbs]);
+DEFINE_CLSID!(ContactLaunchActionVerbs: "Windows.ApplicationModel.Contacts.ContactLaunchActionVerbs");
 DEFINE_IID!(IID_IContactLaunchActionVerbsStatics, 4212273878, 61043, 18151, 135, 97, 17, 205, 1, 87, 114, 143);
 RT_INTERFACE!{static interface IContactLaunchActionVerbsStatics(IContactLaunchActionVerbsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IContactLaunchActionVerbsStatics] {
     fn get_Call(&self, out: *mut HSTRING) -> HRESULT,
@@ -12837,7 +12837,7 @@ impl ContactLocationField {
         <Self as RtActivatable<IContactLocationFieldFactory>>::get_activation_factory().create_location_all(unstructuredAddress, category, street, city, region, country, postalCode)
     }}
 }
-DEFINE_CLSID!(ContactLocationField(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,76,111,99,97,116,105,111,110,70,105,101,108,100,0]) [CLSID_ContactLocationField]);
+DEFINE_CLSID!(ContactLocationField: "Windows.ApplicationModel.Contacts.ContactLocationField");
 DEFINE_IID!(IID_IContactLocationFieldFactory, 4154012375, 12255, 17406, 143, 24, 65, 137, 115, 144, 188, 254);
 RT_INTERFACE!{static interface IContactLocationFieldFactory(IContactLocationFieldFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IContactLocationFieldFactory] {
     fn CreateLocation_Default(&self, unstructuredAddress: HSTRING, out: *mut *mut ContactLocationField) -> HRESULT,
@@ -12935,7 +12935,7 @@ impl ContactManager {
         <Self as RtActivatable<IContactManagerStatics5>>::get_activation_factory().set_include_middle_name_in_system_display_and_sort(value)
     }}
 }
-DEFINE_CLSID!(ContactManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,77,97,110,97,103,101,114,0]) [CLSID_ContactManager]);
+DEFINE_CLSID!(ContactManager: "Windows.ApplicationModel.Contacts.ContactManager");
 DEFINE_IID!(IID_IContactManagerForUser, 3075193431, 4214, 19439, 174, 243, 84, 104, 109, 24, 56, 125);
 RT_INTERFACE!{interface IContactManagerForUser(IContactManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_IContactManagerForUser] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -13408,7 +13408,7 @@ impl IContactPhone {
 }
 RT_CLASS!{class ContactPhone: IContactPhone}
 impl RtActivatable<IActivationFactory> for ContactPhone {}
-DEFINE_CLSID!(ContactPhone(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,80,104,111,110,101,0]) [CLSID_ContactPhone]);
+DEFINE_CLSID!(ContactPhone: "Windows.ApplicationModel.Contacts.ContactPhone");
 RT_ENUM! { enum ContactPhoneKind: i32 {
     Home (ContactPhoneKind_Home) = 0, Mobile (ContactPhoneKind_Mobile) = 1, Work (ContactPhoneKind_Work) = 2, Other (ContactPhoneKind_Other) = 3, Pager (ContactPhoneKind_Pager) = 4, BusinessFax (ContactPhoneKind_BusinessFax) = 5, HomeFax (ContactPhoneKind_HomeFax) = 6, Company (ContactPhoneKind_Company) = 7, Assistant (ContactPhoneKind_Assistant) = 8, Radio (ContactPhoneKind_Radio) = 9,
 }}
@@ -13468,7 +13468,7 @@ impl ContactPicker {
         <Self as RtActivatable<IContactPickerStatics>>::get_activation_factory().is_supported_async()
     }}
 }
-DEFINE_CLSID!(ContactPicker(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,80,105,99,107,101,114,0]) [CLSID_ContactPicker]);
+DEFINE_CLSID!(ContactPicker: "Windows.ApplicationModel.Contacts.ContactPicker");
 DEFINE_IID!(IID_IContactPicker2, 3008369103, 23791, 19748, 170, 12, 52, 12, 82, 8, 114, 93);
 RT_INTERFACE!{interface IContactPicker2(IContactPicker2Vtbl): IInspectable(IInspectableVtbl) [IID_IContactPicker2] {
     fn get_DesiredFieldsWithContactFieldType(&self, out: *mut *mut super::super::foundation::collections::IVector<ContactFieldType>) -> HRESULT,
@@ -13591,7 +13591,7 @@ impl ContactQueryOptions {
         <Self as RtActivatable<IContactQueryOptionsFactory>>::get_activation_factory().create_with_text_and_fields(text, fields)
     }}
 }
-DEFINE_CLSID!(ContactQueryOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_ContactQueryOptions]);
+DEFINE_CLSID!(ContactQueryOptions: "Windows.ApplicationModel.Contacts.ContactQueryOptions");
 DEFINE_IID!(IID_IContactQueryOptionsFactory, 1413462599, 36071, 18123, 157, 172, 154, 164, 42, 27, 200, 226);
 RT_INTERFACE!{static interface IContactQueryOptionsFactory(IContactQueryOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IContactQueryOptionsFactory] {
     fn CreateWithText(&self, text: HSTRING, out: *mut *mut ContactQueryOptions) -> HRESULT,
@@ -13707,7 +13707,7 @@ impl IContactSignificantOther {
 }
 RT_CLASS!{class ContactSignificantOther: IContactSignificantOther}
 impl RtActivatable<IActivationFactory> for ContactSignificantOther {}
-DEFINE_CLSID!(ContactSignificantOther(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,83,105,103,110,105,102,105,99,97,110,116,79,116,104,101,114,0]) [CLSID_ContactSignificantOther]);
+DEFINE_CLSID!(ContactSignificantOther: "Windows.ApplicationModel.Contacts.ContactSignificantOther");
 DEFINE_IID!(IID_IContactSignificantOther2, 2373702772, 16131, 17912, 186, 15, 196, 237, 55, 214, 66, 25);
 RT_INTERFACE!{interface IContactSignificantOther2(IContactSignificantOther2Vtbl): IInspectable(IInspectableVtbl) [IID_IContactSignificantOther2] {
     fn get_Relationship(&self, out: *mut ContactRelationship) -> HRESULT,
@@ -13866,7 +13866,7 @@ impl IContactWebsite {
 }
 RT_CLASS!{class ContactWebsite: IContactWebsite}
 impl RtActivatable<IActivationFactory> for ContactWebsite {}
-DEFINE_CLSID!(ContactWebsite(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,87,101,98,115,105,116,101,0]) [CLSID_ContactWebsite]);
+DEFINE_CLSID!(ContactWebsite: "Windows.ApplicationModel.Contacts.ContactWebsite");
 DEFINE_IID!(IID_IContactWebsite2, 4169066782, 22087, 16488, 187, 94, 75, 111, 67, 124, 227, 8);
 RT_INTERFACE!{interface IContactWebsite2(IContactWebsite2Vtbl): IInspectable(IInspectableVtbl) [IID_IContactWebsite2] {
     fn get_RawValue(&self, out: *mut HSTRING) -> HRESULT,
@@ -13901,7 +13901,7 @@ impl IFullContactCardOptions {
 }
 RT_CLASS!{class FullContactCardOptions: IFullContactCardOptions}
 impl RtActivatable<IActivationFactory> for FullContactCardOptions {}
-DEFINE_CLSID!(FullContactCardOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,70,117,108,108,67,111,110,116,97,99,116,67,97,114,100,79,112,116,105,111,110,115,0]) [CLSID_FullContactCardOptions]);
+DEFINE_CLSID!(FullContactCardOptions: "Windows.ApplicationModel.Contacts.FullContactCardOptions");
 RT_CLASS!{static class KnownContactField}
 impl RtActivatable<IKnownContactFieldStatics> for KnownContactField {}
 impl KnownContactField {
@@ -13924,7 +13924,7 @@ impl KnownContactField {
         <Self as RtActivatable<IKnownContactFieldStatics>>::get_activation_factory().convert_type_to_name(type_)
     }}
 }
-DEFINE_CLSID!(KnownContactField(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,75,110,111,119,110,67,111,110,116,97,99,116,70,105,101,108,100,0]) [CLSID_KnownContactField]);
+DEFINE_CLSID!(KnownContactField: "Windows.ApplicationModel.Contacts.KnownContactField");
 DEFINE_IID!(IID_IKnownContactFieldStatics, 772676370, 54823, 20426, 186, 212, 31, 175, 22, 140, 125, 20);
 RT_INTERFACE!{static interface IKnownContactFieldStatics(IKnownContactFieldStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownContactFieldStatics] {
     fn get_Email(&self, out: *mut HSTRING) -> HRESULT,
@@ -14044,7 +14044,7 @@ impl PinnedContactManager {
         <Self as RtActivatable<IPinnedContactManagerStatics>>::get_activation_factory().is_supported()
     }}
 }
-DEFINE_CLSID!(PinnedContactManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,80,105,110,110,101,100,67,111,110,116,97,99,116,77,97,110,97,103,101,114,0]) [CLSID_PinnedContactManager]);
+DEFINE_CLSID!(PinnedContactManager: "Windows.ApplicationModel.Contacts.PinnedContactManager");
 DEFINE_IID!(IID_IPinnedContactManagerStatics, 4133276798, 65017, 18538, 172, 233, 188, 49, 29, 10, 231, 240);
 RT_INTERFACE!{static interface IPinnedContactManagerStatics(IPinnedContactManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPinnedContactManagerStatics] {
     fn GetDefault(&self, out: *mut *mut PinnedContactManager) -> HRESULT,
@@ -14457,7 +14457,7 @@ impl Clipboard {
         <Self as RtActivatable<IClipboardStatics>>::get_activation_factory().remove_content_changed(token)
     }}
 }
-DEFINE_CLSID!(Clipboard(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,67,108,105,112,98,111,97,114,100,0]) [CLSID_Clipboard]);
+DEFINE_CLSID!(Clipboard: "Windows.ApplicationModel.DataTransfer.Clipboard");
 DEFINE_IID!(IID_IClipboardStatics, 3324502673, 13538, 18787, 142, 237, 147, 203, 176, 234, 61, 112);
 RT_INTERFACE!{static interface IClipboardStatics(IClipboardStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IClipboardStatics] {
     fn GetContent(&self, out: *mut *mut DataPackageView) -> HRESULT,
@@ -14598,7 +14598,7 @@ impl IDataPackage {
 }
 RT_CLASS!{class DataPackage: IDataPackage}
 impl RtActivatable<IActivationFactory> for DataPackage {}
-DEFINE_CLSID!(DataPackage(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,68,97,116,97,80,97,99,107,97,103,101,0]) [CLSID_DataPackage]);
+DEFINE_CLSID!(DataPackage: "Windows.ApplicationModel.DataTransfer.DataPackage");
 DEFINE_IID!(IID_IDataPackage2, 68952041, 9225, 17889, 165, 56, 76, 83, 238, 238, 4, 167);
 RT_INTERFACE!{interface IDataPackage2(IDataPackage2Vtbl): IInspectable(IInspectableVtbl) [IID_IDataPackage2] {
     fn SetApplicationLink(&self, value: *mut super::super::foundation::Uri) -> HRESULT,
@@ -15161,7 +15161,7 @@ impl DataTransferManager {
         <Self as RtActivatable<IDataTransferManagerStatics3>>::get_activation_factory().show_share_uiwith_options(options)
     }}
 }
-DEFINE_CLSID!(DataTransferManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,68,97,116,97,84,114,97,110,115,102,101,114,77,97,110,97,103,101,114,0]) [CLSID_DataTransferManager]);
+DEFINE_CLSID!(DataTransferManager: "Windows.ApplicationModel.DataTransfer.DataTransferManager");
 DEFINE_IID!(IID_IDataTransferManager2, 816741745, 35752, 19458, 142, 63, 221, 178, 59, 56, 135, 21);
 RT_INTERFACE!{interface IDataTransferManager2(IDataTransferManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IDataTransferManager2] {
     fn add_ShareProvidersRequested(&self, handler: *mut super::super::foundation::TypedEventHandler<DataTransferManager, ShareProvidersRequestedEventArgs>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
@@ -15225,7 +15225,7 @@ impl HtmlFormatHelper {
         <Self as RtActivatable<IHtmlFormatHelperStatics>>::get_activation_factory().create_html_format(htmlFragment)
     }}
 }
-DEFINE_CLSID!(HtmlFormatHelper(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,72,116,109,108,70,111,114,109,97,116,72,101,108,112,101,114,0]) [CLSID_HtmlFormatHelper]);
+DEFINE_CLSID!(HtmlFormatHelper: "Windows.ApplicationModel.DataTransfer.HtmlFormatHelper");
 DEFINE_IID!(IID_IHtmlFormatHelperStatics, 3794696009, 56688, 17519, 174, 252, 97, 206, 229, 159, 101, 94);
 RT_INTERFACE!{static interface IHtmlFormatHelperStatics(IHtmlFormatHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHtmlFormatHelperStatics] {
     fn GetStaticFragment(&self, htmlFormat: HSTRING, out: *mut HSTRING) -> HRESULT,
@@ -15291,7 +15291,7 @@ impl SharedStorageAccessManager {
         <Self as RtActivatable<ISharedStorageAccessManagerStatics>>::get_activation_factory().remove_file(token)
     }}
 }
-DEFINE_CLSID!(SharedStorageAccessManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,83,104,97,114,101,100,83,116,111,114,97,103,101,65,99,99,101,115,115,77,97,110,97,103,101,114,0]) [CLSID_SharedStorageAccessManager]);
+DEFINE_CLSID!(SharedStorageAccessManager: "Windows.ApplicationModel.DataTransfer.SharedStorageAccessManager");
 DEFINE_IID!(IID_ISharedStorageAccessManagerStatics, 3323144922, 13489, 18505, 189, 95, 208, 159, 238, 49, 88, 197);
 RT_INTERFACE!{static interface ISharedStorageAccessManagerStatics(ISharedStorageAccessManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISharedStorageAccessManagerStatics] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -15359,7 +15359,7 @@ impl ShareProvider {
         <Self as RtActivatable<IShareProviderFactory>>::get_activation_factory().create(title, displayIcon, backgroundColor, handler)
     }}
 }
-DEFINE_CLSID!(ShareProvider(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,83,104,97,114,101,80,114,111,118,105,100,101,114,0]) [CLSID_ShareProvider]);
+DEFINE_CLSID!(ShareProvider: "Windows.ApplicationModel.DataTransfer.ShareProvider");
 DEFINE_IID!(IID_IShareProviderFactory, 388634444, 59294, 20333, 176, 125, 18, 143, 70, 158, 2, 150);
 RT_INTERFACE!{static interface IShareProviderFactory(IShareProviderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IShareProviderFactory] {
     #[cfg(all(feature="windows-storage",feature="windows-ui"))] fn Create(&self, title: HSTRING, displayIcon: *mut super::super::storage::streams::RandomAccessStreamReference, backgroundColor: super::super::ui::Color, handler: *mut ShareProviderHandler, out: *mut *mut ShareProvider) -> HRESULT
@@ -15475,7 +15475,7 @@ impl IShareUIOptions {
 }
 RT_CLASS!{class ShareUIOptions: IShareUIOptions}
 impl RtActivatable<IActivationFactory> for ShareUIOptions {}
-DEFINE_CLSID!(ShareUIOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,83,104,97,114,101,85,73,79,112,116,105,111,110,115,0]) [CLSID_ShareUIOptions]);
+DEFINE_CLSID!(ShareUIOptions: "Windows.ApplicationModel.DataTransfer.ShareUIOptions");
 RT_ENUM! { enum ShareUITheme: i32 {
     Default (ShareUITheme_Default) = 0, Light (ShareUITheme_Light) = 1, Dark (ShareUITheme_Dark) = 2,
 }}
@@ -15508,7 +15508,7 @@ impl StandardDataFormats {
         <Self as RtActivatable<IStandardDataFormatsStatics2>>::get_activation_factory().get_application_link()
     }}
 }
-DEFINE_CLSID!(StandardDataFormats(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,83,116,97,110,100,97,114,100,68,97,116,97,70,111,114,109,97,116,115,0]) [CLSID_StandardDataFormats]);
+DEFINE_CLSID!(StandardDataFormats: "Windows.ApplicationModel.DataTransfer.StandardDataFormats");
 DEFINE_IID!(IID_IStandardDataFormatsStatics, 2127987105, 43136, 16585, 180, 237, 11, 238, 30, 21, 245, 73);
 RT_INTERFACE!{static interface IStandardDataFormatsStatics(IStandardDataFormatsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStandardDataFormatsStatics] {
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
@@ -15620,7 +15620,7 @@ impl CoreDragDropManager {
         <Self as RtActivatable<ICoreDragDropManagerStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(CoreDragDropManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,68,114,97,103,68,114,111,112,46,67,111,114,101,46,67,111,114,101,68,114,97,103,68,114,111,112,77,97,110,97,103,101,114,0]) [CLSID_CoreDragDropManager]);
+DEFINE_CLSID!(CoreDragDropManager: "Windows.ApplicationModel.DataTransfer.DragDrop.Core.CoreDragDropManager");
 DEFINE_IID!(IID_ICoreDragDropManagerStatics, 2504195530, 55826, 19484, 141, 6, 4, 29, 178, 151, 51, 195);
 RT_INTERFACE!{static interface ICoreDragDropManagerStatics(ICoreDragDropManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreDragDropManagerStatics] {
     fn GetForCurrentView(&self, out: *mut *mut CoreDragDropManager) -> HRESULT
@@ -15714,7 +15714,7 @@ impl ICoreDragOperation {
 }
 RT_CLASS!{class CoreDragOperation: ICoreDragOperation}
 impl RtActivatable<IActivationFactory> for CoreDragOperation {}
-DEFINE_CLSID!(CoreDragOperation(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,68,114,97,103,68,114,111,112,46,67,111,114,101,46,67,111,114,101,68,114,97,103,79,112,101,114,97,116,105,111,110,0]) [CLSID_CoreDragOperation]);
+DEFINE_CLSID!(CoreDragOperation: "Windows.ApplicationModel.DataTransfer.DragDrop.Core.CoreDragOperation");
 DEFINE_IID!(IID_ICoreDragOperation2, 2185961004, 55706, 20419, 133, 7, 108, 24, 47, 51, 180, 106);
 RT_INTERFACE!{interface ICoreDragOperation2(ICoreDragOperation2Vtbl): IInspectable(IInspectableVtbl) [IID_ICoreDragOperation2] {
     fn get_AllowedOperations(&self, out: *mut super::super::DataPackageOperation) -> HRESULT,
@@ -15899,7 +15899,7 @@ impl IQuickLink {
 }
 RT_CLASS!{class QuickLink: IQuickLink}
 impl RtActivatable<IActivationFactory> for QuickLink {}
-DEFINE_CLSID!(QuickLink(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,83,104,97,114,101,84,97,114,103,101,116,46,81,117,105,99,107,76,105,110,107,0]) [CLSID_QuickLink]);
+DEFINE_CLSID!(QuickLink: "Windows.ApplicationModel.DataTransfer.ShareTarget.QuickLink");
 DEFINE_IID!(IID_IShareOperation, 575060664, 53496, 16833, 168, 42, 65, 55, 219, 101, 4, 251);
 RT_INTERFACE!{interface IShareOperation(IShareOperationVtbl): IInspectable(IInspectableVtbl) [IID_IShareOperation] {
     fn get_Data(&self, out: *mut *mut super::DataPackageView) -> HRESULT,
@@ -16017,7 +16017,7 @@ impl EmailAttachment {
         <Self as RtActivatable<IEmailAttachmentFactory2>>::get_activation_factory().create(fileName, data, mimeType)
     }}
 }
-DEFINE_CLSID!(EmailAttachment(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,65,116,116,97,99,104,109,101,110,116,0]) [CLSID_EmailAttachment]);
+DEFINE_CLSID!(EmailAttachment: "Windows.ApplicationModel.Email.EmailAttachment");
 DEFINE_IID!(IID_IEmailAttachment2, 576655472, 45311, 17777, 157, 84, 167, 6, 196, 141, 85, 198);
 RT_INTERFACE!{interface IEmailAttachment2(IEmailAttachment2Vtbl): IInspectable(IInspectableVtbl) [IID_IEmailAttachment2] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -16561,7 +16561,7 @@ impl EmailIrmInfo {
         <Self as RtActivatable<IEmailIrmInfoFactory>>::get_activation_factory().create(expiration, irmTemplate)
     }}
 }
-DEFINE_CLSID!(EmailIrmInfo(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,73,114,109,73,110,102,111,0]) [CLSID_EmailIrmInfo]);
+DEFINE_CLSID!(EmailIrmInfo: "Windows.ApplicationModel.Email.EmailIrmInfo");
 DEFINE_IID!(IID_IEmailIrmInfoFactory, 827044236, 58342, 19835, 190, 141, 145, 169, 99, 17, 176, 27);
 RT_INTERFACE!{static interface IEmailIrmInfoFactory(IEmailIrmInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEmailIrmInfoFactory] {
     fn Create(&self, expiration: super::super::foundation::DateTime, irmTemplate: *mut EmailIrmTemplate, out: *mut *mut EmailIrmInfo) -> HRESULT
@@ -16619,7 +16619,7 @@ impl EmailIrmTemplate {
         <Self as RtActivatable<IEmailIrmTemplateFactory>>::get_activation_factory().create(id, name, description)
     }}
 }
-DEFINE_CLSID!(EmailIrmTemplate(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,73,114,109,84,101,109,112,108,97,116,101,0]) [CLSID_EmailIrmTemplate]);
+DEFINE_CLSID!(EmailIrmTemplate: "Windows.ApplicationModel.Email.EmailIrmTemplate");
 DEFINE_IID!(IID_IEmailIrmTemplateFactory, 1034098806, 34616, 17432, 185, 203, 71, 27, 147, 111, 231, 30);
 RT_INTERFACE!{static interface IEmailIrmTemplateFactory(IEmailIrmTemplateFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEmailIrmTemplateFactory] {
     fn Create(&self, id: HSTRING, name: HSTRING, description: HSTRING, out: *mut *mut EmailIrmTemplate) -> HRESULT
@@ -17167,7 +17167,7 @@ impl IEmailMailboxAutoReplySettings {
 }
 RT_CLASS!{class EmailMailboxAutoReplySettings: IEmailMailboxAutoReplySettings}
 impl RtActivatable<IActivationFactory> for EmailMailboxAutoReplySettings {}
-DEFINE_CLSID!(EmailMailboxAutoReplySettings(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,77,97,105,108,98,111,120,65,117,116,111,82,101,112,108,121,83,101,116,116,105,110,103,115,0]) [CLSID_EmailMailboxAutoReplySettings]);
+DEFINE_CLSID!(EmailMailboxAutoReplySettings: "Windows.ApplicationModel.Email.EmailMailboxAutoReplySettings");
 DEFINE_IID!(IID_IEmailMailboxCapabilities, 4007576486, 35291, 17157, 130, 196, 67, 158, 10, 51, 218, 17);
 RT_INTERFACE!{interface IEmailMailboxCapabilities(IEmailMailboxCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxCapabilities] {
     fn get_CanForwardMeetings(&self, out: *mut bool) -> HRESULT,
@@ -17644,7 +17644,7 @@ impl EmailManager {
         <Self as RtActivatable<IEmailManagerStatics3>>::get_activation_factory().get_for_user(user)
     }}
 }
-DEFINE_CLSID!(EmailManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,77,97,110,97,103,101,114,0]) [CLSID_EmailManager]);
+DEFINE_CLSID!(EmailManager: "Windows.ApplicationModel.Email.EmailManager");
 DEFINE_IID!(IID_IEmailManagerForUser, 4151565983, 15525, 19215, 144, 193, 21, 110, 64, 23, 76, 229);
 RT_INTERFACE!{interface IEmailManagerForUser(IEmailManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_IEmailManagerForUser] {
     fn ShowComposeNewEmailAsync(&self, message: *mut EmailMessage, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT,
@@ -17852,7 +17852,7 @@ impl IEmailMeetingInfo {
 }
 RT_CLASS!{class EmailMeetingInfo: IEmailMeetingInfo}
 impl RtActivatable<IActivationFactory> for EmailMeetingInfo {}
-DEFINE_CLSID!(EmailMeetingInfo(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,77,101,101,116,105,110,103,73,110,102,111,0]) [CLSID_EmailMeetingInfo]);
+DEFINE_CLSID!(EmailMeetingInfo: "Windows.ApplicationModel.Email.EmailMeetingInfo");
 DEFINE_IID!(IID_IEmailMeetingInfo2, 2119776365, 45273, 20453, 134, 124, 227, 30, 210, 181, 136, 184);
 RT_INTERFACE!{interface IEmailMeetingInfo2(IEmailMeetingInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IEmailMeetingInfo2] {
     fn get_IsReportedOutOfDateByServer(&self, out: *mut bool) -> HRESULT
@@ -17920,7 +17920,7 @@ impl IEmailMessage {
 }
 RT_CLASS!{class EmailMessage: IEmailMessage}
 impl RtActivatable<IActivationFactory> for EmailMessage {}
-DEFINE_CLSID!(EmailMessage(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,77,101,115,115,97,103,101,0]) [CLSID_EmailMessage]);
+DEFINE_CLSID!(EmailMessage: "Windows.ApplicationModel.Email.EmailMessage");
 DEFINE_IID!(IID_IEmailMessage2, 4257752203, 40730, 17627, 189, 60, 101, 195, 132, 119, 15, 134);
 RT_INTERFACE!{interface IEmailMessage2(IEmailMessage2Vtbl): IInspectable(IInspectableVtbl) [IID_IEmailMessage2] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -18336,7 +18336,7 @@ impl EmailQueryOptions {
         <Self as RtActivatable<IEmailQueryOptionsFactory>>::get_activation_factory().create_with_text_and_fields(text, fields)
     }}
 }
-DEFINE_CLSID!(EmailQueryOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_EmailQueryOptions]);
+DEFINE_CLSID!(EmailQueryOptions: "Windows.ApplicationModel.Email.EmailQueryOptions");
 DEFINE_IID!(IID_IEmailQueryOptionsFactory, 2297536952, 30891, 20200, 180, 227, 4, 109, 110, 47, 229, 226);
 RT_INTERFACE!{static interface IEmailQueryOptionsFactory(IEmailQueryOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEmailQueryOptionsFactory] {
     fn CreateWithText(&self, text: HSTRING, out: *mut *mut EmailQueryOptions) -> HRESULT,
@@ -18443,7 +18443,7 @@ impl EmailRecipient {
         <Self as RtActivatable<IEmailRecipientFactory>>::get_activation_factory().create_with_name(address, name)
     }}
 }
-DEFINE_CLSID!(EmailRecipient(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,82,101,99,105,112,105,101,110,116,0]) [CLSID_EmailRecipient]);
+DEFINE_CLSID!(EmailRecipient: "Windows.ApplicationModel.Email.EmailRecipient");
 DEFINE_IID!(IID_IEmailRecipientFactory, 1426110541, 51098, 20216, 185, 9, 114, 46, 24, 227, 147, 93);
 RT_INTERFACE!{static interface IEmailRecipientFactory(IEmailRecipientFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEmailRecipientFactory] {
     fn Create(&self, address: HSTRING, out: *mut *mut EmailRecipient) -> HRESULT,
@@ -18480,7 +18480,7 @@ impl IEmailRecipientResolutionResult {
 }
 RT_CLASS!{class EmailRecipientResolutionResult: IEmailRecipientResolutionResult}
 impl RtActivatable<IActivationFactory> for EmailRecipientResolutionResult {}
-DEFINE_CLSID!(EmailRecipientResolutionResult(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,82,101,99,105,112,105,101,110,116,82,101,115,111,108,117,116,105,111,110,82,101,115,117,108,116,0]) [CLSID_EmailRecipientResolutionResult]);
+DEFINE_CLSID!(EmailRecipientResolutionResult: "Windows.ApplicationModel.Email.EmailRecipientResolutionResult");
 DEFINE_IID!(IID_IEmailRecipientResolutionResult2, 1581386678, 52827, 19422, 185, 212, 225, 109, 160, 176, 159, 202);
 RT_INTERFACE!{interface IEmailRecipientResolutionResult2(IEmailRecipientResolutionResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IEmailRecipientResolutionResult2] {
     fn put_Status(&self, value: EmailRecipientResolutionStatus) -> HRESULT,
@@ -19695,7 +19695,7 @@ impl IExtendedExecutionSession {
 }
 RT_CLASS!{class ExtendedExecutionSession: IExtendedExecutionSession}
 impl RtActivatable<IActivationFactory> for ExtendedExecutionSession {}
-DEFINE_CLSID!(ExtendedExecutionSession(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,120,116,101,110,100,101,100,69,120,101,99,117,116,105,111,110,46,69,120,116,101,110,100,101,100,69,120,101,99,117,116,105,111,110,83,101,115,115,105,111,110,0]) [CLSID_ExtendedExecutionSession]);
+DEFINE_CLSID!(ExtendedExecutionSession: "Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession");
 pub mod foreground { // Windows.ApplicationModel.ExtendedExecution.Foreground
 use ::prelude::*;
 RT_ENUM! { enum ExtendedExecutionForegroundReason: i32 {
@@ -19765,7 +19765,7 @@ impl IExtendedExecutionForegroundSession {
 }
 RT_CLASS!{class ExtendedExecutionForegroundSession: IExtendedExecutionForegroundSession}
 impl RtActivatable<IActivationFactory> for ExtendedExecutionForegroundSession {}
-DEFINE_CLSID!(ExtendedExecutionForegroundSession(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,120,116,101,110,100,101,100,69,120,101,99,117,116,105,111,110,46,70,111,114,101,103,114,111,117,110,100,46,69,120,116,101,110,100,101,100,69,120,101,99,117,116,105,111,110,70,111,114,101,103,114,111,117,110,100,83,101,115,115,105,111,110,0]) [CLSID_ExtendedExecutionForegroundSession]);
+DEFINE_CLSID!(ExtendedExecutionForegroundSession: "Windows.ApplicationModel.ExtendedExecution.Foreground.ExtendedExecutionForegroundSession");
 } // Windows.ApplicationModel.ExtendedExecution.Foreground
 } // Windows.ApplicationModel.ExtendedExecution
 pub mod userdatatasks { // Windows.ApplicationModel.UserDataTasks
@@ -19927,7 +19927,7 @@ impl IUserDataTask {
 }
 RT_CLASS!{class UserDataTask: IUserDataTask}
 impl RtActivatable<IActivationFactory> for UserDataTask {}
-DEFINE_CLSID!(UserDataTask(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,84,97,115,107,115,46,85,115,101,114,68,97,116,97,84,97,115,107,0]) [CLSID_UserDataTask]);
+DEFINE_CLSID!(UserDataTask: "Windows.ApplicationModel.UserDataTasks.UserDataTask");
 DEFINE_IID!(IID_IUserDataTaskBatch, 942515710, 8373, 17180, 143, 66, 165, 210, 146, 236, 147, 12);
 RT_INTERFACE!{interface IUserDataTaskBatch(IUserDataTaskBatchVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskBatch] {
     fn get_Tasks(&self, out: *mut *mut super::super::foundation::collections::IVectorView<UserDataTask>) -> HRESULT
@@ -20188,7 +20188,7 @@ impl UserDataTaskManager {
         <Self as RtActivatable<IUserDataTaskManagerStatics>>::get_activation_factory().get_for_user(user)
     }}
 }
-DEFINE_CLSID!(UserDataTaskManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,84,97,115,107,115,46,85,115,101,114,68,97,116,97,84,97,115,107,77,97,110,97,103,101,114,0]) [CLSID_UserDataTaskManager]);
+DEFINE_CLSID!(UserDataTaskManager: "Windows.ApplicationModel.UserDataTasks.UserDataTaskManager");
 DEFINE_IID!(IID_IUserDataTaskManagerStatics, 3008707064, 50434, 18428, 168, 30, 16, 8, 131, 113, 157, 85);
 RT_INTERFACE!{static interface IUserDataTaskManagerStatics(IUserDataTaskManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskManagerStatics] {
     fn GetDefault(&self, out: *mut *mut UserDataTaskManager) -> HRESULT,
@@ -20241,7 +20241,7 @@ impl IUserDataTaskQueryOptions {
 }
 RT_CLASS!{class UserDataTaskQueryOptions: IUserDataTaskQueryOptions}
 impl RtActivatable<IActivationFactory> for UserDataTaskQueryOptions {}
-DEFINE_CLSID!(UserDataTaskQueryOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,84,97,115,107,115,46,85,115,101,114,68,97,116,97,84,97,115,107,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_UserDataTaskQueryOptions]);
+DEFINE_CLSID!(UserDataTaskQueryOptions: "Windows.ApplicationModel.UserDataTasks.UserDataTaskQueryOptions");
 RT_ENUM! { enum UserDataTaskQuerySortProperty: i32 {
     DueDate (UserDataTaskQuerySortProperty_DueDate) = 0,
 }}
@@ -20352,7 +20352,7 @@ impl IUserDataTaskRecurrenceProperties {
 }
 RT_CLASS!{class UserDataTaskRecurrenceProperties: IUserDataTaskRecurrenceProperties}
 impl RtActivatable<IActivationFactory> for UserDataTaskRecurrenceProperties {}
-DEFINE_CLSID!(UserDataTaskRecurrenceProperties(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,84,97,115,107,115,46,85,115,101,114,68,97,116,97,84,97,115,107,82,101,99,117,114,114,101,110,99,101,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_UserDataTaskRecurrenceProperties]);
+DEFINE_CLSID!(UserDataTaskRecurrenceProperties: "Windows.ApplicationModel.UserDataTasks.UserDataTaskRecurrenceProperties");
 RT_ENUM! { enum UserDataTaskRecurrenceUnit: i32 {
     Daily (UserDataTaskRecurrenceUnit_Daily) = 0, Weekly (UserDataTaskRecurrenceUnit_Weekly) = 1, Monthly (UserDataTaskRecurrenceUnit_Monthly) = 2, MonthlyOnDay (UserDataTaskRecurrenceUnit_MonthlyOnDay) = 3, Yearly (UserDataTaskRecurrenceUnit_Yearly) = 4, YearlyOnDay (UserDataTaskRecurrenceUnit_YearlyOnDay) = 5,
 }}
@@ -20407,7 +20407,7 @@ impl IUserDataTaskRegenerationProperties {
 }
 RT_CLASS!{class UserDataTaskRegenerationProperties: IUserDataTaskRegenerationProperties}
 impl RtActivatable<IActivationFactory> for UserDataTaskRegenerationProperties {}
-DEFINE_CLSID!(UserDataTaskRegenerationProperties(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,84,97,115,107,115,46,85,115,101,114,68,97,116,97,84,97,115,107,82,101,103,101,110,101,114,97,116,105,111,110,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_UserDataTaskRegenerationProperties]);
+DEFINE_CLSID!(UserDataTaskRegenerationProperties: "Windows.ApplicationModel.UserDataTasks.UserDataTaskRegenerationProperties");
 RT_ENUM! { enum UserDataTaskRegenerationUnit: i32 {
     Daily (UserDataTaskRegenerationUnit_Daily) = 0, Weekly (UserDataTaskRegenerationUnit_Weekly) = 1, Monthly (UserDataTaskRegenerationUnit_Monthly) = 2, Yearly (UserDataTaskRegenerationUnit_Yearly) = 4,
 }}
@@ -20905,7 +20905,7 @@ impl UserActivityAttribution {
         <Self as RtActivatable<IUserActivityAttributionFactory>>::get_activation_factory().create_with_uri(iconUri)
     }}
 }
-DEFINE_CLSID!(UserActivityAttribution(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,65,99,116,105,118,105,116,105,101,115,46,85,115,101,114,65,99,116,105,118,105,116,121,65,116,116,114,105,98,117,116,105,111,110,0]) [CLSID_UserActivityAttribution]);
+DEFINE_CLSID!(UserActivityAttribution: "Windows.ApplicationModel.UserActivities.UserActivityAttribution");
 DEFINE_IID!(IID_IUserActivityAttributionFactory, 3861631570, 50534, 20290, 153, 116, 145, 108, 77, 118, 55, 126);
 RT_INTERFACE!{static interface IUserActivityAttributionFactory(IUserActivityAttributionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityAttributionFactory] {
     fn CreateWithUri(&self, iconUri: *mut super::super::foundation::Uri, out: *mut *mut UserActivityAttribution) -> HRESULT
@@ -20947,7 +20947,7 @@ impl UserActivityChannel {
         <Self as RtActivatable<IUserActivityChannelStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(UserActivityChannel(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,65,99,116,105,118,105,116,105,101,115,46,85,115,101,114,65,99,116,105,118,105,116,121,67,104,97,110,110,101,108,0]) [CLSID_UserActivityChannel]);
+DEFINE_CLSID!(UserActivityChannel: "Windows.ApplicationModel.UserActivities.UserActivityChannel");
 DEFINE_IID!(IID_IUserActivityChannelStatics, 3368027563, 6541, 19840, 171, 178, 201, 119, 94, 196, 167, 41);
 RT_INTERFACE!{static interface IUserActivityChannelStatics(IUserActivityChannelStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityChannelStatics] {
     fn GetDefault(&self, out: *mut *mut UserActivityChannel) -> HRESULT
@@ -20977,7 +20977,7 @@ impl UserActivityContentInfo {
         <Self as RtActivatable<IUserActivityContentInfoStatics>>::get_activation_factory().from_json(value)
     }}
 }
-DEFINE_CLSID!(UserActivityContentInfo(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,65,99,116,105,118,105,116,105,101,115,46,85,115,101,114,65,99,116,105,118,105,116,121,67,111,110,116,101,110,116,73,110,102,111,0]) [CLSID_UserActivityContentInfo]);
+DEFINE_CLSID!(UserActivityContentInfo: "Windows.ApplicationModel.UserActivities.UserActivityContentInfo");
 DEFINE_IID!(IID_IUserActivityContentInfoStatics, 2575876939, 902, 19401, 150, 138, 130, 0, 176, 4, 20, 79);
 RT_INTERFACE!{static interface IUserActivityContentInfoStatics(IUserActivityContentInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityContentInfoStatics] {
     fn FromJson(&self, value: HSTRING, out: *mut *mut UserActivityContentInfo) -> HRESULT
@@ -21077,7 +21077,7 @@ impl CoreUserActivityManager {
         <Self as RtActivatable<ICoreUserActivityManagerStatics>>::get_activation_factory().delete_user_activity_sessions_in_time_range_async(channel, startTime, endTime)
     }}
 }
-DEFINE_CLSID!(CoreUserActivityManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,65,99,116,105,118,105,116,105,101,115,46,67,111,114,101,46,67,111,114,101,85,115,101,114,65,99,116,105,118,105,116,121,77,97,110,97,103,101,114,0]) [CLSID_CoreUserActivityManager]);
+DEFINE_CLSID!(CoreUserActivityManager: "Windows.ApplicationModel.UserActivities.Core.CoreUserActivityManager");
 DEFINE_IID!(IID_ICoreUserActivityManagerStatics, 3392854786, 42174, 19789, 191, 168, 103, 149, 244, 38, 78, 251);
 RT_INTERFACE!{static interface ICoreUserActivityManagerStatics(ICoreUserActivityManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreUserActivityManagerStatics] {
     fn CreateUserActivitySessionInBackground(&self, activity: *mut super::UserActivity, out: *mut *mut super::UserActivitySession) -> HRESULT,
@@ -21300,7 +21300,7 @@ impl UserDataAccountManager {
         <Self as RtActivatable<IUserDataAccountManagerStatics2>>::get_activation_factory().get_for_user(user)
     }}
 }
-DEFINE_CLSID!(UserDataAccountManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,65,99,99,111,117,110,116,115,46,85,115,101,114,68,97,116,97,65,99,99,111,117,110,116,77,97,110,97,103,101,114,0]) [CLSID_UserDataAccountManager]);
+DEFINE_CLSID!(UserDataAccountManager: "Windows.ApplicationModel.UserDataAccounts.UserDataAccountManager");
 DEFINE_IID!(IID_IUserDataAccountManagerForUser, 1453779163, 56207, 16811, 166, 95, 140, 89, 113, 170, 201, 130);
 RT_INTERFACE!{interface IUserDataAccountManagerForUser(IUserDataAccountManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccountManagerForUser] {
     fn RequestStoreAsync(&self, storeAccessType: UserDataAccountStoreAccessType, out: *mut *mut super::super::foundation::IAsyncOperation<UserDataAccountStore>) -> HRESULT,
@@ -21723,7 +21723,7 @@ impl IDeviceAccountConfiguration {
 }
 RT_CLASS!{class DeviceAccountConfiguration: IDeviceAccountConfiguration}
 impl RtActivatable<IActivationFactory> for DeviceAccountConfiguration {}
-DEFINE_CLSID!(DeviceAccountConfiguration(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,65,99,99,111,117,110,116,115,46,83,121,115,116,101,109,65,99,99,101,115,115,46,68,101,118,105,99,101,65,99,99,111,117,110,116,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_DeviceAccountConfiguration]);
+DEFINE_CLSID!(DeviceAccountConfiguration: "Windows.ApplicationModel.UserDataAccounts.SystemAccess.DeviceAccountConfiguration");
 DEFINE_IID!(IID_IDeviceAccountConfiguration2, 4071810470, 29325, 19018, 137, 69, 43, 248, 88, 1, 54, 222);
 RT_INTERFACE!{interface IDeviceAccountConfiguration2(IDeviceAccountConfiguration2Vtbl): IInspectable(IInspectableVtbl) [IID_IDeviceAccountConfiguration2] {
     #[cfg(not(feature="windows-security"))] fn __Dummy0(&self) -> (),
@@ -22074,7 +22074,7 @@ impl UserDataAccountSystemAccessManager {
         <Self as RtActivatable<IUserDataAccountSystemAccessManagerStatics2>>::get_activation_factory().get_device_account_configuration_async(accountId)
     }}
 }
-DEFINE_CLSID!(UserDataAccountSystemAccessManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,65,99,99,111,117,110,116,115,46,83,121,115,116,101,109,65,99,99,101,115,115,46,85,115,101,114,68,97,116,97,65,99,99,111,117,110,116,83,121,115,116,101,109,65,99,99,101,115,115,77,97,110,97,103,101,114,0]) [CLSID_UserDataAccountSystemAccessManager]);
+DEFINE_CLSID!(UserDataAccountSystemAccessManager: "Windows.ApplicationModel.UserDataAccounts.SystemAccess.UserDataAccountSystemAccessManager");
 DEFINE_IID!(IID_IUserDataAccountSystemAccessManagerStatics, 2641039801, 52197, 17909, 130, 43, 194, 103, 184, 29, 189, 182);
 RT_INTERFACE!{static interface IUserDataAccountSystemAccessManagerStatics(IUserDataAccountSystemAccessManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccountSystemAccessManagerStatics] {
     fn AddAndShowDeviceAccountsAsync(&self, accounts: *mut ::rt::gen::windows::foundation::collections::IIterable<DeviceAccountConfiguration>, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<HString>>) -> HRESULT
@@ -22246,7 +22246,7 @@ impl AppExtensionCatalog {
         <Self as RtActivatable<IAppExtensionCatalogStatics>>::get_activation_factory().open(appExtensionName)
     }}
 }
-DEFINE_CLSID!(AppExtensionCatalog(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,69,120,116,101,110,115,105,111,110,115,46,65,112,112,69,120,116,101,110,115,105,111,110,67,97,116,97,108,111,103,0]) [CLSID_AppExtensionCatalog]);
+DEFINE_CLSID!(AppExtensionCatalog: "Windows.ApplicationModel.AppExtensions.AppExtensionCatalog");
 DEFINE_IID!(IID_IAppExtensionCatalogStatics, 1010198154, 24344, 20235, 156, 229, 202, 182, 29, 25, 111, 17);
 RT_INTERFACE!{static interface IAppExtensionCatalogStatics(IAppExtensionCatalogStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppExtensionCatalogStatics] {
     fn Open(&self, appExtensionName: HSTRING, out: *mut *mut AppExtensionCatalog) -> HRESULT
@@ -22391,7 +22391,7 @@ impl LockApplicationHost {
         <Self as RtActivatable<ILockApplicationHostStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(LockApplicationHost(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,76,111,99,107,83,99,114,101,101,110,46,76,111,99,107,65,112,112,108,105,99,97,116,105,111,110,72,111,115,116,0]) [CLSID_LockApplicationHost]);
+DEFINE_CLSID!(LockApplicationHost: "Windows.ApplicationModel.LockScreen.LockApplicationHost");
 DEFINE_IID!(IID_ILockApplicationHostStatics, 4103056270, 9175, 20067, 150, 161, 102, 111, 245, 45, 59, 44);
 RT_INTERFACE!{static interface ILockApplicationHostStatics(ILockApplicationHostStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILockApplicationHostStatics] {
     fn GetForCurrentView(&self, out: *mut *mut LockApplicationHost) -> HRESULT
@@ -22680,7 +22680,7 @@ impl IPaymentAddress {
 }
 RT_CLASS!{class PaymentAddress: IPaymentAddress}
 impl RtActivatable<IActivationFactory> for PaymentAddress {}
-DEFINE_CLSID!(PaymentAddress(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,65,100,100,114,101,115,115,0]) [CLSID_PaymentAddress]);
+DEFINE_CLSID!(PaymentAddress: "Windows.ApplicationModel.Payments.PaymentAddress");
 DEFINE_IID!(IID_IPaymentCanMakePaymentResult, 1989606997, 54739, 19773, 179, 69, 69, 89, 23, 89, 197, 16);
 RT_INTERFACE!{interface IPaymentCanMakePaymentResult(IPaymentCanMakePaymentResultVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentCanMakePaymentResult] {
     fn get_Status(&self, out: *mut PaymentCanMakePaymentResultStatus) -> HRESULT
@@ -22699,7 +22699,7 @@ impl PaymentCanMakePaymentResult {
         <Self as RtActivatable<IPaymentCanMakePaymentResultFactory>>::get_activation_factory().create(value)
     }}
 }
-DEFINE_CLSID!(PaymentCanMakePaymentResult(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,67,97,110,77,97,107,101,80,97,121,109,101,110,116,82,101,115,117,108,116,0]) [CLSID_PaymentCanMakePaymentResult]);
+DEFINE_CLSID!(PaymentCanMakePaymentResult: "Windows.ApplicationModel.Payments.PaymentCanMakePaymentResult");
 DEFINE_IID!(IID_IPaymentCanMakePaymentResultFactory, 3151800894, 32073, 20329, 170, 83, 42, 15, 129, 100, 183, 201);
 RT_INTERFACE!{static interface IPaymentCanMakePaymentResultFactory(IPaymentCanMakePaymentResultFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentCanMakePaymentResultFactory] {
     fn Create(&self, value: PaymentCanMakePaymentResultStatus, out: *mut *mut PaymentCanMakePaymentResult) -> HRESULT
@@ -22762,7 +22762,7 @@ impl PaymentCurrencyAmount {
         <Self as RtActivatable<IPaymentCurrencyAmountFactory>>::get_activation_factory().create_with_currency_system(value, currency, currencySystem)
     }}
 }
-DEFINE_CLSID!(PaymentCurrencyAmount(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,67,117,114,114,101,110,99,121,65,109,111,117,110,116,0]) [CLSID_PaymentCurrencyAmount]);
+DEFINE_CLSID!(PaymentCurrencyAmount: "Windows.ApplicationModel.Payments.PaymentCurrencyAmount");
 DEFINE_IID!(IID_IPaymentCurrencyAmountFactory, 844616504, 5132, 17781, 133, 53, 247, 115, 23, 140, 9, 167);
 RT_INTERFACE!{static interface IPaymentCurrencyAmountFactory(IPaymentCurrencyAmountFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentCurrencyAmountFactory] {
     fn Create(&self, value: HSTRING, currency: HSTRING, out: *mut *mut PaymentCurrencyAmount) -> HRESULT,
@@ -22840,7 +22840,7 @@ impl PaymentDetails {
         <Self as RtActivatable<IPaymentDetailsFactory>>::get_activation_factory().create_with_display_items(total, displayItems)
     }}
 }
-DEFINE_CLSID!(PaymentDetails(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,68,101,116,97,105,108,115,0]) [CLSID_PaymentDetails]);
+DEFINE_CLSID!(PaymentDetails: "Windows.ApplicationModel.Payments.PaymentDetails");
 DEFINE_IID!(IID_IPaymentDetailsFactory, 3488133102, 49386, 19617, 139, 199, 109, 230, 123, 31, 55, 99);
 RT_INTERFACE!{static interface IPaymentDetailsFactory(IPaymentDetailsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentDetailsFactory] {
     fn Create(&self, total: *mut PaymentItem, out: *mut *mut PaymentDetails) -> HRESULT,
@@ -22900,7 +22900,7 @@ impl PaymentDetailsModifier {
         <Self as RtActivatable<IPaymentDetailsModifierFactory>>::get_activation_factory().create_with_additional_display_items_and_json_data(supportedMethodIds, total, additionalDisplayItems, jsonData)
     }}
 }
-DEFINE_CLSID!(PaymentDetailsModifier(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,68,101,116,97,105,108,115,77,111,100,105,102,105,101,114,0]) [CLSID_PaymentDetailsModifier]);
+DEFINE_CLSID!(PaymentDetailsModifier: "Windows.ApplicationModel.Payments.PaymentDetailsModifier");
 DEFINE_IID!(IID_IPaymentDetailsModifierFactory, 2030064262, 21726, 17052, 158, 79, 93, 206, 110, 16, 235, 206);
 RT_INTERFACE!{static interface IPaymentDetailsModifierFactory(IPaymentDetailsModifierFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentDetailsModifierFactory] {
     fn Create(&self, supportedMethodIds: *mut super::super::foundation::collections::IIterable<HString>, total: *mut PaymentItem, out: *mut *mut PaymentDetailsModifier) -> HRESULT,
@@ -22969,7 +22969,7 @@ impl PaymentItem {
         <Self as RtActivatable<IPaymentItemFactory>>::get_activation_factory().create(label, amount)
     }}
 }
-DEFINE_CLSID!(PaymentItem(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,73,116,101,109,0]) [CLSID_PaymentItem]);
+DEFINE_CLSID!(PaymentItem: "Windows.ApplicationModel.Payments.PaymentItem");
 DEFINE_IID!(IID_IPaymentItemFactory, 3333126872, 9475, 19741, 167, 120, 2, 178, 229, 146, 123, 44);
 RT_INTERFACE!{static interface IPaymentItemFactory(IPaymentItemFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentItemFactory] {
     fn Create(&self, label: HSTRING, amount: *mut PaymentCurrencyAmount, out: *mut *mut PaymentItem) -> HRESULT
@@ -23006,7 +23006,7 @@ impl IPaymentMediator {
 }
 RT_CLASS!{class PaymentMediator: IPaymentMediator}
 impl RtActivatable<IActivationFactory> for PaymentMediator {}
-DEFINE_CLSID!(PaymentMediator(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,77,101,100,105,97,116,111,114,0]) [CLSID_PaymentMediator]);
+DEFINE_CLSID!(PaymentMediator: "Windows.ApplicationModel.Payments.PaymentMediator");
 DEFINE_IID!(IID_IPaymentMediator2, 3471808753, 58375, 16680, 142, 115, 217, 61, 95, 130, 39, 134);
 RT_INTERFACE!{interface IPaymentMediator2(IPaymentMediator2Vtbl): IInspectable(IInspectableVtbl) [IID_IPaymentMediator2] {
     fn CanMakePaymentAsync(&self, paymentRequest: *mut PaymentRequest, out: *mut *mut super::super::foundation::IAsyncOperation<PaymentCanMakePaymentResult>) -> HRESULT
@@ -23043,7 +23043,7 @@ impl PaymentMerchantInfo {
         <Self as RtActivatable<IPaymentMerchantInfoFactory>>::get_activation_factory().create(uri)
     }}
 }
-DEFINE_CLSID!(PaymentMerchantInfo(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,77,101,114,99,104,97,110,116,73,110,102,111,0]) [CLSID_PaymentMerchantInfo]);
+DEFINE_CLSID!(PaymentMerchantInfo: "Windows.ApplicationModel.Payments.PaymentMerchantInfo");
 DEFINE_IID!(IID_IPaymentMerchantInfoFactory, 2659831507, 52407, 16743, 168, 236, 225, 10, 233, 109, 188, 209);
 RT_INTERFACE!{static interface IPaymentMerchantInfoFactory(IPaymentMerchantInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentMerchantInfoFactory] {
     fn Create(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut PaymentMerchantInfo) -> HRESULT
@@ -23082,7 +23082,7 @@ impl PaymentMethodData {
         <Self as RtActivatable<IPaymentMethodDataFactory>>::get_activation_factory().create_with_json_data(supportedMethodIds, jsonData)
     }}
 }
-DEFINE_CLSID!(PaymentMethodData(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,77,101,116,104,111,100,68,97,116,97,0]) [CLSID_PaymentMethodData]);
+DEFINE_CLSID!(PaymentMethodData: "Windows.ApplicationModel.Payments.PaymentMethodData");
 DEFINE_IID!(IID_IPaymentMethodDataFactory, 2329793151, 39850, 19074, 131, 66, 168, 33, 9, 146, 163, 107);
 RT_INTERFACE!{static interface IPaymentMethodDataFactory(IPaymentMethodDataFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentMethodDataFactory] {
     fn Create(&self, supportedMethodIds: *mut super::super::foundation::collections::IIterable<HString>, out: *mut *mut PaymentMethodData) -> HRESULT,
@@ -23165,7 +23165,7 @@ impl IPaymentOptions {
 }
 RT_CLASS!{class PaymentOptions: IPaymentOptions}
 impl RtActivatable<IActivationFactory> for PaymentOptions {}
-DEFINE_CLSID!(PaymentOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,79,112,116,105,111,110,115,0]) [CLSID_PaymentOptions]);
+DEFINE_CLSID!(PaymentOptions: "Windows.ApplicationModel.Payments.PaymentOptions");
 DEFINE_IID!(IID_IPaymentRequest, 3075031777, 60795, 18411, 188, 8, 120, 204, 93, 104, 150, 182);
 RT_INTERFACE!{interface IPaymentRequest(IPaymentRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentRequest] {
     fn get_MerchantInfo(&self, out: *mut *mut PaymentMerchantInfo) -> HRESULT,
@@ -23212,7 +23212,7 @@ impl PaymentRequest {
         <Self as RtActivatable<IPaymentRequestFactory2>>::get_activation_factory().create_with_merchant_info_options_and_id(details, methodData, merchantInfo, options, id)
     }}
 }
-DEFINE_CLSID!(PaymentRequest(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,82,101,113,117,101,115,116,0]) [CLSID_PaymentRequest]);
+DEFINE_CLSID!(PaymentRequest: "Windows.ApplicationModel.Payments.PaymentRequest");
 DEFINE_IID!(IID_IPaymentRequest2, 3057438645, 22936, 18750, 160, 76, 103, 4, 138, 80, 241, 65);
 RT_INTERFACE!{interface IPaymentRequest2(IPaymentRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IPaymentRequest2] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT
@@ -23311,7 +23311,7 @@ impl PaymentRequestChangedResult {
         <Self as RtActivatable<IPaymentRequestChangedResultFactory>>::get_activation_factory().create_with_payment_details(changeAcceptedByMerchant, updatedPaymentDetails)
     }}
 }
-DEFINE_CLSID!(PaymentRequestChangedResult(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,82,101,113,117,101,115,116,67,104,97,110,103,101,100,82,101,115,117,108,116,0]) [CLSID_PaymentRequestChangedResult]);
+DEFINE_CLSID!(PaymentRequestChangedResult: "Windows.ApplicationModel.Payments.PaymentRequestChangedResult");
 DEFINE_IID!(IID_IPaymentRequestChangedResultFactory, 141823830, 7475, 17457, 129, 75, 103, 234, 36, 191, 33, 219);
 RT_INTERFACE!{static interface IPaymentRequestChangedResultFactory(IPaymentRequestChangedResultFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentRequestChangedResultFactory] {
     fn Create(&self, changeAcceptedByMerchant: bool, out: *mut *mut PaymentRequestChangedResult) -> HRESULT,
@@ -23500,7 +23500,7 @@ impl PaymentShippingOption {
         <Self as RtActivatable<IPaymentShippingOptionFactory>>::get_activation_factory().create_with_selected_and_tag(label, amount, selected, tag)
     }}
 }
-DEFINE_CLSID!(PaymentShippingOption(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,83,104,105,112,112,105,110,103,79,112,116,105,111,110,0]) [CLSID_PaymentShippingOption]);
+DEFINE_CLSID!(PaymentShippingOption: "Windows.ApplicationModel.Payments.PaymentShippingOption");
 DEFINE_IID!(IID_IPaymentShippingOptionFactory, 1575352599, 45783, 17515, 157, 115, 97, 35, 251, 202, 59, 198);
 RT_INTERFACE!{static interface IPaymentShippingOptionFactory(IPaymentShippingOptionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentShippingOptionFactory] {
     fn Create(&self, label: HSTRING, amount: *mut PaymentCurrencyAmount, out: *mut *mut PaymentShippingOption) -> HRESULT,
@@ -23554,7 +23554,7 @@ impl PaymentToken {
         <Self as RtActivatable<IPaymentTokenFactory>>::get_activation_factory().create_with_json_details(paymentMethodId, jsonDetails)
     }}
 }
-DEFINE_CLSID!(PaymentToken(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,84,111,107,101,110,0]) [CLSID_PaymentToken]);
+DEFINE_CLSID!(PaymentToken: "Windows.ApplicationModel.Payments.PaymentToken");
 DEFINE_IID!(IID_IPaymentTokenFactory, 2559367082, 18259, 18692, 131, 115, 221, 123, 8, 185, 149, 193);
 RT_INTERFACE!{static interface IPaymentTokenFactory(IPaymentTokenFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentTokenFactory] {
     fn Create(&self, paymentMethodId: HSTRING, out: *mut *mut PaymentToken) -> HRESULT,
@@ -23615,7 +23615,7 @@ impl PaymentAppManager {
         <Self as RtActivatable<IPaymentAppManagerStatics>>::get_activation_factory().get_current()
     }}
 }
-DEFINE_CLSID!(PaymentAppManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,114,111,118,105,100,101,114,46,80,97,121,109,101,110,116,65,112,112,77,97,110,97,103,101,114,0]) [CLSID_PaymentAppManager]);
+DEFINE_CLSID!(PaymentAppManager: "Windows.ApplicationModel.Payments.Provider.PaymentAppManager");
 DEFINE_IID!(IID_IPaymentAppManagerStatics, 2738990120, 64649, 17414, 180, 217, 52, 231, 254, 121, 223, 182);
 RT_INTERFACE!{static interface IPaymentAppManagerStatics(IPaymentAppManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentAppManagerStatics] {
     fn get_Current(&self, out: *mut *mut PaymentAppManager) -> HRESULT
@@ -23701,7 +23701,7 @@ impl PaymentTransaction {
         <Self as RtActivatable<IPaymentTransactionStatics>>::get_activation_factory().from_id_async(id)
     }}
 }
-DEFINE_CLSID!(PaymentTransaction(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,114,111,118,105,100,101,114,46,80,97,121,109,101,110,116,84,114,97,110,115,97,99,116,105,111,110,0]) [CLSID_PaymentTransaction]);
+DEFINE_CLSID!(PaymentTransaction: "Windows.ApplicationModel.Payments.Provider.PaymentTransaction");
 DEFINE_IID!(IID_IPaymentTransactionAcceptResult, 101593718, 54028, 18455, 149, 162, 223, 122, 233, 39, 59, 86);
 RT_INTERFACE!{interface IPaymentTransactionAcceptResult(IPaymentTransactionAcceptResultVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentTransactionAcceptResult] {
     fn get_Status(&self, out: *mut super::PaymentRequestCompletionStatus) -> HRESULT
@@ -23765,7 +23765,7 @@ impl ResourceLoader {
         <Self as RtActivatable<IResourceLoaderStatics2>>::get_activation_factory().get_for_view_independent_use_with_name(name)
     }}
 }
-DEFINE_CLSID!(ResourceLoader(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,82,101,115,111,117,114,99,101,115,46,82,101,115,111,117,114,99,101,76,111,97,100,101,114,0]) [CLSID_ResourceLoader]);
+DEFINE_CLSID!(ResourceLoader: "Windows.ApplicationModel.Resources.ResourceLoader");
 DEFINE_IID!(IID_IResourceLoader2, 283864774, 33080, 18625, 188, 101, 225, 241, 66, 7, 54, 124);
 RT_INTERFACE!{interface IResourceLoader2(IResourceLoader2Vtbl): IInspectable(IInspectableVtbl) [IID_IResourceLoader2] {
     fn GetStringForUri(&self, uri: *mut super::super::foundation::Uri, out: *mut HSTRING) -> HRESULT
@@ -24004,7 +24004,7 @@ impl ResourceContext {
         <Self as RtActivatable<IResourceContextStatics3>>::get_activation_factory().set_global_qualifier_value_with_persistence(key, value, persistence)
     }}
 }
-DEFINE_CLSID!(ResourceContext(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,82,101,115,111,117,114,99,101,115,46,67,111,114,101,46,82,101,115,111,117,114,99,101,67,111,110,116,101,120,116,0]) [CLSID_ResourceContext]);
+DEFINE_CLSID!(ResourceContext: "Windows.ApplicationModel.Resources.Core.ResourceContext");
 RT_CLASS!{class ResourceContextLanguagesVectorView: ::rt::gen::windows::foundation::collections::IVectorView<HString>}
 DEFINE_IID!(IID_IResourceContextStatics, 2562628972, 25400, 19249, 153, 223, 178, 180, 66, 241, 113, 73);
 RT_INTERFACE!{static interface IResourceContextStatics(IResourceContextStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IResourceContextStatics] {
@@ -24105,7 +24105,7 @@ impl ResourceManager {
         <Self as RtActivatable<IResourceManagerStatics>>::get_activation_factory().is_resource_reference(resourceReference)
     }}
 }
-DEFINE_CLSID!(ResourceManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,82,101,115,111,117,114,99,101,115,46,67,111,114,101,46,82,101,115,111,117,114,99,101,77,97,110,97,103,101,114,0]) [CLSID_ResourceManager]);
+DEFINE_CLSID!(ResourceManager: "Windows.ApplicationModel.Resources.Core.ResourceManager");
 DEFINE_IID!(IID_IResourceManager2, 2640772716, 42199, 19491, 158, 133, 103, 95, 48, 76, 37, 45);
 RT_INTERFACE!{interface IResourceManager2(IResourceManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IResourceManager2] {
     fn GetAllNamedResourcesForPackage(&self, packageName: HSTRING, resourceLayoutInfo: ResourceLayoutInfo, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<NamedResource>) -> HRESULT,
@@ -24309,7 +24309,7 @@ impl ResourceIndexer {
         <Self as RtActivatable<IResourceIndexerFactory2>>::get_activation_factory().create_resource_indexer_with_extension(projectRoot, extensionDllPath)
     }}
 }
-DEFINE_CLSID!(ResourceIndexer(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,82,101,115,111,117,114,99,101,115,46,77,97,110,97,103,101,109,101,110,116,46,82,101,115,111,117,114,99,101,73,110,100,101,120,101,114,0]) [CLSID_ResourceIndexer]);
+DEFINE_CLSID!(ResourceIndexer: "Windows.ApplicationModel.Resources.Management.ResourceIndexer");
 DEFINE_IID!(IID_IResourceIndexerFactory, 3101572873, 12749, 19863, 189, 48, 141, 57, 247, 66, 188, 97);
 RT_INTERFACE!{static interface IResourceIndexerFactory(IResourceIndexerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IResourceIndexerFactory] {
     fn CreateResourceIndexer(&self, projectRoot: *mut ::rt::gen::windows::foundation::Uri, out: *mut *mut ResourceIndexer) -> HRESULT
@@ -24451,7 +24451,7 @@ impl CurrentApp {
         <Self as RtActivatable<ICurrentAppWithConsumables>>::get_activation_factory().get_unfulfilled_consumables_async()
     }}
 }
-DEFINE_CLSID!(CurrentApp(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,67,117,114,114,101,110,116,65,112,112,0]) [CLSID_CurrentApp]);
+DEFINE_CLSID!(CurrentApp: "Windows.ApplicationModel.Store.CurrentApp");
 DEFINE_IID!(IID_ICurrentApp2Statics, 3746459181, 12657, 19155, 134, 20, 44, 97, 36, 67, 115, 203);
 RT_INTERFACE!{static interface ICurrentApp2Statics(ICurrentApp2StaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICurrentApp2Statics] {
     fn GetCustomerPurchaseIdAsync(&self, serviceTicket: HSTRING, publisherUserId: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<HString>) -> HRESULT,
@@ -24583,7 +24583,7 @@ impl CurrentAppSimulator {
         <Self as RtActivatable<ICurrentAppSimulatorWithConsumables>>::get_activation_factory().get_unfulfilled_consumables_async()
     }}
 }
-DEFINE_CLSID!(CurrentAppSimulator(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,67,117,114,114,101,110,116,65,112,112,83,105,109,117,108,97,116,111,114,0]) [CLSID_CurrentAppSimulator]);
+DEFINE_CLSID!(CurrentAppSimulator: "Windows.ApplicationModel.Store.CurrentAppSimulator");
 DEFINE_IID!(IID_ICurrentAppSimulatorStaticsWithFiltering, 1635676386, 63599, 19284, 150, 102, 221, 226, 133, 9, 44, 104);
 RT_INTERFACE!{static interface ICurrentAppSimulatorStaticsWithFiltering(ICurrentAppSimulatorStaticsWithFilteringVtbl): IInspectable(IInspectableVtbl) [IID_ICurrentAppSimulatorStaticsWithFiltering] {
     fn LoadListingInformationByProductIdsAsync(&self, productIds: *mut super::super::foundation::collections::IIterable<HString>, out: *mut *mut super::super::foundation::IAsyncOperation<ListingInformation>) -> HRESULT,
@@ -25008,7 +25008,7 @@ impl ProductPurchaseDisplayProperties {
         <Self as RtActivatable<IProductPurchaseDisplayPropertiesFactory>>::get_activation_factory().create_product_purchase_display_properties(name)
     }}
 }
-DEFINE_CLSID!(ProductPurchaseDisplayProperties(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,80,114,111,100,117,99,116,80,117,114,99,104,97,115,101,68,105,115,112,108,97,121,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_ProductPurchaseDisplayProperties]);
+DEFINE_CLSID!(ProductPurchaseDisplayProperties: "Windows.ApplicationModel.Store.ProductPurchaseDisplayProperties");
 DEFINE_IID!(IID_IProductPurchaseDisplayPropertiesFactory, 1867062772, 13014, 19264, 180, 116, 184, 48, 56, 164, 217, 207);
 RT_INTERFACE!{static interface IProductPurchaseDisplayPropertiesFactory(IProductPurchaseDisplayPropertiesFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IProductPurchaseDisplayPropertiesFactory] {
     fn CreateProductPurchaseDisplayProperties(&self, name: HSTRING, out: *mut *mut ProductPurchaseDisplayProperties) -> HRESULT
@@ -25158,7 +25158,7 @@ impl StoreConfiguration {
         <Self as RtActivatable<IStoreConfigurationStatics4>>::get_activation_factory().should_restrict_to_enterprise_store_only_for_user(user)
     }}
 }
-DEFINE_CLSID!(StoreConfiguration(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,80,114,101,118,105,101,119,46,83,116,111,114,101,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_StoreConfiguration]);
+DEFINE_CLSID!(StoreConfiguration: "Windows.ApplicationModel.Store.Preview.StoreConfiguration");
 DEFINE_IID!(IID_IStoreConfigurationStatics, 1922006976, 34344, 17132, 132, 162, 7, 120, 14, 180, 77, 139);
 RT_INTERFACE!{static interface IStoreConfigurationStatics(IStoreConfigurationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStoreConfigurationStatics] {
     fn SetSystemConfiguration(&self, catalogHardwareManufacturerId: HSTRING, catalogStoreContentModifierId: HSTRING, systemConfigurationExpiration: ::rt::gen::windows::foundation::DateTime, catalogHardwareDescriptor: HSTRING) -> HRESULT,
@@ -25370,7 +25370,7 @@ impl StorePreview {
         <Self as RtActivatable<IStorePreview>>::get_activation_factory().load_add_on_product_infos_async()
     }}
 }
-DEFINE_CLSID!(StorePreview(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,80,114,101,118,105,101,119,46,83,116,111,114,101,80,114,101,118,105,101,119,0]) [CLSID_StorePreview]);
+DEFINE_CLSID!(StorePreview: "Windows.ApplicationModel.Store.Preview.StorePreview");
 DEFINE_IID!(IID_IStorePreviewProductInfo, 423091123, 27649, 19613, 133, 205, 91, 171, 170, 194, 179, 81);
 RT_INTERFACE!{interface IStorePreviewProductInfo(IStorePreviewProductInfoVtbl): IInspectable(IInspectableVtbl) [IID_IStorePreviewProductInfo] {
     fn get_ProductId(&self, out: *mut HSTRING) -> HRESULT,
@@ -25512,7 +25512,7 @@ impl WebAuthenticationCoreManagerHelper {
         <Self as RtActivatable<IWebAuthenticationCoreManagerHelper>>::get_activation_factory().request_token_with_uielement_hosting_and_web_account_async(request, webAccount, uiElement)
     }}
 }
-DEFINE_CLSID!(WebAuthenticationCoreManagerHelper(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,80,114,101,118,105,101,119,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,67,111,114,101,77,97,110,97,103,101,114,72,101,108,112,101,114,0]) [CLSID_WebAuthenticationCoreManagerHelper]);
+DEFINE_CLSID!(WebAuthenticationCoreManagerHelper: "Windows.ApplicationModel.Store.Preview.WebAuthenticationCoreManagerHelper");
 pub mod installcontrol { // Windows.ApplicationModel.Store.Preview.InstallControl
 use ::prelude::*;
 DEFINE_IID!(IID_IAppInstallItem, 1238622123, 5770, 19647, 169, 58, 158, 68, 140, 130, 115, 125);
@@ -25739,7 +25739,7 @@ impl IAppInstallManager {
 }
 RT_CLASS!{class AppInstallManager: IAppInstallManager}
 impl RtActivatable<IActivationFactory> for AppInstallManager {}
-DEFINE_CLSID!(AppInstallManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,80,114,101,118,105,101,119,46,73,110,115,116,97,108,108,67,111,110,116,114,111,108,46,65,112,112,73,110,115,116,97,108,108,77,97,110,97,103,101,114,0]) [CLSID_AppInstallManager]);
+DEFINE_CLSID!(AppInstallManager: "Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallManager");
 DEFINE_IID!(IID_IAppInstallManager2, 378763345, 60727, 18445, 131, 20, 82, 226, 124, 3, 240, 74);
 RT_INTERFACE!{interface IAppInstallManager2(IAppInstallManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallManager2] {
     fn StartAppInstallWithTelemetryAsync(&self, productId: HSTRING, skuId: HSTRING, repair: bool, forceUseOfNonRemovableStorage: bool, catalogId: HSTRING, bundleId: HSTRING, correlationVector: HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<AppInstallItem>) -> HRESULT,
@@ -25992,7 +25992,7 @@ impl LicenseManager {
         <Self as RtActivatable<ILicenseManagerStatics2>>::get_activation_factory().refresh_licenses_async(refreshOption)
     }}
 }
-DEFINE_CLSID!(LicenseManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,76,105,99,101,110,115,101,77,97,110,97,103,101,109,101,110,116,46,76,105,99,101,110,115,101,77,97,110,97,103,101,114,0]) [CLSID_LicenseManager]);
+DEFINE_CLSID!(LicenseManager: "Windows.ApplicationModel.Store.LicenseManagement.LicenseManager");
 DEFINE_IID!(IID_ILicenseManagerStatics, 3047963360, 55879, 20256, 154, 35, 9, 24, 44, 148, 118, 255);
 RT_INTERFACE!{static interface ILicenseManagerStatics(ILicenseManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILicenseManagerStatics] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -26243,7 +26243,7 @@ impl IVoiceCommandContentTile {
 }
 RT_CLASS!{class VoiceCommandContentTile: IVoiceCommandContentTile}
 impl RtActivatable<IActivationFactory> for VoiceCommandContentTile {}
-DEFINE_CLSID!(VoiceCommandContentTile(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,86,111,105,99,101,67,111,109,109,97,110,100,115,46,86,111,105,99,101,67,111,109,109,97,110,100,67,111,110,116,101,110,116,84,105,108,101,0]) [CLSID_VoiceCommandContentTile]);
+DEFINE_CLSID!(VoiceCommandContentTile: "Windows.ApplicationModel.VoiceCommands.VoiceCommandContentTile");
 RT_ENUM! { enum VoiceCommandContentTileType: i32 {
     TitleOnly (VoiceCommandContentTileType_TitleOnly) = 0, TitleWithText (VoiceCommandContentTileType_TitleWithText) = 1, TitleWith68x68Icon (VoiceCommandContentTileType_TitleWith68x68Icon) = 2, TitleWith68x68IconAndText (VoiceCommandContentTileType_TitleWith68x68IconAndText) = 3, TitleWith68x92Icon (VoiceCommandContentTileType_TitleWith68x92Icon) = 4, TitleWith68x92IconAndText (VoiceCommandContentTileType_TitleWith68x92IconAndText) = 5, TitleWith280x140Icon (VoiceCommandContentTileType_TitleWith280x140Icon) = 6, TitleWith280x140IconAndText (VoiceCommandContentTileType_TitleWith280x140IconAndText) = 7,
 }}
@@ -26281,7 +26281,7 @@ impl VoiceCommandDefinitionManager {
         <Self as RtActivatable<IVoiceCommandDefinitionManagerStatics>>::get_activation_factory().get_installed_command_definitions()
     }}
 }
-DEFINE_CLSID!(VoiceCommandDefinitionManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,86,111,105,99,101,67,111,109,109,97,110,100,115,46,86,111,105,99,101,67,111,109,109,97,110,100,68,101,102,105,110,105,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_VoiceCommandDefinitionManager]);
+DEFINE_CLSID!(VoiceCommandDefinitionManager: "Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager");
 DEFINE_IID!(IID_IVoiceCommandDefinitionManagerStatics, 2414323358, 1662, 20246, 161, 140, 91, 23, 233, 73, 153, 64);
 RT_INTERFACE!{static interface IVoiceCommandDefinitionManagerStatics(IVoiceCommandDefinitionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVoiceCommandDefinitionManagerStatics] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -26375,7 +26375,7 @@ impl VoiceCommandResponse {
         <Self as RtActivatable<IVoiceCommandResponseStatics>>::get_activation_factory().create_response_for_prompt_with_tiles(message, repeatMessage, contentTiles)
     }}
 }
-DEFINE_CLSID!(VoiceCommandResponse(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,86,111,105,99,101,67,111,109,109,97,110,100,115,46,86,111,105,99,101,67,111,109,109,97,110,100,82,101,115,112,111,110,115,101,0]) [CLSID_VoiceCommandResponse]);
+DEFINE_CLSID!(VoiceCommandResponse: "Windows.ApplicationModel.VoiceCommands.VoiceCommandResponse");
 DEFINE_IID!(IID_IVoiceCommandResponseStatics, 691206163, 3387, 18930, 150, 221, 98, 80, 25, 189, 59, 93);
 RT_INTERFACE!{static interface IVoiceCommandResponseStatics(IVoiceCommandResponseStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVoiceCommandResponseStatics] {
     fn get_MaxSupportedVoiceCommandContentTiles(&self, out: *mut u32) -> HRESULT,
@@ -26483,7 +26483,7 @@ impl VoiceCommandServiceConnection {
         <Self as RtActivatable<IVoiceCommandServiceConnectionStatics>>::get_activation_factory().from_app_service_trigger_details(triggerDetails)
     }}
 }
-DEFINE_CLSID!(VoiceCommandServiceConnection(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,86,111,105,99,101,67,111,109,109,97,110,100,115,46,86,111,105,99,101,67,111,109,109,97,110,100,83,101,114,118,105,99,101,67,111,110,110,101,99,116,105,111,110,0]) [CLSID_VoiceCommandServiceConnection]);
+DEFINE_CLSID!(VoiceCommandServiceConnection: "Windows.ApplicationModel.VoiceCommands.VoiceCommandServiceConnection");
 DEFINE_IID!(IID_IVoiceCommandServiceConnectionStatics, 923713531, 11572, 17119, 135, 112, 7, 77, 15, 51, 70, 151);
 RT_INTERFACE!{static interface IVoiceCommandServiceConnectionStatics(IVoiceCommandServiceConnectionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVoiceCommandServiceConnectionStatics] {
     fn FromAppServiceTriggerDetails(&self, triggerDetails: *mut super::appservice::AppServiceTriggerDetails, out: *mut *mut VoiceCommandServiceConnection) -> HRESULT
@@ -26524,7 +26524,7 @@ impl IVoiceCommandUserMessage {
 }
 RT_CLASS!{class VoiceCommandUserMessage: IVoiceCommandUserMessage}
 impl RtActivatable<IActivationFactory> for VoiceCommandUserMessage {}
-DEFINE_CLSID!(VoiceCommandUserMessage(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,86,111,105,99,101,67,111,109,109,97,110,100,115,46,86,111,105,99,101,67,111,109,109,97,110,100,85,115,101,114,77,101,115,115,97,103,101,0]) [CLSID_VoiceCommandUserMessage]);
+DEFINE_CLSID!(VoiceCommandUserMessage: "Windows.ApplicationModel.VoiceCommands.VoiceCommandUserMessage");
 } // Windows.ApplicationModel.VoiceCommands
 pub mod preview { // Windows.ApplicationModel.Preview
 pub mod holographic { // Windows.ApplicationModel.Preview.Holographic
@@ -26539,7 +26539,7 @@ impl HolographicApplicationPreview {
         <Self as RtActivatable<IHolographicApplicationPreviewStatics>>::get_activation_factory().is_holographic_activation(activatedEventArgs)
     }}
 }
-DEFINE_CLSID!(HolographicApplicationPreview(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,114,101,118,105,101,119,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,65,112,112,108,105,99,97,116,105,111,110,80,114,101,118,105,101,119,0]) [CLSID_HolographicApplicationPreview]);
+DEFINE_CLSID!(HolographicApplicationPreview: "Windows.ApplicationModel.Preview.Holographic.HolographicApplicationPreview");
 DEFINE_IID!(IID_IHolographicApplicationPreviewStatics, 4261643921, 10810, 17833, 162, 8, 123, 237, 105, 25, 25, 243);
 RT_INTERFACE!{static interface IHolographicApplicationPreviewStatics(IHolographicApplicationPreviewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicApplicationPreviewStatics] {
     fn IsCurrentViewPresentedOnHolographicDisplay(&self, out: *mut bool) -> HRESULT,
@@ -26669,7 +26669,7 @@ impl NotesWindowManagerPreview {
         <Self as RtActivatable<INotesWindowManagerPreviewStatics>>::get_activation_factory().get_for_current_app()
     }}
 }
-DEFINE_CLSID!(NotesWindowManagerPreview(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,114,101,118,105,101,119,46,78,111,116,101,115,46,78,111,116,101,115,87,105,110,100,111,119,77,97,110,97,103,101,114,80,114,101,118,105,101,119,0]) [CLSID_NotesWindowManagerPreview]);
+DEFINE_CLSID!(NotesWindowManagerPreview: "Windows.ApplicationModel.Preview.Notes.NotesWindowManagerPreview");
 DEFINE_IID!(IID_INotesWindowManagerPreview2, 3992880714, 8020, 19209, 152, 35, 255, 71, 127, 111, 163, 188);
 RT_INTERFACE!{interface INotesWindowManagerPreview2(INotesWindowManagerPreview2Vtbl): IInspectable(IInspectableVtbl) [IID_INotesWindowManagerPreview2] {
     fn ShowNoteRelativeToWithOptions(&self, noteViewId: i32, anchorNoteViewId: i32, options: *mut NotesWindowManagerPreviewShowNoteOptions) -> HRESULT,
@@ -26715,7 +26715,7 @@ impl INotesWindowManagerPreviewShowNoteOptions {
 }
 RT_CLASS!{class NotesWindowManagerPreviewShowNoteOptions: INotesWindowManagerPreviewShowNoteOptions}
 impl RtActivatable<IActivationFactory> for NotesWindowManagerPreviewShowNoteOptions {}
-DEFINE_CLSID!(NotesWindowManagerPreviewShowNoteOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,114,101,118,105,101,119,46,78,111,116,101,115,46,78,111,116,101,115,87,105,110,100,111,119,77,97,110,97,103,101,114,80,114,101,118,105,101,119,83,104,111,119,78,111,116,101,79,112,116,105,111,110,115,0]) [CLSID_NotesWindowManagerPreviewShowNoteOptions]);
+DEFINE_CLSID!(NotesWindowManagerPreviewShowNoteOptions: "Windows.ApplicationModel.Preview.Notes.NotesWindowManagerPreviewShowNoteOptions");
 DEFINE_IID!(IID_INotesWindowManagerPreviewStatics, 1718144136, 2702, 16679, 163, 142, 153, 84, 69, 134, 138, 120);
 RT_INTERFACE!{static interface INotesWindowManagerPreviewStatics(INotesWindowManagerPreviewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INotesWindowManagerPreviewStatics] {
     fn GetForCurrentApp(&self, out: *mut *mut NotesWindowManagerPreview) -> HRESULT
@@ -26766,7 +26766,7 @@ impl InkWorkspaceHostedAppManager {
         <Self as RtActivatable<IInkWorkspaceHostedAppManagerStatics>>::get_activation_factory().get_for_current_app()
     }}
 }
-DEFINE_CLSID!(InkWorkspaceHostedAppManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,114,101,118,105,101,119,46,73,110,107,87,111,114,107,115,112,97,99,101,46,73,110,107,87,111,114,107,115,112,97,99,101,72,111,115,116,101,100,65,112,112,77,97,110,97,103,101,114,0]) [CLSID_InkWorkspaceHostedAppManager]);
+DEFINE_CLSID!(InkWorkspaceHostedAppManager: "Windows.ApplicationModel.Preview.InkWorkspace.InkWorkspaceHostedAppManager");
 DEFINE_IID!(IID_IInkWorkspaceHostedAppManagerStatics, 3422391493, 41314, 19396, 132, 238, 232, 113, 109, 82, 51, 197);
 RT_INTERFACE!{static interface IInkWorkspaceHostedAppManagerStatics(IInkWorkspaceHostedAppManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IInkWorkspaceHostedAppManagerStatics] {
     fn GetForCurrentApp(&self, out: *mut *mut InkWorkspaceHostedAppManager) -> HRESULT
@@ -26818,7 +26818,7 @@ impl WalletBarcode {
         <Self as RtActivatable<IWalletBarcodeFactory>>::get_activation_factory().create_custom_wallet_barcode(streamToBarcodeImage)
     }}
 }
-DEFINE_CLSID!(WalletBarcode(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,87,97,108,108,101,116,46,87,97,108,108,101,116,66,97,114,99,111,100,101,0]) [CLSID_WalletBarcode]);
+DEFINE_CLSID!(WalletBarcode: "Windows.ApplicationModel.Wallet.WalletBarcode");
 DEFINE_IID!(IID_IWalletBarcodeFactory, 806449505, 60828, 18078, 187, 253, 48, 108, 149, 234, 113, 8);
 RT_INTERFACE!{static interface IWalletBarcodeFactory(IWalletBarcodeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWalletBarcodeFactory] {
     fn CreateWalletBarcode(&self, symbology: WalletBarcodeSymbology, value: HSTRING, out: *mut *mut WalletBarcode) -> HRESULT,
@@ -27165,7 +27165,7 @@ impl WalletItem {
         <Self as RtActivatable<IWalletItemFactory>>::get_activation_factory().create_wallet_item(kind, displayName)
     }}
 }
-DEFINE_CLSID!(WalletItem(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,87,97,108,108,101,116,46,87,97,108,108,101,116,73,116,101,109,0]) [CLSID_WalletItem]);
+DEFINE_CLSID!(WalletItem: "Windows.ApplicationModel.Wallet.WalletItem");
 DEFINE_IID!(IID_IWalletItemCustomProperty, 3108716787, 64000, 16637, 152, 220, 157, 228, 102, 151, 241, 231);
 RT_INTERFACE!{interface IWalletItemCustomProperty(IWalletItemCustomPropertyVtbl): IInspectable(IInspectableVtbl) [IID_IWalletItemCustomProperty] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -27233,7 +27233,7 @@ impl WalletItemCustomProperty {
         <Self as RtActivatable<IWalletItemCustomPropertyFactory>>::get_activation_factory().create_wallet_item_custom_property(name, value)
     }}
 }
-DEFINE_CLSID!(WalletItemCustomProperty(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,87,97,108,108,101,116,46,87,97,108,108,101,116,73,116,101,109,67,117,115,116,111,109,80,114,111,112,101,114,116,121,0]) [CLSID_WalletItemCustomProperty]);
+DEFINE_CLSID!(WalletItemCustomProperty: "Windows.ApplicationModel.Wallet.WalletItemCustomProperty");
 DEFINE_IID!(IID_IWalletItemCustomPropertyFactory, 3489950276, 24993, 16810, 178, 89, 165, 97, 10, 181, 213, 117);
 RT_INTERFACE!{static interface IWalletItemCustomPropertyFactory(IWalletItemCustomPropertyFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWalletItemCustomPropertyFactory] {
     fn CreateWalletItemCustomProperty(&self, name: HSTRING, value: HSTRING, out: *mut *mut WalletItemCustomProperty) -> HRESULT
@@ -27349,7 +27349,7 @@ impl WalletManager {
         <Self as RtActivatable<IWalletManagerStatics>>::get_activation_factory().request_store_async()
     }}
 }
-DEFINE_CLSID!(WalletManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,87,97,108,108,101,116,46,87,97,108,108,101,116,77,97,110,97,103,101,114,0]) [CLSID_WalletManager]);
+DEFINE_CLSID!(WalletManager: "Windows.ApplicationModel.Wallet.WalletManager");
 DEFINE_IID!(IID_IWalletManagerStatics, 1360123576, 51620, 19556, 180, 221, 225, 229, 72, 0, 28, 13);
 RT_INTERFACE!{static interface IWalletManagerStatics(IWalletManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWalletManagerStatics] {
     fn RequestStoreAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<WalletItemStore>) -> HRESULT
@@ -27392,7 +27392,7 @@ impl IWalletRelevantLocation {
 }
 RT_CLASS!{class WalletRelevantLocation: IWalletRelevantLocation}
 impl RtActivatable<IActivationFactory> for WalletRelevantLocation {}
-DEFINE_CLSID!(WalletRelevantLocation(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,87,97,108,108,101,116,46,87,97,108,108,101,116,82,101,108,101,118,97,110,116,76,111,99,97,116,105,111,110,0]) [CLSID_WalletRelevantLocation]);
+DEFINE_CLSID!(WalletRelevantLocation: "Windows.ApplicationModel.Wallet.WalletRelevantLocation");
 RT_ENUM! { enum WalletSummaryViewPosition: i32 {
     Hidden (WalletSummaryViewPosition_Hidden) = 0, Field1 (WalletSummaryViewPosition_Field1) = 1, Field2 (WalletSummaryViewPosition_Field2) = 2,
 }}
@@ -27469,7 +27469,7 @@ impl IWalletTransaction {
 }
 RT_CLASS!{class WalletTransaction: IWalletTransaction}
 impl RtActivatable<IActivationFactory> for WalletTransaction {}
-DEFINE_CLSID!(WalletTransaction(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,87,97,108,108,101,116,46,87,97,108,108,101,116,84,114,97,110,115,97,99,116,105,111,110,0]) [CLSID_WalletTransaction]);
+DEFINE_CLSID!(WalletTransaction: "Windows.ApplicationModel.Wallet.WalletTransaction");
 DEFINE_IID!(IID_IWalletVerb, 397944534, 58305, 19572, 138, 148, 33, 122, 173, 188, 72, 132);
 RT_INTERFACE!{interface IWalletVerb(IWalletVerbVtbl): IInspectable(IInspectableVtbl) [IID_IWalletVerb] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -27493,7 +27493,7 @@ impl WalletVerb {
         <Self as RtActivatable<IWalletVerbFactory>>::get_activation_factory().create_wallet_verb(name)
     }}
 }
-DEFINE_CLSID!(WalletVerb(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,87,97,108,108,101,116,46,87,97,108,108,101,116,86,101,114,98,0]) [CLSID_WalletVerb]);
+DEFINE_CLSID!(WalletVerb: "Windows.ApplicationModel.Wallet.WalletVerb");
 DEFINE_IID!(IID_IWalletVerbFactory, 1979787121, 48728, 19806, 131, 237, 88, 177, 102, 156, 122, 217);
 RT_INTERFACE!{static interface IWalletVerbFactory(IWalletVerbFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWalletVerbFactory] {
     fn CreateWalletVerb(&self, name: HSTRING, out: *mut *mut WalletVerb) -> HRESULT
@@ -27570,7 +27570,7 @@ impl WalletManagerSystem {
         <Self as RtActivatable<IWalletManagerSystemStatics>>::get_activation_factory().request_store_async()
     }}
 }
-DEFINE_CLSID!(WalletManagerSystem(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,87,97,108,108,101,116,46,83,121,115,116,101,109,46,87,97,108,108,101,116,77,97,110,97,103,101,114,83,121,115,116,101,109,0]) [CLSID_WalletManagerSystem]);
+DEFINE_CLSID!(WalletManagerSystem: "Windows.ApplicationModel.Wallet.System.WalletManagerSystem");
 DEFINE_IID!(IID_IWalletManagerSystemStatics, 3202935689, 9780, 19354, 139, 35, 238, 137, 3, 201, 31, 224);
 RT_INTERFACE!{static interface IWalletManagerSystemStatics(IWalletManagerSystemStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWalletManagerSystemStatics] {
     fn RequestStoreAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<WalletItemSystemStore>) -> HRESULT

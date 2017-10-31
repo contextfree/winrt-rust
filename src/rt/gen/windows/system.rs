@@ -33,7 +33,7 @@ impl AppDiagnosticInfo {
         <Self as RtActivatable<IAppDiagnosticInfoStatics2>>::get_activation_factory().request_info_for_app_user_model_id(appUserModelId)
     }}
 }
-DEFINE_CLSID!(AppDiagnosticInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,65,112,112,68,105,97,103,110,111,115,116,105,99,73,110,102,111,0]) [CLSID_AppDiagnosticInfo]);
+DEFINE_CLSID!(AppDiagnosticInfo: "Windows.System.AppDiagnosticInfo");
 DEFINE_IID!(IID_IAppDiagnosticInfo2, 3745971159, 6426, 17516, 148, 115, 143, 188, 35, 116, 163, 84);
 RT_INTERFACE!{interface IAppDiagnosticInfo2(IAppDiagnosticInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppDiagnosticInfo2] {
     fn GetResourceGroups(&self, out: *mut *mut super::foundation::collections::IVector<AppResourceGroupInfo>) -> HRESULT,
@@ -489,7 +489,7 @@ impl DateTimeSettings {
         <Self as RtActivatable<IDateTimeSettingsStatics>>::get_activation_factory().set_system_date_time(utcDateTime)
     }}
 }
-DEFINE_CLSID!(DateTimeSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,97,116,101,84,105,109,101,83,101,116,116,105,110,103,115,0]) [CLSID_DateTimeSettings]);
+DEFINE_CLSID!(DateTimeSettings: "Windows.System.DateTimeSettings");
 DEFINE_IID!(IID_IDateTimeSettingsStatics, 1562464465, 18414, 18603, 165, 43, 159, 25, 84, 39, 141, 130);
 RT_INTERFACE!{static interface IDateTimeSettingsStatics(IDateTimeSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeSettingsStatics] {
     fn SetSystemDateTime(&self, utcDateTime: super::foundation::DateTime) -> HRESULT
@@ -555,7 +555,7 @@ impl DispatcherQueue {
         <Self as RtActivatable<IDispatcherQueueStatics>>::get_activation_factory().get_for_current_thread()
     }}
 }
-DEFINE_CLSID!(DispatcherQueue(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,115,112,97,116,99,104,101,114,81,117,101,117,101,0]) [CLSID_DispatcherQueue]);
+DEFINE_CLSID!(DispatcherQueue: "Windows.System.DispatcherQueue");
 DEFINE_IID!(IID_IDispatcherQueueController, 586370662, 20699, 20022, 169, 141, 97, 192, 27, 56, 77, 32);
 RT_INTERFACE!{interface IDispatcherQueueController(IDispatcherQueueControllerVtbl): IInspectable(IInspectableVtbl) [IID_IDispatcherQueueController] {
     fn get_DispatcherQueue(&self, out: *mut *mut DispatcherQueue) -> HRESULT,
@@ -580,7 +580,7 @@ impl DispatcherQueueController {
         <Self as RtActivatable<IDispatcherQueueControllerStatics>>::get_activation_factory().create_on_dedicated_thread()
     }}
 }
-DEFINE_CLSID!(DispatcherQueueController(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,115,112,97,116,99,104,101,114,81,117,101,117,101,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_DispatcherQueueController]);
+DEFINE_CLSID!(DispatcherQueueController: "Windows.System.DispatcherQueueController");
 DEFINE_IID!(IID_IDispatcherQueueControllerStatics, 174889184, 20888, 18850, 163, 19, 63, 112, 209, 241, 60, 39);
 RT_INTERFACE!{static interface IDispatcherQueueControllerStatics(IDispatcherQueueControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDispatcherQueueControllerStatics] {
     fn CreateOnDedicatedThread(&self, out: *mut *mut DispatcherQueueController) -> HRESULT
@@ -696,7 +696,7 @@ impl IFolderLauncherOptions {
 }
 RT_CLASS!{class FolderLauncherOptions: IFolderLauncherOptions}
 impl RtActivatable<IActivationFactory> for FolderLauncherOptions {}
-DEFINE_CLSID!(FolderLauncherOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,70,111,108,100,101,114,76,97,117,110,99,104,101,114,79,112,116,105,111,110,115,0]) [CLSID_FolderLauncherOptions]);
+DEFINE_CLSID!(FolderLauncherOptions: "Windows.System.FolderLauncherOptions");
 RT_CLASS!{static class KnownUserProperties}
 impl RtActivatable<IKnownUserPropertiesStatics> for KnownUserProperties {}
 impl KnownUserProperties {
@@ -728,7 +728,7 @@ impl KnownUserProperties {
         <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().get_session_initiation_protocol_uri()
     }}
 }
-DEFINE_CLSID!(KnownUserProperties(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,75,110,111,119,110,85,115,101,114,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownUserProperties]);
+DEFINE_CLSID!(KnownUserProperties: "Windows.System.KnownUserProperties");
 DEFINE_IID!(IID_IKnownUserPropertiesStatics, 2002096410, 28869, 18661, 182, 55, 91, 163, 68, 30, 78, 228);
 RT_INTERFACE!{static interface IKnownUserPropertiesStatics(IKnownUserPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownUserPropertiesStatics] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -867,7 +867,7 @@ impl Launcher {
         <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().launch_uri_for_results_with_data_for_user_async(user, uri, options, inputData)
     }}
 }
-DEFINE_CLSID!(Launcher(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,76,97,117,110,99,104,101,114,0]) [CLSID_Launcher]);
+DEFINE_CLSID!(Launcher: "Windows.System.Launcher");
 DEFINE_IID!(IID_ILauncherOptions, 3136954840, 45169, 19672, 133, 62, 52, 18, 3, 229, 87, 211);
 RT_INTERFACE!{interface ILauncherOptions(ILauncherOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ILauncherOptions] {
     fn get_TreatAsUntrusted(&self, out: *mut bool) -> HRESULT,
@@ -947,7 +947,7 @@ impl ILauncherOptions {
 }
 RT_CLASS!{class LauncherOptions: ILauncherOptions}
 impl RtActivatable<IActivationFactory> for LauncherOptions {}
-DEFINE_CLSID!(LauncherOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,76,97,117,110,99,104,101,114,79,112,116,105,111,110,115,0]) [CLSID_LauncherOptions]);
+DEFINE_CLSID!(LauncherOptions: "Windows.System.LauncherOptions");
 DEFINE_IID!(IID_ILauncherOptions2, 1000378036, 28224, 19918, 161, 163, 47, 83, 149, 10, 251, 73);
 RT_INTERFACE!{interface ILauncherOptions2(ILauncherOptions2Vtbl): IInspectable(IInspectableVtbl) [IID_ILauncherOptions2] {
     fn get_TargetApplicationPackageFamilyName(&self, out: *mut HSTRING) -> HRESULT,
@@ -1307,7 +1307,7 @@ impl MemoryManager {
         <Self as RtActivatable<IMemoryManagerStatics4>>::get_activation_factory().get_expected_app_memory_usage_limit()
     }}
 }
-DEFINE_CLSID!(MemoryManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,77,101,109,111,114,121,77,97,110,97,103,101,114,0]) [CLSID_MemoryManager]);
+DEFINE_CLSID!(MemoryManager: "Windows.System.MemoryManager");
 DEFINE_IID!(IID_IMemoryManagerStatics, 1550591900, 55242, 18297, 145, 136, 64, 87, 33, 156, 230, 76);
 RT_INTERFACE!{static interface IMemoryManagerStatics(IMemoryManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryManagerStatics] {
     fn get_AppMemoryUsage(&self, out: *mut u64) -> HRESULT,
@@ -1416,7 +1416,7 @@ impl ProcessLauncher {
         <Self as RtActivatable<IProcessLauncherStatics>>::get_activation_factory().run_to_completion_async_with_options(fileName, args, options)
     }}
 }
-DEFINE_CLSID!(ProcessLauncher(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,99,101,115,115,76,97,117,110,99,104,101,114,0]) [CLSID_ProcessLauncher]);
+DEFINE_CLSID!(ProcessLauncher: "Windows.System.ProcessLauncher");
 DEFINE_IID!(IID_IProcessLauncherOptions, 813742543, 62532, 19075, 190, 175, 165, 73, 160, 243, 34, 156);
 RT_INTERFACE!{interface IProcessLauncherOptions(IProcessLauncherOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IProcessLauncherOptions] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -1474,7 +1474,7 @@ impl IProcessLauncherOptions {
 }
 RT_CLASS!{class ProcessLauncherOptions: IProcessLauncherOptions}
 impl RtActivatable<IActivationFactory> for ProcessLauncherOptions {}
-DEFINE_CLSID!(ProcessLauncherOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,99,101,115,115,76,97,117,110,99,104,101,114,79,112,116,105,111,110,115,0]) [CLSID_ProcessLauncherOptions]);
+DEFINE_CLSID!(ProcessLauncherOptions: "Windows.System.ProcessLauncherOptions");
 DEFINE_IID!(IID_IProcessLauncherResult, 1414302004, 34520, 18833, 142, 117, 236, 232, 164, 59, 107, 109);
 RT_INTERFACE!{interface IProcessLauncherResult(IProcessLauncherResultVtbl): IInspectable(IInspectableVtbl) [IID_IProcessLauncherResult] {
     fn get_ExitCode(&self, out: *mut u32) -> HRESULT
@@ -1549,7 +1549,7 @@ impl RemoteLauncher {
         <Self as RtActivatable<IRemoteLauncherStatics>>::get_activation_factory().launch_uri_with_data_async(remoteSystemConnectionRequest, uri, options, inputData)
     }}
 }
-DEFINE_CLSID!(RemoteLauncher(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,76,97,117,110,99,104,101,114,0]) [CLSID_RemoteLauncher]);
+DEFINE_CLSID!(RemoteLauncher: "Windows.System.RemoteLauncher");
 DEFINE_IID!(IID_IRemoteLauncherOptions, 2654611336, 10385, 19679, 162, 214, 157, 255, 125, 2, 230, 147);
 RT_INTERFACE!{interface IRemoteLauncherOptions(IRemoteLauncherOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteLauncherOptions] {
     fn get_FallbackUri(&self, out: *mut *mut super::foundation::Uri) -> HRESULT,
@@ -1574,7 +1574,7 @@ impl IRemoteLauncherOptions {
 }
 RT_CLASS!{class RemoteLauncherOptions: IRemoteLauncherOptions}
 impl RtActivatable<IActivationFactory> for RemoteLauncherOptions {}
-DEFINE_CLSID!(RemoteLauncherOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,76,97,117,110,99,104,101,114,79,112,116,105,111,110,115,0]) [CLSID_RemoteLauncherOptions]);
+DEFINE_CLSID!(RemoteLauncherOptions: "Windows.System.RemoteLauncherOptions");
 DEFINE_IID!(IID_IRemoteLauncherStatics, 3621485203, 41740, 18615, 159, 33, 5, 16, 38, 164, 229, 23);
 RT_INTERFACE!{static interface IRemoteLauncherStatics(IRemoteLauncherStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteLauncherStatics] {
     fn LaunchUriAsync(&self, remoteSystemConnectionRequest: *mut remotesystems::RemoteSystemConnectionRequest, uri: *mut super::foundation::Uri, out: *mut *mut super::foundation::IAsyncOperation<RemoteLaunchUriStatus>) -> HRESULT,
@@ -1624,7 +1624,7 @@ impl ShutdownManager {
         <Self as RtActivatable<IShutdownManagerStatics2>>::get_activation_factory().enter_power_state_with_time_span(powerState, wakeUpAfter)
     }}
 }
-DEFINE_CLSID!(ShutdownManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,83,104,117,116,100,111,119,110,77,97,110,97,103,101,114,0]) [CLSID_ShutdownManager]);
+DEFINE_CLSID!(ShutdownManager: "Windows.System.ShutdownManager");
 DEFINE_IID!(IID_IShutdownManagerStatics, 1927432173, 56667, 19820, 177, 208, 197, 122, 123, 187, 95, 148);
 RT_INTERFACE!{static interface IShutdownManagerStatics(IShutdownManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IShutdownManagerStatics] {
     fn BeginShutdown(&self, shutdownKind: ShutdownKind, timeout: super::foundation::TimeSpan) -> HRESULT,
@@ -1677,7 +1677,7 @@ impl TimeZoneSettings {
         <Self as RtActivatable<ITimeZoneSettingsStatics>>::get_activation_factory().change_time_zone_by_display_name(timeZoneDisplayName)
     }}
 }
-DEFINE_CLSID!(TimeZoneSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,105,109,101,90,111,110,101,83,101,116,116,105,110,103,115,0]) [CLSID_TimeZoneSettings]);
+DEFINE_CLSID!(TimeZoneSettings: "Windows.System.TimeZoneSettings");
 DEFINE_IID!(IID_ITimeZoneSettingsStatics, 2604346346, 41217, 16814, 159, 189, 2, 135, 40, 186, 183, 61);
 RT_INTERFACE!{static interface ITimeZoneSettingsStatics(ITimeZoneSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITimeZoneSettingsStatics] {
     fn get_CurrentTimeZoneDisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -1766,7 +1766,7 @@ impl User {
         <Self as RtActivatable<IUserStatics>>::get_activation_factory().get_from_id(nonRoamableId)
     }}
 }
-DEFINE_CLSID!(User(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,0]) [CLSID_User]);
+DEFINE_CLSID!(User: "Windows.System.User");
 RT_ENUM! { enum UserAuthenticationStatus: i32 {
     Unauthenticated (UserAuthenticationStatus_Unauthenticated) = 0, LocallyAuthenticated (UserAuthenticationStatus_LocallyAuthenticated) = 1, RemotelyAuthenticated (UserAuthenticationStatus_RemotelyAuthenticated) = 2,
 }}
@@ -1836,7 +1836,7 @@ impl UserDeviceAssociation {
         <Self as RtActivatable<IUserDeviceAssociationStatics>>::get_activation_factory().remove_user_device_association_changed(token)
     }}
 }
-DEFINE_CLSID!(UserDeviceAssociation(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,68,101,118,105,99,101,65,115,115,111,99,105,97,116,105,111,110,0]) [CLSID_UserDeviceAssociation]);
+DEFINE_CLSID!(UserDeviceAssociation: "Windows.System.UserDeviceAssociation");
 DEFINE_IID!(IID_IUserDeviceAssociationChangedEventArgs, 3172953964, 47965, 19835, 165, 240, 200, 205, 17, 163, 141, 66);
 RT_INTERFACE!{interface IUserDeviceAssociationChangedEventArgs(IUserDeviceAssociationChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDeviceAssociationChangedEventArgs] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -1924,7 +1924,7 @@ impl UserPicker {
         <Self as RtActivatable<IUserPickerStatics>>::get_activation_factory().is_supported()
     }}
 }
-DEFINE_CLSID!(UserPicker(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,105,99,107,101,114,0]) [CLSID_UserPicker]);
+DEFINE_CLSID!(UserPicker: "Windows.System.UserPicker");
 DEFINE_IID!(IID_IUserPickerStatics, 3727855836, 32371, 19958, 161, 174, 77, 126, 202, 130, 180, 13);
 RT_INTERFACE!{static interface IUserPickerStatics(IUserPickerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserPickerStatics] {
     fn IsSupported(&self, out: *mut bool) -> HRESULT
@@ -2101,7 +2101,7 @@ impl AdvertisingManager {
         <Self as RtActivatable<IAdvertisingManagerStatics2>>::get_activation_factory().get_for_user(user)
     }}
 }
-DEFINE_CLSID!(AdvertisingManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,65,100,118,101,114,116,105,115,105,110,103,77,97,110,97,103,101,114,0]) [CLSID_AdvertisingManager]);
+DEFINE_CLSID!(AdvertisingManager: "Windows.System.UserProfile.AdvertisingManager");
 DEFINE_IID!(IID_IAdvertisingManagerForUser, 2458645456, 53116, 19120, 167, 220, 109, 197, 188, 212, 66, 82);
 RT_INTERFACE!{interface IAdvertisingManagerForUser(IAdvertisingManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_IAdvertisingManagerForUser] {
     fn get_AdvertisingId(&self, out: *mut HSTRING) -> HRESULT,
@@ -2169,7 +2169,7 @@ impl DiagnosticsSettings {
         <Self as RtActivatable<IDiagnosticsSettingsStatics>>::get_activation_factory().get_for_user(user)
     }}
 }
-DEFINE_CLSID!(DiagnosticsSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,68,105,97,103,110,111,115,116,105,99,115,83,101,116,116,105,110,103,115,0]) [CLSID_DiagnosticsSettings]);
+DEFINE_CLSID!(DiagnosticsSettings: "Windows.System.UserProfile.DiagnosticsSettings");
 DEFINE_IID!(IID_IDiagnosticsSettingsStatics, 1926424591, 21392, 18323, 153, 11, 60, 204, 125, 106, 201, 200);
 RT_INTERFACE!{static interface IDiagnosticsSettingsStatics(IDiagnosticsSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDiagnosticsSettingsStatics] {
     fn GetDefault(&self, out: *mut *mut DiagnosticsSettings) -> HRESULT,
@@ -2198,7 +2198,7 @@ impl FirstSignInSettings {
         <Self as RtActivatable<IFirstSignInSettingsStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(FirstSignInSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,70,105,114,115,116,83,105,103,110,73,110,83,101,116,116,105,110,103,115,0]) [CLSID_FirstSignInSettings]);
+DEFINE_CLSID!(FirstSignInSettings: "Windows.System.UserProfile.FirstSignInSettings");
 DEFINE_IID!(IID_IFirstSignInSettingsStatics, 484544271, 7233, 20128, 183, 162, 111, 12, 28, 126, 132, 56);
 RT_INTERFACE!{static interface IFirstSignInSettingsStatics(IFirstSignInSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFirstSignInSettingsStatics] {
     fn GetDefault(&self, out: *mut *mut FirstSignInSettings) -> HRESULT
@@ -2239,7 +2239,7 @@ impl GlobalizationPreferences {
         <Self as RtActivatable<IGlobalizationPreferencesStatics2>>::get_activation_factory().try_set_languages(languageTags)
     }}
 }
-DEFINE_CLSID!(GlobalizationPreferences(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,71,108,111,98,97,108,105,122,97,116,105,111,110,80,114,101,102,101,114,101,110,99,101,115,0]) [CLSID_GlobalizationPreferences]);
+DEFINE_CLSID!(GlobalizationPreferences: "Windows.System.UserProfile.GlobalizationPreferences");
 DEFINE_IID!(IID_IGlobalizationPreferencesStatics, 29311782, 60727, 20118, 176, 233, 193, 52, 13, 30, 161, 88);
 RT_INTERFACE!{static interface IGlobalizationPreferencesStatics(IGlobalizationPreferencesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalizationPreferencesStatics] {
     fn get_Calendars(&self, out: *mut *mut super::super::foundation::collections::IVectorView<HString>) -> HRESULT,
@@ -2321,7 +2321,7 @@ impl LockScreen {
         <Self as RtActivatable<ILockScreenStatics>>::get_activation_factory().set_image_stream_async(value)
     }}
 }
-DEFINE_CLSID!(LockScreen(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,76,111,99,107,83,99,114,101,101,110,0]) [CLSID_LockScreen]);
+DEFINE_CLSID!(LockScreen: "Windows.System.UserProfile.LockScreen");
 DEFINE_IID!(IID_ILockScreenImageFeedStatics, 739079158, 937, 16806, 155, 1, 73, 82, 81, 255, 81, 213);
 RT_INTERFACE!{static interface ILockScreenImageFeedStatics(ILockScreenImageFeedStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILockScreenImageFeedStatics] {
     fn RequestSetImageFeedAsync(&self, syndicationFeedUri: *mut super::super::foundation::Uri, out: *mut *mut super::super::foundation::IAsyncOperation<SetImageFeedResult>) -> HRESULT,
@@ -2423,7 +2423,7 @@ impl UserInformation {
         <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().get_domain_name_async()
     }}
 }
-DEFINE_CLSID!(UserInformation(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,85,115,101,114,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_UserInformation]);
+DEFINE_CLSID!(UserInformation: "Windows.System.UserProfile.UserInformation");
 DEFINE_IID!(IID_IUserInformationStatics, 2012457232, 18682, 18588, 147, 78, 42, 232, 91, 168, 247, 114);
 RT_INTERFACE!{static interface IUserInformationStatics(IUserInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserInformationStatics] {
     fn get_AccountPictureChangeEnabled(&self, out: *mut bool) -> HRESULT,
@@ -2550,7 +2550,7 @@ impl UserProfilePersonalizationSettings {
         <Self as RtActivatable<IUserProfilePersonalizationSettingsStatics>>::get_activation_factory().is_supported()
     }}
 }
-DEFINE_CLSID!(UserProfilePersonalizationSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,85,115,101,114,80,114,111,102,105,108,101,80,101,114,115,111,110,97,108,105,122,97,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_UserProfilePersonalizationSettings]);
+DEFINE_CLSID!(UserProfilePersonalizationSettings: "Windows.System.UserProfile.UserProfilePersonalizationSettings");
 DEFINE_IID!(IID_IUserProfilePersonalizationSettingsStatics, 2444015681, 20535, 17739, 152, 131, 187, 119, 45, 8, 221, 22);
 RT_INTERFACE!{static interface IUserProfilePersonalizationSettingsStatics(IUserProfilePersonalizationSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserProfilePersonalizationSettingsStatics] {
     fn get_Current(&self, out: *mut *mut UserProfilePersonalizationSettings) -> HRESULT,
@@ -2581,7 +2581,7 @@ impl AnalyticsInfo {
         <Self as RtActivatable<IAnalyticsInfoStatics>>::get_activation_factory().get_device_form()
     }}
 }
-DEFINE_CLSID!(AnalyticsInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,65,110,97,108,121,116,105,99,115,73,110,102,111,0]) [CLSID_AnalyticsInfo]);
+DEFINE_CLSID!(AnalyticsInfo: "Windows.System.Profile.AnalyticsInfo");
 DEFINE_IID!(IID_IAnalyticsInfoStatics, 492757094, 6285, 23465, 67, 135, 172, 174, 176, 231, 227, 5);
 RT_INTERFACE!{static interface IAnalyticsInfoStatics(IAnalyticsInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAnalyticsInfoStatics] {
     fn get_VersionInfo(&self, out: *mut *mut AnalyticsVersionInfo) -> HRESULT,
@@ -2624,7 +2624,7 @@ impl EducationSettings {
         <Self as RtActivatable<IEducationSettingsStatics>>::get_activation_factory().get_is_education_environment()
     }}
 }
-DEFINE_CLSID!(EducationSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,69,100,117,99,97,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_EducationSettings]);
+DEFINE_CLSID!(EducationSettings: "Windows.System.Profile.EducationSettings");
 DEFINE_IID!(IID_IEducationSettingsStatics, 4233359599, 19774, 19987, 155, 35, 80, 95, 77, 9, 30, 146);
 RT_INTERFACE!{static interface IEducationSettingsStatics(IEducationSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IEducationSettingsStatics] {
     fn get_IsEducationEnvironment(&self, out: *mut bool) -> HRESULT
@@ -2643,7 +2643,7 @@ impl HardwareIdentification {
         <Self as RtActivatable<IHardwareIdentificationStatics>>::get_activation_factory().get_package_specific_token(nonce)
     }}
 }
-DEFINE_CLSID!(HardwareIdentification(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,72,97,114,100,119,97,114,101,73,100,101,110,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_HardwareIdentification]);
+DEFINE_CLSID!(HardwareIdentification: "Windows.System.Profile.HardwareIdentification");
 DEFINE_IID!(IID_IHardwareIdentificationStatics, 2534564064, 61808, 19010, 189, 85, 169, 0, 178, 18, 218, 226);
 RT_INTERFACE!{static interface IHardwareIdentificationStatics(IHardwareIdentificationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHardwareIdentificationStatics] {
     #[cfg(feature="windows-storage")] fn GetPackageSpecificToken(&self, nonce: *mut super::super::storage::streams::IBuffer, out: *mut *mut HardwareToken) -> HRESULT
@@ -2749,7 +2749,7 @@ impl KnownRetailInfoProperties {
         <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_windows_edition()
     }}
 }
-DEFINE_CLSID!(KnownRetailInfoProperties(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,75,110,111,119,110,82,101,116,97,105,108,73,110,102,111,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownRetailInfoProperties]);
+DEFINE_CLSID!(KnownRetailInfoProperties: "Windows.System.Profile.KnownRetailInfoProperties");
 DEFINE_IID!(IID_IKnownRetailInfoPropertiesStatics, 2572620152, 20495, 18558, 142, 117, 41, 229, 81, 114, 135, 18);
 RT_INTERFACE!{static interface IKnownRetailInfoPropertiesStatics(IKnownRetailInfoPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownRetailInfoPropertiesStatics] {
     fn get_RetailAccessCode(&self, out: *mut HSTRING) -> HRESULT,
@@ -2906,7 +2906,7 @@ impl PlatformDiagnosticsAndUsageDataSettings {
         <Self as RtActivatable<IPlatformDiagnosticsAndUsageDataSettingsStatics>>::get_activation_factory().can_collect_diagnostics(level)
     }}
 }
-DEFINE_CLSID!(PlatformDiagnosticsAndUsageDataSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,80,108,97,116,102,111,114,109,68,105,97,103,110,111,115,116,105,99,115,65,110,100,85,115,97,103,101,68,97,116,97,83,101,116,116,105,110,103,115,0]) [CLSID_PlatformDiagnosticsAndUsageDataSettings]);
+DEFINE_CLSID!(PlatformDiagnosticsAndUsageDataSettings: "Windows.System.Profile.PlatformDiagnosticsAndUsageDataSettings");
 DEFINE_IID!(IID_IPlatformDiagnosticsAndUsageDataSettingsStatics, 3068283931, 31516, 19250, 140, 98, 166, 101, 151, 206, 114, 58);
 RT_INTERFACE!{static interface IPlatformDiagnosticsAndUsageDataSettingsStatics(IPlatformDiagnosticsAndUsageDataSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlatformDiagnosticsAndUsageDataSettingsStatics] {
     fn get_CollectionLevel(&self, out: *mut PlatformDataCollectionLevel) -> HRESULT,
@@ -2945,7 +2945,7 @@ impl RetailInfo {
         <Self as RtActivatable<IRetailInfoStatics>>::get_activation_factory().get_properties()
     }}
 }
-DEFINE_CLSID!(RetailInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,82,101,116,97,105,108,73,110,102,111,0]) [CLSID_RetailInfo]);
+DEFINE_CLSID!(RetailInfo: "Windows.System.Profile.RetailInfo");
 DEFINE_IID!(IID_IRetailInfoStatics, 118671032, 35730, 20266, 132, 153, 3, 31, 23, 152, 214, 239);
 RT_INTERFACE!{static interface IRetailInfoStatics(IRetailInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRetailInfoStatics] {
     fn get_IsDemoModeEnabled(&self, out: *mut bool) -> HRESULT,
@@ -2974,7 +2974,7 @@ impl SharedModeSettings {
         <Self as RtActivatable<ISharedModeSettingsStatics2>>::get_activation_factory().get_should_avoid_local_storage()
     }}
 }
-DEFINE_CLSID!(SharedModeSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,104,97,114,101,100,77,111,100,101,83,101,116,116,105,110,103,115,0]) [CLSID_SharedModeSettings]);
+DEFINE_CLSID!(SharedModeSettings: "Windows.System.Profile.SharedModeSettings");
 DEFINE_IID!(IID_ISharedModeSettingsStatics, 2302538766, 51926, 19792, 140, 73, 111, 207, 192, 62, 219, 41);
 RT_INTERFACE!{static interface ISharedModeSettingsStatics(ISharedModeSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISharedModeSettingsStatics] {
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT
@@ -3007,7 +3007,7 @@ impl SystemIdentification {
         <Self as RtActivatable<ISystemIdentificationStatics>>::get_activation_factory().get_system_id_for_user(user)
     }}
 }
-DEFINE_CLSID!(SystemIdentification(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,121,115,116,101,109,73,100,101,110,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_SystemIdentification]);
+DEFINE_CLSID!(SystemIdentification: "Windows.System.Profile.SystemIdentification");
 DEFINE_IID!(IID_ISystemIdentificationInfo, 207986301, 50114, 19763, 162, 223, 33, 188, 65, 145, 110, 179);
 RT_INTERFACE!{interface ISystemIdentificationInfo(ISystemIdentificationInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISystemIdentificationInfo] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -3080,7 +3080,7 @@ impl SmbiosInformation {
         <Self as RtActivatable<ISmbiosInformationStatics>>::get_activation_factory().get_serial_number()
     }}
 }
-DEFINE_CLSID!(SmbiosInformation(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,121,115,116,101,109,77,97,110,117,102,97,99,116,117,114,101,114,115,46,83,109,98,105,111,115,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_SmbiosInformation]);
+DEFINE_CLSID!(SmbiosInformation: "Windows.System.Profile.SystemManufacturers.SmbiosInformation");
 DEFINE_IID!(IID_ISmbiosInformationStatics, 135055996, 25468, 18628, 183, 40, 249, 39, 56, 18, 219, 142);
 RT_INTERFACE!{static interface ISmbiosInformationStatics(ISmbiosInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmbiosInformationStatics] {
     fn get_SerialNumber(&self, out: *mut HSTRING) -> HRESULT
@@ -3102,7 +3102,7 @@ impl SystemSupportInfo {
         <Self as RtActivatable<ISystemSupportInfoStatics>>::get_activation_factory().get_oem_support_info()
     }}
 }
-DEFINE_CLSID!(SystemSupportInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,121,115,116,101,109,77,97,110,117,102,97,99,116,117,114,101,114,115,46,83,121,115,116,101,109,83,117,112,112,111,114,116,73,110,102,111,0]) [CLSID_SystemSupportInfo]);
+DEFINE_CLSID!(SystemSupportInfo: "Windows.System.Profile.SystemManufacturers.SystemSupportInfo");
 DEFINE_IID!(IID_ISystemSupportInfoStatics, 4017424756, 50210, 17879, 164, 77, 92, 28, 0, 67, 162, 179);
 RT_INTERFACE!{static interface ISystemSupportInfoStatics(ISystemSupportInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemSupportInfoStatics] {
     fn get_LocalSystemEdition(&self, out: *mut HSTRING) -> HRESULT,
@@ -3131,7 +3131,7 @@ impl InteractiveSession {
         <Self as RtActivatable<IInteractiveSessionStatics>>::get_activation_factory().get_is_remote()
     }}
 }
-DEFINE_CLSID!(InteractiveSession(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,68,101,115,107,116,111,112,46,73,110,116,101,114,97,99,116,105,118,101,83,101,115,115,105,111,110,0]) [CLSID_InteractiveSession]);
+DEFINE_CLSID!(InteractiveSession: "Windows.System.RemoteDesktop.InteractiveSession");
 DEFINE_IID!(IID_IInteractiveSessionStatics, 1619543601, 56634, 17782, 156, 141, 232, 2, 118, 24, 189, 206);
 RT_INTERFACE!{static interface IInteractiveSessionStatics(IInteractiveSessionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IInteractiveSessionStatics] {
     fn get_IsRemote(&self, out: *mut bool) -> HRESULT
@@ -3186,7 +3186,7 @@ impl BackgroundEnergyManager {
         <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().remove_recent_energy_usage_returned_to_low(token)
     }}
 }
-DEFINE_CLSID!(BackgroundEnergyManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,66,97,99,107,103,114,111,117,110,100,69,110,101,114,103,121,77,97,110,97,103,101,114,0]) [CLSID_BackgroundEnergyManager]);
+DEFINE_CLSID!(BackgroundEnergyManager: "Windows.System.Power.BackgroundEnergyManager");
 DEFINE_IID!(IID_IBackgroundEnergyManagerStatics, 3004571029, 4480, 17270, 150, 225, 64, 149, 86, 129, 71, 206);
 RT_INTERFACE!{static interface IBackgroundEnergyManagerStatics(IBackgroundEnergyManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundEnergyManagerStatics] {
     fn get_LowUsageLevel(&self, out: *mut u32) -> HRESULT,
@@ -3302,7 +3302,7 @@ impl ForegroundEnergyManager {
         <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().remove_recent_energy_usage_returned_to_low(token)
     }}
 }
-DEFINE_CLSID!(ForegroundEnergyManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,70,111,114,101,103,114,111,117,110,100,69,110,101,114,103,121,77,97,110,97,103,101,114,0]) [CLSID_ForegroundEnergyManager]);
+DEFINE_CLSID!(ForegroundEnergyManager: "Windows.System.Power.ForegroundEnergyManager");
 DEFINE_IID!(IID_IForegroundEnergyManagerStatics, 2683857010, 58999, 18452, 154, 32, 83, 55, 202, 115, 43, 152);
 RT_INTERFACE!{static interface IForegroundEnergyManagerStatics(IForegroundEnergyManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IForegroundEnergyManagerStatics] {
     fn get_LowUsageLevel(&self, out: *mut u32) -> HRESULT,
@@ -3415,7 +3415,7 @@ impl PowerManager {
         <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().remove_remaining_discharge_time_changed(token)
     }}
 }
-DEFINE_CLSID!(PowerManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,80,111,119,101,114,77,97,110,97,103,101,114,0]) [CLSID_PowerManager]);
+DEFINE_CLSID!(PowerManager: "Windows.System.Power.PowerManager");
 DEFINE_IID!(IID_IPowerManagerStatics, 328499805, 25294, 17252, 152, 213, 170, 40, 199, 251, 209, 91);
 RT_INTERFACE!{static interface IPowerManagerStatics(IPowerManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPowerManagerStatics] {
     fn get_EnergySaverStatus(&self, out: *mut EnergySaverStatus) -> HRESULT,
@@ -3524,7 +3524,7 @@ impl BackgroundEnergyDiagnostics {
         <Self as RtActivatable<IBackgroundEnergyDiagnosticsStatics>>::get_activation_factory().reset_total_energy_usage()
     }}
 }
-DEFINE_CLSID!(BackgroundEnergyDiagnostics(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,68,105,97,103,110,111,115,116,105,99,115,46,66,97,99,107,103,114,111,117,110,100,69,110,101,114,103,121,68,105,97,103,110,111,115,116,105,99,115,0]) [CLSID_BackgroundEnergyDiagnostics]);
+DEFINE_CLSID!(BackgroundEnergyDiagnostics: "Windows.System.Power.Diagnostics.BackgroundEnergyDiagnostics");
 DEFINE_IID!(IID_IBackgroundEnergyDiagnosticsStatics, 3613800194, 54182, 18144, 143, 155, 80, 185, 91, 180, 249, 197);
 RT_INTERFACE!{static interface IBackgroundEnergyDiagnosticsStatics(IBackgroundEnergyDiagnosticsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundEnergyDiagnosticsStatics] {
     fn get_DeviceSpecificConversionFactor(&self, out: *mut f64) -> HRESULT,
@@ -3560,7 +3560,7 @@ impl ForegroundEnergyDiagnostics {
         <Self as RtActivatable<IForegroundEnergyDiagnosticsStatics>>::get_activation_factory().reset_total_energy_usage()
     }}
 }
-DEFINE_CLSID!(ForegroundEnergyDiagnostics(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,68,105,97,103,110,111,115,116,105,99,115,46,70,111,114,101,103,114,111,117,110,100,69,110,101,114,103,121,68,105,97,103,110,111,115,116,105,99,115,0]) [CLSID_ForegroundEnergyDiagnostics]);
+DEFINE_CLSID!(ForegroundEnergyDiagnostics: "Windows.System.Power.Diagnostics.ForegroundEnergyDiagnostics");
 DEFINE_IID!(IID_IForegroundEnergyDiagnosticsStatics, 600443159, 52487, 17929, 190, 21, 143, 232, 148, 197, 228, 30);
 RT_INTERFACE!{static interface IForegroundEnergyDiagnosticsStatics(IForegroundEnergyDiagnosticsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IForegroundEnergyDiagnosticsStatics] {
     fn get_DeviceSpecificConversionFactor(&self, out: *mut f64) -> HRESULT,
@@ -3632,7 +3632,7 @@ impl DiagnosticInvoker {
         <Self as RtActivatable<IDiagnosticInvokerStatics>>::get_activation_factory().get_is_supported()
     }}
 }
-DEFINE_CLSID!(DiagnosticInvoker(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,68,105,97,103,110,111,115,116,105,99,73,110,118,111,107,101,114,0]) [CLSID_DiagnosticInvoker]);
+DEFINE_CLSID!(DiagnosticInvoker: "Windows.System.Diagnostics.DiagnosticInvoker");
 DEFINE_IID!(IID_IDiagnosticInvokerStatics, 1559943390, 61788, 17748, 168, 19, 193, 19, 195, 136, 27, 9);
 RT_INTERFACE!{static interface IDiagnosticInvokerStatics(IDiagnosticInvokerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDiagnosticInvokerStatics] {
     fn GetDefault(&self, out: *mut *mut DiagnosticInvoker) -> HRESULT,
@@ -3747,7 +3747,7 @@ impl ProcessDiagnosticInfo {
         <Self as RtActivatable<IProcessDiagnosticInfoStatics2>>::get_activation_factory().try_get_for_process_id(processId)
     }}
 }
-DEFINE_CLSID!(ProcessDiagnosticInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,80,114,111,99,101,115,115,68,105,97,103,110,111,115,116,105,99,73,110,102,111,0]) [CLSID_ProcessDiagnosticInfo]);
+DEFINE_CLSID!(ProcessDiagnosticInfo: "Windows.System.Diagnostics.ProcessDiagnosticInfo");
 DEFINE_IID!(IID_IProcessDiagnosticInfo2, 2505624346, 15627, 18924, 171, 112, 79, 122, 17, 40, 5, 222);
 RT_INTERFACE!{interface IProcessDiagnosticInfo2(IProcessDiagnosticInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IProcessDiagnosticInfo2] {
     fn GetAppDiagnosticInfos(&self, out: *mut *mut super::super::foundation::collections::IVector<super::AppDiagnosticInfo>) -> HRESULT,
@@ -3997,7 +3997,7 @@ impl SystemDiagnosticInfo {
         <Self as RtActivatable<ISystemDiagnosticInfoStatics>>::get_activation_factory().get_for_current_system()
     }}
 }
-DEFINE_CLSID!(SystemDiagnosticInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,83,121,115,116,101,109,68,105,97,103,110,111,115,116,105,99,73,110,102,111,0]) [CLSID_SystemDiagnosticInfo]);
+DEFINE_CLSID!(SystemDiagnosticInfo: "Windows.System.Diagnostics.SystemDiagnosticInfo");
 DEFINE_IID!(IID_ISystemDiagnosticInfoStatics, 3557076001, 64637, 17904, 154, 63, 57, 32, 58, 237, 159, 126);
 RT_INTERFACE!{static interface ISystemDiagnosticInfoStatics(ISystemDiagnosticInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemDiagnosticInfoStatics] {
     fn GetForCurrentSystem(&self, out: *mut *mut SystemDiagnosticInfo) -> HRESULT
@@ -4075,7 +4075,7 @@ impl PlatformDiagnosticActions {
         <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().get_known_trace_list(slotType)
     }}
 }
-DEFINE_CLSID!(PlatformDiagnosticActions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,84,114,97,99,101,82,101,112,111,114,116,105,110,103,46,80,108,97,116,102,111,114,109,68,105,97,103,110,111,115,116,105,99,65,99,116,105,111,110,115,0]) [CLSID_PlatformDiagnosticActions]);
+DEFINE_CLSID!(PlatformDiagnosticActions: "Windows.System.Diagnostics.TraceReporting.PlatformDiagnosticActions");
 DEFINE_IID!(IID_IPlatformDiagnosticActionsStatics, 3239337210, 37522, 16999, 137, 10, 158, 163, 237, 7, 35, 18);
 RT_INTERFACE!{static interface IPlatformDiagnosticActionsStatics(IPlatformDiagnosticActionsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlatformDiagnosticActionsStatics] {
     fn IsScenarioEnabled(&self, scenarioId: Guid, out: *mut bool) -> HRESULT,
@@ -4220,7 +4220,7 @@ impl PlatformTelemetryClient {
         <Self as RtActivatable<IPlatformTelemetryClientStatics>>::get_activation_factory().register_with_settings(id, settings)
     }}
 }
-DEFINE_CLSID!(PlatformTelemetryClient(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,84,101,108,101,109,101,116,114,121,46,80,108,97,116,102,111,114,109,84,101,108,101,109,101,116,114,121,67,108,105,101,110,116,0]) [CLSID_PlatformTelemetryClient]);
+DEFINE_CLSID!(PlatformTelemetryClient: "Windows.System.Diagnostics.Telemetry.PlatformTelemetryClient");
 DEFINE_IID!(IID_IPlatformTelemetryClientStatics, 2616455773, 54723, 20202, 141, 190, 156, 141, 187, 13, 157, 143);
 RT_INTERFACE!{static interface IPlatformTelemetryClientStatics(IPlatformTelemetryClientStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlatformTelemetryClientStatics] {
     fn Register(&self, id: HSTRING, out: *mut *mut PlatformTelemetryRegistrationResult) -> HRESULT,
@@ -4279,7 +4279,7 @@ impl IPlatformTelemetryRegistrationSettings {
 }
 RT_CLASS!{class PlatformTelemetryRegistrationSettings: IPlatformTelemetryRegistrationSettings}
 impl RtActivatable<IActivationFactory> for PlatformTelemetryRegistrationSettings {}
-DEFINE_CLSID!(PlatformTelemetryRegistrationSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,84,101,108,101,109,101,116,114,121,46,80,108,97,116,102,111,114,109,84,101,108,101,109,101,116,114,121,82,101,103,105,115,116,114,97,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_PlatformTelemetryRegistrationSettings]);
+DEFINE_CLSID!(PlatformTelemetryRegistrationSettings: "Windows.System.Diagnostics.Telemetry.PlatformTelemetryRegistrationSettings");
 RT_ENUM! { enum PlatformTelemetryRegistrationStatus: i32 {
     Success (PlatformTelemetryRegistrationStatus_Success) = 0, SettingsOutOfRange (PlatformTelemetryRegistrationStatus_SettingsOutOfRange) = 1, UnknownFailure (PlatformTelemetryRegistrationStatus_UnknownFailure) = 2,
 }}
@@ -4320,7 +4320,7 @@ impl DevicePortalConnection {
         <Self as RtActivatable<IDevicePortalConnectionStatics>>::get_activation_factory().get_for_app_service_connection(appServiceConnection)
     }}
 }
-DEFINE_CLSID!(DevicePortalConnection(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,68,101,118,105,99,101,80,111,114,116,97,108,46,68,101,118,105,99,101,80,111,114,116,97,108,67,111,110,110,101,99,116,105,111,110,0]) [CLSID_DevicePortalConnection]);
+DEFINE_CLSID!(DevicePortalConnection: "Windows.System.Diagnostics.DevicePortal.DevicePortalConnection");
 DEFINE_IID!(IID_IDevicePortalConnectionClosedEventArgs, 4244049464, 28722, 17036, 159, 80, 148, 92, 21, 169, 240, 203);
 RT_INTERFACE!{interface IDevicePortalConnectionClosedEventArgs(IDevicePortalConnectionClosedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalConnectionClosedEventArgs] {
     fn get_Reason(&self, out: *mut DevicePortalConnectionClosedReason) -> HRESULT
@@ -4385,7 +4385,7 @@ impl KnownRemoteSystemCapabilities {
         <Self as RtActivatable<IKnownRemoteSystemCapabilitiesStatics>>::get_activation_factory().get_spatial_entity()
     }}
 }
-DEFINE_CLSID!(KnownRemoteSystemCapabilities(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,75,110,111,119,110,82,101,109,111,116,101,83,121,115,116,101,109,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_KnownRemoteSystemCapabilities]);
+DEFINE_CLSID!(KnownRemoteSystemCapabilities: "Windows.System.RemoteSystems.KnownRemoteSystemCapabilities");
 DEFINE_IID!(IID_IKnownRemoteSystemCapabilitiesStatics, 2164843392, 32650, 17636, 146, 205, 3, 182, 70, 155, 148, 163);
 RT_INTERFACE!{static interface IKnownRemoteSystemCapabilitiesStatics(IKnownRemoteSystemCapabilitiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownRemoteSystemCapabilitiesStatics] {
     fn get_AppService(&self, out: *mut HSTRING) -> HRESULT,
@@ -4470,7 +4470,7 @@ impl RemoteSystem {
         <Self as RtActivatable<IRemoteSystemStatics2>>::get_activation_factory().is_authorization_kind_enabled(kind)
     }}
 }
-DEFINE_CLSID!(RemoteSystem(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,0]) [CLSID_RemoteSystem]);
+DEFINE_CLSID!(RemoteSystem: "Windows.System.RemoteSystems.RemoteSystem");
 DEFINE_IID!(IID_IRemoteSystem2, 165668076, 64395, 18952, 167, 88, 104, 118, 67, 93, 118, 158);
 RT_INTERFACE!{interface IRemoteSystem2(IRemoteSystem2Vtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystem2] {
     fn get_IsAvailableBySpatialProximity(&self, out: *mut bool) -> HRESULT,
@@ -4541,7 +4541,7 @@ impl RemoteSystemAuthorizationKindFilter {
         <Self as RtActivatable<IRemoteSystemAuthorizationKindFilterFactory>>::get_activation_factory().create(remoteSystemAuthorizationKind)
     }}
 }
-DEFINE_CLSID!(RemoteSystemAuthorizationKindFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,65,117,116,104,111,114,105,122,97,116,105,111,110,75,105,110,100,70,105,108,116,101,114,0]) [CLSID_RemoteSystemAuthorizationKindFilter]);
+DEFINE_CLSID!(RemoteSystemAuthorizationKindFilter: "Windows.System.RemoteSystems.RemoteSystemAuthorizationKindFilter");
 DEFINE_IID!(IID_IRemoteSystemAuthorizationKindFilterFactory, 2909134669, 46698, 17828, 129, 119, 140, 174, 215, 93, 158, 90);
 RT_INTERFACE!{static interface IRemoteSystemAuthorizationKindFilterFactory(IRemoteSystemAuthorizationKindFilterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemAuthorizationKindFilterFactory] {
     fn Create(&self, remoteSystemAuthorizationKind: RemoteSystemAuthorizationKind, out: *mut *mut RemoteSystemAuthorizationKindFilter) -> HRESULT
@@ -4571,7 +4571,7 @@ impl RemoteSystemConnectionRequest {
         <Self as RtActivatable<IRemoteSystemConnectionRequestFactory>>::get_activation_factory().create(remoteSystem)
     }}
 }
-DEFINE_CLSID!(RemoteSystemConnectionRequest(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,67,111,110,110,101,99,116,105,111,110,82,101,113,117,101,115,116,0]) [CLSID_RemoteSystemConnectionRequest]);
+DEFINE_CLSID!(RemoteSystemConnectionRequest: "Windows.System.RemoteSystems.RemoteSystemConnectionRequest");
 DEFINE_IID!(IID_IRemoteSystemConnectionRequestFactory, 2852784672, 47851, 17781, 181, 48, 129, 11, 185, 120, 99, 52);
 RT_INTERFACE!{static interface IRemoteSystemConnectionRequestFactory(IRemoteSystemConnectionRequestFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemConnectionRequestFactory] {
     fn Create(&self, remoteSystem: *mut RemoteSystem, out: *mut *mut RemoteSystemConnectionRequest) -> HRESULT
@@ -4604,7 +4604,7 @@ impl RemoteSystemDiscoveryTypeFilter {
         <Self as RtActivatable<IRemoteSystemDiscoveryTypeFilterFactory>>::get_activation_factory().create(discoveryType)
     }}
 }
-DEFINE_CLSID!(RemoteSystemDiscoveryTypeFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,68,105,115,99,111,118,101,114,121,84,121,112,101,70,105,108,116,101,114,0]) [CLSID_RemoteSystemDiscoveryTypeFilter]);
+DEFINE_CLSID!(RemoteSystemDiscoveryTypeFilter: "Windows.System.RemoteSystems.RemoteSystemDiscoveryTypeFilter");
 DEFINE_IID!(IID_IRemoteSystemDiscoveryTypeFilterFactory, 2677979539, 49760, 16737, 146, 242, 156, 2, 31, 35, 254, 93);
 RT_INTERFACE!{static interface IRemoteSystemDiscoveryTypeFilterFactory(IRemoteSystemDiscoveryTypeFilterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemDiscoveryTypeFilterFactory] {
     fn Create(&self, discoveryType: RemoteSystemDiscoveryType, out: *mut *mut RemoteSystemDiscoveryTypeFilter) -> HRESULT
@@ -4638,7 +4638,7 @@ impl RemoteSystemKindFilter {
         <Self as RtActivatable<IRemoteSystemKindFilterFactory>>::get_activation_factory().create(remoteSystemKinds)
     }}
 }
-DEFINE_CLSID!(RemoteSystemKindFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,75,105,110,100,70,105,108,116,101,114,0]) [CLSID_RemoteSystemKindFilter]);
+DEFINE_CLSID!(RemoteSystemKindFilter: "Windows.System.RemoteSystems.RemoteSystemKindFilter");
 DEFINE_IID!(IID_IRemoteSystemKindFilterFactory, 2717587694, 39402, 16572, 154, 57, 198, 112, 170, 128, 74, 40);
 RT_INTERFACE!{static interface IRemoteSystemKindFilterFactory(IRemoteSystemKindFilterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemKindFilterFactory] {
     fn Create(&self, remoteSystemKinds: *mut super::super::foundation::collections::IIterable<HString>, out: *mut *mut RemoteSystemKindFilter) -> HRESULT
@@ -4679,7 +4679,7 @@ impl RemoteSystemKinds {
         <Self as RtActivatable<IRemoteSystemKindStatics2>>::get_activation_factory().get_laptop()
     }}
 }
-DEFINE_CLSID!(RemoteSystemKinds(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,75,105,110,100,115,0]) [CLSID_RemoteSystemKinds]);
+DEFINE_CLSID!(RemoteSystemKinds: "Windows.System.RemoteSystems.RemoteSystemKinds");
 DEFINE_IID!(IID_IRemoteSystemKindStatics, 4130436659, 43796, 16848, 149, 83, 121, 106, 173, 184, 130, 219);
 RT_INTERFACE!{static interface IRemoteSystemKindStatics(IRemoteSystemKindStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemKindStatics] {
     fn get_Phone(&self, out: *mut HSTRING) -> HRESULT,
@@ -4803,7 +4803,7 @@ impl RemoteSystemSession {
         <Self as RtActivatable<IRemoteSystemSessionStatics>>::get_activation_factory().create_watcher()
     }}
 }
-DEFINE_CLSID!(RemoteSystemSession(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,0]) [CLSID_RemoteSystemSession]);
+DEFINE_CLSID!(RemoteSystemSession: "Windows.System.RemoteSystems.RemoteSystemSession");
 DEFINE_IID!(IID_IRemoteSystemSessionAddedEventArgs, 3582318420, 48279, 19513, 153, 180, 190, 202, 118, 224, 76, 63);
 RT_INTERFACE!{interface IRemoteSystemSessionAddedEventArgs(IRemoteSystemSessionAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionAddedEventArgs] {
     fn get_SessionInfo(&self, out: *mut *mut RemoteSystemSessionInfo) -> HRESULT
@@ -4854,7 +4854,7 @@ impl RemoteSystemSessionController {
         <Self as RtActivatable<IRemoteSystemSessionControllerFactory>>::get_activation_factory().create_controller_with_session_options(displayName, options)
     }}
 }
-DEFINE_CLSID!(RemoteSystemSessionController(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_RemoteSystemSessionController]);
+DEFINE_CLSID!(RemoteSystemSessionController: "Windows.System.RemoteSystems.RemoteSystemSessionController");
 DEFINE_IID!(IID_IRemoteSystemSessionControllerFactory, 3217829739, 44093, 16793, 130, 205, 102, 112, 167, 115, 239, 46);
 RT_INTERFACE!{static interface IRemoteSystemSessionControllerFactory(IRemoteSystemSessionControllerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionControllerFactory] {
     fn CreateController(&self, displayName: HSTRING, out: *mut *mut RemoteSystemSessionController) -> HRESULT,
@@ -4968,7 +4968,7 @@ impl IRemoteSystemSessionInvitationListener {
 }
 RT_CLASS!{class RemoteSystemSessionInvitationListener: IRemoteSystemSessionInvitationListener}
 impl RtActivatable<IActivationFactory> for RemoteSystemSessionInvitationListener {}
-DEFINE_CLSID!(RemoteSystemSessionInvitationListener(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,73,110,118,105,116,97,116,105,111,110,76,105,115,116,101,110,101,114,0]) [CLSID_RemoteSystemSessionInvitationListener]);
+DEFINE_CLSID!(RemoteSystemSessionInvitationListener: "Windows.System.RemoteSystems.RemoteSystemSessionInvitationListener");
 DEFINE_IID!(IID_IRemoteSystemSessionInvitationReceivedEventArgs, 1586907693, 41229, 20187, 141, 234, 84, 210, 10, 193, 149, 67);
 RT_INTERFACE!{interface IRemoteSystemSessionInvitationReceivedEventArgs(IRemoteSystemSessionInvitationReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionInvitationReceivedEventArgs] {
     fn get_Invitation(&self, out: *mut *mut RemoteSystemSessionInvitation) -> HRESULT
@@ -5087,7 +5087,7 @@ impl RemoteSystemSessionMessageChannel {
         <Self as RtActivatable<IRemoteSystemSessionMessageChannelFactory>>::get_activation_factory().create_with_reliability(session, channelName, reliability)
     }}
 }
-DEFINE_CLSID!(RemoteSystemSessionMessageChannel(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,77,101,115,115,97,103,101,67,104,97,110,110,101,108,0]) [CLSID_RemoteSystemSessionMessageChannel]);
+DEFINE_CLSID!(RemoteSystemSessionMessageChannel: "Windows.System.RemoteSystems.RemoteSystemSessionMessageChannel");
 DEFINE_IID!(IID_IRemoteSystemSessionMessageChannelFactory, 694033482, 48406, 17048, 183, 206, 65, 84, 130, 176, 225, 29);
 RT_INTERFACE!{static interface IRemoteSystemSessionMessageChannelFactory(IRemoteSystemSessionMessageChannelFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionMessageChannelFactory] {
     fn Create(&self, session: *mut RemoteSystemSession, channelName: HSTRING, out: *mut *mut RemoteSystemSessionMessageChannel) -> HRESULT,
@@ -5126,7 +5126,7 @@ impl IRemoteSystemSessionOptions {
 }
 RT_CLASS!{class RemoteSystemSessionOptions: IRemoteSystemSessionOptions}
 impl RtActivatable<IActivationFactory> for RemoteSystemSessionOptions {}
-DEFINE_CLSID!(RemoteSystemSessionOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,79,112,116,105,111,110,115,0]) [CLSID_RemoteSystemSessionOptions]);
+DEFINE_CLSID!(RemoteSystemSessionOptions: "Windows.System.RemoteSystems.RemoteSystemSessionOptions");
 DEFINE_IID!(IID_IRemoteSystemSessionParticipant, 2123367820, 44281, 18217, 138, 23, 68, 231, 186, 237, 93, 204);
 RT_INTERFACE!{interface IRemoteSystemSessionParticipant(IRemoteSystemSessionParticipantVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionParticipant] {
     fn get_RemoteSystem(&self, out: *mut *mut RemoteSystem) -> HRESULT,
@@ -5403,7 +5403,7 @@ impl RemoteSystemStatusTypeFilter {
         <Self as RtActivatable<IRemoteSystemStatusTypeFilterFactory>>::get_activation_factory().create(remoteSystemStatusType)
     }}
 }
-DEFINE_CLSID!(RemoteSystemStatusTypeFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,116,97,116,117,115,84,121,112,101,70,105,108,116,101,114,0]) [CLSID_RemoteSystemStatusTypeFilter]);
+DEFINE_CLSID!(RemoteSystemStatusTypeFilter: "Windows.System.RemoteSystems.RemoteSystemStatusTypeFilter");
 DEFINE_IID!(IID_IRemoteSystemStatusTypeFilterFactory, 869234938, 55076, 16677, 172, 122, 141, 40, 30, 68, 201, 73);
 RT_INTERFACE!{static interface IRemoteSystemStatusTypeFilterFactory(IRemoteSystemStatusTypeFilterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemStatusTypeFilterFactory] {
     fn Create(&self, remoteSystemStatusType: RemoteSystemStatusType, out: *mut *mut RemoteSystemStatusTypeFilter) -> HRESULT
@@ -5492,7 +5492,7 @@ impl ThreadPool {
         <Self as RtActivatable<IThreadPoolStatics>>::get_activation_factory().run_with_priority_and_options_async(handler, priority, options)
     }}
 }
-DEFINE_CLSID!(ThreadPool(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,104,114,101,97,100,105,110,103,46,84,104,114,101,97,100,80,111,111,108,0]) [CLSID_ThreadPool]);
+DEFINE_CLSID!(ThreadPool: "Windows.System.Threading.ThreadPool");
 DEFINE_IID!(IID_IThreadPoolStatics, 3065997277, 33981, 17656, 172, 28, 147, 235, 203, 157, 186, 145);
 RT_INTERFACE!{static interface IThreadPoolStatics(IThreadPoolStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IThreadPoolStatics] {
     fn RunAsync(&self, handler: *mut WorkItemHandler, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT,
@@ -5554,7 +5554,7 @@ impl ThreadPoolTimer {
         <Self as RtActivatable<IThreadPoolTimerStatics>>::get_activation_factory().create_timer_with_completion(handler, delay, destroyed)
     }}
 }
-DEFINE_CLSID!(ThreadPoolTimer(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,104,114,101,97,100,105,110,103,46,84,104,114,101,97,100,80,111,111,108,84,105,109,101,114,0]) [CLSID_ThreadPoolTimer]);
+DEFINE_CLSID!(ThreadPoolTimer: "Windows.System.Threading.ThreadPoolTimer");
 DEFINE_IID!(IID_IThreadPoolTimerStatics, 445291778, 58498, 17947, 184, 199, 142, 250, 209, 204, 229, 144);
 RT_INTERFACE!{static interface IThreadPoolTimerStatics(IThreadPoolTimerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IThreadPoolTimerStatics] {
     fn CreatePeriodicTimer(&self, handler: *mut TimerElapsedHandler, period: super::super::foundation::TimeSpan, out: *mut *mut ThreadPoolTimer) -> HRESULT,
@@ -5646,7 +5646,7 @@ impl PreallocatedWorkItem {
         <Self as RtActivatable<IPreallocatedWorkItemFactory>>::get_activation_factory().create_work_item_with_priority_and_options(handler, priority, options)
     }}
 }
-DEFINE_CLSID!(PreallocatedWorkItem(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,104,114,101,97,100,105,110,103,46,67,111,114,101,46,80,114,101,97,108,108,111,99,97,116,101,100,87,111,114,107,73,116,101,109,0]) [CLSID_PreallocatedWorkItem]);
+DEFINE_CLSID!(PreallocatedWorkItem: "Windows.System.Threading.Core.PreallocatedWorkItem");
 DEFINE_IID!(IID_IPreallocatedWorkItemFactory, 3822267205, 57322, 18075, 130, 197, 246, 227, 206, 253, 234, 251);
 RT_INTERFACE!{static interface IPreallocatedWorkItemFactory(IPreallocatedWorkItemFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPreallocatedWorkItemFactory] {
     fn CreateWorkItem(&self, handler: *mut super::WorkItemHandler, out: *mut *mut PreallocatedWorkItem) -> HRESULT,
@@ -5711,7 +5711,7 @@ impl SignalNotifier {
         <Self as RtActivatable<ISignalNotifierStatics>>::get_activation_factory().attach_to_semaphore_with_timeout(name, handler, timeout)
     }}
 }
-DEFINE_CLSID!(SignalNotifier(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,104,114,101,97,100,105,110,103,46,67,111,114,101,46,83,105,103,110,97,108,78,111,116,105,102,105,101,114,0]) [CLSID_SignalNotifier]);
+DEFINE_CLSID!(SignalNotifier: "Windows.System.Threading.Core.SignalNotifier");
 DEFINE_IID!(IID_ISignalNotifierStatics, 474891622, 33792, 18131, 161, 21, 125, 12, 13, 252, 159, 98);
 RT_INTERFACE!{static interface ISignalNotifierStatics(ISignalNotifierStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISignalNotifierStatics] {
     fn AttachToEvent(&self, name: HSTRING, handler: *mut SignalHandler, out: *mut *mut SignalNotifier) -> HRESULT,
@@ -5762,5 +5762,5 @@ impl IDisplayRequest {
 }
 RT_CLASS!{class DisplayRequest: IDisplayRequest}
 impl RtActivatable<IActivationFactory> for DisplayRequest {}
-DEFINE_CLSID!(DisplayRequest(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,115,112,108,97,121,46,68,105,115,112,108,97,121,82,101,113,117,101,115,116,0]) [CLSID_DisplayRequest]);
+DEFINE_CLSID!(DisplayRequest: "Windows.System.Display.DisplayRequest");
 } // Windows.System.Display

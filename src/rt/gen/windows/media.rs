@@ -43,7 +43,7 @@ impl AudioFrame {
         <Self as RtActivatable<IAudioFrameFactory>>::get_activation_factory().create(capacity)
     }}
 }
-DEFINE_CLSID!(AudioFrame(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,70,114,97,109,101,0]) [CLSID_AudioFrame]);
+DEFINE_CLSID!(AudioFrame: "Windows.Media.AudioFrame");
 DEFINE_IID!(IID_IAudioFrameFactory, 2443774686, 9250, 16550, 185, 173, 48, 208, 36, 4, 49, 125);
 RT_INTERFACE!{static interface IAudioFrameFactory(IAudioFrameFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFrameFactory] {
     fn Create(&self, capacity: u32, out: *mut *mut AudioFrame) -> HRESULT
@@ -388,7 +388,7 @@ impl MediaControl {
         <Self as RtActivatable<IMediaControl>>::get_activation_factory().get_album_art()
     }}
 }
-DEFINE_CLSID!(MediaControl(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,67,111,110,116,114,111,108,0]) [CLSID_MediaControl]);
+DEFINE_CLSID!(MediaControl: "Windows.Media.MediaControl");
 DEFINE_IID!(IID_IMediaExtension, 126963992, 17887, 17451, 138, 63, 247, 130, 106, 99, 112, 171);
 RT_INTERFACE!{interface IMediaExtension(IMediaExtensionVtbl): IInspectable(IInspectableVtbl) [IID_IMediaExtension] {
     fn SetProperties(&self, configuration: *mut super::foundation::collections::IPropertySet) -> HRESULT
@@ -466,7 +466,7 @@ impl IMediaExtensionManager {
 }
 RT_CLASS!{class MediaExtensionManager: IMediaExtensionManager}
 impl RtActivatable<IActivationFactory> for MediaExtensionManager {}
-DEFINE_CLSID!(MediaExtensionManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,69,120,116,101,110,115,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MediaExtensionManager]);
+DEFINE_CLSID!(MediaExtensionManager: "Windows.Media.MediaExtensionManager");
 DEFINE_IID!(IID_IMediaExtensionManager2, 1540276039, 16451, 20461, 172, 175, 84, 236, 41, 223, 177, 247);
 RT_INTERFACE!{interface IMediaExtensionManager2(IMediaExtensionManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaExtensionManager2] {
     #[cfg(feature="windows-applicationmodel")] fn RegisterMediaExtensionForAppService(&self, extension: *mut IMediaExtension, connection: *mut super::applicationmodel::appservice::AppServiceConnection) -> HRESULT
@@ -585,7 +585,7 @@ impl MediaMarkerTypes {
         <Self as RtActivatable<IMediaMarkerTypesStatics>>::get_activation_factory().get_bookmark()
     }}
 }
-DEFINE_CLSID!(MediaMarkerTypes(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,77,97,114,107,101,114,84,121,112,101,115,0]) [CLSID_MediaMarkerTypes]);
+DEFINE_CLSID!(MediaMarkerTypes: "Windows.Media.MediaMarkerTypes");
 DEFINE_IID!(IID_IMediaMarkerTypesStatics, 3139010624, 18479, 18243, 136, 50, 69, 133, 56, 33, 236, 224);
 RT_INTERFACE!{static interface IMediaMarkerTypesStatics(IMediaMarkerTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaMarkerTypesStatics] {
     fn get_Bookmark(&self, out: *mut HSTRING) -> HRESULT
@@ -690,7 +690,7 @@ impl IMediaTimelineController {
 }
 RT_CLASS!{class MediaTimelineController: IMediaTimelineController}
 impl RtActivatable<IActivationFactory> for MediaTimelineController {}
-DEFINE_CLSID!(MediaTimelineController(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,84,105,109,101,108,105,110,101,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_MediaTimelineController]);
+DEFINE_CLSID!(MediaTimelineController: "Windows.Media.MediaTimelineController");
 DEFINE_IID!(IID_IMediaTimelineController2, 4017416760, 40562, 19961, 131, 85, 110, 144, 200, 27, 186, 221);
 RT_INTERFACE!{interface IMediaTimelineController2(IMediaTimelineController2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaTimelineController2] {
     fn get_Duration(&self, out: *mut *mut super::foundation::IReference<super::foundation::TimeSpan>) -> HRESULT,
@@ -1063,7 +1063,7 @@ impl SystemMediaTransportControls {
         <Self as RtActivatable<ISystemMediaTransportControlsStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(SystemMediaTransportControls(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,121,115,116,101,109,77,101,100,105,97,84,114,97,110,115,112,111,114,116,67,111,110,116,114,111,108,115,0]) [CLSID_SystemMediaTransportControls]);
+DEFINE_CLSID!(SystemMediaTransportControls: "Windows.Media.SystemMediaTransportControls");
 DEFINE_IID!(IID_ISystemMediaTransportControls2, 3935884022, 32572, 19186, 165, 134, 114, 136, 152, 8, 239, 177);
 RT_INTERFACE!{interface ISystemMediaTransportControls2(ISystemMediaTransportControls2Vtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaTransportControls2] {
     fn get_AutoRepeatMode(&self, out: *mut MediaPlaybackAutoRepeatMode) -> HRESULT,
@@ -1330,7 +1330,7 @@ impl ISystemMediaTransportControlsTimelineProperties {
 }
 RT_CLASS!{class SystemMediaTransportControlsTimelineProperties: ISystemMediaTransportControlsTimelineProperties}
 impl RtActivatable<IActivationFactory> for SystemMediaTransportControlsTimelineProperties {}
-DEFINE_CLSID!(SystemMediaTransportControlsTimelineProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,121,115,116,101,109,77,101,100,105,97,84,114,97,110,115,112,111,114,116,67,111,110,116,114,111,108,115,84,105,109,101,108,105,110,101,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_SystemMediaTransportControlsTimelineProperties]);
+DEFINE_CLSID!(SystemMediaTransportControlsTimelineProperties: "Windows.Media.SystemMediaTransportControlsTimelineProperties");
 DEFINE_IID!(IID_IVideoDisplayProperties, 1443495345, 23853, 18546, 129, 112, 69, 222, 229, 188, 47, 92);
 RT_INTERFACE!{interface IVideoDisplayProperties(IVideoDisplayPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IVideoDisplayProperties] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
@@ -1377,7 +1377,7 @@ impl VideoEffects {
         <Self as RtActivatable<IVideoEffectsStatics>>::get_activation_factory().get_video_stabilization()
     }}
 }
-DEFINE_CLSID!(VideoEffects(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,86,105,100,101,111,69,102,102,101,99,116,115,0]) [CLSID_VideoEffects]);
+DEFINE_CLSID!(VideoEffects: "Windows.Media.VideoEffects");
 DEFINE_IID!(IID_IVideoEffectsStatics, 533571048, 47857, 17697, 152, 12, 59, 206, 187, 68, 207, 56);
 RT_INTERFACE!{static interface IVideoEffectsStatics(IVideoEffectsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVideoEffectsStatics] {
     fn get_VideoStabilization(&self, out: *mut HSTRING) -> HRESULT
@@ -1422,7 +1422,7 @@ impl VideoFrame {
         <Self as RtActivatable<IVideoFrameFactory>>::get_activation_factory().create_with_alpha(format, width, height, alpha)
     }}
 }
-DEFINE_CLSID!(VideoFrame(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,86,105,100,101,111,70,114,97,109,101,0]) [CLSID_VideoFrame]);
+DEFINE_CLSID!(VideoFrame: "Windows.Media.VideoFrame");
 DEFINE_IID!(IID_IVideoFrameFactory, 21720425, 8744, 19602, 146, 255, 80, 195, 128, 211, 231, 118);
 RT_INTERFACE!{static interface IVideoFrameFactory(IVideoFrameFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVideoFrameFactory] {
     #[cfg(feature="windows-graphics")] fn Create(&self, format: super::graphics::imaging::BitmapPixelFormat, width: i32, height: i32, out: *mut *mut VideoFrame) -> HRESULT,
@@ -2051,7 +2051,7 @@ impl AppBroadcastManager {
         <Self as RtActivatable<IAppBroadcastManagerStatics>>::get_activation_factory().apply_provider_settings(value)
     }}
 }
-DEFINE_CLSID!(AppBroadcastManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,66,114,111,97,100,99,97,115,116,77,97,110,97,103,101,114,0]) [CLSID_AppBroadcastManager]);
+DEFINE_CLSID!(AppBroadcastManager: "Windows.Media.Capture.AppBroadcastManager");
 DEFINE_IID!(IID_IAppBroadcastManagerStatics, 911081867, 7758, 16671, 171, 62, 146, 149, 152, 68, 193, 86);
 RT_INTERFACE!{static interface IAppBroadcastManagerStatics(IAppBroadcastManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastManagerStatics] {
     fn GetGlobalSettings(&self, out: *mut *mut AppBroadcastGlobalSettings) -> HRESULT,
@@ -2169,7 +2169,7 @@ impl AppBroadcastPlugInManager {
         <Self as RtActivatable<IAppBroadcastPlugInManagerStatics>>::get_activation_factory().get_for_user(user)
     }}
 }
-DEFINE_CLSID!(AppBroadcastPlugInManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,66,114,111,97,100,99,97,115,116,80,108,117,103,73,110,77,97,110,97,103,101,114,0]) [CLSID_AppBroadcastPlugInManager]);
+DEFINE_CLSID!(AppBroadcastPlugInManager: "Windows.Media.Capture.AppBroadcastPlugInManager");
 DEFINE_IID!(IID_IAppBroadcastPlugInManagerStatics, 4066663456, 23670, 19676, 147, 100, 130, 254, 158, 182, 83, 77);
 RT_INTERFACE!{static interface IAppBroadcastPlugInManagerStatics(IAppBroadcastPlugInManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPlugInManagerStatics] {
     fn GetDefault(&self, out: *mut *mut AppBroadcastPlugInManager) -> HRESULT,
@@ -3052,7 +3052,7 @@ impl AppCapture {
         <Self as RtActivatable<IAppCaptureStatics2>>::get_activation_factory().set_allowed_async(allowed)
     }}
 }
-DEFINE_CLSID!(AppCapture(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,67,97,112,116,117,114,101,0]) [CLSID_AppCapture]);
+DEFINE_CLSID!(AppCapture: "Windows.Media.Capture.AppCapture");
 DEFINE_IID!(IID_IAppCaptureAlternateShortcutKeys, 434692335, 9068, 16633, 179, 143, 155, 125, 214, 93, 28, 204);
 RT_INTERFACE!{interface IAppCaptureAlternateShortcutKeys(IAppCaptureAlternateShortcutKeysVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureAlternateShortcutKeys] {
     #[cfg(feature="windows-system")] fn put_ToggleGameBarKey(&self, value: super::super::system::VirtualKey) -> HRESULT,
@@ -3282,7 +3282,7 @@ impl AppCaptureManager {
         <Self as RtActivatable<IAppCaptureManagerStatics>>::get_activation_factory().apply_settings(appCaptureSettings)
     }}
 }
-DEFINE_CLSID!(AppCaptureManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,67,97,112,116,117,114,101,77,97,110,97,103,101,114,0]) [CLSID_AppCaptureManager]);
+DEFINE_CLSID!(AppCaptureManager: "Windows.Media.Capture.AppCaptureManager");
 DEFINE_IID!(IID_IAppCaptureManagerStatics, 2107522727, 25218, 18229, 141, 78, 170, 69, 249, 15, 103, 35);
 RT_INTERFACE!{static interface IAppCaptureManagerStatics(IAppCaptureManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureManagerStatics] {
     fn GetCurrentSettings(&self, out: *mut *mut AppCaptureSettings) -> HRESULT,
@@ -3366,7 +3366,7 @@ impl IAppCaptureMetadataWriter {
 }
 RT_CLASS!{class AppCaptureMetadataWriter: IAppCaptureMetadataWriter}
 impl RtActivatable<IActivationFactory> for AppCaptureMetadataWriter {}
-DEFINE_CLSID!(AppCaptureMetadataWriter(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,67,97,112,116,117,114,101,77,101,116,97,100,97,116,97,87,114,105,116,101,114,0]) [CLSID_AppCaptureMetadataWriter]);
+DEFINE_CLSID!(AppCaptureMetadataWriter: "Windows.Media.Capture.AppCaptureMetadataWriter");
 RT_ENUM! { enum AppCaptureMicrophoneCaptureState: i32 {
     Stopped (AppCaptureMicrophoneCaptureState_Stopped) = 0, Started (AppCaptureMicrophoneCaptureState_Started) = 1, Failed (AppCaptureMicrophoneCaptureState_Failed) = 2,
 }}
@@ -3957,7 +3957,7 @@ impl ICameraCaptureUI {
 }
 RT_CLASS!{class CameraCaptureUI: ICameraCaptureUI}
 impl RtActivatable<IActivationFactory> for CameraCaptureUI {}
-DEFINE_CLSID!(CameraCaptureUI(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,67,97,109,101,114,97,67,97,112,116,117,114,101,85,73,0]) [CLSID_CameraCaptureUI]);
+DEFINE_CLSID!(CameraCaptureUI: "Windows.Media.Capture.CameraCaptureUI");
 RT_ENUM! { enum CameraCaptureUIMaxPhotoResolution: i32 {
     HighestAvailable (CameraCaptureUIMaxPhotoResolution_HighestAvailable) = 0, VerySmallQvga (CameraCaptureUIMaxPhotoResolution_VerySmallQvga) = 1, SmallVga (CameraCaptureUIMaxPhotoResolution_SmallVga) = 2, MediumXga (CameraCaptureUIMaxPhotoResolution_MediumXga) = 3, Large3M (CameraCaptureUIMaxPhotoResolution_Large3M) = 4, VeryLarge5M (CameraCaptureUIMaxPhotoResolution_VeryLarge5M) = 5,
 }}
@@ -4091,7 +4091,7 @@ impl CameraOptionsUI {
         <Self as RtActivatable<ICameraOptionsUIStatics>>::get_activation_factory().show(mediaCapture)
     }}
 }
-DEFINE_CLSID!(CameraOptionsUI(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,67,97,109,101,114,97,79,112,116,105,111,110,115,85,73,0]) [CLSID_CameraOptionsUI]);
+DEFINE_CLSID!(CameraOptionsUI: "Windows.Media.Capture.CameraOptionsUI");
 DEFINE_IID!(IID_ICameraOptionsUIStatics, 990731828, 14598, 19325, 148, 108, 123, 222, 132, 68, 153, 174);
 RT_INTERFACE!{static interface ICameraOptionsUIStatics(ICameraOptionsUIStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICameraOptionsUIStatics] {
     fn Show(&self, mediaCapture: *mut MediaCapture) -> HRESULT
@@ -4354,7 +4354,7 @@ impl GameBarServicesManager {
         <Self as RtActivatable<IGameBarServicesManagerStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(GameBarServicesManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,71,97,109,101,66,97,114,83,101,114,118,105,99,101,115,77,97,110,97,103,101,114,0]) [CLSID_GameBarServicesManager]);
+DEFINE_CLSID!(GameBarServicesManager: "Windows.Media.Capture.GameBarServicesManager");
 DEFINE_IID!(IID_IGameBarServicesManagerGameBarServicesCreatedEventArgs, 3991780764, 5182, 18851, 165, 234, 11, 25, 149, 200, 212, 110);
 RT_INTERFACE!{interface IGameBarServicesManagerGameBarServicesCreatedEventArgs(IGameBarServicesManagerGameBarServicesCreatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarServicesManagerGameBarServicesCreatedEventArgs] {
     fn get_GameBarServices(&self, out: *mut *mut GameBarServices) -> HRESULT
@@ -4701,7 +4701,7 @@ impl MediaCapture {
         <Self as RtActivatable<IMediaCaptureStatics>>::get_activation_factory().find_known_video_profiles(videoDeviceId, name)
     }}
 }
-DEFINE_CLSID!(MediaCapture(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,77,101,100,105,97,67,97,112,116,117,114,101,0]) [CLSID_MediaCapture]);
+DEFINE_CLSID!(MediaCapture: "Windows.Media.Capture.MediaCapture");
 DEFINE_IID!(IID_IMediaCapture2, 2630255200, 32161, 16451, 182, 82, 33, 184, 135, 141, 175, 249);
 RT_INTERFACE!{interface IMediaCapture2(IMediaCapture2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCapture2] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -5046,7 +5046,7 @@ impl IMediaCaptureInitializationSettings {
 }
 RT_CLASS!{class MediaCaptureInitializationSettings: IMediaCaptureInitializationSettings}
 impl RtActivatable<IActivationFactory> for MediaCaptureInitializationSettings {}
-DEFINE_CLSID!(MediaCaptureInitializationSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,77,101,100,105,97,67,97,112,116,117,114,101,73,110,105,116,105,97,108,105,122,97,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_MediaCaptureInitializationSettings]);
+DEFINE_CLSID!(MediaCaptureInitializationSettings: "Windows.Media.Capture.MediaCaptureInitializationSettings");
 DEFINE_IID!(IID_IMediaCaptureInitializationSettings2, 1078855206, 51676, 17385, 174, 228, 230, 191, 27, 87, 180, 76);
 RT_INTERFACE!{interface IMediaCaptureInitializationSettings2(IMediaCaptureInitializationSettings2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureInitializationSettings2] {
     fn put_MediaCategory(&self, value: MediaCategory) -> HRESULT,
@@ -5998,7 +5998,7 @@ impl MediaFrameSourceGroup {
         <Self as RtActivatable<IMediaFrameSourceGroupStatics>>::get_activation_factory().get_device_selector()
     }}
 }
-DEFINE_CLSID!(MediaFrameSourceGroup(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,70,114,97,109,101,115,46,77,101,100,105,97,70,114,97,109,101,83,111,117,114,99,101,71,114,111,117,112,0]) [CLSID_MediaFrameSourceGroup]);
+DEFINE_CLSID!(MediaFrameSourceGroup: "Windows.Media.Capture.Frames.MediaFrameSourceGroup");
 DEFINE_IID!(IID_IMediaFrameSourceGroupStatics, 474529733, 17263, 17672, 148, 207, 213, 216, 183, 50, 100, 69);
 RT_INTERFACE!{static interface IMediaFrameSourceGroupStatics(IMediaFrameSourceGroupStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceGroupStatics] {
     fn FindAllAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<MediaFrameSourceGroup>>) -> HRESULT,
@@ -6370,7 +6370,7 @@ impl AppRecordingManager {
         <Self as RtActivatable<IAppRecordingManagerStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(AppRecordingManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,112,112,82,101,99,111,114,100,105,110,103,46,65,112,112,82,101,99,111,114,100,105,110,103,77,97,110,97,103,101,114,0]) [CLSID_AppRecordingManager]);
+DEFINE_CLSID!(AppRecordingManager: "Windows.Media.AppRecording.AppRecordingManager");
 DEFINE_IID!(IID_IAppRecordingManagerStatics, 1357318647, 14542, 19411, 157, 178, 231, 43, 190, 157, 225, 29);
 RT_INTERFACE!{static interface IAppRecordingManagerStatics(IAppRecordingManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppRecordingManagerStatics] {
     fn GetDefault(&self, out: *mut *mut AppRecordingManager) -> HRESULT
@@ -6575,7 +6575,7 @@ impl IAppBroadcastingMonitor {
 }
 RT_CLASS!{class AppBroadcastingMonitor: IAppBroadcastingMonitor}
 impl RtActivatable<IActivationFactory> for AppBroadcastingMonitor {}
-DEFINE_CLSID!(AppBroadcastingMonitor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,112,112,66,114,111,97,100,99,97,115,116,105,110,103,46,65,112,112,66,114,111,97,100,99,97,115,116,105,110,103,77,111,110,105,116,111,114,0]) [CLSID_AppBroadcastingMonitor]);
+DEFINE_CLSID!(AppBroadcastingMonitor: "Windows.Media.AppBroadcasting.AppBroadcastingMonitor");
 DEFINE_IID!(IID_IAppBroadcastingStatus, 304473311, 929, 17144, 139, 128, 201, 34, 140, 217, 207, 46);
 RT_INTERFACE!{interface IAppBroadcastingStatus(IAppBroadcastingStatusVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastingStatus] {
     fn get_CanStartBroadcast(&self, out: *mut bool) -> HRESULT,
@@ -6674,7 +6674,7 @@ impl AppBroadcastingUI {
         <Self as RtActivatable<IAppBroadcastingUIStatics>>::get_activation_factory().get_for_user(user)
     }}
 }
-DEFINE_CLSID!(AppBroadcastingUI(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,112,112,66,114,111,97,100,99,97,115,116,105,110,103,46,65,112,112,66,114,111,97,100,99,97,115,116,105,110,103,85,73,0]) [CLSID_AppBroadcastingUI]);
+DEFINE_CLSID!(AppBroadcastingUI: "Windows.Media.AppBroadcasting.AppBroadcastingUI");
 DEFINE_IID!(IID_IAppBroadcastingUIStatics, 1437116317, 9163, 17785, 156, 52, 136, 111, 224, 44, 4, 90);
 RT_INTERFACE!{static interface IAppBroadcastingUIStatics(IAppBroadcastingUIStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastingUIStatics] {
     fn GetDefault(&self, out: *mut *mut AppBroadcastingUI) -> HRESULT,
@@ -7093,7 +7093,7 @@ impl AudioGraph {
         <Self as RtActivatable<IAudioGraphStatics>>::get_activation_factory().create_async(settings)
     }}
 }
-DEFINE_CLSID!(AudioGraph(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,71,114,97,112,104,0]) [CLSID_AudioGraph]);
+DEFINE_CLSID!(AudioGraph: "Windows.Media.Audio.AudioGraph");
 DEFINE_IID!(IID_IAudioGraph2, 1313618901, 20417, 17910, 169, 71, 60, 211, 143, 79, 216, 57);
 RT_INTERFACE!{interface IAudioGraph2(IAudioGraph2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraph2] {
     fn CreateFrameInputNodeWithFormatAndEmitter(&self, encodingProperties: *mut super::mediaproperties::AudioEncodingProperties, emitter: *mut AudioNodeEmitter, out: *mut *mut AudioFrameInputNode) -> HRESULT,
@@ -7238,7 +7238,7 @@ impl AudioGraphSettings {
         <Self as RtActivatable<IAudioGraphSettingsFactory>>::get_activation_factory().create(audioRenderCategory)
     }}
 }
-DEFINE_CLSID!(AudioGraphSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,71,114,97,112,104,83,101,116,116,105,110,103,115,0]) [CLSID_AudioGraphSettings]);
+DEFINE_CLSID!(AudioGraphSettings: "Windows.Media.Audio.AudioGraphSettings");
 DEFINE_IID!(IID_IAudioGraphSettingsFactory, 2782469318, 49899, 19041, 162, 20, 29, 102, 215, 95, 131, 218);
 RT_INTERFACE!{static interface IAudioGraphSettingsFactory(IAudioGraphSettingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraphSettingsFactory] {
     fn Create(&self, audioRenderCategory: super::render::AudioRenderCategory, out: *mut *mut AudioGraphSettings) -> HRESULT
@@ -7474,7 +7474,7 @@ impl AudioNodeEmitter {
         <Self as RtActivatable<IAudioNodeEmitterFactory>>::get_activation_factory().create_audio_node_emitter(shape, decayModel, settings)
     }}
 }
-DEFINE_CLSID!(AudioNodeEmitter(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,78,111,100,101,69,109,105,116,116,101,114,0]) [CLSID_AudioNodeEmitter]);
+DEFINE_CLSID!(AudioNodeEmitter: "Windows.Media.Audio.AudioNodeEmitter");
 DEFINE_IID!(IID_IAudioNodeEmitter2, 1253502667, 60457, 18424, 129, 140, 182, 182, 96, 165, 174, 177);
 RT_INTERFACE!{interface IAudioNodeEmitter2(IAudioNodeEmitter2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitter2] {
     fn get_SpatialAudioModel(&self, out: *mut SpatialAudioModel) -> HRESULT,
@@ -7557,7 +7557,7 @@ impl AudioNodeEmitterDecayModel {
         <Self as RtActivatable<IAudioNodeEmitterDecayModelStatics>>::get_activation_factory().create_custom(minGain, maxGain)
     }}
 }
-DEFINE_CLSID!(AudioNodeEmitterDecayModel(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,78,111,100,101,69,109,105,116,116,101,114,68,101,99,97,121,77,111,100,101,108,0]) [CLSID_AudioNodeEmitterDecayModel]);
+DEFINE_CLSID!(AudioNodeEmitterDecayModel: "Windows.Media.Audio.AudioNodeEmitterDecayModel");
 DEFINE_IID!(IID_IAudioNodeEmitterDecayModelStatics, 3346562216, 61816, 17967, 188, 129, 141, 213, 203, 229, 218, 232);
 RT_INTERFACE!{static interface IAudioNodeEmitterDecayModelStatics(IAudioNodeEmitterDecayModelStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitterDecayModelStatics] {
     fn CreateNatural(&self, minGain: f64, maxGain: f64, unityGainDistance: f64, cutoffDistance: f64, out: *mut *mut AudioNodeEmitterDecayModel) -> HRESULT,
@@ -7634,7 +7634,7 @@ impl AudioNodeEmitterShape {
         <Self as RtActivatable<IAudioNodeEmitterShapeStatics>>::get_activation_factory().create_omnidirectional()
     }}
 }
-DEFINE_CLSID!(AudioNodeEmitterShape(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,78,111,100,101,69,109,105,116,116,101,114,83,104,97,112,101,0]) [CLSID_AudioNodeEmitterShape]);
+DEFINE_CLSID!(AudioNodeEmitterShape: "Windows.Media.Audio.AudioNodeEmitterShape");
 RT_ENUM! { enum AudioNodeEmitterShapeKind: i32 {
     Omnidirectional (AudioNodeEmitterShapeKind_Omnidirectional) = 0, Cone (AudioNodeEmitterShapeKind_Cone) = 1,
 }}
@@ -7706,7 +7706,7 @@ impl IAudioNodeListener {
 }
 RT_CLASS!{class AudioNodeListener: IAudioNodeListener}
 impl RtActivatable<IActivationFactory> for AudioNodeListener {}
-DEFINE_CLSID!(AudioNodeListener(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,78,111,100,101,76,105,115,116,101,110,101,114,0]) [CLSID_AudioNodeListener]);
+DEFINE_CLSID!(AudioNodeListener: "Windows.Media.Audio.AudioNodeListener");
 DEFINE_IID!(IID_IAudioNodeWithListener, 235901052, 31231, 17732, 158, 235, 1, 37, 123, 21, 16, 90);
 RT_INTERFACE!{interface IAudioNodeWithListener(IAudioNodeWithListenerVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeWithListener] {
     fn put_Listener(&self, value: *mut AudioNodeListener) -> HRESULT,
@@ -7859,7 +7859,7 @@ impl EchoEffectDefinition {
         <Self as RtActivatable<IEchoEffectDefinitionFactory>>::get_activation_factory().create(audioGraph)
     }}
 }
-DEFINE_CLSID!(EchoEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,69,99,104,111,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_EchoEffectDefinition]);
+DEFINE_CLSID!(EchoEffectDefinition: "Windows.Media.Audio.EchoEffectDefinition");
 DEFINE_IID!(IID_IEchoEffectDefinitionFactory, 223224407, 43762, 20102, 165, 76, 251, 121, 219, 143, 108, 18);
 RT_INTERFACE!{static interface IEchoEffectDefinitionFactory(IEchoEffectDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEchoEffectDefinitionFactory] {
     fn Create(&self, audioGraph: *mut AudioGraph, out: *mut *mut EchoEffectDefinition) -> HRESULT
@@ -7928,7 +7928,7 @@ impl EqualizerEffectDefinition {
         <Self as RtActivatable<IEqualizerEffectDefinitionFactory>>::get_activation_factory().create(audioGraph)
     }}
 }
-DEFINE_CLSID!(EqualizerEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,69,113,117,97,108,105,122,101,114,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_EqualizerEffectDefinition]);
+DEFINE_CLSID!(EqualizerEffectDefinition: "Windows.Media.Audio.EqualizerEffectDefinition");
 DEFINE_IID!(IID_IEqualizerEffectDefinitionFactory, 3532091332, 54288, 20149, 158, 105, 201, 170, 18, 119, 234, 240);
 RT_INTERFACE!{static interface IEqualizerEffectDefinitionFactory(IEqualizerEffectDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEqualizerEffectDefinitionFactory] {
     fn Create(&self, audioGraph: *mut AudioGraph, out: *mut *mut EqualizerEffectDefinition) -> HRESULT
@@ -7986,7 +7986,7 @@ impl LimiterEffectDefinition {
         <Self as RtActivatable<ILimiterEffectDefinitionFactory>>::get_activation_factory().create(audioGraph)
     }}
 }
-DEFINE_CLSID!(LimiterEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,76,105,109,105,116,101,114,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_LimiterEffectDefinition]);
+DEFINE_CLSID!(LimiterEffectDefinition: "Windows.Media.Audio.LimiterEffectDefinition");
 DEFINE_IID!(IID_ILimiterEffectDefinitionFactory, 3971671793, 25087, 17903, 184, 245, 72, 101, 154, 87, 199, 45);
 RT_INTERFACE!{static interface ILimiterEffectDefinitionFactory(ILimiterEffectDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILimiterEffectDefinitionFactory] {
     fn Create(&self, audioGraph: *mut AudioGraph, out: *mut *mut LimiterEffectDefinition) -> HRESULT
@@ -8266,7 +8266,7 @@ impl ReverbEffectDefinition {
         <Self as RtActivatable<IReverbEffectDefinitionFactory>>::get_activation_factory().create(audioGraph)
     }}
 }
-DEFINE_CLSID!(ReverbEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,82,101,118,101,114,98,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_ReverbEffectDefinition]);
+DEFINE_CLSID!(ReverbEffectDefinition: "Windows.Media.Audio.ReverbEffectDefinition");
 DEFINE_IID!(IID_IReverbEffectDefinitionFactory, 2815806462, 4107, 20464, 157, 166, 220, 78, 5, 167, 89, 240);
 RT_INTERFACE!{static interface IReverbEffectDefinitionFactory(IReverbEffectDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IReverbEffectDefinitionFactory] {
     fn Create(&self, audioGraph: *mut AudioGraph, out: *mut *mut ReverbEffectDefinition) -> HRESULT
@@ -8423,7 +8423,7 @@ impl CastingDevice {
         <Self as RtActivatable<ICastingDeviceStatics>>::get_activation_factory().device_info_supports_casting_async(device)
     }}
 }
-DEFINE_CLSID!(CastingDevice(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,115,116,105,110,103,46,67,97,115,116,105,110,103,68,101,118,105,99,101,0]) [CLSID_CastingDevice]);
+DEFINE_CLSID!(CastingDevice: "Windows.Media.Casting.CastingDevice");
 DEFINE_IID!(IID_ICastingDevicePicker, 3704854820, 1425, 18878, 170, 203, 75, 130, 238, 117, 106, 149);
 RT_INTERFACE!{interface ICastingDevicePicker(ICastingDevicePickerVtbl): IInspectable(IInspectableVtbl) [IID_ICastingDevicePicker] {
     fn get_Filter(&self, out: *mut *mut CastingDevicePickerFilter) -> HRESULT,
@@ -8482,7 +8482,7 @@ impl ICastingDevicePicker {
 }
 RT_CLASS!{class CastingDevicePicker: ICastingDevicePicker}
 impl RtActivatable<IActivationFactory> for CastingDevicePicker {}
-DEFINE_CLSID!(CastingDevicePicker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,115,116,105,110,103,46,67,97,115,116,105,110,103,68,101,118,105,99,101,80,105,99,107,101,114,0]) [CLSID_CastingDevicePicker]);
+DEFINE_CLSID!(CastingDevicePicker: "Windows.Media.Casting.CastingDevicePicker");
 DEFINE_IID!(IID_ICastingDevicePickerFilter, 3196871068, 46435, 17236, 174, 51, 159, 218, 173, 140, 98, 145);
 RT_INTERFACE!{interface ICastingDevicePickerFilter(ICastingDevicePickerFilterVtbl): IInspectable(IInspectableVtbl) [IID_ICastingDevicePickerFilter] {
     fn get_SupportsAudio(&self, out: *mut bool) -> HRESULT,
@@ -8616,7 +8616,7 @@ impl AudioStreamDescriptor {
         <Self as RtActivatable<IAudioStreamDescriptorFactory>>::get_activation_factory().create(encodingProperties)
     }}
 }
-DEFINE_CLSID!(AudioStreamDescriptor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,65,117,100,105,111,83,116,114,101,97,109,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_AudioStreamDescriptor]);
+DEFINE_CLSID!(AudioStreamDescriptor: "Windows.Media.Core.AudioStreamDescriptor");
 DEFINE_IID!(IID_IAudioStreamDescriptor2, 778629622, 42056, 18811, 136, 64, 133, 8, 38, 101, 172, 249);
 RT_INTERFACE!{interface IAudioStreamDescriptor2(IAudioStreamDescriptor2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioStreamDescriptor2] {
     fn put_LeadingEncoderPadding(&self, value: *mut super::super::foundation::IReference<u32>) -> HRESULT,
@@ -8756,7 +8756,7 @@ impl IChapterCue {
 }
 RT_CLASS!{class ChapterCue: IChapterCue}
 impl RtActivatable<IActivationFactory> for ChapterCue {}
-DEFINE_CLSID!(ChapterCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,67,104,97,112,116,101,114,67,117,101,0]) [CLSID_ChapterCue]);
+DEFINE_CLSID!(ChapterCue: "Windows.Media.Core.ChapterCue");
 RT_ENUM! { enum CodecCategory: i32 {
     Encoder (CodecCategory_Encoder) = 0, Decoder (CodecCategory_Decoder) = 1,
 }}
@@ -8812,7 +8812,7 @@ impl ICodecQuery {
 }
 RT_CLASS!{class CodecQuery: ICodecQuery}
 impl RtActivatable<IActivationFactory> for CodecQuery {}
-DEFINE_CLSID!(CodecQuery(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,67,111,100,101,99,81,117,101,114,121,0]) [CLSID_CodecQuery]);
+DEFINE_CLSID!(CodecQuery: "Windows.Media.Core.CodecQuery");
 RT_CLASS!{static class CodecSubtypes}
 impl RtActivatable<ICodecSubtypesStatics> for CodecSubtypes {}
 impl CodecSubtypes {
@@ -8970,7 +8970,7 @@ impl CodecSubtypes {
         <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_wmaudio_v9()
     }}
 }
-DEFINE_CLSID!(CodecSubtypes(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,67,111,100,101,99,83,117,98,116,121,112,101,115,0]) [CLSID_CodecSubtypes]);
+DEFINE_CLSID!(CodecSubtypes: "Windows.Media.Core.CodecSubtypes");
 DEFINE_IID!(IID_ICodecSubtypesStatics, 2792015090, 34955, 16932, 140, 246, 42, 141, 78, 176, 35, 130);
 RT_INTERFACE!{static interface ICodecSubtypesStatics(ICodecSubtypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICodecSubtypesStatics] {
     fn get_VideoFormatDV25(&self, out: *mut HSTRING) -> HRESULT,
@@ -9300,7 +9300,7 @@ impl IDataCue {
 }
 RT_CLASS!{class DataCue: IDataCue}
 impl RtActivatable<IActivationFactory> for DataCue {}
-DEFINE_CLSID!(DataCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,68,97,116,97,67,117,101,0]) [CLSID_DataCue]);
+DEFINE_CLSID!(DataCue: "Windows.Media.Core.DataCue");
 DEFINE_IID!(IID_IDataCue2, 3159759637, 38386, 18920, 150, 241, 141, 213, 218, 198, 141, 147);
 RT_INTERFACE!{interface IDataCue2(IDataCue2Vtbl): IInspectable(IInspectableVtbl) [IID_IDataCue2] {
     fn get_Properties(&self, out: *mut *mut super::super::foundation::collections::PropertySet) -> HRESULT
@@ -9392,7 +9392,7 @@ impl IFaceDetectionEffectDefinition {
 }
 RT_CLASS!{class FaceDetectionEffectDefinition: super::effects::IVideoEffectDefinition}
 impl RtActivatable<IActivationFactory> for FaceDetectionEffectDefinition {}
-DEFINE_CLSID!(FaceDetectionEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,70,97,99,101,68,101,116,101,99,116,105,111,110,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_FaceDetectionEffectDefinition]);
+DEFINE_CLSID!(FaceDetectionEffectDefinition: "Windows.Media.Core.FaceDetectionEffectDefinition");
 DEFINE_IID!(IID_IFaceDetectionEffectFrame, 2326825363, 24008, 17531, 162, 71, 82, 112, 189, 128, 46, 206);
 RT_INTERFACE!{interface IFaceDetectionEffectFrame(IFaceDetectionEffectFrameVtbl): IInspectable(IInspectableVtbl) [IID_IFaceDetectionEffectFrame] {
     fn get_DetectedFaces(&self, out: *mut *mut super::super::foundation::collections::IVectorView<super::faceanalysis::DetectedFace>) -> HRESULT
@@ -9483,7 +9483,7 @@ impl IImageCue {
 }
 RT_CLASS!{class ImageCue: IImageCue}
 impl RtActivatable<IActivationFactory> for ImageCue {}
-DEFINE_CLSID!(ImageCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,73,109,97,103,101,67,117,101,0]) [CLSID_ImageCue]);
+DEFINE_CLSID!(ImageCue: "Windows.Media.Core.ImageCue");
 DEFINE_IID!(IID_IInitializeMediaStreamSourceRequestedEventArgs, 633095649, 39688, 19502, 168, 85, 69, 66, 241, 167, 93, 235);
 RT_INTERFACE!{interface IInitializeMediaStreamSourceRequestedEventArgs(IInitializeMediaStreamSourceRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IInitializeMediaStreamSourceRequestedEventArgs] {
     fn get_Source(&self, out: *mut *mut MediaStreamSource) -> HRESULT,
@@ -9522,7 +9522,7 @@ impl LowLightFusion {
         <Self as RtActivatable<ILowLightFusionStatics>>::get_activation_factory().fuse_async(frameSet)
     }}
 }
-DEFINE_CLSID!(LowLightFusion(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,76,111,119,76,105,103,104,116,70,117,115,105,111,110,0]) [CLSID_LowLightFusion]);
+DEFINE_CLSID!(LowLightFusion: "Windows.Media.Core.LowLightFusion");
 DEFINE_IID!(IID_ILowLightFusionResult, 2028846645, 10144, 17120, 156, 211, 115, 141, 32, 137, 222, 156);
 RT_INTERFACE!{interface ILowLightFusionResult(ILowLightFusionResultVtbl): IInspectable(IInspectableVtbl) [IID_ILowLightFusionResult] {
     #[cfg(feature="windows-graphics")] fn get_Frame(&self, out: *mut *mut super::super::graphics::imaging::SoftwareBitmap) -> HRESULT
@@ -9593,7 +9593,7 @@ impl IMediaBinder {
 }
 RT_CLASS!{class MediaBinder: IMediaBinder}
 impl RtActivatable<IActivationFactory> for MediaBinder {}
-DEFINE_CLSID!(MediaBinder(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,66,105,110,100,101,114,0]) [CLSID_MediaBinder]);
+DEFINE_CLSID!(MediaBinder: "Windows.Media.Core.MediaBinder");
 DEFINE_IID!(IID_IMediaBindingEventArgs, 3055333978, 7021, 17968, 168, 109, 47, 8, 55, 247, 18, 229);
 RT_INTERFACE!{interface IMediaBindingEventArgs(IMediaBindingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBindingEventArgs] {
     fn add_Canceled(&self, handler: *mut super::super::foundation::TypedEventHandler<MediaBindingEventArgs, IInspectable>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
@@ -9746,7 +9746,7 @@ impl MediaSource {
         <Self as RtActivatable<IMediaSourceStatics3>>::get_activation_factory().create_from_media_frame_source(frameSource)
     }}
 }
-DEFINE_CLSID!(MediaSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,111,117,114,99,101,0]) [CLSID_MediaSource]);
+DEFINE_CLSID!(MediaSource: "Windows.Media.Core.MediaSource");
 DEFINE_IID!(IID_IMediaSource2, 783683656, 25951, 19511, 184, 19, 180, 228, 93, 250, 10, 190);
 RT_INTERFACE!{interface IMediaSource2(IMediaSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaSource2] {
     fn add_OpenOperationCompleted(&self, handler: *mut super::super::foundation::TypedEventHandler<MediaSource, MediaSourceOpenOperationCompletedEventArgs>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
@@ -9883,7 +9883,7 @@ impl MediaSourceAppServiceConnection {
         <Self as RtActivatable<IMediaSourceAppServiceConnectionFactory>>::get_activation_factory().create(appServiceConnection)
     }}
 }
-DEFINE_CLSID!(MediaSourceAppServiceConnection(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,111,117,114,99,101,65,112,112,83,101,114,118,105,99,101,67,111,110,110,101,99,116,105,111,110,0]) [CLSID_MediaSourceAppServiceConnection]);
+DEFINE_CLSID!(MediaSourceAppServiceConnection: "Windows.Media.Core.MediaSourceAppServiceConnection");
 DEFINE_IID!(IID_IMediaSourceAppServiceConnectionFactory, 1706627819, 32953, 17657, 156, 30, 225, 32, 246, 217, 40, 56);
 RT_INTERFACE!{static interface IMediaSourceAppServiceConnectionFactory(IMediaSourceAppServiceConnectionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceAppServiceConnectionFactory] {
     #[cfg(feature="windows-applicationmodel")] fn Create(&self, appServiceConnection: *mut super::super::applicationmodel::appservice::AppServiceConnection, out: *mut *mut MediaSourceAppServiceConnection) -> HRESULT
@@ -10165,7 +10165,7 @@ impl MediaStreamSample {
         <Self as RtActivatable<IMediaStreamSampleStatics>>::get_activation_factory().create_from_stream_async(stream, count, timestamp)
     }}
 }
-DEFINE_CLSID!(MediaStreamSample(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,116,114,101,97,109,83,97,109,112,108,101,0]) [CLSID_MediaStreamSample]);
+DEFINE_CLSID!(MediaStreamSample: "Windows.Media.Core.MediaStreamSample");
 RT_CLASS!{class MediaStreamSamplePropertySet: super::super::foundation::collections::IMap<Guid, IInspectable>}
 DEFINE_IID!(IID_IMediaStreamSampleProtectionProperties, 1320714898, 60639, 18750, 132, 29, 221, 74, 221, 124, 172, 162);
 RT_INTERFACE!{interface IMediaStreamSampleProtectionProperties(IMediaStreamSampleProtectionPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSampleProtectionProperties] {
@@ -10384,7 +10384,7 @@ impl MediaStreamSource {
         <Self as RtActivatable<IMediaStreamSourceFactory>>::get_activation_factory().create_from_descriptors(descriptor, descriptor2)
     }}
 }
-DEFINE_CLSID!(MediaStreamSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,116,114,101,97,109,83,111,117,114,99,101,0]) [CLSID_MediaStreamSource]);
+DEFINE_CLSID!(MediaStreamSource: "Windows.Media.Core.MediaStreamSource");
 DEFINE_IID!(IID_IMediaStreamSource2, 3965046957, 11882, 20340, 173, 187, 181, 98, 209, 83, 56, 73);
 RT_INTERFACE!{interface IMediaStreamSource2(IMediaStreamSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSource2] {
     fn add_SampleRendered(&self, handler: *mut super::super::foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceSampleRenderedEventArgs>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
@@ -10958,7 +10958,7 @@ impl MseStreamSource {
         <Self as RtActivatable<IMseStreamSourceStatics>>::get_activation_factory().is_content_type_supported(contentType)
     }}
 }
-DEFINE_CLSID!(MseStreamSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,115,101,83,116,114,101,97,109,83,111,117,114,99,101,0]) [CLSID_MseStreamSource]);
+DEFINE_CLSID!(MseStreamSource: "Windows.Media.Core.MseStreamSource");
 DEFINE_IID!(IID_IMseStreamSource2, 1727364407, 63975, 16778, 156, 222, 160, 32, 233, 86, 85, 43);
 RT_INTERFACE!{interface IMseStreamSource2(IMseStreamSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IMseStreamSource2] {
     fn get_LiveSeekableRange(&self, out: *mut *mut super::super::foundation::IReference<MseTimeRange>) -> HRESULT,
@@ -11025,7 +11025,7 @@ impl ISceneAnalysisEffect {
 RT_CLASS!{class SceneAnalysisEffect: ISceneAnalysisEffect}
 RT_CLASS!{class SceneAnalysisEffectDefinition: super::effects::IVideoEffectDefinition}
 impl RtActivatable<IActivationFactory> for SceneAnalysisEffectDefinition {}
-DEFINE_CLSID!(SceneAnalysisEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,83,99,101,110,101,65,110,97,108,121,115,105,115,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_SceneAnalysisEffectDefinition]);
+DEFINE_CLSID!(SceneAnalysisEffectDefinition: "Windows.Media.Core.SceneAnalysisEffectDefinition");
 DEFINE_IID!(IID_ISceneAnalysisEffectFrame, 3635482188, 32729, 17121, 133, 235, 101, 114, 194, 151, 201, 135);
 RT_INTERFACE!{interface ISceneAnalysisEffectFrame(ISceneAnalysisEffectFrameVtbl): IInspectable(IInspectableVtbl) [IID_ISceneAnalysisEffectFrame] {
     fn get_FrameControlValues(&self, out: *mut *mut super::capture::CapturedFrameControlValues) -> HRESULT,
@@ -11137,7 +11137,7 @@ impl ISpeechCue {
 }
 RT_CLASS!{class SpeechCue: ISpeechCue}
 impl RtActivatable<IActivationFactory> for SpeechCue {}
-DEFINE_CLSID!(SpeechCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,83,112,101,101,99,104,67,117,101,0]) [CLSID_SpeechCue]);
+DEFINE_CLSID!(SpeechCue: "Windows.Media.Core.SpeechCue");
 RT_ENUM! { enum TimedMetadataKind: i32 {
     Caption (TimedMetadataKind_Caption) = 0, Chapter (TimedMetadataKind_Chapter) = 1, Custom (TimedMetadataKind_Custom) = 2, Data (TimedMetadataKind_Data) = 3, Description (TimedMetadataKind_Description) = 4, Subtitle (TimedMetadataKind_Subtitle) = 5, ImageSubtitle (TimedMetadataKind_ImageSubtitle) = 6, Speech (TimedMetadataKind_Speech) = 7,
 }}
@@ -11220,7 +11220,7 @@ impl TimedMetadataTrack {
         <Self as RtActivatable<ITimedMetadataTrackFactory>>::get_activation_factory().create(id, language, kind)
     }}
 }
-DEFINE_CLSID!(TimedMetadataTrack(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,77,101,116,97,100,97,116,97,84,114,97,99,107,0]) [CLSID_TimedMetadataTrack]);
+DEFINE_CLSID!(TimedMetadataTrack: "Windows.Media.Core.TimedMetadataTrack");
 DEFINE_IID!(IID_ITimedMetadataTrack2, 565491272, 40861, 16570, 168, 243, 26, 146, 117, 58, 239, 11);
 RT_INTERFACE!{interface ITimedMetadataTrack2(ITimedMetadataTrack2Vtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataTrack2] {
     fn get_PlaybackItem(&self, out: *mut *mut super::playback::MediaPlaybackItem) -> HRESULT,
@@ -11328,7 +11328,7 @@ impl ITimedTextCue {
 }
 RT_CLASS!{class TimedTextCue: ITimedTextCue}
 impl RtActivatable<IActivationFactory> for TimedTextCue {}
-DEFINE_CLSID!(TimedTextCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,67,117,101,0]) [CLSID_TimedTextCue]);
+DEFINE_CLSID!(TimedTextCue: "Windows.Media.Core.TimedTextCue");
 RT_ENUM! { enum TimedTextDisplayAlignment: i32 {
     Before (TimedTextDisplayAlignment_Before) = 0, After (TimedTextDisplayAlignment_After) = 1, Center (TimedTextDisplayAlignment_Center) = 2,
 }}
@@ -11365,7 +11365,7 @@ impl ITimedTextLine {
 }
 RT_CLASS!{class TimedTextLine: ITimedTextLine}
 impl RtActivatable<IActivationFactory> for TimedTextLine {}
-DEFINE_CLSID!(TimedTextLine(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,76,105,110,101,0]) [CLSID_TimedTextLine]);
+DEFINE_CLSID!(TimedTextLine: "Windows.Media.Core.TimedTextLine");
 RT_ENUM! { enum TimedTextLineAlignment: i32 {
     Start (TimedTextLineAlignment_Start) = 0, End (TimedTextLineAlignment_End) = 1, Center (TimedTextLineAlignment_Center) = 2,
 }}
@@ -11516,7 +11516,7 @@ impl ITimedTextRegion {
 }
 RT_CLASS!{class TimedTextRegion: ITimedTextRegion}
 impl RtActivatable<IActivationFactory> for TimedTextRegion {}
-DEFINE_CLSID!(TimedTextRegion(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,82,101,103,105,111,110,0]) [CLSID_TimedTextRegion]);
+DEFINE_CLSID!(TimedTextRegion: "Windows.Media.Core.TimedTextRegion");
 RT_ENUM! { enum TimedTextScrollMode: i32 {
     Popon (TimedTextScrollMode_Popon) = 0, Rollup (TimedTextScrollMode_Rollup) = 1,
 }}
@@ -11568,7 +11568,7 @@ impl TimedTextSource {
         <Self as RtActivatable<ITimedTextSourceStatics2>>::get_activation_factory().create_from_uri_with_index_and_language(uri, indexUri, defaultLanguage)
     }}
 }
-DEFINE_CLSID!(TimedTextSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,83,111,117,114,99,101,0]) [CLSID_TimedTextSource]);
+DEFINE_CLSID!(TimedTextSource: "Windows.Media.Core.TimedTextSource");
 DEFINE_IID!(IID_ITimedTextSourceResolveResultEventArgs, 1217428636, 56536, 19507, 154, 211, 108, 220, 231, 177, 197, 102);
 RT_INTERFACE!{interface ITimedTextSourceResolveResultEventArgs(ITimedTextSourceResolveResultEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextSourceResolveResultEventArgs] {
     fn get_Error(&self, out: *mut *mut TimedMetadataTrackError) -> HRESULT,
@@ -11794,7 +11794,7 @@ impl ITimedTextStyle {
 }
 RT_CLASS!{class TimedTextStyle: ITimedTextStyle}
 impl RtActivatable<IActivationFactory> for TimedTextStyle {}
-DEFINE_CLSID!(TimedTextStyle(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,83,116,121,108,101,0]) [CLSID_TimedTextStyle]);
+DEFINE_CLSID!(TimedTextStyle: "Windows.Media.Core.TimedTextStyle");
 DEFINE_IID!(IID_ITimedTextStyle2, 1700743469, 24849, 18311, 137, 204, 104, 111, 236, 229, 126, 20);
 RT_INTERFACE!{interface ITimedTextStyle2(ITimedTextStyle2Vtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextStyle2] {
     fn get_FontStyle(&self, out: *mut TimedTextFontStyle) -> HRESULT,
@@ -11884,7 +11884,7 @@ impl ITimedTextSubformat {
 }
 RT_CLASS!{class TimedTextSubformat: ITimedTextSubformat}
 impl RtActivatable<IActivationFactory> for TimedTextSubformat {}
-DEFINE_CLSID!(TimedTextSubformat(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,83,117,98,102,111,114,109,97,116,0]) [CLSID_TimedTextSubformat]);
+DEFINE_CLSID!(TimedTextSubformat: "Windows.Media.Core.TimedTextSubformat");
 RT_ENUM! { enum TimedTextUnit: i32 {
     Pixels (TimedTextUnit_Pixels) = 0, Percentage (TimedTextUnit_Percentage) = 1,
 }}
@@ -11933,7 +11933,7 @@ impl IVideoStabilizationEffect {
 RT_CLASS!{class VideoStabilizationEffect: IVideoStabilizationEffect}
 RT_CLASS!{class VideoStabilizationEffectDefinition: super::effects::IVideoEffectDefinition}
 impl RtActivatable<IActivationFactory> for VideoStabilizationEffectDefinition {}
-DEFINE_CLSID!(VideoStabilizationEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,86,105,100,101,111,83,116,97,98,105,108,105,122,97,116,105,111,110,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_VideoStabilizationEffectDefinition]);
+DEFINE_CLSID!(VideoStabilizationEffectDefinition: "Windows.Media.Core.VideoStabilizationEffectDefinition");
 DEFINE_IID!(IID_IVideoStabilizationEffectEnabledChangedEventArgs, 410976040, 26555, 18195, 185, 0, 65, 104, 218, 22, 69, 41);
 RT_INTERFACE!{interface IVideoStabilizationEffectEnabledChangedEventArgs(IVideoStabilizationEffectEnabledChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVideoStabilizationEffectEnabledChangedEventArgs] {
     fn get_Reason(&self, out: *mut VideoStabilizationEffectEnabledChangedReason) -> HRESULT
@@ -11967,7 +11967,7 @@ impl VideoStreamDescriptor {
         <Self as RtActivatable<IVideoStreamDescriptorFactory>>::get_activation_factory().create(encodingProperties)
     }}
 }
-DEFINE_CLSID!(VideoStreamDescriptor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,86,105,100,101,111,83,116,114,101,97,109,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_VideoStreamDescriptor]);
+DEFINE_CLSID!(VideoStreamDescriptor: "Windows.Media.Core.VideoStreamDescriptor");
 DEFINE_IID!(IID_IVideoStreamDescriptorFactory, 1229911761, 47989, 17362, 158, 94, 123, 121, 163, 175, 206, 212);
 RT_INTERFACE!{static interface IVideoStreamDescriptorFactory(IVideoStreamDescriptorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVideoStreamDescriptorFactory] {
     fn Create(&self, encodingProperties: *mut super::mediaproperties::VideoEncodingProperties, out: *mut *mut VideoStreamDescriptor) -> HRESULT
@@ -12065,7 +12065,7 @@ impl SoundLevelBroker {
         <Self as RtActivatable<ISoundLevelBrokerStatics>>::get_activation_factory().remove_sound_level_changed(token)
     }}
 }
-DEFINE_CLSID!(SoundLevelBroker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,80,114,101,118,105,101,119,46,83,111,117,110,100,76,101,118,101,108,66,114,111,107,101,114,0]) [CLSID_SoundLevelBroker]);
+DEFINE_CLSID!(SoundLevelBroker: "Windows.Media.Core.Preview.SoundLevelBroker");
 DEFINE_IID!(IID_ISoundLevelBrokerStatics, 1784887649, 56301, 17996, 160, 154, 51, 65, 47, 92, 170, 63);
 RT_INTERFACE!{static interface ISoundLevelBrokerStatics(ISoundLevelBrokerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISoundLevelBrokerStatics] {
     fn get_SoundLevel(&self, out: *mut super::super::SoundLevel) -> HRESULT,
@@ -12110,7 +12110,7 @@ impl IAdvancedPhotoCaptureSettings {
 }
 RT_CLASS!{class AdvancedPhotoCaptureSettings: IAdvancedPhotoCaptureSettings}
 impl RtActivatable<IActivationFactory> for AdvancedPhotoCaptureSettings {}
-DEFINE_CLSID!(AdvancedPhotoCaptureSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,65,100,118,97,110,99,101,100,80,104,111,116,111,67,97,112,116,117,114,101,83,101,116,116,105,110,103,115,0]) [CLSID_AdvancedPhotoCaptureSettings]);
+DEFINE_CLSID!(AdvancedPhotoCaptureSettings: "Windows.Media.Devices.AdvancedPhotoCaptureSettings");
 DEFINE_IID!(IID_IAdvancedPhotoControl, 3316733062, 36865, 18050, 147, 9, 104, 234, 224, 8, 14, 236);
 RT_INTERFACE!{interface IAdvancedPhotoControl(IAdvancedPhotoControlVtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedPhotoControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -12462,7 +12462,7 @@ impl AudioDeviceModulesManager {
         <Self as RtActivatable<IAudioDeviceModulesManagerFactory>>::get_activation_factory().create(deviceId)
     }}
 }
-DEFINE_CLSID!(AudioDeviceModulesManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,65,117,100,105,111,68,101,118,105,99,101,77,111,100,117,108,101,115,77,97,110,97,103,101,114,0]) [CLSID_AudioDeviceModulesManager]);
+DEFINE_CLSID!(AudioDeviceModulesManager: "Windows.Media.Devices.AudioDeviceModulesManager");
 DEFINE_IID!(IID_IAudioDeviceModulesManagerFactory, 2377135728, 58957, 18291, 150, 192, 188, 126, 191, 14, 6, 63);
 RT_INTERFACE!{static interface IAudioDeviceModulesManagerFactory(IAudioDeviceModulesManagerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAudioDeviceModulesManagerFactory] {
     fn Create(&self, deviceId: HSTRING, out: *mut *mut AudioDeviceModulesManager) -> HRESULT
@@ -12589,7 +12589,7 @@ impl CallControl {
         <Self as RtActivatable<ICallControlStatics>>::get_activation_factory().from_id(deviceId)
     }}
 }
-DEFINE_CLSID!(CallControl(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,67,97,108,108,67,111,110,116,114,111,108,0]) [CLSID_CallControl]);
+DEFINE_CLSID!(CallControl: "Windows.Media.Devices.CallControl");
 DEFINE_IID!(IID_CallControlEventHandler, 1500476831, 20703, 17492, 188, 99, 77, 61, 1, 182, 25, 88);
 RT_DELEGATE!{delegate CallControlEventHandler(CallControlEventHandlerVtbl, CallControlEventHandlerImpl) [IID_CallControlEventHandler] {
     fn Invoke(&self, sender: *mut CallControl) -> HRESULT
@@ -13099,7 +13099,7 @@ impl IFocusSettings {
 }
 RT_CLASS!{class FocusSettings: IFocusSettings}
 impl RtActivatable<IActivationFactory> for FocusSettings {}
-DEFINE_CLSID!(FocusSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,70,111,99,117,115,83,101,116,116,105,110,103,115,0]) [CLSID_FocusSettings]);
+DEFINE_CLSID!(FocusSettings: "Windows.Media.Devices.FocusSettings");
 DEFINE_IID!(IID_IHdrVideoControl, 1440277200, 12480, 17343, 155, 154, 151, 153, 215, 12, 237, 148);
 RT_INTERFACE!{interface IHdrVideoControl(IHdrVideoControlVtbl): IInspectable(IInspectableVtbl) [IID_IHdrVideoControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -13431,7 +13431,7 @@ impl MediaDevice {
         <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().remove_default_audio_render_device_changed(cookie)
     }}
 }
-DEFINE_CLSID!(MediaDevice(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,77,101,100,105,97,68,101,118,105,99,101,0]) [CLSID_MediaDevice]);
+DEFINE_CLSID!(MediaDevice: "Windows.Media.Devices.MediaDevice");
 DEFINE_IID!(IID_IMediaDeviceControl, 4020821929, 28533, 18531, 186, 11, 88, 63, 48, 54, 180, 222);
 RT_INTERFACE!{interface IMediaDeviceControl(IMediaDeviceControlVtbl): IInspectable(IInspectableVtbl) [IID_IMediaDeviceControl] {
     fn get_Capabilities(&self, out: *mut *mut MediaDeviceControlCapabilities) -> HRESULT,
@@ -13746,7 +13746,7 @@ impl IRegionOfInterest {
 }
 RT_CLASS!{class RegionOfInterest: IRegionOfInterest}
 impl RtActivatable<IActivationFactory> for RegionOfInterest {}
-DEFINE_CLSID!(RegionOfInterest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,82,101,103,105,111,110,79,102,73,110,116,101,114,101,115,116,0]) [CLSID_RegionOfInterest]);
+DEFINE_CLSID!(RegionOfInterest: "Windows.Media.Devices.RegionOfInterest");
 DEFINE_IID!(IID_IRegionOfInterest2, 436087441, 29610, 19793, 138, 157, 86, 204, 247, 219, 127, 84);
 RT_INTERFACE!{interface IRegionOfInterest2(IRegionOfInterest2Vtbl): IInspectable(IInspectableVtbl) [IID_IRegionOfInterest2] {
     fn get_Type(&self, out: *mut RegionOfInterestType) -> HRESULT,
@@ -14160,7 +14160,7 @@ impl IZoomSettings {
 }
 RT_CLASS!{class ZoomSettings: IZoomSettings}
 impl RtActivatable<IActivationFactory> for ZoomSettings {}
-DEFINE_CLSID!(ZoomSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,90,111,111,109,83,101,116,116,105,110,103,115,0]) [CLSID_ZoomSettings]);
+DEFINE_CLSID!(ZoomSettings: "Windows.Media.Devices.ZoomSettings");
 RT_ENUM! { enum ZoomTransitionMode: i32 {
     Auto (ZoomTransitionMode_Auto) = 0, Direct (ZoomTransitionMode_Direct) = 1, Smooth (ZoomTransitionMode_Smooth) = 2,
 }}
@@ -14391,7 +14391,7 @@ impl IFrameController {
 }
 RT_CLASS!{class FrameController: IFrameController}
 impl RtActivatable<IActivationFactory> for FrameController {}
-DEFINE_CLSID!(FrameController(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,67,111,114,101,46,70,114,97,109,101,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_FrameController]);
+DEFINE_CLSID!(FrameController: "Windows.Media.Devices.Core.FrameController");
 DEFINE_IID!(IID_IFrameController2, 13876341, 55420, 18523, 138, 9, 92, 53, 133, 104, 180, 39);
 RT_INTERFACE!{interface IFrameController2(IFrameController2Vtbl): IInspectable(IInspectableVtbl) [IID_IFrameController2] {
     fn get_FlashControl(&self, out: *mut *mut FrameFlashControl) -> HRESULT
@@ -14834,7 +14834,7 @@ impl DialDevice {
         <Self as RtActivatable<IDialDeviceStatics>>::get_activation_factory().device_info_supports_dial_async(device)
     }}
 }
-DEFINE_CLSID!(DialDevice(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,105,97,108,80,114,111,116,111,99,111,108,46,68,105,97,108,68,101,118,105,99,101,0]) [CLSID_DialDevice]);
+DEFINE_CLSID!(DialDevice: "Windows.Media.DialProtocol.DialDevice");
 DEFINE_IID!(IID_IDialDevice2, 3132617685, 23547, 20154, 139, 50, 181, 124, 92, 94, 229, 201);
 RT_INTERFACE!{interface IDialDevice2(IDialDevice2Vtbl): IInspectable(IInspectableVtbl) [IID_IDialDevice2] {
     fn get_FriendlyName(&self, out: *mut HSTRING) -> HRESULT,
@@ -14942,7 +14942,7 @@ impl IDialDevicePicker {
 }
 RT_CLASS!{class DialDevicePicker: IDialDevicePicker}
 impl RtActivatable<IActivationFactory> for DialDevicePicker {}
-DEFINE_CLSID!(DialDevicePicker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,105,97,108,80,114,111,116,111,99,111,108,46,68,105,97,108,68,101,118,105,99,101,80,105,99,107,101,114,0]) [CLSID_DialDevicePicker]);
+DEFINE_CLSID!(DialDevicePicker: "Windows.Media.DialProtocol.DialDevicePicker");
 DEFINE_IID!(IID_IDialDevicePickerFilter, 3246166970, 34496, 18525, 184, 214, 15, 154, 143, 100, 21, 144);
 RT_INTERFACE!{interface IDialDevicePickerFilter(IDialDevicePickerFilterVtbl): IInspectable(IInspectableVtbl) [IID_IDialDevicePickerFilter] {
     fn get_SupportedAppNames(&self, out: *mut *mut super::super::foundation::collections::IVector<HString>) -> HRESULT
@@ -15026,7 +15026,7 @@ impl DialReceiverApp {
         <Self as RtActivatable<IDialReceiverAppStatics>>::get_activation_factory().get_current()
     }}
 }
-DEFINE_CLSID!(DialReceiverApp(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,105,97,108,80,114,111,116,111,99,111,108,46,68,105,97,108,82,101,99,101,105,118,101,114,65,112,112,0]) [CLSID_DialReceiverApp]);
+DEFINE_CLSID!(DialReceiverApp: "Windows.Media.DialProtocol.DialReceiverApp");
 DEFINE_IID!(IID_IDialReceiverAppStatics, 1394096700, 19510, 19714, 178, 138, 242, 169, 218, 56, 236, 82);
 RT_INTERFACE!{static interface IDialReceiverAppStatics(IDialReceiverAppStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDialReceiverAppStatics] {
     fn get_Current(&self, out: *mut *mut DialReceiverApp) -> HRESULT
@@ -15103,7 +15103,7 @@ impl AudioEffectDefinition {
         <Self as RtActivatable<IAudioEffectDefinitionFactory>>::get_activation_factory().create_with_properties(activatableClassId, props)
     }}
 }
-DEFINE_CLSID!(AudioEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,65,117,100,105,111,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_AudioEffectDefinition]);
+DEFINE_CLSID!(AudioEffectDefinition: "Windows.Media.Effects.AudioEffectDefinition");
 DEFINE_IID!(IID_IAudioEffectDefinitionFactory, 2384307782, 59141, 17901, 138, 43, 252, 78, 79, 64, 90, 151);
 RT_INTERFACE!{static interface IAudioEffectDefinitionFactory(IAudioEffectDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAudioEffectDefinitionFactory] {
     fn Create(&self, activatableClassId: HSTRING, out: *mut *mut AudioEffectDefinition) -> HRESULT,
@@ -15137,7 +15137,7 @@ impl AudioEffectsManager {
         <Self as RtActivatable<IAudioEffectsManagerStatics>>::get_activation_factory().create_audio_capture_effects_manager_with_mode(deviceId, category, mode)
     }}
 }
-DEFINE_CLSID!(AudioEffectsManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,65,117,100,105,111,69,102,102,101,99,116,115,77,97,110,97,103,101,114,0]) [CLSID_AudioEffectsManager]);
+DEFINE_CLSID!(AudioEffectsManager: "Windows.Media.Effects.AudioEffectsManager");
 DEFINE_IID!(IID_IAudioEffectsManagerStatics, 1715497988, 34554, 18380, 163, 21, 244, 137, 216, 195, 254, 16);
 RT_INTERFACE!{static interface IAudioEffectsManagerStatics(IAudioEffectsManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioEffectsManagerStatics] {
     fn CreateAudioRenderEffectsManager(&self, deviceId: HSTRING, category: super::render::AudioRenderCategory, out: *mut *mut AudioRenderEffectsManager) -> HRESULT,
@@ -15434,7 +15434,7 @@ impl VideoCompositorDefinition {
         <Self as RtActivatable<IVideoCompositorDefinitionFactory>>::get_activation_factory().create_with_properties(activatableClassId, props)
     }}
 }
-DEFINE_CLSID!(VideoCompositorDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,86,105,100,101,111,67,111,109,112,111,115,105,116,111,114,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_VideoCompositorDefinition]);
+DEFINE_CLSID!(VideoCompositorDefinition: "Windows.Media.Effects.VideoCompositorDefinition");
 DEFINE_IID!(IID_IVideoCompositorDefinitionFactory, 1130822928, 26808, 19794, 137, 182, 2, 169, 104, 204, 168, 153);
 RT_INTERFACE!{static interface IVideoCompositorDefinitionFactory(IVideoCompositorDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVideoCompositorDefinitionFactory] {
     fn Create(&self, activatableClassId: HSTRING, out: *mut *mut VideoCompositorDefinition) -> HRESULT,
@@ -15479,7 +15479,7 @@ impl VideoEffectDefinition {
         <Self as RtActivatable<IVideoEffectDefinitionFactory>>::get_activation_factory().create_with_properties(activatableClassId, props)
     }}
 }
-DEFINE_CLSID!(VideoEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,86,105,100,101,111,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_VideoEffectDefinition]);
+DEFINE_CLSID!(VideoEffectDefinition: "Windows.Media.Effects.VideoEffectDefinition");
 DEFINE_IID!(IID_IVideoEffectDefinitionFactory, 2168691534, 28211, 17039, 157, 33, 181, 170, 254, 247, 97, 124);
 RT_INTERFACE!{static interface IVideoEffectDefinitionFactory(IVideoEffectDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVideoEffectDefinitionFactory] {
     fn Create(&self, activatableClassId: HSTRING, out: *mut *mut VideoEffectDefinition) -> HRESULT,
@@ -15572,7 +15572,7 @@ impl IVideoTransformEffectDefinition {
 }
 RT_CLASS!{class VideoTransformEffectDefinition: IVideoEffectDefinition}
 impl RtActivatable<IActivationFactory> for VideoTransformEffectDefinition {}
-DEFINE_CLSID!(VideoTransformEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,86,105,100,101,111,84,114,97,110,115,102,111,114,109,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_VideoTransformEffectDefinition]);
+DEFINE_CLSID!(VideoTransformEffectDefinition: "Windows.Media.Effects.VideoTransformEffectDefinition");
 } // Windows.Media.Effects
 pub mod editing { // Windows.Media.Editing
 use ::prelude::*;
@@ -15671,7 +15671,7 @@ impl BackgroundAudioTrack {
         <Self as RtActivatable<IBackgroundAudioTrackStatics>>::get_activation_factory().create_from_file_async(file)
     }}
 }
-DEFINE_CLSID!(BackgroundAudioTrack(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,66,97,99,107,103,114,111,117,110,100,65,117,100,105,111,84,114,97,99,107,0]) [CLSID_BackgroundAudioTrack]);
+DEFINE_CLSID!(BackgroundAudioTrack: "Windows.Media.Editing.BackgroundAudioTrack");
 DEFINE_IID!(IID_IBackgroundAudioTrackStatics, 3652305111, 53272, 17064, 165, 89, 203, 77, 158, 151, 230, 100);
 RT_INTERFACE!{static interface IBackgroundAudioTrackStatics(IBackgroundAudioTrackStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundAudioTrackStatics] {
     fn CreateFromEmbeddedAudioTrack(&self, embeddedAudioTrack: *mut EmbeddedAudioTrack, out: *mut *mut BackgroundAudioTrack) -> HRESULT,
@@ -15827,7 +15827,7 @@ impl MediaClip {
         <Self as RtActivatable<IMediaClipStatics2>>::get_activation_factory().create_from_surface(surface, originalDuration)
     }}
 }
-DEFINE_CLSID!(MediaClip(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,77,101,100,105,97,67,108,105,112,0]) [CLSID_MediaClip]);
+DEFINE_CLSID!(MediaClip: "Windows.Media.Editing.MediaClip");
 DEFINE_IID!(IID_IMediaClipStatics, 4198509416, 37519, 17348, 188, 110, 120, 58, 26, 53, 150, 86);
 RT_INTERFACE!{static interface IMediaClipStatics(IMediaClipStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaClipStatics] {
     #[cfg(not(feature="windows-ui"))] fn __Dummy0(&self) -> (),
@@ -15972,7 +15972,7 @@ impl MediaComposition {
         <Self as RtActivatable<IMediaCompositionStatics>>::get_activation_factory().load_async(file)
     }}
 }
-DEFINE_CLSID!(MediaComposition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,77,101,100,105,97,67,111,109,112,111,115,105,116,105,111,110,0]) [CLSID_MediaComposition]);
+DEFINE_CLSID!(MediaComposition: "Windows.Media.Editing.MediaComposition");
 DEFINE_IID!(IID_IMediaComposition2, 2778616690, 9062, 18732, 190, 200, 230, 223, 186, 109, 2, 129);
 RT_INTERFACE!{interface IMediaComposition2(IMediaComposition2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaComposition2] {
     fn get_OverlayLayers(&self, out: *mut *mut super::super::foundation::collections::IVector<MediaOverlayLayer>) -> HRESULT
@@ -16066,7 +16066,7 @@ impl MediaOverlay {
         <Self as RtActivatable<IMediaOverlayFactory>>::get_activation_factory().create_with_position_and_opacity(clip, position, opacity)
     }}
 }
-DEFINE_CLSID!(MediaOverlay(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,77,101,100,105,97,79,118,101,114,108,97,121,0]) [CLSID_MediaOverlay]);
+DEFINE_CLSID!(MediaOverlay: "Windows.Media.Editing.MediaOverlay");
 DEFINE_IID!(IID_IMediaOverlayFactory, 3045360266, 24968, 20367, 162, 224, 170, 85, 45, 89, 142, 24);
 RT_INTERFACE!{static interface IMediaOverlayFactory(IMediaOverlayFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaOverlayFactory] {
     fn Create(&self, clip: *mut MediaClip, out: *mut *mut MediaOverlay) -> HRESULT,
@@ -16115,7 +16115,7 @@ impl MediaOverlayLayer {
         <Self as RtActivatable<IMediaOverlayLayerFactory>>::get_activation_factory().create_with_compositor_definition(compositorDefinition)
     }}
 }
-DEFINE_CLSID!(MediaOverlayLayer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,77,101,100,105,97,79,118,101,114,108,97,121,76,97,121,101,114,0]) [CLSID_MediaOverlayLayer]);
+DEFINE_CLSID!(MediaOverlayLayer: "Windows.Media.Editing.MediaOverlayLayer");
 DEFINE_IID!(IID_IMediaOverlayLayerFactory, 2491200627, 41886, 17250, 171, 191, 159, 139, 80, 112, 160, 98);
 RT_INTERFACE!{static interface IMediaOverlayLayerFactory(IMediaOverlayLayerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaOverlayLayerFactory] {
     fn CreateWithCompositorDefinition(&self, compositorDefinition: *mut super::effects::IVideoCompositorDefinition, out: *mut *mut MediaOverlayLayer) -> HRESULT
@@ -16209,7 +16209,7 @@ impl FaceDetector {
         <Self as RtActivatable<IFaceDetectorStatics>>::get_activation_factory().get_is_supported()
     }}
 }
-DEFINE_CLSID!(FaceDetector(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,70,97,99,101,65,110,97,108,121,115,105,115,46,70,97,99,101,68,101,116,101,99,116,111,114,0]) [CLSID_FaceDetector]);
+DEFINE_CLSID!(FaceDetector: "Windows.Media.FaceAnalysis.FaceDetector");
 DEFINE_IID!(IID_IFaceDetectorStatics, 3154390375, 36935, 13302, 136, 27, 103, 70, 193, 178, 24, 184);
 RT_INTERFACE!{static interface IFaceDetectorStatics(IFaceDetectorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFaceDetectorStatics] {
     fn CreateAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<FaceDetector>) -> HRESULT,
@@ -16290,7 +16290,7 @@ impl FaceTracker {
         <Self as RtActivatable<IFaceTrackerStatics>>::get_activation_factory().get_is_supported()
     }}
 }
-DEFINE_CLSID!(FaceTracker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,70,97,99,101,65,110,97,108,121,115,105,115,46,70,97,99,101,84,114,97,99,107,101,114,0]) [CLSID_FaceTracker]);
+DEFINE_CLSID!(FaceTracker: "Windows.Media.FaceAnalysis.FaceTracker");
 DEFINE_IID!(IID_IFaceTrackerStatics, 3915551128, 6145, 16293, 147, 46, 49, 215, 103, 175, 108, 77);
 RT_INTERFACE!{static interface IFaceTrackerStatics(IFaceTrackerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFaceTrackerStatics] {
     fn CreateAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<FaceTracker>) -> HRESULT,
@@ -16835,7 +16835,7 @@ impl PhotoImportManager {
         <Self as RtActivatable<IPhotoImportManagerStatics>>::get_activation_factory().get_pending_operations()
     }}
 }
-DEFINE_CLSID!(PhotoImportManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,73,109,112,111,114,116,46,80,104,111,116,111,73,109,112,111,114,116,77,97,110,97,103,101,114,0]) [CLSID_PhotoImportManager]);
+DEFINE_CLSID!(PhotoImportManager: "Windows.Media.Import.PhotoImportManager");
 DEFINE_IID!(IID_IPhotoImportManagerStatics, 661753917, 41030, 20230, 155, 156, 191, 214, 98, 232, 50, 135);
 RT_INTERFACE!{static interface IPhotoImportManagerStatics(IPhotoImportManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportManagerStatics] {
     fn IsSupportedAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<bool>) -> HRESULT,
@@ -17152,7 +17152,7 @@ impl PhotoImportSource {
         <Self as RtActivatable<IPhotoImportSourceStatics>>::get_activation_factory().from_folder_async(sourceRootFolder)
     }}
 }
-DEFINE_CLSID!(PhotoImportSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,73,109,112,111,114,116,46,80,104,111,116,111,73,109,112,111,114,116,83,111,117,114,99,101,0]) [CLSID_PhotoImportSource]);
+DEFINE_CLSID!(PhotoImportSource: "Windows.Media.Import.PhotoImportSource");
 DEFINE_IID!(IID_IPhotoImportSourceStatics, 86566278, 13016, 18044, 140, 238, 35, 161, 178, 244, 62, 133);
 RT_INTERFACE!{static interface IPhotoImportSourceStatics(IPhotoImportSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportSourceStatics] {
     fn FromIdAsync(&self, sourceId: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<PhotoImportSource>) -> HRESULT,
@@ -17314,7 +17314,7 @@ impl OcrEngine {
         <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().try_create_from_user_profile_languages()
     }}
 }
-DEFINE_CLSID!(OcrEngine(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,79,99,114,46,79,99,114,69,110,103,105,110,101,0]) [CLSID_OcrEngine]);
+DEFINE_CLSID!(OcrEngine: "Windows.Media.Ocr.OcrEngine");
 DEFINE_IID!(IID_IOcrEngineStatics, 1543481434, 13188, 13632, 153, 64, 105, 145, 32, 212, 40, 168);
 RT_INTERFACE!{static interface IOcrEngineStatics(IOcrEngineStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IOcrEngineStatics] {
     fn get_MaxImageDimension(&self, out: *mut u32) -> HRESULT,
@@ -17450,7 +17450,7 @@ impl BackgroundMediaPlayer {
         <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().shutdown()
     }}
 }
-DEFINE_CLSID!(BackgroundMediaPlayer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,66,97,99,107,103,114,111,117,110,100,77,101,100,105,97,80,108,97,121,101,114,0]) [CLSID_BackgroundMediaPlayer]);
+DEFINE_CLSID!(BackgroundMediaPlayer: "Windows.Media.Playback.BackgroundMediaPlayer");
 DEFINE_IID!(IID_IBackgroundMediaPlayerStatics, 2238569409, 22007, 18207, 160, 242, 104, 172, 76, 144, 69, 146);
 RT_INTERFACE!{static interface IBackgroundMediaPlayerStatics(IBackgroundMediaPlayerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundMediaPlayerStatics] {
     fn get_Current(&self, out: *mut *mut MediaPlayer) -> HRESULT,
@@ -17587,7 +17587,7 @@ impl MediaBreak {
         <Self as RtActivatable<IMediaBreakFactory>>::get_activation_factory().create_with_presentation_position(insertionMethod, presentationPosition)
     }}
 }
-DEFINE_CLSID!(MediaBreak(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,77,101,100,105,97,66,114,101,97,107,0]) [CLSID_MediaBreak]);
+DEFINE_CLSID!(MediaBreak: "Windows.Media.Playback.MediaBreak");
 DEFINE_IID!(IID_IMediaBreakEndedEventArgs, 850997878, 7261, 20462, 135, 50, 35, 109, 195, 168, 133, 128);
 RT_INTERFACE!{interface IMediaBreakEndedEventArgs(IMediaBreakEndedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakEndedEventArgs] {
     fn get_MediaBreak(&self, out: *mut *mut MediaBreak) -> HRESULT
@@ -18435,7 +18435,7 @@ impl MediaPlaybackItem {
         <Self as RtActivatable<IMediaPlaybackItemStatics>>::get_activation_factory().find_from_media_source(source)
     }}
 }
-DEFINE_CLSID!(MediaPlaybackItem(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,77,101,100,105,97,80,108,97,121,98,97,99,107,73,116,101,109,0]) [CLSID_MediaPlaybackItem]);
+DEFINE_CLSID!(MediaPlaybackItem: "Windows.Media.Playback.MediaPlaybackItem");
 DEFINE_IID!(IID_IMediaPlaybackItem2, 3629764977, 55279, 19329, 172, 31, 244, 4, 147, 203, 176, 145);
 RT_INTERFACE!{interface IMediaPlaybackItem2(IMediaPlaybackItem2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItem2] {
     fn get_BreakSchedule(&self, out: *mut *mut MediaBreakSchedule) -> HRESULT,
@@ -18705,7 +18705,7 @@ impl IMediaPlaybackList {
 }
 RT_CLASS!{class MediaPlaybackList: IMediaPlaybackList}
 impl RtActivatable<IActivationFactory> for MediaPlaybackList {}
-DEFINE_CLSID!(MediaPlaybackList(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,77,101,100,105,97,80,108,97,121,98,97,99,107,76,105,115,116,0]) [CLSID_MediaPlaybackList]);
+DEFINE_CLSID!(MediaPlaybackList: "Windows.Media.Playback.MediaPlaybackList");
 DEFINE_IID!(IID_IMediaPlaybackList2, 235517048, 24586, 17012, 161, 75, 11, 103, 35, 208, 244, 139);
 RT_INTERFACE!{interface IMediaPlaybackList2(IMediaPlaybackList2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackList2] {
     fn get_MaxPrefetchTime(&self, out: *mut *mut super::super::foundation::IReference<super::super::foundation::TimeSpan>) -> HRESULT,
@@ -19419,7 +19419,7 @@ impl IMediaPlayer {
 }
 RT_CLASS!{class MediaPlayer: IMediaPlayer}
 impl RtActivatable<IActivationFactory> for MediaPlayer {}
-DEFINE_CLSID!(MediaPlayer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,77,101,100,105,97,80,108,97,121,101,114,0]) [CLSID_MediaPlayer]);
+DEFINE_CLSID!(MediaPlayer: "Windows.Media.Playback.MediaPlayer");
 DEFINE_IID!(IID_IMediaPlayer2, 1015288344, 8483, 20421, 144, 130, 47, 136, 63, 119, 189, 245);
 RT_INTERFACE!{interface IMediaPlayer2(IMediaPlayer2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayer2] {
     fn get_SystemMediaTransportControls(&self, out: *mut *mut super::SystemMediaTransportControls) -> HRESULT,
@@ -19861,7 +19861,7 @@ impl PlaybackMediaMarker {
         <Self as RtActivatable<IPlaybackMediaMarkerFactory>>::get_activation_factory().create(value, mediaMarketType, text)
     }}
 }
-DEFINE_CLSID!(PlaybackMediaMarker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,80,108,97,121,98,97,99,107,77,101,100,105,97,77,97,114,107,101,114,0]) [CLSID_PlaybackMediaMarker]);
+DEFINE_CLSID!(PlaybackMediaMarker: "Windows.Media.Playback.PlaybackMediaMarker");
 DEFINE_IID!(IID_IPlaybackMediaMarkerFactory, 2354252408, 57518, 19994, 168, 200, 226, 63, 152, 42, 147, 123);
 RT_INTERFACE!{static interface IPlaybackMediaMarkerFactory(IPlaybackMediaMarkerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackMediaMarkerFactory] {
     fn CreateFromTime(&self, value: super::super::foundation::TimeSpan, out: *mut *mut PlaybackMediaMarker) -> HRESULT,
@@ -20138,7 +20138,7 @@ impl PlayToManager {
         <Self as RtActivatable<IPlayToManagerStatics>>::get_activation_factory().show_play_to_ui()
     }}
 }
-DEFINE_CLSID!(PlayToManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,84,111,46,80,108,97,121,84,111,77,97,110,97,103,101,114,0]) [CLSID_PlayToManager]);
+DEFINE_CLSID!(PlayToManager: "Windows.Media.PlayTo.PlayToManager");
 DEFINE_IID!(IID_IPlayToManagerStatics, 1692838023, 14722, 20283, 186, 32, 97, 85, 228, 53, 50, 91);
 RT_INTERFACE!{static interface IPlayToManagerStatics(IPlayToManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToManagerStatics] {
     fn GetForCurrentView(&self, out: *mut *mut PlayToManager) -> HRESULT,
@@ -20383,7 +20383,7 @@ impl IPlayToReceiver {
 }
 RT_CLASS!{class PlayToReceiver: IPlayToReceiver}
 impl RtActivatable<IActivationFactory> for PlayToReceiver {}
-DEFINE_CLSID!(PlayToReceiver(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,84,111,46,80,108,97,121,84,111,82,101,99,101,105,118,101,114,0]) [CLSID_PlayToReceiver]);
+DEFINE_CLSID!(PlayToReceiver: "Windows.Media.PlayTo.PlayToReceiver");
 DEFINE_IID!(IID_IPlayToSource, 2131986952, 64439, 19209, 131, 86, 170, 95, 78, 51, 92, 49);
 RT_INTERFACE!{interface IPlayToSource(IPlayToSourceVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToSource] {
     fn get_Connection(&self, out: *mut *mut PlayToConnection) -> HRESULT,
@@ -20634,7 +20634,7 @@ impl ComponentRenewal {
         <Self as RtActivatable<IComponentRenewalStatics>>::get_activation_factory().renew_system_components_async(information)
     }}
 }
-DEFINE_CLSID!(ComponentRenewal(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,67,111,109,112,111,110,101,110,116,82,101,110,101,119,97,108,0]) [CLSID_ComponentRenewal]);
+DEFINE_CLSID!(ComponentRenewal: "Windows.Media.Protection.ComponentRenewal");
 DEFINE_IID!(IID_IComponentRenewalStatics, 1878773095, 46997, 18629, 139, 123, 167, 196, 239, 226, 2, 227);
 RT_INTERFACE!{static interface IComponentRenewalStatics(IComponentRenewalStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IComponentRenewalStatics] {
     fn RenewSystemComponentsAsync(&self, information: *mut RevocationAndRenewalInformation, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<RenewalStatus, u32>) -> HRESULT
@@ -20688,7 +20688,7 @@ impl IHdcpSession {
 }
 RT_CLASS!{class HdcpSession: IHdcpSession}
 impl RtActivatable<IActivationFactory> for HdcpSession {}
-DEFINE_CLSID!(HdcpSession(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,72,100,99,112,83,101,115,115,105,111,110,0]) [CLSID_HdcpSession]);
+DEFINE_CLSID!(HdcpSession: "Windows.Media.Protection.HdcpSession");
 RT_ENUM! { enum HdcpSetProtectionResult: i32 {
     Success (HdcpSetProtectionResult_Success) = 0, TimedOut (HdcpSetProtectionResult_TimedOut) = 1, NotSupported (HdcpSetProtectionResult_NotSupported) = 2, UnknownFailure (HdcpSetProtectionResult_UnknownFailure) = 3,
 }}
@@ -20738,7 +20738,7 @@ impl IMediaProtectionManager {
 }
 RT_CLASS!{class MediaProtectionManager: IMediaProtectionManager}
 impl RtActivatable<IActivationFactory> for MediaProtectionManager {}
-DEFINE_CLSID!(MediaProtectionManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,77,101,100,105,97,80,114,111,116,101,99,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MediaProtectionManager]);
+DEFINE_CLSID!(MediaProtectionManager: "Windows.Media.Protection.MediaProtectionManager");
 DEFINE_IID!(IID_IMediaProtectionPMPServer, 202445350, 31526, 19761, 149, 187, 156, 27, 8, 239, 127, 192);
 RT_INTERFACE!{interface IMediaProtectionPMPServer(IMediaProtectionPMPServerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaProtectionPMPServer] {
     fn get_Properties(&self, out: *mut *mut super::super::foundation::collections::IPropertySet) -> HRESULT
@@ -20757,7 +20757,7 @@ impl MediaProtectionPMPServer {
         <Self as RtActivatable<IMediaProtectionPMPServerFactory>>::get_activation_factory().create_pmpserver(pProperties)
     }}
 }
-DEFINE_CLSID!(MediaProtectionPMPServer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,77,101,100,105,97,80,114,111,116,101,99,116,105,111,110,80,77,80,83,101,114,118,101,114,0]) [CLSID_MediaProtectionPMPServer]);
+DEFINE_CLSID!(MediaProtectionPMPServer: "Windows.Media.Protection.MediaProtectionPMPServer");
 DEFINE_IID!(IID_IMediaProtectionPMPServerFactory, 1613532766, 63442, 18558, 175, 145, 219, 196, 37, 43, 33, 130);
 RT_INTERFACE!{static interface IMediaProtectionPMPServerFactory(IMediaProtectionPMPServerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaProtectionPMPServerFactory] {
     fn CreatePMPServer(&self, pProperties: *mut super::super::foundation::collections::IPropertySet, out: *mut *mut MediaProtectionPMPServer) -> HRESULT
@@ -20810,7 +20810,7 @@ impl IProtectionCapabilities {
 }
 RT_CLASS!{class ProtectionCapabilities: IProtectionCapabilities}
 impl RtActivatable<IActivationFactory> for ProtectionCapabilities {}
-DEFINE_CLSID!(ProtectionCapabilities(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,114,111,116,101,99,116,105,111,110,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_ProtectionCapabilities]);
+DEFINE_CLSID!(ProtectionCapabilities: "Windows.Media.Protection.ProtectionCapabilities");
 RT_ENUM! { enum ProtectionCapabilityResult: i32 {
     NotSupported (ProtectionCapabilityResult_NotSupported) = 0, Maybe (ProtectionCapabilityResult_Maybe) = 1, Probably (ProtectionCapabilityResult_Probably) = 2,
 }}
@@ -21018,7 +21018,7 @@ impl NDClient {
         <Self as RtActivatable<INDClientFactory>>::get_activation_factory().create_instance(downloadEngine, streamParser, pMessenger)
     }}
 }
-DEFINE_CLSID!(NDClient(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,67,108,105,101,110,116,0]) [CLSID_NDClient]);
+DEFINE_CLSID!(NDClient: "Windows.Media.Protection.PlayReady.NDClient");
 DEFINE_IID!(IID_INDClientFactory, 1045683554, 65256, 17695, 176, 212, 247, 6, 204, 163, 224, 55);
 RT_INTERFACE!{static interface INDClientFactory(INDClientFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INDClientFactory] {
     fn CreateInstance(&self, downloadEngine: *mut INDDownloadEngine, streamParser: *mut INDStreamParser, pMessenger: *mut INDMessenger, out: *mut *mut NDClient) -> HRESULT
@@ -21083,7 +21083,7 @@ impl NDCustomData {
         <Self as RtActivatable<INDCustomDataFactory>>::get_activation_factory().create_instance(customDataTypeIDBytes, customDataBytes)
     }}
 }
-DEFINE_CLSID!(NDCustomData(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,67,117,115,116,111,109,68,97,116,97,0]) [CLSID_NDCustomData]);
+DEFINE_CLSID!(NDCustomData: "Windows.Media.Protection.PlayReady.NDCustomData");
 DEFINE_IID!(IID_INDCustomDataFactory, 3595830699, 13348, 18483, 140, 154, 175, 95, 222, 178, 40, 114);
 RT_INTERFACE!{static interface INDCustomDataFactory(INDCustomDataFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INDCustomDataFactory] {
     fn CreateInstance(&self, customDataTypeIDBytesSize: u32, customDataTypeIDBytes: *mut u8, customDataBytesSize: u32, customDataBytes: *mut u8, out: *mut *mut NDCustomData) -> HRESULT
@@ -21186,7 +21186,7 @@ impl INDDownloadEngineNotifier {
 }
 RT_CLASS!{class NDDownloadEngineNotifier: INDDownloadEngineNotifier}
 impl RtActivatable<IActivationFactory> for NDDownloadEngineNotifier {}
-DEFINE_CLSID!(NDDownloadEngineNotifier(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,68,111,119,110,108,111,97,100,69,110,103,105,110,101,78,111,116,105,102,105,101,114,0]) [CLSID_NDDownloadEngineNotifier]);
+DEFINE_CLSID!(NDDownloadEngineNotifier: "Windows.Media.Protection.PlayReady.NDDownloadEngineNotifier");
 DEFINE_IID!(IID_INDLicenseFetchCompletedEventArgs, 518195738, 4530, 17752, 136, 101, 227, 165, 22, 146, 37, 23);
 RT_INTERFACE!{interface INDLicenseFetchCompletedEventArgs(INDLicenseFetchCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_INDLicenseFetchCompletedEventArgs] {
     fn get_ResponseCustomData(&self, out: *mut *mut INDCustomData) -> HRESULT
@@ -21233,7 +21233,7 @@ impl NDLicenseFetchDescriptor {
         <Self as RtActivatable<INDLicenseFetchDescriptorFactory>>::get_activation_factory().create_instance(contentIDType, contentIDBytes, licenseFetchChallengeCustomData)
     }}
 }
-DEFINE_CLSID!(NDLicenseFetchDescriptor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,76,105,99,101,110,115,101,70,101,116,99,104,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_NDLicenseFetchDescriptor]);
+DEFINE_CLSID!(NDLicenseFetchDescriptor: "Windows.Media.Protection.PlayReady.NDLicenseFetchDescriptor");
 DEFINE_IID!(IID_INDLicenseFetchDescriptorFactory, 3489862146, 53164, 20224, 174, 106, 151, 175, 128, 184, 72, 242);
 RT_INTERFACE!{static interface INDLicenseFetchDescriptorFactory(INDLicenseFetchDescriptorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INDLicenseFetchDescriptorFactory] {
     fn CreateInstance(&self, contentIDType: NDContentIDType, contentIDBytesSize: u32, contentIDBytes: *mut u8, licenseFetchChallengeCustomData: *mut INDCustomData, out: *mut *mut NDLicenseFetchDescriptor) -> HRESULT
@@ -21368,7 +21368,7 @@ impl INDStorageFileHelper {
 }
 RT_CLASS!{class NDStorageFileHelper: INDStorageFileHelper}
 impl RtActivatable<IActivationFactory> for NDStorageFileHelper {}
-DEFINE_CLSID!(NDStorageFileHelper(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,83,116,111,114,97,103,101,70,105,108,101,72,101,108,112,101,114,0]) [CLSID_NDStorageFileHelper]);
+DEFINE_CLSID!(NDStorageFileHelper: "Windows.Media.Protection.PlayReady.NDStorageFileHelper");
 DEFINE_IID!(IID_INDStreamParser, 3770327448, 38806, 16841, 134, 149, 89, 67, 126, 103, 230, 106);
 RT_INTERFACE!{interface INDStreamParser(INDStreamParserVtbl): IInspectable(IInspectableVtbl) [IID_INDStreamParser] {
     fn ParseData(&self, dataBytesSize: u32, dataBytes: *mut u8) -> HRESULT,
@@ -21428,7 +21428,7 @@ impl INDStreamParserNotifier {
 }
 RT_CLASS!{class NDStreamParserNotifier: INDStreamParserNotifier}
 impl RtActivatable<IActivationFactory> for NDStreamParserNotifier {}
-DEFINE_CLSID!(NDStreamParserNotifier(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,83,116,114,101,97,109,80,97,114,115,101,114,78,111,116,105,102,105,101,114,0]) [CLSID_NDStreamParserNotifier]);
+DEFINE_CLSID!(NDStreamParserNotifier: "Windows.Media.Protection.PlayReady.NDStreamParserNotifier");
 RT_CLASS!{class NDTCPMessenger: INDMessenger}
 impl RtActivatable<INDTCPMessengerFactory> for NDTCPMessenger {}
 impl NDTCPMessenger {
@@ -21436,7 +21436,7 @@ impl NDTCPMessenger {
         <Self as RtActivatable<INDTCPMessengerFactory>>::get_activation_factory().create_instance(remoteHostName, remoteHostPort)
     }}
 }
-DEFINE_CLSID!(NDTCPMessenger(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,84,67,80,77,101,115,115,101,110,103,101,114,0]) [CLSID_NDTCPMessenger]);
+DEFINE_CLSID!(NDTCPMessenger: "Windows.Media.Protection.PlayReady.NDTCPMessenger");
 DEFINE_IID!(IID_INDTCPMessengerFactory, 2111331582, 7065, 20328, 143, 130, 129, 119, 247, 206, 223, 43);
 RT_INTERFACE!{static interface INDTCPMessengerFactory(INDTCPMessengerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INDTCPMessengerFactory] {
     fn CreateInstance(&self, remoteHostName: HSTRING, remoteHostPort: u32, out: *mut *mut NDTCPMessenger) -> HRESULT
@@ -21601,7 +21601,7 @@ impl PlayReadyContentHeader {
         <Self as RtActivatable<IPlayReadyContentHeaderFactory2>>::get_activation_factory().create_instance_from_components2(dwFlags, contentKeyIds, contentKeyIdStrings, contentEncryptionAlgorithm, licenseAcquisitionUrl, licenseAcquisitionUserInterfaceUrl, customAttributes, domainServiceId)
     }}
 }
-DEFINE_CLSID!(PlayReadyContentHeader(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,67,111,110,116,101,110,116,72,101,97,100,101,114,0]) [CLSID_PlayReadyContentHeader]);
+DEFINE_CLSID!(PlayReadyContentHeader: "Windows.Media.Protection.PlayReady.PlayReadyContentHeader");
 DEFINE_IID!(IID_IPlayReadyContentHeader2, 899447284, 8576, 18828, 150, 91, 231, 84, 216, 117, 234, 178);
 RT_INTERFACE!{interface IPlayReadyContentHeader2(IPlayReadyContentHeader2Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyContentHeader2] {
     fn get_KeyIds(&self, outSize: *mut u32, out: *mut *mut Guid) -> HRESULT,
@@ -21671,7 +21671,7 @@ impl PlayReadyContentResolver {
         <Self as RtActivatable<IPlayReadyContentResolver>>::get_activation_factory().service_request(contentHeader)
     }}
 }
-DEFINE_CLSID!(PlayReadyContentResolver(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,67,111,110,116,101,110,116,82,101,115,111,108,118,101,114,0]) [CLSID_PlayReadyContentResolver]);
+DEFINE_CLSID!(PlayReadyContentResolver: "Windows.Media.Protection.PlayReady.PlayReadyContentResolver");
 RT_ENUM! { enum PlayReadyDecryptorSetup: i32 {
     Uninitialized (PlayReadyDecryptorSetup_Uninitialized) = 0, OnDemand (PlayReadyDecryptorSetup_OnDemand) = 1,
 }}
@@ -21718,7 +21718,7 @@ impl PlayReadyDomainIterable {
         <Self as RtActivatable<IPlayReadyDomainIterableFactory>>::get_activation_factory().create_instance(domainAccountId)
     }}
 }
-DEFINE_CLSID!(PlayReadyDomainIterable(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,68,111,109,97,105,110,73,116,101,114,97,98,108,101,0]) [CLSID_PlayReadyDomainIterable]);
+DEFINE_CLSID!(PlayReadyDomainIterable: "Windows.Media.Protection.PlayReady.PlayReadyDomainIterable");
 DEFINE_IID!(IID_IPlayReadyDomainIterableFactory, 1307804910, 12577, 19955, 165, 232, 208, 194, 76, 5, 0, 252);
 RT_INTERFACE!{static interface IPlayReadyDomainIterableFactory(IPlayReadyDomainIterableFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyDomainIterableFactory] {
     fn CreateInstance(&self, domainAccountId: Guid, out: *mut *mut PlayReadyDomainIterable) -> HRESULT
@@ -21771,7 +21771,7 @@ impl IPlayReadyDomainJoinServiceRequest {
 }
 RT_CLASS!{class PlayReadyDomainJoinServiceRequest: IPlayReadyDomainJoinServiceRequest}
 impl RtActivatable<IActivationFactory> for PlayReadyDomainJoinServiceRequest {}
-DEFINE_CLSID!(PlayReadyDomainJoinServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,68,111,109,97,105,110,74,111,105,110,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyDomainJoinServiceRequest]);
+DEFINE_CLSID!(PlayReadyDomainJoinServiceRequest: "Windows.Media.Protection.PlayReady.PlayReadyDomainJoinServiceRequest");
 DEFINE_IID!(IID_IPlayReadyDomainLeaveServiceRequest, 103635134, 38829, 18711, 170, 3, 70, 212, 194, 82, 212, 100);
 RT_INTERFACE!{interface IPlayReadyDomainLeaveServiceRequest(IPlayReadyDomainLeaveServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyDomainLeaveServiceRequest] {
     fn get_DomainAccountId(&self, out: *mut Guid) -> HRESULT,
@@ -21801,7 +21801,7 @@ impl IPlayReadyDomainLeaveServiceRequest {
 }
 RT_CLASS!{class PlayReadyDomainLeaveServiceRequest: IPlayReadyDomainLeaveServiceRequest}
 impl RtActivatable<IActivationFactory> for PlayReadyDomainLeaveServiceRequest {}
-DEFINE_CLSID!(PlayReadyDomainLeaveServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,68,111,109,97,105,110,76,101,97,118,101,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyDomainLeaveServiceRequest]);
+DEFINE_CLSID!(PlayReadyDomainLeaveServiceRequest: "Windows.Media.Protection.PlayReady.PlayReadyDomainLeaveServiceRequest");
 RT_ENUM! { enum PlayReadyEncryptionAlgorithm: i32 {
     Unprotected (PlayReadyEncryptionAlgorithm_Unprotected) = 0, Aes128Ctr (PlayReadyEncryptionAlgorithm_Aes128Ctr) = 1, Cocktail (PlayReadyEncryptionAlgorithm_Cocktail) = 4, Aes128Cbc (PlayReadyEncryptionAlgorithm_Aes128Cbc) = 5, Unspecified (PlayReadyEncryptionAlgorithm_Unspecified) = 65535, Uninitialized (PlayReadyEncryptionAlgorithm_Uninitialized) = 2147483647,
 }}
@@ -21814,7 +21814,7 @@ RT_INTERFACE!{interface IPlayReadyIndividualizationServiceRequest(IPlayReadyIndi
 }}
 RT_CLASS!{class PlayReadyIndividualizationServiceRequest: IPlayReadyIndividualizationServiceRequest}
 impl RtActivatable<IActivationFactory> for PlayReadyIndividualizationServiceRequest {}
-DEFINE_CLSID!(PlayReadyIndividualizationServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,73,110,100,105,118,105,100,117,97,108,105,122,97,116,105,111,110,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyIndividualizationServiceRequest]);
+DEFINE_CLSID!(PlayReadyIndividualizationServiceRequest: "Windows.Media.Protection.PlayReady.PlayReadyIndividualizationServiceRequest");
 RT_ENUM! { enum PlayReadyITADataFormat: i32 {
     SerializedProperties (PlayReadyITADataFormat_SerializedProperties) = 0, SerializedProperties_WithContentProtectionWrapper (PlayReadyITADataFormat_SerializedProperties_WithContentProtectionWrapper) = 1,
 }}
@@ -21831,7 +21831,7 @@ impl IPlayReadyITADataGenerator {
 }
 RT_CLASS!{class PlayReadyITADataGenerator: IPlayReadyITADataGenerator}
 impl RtActivatable<IActivationFactory> for PlayReadyITADataGenerator {}
-DEFINE_CLSID!(PlayReadyITADataGenerator(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,73,84,65,68,97,116,97,71,101,110,101,114,97,116,111,114,0]) [CLSID_PlayReadyITADataGenerator]);
+DEFINE_CLSID!(PlayReadyITADataGenerator: "Windows.Media.Protection.PlayReady.PlayReadyITADataGenerator");
 DEFINE_IID!(IID_IPlayReadyLicense, 3997649998, 64060, 16717, 169, 242, 63, 252, 30, 248, 50, 212);
 RT_INTERFACE!{interface IPlayReadyLicense(IPlayReadyLicenseVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicense] {
     fn get_FullyEvaluated(&self, out: *mut bool) -> HRESULT,
@@ -21938,7 +21938,7 @@ impl IPlayReadyLicenseAcquisitionServiceRequest {
 }
 RT_CLASS!{class PlayReadyLicenseAcquisitionServiceRequest: IPlayReadyLicenseAcquisitionServiceRequest}
 impl RtActivatable<IActivationFactory> for PlayReadyLicenseAcquisitionServiceRequest {}
-DEFINE_CLSID!(PlayReadyLicenseAcquisitionServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,76,105,99,101,110,115,101,65,99,113,117,105,115,105,116,105,111,110,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyLicenseAcquisitionServiceRequest]);
+DEFINE_CLSID!(PlayReadyLicenseAcquisitionServiceRequest: "Windows.Media.Protection.PlayReady.PlayReadyLicenseAcquisitionServiceRequest");
 DEFINE_IID!(IID_IPlayReadyLicenseAcquisitionServiceRequest2, 3086638773, 65036, 45605, 188, 96, 90, 158, 221, 50, 206, 181);
 RT_INTERFACE!{interface IPlayReadyLicenseAcquisitionServiceRequest2(IPlayReadyLicenseAcquisitionServiceRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicenseAcquisitionServiceRequest2] {
     fn get_SessionId(&self, out: *mut Guid) -> HRESULT
@@ -21969,7 +21969,7 @@ impl PlayReadyLicenseIterable {
         <Self as RtActivatable<IPlayReadyLicenseIterableFactory>>::get_activation_factory().create_instance(contentHeader, fullyEvaluated)
     }}
 }
-DEFINE_CLSID!(PlayReadyLicenseIterable(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,76,105,99,101,110,115,101,73,116,101,114,97,98,108,101,0]) [CLSID_PlayReadyLicenseIterable]);
+DEFINE_CLSID!(PlayReadyLicenseIterable: "Windows.Media.Protection.PlayReady.PlayReadyLicenseIterable");
 DEFINE_IID!(IID_IPlayReadyLicenseIterableFactory, 3558317832, 2103, 18808, 142, 104, 190, 66, 147, 200, 215, 166);
 RT_INTERFACE!{static interface IPlayReadyLicenseIterableFactory(IPlayReadyLicenseIterableFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicenseIterableFactory] {
     fn CreateInstance(&self, contentHeader: *mut PlayReadyContentHeader, fullyEvaluated: bool, out: *mut *mut PlayReadyLicenseIterable) -> HRESULT
@@ -22000,7 +22000,7 @@ impl PlayReadyLicenseManagement {
         <Self as RtActivatable<IPlayReadyLicenseManagement>>::get_activation_factory().delete_licenses(contentHeader)
     }}
 }
-DEFINE_CLSID!(PlayReadyLicenseManagement(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,76,105,99,101,110,115,101,77,97,110,97,103,101,109,101,110,116,0]) [CLSID_PlayReadyLicenseManagement]);
+DEFINE_CLSID!(PlayReadyLicenseManagement: "Windows.Media.Protection.PlayReady.PlayReadyLicenseManagement");
 DEFINE_IID!(IID_IPlayReadyLicenseSession, 2708617785, 34810, 20445, 171, 187, 169, 114, 14, 132, 82, 89);
 RT_INTERFACE!{interface IPlayReadyLicenseSession(IPlayReadyLicenseSessionVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicenseSession] {
     fn CreateLAServiceRequest(&self, out: *mut *mut IPlayReadyLicenseAcquisitionServiceRequest) -> HRESULT,
@@ -22024,7 +22024,7 @@ impl PlayReadyLicenseSession {
         <Self as RtActivatable<IPlayReadyLicenseSessionFactory>>::get_activation_factory().create_instance(configuration)
     }}
 }
-DEFINE_CLSID!(PlayReadyLicenseSession(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,76,105,99,101,110,115,101,83,101,115,115,105,111,110,0]) [CLSID_PlayReadyLicenseSession]);
+DEFINE_CLSID!(PlayReadyLicenseSession: "Windows.Media.Protection.PlayReady.PlayReadyLicenseSession");
 DEFINE_IID!(IID_IPlayReadyLicenseSession2, 1225375290, 15085, 18006, 138, 215, 238, 15, 215, 121, 149, 16);
 RT_INTERFACE!{interface IPlayReadyLicenseSession2(IPlayReadyLicenseSession2Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicenseSession2] {
     fn CreateLicenseIterable(&self, contentHeader: *mut PlayReadyContentHeader, fullyEvaluated: bool, out: *mut *mut PlayReadyLicenseIterable) -> HRESULT
@@ -22065,14 +22065,14 @@ impl IPlayReadyMeteringReportServiceRequest {
 }
 RT_CLASS!{class PlayReadyMeteringReportServiceRequest: IPlayReadyMeteringReportServiceRequest}
 impl RtActivatable<IActivationFactory> for PlayReadyMeteringReportServiceRequest {}
-DEFINE_CLSID!(PlayReadyMeteringReportServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,77,101,116,101,114,105,110,103,82,101,112,111,114,116,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyMeteringReportServiceRequest]);
+DEFINE_CLSID!(PlayReadyMeteringReportServiceRequest: "Windows.Media.Protection.PlayReady.PlayReadyMeteringReportServiceRequest");
 DEFINE_IID!(IID_IPlayReadyRevocationServiceRequest, 1413310124, 64240, 17760, 132, 165, 14, 74, 206, 201, 57, 228);
 RT_INTERFACE!{interface IPlayReadyRevocationServiceRequest(IPlayReadyRevocationServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyRevocationServiceRequest] {
     
 }}
 RT_CLASS!{class PlayReadyRevocationServiceRequest: IPlayReadyRevocationServiceRequest}
 impl RtActivatable<IActivationFactory> for PlayReadyRevocationServiceRequest {}
-DEFINE_CLSID!(PlayReadyRevocationServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,82,101,118,111,99,97,116,105,111,110,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyRevocationServiceRequest]);
+DEFINE_CLSID!(PlayReadyRevocationServiceRequest: "Windows.Media.Protection.PlayReady.PlayReadyRevocationServiceRequest");
 RT_CLASS!{class PlayReadySecureStopIterable: ::rt::gen::windows::foundation::collections::IIterable<IPlayReadySecureStopServiceRequest>}
 impl RtActivatable<IPlayReadySecureStopIterableFactory> for PlayReadySecureStopIterable {}
 impl PlayReadySecureStopIterable {
@@ -22080,7 +22080,7 @@ impl PlayReadySecureStopIterable {
         <Self as RtActivatable<IPlayReadySecureStopIterableFactory>>::get_activation_factory().create_instance(publisherCertBytes)
     }}
 }
-DEFINE_CLSID!(PlayReadySecureStopIterable(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,83,101,99,117,114,101,83,116,111,112,73,116,101,114,97,98,108,101,0]) [CLSID_PlayReadySecureStopIterable]);
+DEFINE_CLSID!(PlayReadySecureStopIterable: "Windows.Media.Protection.PlayReady.PlayReadySecureStopIterable");
 DEFINE_IID!(IID_IPlayReadySecureStopIterableFactory, 1595867493, 16916, 19870, 129, 235, 232, 159, 157, 41, 74, 238);
 RT_INTERFACE!{static interface IPlayReadySecureStopIterableFactory(IPlayReadySecureStopIterableFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadySecureStopIterableFactory] {
     fn CreateInstance(&self, publisherCertBytesSize: u32, publisherCertBytes: *mut u8, out: *mut *mut PlayReadySecureStopIterable) -> HRESULT
@@ -22138,7 +22138,7 @@ impl PlayReadySecureStopServiceRequest {
         <Self as RtActivatable<IPlayReadySecureStopServiceRequestFactory>>::get_activation_factory().create_instance_from_session_id(sessionID, publisherCertBytes)
     }}
 }
-DEFINE_CLSID!(PlayReadySecureStopServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,83,101,99,117,114,101,83,116,111,112,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadySecureStopServiceRequest]);
+DEFINE_CLSID!(PlayReadySecureStopServiceRequest: "Windows.Media.Protection.PlayReady.PlayReadySecureStopServiceRequest");
 DEFINE_IID!(IID_IPlayReadySecureStopServiceRequestFactory, 239373001, 59006, 18766, 159, 73, 98, 133, 67, 140, 118, 207);
 RT_INTERFACE!{static interface IPlayReadySecureStopServiceRequestFactory(IPlayReadySecureStopServiceRequestFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadySecureStopServiceRequestFactory] {
     fn CreateInstance(&self, publisherCertBytesSize: u32, publisherCertBytes: *mut u8, out: *mut *mut PlayReadySecureStopServiceRequest) -> HRESULT,
@@ -22336,7 +22336,7 @@ impl PlayReadyStatics {
         <Self as RtActivatable<IPlayReadyStatics4>>::get_activation_factory().get_protection_system_id()
     }}
 }
-DEFINE_CLSID!(PlayReadyStatics(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,83,116,97,116,105,99,115,0]) [CLSID_PlayReadyStatics]);
+DEFINE_CLSID!(PlayReadyStatics: "Windows.Media.Protection.PlayReady.PlayReadyStatics");
 DEFINE_IID!(IID_IPlayReadyStatics2, 529361554, 24474, 16958, 148, 102, 179, 57, 105, 175, 122, 61);
 RT_INTERFACE!{static interface IPlayReadyStatics2(IPlayReadyStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyStatics2] {
     fn get_PlayReadyCertificateSecurityLevel(&self, out: *mut u32) -> HRESULT
@@ -22576,7 +22576,7 @@ impl SpeechRecognitionGrammarFileConstraint {
         <Self as RtActivatable<ISpeechRecognitionGrammarFileConstraintFactory>>::get_activation_factory().create_with_tag(file, tag)
     }}
 }
-DEFINE_CLSID!(SpeechRecognitionGrammarFileConstraint(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,71,114,97,109,109,97,114,70,105,108,101,67,111,110,115,116,114,97,105,110,116,0]) [CLSID_SpeechRecognitionGrammarFileConstraint]);
+DEFINE_CLSID!(SpeechRecognitionGrammarFileConstraint: "Windows.Media.SpeechRecognition.SpeechRecognitionGrammarFileConstraint");
 DEFINE_IID!(IID_ISpeechRecognitionGrammarFileConstraintFactory, 1034383595, 50297, 19495, 159, 25, 137, 151, 78, 243, 146, 209);
 RT_INTERFACE!{static interface ISpeechRecognitionGrammarFileConstraintFactory(ISpeechRecognitionGrammarFileConstraintFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionGrammarFileConstraintFactory] {
     #[cfg(feature="windows-storage")] fn Create(&self, file: *mut super::super::storage::StorageFile, out: *mut *mut SpeechRecognitionGrammarFileConstraint) -> HRESULT,
@@ -22639,7 +22639,7 @@ impl SpeechRecognitionListConstraint {
         <Self as RtActivatable<ISpeechRecognitionListConstraintFactory>>::get_activation_factory().create_with_tag(commands, tag)
     }}
 }
-DEFINE_CLSID!(SpeechRecognitionListConstraint(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,76,105,115,116,67,111,110,115,116,114,97,105,110,116,0]) [CLSID_SpeechRecognitionListConstraint]);
+DEFINE_CLSID!(SpeechRecognitionListConstraint: "Windows.Media.SpeechRecognition.SpeechRecognitionListConstraint");
 DEFINE_IID!(IID_ISpeechRecognitionListConstraintFactory, 1089719751, 22058, 17002, 159, 59, 59, 78, 40, 43, 225, 213);
 RT_INTERFACE!{static interface ISpeechRecognitionListConstraintFactory(ISpeechRecognitionListConstraintFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionListConstraintFactory] {
     fn Create(&self, commands: *mut super::super::foundation::collections::IIterable<HString>, out: *mut *mut SpeechRecognitionListConstraint) -> HRESULT,
@@ -22785,7 +22785,7 @@ impl SpeechRecognitionTopicConstraint {
         <Self as RtActivatable<ISpeechRecognitionTopicConstraintFactory>>::get_activation_factory().create_with_tag(scenario, topicHint, tag)
     }}
 }
-DEFINE_CLSID!(SpeechRecognitionTopicConstraint(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,84,111,112,105,99,67,111,110,115,116,114,97,105,110,116,0]) [CLSID_SpeechRecognitionTopicConstraint]);
+DEFINE_CLSID!(SpeechRecognitionTopicConstraint: "Windows.Media.SpeechRecognition.SpeechRecognitionTopicConstraint");
 DEFINE_IID!(IID_ISpeechRecognitionTopicConstraintFactory, 1852335071, 60421, 18391, 165, 223, 86, 163, 67, 30, 88, 210);
 RT_INTERFACE!{static interface ISpeechRecognitionTopicConstraintFactory(ISpeechRecognitionTopicConstraintFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionTopicConstraintFactory] {
     fn Create(&self, scenario: SpeechRecognitionScenario, topicHint: HSTRING, out: *mut *mut SpeechRecognitionTopicConstraint) -> HRESULT,
@@ -22900,7 +22900,7 @@ impl SpeechRecognizer {
         <Self as RtActivatable<ISpeechRecognizerStatics2>>::get_activation_factory().try_set_system_speech_language_async(speechLanguage)
     }}
 }
-DEFINE_CLSID!(SpeechRecognizer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,46,83,112,101,101,99,104,82,101,99,111,103,110,105,122,101,114,0]) [CLSID_SpeechRecognizer]);
+DEFINE_CLSID!(SpeechRecognizer: "Windows.Media.SpeechRecognition.SpeechRecognizer");
 DEFINE_IID!(IID_ISpeechRecognizer2, 1674164977, 37347, 20132, 134, 161, 124, 56, 103, 208, 132, 166);
 RT_INTERFACE!{interface ISpeechRecognizer2(ISpeechRecognizer2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognizer2] {
     fn get_ContinuousRecognitionSession(&self, out: *mut *mut SpeechContinuousRecognitionSession) -> HRESULT,
@@ -23170,7 +23170,7 @@ impl SpeechSynthesizer {
         <Self as RtActivatable<IInstalledVoicesStatic2>>::get_activation_factory().try_set_default_voice_async(voice)
     }}
 }
-DEFINE_CLSID!(SpeechSynthesizer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,83,121,110,116,104,101,115,105,115,46,83,112,101,101,99,104,83,121,110,116,104,101,115,105,122,101,114,0]) [CLSID_SpeechSynthesizer]);
+DEFINE_CLSID!(SpeechSynthesizer: "Windows.Media.SpeechSynthesis.SpeechSynthesizer");
 DEFINE_IID!(IID_ISpeechSynthesizer2, 2814766258, 17209, 19818, 187, 248, 199, 164, 241, 84, 76, 46);
 RT_INTERFACE!{interface ISpeechSynthesizer2(ISpeechSynthesizer2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpeechSynthesizer2] {
     fn get_Options(&self, out: *mut *mut SpeechSynthesizerOptions) -> HRESULT
@@ -23378,7 +23378,7 @@ impl IMediaTranscoder {
 }
 RT_CLASS!{class MediaTranscoder: IMediaTranscoder}
 impl RtActivatable<IActivationFactory> for MediaTranscoder {}
-DEFINE_CLSID!(MediaTranscoder(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,84,114,97,110,115,99,111,100,105,110,103,46,77,101,100,105,97,84,114,97,110,115,99,111,100,101,114,0]) [CLSID_MediaTranscoder]);
+DEFINE_CLSID!(MediaTranscoder: "Windows.Media.Transcoding.MediaTranscoder");
 DEFINE_IID!(IID_IMediaTranscoder2, 1079188852, 13792, 20228, 133, 116, 202, 139, 196, 229, 160, 130);
 RT_INTERFACE!{interface IMediaTranscoder2(IMediaTranscoder2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaTranscoder2] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -23511,7 +23511,7 @@ impl AudioEncodingProperties {
         <Self as RtActivatable<IAudioEncodingPropertiesStatics2>>::get_activation_factory().create_flac(sampleRate, channelCount, bitsPerSample)
     }}
 }
-DEFINE_CLSID!(AudioEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,65,117,100,105,111,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_AudioEncodingProperties]);
+DEFINE_CLSID!(AudioEncodingProperties: "Windows.Media.MediaProperties.AudioEncodingProperties");
 DEFINE_IID!(IID_IAudioEncodingProperties2, 3294450906, 32957, 19491, 128, 213, 114, 212, 161, 129, 232, 148);
 RT_INTERFACE!{interface IAudioEncodingProperties2(IAudioEncodingProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioEncodingProperties2] {
     fn get_IsSpatial(&self, out: *mut bool) -> HRESULT
@@ -23600,7 +23600,7 @@ RT_INTERFACE!{interface IContainerEncodingProperties(IContainerEncodingPropertie
 }}
 RT_CLASS!{class ContainerEncodingProperties: IContainerEncodingProperties}
 impl RtActivatable<IActivationFactory> for ContainerEncodingProperties {}
-DEFINE_CLSID!(ContainerEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,67,111,110,116,97,105,110,101,114,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_ContainerEncodingProperties]);
+DEFINE_CLSID!(ContainerEncodingProperties: "Windows.Media.MediaProperties.ContainerEncodingProperties");
 RT_CLASS!{static class H264ProfileIds}
 impl RtActivatable<IH264ProfileIdsStatics> for H264ProfileIds {}
 impl H264ProfileIds {
@@ -23635,7 +23635,7 @@ impl H264ProfileIds {
         <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_multiview_high()
     }}
 }
-DEFINE_CLSID!(H264ProfileIds(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,72,50,54,52,80,114,111,102,105,108,101,73,100,115,0]) [CLSID_H264ProfileIds]);
+DEFINE_CLSID!(H264ProfileIds: "Windows.Media.MediaProperties.H264ProfileIds");
 DEFINE_IID!(IID_IH264ProfileIdsStatics, 946162855, 33898, 20375, 162, 229, 195, 161, 91, 191, 112, 253);
 RT_INTERFACE!{static interface IH264ProfileIdsStatics(IH264ProfileIdsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IH264ProfileIdsStatics] {
     fn get_ConstrainedBaseline(&self, out: *mut i32) -> HRESULT,
@@ -23749,7 +23749,7 @@ impl ImageEncodingProperties {
         <Self as RtActivatable<IImageEncodingPropertiesStatics2>>::get_activation_factory().create_bmp()
     }}
 }
-DEFINE_CLSID!(ImageEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,73,109,97,103,101,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_ImageEncodingProperties]);
+DEFINE_CLSID!(ImageEncodingProperties: "Windows.Media.MediaProperties.ImageEncodingProperties");
 DEFINE_IID!(IID_IImageEncodingPropertiesStatics, 628910300, 35737, 17310, 170, 89, 145, 58, 54, 22, 18, 151);
 RT_INTERFACE!{static interface IImageEncodingPropertiesStatics(IImageEncodingPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IImageEncodingPropertiesStatics] {
     fn CreateJpeg(&self, out: *mut *mut ImageEncodingProperties) -> HRESULT,
@@ -23871,7 +23871,7 @@ impl MediaEncodingProfile {
         <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().create_hevc(quality)
     }}
 }
-DEFINE_CLSID!(MediaEncodingProfile(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,101,100,105,97,69,110,99,111,100,105,110,103,80,114,111,102,105,108,101,0]) [CLSID_MediaEncodingProfile]);
+DEFINE_CLSID!(MediaEncodingProfile: "Windows.Media.MediaProperties.MediaEncodingProfile");
 DEFINE_IID!(IID_IMediaEncodingProfile2, 882589194, 16437, 18574, 152, 119, 133, 99, 40, 101, 237, 16);
 RT_INTERFACE!{interface IMediaEncodingProfile2(IMediaEncodingProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingProfile2] {
     fn SetAudioTracks(&self, value: *mut super::super::foundation::collections::IIterable<super::core::AudioStreamDescriptor>) -> HRESULT,
@@ -24158,7 +24158,7 @@ impl MediaEncodingSubtypes {
         <Self as RtActivatable<IMediaEncodingSubtypesStatics3>>::get_activation_factory().get_flac()
     }}
 }
-DEFINE_CLSID!(MediaEncodingSubtypes(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,101,100,105,97,69,110,99,111,100,105,110,103,83,117,98,116,121,112,101,115,0]) [CLSID_MediaEncodingSubtypes]);
+DEFINE_CLSID!(MediaEncodingSubtypes: "Windows.Media.MediaProperties.MediaEncodingSubtypes");
 DEFINE_IID!(IID_IMediaEncodingSubtypesStatics, 934696974, 41329, 17508, 186, 90, 83, 24, 158, 72, 193, 200);
 RT_INTERFACE!{static interface IMediaEncodingSubtypesStatics(IMediaEncodingSubtypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingSubtypesStatics] {
     fn get_Aac(&self, out: *mut HSTRING) -> HRESULT,
@@ -24458,7 +24458,7 @@ RT_ENUM! { enum MediaPixelFormat: i32 {
 }}
 RT_CLASS!{class MediaPropertySet: super::super::foundation::collections::IMap<Guid, IInspectable>}
 impl RtActivatable<IActivationFactory> for MediaPropertySet {}
-DEFINE_CLSID!(MediaPropertySet(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,101,100,105,97,80,114,111,112,101,114,116,121,83,101,116,0]) [CLSID_MediaPropertySet]);
+DEFINE_CLSID!(MediaPropertySet: "Windows.Media.MediaProperties.MediaPropertySet");
 DEFINE_IID!(IID_IMediaRatio, 3536912101, 35113, 16413, 172, 120, 125, 53, 126, 55, 129, 99);
 RT_INTERFACE!{interface IMediaRatio(IMediaRatioVtbl): IInspectable(IInspectableVtbl) [IID_IMediaRatio] {
     fn put_Numerator(&self, value: u32) -> HRESULT,
@@ -24512,7 +24512,7 @@ impl Mpeg2ProfileIds {
         <Self as RtActivatable<IMpeg2ProfileIdsStatics>>::get_activation_factory().get_high()
     }}
 }
-DEFINE_CLSID!(Mpeg2ProfileIds(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,112,101,103,50,80,114,111,102,105,108,101,73,100,115,0]) [CLSID_Mpeg2ProfileIds]);
+DEFINE_CLSID!(Mpeg2ProfileIds: "Windows.Media.MediaProperties.Mpeg2ProfileIds");
 DEFINE_IID!(IID_IMpeg2ProfileIdsStatics, 2757885829, 58746, 16680, 155, 33, 213, 51, 27, 4, 35, 92);
 RT_INTERFACE!{static interface IMpeg2ProfileIdsStatics(IMpeg2ProfileIdsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMpeg2ProfileIdsStatics] {
     fn get_Simple(&self, out: *mut i32) -> HRESULT,
@@ -24622,7 +24622,7 @@ impl VideoEncodingProperties {
         <Self as RtActivatable<IVideoEncodingPropertiesStatics2>>::get_activation_factory().create_hevc()
     }}
 }
-DEFINE_CLSID!(VideoEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,86,105,100,101,111,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_VideoEncodingProperties]);
+DEFINE_CLSID!(VideoEncodingProperties: "Windows.Media.MediaProperties.VideoEncodingProperties");
 DEFINE_IID!(IID_IVideoEncodingProperties2, 4148404719, 54373, 17040, 169, 75, 239, 15, 21, 40, 248, 227);
 RT_INTERFACE!{interface IVideoEncodingProperties2(IVideoEncodingProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoEncodingProperties2] {
     fn SetFormatUserData(&self, valueSize: u32, value: *mut u8) -> HRESULT,
@@ -24761,7 +24761,7 @@ impl ClosedCaptionProperties {
         <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().get_region_opacity()
     }}
 }
-DEFINE_CLSID!(ClosedCaptionProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,108,111,115,101,100,67,97,112,116,105,111,110,105,110,103,46,67,108,111,115,101,100,67,97,112,116,105,111,110,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_ClosedCaptionProperties]);
+DEFINE_CLSID!(ClosedCaptionProperties: "Windows.Media.ClosedCaptioning.ClosedCaptionProperties");
 DEFINE_IID!(IID_IClosedCaptionPropertiesStatics, 279584644, 52272, 16705, 181, 3, 82, 114, 40, 158, 12, 32);
 RT_INTERFACE!{static interface IClosedCaptionPropertiesStatics(IClosedCaptionPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IClosedCaptionPropertiesStatics] {
     fn get_FontColor(&self, out: *mut ClosedCaptionColor) -> HRESULT,
@@ -25022,7 +25022,7 @@ impl AdaptiveMediaSource {
         <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().create_from_stream_with_downloader_async(stream, uri, contentType, httpClient)
     }}
 }
-DEFINE_CLSID!(AdaptiveMediaSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,116,114,101,97,109,105,110,103,46,65,100,97,112,116,105,118,101,46,65,100,97,112,116,105,118,101,77,101,100,105,97,83,111,117,114,99,101,0]) [CLSID_AdaptiveMediaSource]);
+DEFINE_CLSID!(AdaptiveMediaSource: "Windows.Media.Streaming.Adaptive.AdaptiveMediaSource");
 DEFINE_IID!(IID_IAdaptiveMediaSource2, 394855234, 26464, 19385, 165, 138, 247, 170, 152, 176, 140, 14);
 RT_INTERFACE!{interface IAdaptiveMediaSource2(IAdaptiveMediaSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSource2] {
     fn get_AdvancedSettings(&self, out: *mut *mut AdaptiveMediaSourceAdvancedSettings) -> HRESULT
@@ -25781,7 +25781,7 @@ impl RatedContentDescription {
         <Self as RtActivatable<IRatedContentDescriptionFactory>>::get_activation_factory().create(id, title, category)
     }}
 }
-DEFINE_CLSID!(RatedContentDescription(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,110,116,101,110,116,82,101,115,116,114,105,99,116,105,111,110,115,46,82,97,116,101,100,67,111,110,116,101,110,116,68,101,115,99,114,105,112,116,105,111,110,0]) [CLSID_RatedContentDescription]);
+DEFINE_CLSID!(RatedContentDescription: "Windows.Media.ContentRestrictions.RatedContentDescription");
 DEFINE_IID!(IID_IRatedContentDescriptionFactory, 775479138, 39824, 20390, 137, 193, 75, 141, 47, 251, 53, 115);
 RT_INTERFACE!{static interface IRatedContentDescriptionFactory(IRatedContentDescriptionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRatedContentDescriptionFactory] {
     fn Create(&self, id: HSTRING, title: HSTRING, category: RatedContentCategory, out: *mut *mut RatedContentDescription) -> HRESULT
@@ -25835,7 +25835,7 @@ impl RatedContentRestrictions {
         <Self as RtActivatable<IRatedContentRestrictionsFactory>>::get_activation_factory().create_with_max_age_rating(maxAgeRating)
     }}
 }
-DEFINE_CLSID!(RatedContentRestrictions(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,110,116,101,110,116,82,101,115,116,114,105,99,116,105,111,110,115,46,82,97,116,101,100,67,111,110,116,101,110,116,82,101,115,116,114,105,99,116,105,111,110,115,0]) [CLSID_RatedContentRestrictions]);
+DEFINE_CLSID!(RatedContentRestrictions: "Windows.Media.ContentRestrictions.RatedContentRestrictions");
 DEFINE_IID!(IID_IRatedContentRestrictionsFactory, 4216007062, 50109, 18704, 150, 25, 151, 207, 208, 105, 77, 86);
 RT_INTERFACE!{static interface IRatedContentRestrictionsFactory(IRatedContentRestrictionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRatedContentRestrictionsFactory] {
     fn CreateWithMaxAgeRating(&self, maxAgeRating: u32, out: *mut *mut RatedContentRestrictions) -> HRESULT
@@ -25887,7 +25887,7 @@ impl Playlist {
         <Self as RtActivatable<IPlaylistStatics>>::get_activation_factory().load_async(file)
     }}
 }
-DEFINE_CLSID!(Playlist(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,108,105,115,116,115,46,80,108,97,121,108,105,115,116,0]) [CLSID_Playlist]);
+DEFINE_CLSID!(Playlist: "Windows.Media.Playlists.Playlist");
 RT_ENUM! { enum PlaylistFormat: i32 {
     WindowsMedia (PlaylistFormat_WindowsMedia) = 0, Zune (PlaylistFormat_Zune) = 1, M3u (PlaylistFormat_M3u) = 2,
 }}

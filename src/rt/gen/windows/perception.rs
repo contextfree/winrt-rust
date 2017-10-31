@@ -24,7 +24,7 @@ impl PerceptionTimestampHelper {
         <Self as RtActivatable<IPerceptionTimestampHelperStatics>>::get_activation_factory().from_historical_target_time(targetTime)
     }}
 }
-DEFINE_CLSID!(PerceptionTimestampHelper(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,80,101,114,99,101,112,116,105,111,110,84,105,109,101,115,116,97,109,112,72,101,108,112,101,114,0]) [CLSID_PerceptionTimestampHelper]);
+DEFINE_CLSID!(PerceptionTimestampHelper: "Windows.Perception.PerceptionTimestampHelper");
 DEFINE_IID!(IID_IPerceptionTimestampHelperStatics, 1202065876, 43487, 20188, 133, 93, 244, 211, 57, 217, 103, 172);
 RT_INTERFACE!{static interface IPerceptionTimestampHelperStatics(IPerceptionTimestampHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionTimestampHelperStatics] {
     fn FromHistoricalTargetTime(&self, targetTime: super::foundation::DateTime, out: *mut *mut PerceptionTimestamp) -> HRESULT
@@ -79,7 +79,7 @@ impl SpatialAnchor {
         <Self as RtActivatable<ISpatialAnchorStatics>>::get_activation_factory().try_create_with_position_and_orientation_relative_to(coordinateSystem, position, orientation)
     }}
 }
-DEFINE_CLSID!(SpatialAnchor(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,65,110,99,104,111,114,0]) [CLSID_SpatialAnchor]);
+DEFINE_CLSID!(SpatialAnchor: "Windows.Perception.Spatial.SpatialAnchor");
 DEFINE_IID!(IID_ISpatialAnchor2, 3977758984, 42645, 19702, 146, 253, 151, 38, 59, 167, 16, 71);
 RT_INTERFACE!{interface ISpatialAnchor2(ISpatialAnchor2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchor2] {
     fn get_RemovedByUser(&self, out: *mut bool) -> HRESULT
@@ -98,7 +98,7 @@ impl SpatialAnchorManager {
         <Self as RtActivatable<ISpatialAnchorManagerStatics>>::get_activation_factory().request_store_async()
     }}
 }
-DEFINE_CLSID!(SpatialAnchorManager(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,65,110,99,104,111,114,77,97,110,97,103,101,114,0]) [CLSID_SpatialAnchorManager]);
+DEFINE_CLSID!(SpatialAnchorManager: "Windows.Perception.Spatial.SpatialAnchorManager");
 DEFINE_IID!(IID_ISpatialAnchorManagerStatics, 2296581803, 62391, 16907, 176, 134, 138, 128, 192, 125, 145, 13);
 RT_INTERFACE!{static interface ISpatialAnchorManagerStatics(ISpatialAnchorManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorManagerStatics] {
     fn RequestStoreAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<SpatialAnchorStore>) -> HRESULT
@@ -186,7 +186,7 @@ impl SpatialAnchorTransferManager {
         <Self as RtActivatable<ISpatialAnchorTransferManagerStatics>>::get_activation_factory().request_access_async()
     }}
 }
-DEFINE_CLSID!(SpatialAnchorTransferManager(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,65,110,99,104,111,114,84,114,97,110,115,102,101,114,77,97,110,97,103,101,114,0]) [CLSID_SpatialAnchorTransferManager]);
+DEFINE_CLSID!(SpatialAnchorTransferManager: "Windows.Perception.Spatial.SpatialAnchorTransferManager");
 DEFINE_IID!(IID_ISpatialAnchorTransferManagerStatics, 62650809, 4824, 19406, 136, 53, 197, 223, 58, 192, 173, 171);
 RT_INTERFACE!{static interface ISpatialAnchorTransferManagerStatics(ISpatialAnchorTransferManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorTransferManagerStatics] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -244,7 +244,7 @@ impl SpatialBoundingVolume {
         <Self as RtActivatable<ISpatialBoundingVolumeStatics>>::get_activation_factory().from_frustum(coordinateSystem, frustum)
     }}
 }
-DEFINE_CLSID!(SpatialBoundingVolume(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,66,111,117,110,100,105,110,103,86,111,108,117,109,101,0]) [CLSID_SpatialBoundingVolume]);
+DEFINE_CLSID!(SpatialBoundingVolume: "Windows.Perception.Spatial.SpatialBoundingVolume");
 DEFINE_IID!(IID_ISpatialBoundingVolumeStatics, 92836119, 46049, 14040, 176, 23, 86, 97, 129, 165, 177, 150);
 RT_INTERFACE!{static interface ISpatialBoundingVolumeStatics(ISpatialBoundingVolumeStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialBoundingVolumeStatics] {
     fn FromBox(&self, coordinateSystem: *mut SpatialCoordinateSystem, box_: SpatialBoundingBox, out: *mut *mut SpatialBoundingVolume) -> HRESULT,
@@ -319,7 +319,7 @@ impl SpatialEntity {
         <Self as RtActivatable<ISpatialEntityFactory>>::get_activation_factory().create_with_spatial_anchor_and_properties(spatialAnchor, propertySet)
     }}
 }
-DEFINE_CLSID!(SpatialEntity(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,69,110,116,105,116,121,0]) [CLSID_SpatialEntity]);
+DEFINE_CLSID!(SpatialEntity: "Windows.Perception.Spatial.SpatialEntity");
 DEFINE_IID!(IID_ISpatialEntityAddedEventArgs, 2744644763, 5482, 18183, 172, 44, 211, 29, 87, 14, 211, 153);
 RT_INTERFACE!{interface ISpatialEntityAddedEventArgs(ISpatialEntityAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntityAddedEventArgs] {
     fn get_Entity(&self, out: *mut *mut SpatialEntity) -> HRESULT
@@ -394,7 +394,7 @@ impl SpatialEntityStore {
         <Self as RtActivatable<ISpatialEntityStoreStatics>>::get_activation_factory().try_get_for_remote_system_session(session)
     }}
 }
-DEFINE_CLSID!(SpatialEntityStore(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,69,110,116,105,116,121,83,116,111,114,101,0]) [CLSID_SpatialEntityStore]);
+DEFINE_CLSID!(SpatialEntityStore: "Windows.Perception.Spatial.SpatialEntityStore");
 DEFINE_IID!(IID_ISpatialEntityStoreStatics, 1800091806, 31824, 20114, 138, 98, 77, 29, 75, 124, 205, 62);
 RT_INTERFACE!{static interface ISpatialEntityStoreStatics(ISpatialEntityStoreStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntityStoreStatics] {
     fn get_IsSupported(&self, out: *mut bool) -> HRESULT,
@@ -632,7 +632,7 @@ impl SpatialLocator {
         <Self as RtActivatable<ISpatialLocatorStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(SpatialLocator(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,76,111,99,97,116,111,114,0]) [CLSID_SpatialLocator]);
+DEFINE_CLSID!(SpatialLocator: "Windows.Perception.Spatial.SpatialLocator");
 DEFINE_IID!(IID_ISpatialLocatorAttachedFrameOfReference, 3782692598, 8015, 18844, 150, 37, 239, 94, 110, 215, 160, 72);
 RT_INTERFACE!{interface ISpatialLocatorAttachedFrameOfReference(ISpatialLocatorAttachedFrameOfReferenceVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialLocatorAttachedFrameOfReference] {
     fn get_RelativePosition(&self, out: *mut super::super::foundation::numerics::Vector3) -> HRESULT,
@@ -766,7 +766,7 @@ impl SpatialStageFrameOfReference {
         <Self as RtActivatable<ISpatialStageFrameOfReferenceStatics>>::get_activation_factory().request_new_stage_async()
     }}
 }
-DEFINE_CLSID!(SpatialStageFrameOfReference(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,83,116,97,103,101,70,114,97,109,101,79,102,82,101,102,101,114,101,110,99,101,0]) [CLSID_SpatialStageFrameOfReference]);
+DEFINE_CLSID!(SpatialStageFrameOfReference: "Windows.Perception.Spatial.SpatialStageFrameOfReference");
 DEFINE_IID!(IID_ISpatialStageFrameOfReferenceStatics, 4153236557, 41124, 18844, 141, 145, 168, 201, 101, 212, 6, 84);
 RT_INTERFACE!{static interface ISpatialStageFrameOfReferenceStatics(ISpatialStageFrameOfReferenceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialStageFrameOfReferenceStatics] {
     fn get_Current(&self, out: *mut *mut SpatialStageFrameOfReference) -> HRESULT,
@@ -987,7 +987,7 @@ impl SpatialSurfaceMeshOptions {
         <Self as RtActivatable<ISpatialSurfaceMeshOptionsStatics>>::get_activation_factory().get_supported_vertex_normal_formats()
     }}
 }
-DEFINE_CLSID!(SpatialSurfaceMeshOptions(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,117,114,102,97,99,101,115,46,83,112,97,116,105,97,108,83,117,114,102,97,99,101,77,101,115,104,79,112,116,105,111,110,115,0]) [CLSID_SpatialSurfaceMeshOptions]);
+DEFINE_CLSID!(SpatialSurfaceMeshOptions: "Windows.Perception.Spatial.Surfaces.SpatialSurfaceMeshOptions");
 DEFINE_IID!(IID_ISpatialSurfaceMeshOptionsStatics, 2603879103, 38785, 17669, 137, 53, 1, 53, 117, 202, 174, 94);
 RT_INTERFACE!{static interface ISpatialSurfaceMeshOptionsStatics(ISpatialSurfaceMeshOptionsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceMeshOptionsStatics] {
     #[cfg(feature="windows-graphics")] fn get_SupportedVertexPositionFormats(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>) -> HRESULT,
@@ -1055,7 +1055,7 @@ impl SpatialSurfaceObserver {
         <Self as RtActivatable<ISpatialSurfaceObserverStatics2>>::get_activation_factory().is_supported()
     }}
 }
-DEFINE_CLSID!(SpatialSurfaceObserver(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,117,114,102,97,99,101,115,46,83,112,97,116,105,97,108,83,117,114,102,97,99,101,79,98,115,101,114,118,101,114,0]) [CLSID_SpatialSurfaceObserver]);
+DEFINE_CLSID!(SpatialSurfaceObserver: "Windows.Perception.Spatial.Surfaces.SpatialSurfaceObserver");
 DEFINE_IID!(IID_ISpatialSurfaceObserverStatics, 374952429, 8456, 16744, 145, 117, 135, 224, 39, 188, 146, 133);
 RT_INTERFACE!{static interface ISpatialSurfaceObserverStatics(ISpatialSurfaceObserverStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceObserverStatics] {
     fn RequestAccessAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<super::SpatialPerceptionAccessStatus>) -> HRESULT
@@ -1117,7 +1117,7 @@ impl CorePerceptionAutomation {
         <Self as RtActivatable<ICorePerceptionAutomationStatics>>::get_activation_factory().set_activation_factory_provider(provider)
     }}
 }
-DEFINE_CLSID!(CorePerceptionAutomation(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,65,117,116,111,109,97,116,105,111,110,46,67,111,114,101,46,67,111,114,101,80,101,114,99,101,112,116,105,111,110,65,117,116,111,109,97,116,105,111,110,0]) [CLSID_CorePerceptionAutomation]);
+DEFINE_CLSID!(CorePerceptionAutomation: "Windows.Perception.Automation.Core.CorePerceptionAutomation");
 DEFINE_IID!(IID_ICorePerceptionAutomationStatics, 196101441, 19682, 18723, 154, 118, 129, 135, 236, 197, 145, 18);
 RT_INTERFACE!{static interface ICorePerceptionAutomationStatics(ICorePerceptionAutomationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICorePerceptionAutomationStatics] {
     fn SetActivationFactoryProvider(&self, provider: *mut ::rt::gen::windows::foundation::IGetActivationFactory) -> HRESULT

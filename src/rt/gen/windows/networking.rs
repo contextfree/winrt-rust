@@ -58,7 +58,7 @@ impl EndpointPair {
         <Self as RtActivatable<IEndpointPairFactory>>::get_activation_factory().create_endpoint_pair(localHostName, localServiceName, remoteHostName, remoteServiceName)
     }}
 }
-DEFINE_CLSID!(EndpointPair(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,69,110,100,112,111,105,110,116,80,97,105,114,0]) [CLSID_EndpointPair]);
+DEFINE_CLSID!(EndpointPair: "Windows.Networking.EndpointPair");
 DEFINE_IID!(IID_IEndpointPairFactory, 3054098801, 25824, 17451, 170, 111, 204, 140, 143, 24, 31, 120);
 RT_INTERFACE!{static interface IEndpointPairFactory(IEndpointPairFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEndpointPairFactory] {
     fn CreateEndpointPair(&self, localHostName: *mut HostName, localServiceName: HSTRING, remoteHostName: *mut HostName, remoteServiceName: HSTRING, out: *mut *mut EndpointPair) -> HRESULT
@@ -122,7 +122,7 @@ impl HostName {
         <Self as RtActivatable<IHostNameStatics>>::get_activation_factory().compare(value1, value2)
     }}
 }
-DEFINE_CLSID!(HostName(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,72,111,115,116,78,97,109,101,0]) [CLSID_HostName]);
+DEFINE_CLSID!(HostName: "Windows.Networking.HostName");
 DEFINE_IID!(IID_IHostNameFactory, 1166812141, 28975, 17782, 173, 241, 194, 11, 44, 100, 53, 88);
 RT_INTERFACE!{static interface IHostNameFactory(IHostNameFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHostNameFactory] {
     fn CreateHostName(&self, hostName: HSTRING, out: *mut *mut HostName) -> HRESULT
@@ -219,7 +219,7 @@ impl HotspotAuthenticationContext {
         <Self as RtActivatable<IHotspotAuthenticationContextStatics>>::get_activation_factory().try_get_authentication_context(evenToken)
     }}
 }
-DEFINE_CLSID!(HotspotAuthenticationContext(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,72,111,116,115,112,111,116,65,117,116,104,101,110,116,105,99,97,116,105,111,110,67,111,110,116,101,120,116,0]) [CLSID_HotspotAuthenticationContext]);
+DEFINE_CLSID!(HotspotAuthenticationContext: "Windows.Networking.NetworkOperators.HotspotAuthenticationContext");
 DEFINE_IID!(IID_IHotspotAuthenticationContext2, 3881224081, 4100, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
 RT_INTERFACE!{interface IHotspotAuthenticationContext2(IHotspotAuthenticationContext2Vtbl): IInspectable(IInspectableVtbl) [IID_IHotspotAuthenticationContext2] {
     fn IssueCredentialsAsync(&self, userName: HSTRING, password: HSTRING, extraParameters: HSTRING, markAsManualConnectOnFailure: bool, out: *mut *mut super::super::foundation::IAsyncOperation<HotspotCredentialsAuthenticationResult>) -> HRESULT
@@ -300,7 +300,7 @@ impl KnownCSimFilePaths {
         <Self as RtActivatable<IKnownCSimFilePathsStatics>>::get_activation_factory().get_gid2()
     }}
 }
-DEFINE_CLSID!(KnownCSimFilePaths(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,75,110,111,119,110,67,83,105,109,70,105,108,101,80,97,116,104,115,0]) [CLSID_KnownCSimFilePaths]);
+DEFINE_CLSID!(KnownCSimFilePaths: "Windows.Networking.NetworkOperators.KnownCSimFilePaths");
 DEFINE_IID!(IID_IKnownCSimFilePathsStatics, 3025710829, 18929, 19490, 176, 115, 150, 213, 17, 191, 156, 53);
 RT_INTERFACE!{static interface IKnownCSimFilePathsStatics(IKnownCSimFilePathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownCSimFilePathsStatics] {
     fn get_EFSpn(&self, out: *mut *mut super::super::foundation::collections::IVectorView<u32>) -> HRESULT,
@@ -337,7 +337,7 @@ impl KnownRuimFilePaths {
         <Self as RtActivatable<IKnownRuimFilePathsStatics>>::get_activation_factory().get_gid2()
     }}
 }
-DEFINE_CLSID!(KnownRuimFilePaths(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,75,110,111,119,110,82,117,105,109,70,105,108,101,80,97,116,104,115,0]) [CLSID_KnownRuimFilePaths]);
+DEFINE_CLSID!(KnownRuimFilePaths: "Windows.Networking.NetworkOperators.KnownRuimFilePaths");
 DEFINE_IID!(IID_IKnownRuimFilePathsStatics, 948160697, 65316, 17777, 168, 103, 9, 249, 96, 66, 110, 20);
 RT_INTERFACE!{static interface IKnownRuimFilePathsStatics(IKnownRuimFilePathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownRuimFilePathsStatics] {
     fn get_EFSpn(&self, out: *mut *mut super::super::foundation::collections::IVectorView<u32>) -> HRESULT,
@@ -377,7 +377,7 @@ impl KnownSimFilePaths {
         <Self as RtActivatable<IKnownSimFilePathsStatics>>::get_activation_factory().get_gid2()
     }}
 }
-DEFINE_CLSID!(KnownSimFilePaths(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,75,110,111,119,110,83,105,109,70,105,108,101,80,97,116,104,115,0]) [CLSID_KnownSimFilePaths]);
+DEFINE_CLSID!(KnownSimFilePaths: "Windows.Networking.NetworkOperators.KnownSimFilePaths");
 DEFINE_IID!(IID_IKnownSimFilePathsStatics, 2160925283, 14245, 17363, 128, 163, 204, 210, 62, 143, 236, 238);
 RT_INTERFACE!{static interface IKnownSimFilePathsStatics(IKnownSimFilePathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownSimFilePathsStatics] {
     fn get_EFOns(&self, out: *mut *mut super::super::foundation::collections::IVectorView<u32>) -> HRESULT,
@@ -426,7 +426,7 @@ impl KnownUSimFilePaths {
         <Self as RtActivatable<IKnownUSimFilePathsStatics>>::get_activation_factory().get_gid2()
     }}
 }
-DEFINE_CLSID!(KnownUSimFilePaths(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,75,110,111,119,110,85,83,105,109,70,105,108,101,80,97,116,104,115,0]) [CLSID_KnownUSimFilePaths]);
+DEFINE_CLSID!(KnownUSimFilePaths: "Windows.Networking.NetworkOperators.KnownUSimFilePaths");
 DEFINE_IID!(IID_IKnownUSimFilePathsStatics, 2083841409, 7963, 17396, 149, 48, 139, 9, 45, 50, 215, 31);
 RT_INTERFACE!{static interface IKnownUSimFilePathsStatics(IKnownUSimFilePathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownUSimFilePathsStatics] {
     fn get_EFSpn(&self, out: *mut *mut super::super::foundation::collections::IVectorView<u32>) -> HRESULT,
@@ -507,7 +507,7 @@ impl MobileBroadbandAccount {
         <Self as RtActivatable<IMobileBroadbandAccountStatics>>::get_activation_factory().create_from_network_account_id(networkAccountId)
     }}
 }
-DEFINE_CLSID!(MobileBroadbandAccount(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,65,99,99,111,117,110,116,0]) [CLSID_MobileBroadbandAccount]);
+DEFINE_CLSID!(MobileBroadbandAccount: "Windows.Networking.NetworkOperators.MobileBroadbandAccount");
 DEFINE_IID!(IID_IMobileBroadbandAccount2, 955592476, 4406, 16983, 149, 159, 182, 88, 163, 82, 182, 212);
 RT_INTERFACE!{interface IMobileBroadbandAccount2(IMobileBroadbandAccount2Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAccount2] {
     fn GetConnectionProfiles(&self, out: *mut *mut super::super::foundation::collections::IVectorView<super::connectivity::ConnectionProfile>) -> HRESULT
@@ -661,7 +661,7 @@ impl IMobileBroadbandAccountWatcher {
 }
 RT_CLASS!{class MobileBroadbandAccountWatcher: IMobileBroadbandAccountWatcher}
 impl RtActivatable<IActivationFactory> for MobileBroadbandAccountWatcher {}
-DEFINE_CLSID!(MobileBroadbandAccountWatcher(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,65,99,99,111,117,110,116,87,97,116,99,104,101,114,0]) [CLSID_MobileBroadbandAccountWatcher]);
+DEFINE_CLSID!(MobileBroadbandAccountWatcher: "Windows.Networking.NetworkOperators.MobileBroadbandAccountWatcher");
 RT_ENUM! { enum MobileBroadbandAccountWatcherStatus: i32 {
     Created (MobileBroadbandAccountWatcherStatus_Created) = 0, Started (MobileBroadbandAccountWatcherStatus_Started) = 1, EnumerationCompleted (MobileBroadbandAccountWatcherStatus_EnumerationCompleted) = 2, Stopped (MobileBroadbandAccountWatcherStatus_Stopped) = 3, Aborted (MobileBroadbandAccountWatcherStatus_Aborted) = 4,
 }}
@@ -1393,7 +1393,7 @@ impl MobileBroadbandModem {
         <Self as RtActivatable<IMobileBroadbandModemStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(MobileBroadbandModem(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,77,111,100,101,109,0]) [CLSID_MobileBroadbandModem]);
+DEFINE_CLSID!(MobileBroadbandModem: "Windows.Networking.NetworkOperators.MobileBroadbandModem");
 DEFINE_IID!(IID_IMobileBroadbandModem2, 310782760, 47595, 20194, 187, 227, 113, 31, 83, 238, 163, 115);
 RT_INTERFACE!{interface IMobileBroadbandModem2(IMobileBroadbandModem2Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModem2] {
     fn GetIsPassthroughEnabledAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<bool>) -> HRESULT,
@@ -2099,7 +2099,7 @@ impl INetworkOperatorTetheringAccessPointConfiguration {
 }
 RT_CLASS!{class NetworkOperatorTetheringAccessPointConfiguration: INetworkOperatorTetheringAccessPointConfiguration}
 impl RtActivatable<IActivationFactory> for NetworkOperatorTetheringAccessPointConfiguration {}
-DEFINE_CLSID!(NetworkOperatorTetheringAccessPointConfiguration(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,84,101,116,104,101,114,105,110,103,65,99,99,101,115,115,80,111,105,110,116,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_NetworkOperatorTetheringAccessPointConfiguration]);
+DEFINE_CLSID!(NetworkOperatorTetheringAccessPointConfiguration: "Windows.Networking.NetworkOperators.NetworkOperatorTetheringAccessPointConfiguration");
 DEFINE_IID!(IID_INetworkOperatorTetheringClient, 1889346892, 22879, 18503, 187, 48, 100, 105, 53, 84, 41, 24);
 RT_INTERFACE!{interface INetworkOperatorTetheringClient(INetworkOperatorTetheringClientVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringClient] {
     fn get_MacAddress(&self, out: *mut HSTRING) -> HRESULT,
@@ -2207,7 +2207,7 @@ impl NetworkOperatorTetheringManager {
         <Self as RtActivatable<INetworkOperatorTetheringManagerStatics3>>::get_activation_factory().create_from_connection_profile_with_target_adapter(profile, adapter)
     }}
 }
-DEFINE_CLSID!(NetworkOperatorTetheringManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,84,101,116,104,101,114,105,110,103,77,97,110,97,103,101,114,0]) [CLSID_NetworkOperatorTetheringManager]);
+DEFINE_CLSID!(NetworkOperatorTetheringManager: "Windows.Networking.NetworkOperators.NetworkOperatorTetheringManager");
 DEFINE_IID!(IID_INetworkOperatorTetheringManagerStatics, 1052555980, 63683, 16476, 153, 100, 112, 161, 238, 171, 225, 148);
 RT_INTERFACE!{static interface INetworkOperatorTetheringManagerStatics(INetworkOperatorTetheringManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringManagerStatics] {
     fn GetTetheringCapability(&self, networkAccountId: HSTRING, out: *mut TetheringCapability) -> HRESULT,
@@ -2339,7 +2339,7 @@ impl ProvisioningAgent {
         <Self as RtActivatable<IProvisioningAgentStaticMethods>>::get_activation_factory().create_from_network_account_id(networkAccountId)
     }}
 }
-DEFINE_CLSID!(ProvisioningAgent(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,80,114,111,118,105,115,105,111,110,105,110,103,65,103,101,110,116,0]) [CLSID_ProvisioningAgent]);
+DEFINE_CLSID!(ProvisioningAgent: "Windows.Networking.NetworkOperators.ProvisioningAgent");
 DEFINE_IID!(IID_IProvisioningAgentStaticMethods, 561447136, 33025, 4575, 173, 185, 244, 206, 70, 45, 145, 55);
 RT_INTERFACE!{static interface IProvisioningAgentStaticMethods(IProvisioningAgentStaticMethodsVtbl): IInspectable(IInspectableVtbl) [IID_IProvisioningAgentStaticMethods] {
     fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut *mut ProvisioningAgent) -> HRESULT
@@ -2414,7 +2414,7 @@ impl UssdMessage {
         <Self as RtActivatable<IUssdMessageFactory>>::get_activation_factory().create_message(messageText)
     }}
 }
-DEFINE_CLSID!(UssdMessage(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,85,115,115,100,77,101,115,115,97,103,101,0]) [CLSID_UssdMessage]);
+DEFINE_CLSID!(UssdMessage: "Windows.Networking.NetworkOperators.UssdMessage");
 DEFINE_IID!(IID_IUssdMessageFactory, 798674818, 4099, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
 RT_INTERFACE!{static interface IUssdMessageFactory(IUssdMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUssdMessageFactory] {
     fn CreateMessage(&self, messageText: HSTRING, out: *mut *mut UssdMessage) -> HRESULT
@@ -2473,7 +2473,7 @@ impl UssdSession {
         <Self as RtActivatable<IUssdSessionStatics>>::get_activation_factory().create_from_network_interface_id(networkInterfaceId)
     }}
 }
-DEFINE_CLSID!(UssdSession(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,85,115,115,100,83,101,115,115,105,111,110,0]) [CLSID_UssdSession]);
+DEFINE_CLSID!(UssdSession: "Windows.Networking.NetworkOperators.UssdSession");
 DEFINE_IID!(IID_IUssdSessionStatics, 798674818, 4097, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
 RT_INTERFACE!{static interface IUssdSessionStatics(IUssdSessionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUssdSessionStatics] {
     fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut *mut UssdSession) -> HRESULT,
@@ -2606,7 +2606,7 @@ impl ICellularApnContext {
 }
 RT_CLASS!{class CellularApnContext: ICellularApnContext}
 impl RtActivatable<IActivationFactory> for CellularApnContext {}
-DEFINE_CLSID!(CellularApnContext(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,101,108,108,117,108,97,114,65,112,110,67,111,110,116,101,120,116,0]) [CLSID_CellularApnContext]);
+DEFINE_CLSID!(CellularApnContext: "Windows.Networking.Connectivity.CellularApnContext");
 DEFINE_IID!(IID_IConnectionCost, 3134707753, 13334, 19216, 162, 2, 186, 192, 176, 117, 189, 174);
 RT_INTERFACE!{interface IConnectionCost(IConnectionCostVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionCost] {
     fn get_NetworkCostType(&self, out: *mut NetworkCostType) -> HRESULT,
@@ -2851,7 +2851,7 @@ impl IConnectionProfileFilter {
 }
 RT_CLASS!{class ConnectionProfileFilter: IConnectionProfileFilter}
 impl RtActivatable<IActivationFactory> for ConnectionProfileFilter {}
-DEFINE_CLSID!(ConnectionProfileFilter(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,111,110,110,101,99,116,105,111,110,80,114,111,102,105,108,101,70,105,108,116,101,114,0]) [CLSID_ConnectionProfileFilter]);
+DEFINE_CLSID!(ConnectionProfileFilter: "Windows.Networking.Connectivity.ConnectionProfileFilter");
 DEFINE_IID!(IID_IConnectionProfileFilter2, 3439759073, 50172, 20397, 157, 220, 89, 63, 170, 75, 120, 133);
 RT_INTERFACE!{interface IConnectionProfileFilter2(IConnectionProfileFilter2Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfileFilter2] {
     fn put_IsRoaming(&self, value: *mut super::super::foundation::IReference<bool>) -> HRESULT,
@@ -2939,7 +2939,7 @@ impl ConnectivityManager {
         <Self as RtActivatable<IConnectivityManagerStatics>>::get_activation_factory().remove_http_route_policy(routePolicy)
     }}
 }
-DEFINE_CLSID!(ConnectivityManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,111,110,110,101,99,116,105,118,105,116,121,77,97,110,97,103,101,114,0]) [CLSID_ConnectivityManager]);
+DEFINE_CLSID!(ConnectivityManager: "Windows.Networking.Connectivity.ConnectivityManager");
 DEFINE_IID!(IID_IConnectivityManagerStatics, 1361106097, 20401, 18608, 175, 201, 66, 224, 9, 42, 129, 100);
 RT_INTERFACE!{static interface IConnectivityManagerStatics(IConnectivityManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IConnectivityManagerStatics] {
     fn AcquireConnectionAsync(&self, cellularApnContext: *mut CellularApnContext, out: *mut *mut super::super::foundation::IAsyncOperation<ConnectionSession>) -> HRESULT,
@@ -3190,7 +3190,7 @@ impl NetworkInformation {
         <Self as RtActivatable<INetworkInformationStatics2>>::get_activation_factory().find_connection_profiles_async(pProfileFilter)
     }}
 }
-DEFINE_CLSID!(NetworkInformation(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,78,101,116,119,111,114,107,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_NetworkInformation]);
+DEFINE_CLSID!(NetworkInformation: "Windows.Networking.Connectivity.NetworkInformation");
 DEFINE_IID!(IID_INetworkInformationStatics, 1349843025, 38157, 16741, 156, 21, 54, 86, 25, 72, 30, 234);
 RT_INTERFACE!{static interface INetworkInformationStatics(INetworkInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkInformationStatics] {
     fn GetConnectionProfiles(&self, out: *mut *mut super::super::foundation::collections::IVectorView<ConnectionProfile>) -> HRESULT,
@@ -3465,7 +3465,7 @@ impl RoutePolicy {
         <Self as RtActivatable<IRoutePolicyFactory>>::get_activation_factory().create_route_policy(connectionProfile, hostName, type_)
     }}
 }
-DEFINE_CLSID!(RoutePolicy(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,82,111,117,116,101,80,111,108,105,99,121,0]) [CLSID_RoutePolicy]);
+DEFINE_CLSID!(RoutePolicy: "Windows.Networking.Connectivity.RoutePolicy");
 DEFINE_IID!(IID_IRoutePolicyFactory, 906131763, 41358, 19893, 166, 151, 245, 143, 167, 54, 78, 68);
 RT_INTERFACE!{static interface IRoutePolicyFactory(IRoutePolicyFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRoutePolicyFactory] {
     fn CreateRoutePolicy(&self, connectionProfile: *mut ConnectionProfile, hostName: *mut super::HostName, type_: super::DomainNameType, out: *mut *mut RoutePolicy) -> HRESULT
@@ -3577,7 +3577,7 @@ impl BackgroundDownloader {
         <Self as RtActivatable<IBackgroundDownloaderUserConsent>>::get_activation_factory().request_unconstrained_downloads_async(operations)
     }}
 }
-DEFINE_CLSID!(BackgroundDownloader(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,68,111,119,110,108,111,97,100,101,114,0]) [CLSID_BackgroundDownloader]);
+DEFINE_CLSID!(BackgroundDownloader: "Windows.Networking.BackgroundTransfer.BackgroundDownloader");
 DEFINE_IID!(IID_IBackgroundDownloader2, 2840221767, 13453, 18997, 137, 14, 138, 30, 243, 121, 132, 121);
 RT_INTERFACE!{interface IBackgroundDownloader2(IBackgroundDownloader2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader2] {
     fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT,
@@ -3799,7 +3799,7 @@ impl IBackgroundTransferCompletionGroup {
 }
 RT_CLASS!{class BackgroundTransferCompletionGroup: IBackgroundTransferCompletionGroup}
 impl RtActivatable<IActivationFactory> for BackgroundTransferCompletionGroup {}
-DEFINE_CLSID!(BackgroundTransferCompletionGroup(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,67,111,109,112,108,101,116,105,111,110,71,114,111,117,112,0]) [CLSID_BackgroundTransferCompletionGroup]);
+DEFINE_CLSID!(BackgroundTransferCompletionGroup: "Windows.Networking.BackgroundTransfer.BackgroundTransferCompletionGroup");
 DEFINE_IID!(IID_IBackgroundTransferCompletionGroupTriggerDetails, 2070667910, 28231, 20790, 127, 203, 250, 67, 137, 244, 111, 91);
 RT_INTERFACE!{interface IBackgroundTransferCompletionGroupTriggerDetails(IBackgroundTransferCompletionGroupTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferCompletionGroupTriggerDetails] {
     fn get_Downloads(&self, out: *mut *mut super::super::foundation::collections::IVectorView<DownloadOperation>) -> HRESULT,
@@ -3849,7 +3849,7 @@ impl BackgroundTransferContentPart {
         <Self as RtActivatable<IBackgroundTransferContentPartFactory>>::get_activation_factory().create_with_name_and_file_name(name, fileName)
     }}
 }
-DEFINE_CLSID!(BackgroundTransferContentPart(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,67,111,110,116,101,110,116,80,97,114,116,0]) [CLSID_BackgroundTransferContentPart]);
+DEFINE_CLSID!(BackgroundTransferContentPart: "Windows.Networking.BackgroundTransfer.BackgroundTransferContentPart");
 DEFINE_IID!(IID_IBackgroundTransferContentPartFactory, 2431621289, 31233, 18955, 159, 128, 160, 176, 187, 55, 15, 141);
 RT_INTERFACE!{static interface IBackgroundTransferContentPartFactory(IBackgroundTransferContentPartFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferContentPartFactory] {
     fn CreateWithName(&self, name: HSTRING, out: *mut *mut BackgroundTransferContentPart) -> HRESULT,
@@ -3877,7 +3877,7 @@ impl BackgroundTransferError {
         <Self as RtActivatable<IBackgroundTransferErrorStaticMethods>>::get_activation_factory().get_status(hresult)
     }}
 }
-DEFINE_CLSID!(BackgroundTransferError(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,69,114,114,111,114,0]) [CLSID_BackgroundTransferError]);
+DEFINE_CLSID!(BackgroundTransferError: "Windows.Networking.BackgroundTransfer.BackgroundTransferError");
 DEFINE_IID!(IID_IBackgroundTransferErrorStaticMethods, 2865969924, 4498, 19444, 139, 104, 57, 197, 173, 210, 68, 226);
 RT_INTERFACE!{static interface IBackgroundTransferErrorStaticMethods(IBackgroundTransferErrorStaticMethodsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferErrorStaticMethods] {
     #[cfg(feature="windows-web")] fn GetStatus(&self, hresult: i32, out: *mut super::super::web::WebErrorStatus) -> HRESULT
@@ -3921,7 +3921,7 @@ impl BackgroundTransferGroup {
         <Self as RtActivatable<IBackgroundTransferGroupStatics>>::get_activation_factory().create_group(name)
     }}
 }
-DEFINE_CLSID!(BackgroundTransferGroup(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,71,114,111,117,112,0]) [CLSID_BackgroundTransferGroup]);
+DEFINE_CLSID!(BackgroundTransferGroup: "Windows.Networking.BackgroundTransfer.BackgroundTransferGroup");
 DEFINE_IID!(IID_IBackgroundTransferGroupStatics, 49041586, 32024, 18779, 170, 34, 50, 169, 125, 69, 211, 226);
 RT_INTERFACE!{static interface IBackgroundTransferGroupStatics(IBackgroundTransferGroupStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferGroupStatics] {
     fn CreateGroup(&self, name: HSTRING, out: *mut *mut BackgroundTransferGroup) -> HRESULT
@@ -4092,7 +4092,7 @@ impl BackgroundUploader {
         <Self as RtActivatable<IBackgroundUploaderUserConsent>>::get_activation_factory().request_unconstrained_uploads_async(operations)
     }}
 }
-DEFINE_CLSID!(BackgroundUploader(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,85,112,108,111,97,100,101,114,0]) [CLSID_BackgroundUploader]);
+DEFINE_CLSID!(BackgroundUploader: "Windows.Networking.BackgroundTransfer.BackgroundUploader");
 DEFINE_IID!(IID_IBackgroundUploader2, 2382762702, 3124, 17507, 128, 127, 25, 138, 27, 139, 212, 173);
 RT_INTERFACE!{interface IBackgroundUploader2(IBackgroundUploader2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader2] {
     fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT,
@@ -4256,7 +4256,7 @@ impl ContentPrefetcher {
         <Self as RtActivatable<IContentPrefetcherTime>>::get_activation_factory().get_last_successful_prefetch_time()
     }}
 }
-DEFINE_CLSID!(ContentPrefetcher(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,67,111,110,116,101,110,116,80,114,101,102,101,116,99,104,101,114,0]) [CLSID_ContentPrefetcher]);
+DEFINE_CLSID!(ContentPrefetcher: "Windows.Networking.BackgroundTransfer.ContentPrefetcher");
 DEFINE_IID!(IID_IContentPrefetcherTime, 3814849800, 4906, 20446, 167, 204, 252, 176, 230, 101, 35, 175);
 RT_INTERFACE!{static interface IContentPrefetcherTime(IContentPrefetcherTimeVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetcherTime] {
     fn get_LastSuccessfulPrefetchTime(&self, out: *mut *mut super::super::foundation::IReference<super::super::foundation::DateTime>) -> HRESULT
@@ -4596,7 +4596,7 @@ impl PeerFinder {
         <Self as RtActivatable<IPeerFinderStatics2>>::get_activation_factory().create_watcher()
     }}
 }
-DEFINE_CLSID!(PeerFinder(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,80,114,111,120,105,109,105,116,121,46,80,101,101,114,70,105,110,100,101,114,0]) [CLSID_PeerFinder]);
+DEFINE_CLSID!(PeerFinder: "Windows.Networking.Proximity.PeerFinder");
 DEFINE_IID!(IID_IPeerFinderStatics, 2437626721, 63201, 18372, 161, 76, 20, 138, 25, 3, 208, 198);
 RT_INTERFACE!{static interface IPeerFinderStatics(IPeerFinderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPeerFinderStatics] {
     fn get_AllowBluetooth(&self, out: *mut bool) -> HRESULT,
@@ -4983,7 +4983,7 @@ impl ProximityDevice {
         <Self as RtActivatable<IProximityDeviceStatics>>::get_activation_factory().from_id(deviceId)
     }}
 }
-DEFINE_CLSID!(ProximityDevice(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,80,114,111,120,105,109,105,116,121,46,80,114,111,120,105,109,105,116,121,68,101,118,105,99,101,0]) [CLSID_ProximityDevice]);
+DEFINE_CLSID!(ProximityDevice: "Windows.Networking.Proximity.ProximityDevice");
 DEFINE_IID!(IID_IProximityDeviceStatics, 2437652509, 63201, 18372, 161, 76, 20, 138, 25, 3, 208, 198);
 RT_INTERFACE!{static interface IProximityDeviceStatics(IProximityDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IProximityDeviceStatics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
@@ -5094,7 +5094,7 @@ impl IDnssdRegistrationResult {
 }
 RT_CLASS!{class DnssdRegistrationResult: IDnssdRegistrationResult}
 impl RtActivatable<IActivationFactory> for DnssdRegistrationResult {}
-DEFINE_CLSID!(DnssdRegistrationResult(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,101,114,118,105,99,101,68,105,115,99,111,118,101,114,121,46,68,110,115,115,100,46,68,110,115,115,100,82,101,103,105,115,116,114,97,116,105,111,110,82,101,115,117,108,116,0]) [CLSID_DnssdRegistrationResult]);
+DEFINE_CLSID!(DnssdRegistrationResult: "Windows.Networking.ServiceDiscovery.Dnssd.DnssdRegistrationResult");
 RT_ENUM! { enum DnssdRegistrationStatus: i32 {
     Success (DnssdRegistrationStatus_Success) = 0, InvalidServiceName (DnssdRegistrationStatus_InvalidServiceName) = 1, ServerError (DnssdRegistrationStatus_ServerError) = 2, SecurityError (DnssdRegistrationStatus_SecurityError) = 3,
 }}
@@ -5195,7 +5195,7 @@ impl DnssdServiceInstance {
         <Self as RtActivatable<IDnssdServiceInstanceFactory>>::get_activation_factory().create(dnssdServiceInstanceName, hostName, port)
     }}
 }
-DEFINE_CLSID!(DnssdServiceInstance(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,101,114,118,105,99,101,68,105,115,99,111,118,101,114,121,46,68,110,115,115,100,46,68,110,115,115,100,83,101,114,118,105,99,101,73,110,115,116,97,110,99,101,0]) [CLSID_DnssdServiceInstance]);
+DEFINE_CLSID!(DnssdServiceInstance: "Windows.Networking.ServiceDiscovery.Dnssd.DnssdServiceInstance");
 RT_CLASS!{class DnssdServiceInstanceCollection: ::rt::gen::windows::foundation::collections::IVectorView<DnssdServiceInstance>}
 DEFINE_IID!(IID_IDnssdServiceInstanceFactory, 1823498657, 50296, 17201, 150, 132, 74, 242, 24, 108, 10, 43);
 RT_INTERFACE!{static interface IDnssdServiceInstanceFactory(IDnssdServiceInstanceFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDnssdServiceInstanceFactory] {
@@ -5352,7 +5352,7 @@ impl ControlChannelTrigger {
         <Self as RtActivatable<IControlChannelTriggerFactory>>::get_activation_factory().create_control_channel_trigger_ex(channelId, serverKeepAliveIntervalInMinutes, resourceRequestType)
     }}
 }
-DEFINE_CLSID!(ControlChannelTrigger(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,67,111,110,116,114,111,108,67,104,97,110,110,101,108,84,114,105,103,103,101,114,0]) [CLSID_ControlChannelTrigger]);
+DEFINE_CLSID!(ControlChannelTrigger: "Windows.Networking.Sockets.ControlChannelTrigger");
 DEFINE_IID!(IID_IControlChannelTrigger2, 2936066615, 20926, 17684, 151, 37, 53, 86, 225, 135, 149, 128);
 RT_INTERFACE!{interface IControlChannelTrigger2(IControlChannelTrigger2Vtbl): IInspectable(IInspectableVtbl) [IID_IControlChannelTrigger2] {
     fn get_IsWakeFromLowPowerSupported(&self, out: *mut bool) -> HRESULT
@@ -5513,7 +5513,7 @@ impl DatagramSocket {
         <Self as RtActivatable<IDatagramSocketStatics>>::get_activation_factory().get_endpoint_pairs_with_sort_options_async(remoteHostName, remoteServiceName, sortOptions)
     }}
 }
-DEFINE_CLSID!(DatagramSocket(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,68,97,116,97,103,114,97,109,83,111,99,107,101,116,0]) [CLSID_DatagramSocket]);
+DEFINE_CLSID!(DatagramSocket: "Windows.Networking.Sockets.DatagramSocket");
 DEFINE_IID!(IID_IDatagramSocket2, 3627787092, 39581, 16773, 162, 10, 20, 36, 201, 194, 167, 205);
 RT_INTERFACE!{interface IDatagramSocket2(IDatagramSocket2Vtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocket2] {
     fn BindServiceNameAndAdapterAsync(&self, localServiceName: HSTRING, adapter: *mut super::connectivity::NetworkAdapter, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT
@@ -5745,7 +5745,7 @@ impl IMessageWebSocket {
 }
 RT_CLASS!{class MessageWebSocket: IMessageWebSocket}
 impl RtActivatable<IActivationFactory> for MessageWebSocket {}
-DEFINE_CLSID!(MessageWebSocket(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,77,101,115,115,97,103,101,87,101,98,83,111,99,107,101,116,0]) [CLSID_MessageWebSocket]);
+DEFINE_CLSID!(MessageWebSocket: "Windows.Networking.Sockets.MessageWebSocket");
 DEFINE_IID!(IID_IMessageWebSocket2, 3201355495, 63944, 17418, 154, 213, 115, 114, 129, 217, 116, 46);
 RT_INTERFACE!{interface IMessageWebSocket2(IMessageWebSocket2Vtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocket2] {
     fn add_ServerCustomValidationRequested(&self, eventHandler: *mut super::super::foundation::TypedEventHandler<MessageWebSocket, WebSocketServerCustomValidationRequestedEventArgs>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
@@ -5897,7 +5897,7 @@ impl SocketActivityContext {
         <Self as RtActivatable<ISocketActivityContextFactory>>::get_activation_factory().create(data)
     }}
 }
-DEFINE_CLSID!(SocketActivityContext(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,111,99,107,101,116,65,99,116,105,118,105,116,121,67,111,110,116,101,120,116,0]) [CLSID_SocketActivityContext]);
+DEFINE_CLSID!(SocketActivityContext: "Windows.Networking.Sockets.SocketActivityContext");
 DEFINE_IID!(IID_ISocketActivityContextFactory, 3114255299, 2188, 17288, 131, 174, 37, 37, 19, 142, 4, 154);
 RT_INTERFACE!{static interface ISocketActivityContextFactory(ISocketActivityContextFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISocketActivityContextFactory] {
     #[cfg(feature="windows-storage")] fn Create(&self, data: *mut super::super::storage::streams::IBuffer, out: *mut *mut SocketActivityContext) -> HRESULT
@@ -5963,7 +5963,7 @@ impl SocketActivityInformation {
         <Self as RtActivatable<ISocketActivityInformationStatics>>::get_activation_factory().get_all_sockets()
     }}
 }
-DEFINE_CLSID!(SocketActivityInformation(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,111,99,107,101,116,65,99,116,105,118,105,116,121,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_SocketActivityInformation]);
+DEFINE_CLSID!(SocketActivityInformation: "Windows.Networking.Sockets.SocketActivityInformation");
 DEFINE_IID!(IID_ISocketActivityInformationStatics, 2238755962, 32381, 18230, 128, 65, 19, 39, 166, 84, 60, 86);
 RT_INTERFACE!{static interface ISocketActivityInformationStatics(ISocketActivityInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISocketActivityInformationStatics] {
     fn get_AllSockets(&self, out: *mut *mut super::super::foundation::collections::IMapView<HString, SocketActivityInformation>) -> HRESULT
@@ -6006,7 +6006,7 @@ impl SocketError {
         <Self as RtActivatable<ISocketErrorStatics>>::get_activation_factory().get_status(hresult)
     }}
 }
-DEFINE_CLSID!(SocketError(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,111,99,107,101,116,69,114,114,111,114,0]) [CLSID_SocketError]);
+DEFINE_CLSID!(SocketError: "Windows.Networking.Sockets.SocketError");
 DEFINE_IID!(IID_ISocketErrorStatics, 2189637620, 32086, 19854, 183, 180, 160, 125, 215, 193, 188, 169);
 RT_INTERFACE!{static interface ISocketErrorStatics(ISocketErrorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISocketErrorStatics] {
     fn GetStatus(&self, hresult: i32, out: *mut SocketErrorStatus) -> HRESULT
@@ -6105,7 +6105,7 @@ impl StreamSocket {
         <Self as RtActivatable<IStreamSocketStatics>>::get_activation_factory().get_endpoint_pairs_with_sort_options_async(remoteHostName, remoteServiceName, sortOptions)
     }}
 }
-DEFINE_CLSID!(StreamSocket(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,116,114,101,97,109,83,111,99,107,101,116,0]) [CLSID_StreamSocket]);
+DEFINE_CLSID!(StreamSocket: "Windows.Networking.Sockets.StreamSocket");
 DEFINE_IID!(IID_IStreamSocket2, 701556085, 62228, 19721, 173, 240, 15, 189, 150, 127, 189, 159);
 RT_INTERFACE!{interface IStreamSocket2(IStreamSocket2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocket2] {
     fn ConnectWithProtectionLevelAndAdapterAsync(&self, remoteHostName: *mut super::HostName, remoteServiceName: HSTRING, protectionLevel: SocketProtectionLevel, adapter: *mut super::connectivity::NetworkAdapter, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT
@@ -6405,7 +6405,7 @@ impl IStreamSocketListener {
 }
 RT_CLASS!{class StreamSocketListener: IStreamSocketListener}
 impl RtActivatable<IActivationFactory> for StreamSocketListener {}
-DEFINE_CLSID!(StreamSocketListener(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,116,114,101,97,109,83,111,99,107,101,116,76,105,115,116,101,110,101,114,0]) [CLSID_StreamSocketListener]);
+DEFINE_CLSID!(StreamSocketListener: "Windows.Networking.Sockets.StreamSocketListener");
 DEFINE_IID!(IID_IStreamSocketListener2, 1703788862, 47934, 17496, 178, 50, 237, 16, 136, 105, 75, 152);
 RT_INTERFACE!{interface IStreamSocketListener2(IStreamSocketListener2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketListener2] {
     fn BindServiceNameWithProtectionLevelAsync(&self, localServiceName: HSTRING, protectionLevel: SocketProtectionLevel, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT,
@@ -6586,7 +6586,7 @@ impl IStreamWebSocket {
 }
 RT_CLASS!{class StreamWebSocket: IStreamWebSocket}
 impl RtActivatable<IActivationFactory> for StreamWebSocket {}
-DEFINE_CLSID!(StreamWebSocket(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,116,114,101,97,109,87,101,98,83,111,99,107,101,116,0]) [CLSID_StreamWebSocket]);
+DEFINE_CLSID!(StreamWebSocket: "Windows.Networking.Sockets.StreamWebSocket");
 DEFINE_IID!(IID_IStreamWebSocket2, 2857175243, 37877, 18040, 130, 54, 87, 204, 229, 65, 126, 213);
 RT_INTERFACE!{interface IStreamWebSocket2(IStreamWebSocket2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamWebSocket2] {
     fn add_ServerCustomValidationRequested(&self, eventHandler: *mut super::super::foundation::TypedEventHandler<StreamWebSocket, WebSocketServerCustomValidationRequestedEventArgs>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
@@ -6777,7 +6777,7 @@ impl WebSocketError {
         <Self as RtActivatable<IWebSocketErrorStatics>>::get_activation_factory().get_status(hresult)
     }}
 }
-DEFINE_CLSID!(WebSocketError(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,87,101,98,83,111,99,107,101,116,69,114,114,111,114,0]) [CLSID_WebSocketError]);
+DEFINE_CLSID!(WebSocketError: "Windows.Networking.Sockets.WebSocketError");
 DEFINE_IID!(IID_IWebSocketErrorStatics, 667808603, 8033, 18185, 142, 2, 97, 40, 58, 218, 78, 157);
 RT_INTERFACE!{static interface IWebSocketErrorStatics(IWebSocketErrorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebSocketErrorStatics] {
     #[cfg(feature="windows-web")] fn GetStatus(&self, hresult: i32, out: *mut super::super::web::WebErrorStatus) -> HRESULT
@@ -6844,7 +6844,7 @@ impl IWebSocketInformation2 {
 #[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebSocketKeepAlive: super::super::applicationmodel::background::IBackgroundTask}
 #[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebSocketKeepAlive: IInspectable}
 impl RtActivatable<IActivationFactory> for WebSocketKeepAlive {}
-DEFINE_CLSID!(WebSocketKeepAlive(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,87,101,98,83,111,99,107,101,116,75,101,101,112,65,108,105,118,101,0]) [CLSID_WebSocketKeepAlive]);
+DEFINE_CLSID!(WebSocketKeepAlive: "Windows.Networking.Sockets.WebSocketKeepAlive");
 DEFINE_IID!(IID_IWebSocketServerCustomValidationRequestedEventArgs, 4293918280, 554, 19127, 139, 54, 225, 10, 244, 100, 14, 107);
 RT_INTERFACE!{interface IWebSocketServerCustomValidationRequestedEventArgs(IWebSocketServerCustomValidationRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebSocketServerCustomValidationRequestedEventArgs] {
     #[cfg(not(feature="windows-security"))] fn __Dummy0(&self) -> (),
@@ -6926,7 +6926,7 @@ impl VpnAppId {
         <Self as RtActivatable<IVpnAppIdFactory>>::get_activation_factory().create(type_, value)
     }}
 }
-DEFINE_CLSID!(VpnAppId(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,65,112,112,73,100,0]) [CLSID_VpnAppId]);
+DEFINE_CLSID!(VpnAppId: "Windows.Networking.Vpn.VpnAppId");
 DEFINE_IID!(IID_IVpnAppIdFactory, 1185807658, 2731, 20443, 130, 29, 211, 221, 201, 25, 120, 139);
 RT_INTERFACE!{static interface IVpnAppIdFactory(IVpnAppIdFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnAppIdFactory] {
     fn Create(&self, type_: VpnAppIdType, value: HSTRING, out: *mut *mut VpnAppId) -> HRESULT
@@ -7044,7 +7044,7 @@ impl VpnChannel {
         <Self as RtActivatable<IVpnChannelStatics>>::get_activation_factory().process_event_async(thirdPartyPlugIn, event)
     }}
 }
-DEFINE_CLSID!(VpnChannel(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,104,97,110,110,101,108,0]) [CLSID_VpnChannel]);
+DEFINE_CLSID!(VpnChannel: "Windows.Networking.Vpn.VpnChannel");
 DEFINE_IID!(IID_IVpnChannel2, 576049509, 39227, 17961, 173, 96, 241, 195, 243, 83, 127, 80);
 RT_INTERFACE!{interface IVpnChannel2(IVpnChannel2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannel2] {
     fn StartWithMainTransport(&self, assignedClientIPv4list: *mut super::super::foundation::collections::IVectorView<super::HostName>, assignedClientIPv6list: *mut super::super::foundation::collections::IVectorView<super::HostName>, vpnInterfaceId: *mut VpnInterfaceId, assignedRoutes: *mut VpnRouteAssignment, assignedDomainName: *mut VpnDomainNameAssignment, mtuSize: u32, maxFrameSize: u32, reserved: bool, mainOuterTunnelTransport: *mut IInspectable) -> HRESULT,
@@ -7250,7 +7250,7 @@ impl IVpnCustomCheckBox {
 }
 RT_CLASS!{class VpnCustomCheckBox: IVpnCustomCheckBox}
 impl RtActivatable<IActivationFactory> for VpnCustomCheckBox {}
-DEFINE_CLSID!(VpnCustomCheckBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,67,104,101,99,107,66,111,120,0]) [CLSID_VpnCustomCheckBox]);
+DEFINE_CLSID!(VpnCustomCheckBox: "Windows.Networking.Vpn.VpnCustomCheckBox");
 DEFINE_IID!(IID_IVpnCustomComboBox, 2586056078, 56225, 19567, 130, 112, 220, 243, 201, 118, 28, 76);
 RT_INTERFACE!{interface IVpnCustomComboBox(IVpnCustomComboBoxVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomComboBox] {
     fn put_OptionsText(&self, value: *mut super::super::foundation::collections::IVectorView<HString>) -> HRESULT,
@@ -7275,7 +7275,7 @@ impl IVpnCustomComboBox {
 }
 RT_CLASS!{class VpnCustomComboBox: IVpnCustomComboBox}
 impl RtActivatable<IActivationFactory> for VpnCustomComboBox {}
-DEFINE_CLSID!(VpnCustomComboBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,67,111,109,98,111,66,111,120,0]) [CLSID_VpnCustomComboBox]);
+DEFINE_CLSID!(VpnCustomComboBox: "Windows.Networking.Vpn.VpnCustomComboBox");
 DEFINE_IID!(IID_IVpnCustomEditBox, 805493152, 53183, 19467, 143, 60, 102, 245, 3, 194, 11, 57);
 RT_INTERFACE!{interface IVpnCustomEditBox(IVpnCustomEditBoxVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomEditBox] {
     fn put_DefaultText(&self, value: HSTRING) -> HRESULT,
@@ -7311,14 +7311,14 @@ impl IVpnCustomEditBox {
 }
 RT_CLASS!{class VpnCustomEditBox: IVpnCustomEditBox}
 impl RtActivatable<IActivationFactory> for VpnCustomEditBox {}
-DEFINE_CLSID!(VpnCustomEditBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,69,100,105,116,66,111,120,0]) [CLSID_VpnCustomEditBox]);
+DEFINE_CLSID!(VpnCustomEditBox: "Windows.Networking.Vpn.VpnCustomEditBox");
 DEFINE_IID!(IID_IVpnCustomErrorBox, 2663706546, 51522, 17071, 178, 35, 88, 139, 72, 50, 135, 33);
 RT_INTERFACE!{interface IVpnCustomErrorBox(IVpnCustomErrorBoxVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomErrorBox] {
     
 }}
 RT_CLASS!{class VpnCustomErrorBox: IVpnCustomErrorBox}
 impl RtActivatable<IActivationFactory> for VpnCustomErrorBox {}
-DEFINE_CLSID!(VpnCustomErrorBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,69,114,114,111,114,66,111,120,0]) [CLSID_VpnCustomErrorBox]);
+DEFINE_CLSID!(VpnCustomErrorBox: "Windows.Networking.Vpn.VpnCustomErrorBox");
 DEFINE_IID!(IID_IVpnCustomPrompt, 2603531899, 34773, 17212, 180, 246, 238, 230, 170, 104, 162, 68);
 RT_INTERFACE!{interface IVpnCustomPrompt(IVpnCustomPromptVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomPrompt] {
     fn put_Label(&self, value: HSTRING) -> HRESULT,
@@ -7381,7 +7381,7 @@ impl IVpnCustomPromptBooleanInput {
 }
 RT_CLASS!{class VpnCustomPromptBooleanInput: IVpnCustomPromptBooleanInput}
 impl RtActivatable<IActivationFactory> for VpnCustomPromptBooleanInput {}
-DEFINE_CLSID!(VpnCustomPromptBooleanInput(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,80,114,111,109,112,116,66,111,111,108,101,97,110,73,110,112,117,116,0]) [CLSID_VpnCustomPromptBooleanInput]);
+DEFINE_CLSID!(VpnCustomPromptBooleanInput: "Windows.Networking.Vpn.VpnCustomPromptBooleanInput");
 DEFINE_IID!(IID_IVpnCustomPromptElement, 1941788216, 28420, 16461, 147, 221, 80, 164, 73, 36, 163, 139);
 RT_INTERFACE!{interface IVpnCustomPromptElement(IVpnCustomPromptElementVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomPromptElement] {
     fn put_DisplayName(&self, value: HSTRING) -> HRESULT,
@@ -7439,7 +7439,7 @@ impl IVpnCustomPromptOptionSelector {
 }
 RT_CLASS!{class VpnCustomPromptOptionSelector: IVpnCustomPromptOptionSelector}
 impl RtActivatable<IActivationFactory> for VpnCustomPromptOptionSelector {}
-DEFINE_CLSID!(VpnCustomPromptOptionSelector(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,80,114,111,109,112,116,79,112,116,105,111,110,83,101,108,101,99,116,111,114,0]) [CLSID_VpnCustomPromptOptionSelector]);
+DEFINE_CLSID!(VpnCustomPromptOptionSelector: "Windows.Networking.Vpn.VpnCustomPromptOptionSelector");
 DEFINE_IID!(IID_IVpnCustomPromptText, 1003011566, 14914, 18851, 171, 221, 7, 178, 237, 234, 117, 45);
 RT_INTERFACE!{interface IVpnCustomPromptText(IVpnCustomPromptTextVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomPromptText] {
     fn put_Text(&self, value: HSTRING) -> HRESULT,
@@ -7458,7 +7458,7 @@ impl IVpnCustomPromptText {
 }
 RT_CLASS!{class VpnCustomPromptText: IVpnCustomPromptText}
 impl RtActivatable<IActivationFactory> for VpnCustomPromptText {}
-DEFINE_CLSID!(VpnCustomPromptText(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,80,114,111,109,112,116,84,101,120,116,0]) [CLSID_VpnCustomPromptText]);
+DEFINE_CLSID!(VpnCustomPromptText: "Windows.Networking.Vpn.VpnCustomPromptText");
 DEFINE_IID!(IID_IVpnCustomPromptTextInput, 3386547317, 37180, 18389, 136, 186, 72, 252, 72, 147, 2, 53);
 RT_INTERFACE!{interface IVpnCustomPromptTextInput(IVpnCustomPromptTextInputVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomPromptTextInput] {
     fn put_PlaceholderText(&self, value: HSTRING) -> HRESULT,
@@ -7494,7 +7494,7 @@ impl IVpnCustomPromptTextInput {
 }
 RT_CLASS!{class VpnCustomPromptTextInput: IVpnCustomPromptTextInput}
 impl RtActivatable<IActivationFactory> for VpnCustomPromptTextInput {}
-DEFINE_CLSID!(VpnCustomPromptTextInput(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,80,114,111,109,112,116,84,101,120,116,73,110,112,117,116,0]) [CLSID_VpnCustomPromptTextInput]);
+DEFINE_CLSID!(VpnCustomPromptTextInput: "Windows.Networking.Vpn.VpnCustomPromptTextInput");
 DEFINE_IID!(IID_IVpnCustomTextBox, 3668231114, 36643, 19766, 145, 241, 118, 217, 55, 130, 121, 66);
 RT_INTERFACE!{interface IVpnCustomTextBox(IVpnCustomTextBoxVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomTextBox] {
     fn put_DisplayText(&self, value: HSTRING) -> HRESULT,
@@ -7513,7 +7513,7 @@ impl IVpnCustomTextBox {
 }
 RT_CLASS!{class VpnCustomTextBox: IVpnCustomTextBox}
 impl RtActivatable<IActivationFactory> for VpnCustomTextBox {}
-DEFINE_CLSID!(VpnCustomTextBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,84,101,120,116,66,111,120,0]) [CLSID_VpnCustomTextBox]);
+DEFINE_CLSID!(VpnCustomTextBox: "Windows.Networking.Vpn.VpnCustomTextBox");
 RT_ENUM! { enum VpnDataPathType: i32 {
     Send (VpnDataPathType_Send) = 0, Receive (VpnDataPathType_Receive) = 1,
 }}
@@ -7541,7 +7541,7 @@ impl IVpnDomainNameAssignment {
 }
 RT_CLASS!{class VpnDomainNameAssignment: IVpnDomainNameAssignment}
 impl RtActivatable<IActivationFactory> for VpnDomainNameAssignment {}
-DEFINE_CLSID!(VpnDomainNameAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,68,111,109,97,105,110,78,97,109,101,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnDomainNameAssignment]);
+DEFINE_CLSID!(VpnDomainNameAssignment: "Windows.Networking.Vpn.VpnDomainNameAssignment");
 DEFINE_IID!(IID_IVpnDomainNameInfo, 2905520175, 60046, 20346, 132, 62, 26, 135, 227, 46, 27, 154);
 RT_INTERFACE!{interface IVpnDomainNameInfo(IVpnDomainNameInfoVtbl): IInspectable(IInspectableVtbl) [IID_IVpnDomainNameInfo] {
     fn put_DomainName(&self, value: *mut super::HostName) -> HRESULT,
@@ -7588,7 +7588,7 @@ impl VpnDomainNameInfo {
         <Self as RtActivatable<IVpnDomainNameInfoFactory>>::get_activation_factory().create_vpn_domain_name_info(name, nameType, dnsServerList, proxyServerList)
     }}
 }
-DEFINE_CLSID!(VpnDomainNameInfo(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,68,111,109,97,105,110,78,97,109,101,73,110,102,111,0]) [CLSID_VpnDomainNameInfo]);
+DEFINE_CLSID!(VpnDomainNameInfo: "Windows.Networking.Vpn.VpnDomainNameInfo");
 DEFINE_IID!(IID_IVpnDomainNameInfo2, 2877755729, 27731, 18472, 152, 131, 216, 134, 222, 16, 68, 7);
 RT_INTERFACE!{interface IVpnDomainNameInfo2(IVpnDomainNameInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnDomainNameInfo2] {
     fn get_WebProxyUris(&self, out: *mut *mut super::super::foundation::collections::IVector<super::super::foundation::Uri>) -> HRESULT
@@ -7632,7 +7632,7 @@ impl VpnInterfaceId {
         <Self as RtActivatable<IVpnInterfaceIdFactory>>::get_activation_factory().create_vpn_interface_id(address)
     }}
 }
-DEFINE_CLSID!(VpnInterfaceId(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,73,110,116,101,114,102,97,99,101,73,100,0]) [CLSID_VpnInterfaceId]);
+DEFINE_CLSID!(VpnInterfaceId: "Windows.Networking.Vpn.VpnInterfaceId");
 DEFINE_IID!(IID_IVpnInterfaceIdFactory, 2653805730, 5906, 19684, 177, 121, 140, 101, 44, 109, 16, 0);
 RT_INTERFACE!{static interface IVpnInterfaceIdFactory(IVpnInterfaceIdFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnInterfaceIdFactory] {
     fn CreateVpnInterfaceId(&self, addressSize: u32, address: *mut u8, out: *mut *mut VpnInterfaceId) -> HRESULT
@@ -7709,7 +7709,7 @@ impl IVpnManagementAgent {
 }
 RT_CLASS!{class VpnManagementAgent: IVpnManagementAgent}
 impl RtActivatable<IActivationFactory> for VpnManagementAgent {}
-DEFINE_CLSID!(VpnManagementAgent(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,77,97,110,97,103,101,109,101,110,116,65,103,101,110,116,0]) [CLSID_VpnManagementAgent]);
+DEFINE_CLSID!(VpnManagementAgent: "Windows.Networking.Vpn.VpnManagementAgent");
 RT_ENUM! { enum VpnManagementConnectionStatus: i32 {
     Disconnected (VpnManagementConnectionStatus_Disconnected) = 0, Disconnecting (VpnManagementConnectionStatus_Disconnecting) = 1, Connected (VpnManagementConnectionStatus_Connected) = 2, Connecting (VpnManagementConnectionStatus_Connecting) = 3,
 }}
@@ -7745,7 +7745,7 @@ impl IVpnNamespaceAssignment {
 }
 RT_CLASS!{class VpnNamespaceAssignment: IVpnNamespaceAssignment}
 impl RtActivatable<IActivationFactory> for VpnNamespaceAssignment {}
-DEFINE_CLSID!(VpnNamespaceAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,78,97,109,101,115,112,97,99,101,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnNamespaceAssignment]);
+DEFINE_CLSID!(VpnNamespaceAssignment: "Windows.Networking.Vpn.VpnNamespaceAssignment");
 DEFINE_IID!(IID_IVpnNamespaceInfo, 820902723, 17487, 17605, 129, 103, 163, 90, 145, 241, 175, 148);
 RT_INTERFACE!{interface IVpnNamespaceInfo(IVpnNamespaceInfoVtbl): IInspectable(IInspectableVtbl) [IID_IVpnNamespaceInfo] {
     fn put_Namespace(&self, value: HSTRING) -> HRESULT,
@@ -7791,7 +7791,7 @@ impl VpnNamespaceInfo {
         <Self as RtActivatable<IVpnNamespaceInfoFactory>>::get_activation_factory().create_vpn_namespace_info(name, dnsServerList, proxyServerList)
     }}
 }
-DEFINE_CLSID!(VpnNamespaceInfo(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,78,97,109,101,115,112,97,99,101,73,110,102,111,0]) [CLSID_VpnNamespaceInfo]);
+DEFINE_CLSID!(VpnNamespaceInfo: "Windows.Networking.Vpn.VpnNamespaceInfo");
 DEFINE_IID!(IID_IVpnNamespaceInfoFactory, 3409876250, 45262, 17451, 172, 187, 95, 153, 178, 2, 195, 28);
 RT_INTERFACE!{static interface IVpnNamespaceInfoFactory(IVpnNamespaceInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnNamespaceInfoFactory] {
     fn CreateVpnNamespaceInfo(&self, name: HSTRING, dnsServerList: *mut super::super::foundation::collections::IVector<super::HostName>, proxyServerList: *mut super::super::foundation::collections::IVector<super::HostName>, out: *mut *mut VpnNamespaceInfo) -> HRESULT
@@ -7871,7 +7871,7 @@ impl IVpnNativeProfile {
 }
 RT_CLASS!{class VpnNativeProfile: IVpnNativeProfile}
 impl RtActivatable<IActivationFactory> for VpnNativeProfile {}
-DEFINE_CLSID!(VpnNativeProfile(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,78,97,116,105,118,101,80,114,111,102,105,108,101,0]) [CLSID_VpnNativeProfile]);
+DEFINE_CLSID!(VpnNativeProfile: "Windows.Networking.Vpn.VpnNativeProfile");
 DEFINE_IID!(IID_IVpnNativeProfile2, 267134055, 52661, 19143, 181, 163, 10, 251, 94, 196, 118, 130);
 RT_INTERFACE!{interface IVpnNativeProfile2(IVpnNativeProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnNativeProfile2] {
     fn get_RequireVpnClientAppUI(&self, out: *mut bool) -> HRESULT,
@@ -7938,7 +7938,7 @@ impl VpnPacketBuffer {
         <Self as RtActivatable<IVpnPacketBufferFactory>>::get_activation_factory().create_vpn_packet_buffer(parentBuffer, offset, length)
     }}
 }
-DEFINE_CLSID!(VpnPacketBuffer(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,80,97,99,107,101,116,66,117,102,102,101,114,0]) [CLSID_VpnPacketBuffer]);
+DEFINE_CLSID!(VpnPacketBuffer: "Windows.Networking.Vpn.VpnPacketBuffer");
 DEFINE_IID!(IID_IVpnPacketBuffer2, 1717473776, 34821, 19445, 166, 25, 46, 132, 136, 46, 107, 79);
 RT_INTERFACE!{interface IVpnPacketBuffer2(IVpnPacketBuffer2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBuffer2] {
     fn get_AppId(&self, out: *mut *mut VpnAppId) -> HRESULT
@@ -8131,7 +8131,7 @@ impl IVpnPlugInProfile {
 }
 RT_CLASS!{class VpnPlugInProfile: IVpnPlugInProfile}
 impl RtActivatable<IActivationFactory> for VpnPlugInProfile {}
-DEFINE_CLSID!(VpnPlugInProfile(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,80,108,117,103,73,110,80,114,111,102,105,108,101,0]) [CLSID_VpnPlugInProfile]);
+DEFINE_CLSID!(VpnPlugInProfile: "Windows.Networking.Vpn.VpnPlugInProfile");
 DEFINE_IID!(IID_IVpnPlugInProfile2, 1629243538, 53140, 19158, 186, 153, 0, 244, 255, 52, 86, 94);
 RT_INTERFACE!{interface IVpnPlugInProfile2(IVpnPlugInProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnPlugInProfile2] {
     fn get_RequireVpnClientAppUI(&self, out: *mut bool) -> HRESULT,
@@ -8250,7 +8250,7 @@ impl VpnRoute {
         <Self as RtActivatable<IVpnRouteFactory>>::get_activation_factory().create_vpn_route(address, prefixSize)
     }}
 }
-DEFINE_CLSID!(VpnRoute(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,82,111,117,116,101,0]) [CLSID_VpnRoute]);
+DEFINE_CLSID!(VpnRoute: "Windows.Networking.Vpn.VpnRoute");
 DEFINE_IID!(IID_IVpnRouteAssignment, 3680820770, 52793, 19062, 149, 80, 246, 16, 57, 248, 14, 72);
 RT_INTERFACE!{interface IVpnRouteAssignment(IVpnRouteAssignmentVtbl): IInspectable(IInspectableVtbl) [IID_IVpnRouteAssignment] {
     fn put_Ipv4InclusionRoutes(&self, value: *mut super::super::foundation::collections::IVector<VpnRoute>) -> HRESULT,
@@ -8313,7 +8313,7 @@ impl IVpnRouteAssignment {
 }
 RT_CLASS!{class VpnRouteAssignment: IVpnRouteAssignment}
 impl RtActivatable<IActivationFactory> for VpnRouteAssignment {}
-DEFINE_CLSID!(VpnRouteAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,82,111,117,116,101,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnRouteAssignment]);
+DEFINE_CLSID!(VpnRouteAssignment: "Windows.Networking.Vpn.VpnRouteAssignment");
 DEFINE_IID!(IID_IVpnRouteFactory, 3186275839, 17871, 19353, 131, 251, 219, 59, 194, 103, 43, 2);
 RT_INTERFACE!{static interface IVpnRouteFactory(IVpnRouteFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnRouteFactory] {
     fn CreateVpnRoute(&self, address: *mut super::HostName, prefixSize: u8, out: *mut *mut VpnRoute) -> HRESULT
@@ -8415,7 +8415,7 @@ impl VpnTrafficFilter {
         <Self as RtActivatable<IVpnTrafficFilterFactory>>::get_activation_factory().create(appId)
     }}
 }
-DEFINE_CLSID!(VpnTrafficFilter(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,84,114,97,102,102,105,99,70,105,108,116,101,114,0]) [CLSID_VpnTrafficFilter]);
+DEFINE_CLSID!(VpnTrafficFilter: "Windows.Networking.Vpn.VpnTrafficFilter");
 DEFINE_IID!(IID_IVpnTrafficFilterAssignment, 1456264284, 58980, 18206, 137, 205, 96, 22, 3, 185, 224, 243);
 RT_INTERFACE!{interface IVpnTrafficFilterAssignment(IVpnTrafficFilterAssignmentVtbl): IInspectable(IInspectableVtbl) [IID_IVpnTrafficFilterAssignment] {
     fn get_TrafficFilterList(&self, out: *mut *mut super::super::foundation::collections::IVector<VpnTrafficFilter>) -> HRESULT,
@@ -8451,7 +8451,7 @@ impl IVpnTrafficFilterAssignment {
 }
 RT_CLASS!{class VpnTrafficFilterAssignment: IVpnTrafficFilterAssignment}
 impl RtActivatable<IActivationFactory> for VpnTrafficFilterAssignment {}
-DEFINE_CLSID!(VpnTrafficFilterAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,84,114,97,102,102,105,99,70,105,108,116,101,114,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnTrafficFilterAssignment]);
+DEFINE_CLSID!(VpnTrafficFilterAssignment: "Windows.Networking.Vpn.VpnTrafficFilterAssignment");
 DEFINE_IID!(IID_IVpnTrafficFilterFactory, 1208828373, 32665, 18252, 134, 238, 150, 223, 22, 131, 24, 241);
 RT_INTERFACE!{static interface IVpnTrafficFilterFactory(IVpnTrafficFilterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnTrafficFilterFactory] {
     fn Create(&self, appId: *mut VpnAppId, out: *mut *mut VpnTrafficFilter) -> HRESULT
@@ -8521,7 +8521,7 @@ impl PushNotificationChannelManager {
         <Self as RtActivatable<IPushNotificationChannelManagerStatics3>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(PushNotificationChannelManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,80,117,115,104,78,111,116,105,102,105,99,97,116,105,111,110,115,46,80,117,115,104,78,111,116,105,102,105,99,97,116,105,111,110,67,104,97,110,110,101,108,77,97,110,97,103,101,114,0]) [CLSID_PushNotificationChannelManager]);
+DEFINE_CLSID!(PushNotificationChannelManager: "Windows.Networking.PushNotifications.PushNotificationChannelManager");
 DEFINE_IID!(IID_IPushNotificationChannelManagerForUser, 2764330756, 4482, 17095, 136, 144, 245, 99, 196, 137, 13, 196);
 RT_INTERFACE!{interface IPushNotificationChannelManagerForUser(IPushNotificationChannelManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerForUser] {
     fn CreatePushNotificationChannelForApplicationAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
@@ -8777,7 +8777,7 @@ impl XboxLiveDeviceAddress {
         <Self as RtActivatable<IXboxLiveDeviceAddressStatics>>::get_activation_factory().get_max_snapshot_bytes_size()
     }}
 }
-DEFINE_CLSID!(XboxLiveDeviceAddress(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,88,98,111,120,76,105,118,101,46,88,98,111,120,76,105,118,101,68,101,118,105,99,101,65,100,100,114,101,115,115,0]) [CLSID_XboxLiveDeviceAddress]);
+DEFINE_CLSID!(XboxLiveDeviceAddress: "Windows.Networking.XboxLive.XboxLiveDeviceAddress");
 DEFINE_IID!(IID_IXboxLiveDeviceAddressStatics, 1498720281, 19065, 18737, 130, 124, 127, 80, 62, 150, 50, 99);
 RT_INTERFACE!{static interface IXboxLiveDeviceAddressStatics(IXboxLiveDeviceAddressStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveDeviceAddressStatics] {
     fn CreateFromSnapshotBase64(&self, base64: HSTRING, out: *mut *mut XboxLiveDeviceAddress) -> HRESULT,
@@ -8898,7 +8898,7 @@ impl XboxLiveEndpointPair {
         <Self as RtActivatable<IXboxLiveEndpointPairStatics>>::get_activation_factory().find_endpoint_pair_by_host_names_and_ports(localHostName, localPort, remoteHostName, remotePort)
     }}
 }
-DEFINE_CLSID!(XboxLiveEndpointPair(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,88,98,111,120,76,105,118,101,46,88,98,111,120,76,105,118,101,69,110,100,112,111,105,110,116,80,97,105,114,0]) [CLSID_XboxLiveEndpointPair]);
+DEFINE_CLSID!(XboxLiveEndpointPair: "Windows.Networking.XboxLive.XboxLiveEndpointPair");
 RT_ENUM! { enum XboxLiveEndpointPairCreationBehaviors: u32 {
     None (XboxLiveEndpointPairCreationBehaviors_None) = 0, ReevaluatePath (XboxLiveEndpointPairCreationBehaviors_ReevaluatePath) = 1,
 }}
@@ -9065,7 +9065,7 @@ impl XboxLiveEndpointPairTemplate {
         <Self as RtActivatable<IXboxLiveEndpointPairTemplateStatics>>::get_activation_factory().get_templates()
     }}
 }
-DEFINE_CLSID!(XboxLiveEndpointPairTemplate(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,88,98,111,120,76,105,118,101,46,88,98,111,120,76,105,118,101,69,110,100,112,111,105,110,116,80,97,105,114,84,101,109,112,108,97,116,101,0]) [CLSID_XboxLiveEndpointPairTemplate]);
+DEFINE_CLSID!(XboxLiveEndpointPairTemplate: "Windows.Networking.XboxLive.XboxLiveEndpointPairTemplate");
 DEFINE_IID!(IID_IXboxLiveEndpointPairTemplateStatics, 504566651, 29563, 18979, 188, 100, 8, 112, 247, 86, 85, 186);
 RT_INTERFACE!{static interface IXboxLiveEndpointPairTemplateStatics(IXboxLiveEndpointPairTemplateStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPairTemplateStatics] {
     fn GetTemplateByName(&self, name: HSTRING, out: *mut *mut XboxLiveEndpointPairTemplate) -> HRESULT,
@@ -9234,7 +9234,7 @@ impl XboxLiveQualityOfServiceMeasurement {
         <Self as RtActivatable<IXboxLiveQualityOfServiceMeasurementStatics>>::get_activation_factory().get_max_private_payload_size()
     }}
 }
-DEFINE_CLSID!(XboxLiveQualityOfServiceMeasurement(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,88,98,111,120,76,105,118,101,46,88,98,111,120,76,105,118,101,81,117,97,108,105,116,121,79,102,83,101,114,118,105,99,101,77,101,97,115,117,114,101,109,101,110,116,0]) [CLSID_XboxLiveQualityOfServiceMeasurement]);
+DEFINE_CLSID!(XboxLiveQualityOfServiceMeasurement: "Windows.Networking.XboxLive.XboxLiveQualityOfServiceMeasurement");
 DEFINE_IID!(IID_IXboxLiveQualityOfServiceMeasurementStatics, 1848978890, 9167, 17418, 176, 119, 94, 48, 133, 122, 130, 52);
 RT_INTERFACE!{static interface IXboxLiveQualityOfServiceMeasurementStatics(IXboxLiveQualityOfServiceMeasurementStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveQualityOfServiceMeasurementStatics] {
     fn PublishPrivatePayloadBytes(&self, payloadSize: u32, payload: *mut u8) -> HRESULT,

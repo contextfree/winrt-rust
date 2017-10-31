@@ -68,7 +68,7 @@ impl AppDataPaths {
         <Self as RtActivatable<IAppDataPathsStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(AppDataPaths(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,112,112,68,97,116,97,80,97,116,104,115,0]) [CLSID_AppDataPaths]);
+DEFINE_CLSID!(AppDataPaths: "Windows.Storage.AppDataPaths");
 DEFINE_IID!(IID_IAppDataPathsStatics, 3639290622, 43481, 19220, 185, 153, 227, 146, 19, 121, 217, 3);
 RT_INTERFACE!{static interface IAppDataPathsStatics(IAppDataPathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppDataPathsStatics] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
@@ -179,7 +179,7 @@ impl ApplicationData {
         <Self as RtActivatable<IApplicationDataStatics2>>::get_activation_factory().get_for_user_async(user)
     }}
 }
-DEFINE_CLSID!(ApplicationData(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,112,112,108,105,99,97,116,105,111,110,68,97,116,97,0]) [CLSID_ApplicationData]);
+DEFINE_CLSID!(ApplicationData: "Windows.Storage.ApplicationData");
 DEFINE_IID!(IID_IApplicationData2, 2657471849, 2979, 20018, 190, 41, 176, 45, 230, 96, 118, 56);
 RT_INTERFACE!{interface IApplicationData2(IApplicationData2Vtbl): IInspectable(IInspectableVtbl) [IID_IApplicationData2] {
     fn get_LocalCacheFolder(&self, out: *mut *mut StorageFolder) -> HRESULT
@@ -216,7 +216,7 @@ impl IApplicationData3 {
 }
 RT_CLASS!{class ApplicationDataCompositeValue: super::foundation::collections::IPropertySet}
 impl RtActivatable<IActivationFactory> for ApplicationDataCompositeValue {}
-DEFINE_CLSID!(ApplicationDataCompositeValue(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,112,112,108,105,99,97,116,105,111,110,68,97,116,97,67,111,109,112,111,115,105,116,101,86,97,108,117,101,0]) [CLSID_ApplicationDataCompositeValue]);
+DEFINE_CLSID!(ApplicationDataCompositeValue: "Windows.Storage.ApplicationDataCompositeValue");
 DEFINE_IID!(IID_IApplicationDataContainer, 3316579614, 62567, 16570, 133, 102, 171, 100, 10, 68, 30, 29);
 RT_INTERFACE!{interface IApplicationDataContainer(IApplicationDataContainerVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationDataContainer] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -307,7 +307,7 @@ impl CachedFileManager {
         <Self as RtActivatable<ICachedFileManagerStatics>>::get_activation_factory().complete_updates_async(file)
     }}
 }
-DEFINE_CLSID!(CachedFileManager(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,67,97,99,104,101,100,70,105,108,101,77,97,110,97,103,101,114,0]) [CLSID_CachedFileManager]);
+DEFINE_CLSID!(CachedFileManager: "Windows.Storage.CachedFileManager");
 DEFINE_IID!(IID_ICachedFileManagerStatics, 2415665738, 59266, 18781, 182, 20, 101, 76, 79, 11, 35, 112);
 RT_INTERFACE!{static interface ICachedFileManagerStatics(ICachedFileManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileManagerStatics] {
     fn DeferUpdates(&self, file: *mut IStorageFile) -> HRESULT,
@@ -356,7 +356,7 @@ impl DownloadsFolder {
         <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_folder_for_user_with_collision_option_async(user, desiredName, option)
     }}
 }
-DEFINE_CLSID!(DownloadsFolder(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,68,111,119,110,108,111,97,100,115,70,111,108,100,101,114,0]) [CLSID_DownloadsFolder]);
+DEFINE_CLSID!(DownloadsFolder: "Windows.Storage.DownloadsFolder");
 DEFINE_IID!(IID_IDownloadsFolderStatics, 663105232, 16462, 18399, 161, 226, 227, 115, 8, 190, 123, 55);
 RT_INTERFACE!{static interface IDownloadsFolderStatics(IDownloadsFolderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDownloadsFolderStatics] {
     fn CreateFileAsync(&self, desiredName: HSTRING, out: *mut *mut super::foundation::IAsyncOperation<StorageFile>) -> HRESULT,
@@ -470,7 +470,7 @@ impl FileIO {
         <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().write_bytes_async(file, buffer)
     }}
 }
-DEFINE_CLSID!(FileIO(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,70,105,108,101,73,79,0]) [CLSID_FileIO]);
+DEFINE_CLSID!(FileIO: "Windows.Storage.FileIO");
 DEFINE_IID!(IID_IFileIOStatics, 2289308139, 32596, 18226, 165, 240, 94, 67, 227, 184, 194, 245);
 RT_INTERFACE!{static interface IFileIOStatics(IFileIOStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFileIOStatics] {
     fn ReadTextAsync(&self, file: *mut IStorageFile, out: *mut *mut super::foundation::IAsyncOperation<HString>) -> HRESULT,
@@ -620,7 +620,7 @@ impl KnownFolders {
         <Self as RtActivatable<IKnownFoldersStatics3>>::get_activation_factory().get_folder_for_user_async(user, folderId)
     }}
 }
-DEFINE_CLSID!(KnownFolders(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,75,110,111,119,110,70,111,108,100,101,114,115,0]) [CLSID_KnownFolders]);
+DEFINE_CLSID!(KnownFolders: "Windows.Storage.KnownFolders");
 DEFINE_IID!(IID_IKnownFoldersCameraRollStatics, 1561419366, 10216, 18735, 184, 229, 47, 144, 137, 108, 212, 205);
 RT_INTERFACE!{static interface IKnownFoldersCameraRollStatics(IKnownFoldersCameraRollStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownFoldersCameraRollStatics] {
     fn get_CameraRoll(&self, out: *mut *mut StorageFolder) -> HRESULT
@@ -790,7 +790,7 @@ impl PathIO {
         <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().write_bytes_async(absolutePath, buffer)
     }}
 }
-DEFINE_CLSID!(PathIO(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,97,116,104,73,79,0]) [CLSID_PathIO]);
+DEFINE_CLSID!(PathIO: "Windows.Storage.PathIO");
 DEFINE_IID!(IID_IPathIOStatics, 254752600, 36551, 17281, 146, 43, 143, 108, 7, 210, 136, 243);
 RT_INTERFACE!{static interface IPathIOStatics(IPathIOStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPathIOStatics] {
     fn ReadTextAsync(&self, absolutePath: HSTRING, out: *mut *mut super::foundation::IAsyncOperation<HString>) -> HRESULT,
@@ -1023,7 +1023,7 @@ impl StorageFile {
         <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().replace_with_streamed_file_from_uri_async(fileToReplace, uri, thumbnail)
     }}
 }
-DEFINE_CLSID!(StorageFile(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,70,105,108,101,0]) [CLSID_StorageFile]);
+DEFINE_CLSID!(StorageFile: "Windows.Storage.StorageFile");
 DEFINE_IID!(IID_IStorageFile2, 2504936399, 2679, 17147, 183, 119, 194, 237, 88, 165, 46, 68);
 RT_INTERFACE!{interface IStorageFile2(IStorageFile2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageFile2] {
     fn OpenWithOptionsAsync(&self, accessMode: FileAccessMode, options: StorageOpenOptions, out: *mut *mut super::foundation::IAsyncOperation<streams::IRandomAccessStream>) -> HRESULT,
@@ -1165,7 +1165,7 @@ impl StorageFolder {
         <Self as RtActivatable<IStorageFolderStatics>>::get_activation_factory().get_folder_from_path_async(path)
     }}
 }
-DEFINE_CLSID!(StorageFolder(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,70,111,108,100,101,114,0]) [CLSID_StorageFolder]);
+DEFINE_CLSID!(StorageFolder: "Windows.Storage.StorageFolder");
 DEFINE_IID!(IID_IStorageFolder2, 3894929593, 2265, 19086, 160, 172, 254, 94, 211, 203, 187, 211);
 RT_INTERFACE!{interface IStorageFolder2(IStorageFolder2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolder2] {
     fn TryGetItemAsync(&self, name: HSTRING, out: *mut *mut super::foundation::IAsyncOperation<IStorageItem>) -> HRESULT
@@ -1405,7 +1405,7 @@ impl StorageLibrary {
         <Self as RtActivatable<IStorageLibraryStatics2>>::get_activation_factory().get_library_for_user_async(user, libraryId)
     }}
 }
-DEFINE_CLSID!(StorageLibrary(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,76,105,98,114,97,114,121,0]) [CLSID_StorageLibrary]);
+DEFINE_CLSID!(StorageLibrary: "Windows.Storage.StorageLibrary");
 DEFINE_IID!(IID_IStorageLibrary2, 1527571272, 64691, 16433, 175, 176, 166, 141, 123, 212, 69, 52);
 RT_INTERFACE!{interface IStorageLibrary2(IStorageLibrary2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibrary2] {
     fn get_ChangeTracker(&self, out: *mut *mut StorageLibraryChangeTracker) -> HRESULT
@@ -1723,7 +1723,7 @@ impl SystemDataPaths {
         <Self as RtActivatable<ISystemDataPathsStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(SystemDataPaths(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,121,115,116,101,109,68,97,116,97,80,97,116,104,115,0]) [CLSID_SystemDataPaths]);
+DEFINE_CLSID!(SystemDataPaths: "Windows.Storage.SystemDataPaths");
 DEFINE_IID!(IID_ISystemDataPathsStatics, 3774443472, 39200, 19402, 179, 121, 249, 111, 223, 124, 170, 216);
 RT_INTERFACE!{static interface ISystemDataPathsStatics(ISystemDataPathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemDataPathsStatics] {
     fn GetDefault(&self, out: *mut *mut SystemDataPaths) -> HRESULT
@@ -2029,7 +2029,7 @@ impl SystemProperties {
         <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_image()
     }}
 }
-DEFINE_CLSID!(SystemProperties(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,121,115,116,101,109,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_SystemProperties]);
+DEFINE_CLSID!(SystemProperties: "Windows.Storage.SystemProperties");
 DEFINE_IID!(IID_ISystemVideoProperties, 541128469, 26616, 17186, 155, 128, 79, 169, 254, 251, 131, 232);
 RT_INTERFACE!{interface ISystemVideoProperties(ISystemVideoPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemVideoProperties] {
     fn get_Director(&self, out: *mut HSTRING) -> HRESULT,
@@ -2195,7 +2195,7 @@ impl UserDataPaths {
         <Self as RtActivatable<IUserDataPathsStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(UserDataPaths(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,85,115,101,114,68,97,116,97,80,97,116,104,115,0]) [CLSID_UserDataPaths]);
+DEFINE_CLSID!(UserDataPaths: "Windows.Storage.UserDataPaths");
 DEFINE_IID!(IID_IUserDataPathsStatics, 28483055, 57442, 18593, 139, 12, 242, 199, 169, 202, 86, 192);
 RT_INTERFACE!{static interface IUserDataPathsStatics(IUserDataPathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataPathsStatics] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
@@ -2252,7 +2252,7 @@ impl Buffer {
         <Self as RtActivatable<IBufferStatics>>::get_activation_factory().create_memory_buffer_over_ibuffer(input)
     }}
 }
-DEFINE_CLSID!(Buffer(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,66,117,102,102,101,114,0]) [CLSID_Buffer]);
+DEFINE_CLSID!(Buffer: "Windows.Storage.Streams.Buffer");
 DEFINE_IID!(IID_IBufferFactory, 1907331405, 49423, 18507, 188, 80, 20, 188, 98, 59, 58, 39);
 RT_INTERFACE!{static interface IBufferFactory(IBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBufferFactory] {
     fn Create(&self, capacity: u32, out: *mut *mut Buffer) -> HRESULT
@@ -2463,7 +2463,7 @@ impl DataReader {
         <Self as RtActivatable<IDataReaderStatics>>::get_activation_factory().from_buffer(buffer)
     }}
 }
-DEFINE_CLSID!(DataReader(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,82,101,97,100,101,114,0]) [CLSID_DataReader]);
+DEFINE_CLSID!(DataReader: "Windows.Storage.Streams.DataReader");
 DEFINE_IID!(IID_IDataReaderFactory, 3612506183, 22490, 19989, 145, 76, 6, 128, 102, 153, 160, 152);
 RT_INTERFACE!{static interface IDataReaderFactory(IDataReaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderFactory] {
     fn CreateDataReader(&self, inputStream: *mut IInputStream, out: *mut *mut DataReader) -> HRESULT
@@ -2644,7 +2644,7 @@ impl DataWriter {
         <Self as RtActivatable<IDataWriterFactory>>::get_activation_factory().create_data_writer(outputStream)
     }}
 }
-DEFINE_CLSID!(DataWriter(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,87,114,105,116,101,114,0]) [CLSID_DataWriter]);
+DEFINE_CLSID!(DataWriter: "Windows.Storage.Streams.DataWriter");
 DEFINE_IID!(IID_IDataWriterFactory, 864839618, 35716, 19499, 156, 80, 123, 135, 103, 132, 122, 31);
 RT_INTERFACE!{static interface IDataWriterFactory(IDataWriterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataWriterFactory] {
     fn CreateDataWriter(&self, outputStream: *mut IOutputStream, out: *mut *mut DataWriter) -> HRESULT
@@ -2690,7 +2690,7 @@ impl FileRandomAccessStream {
         <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_for_user_with_options_async(user, filePath, openOptions, openDisposition)
     }}
 }
-DEFINE_CLSID!(FileRandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,70,105,108,101,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_FileRandomAccessStream]);
+DEFINE_CLSID!(FileRandomAccessStream: "Windows.Storage.Streams.FileRandomAccessStream");
 DEFINE_IID!(IID_IFileRandomAccessStreamStatics, 1934950663, 15191, 19293, 131, 69, 85, 77, 47, 198, 33, 240);
 RT_INTERFACE!{static interface IFileRandomAccessStreamStatics(IFileRandomAccessStreamStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFileRandomAccessStreamStatics] {
     fn OpenAsync(&self, filePath: HSTRING, accessMode: super::FileAccessMode, out: *mut *mut super::super::foundation::IAsyncOperation<IRandomAccessStream>) -> HRESULT,
@@ -2746,7 +2746,7 @@ impl IFileRandomAccessStreamStatics {
 }
 RT_CLASS!{class InMemoryRandomAccessStream: IRandomAccessStream}
 impl RtActivatable<IActivationFactory> for InMemoryRandomAccessStream {}
-DEFINE_CLSID!(InMemoryRandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,73,110,77,101,109,111,114,121,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_InMemoryRandomAccessStream]);
+DEFINE_CLSID!(InMemoryRandomAccessStream: "Windows.Storage.Streams.InMemoryRandomAccessStream");
 DEFINE_IID!(IID_IInputStream, 2421821410, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
 RT_INTERFACE!{interface IInputStream(IInputStreamVtbl): IInspectable(IInspectableVtbl) [IID_IInputStream] {
     fn ReadAsync(&self, buffer: *mut IBuffer, count: u32, options: InputStreamOptions, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<IBuffer, u32>) -> HRESULT
@@ -2861,7 +2861,7 @@ impl RandomAccessStream {
         <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().copy_and_close_async(source, destination)
     }}
 }
-DEFINE_CLSID!(RandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_RandomAccessStream]);
+DEFINE_CLSID!(RandomAccessStream: "Windows.Storage.Streams.RandomAccessStream");
 RT_CLASS!{class RandomAccessStreamOverStream: IRandomAccessStream}
 DEFINE_IID!(IID_IRandomAccessStreamReference, 871248180, 7638, 20026, 128, 103, 209, 193, 98, 232, 100, 43);
 RT_INTERFACE!{interface IRandomAccessStreamReference(IRandomAccessStreamReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamReference] {
@@ -2887,7 +2887,7 @@ impl RandomAccessStreamReference {
         <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().create_from_stream(stream)
     }}
 }
-DEFINE_CLSID!(RandomAccessStreamReference(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,82,101,102,101,114,101,110,99,101,0]) [CLSID_RandomAccessStreamReference]);
+DEFINE_CLSID!(RandomAccessStreamReference: "Windows.Storage.Streams.RandomAccessStreamReference");
 DEFINE_IID!(IID_IRandomAccessStreamReferenceStatics, 2238908892, 16319, 20093, 152, 111, 239, 59, 26, 7, 169, 100);
 RT_INTERFACE!{static interface IRandomAccessStreamReferenceStatics(IRandomAccessStreamReferenceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamReferenceStatics] {
     fn CreateFromFile(&self, file: *mut super::IStorageFile, out: *mut *mut RandomAccessStreamReference) -> HRESULT,
@@ -2974,7 +2974,7 @@ impl Compressor {
         <Self as RtActivatable<ICompressorFactory>>::get_activation_factory().create_compressor_ex(underlyingStream, algorithm, blockSize)
     }}
 }
-DEFINE_CLSID!(Compressor(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,67,111,109,112,114,101,115,115,105,111,110,46,67,111,109,112,114,101,115,115,111,114,0]) [CLSID_Compressor]);
+DEFINE_CLSID!(Compressor: "Windows.Storage.Compression.Compressor");
 DEFINE_IID!(IID_ICompressorFactory, 1597871780, 11515, 17452, 168, 186, 215, 209, 27, 3, 157, 160);
 RT_INTERFACE!{static interface ICompressorFactory(ICompressorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompressorFactory] {
     fn CreateCompressor(&self, underlyingStream: *mut super::streams::IOutputStream, out: *mut *mut Compressor) -> HRESULT,
@@ -3010,7 +3010,7 @@ impl Decompressor {
         <Self as RtActivatable<IDecompressorFactory>>::get_activation_factory().create_decompressor(underlyingStream)
     }}
 }
-DEFINE_CLSID!(Decompressor(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,67,111,109,112,114,101,115,115,105,111,110,46,68,101,99,111,109,112,114,101,115,115,111,114,0]) [CLSID_Decompressor]);
+DEFINE_CLSID!(Decompressor: "Windows.Storage.Compression.Decompressor");
 DEFINE_IID!(IID_IDecompressorFactory, 1396171346, 7586, 17121, 136, 52, 3, 121, 210, 141, 116, 47);
 RT_INTERFACE!{static interface IDecompressorFactory(IDecompressorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDecompressorFactory] {
     fn CreateDecompressor(&self, underlyingStream: *mut super::streams::IInputStream, out: *mut *mut Decompressor) -> HRESULT
@@ -3088,7 +3088,7 @@ impl ContentIndexer {
         <Self as RtActivatable<IContentIndexerStatics>>::get_activation_factory().get_indexer()
     }}
 }
-DEFINE_CLSID!(ContentIndexer(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,67,111,110,116,101,110,116,73,110,100,101,120,101,114,0]) [CLSID_ContentIndexer]);
+DEFINE_CLSID!(ContentIndexer: "Windows.Storage.Search.ContentIndexer");
 DEFINE_IID!(IID_IContentIndexerQuery, 1893970168, 19452, 17034, 136, 137, 204, 81, 218, 154, 123, 157);
 RT_INTERFACE!{interface IContentIndexerQuery(IContentIndexerQueryVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexerQuery] {
     fn GetCountAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<u32>) -> HRESULT,
@@ -3223,7 +3223,7 @@ impl IIndexableContent {
 }
 RT_CLASS!{class IndexableContent: IIndexableContent}
 impl RtActivatable<IActivationFactory> for IndexableContent {}
-DEFINE_CLSID!(IndexableContent(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,73,110,100,101,120,97,98,108,101,67,111,110,116,101,110,116,0]) [CLSID_IndexableContent]);
+DEFINE_CLSID!(IndexableContent: "Windows.Storage.Search.IndexableContent");
 RT_ENUM! { enum IndexedState: i32 {
     Unknown (IndexedState_Unknown) = 0, NotIndexed (IndexedState_NotIndexed) = 1, PartiallyIndexed (IndexedState_PartiallyIndexed) = 2, FullyIndexed (IndexedState_FullyIndexed) = 3,
 }}
@@ -3346,7 +3346,7 @@ impl QueryOptions {
         <Self as RtActivatable<IQueryOptionsFactory>>::get_activation_factory().create_common_folder_query(query)
     }}
 }
-DEFINE_CLSID!(QueryOptions(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_QueryOptions]);
+DEFINE_CLSID!(QueryOptions: "Windows.Storage.Search.QueryOptions");
 DEFINE_IID!(IID_IQueryOptionsFactory, 53354380, 43457, 20081, 128, 17, 13, 238, 157, 72, 17, 163);
 RT_INTERFACE!{static interface IQueryOptionsFactory(IQueryOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IQueryOptionsFactory] {
     fn CreateCommonFileQuery(&self, query: CommonFileQuery, fileTypeFilter: *mut super::super::foundation::collections::IIterable<HString>, out: *mut *mut QueryOptions) -> HRESULT,
@@ -3654,7 +3654,7 @@ impl IValueAndLanguage {
 }
 RT_CLASS!{class ValueAndLanguage: IValueAndLanguage}
 impl RtActivatable<IActivationFactory> for ValueAndLanguage {}
-DEFINE_CLSID!(ValueAndLanguage(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,86,97,108,117,101,65,110,100,76,97,110,103,117,97,103,101,0]) [CLSID_ValueAndLanguage]);
+DEFINE_CLSID!(ValueAndLanguage: "Windows.Storage.Search.ValueAndLanguage");
 } // Windows.Storage.Search
 pub mod pickers { // Windows.Storage.Pickers
 use ::prelude::*;
@@ -3734,7 +3734,7 @@ impl FileOpenPicker {
         <Self as RtActivatable<IFileOpenPickerStatics>>::get_activation_factory().resume_pick_single_file_async()
     }}
 }
-DEFINE_CLSID!(FileOpenPicker(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,105,99,107,101,114,115,46,70,105,108,101,79,112,101,110,80,105,99,107,101,114,0]) [CLSID_FileOpenPicker]);
+DEFINE_CLSID!(FileOpenPicker: "Windows.Storage.Pickers.FileOpenPicker");
 DEFINE_IID!(IID_IFileOpenPicker2, 2364239058, 46150, 18167, 178, 101, 144, 248, 229, 90, 214, 80);
 RT_INTERFACE!{interface IFileOpenPicker2(IFileOpenPicker2Vtbl): IInspectable(IInspectableVtbl) [IID_IFileOpenPicker2] {
     fn get_ContinuationData(&self, out: *mut *mut super::super::foundation::collections::ValueSet) -> HRESULT,
@@ -3865,7 +3865,7 @@ impl IFileSavePicker {
 }
 RT_CLASS!{class FileSavePicker: IFileSavePicker}
 impl RtActivatable<IActivationFactory> for FileSavePicker {}
-DEFINE_CLSID!(FileSavePicker(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,105,99,107,101,114,115,46,70,105,108,101,83,97,118,101,80,105,99,107,101,114,0]) [CLSID_FileSavePicker]);
+DEFINE_CLSID!(FileSavePicker: "Windows.Storage.Pickers.FileSavePicker");
 DEFINE_IID!(IID_IFileSavePicker2, 247665570, 53835, 17562, 129, 151, 232, 145, 4, 253, 66, 204);
 RT_INTERFACE!{interface IFileSavePicker2(IFileSavePicker2Vtbl): IInspectable(IInspectableVtbl) [IID_IFileSavePicker2] {
     fn get_ContinuationData(&self, out: *mut *mut super::super::foundation::collections::ValueSet) -> HRESULT,
@@ -3961,7 +3961,7 @@ impl IFolderPicker {
 }
 RT_CLASS!{class FolderPicker: IFolderPicker}
 impl RtActivatable<IActivationFactory> for FolderPicker {}
-DEFINE_CLSID!(FolderPicker(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,105,99,107,101,114,115,46,70,111,108,100,101,114,80,105,99,107,101,114,0]) [CLSID_FolderPicker]);
+DEFINE_CLSID!(FolderPicker: "Windows.Storage.Pickers.FolderPicker");
 DEFINE_IID!(IID_IFolderPicker2, 2394143383, 56453, 17942, 190, 148, 150, 96, 136, 31, 47, 93);
 RT_INTERFACE!{interface IFolderPicker2(IFolderPicker2Vtbl): IInspectable(IInspectableVtbl) [IID_IFolderPicker2] {
     fn get_ContinuationData(&self, out: *mut *mut super::super::foundation::collections::ValueSet) -> HRESULT,
@@ -4260,7 +4260,7 @@ impl CachedFileUpdater {
         <Self as RtActivatable<ICachedFileUpdaterStatics>>::get_activation_factory().set_update_information(file, contentId, readMode, writeMode, options)
     }}
 }
-DEFINE_CLSID!(CachedFileUpdater(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,67,97,99,104,101,100,70,105,108,101,85,112,100,97,116,101,114,0]) [CLSID_CachedFileUpdater]);
+DEFINE_CLSID!(CachedFileUpdater: "Windows.Storage.Provider.CachedFileUpdater");
 DEFINE_IID!(IID_ICachedFileUpdaterStatics, 2680752416, 31695, 18568, 168, 30, 16, 45, 112, 52, 215, 206);
 RT_INTERFACE!{static interface ICachedFileUpdaterStatics(ICachedFileUpdaterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterStatics] {
     fn SetUpdateInformation(&self, file: *mut super::IStorageFile, contentId: HSTRING, readMode: ReadActivationMode, writeMode: WriteActivationMode, options: CachedFileOptions) -> HRESULT
@@ -4443,7 +4443,7 @@ impl StorageProviderItemProperties {
         <Self as RtActivatable<IStorageProviderItemPropertiesStatics>>::get_activation_factory().set_async(item, itemProperties)
     }}
 }
-DEFINE_CLSID!(StorageProviderItemProperties(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,73,116,101,109,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_StorageProviderItemProperties]);
+DEFINE_CLSID!(StorageProviderItemProperties: "Windows.Storage.Provider.StorageProviderItemProperties");
 DEFINE_IID!(IID_IStorageProviderItemPropertiesStatics, 757865623, 9988, 18217, 143, 169, 126, 107, 142, 21, 140, 47);
 RT_INTERFACE!{static interface IStorageProviderItemPropertiesStatics(IStorageProviderItemPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderItemPropertiesStatics] {
     fn SetAsync(&self, item: *mut super::IStorageItem, itemProperties: *mut super::super::foundation::collections::IIterable<StorageProviderItemProperty>, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT
@@ -4495,7 +4495,7 @@ impl IStorageProviderItemProperty {
 }
 RT_CLASS!{class StorageProviderItemProperty: IStorageProviderItemProperty}
 impl RtActivatable<IActivationFactory> for StorageProviderItemProperty {}
-DEFINE_CLSID!(StorageProviderItemProperty(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,73,116,101,109,80,114,111,112,101,114,116,121,0]) [CLSID_StorageProviderItemProperty]);
+DEFINE_CLSID!(StorageProviderItemProperty: "Windows.Storage.Provider.StorageProviderItemProperty");
 DEFINE_IID!(IID_IStorageProviderItemPropertyDefinition, 3316876219, 65311, 17048, 131, 30, 255, 28, 8, 8, 150, 144);
 RT_INTERFACE!{interface IStorageProviderItemPropertyDefinition(IStorageProviderItemPropertyDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderItemPropertyDefinition] {
     fn get_Id(&self, out: *mut i32) -> HRESULT,
@@ -4525,7 +4525,7 @@ impl IStorageProviderItemPropertyDefinition {
 }
 RT_CLASS!{class StorageProviderItemPropertyDefinition: IStorageProviderItemPropertyDefinition}
 impl RtActivatable<IActivationFactory> for StorageProviderItemPropertyDefinition {}
-DEFINE_CLSID!(StorageProviderItemPropertyDefinition(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,73,116,101,109,80,114,111,112,101,114,116,121,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_StorageProviderItemPropertyDefinition]);
+DEFINE_CLSID!(StorageProviderItemPropertyDefinition: "Windows.Storage.Provider.StorageProviderItemPropertyDefinition");
 DEFINE_IID!(IID_IStorageProviderItemPropertySource, 2406456382, 63026, 19099, 141, 153, 210, 215, 161, 29, 245, 106);
 RT_INTERFACE!{interface IStorageProviderItemPropertySource(IStorageProviderItemPropertySourceVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderItemPropertySource] {
     fn GetItemProperties(&self, itemPath: HSTRING, out: *mut *mut super::super::foundation::collections::IIterable<StorageProviderItemProperty>) -> HRESULT
@@ -4732,7 +4732,7 @@ impl IStorageProviderSyncRootInfo {
 }
 RT_CLASS!{class StorageProviderSyncRootInfo: IStorageProviderSyncRootInfo}
 impl RtActivatable<IActivationFactory> for StorageProviderSyncRootInfo {}
-DEFINE_CLSID!(StorageProviderSyncRootInfo(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,83,121,110,99,82,111,111,116,73,110,102,111,0]) [CLSID_StorageProviderSyncRootInfo]);
+DEFINE_CLSID!(StorageProviderSyncRootInfo: "Windows.Storage.Provider.StorageProviderSyncRootInfo");
 RT_CLASS!{static class StorageProviderSyncRootManager}
 impl RtActivatable<IStorageProviderSyncRootManagerStatics> for StorageProviderSyncRootManager {}
 impl StorageProviderSyncRootManager {
@@ -4752,7 +4752,7 @@ impl StorageProviderSyncRootManager {
         <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().get_current_sync_roots()
     }}
 }
-DEFINE_CLSID!(StorageProviderSyncRootManager(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,83,121,110,99,82,111,111,116,77,97,110,97,103,101,114,0]) [CLSID_StorageProviderSyncRootManager]);
+DEFINE_CLSID!(StorageProviderSyncRootManager: "Windows.Storage.Provider.StorageProviderSyncRootManager");
 DEFINE_IID!(IID_IStorageProviderSyncRootManagerStatics, 1050278847, 36835, 19264, 171, 199, 246, 252, 61, 116, 201, 142);
 RT_INTERFACE!{static interface IStorageProviderSyncRootManagerStatics(IStorageProviderSyncRootManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderSyncRootManagerStatics] {
     fn Register(&self, syncRootInformation: *mut StorageProviderSyncRootInfo) -> HRESULT,
@@ -4872,7 +4872,7 @@ impl GeotagHelper {
         <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().set_geotag_async(file, geopoint)
     }}
 }
-DEFINE_CLSID!(GeotagHelper(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,70,105,108,101,80,114,111,112,101,114,116,105,101,115,46,71,101,111,116,97,103,72,101,108,112,101,114,0]) [CLSID_GeotagHelper]);
+DEFINE_CLSID!(GeotagHelper: "Windows.Storage.FileProperties.GeotagHelper");
 DEFINE_IID!(IID_IGeotagHelperStatics, 1095316036, 9508, 18005, 134, 166, 237, 22, 245, 252, 113, 107);
 RT_INTERFACE!{static interface IGeotagHelperStatics(IGeotagHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeotagHelperStatics] {
     #[cfg(feature="windows-devices")] fn GetGeotagAsync(&self, file: *mut super::IStorageFile, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint>) -> HRESULT,
@@ -5409,7 +5409,7 @@ impl StorageApplicationPermissions {
         <Self as RtActivatable<IStorageApplicationPermissionsStatics>>::get_activation_factory().get_most_recently_used_list()
     }}
 }
-DEFINE_CLSID!(StorageApplicationPermissions(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,99,99,101,115,115,67,97,99,104,101,46,83,116,111,114,97,103,101,65,112,112,108,105,99,97,116,105,111,110,80,101,114,109,105,115,115,105,111,110,115,0]) [CLSID_StorageApplicationPermissions]);
+DEFINE_CLSID!(StorageApplicationPermissions: "Windows.Storage.AccessCache.StorageApplicationPermissions");
 DEFINE_IID!(IID_IStorageApplicationPermissionsStatics, 1133633450, 53299, 18681, 128, 96, 62, 200, 71, 210, 227, 241);
 RT_INTERFACE!{static interface IStorageApplicationPermissionsStatics(IStorageApplicationPermissionsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageApplicationPermissionsStatics] {
     fn get_FutureAccessList(&self, out: *mut *mut StorageItemAccessList) -> HRESULT,
@@ -5637,7 +5637,7 @@ impl FileInformationFactory {
         <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode_and_size_and_options_and_flags(queryResult, mode, requestedThumbnailSize, thumbnailOptions, delayLoad)
     }}
 }
-DEFINE_CLSID!(FileInformationFactory(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,66,117,108,107,65,99,99,101,115,115,46,70,105,108,101,73,110,102,111,114,109,97,116,105,111,110,70,97,99,116,111,114,121,0]) [CLSID_FileInformationFactory]);
+DEFINE_CLSID!(FileInformationFactory: "Windows.Storage.BulkAccess.FileInformationFactory");
 DEFINE_IID!(IID_IFileInformationFactoryFactory, 2229931645, 58530, 20224, 138, 250, 175, 94, 15, 130, 107, 213);
 RT_INTERFACE!{static interface IFileInformationFactoryFactory(IFileInformationFactoryFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileInformationFactoryFactory] {
     fn CreateWithMode(&self, queryResult: *mut super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, out: *mut *mut FileInformationFactory) -> HRESULT,

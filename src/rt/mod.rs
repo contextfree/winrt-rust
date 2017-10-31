@@ -565,15 +565,13 @@ macro_rules! RT_CLASS {
 }
 
 macro_rules! DEFINE_CLSID {
-    ($clsname:ident($id:expr) [$idname:ident]) => {
-        const $idname: &'static [u16] = $id; // Full name of the class as null-terminated UTF16 string
+    ($clsname:ident : $namestr:tt) => {
         impl ::RtNamedClass for $clsname {
             #[inline]
-            fn name() -> &'static [u16] { $idname } 
+            fn name() -> &'static [u16] { wstrz!($namestr) }
         }
     }
 }
-
 
 macro_rules! RT_ENUM {
     {enum $name:ident : $t:ty { $($variant:ident ($longvariant:ident) = $value:expr,)+ }} => {

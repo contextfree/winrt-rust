@@ -22,7 +22,7 @@ impl GameBar {
         <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().get_is_input_redirected()
     }}
 }
-DEFINE_CLSID!(GameBar(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,66,97,114,0]) [CLSID_GameBar]);
+DEFINE_CLSID!(GameBar: "Windows.Gaming.UI.GameBar");
 DEFINE_IID!(IID_IGameBarStatics, 498705042, 52344, 16755, 190, 69, 182, 30, 103, 40, 62, 167);
 RT_INTERFACE!{static interface IGameBarStatics(IGameBarStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarStatics] {
     fn add_VisibilityChanged(&self, handler: *mut super::super::foundation::EventHandler<IInspectable>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
@@ -129,7 +129,7 @@ impl GameChatOverlay {
         <Self as RtActivatable<IGameChatOverlayStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(GameChatOverlay(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,67,104,97,116,79,118,101,114,108,97,121,0]) [CLSID_GameChatOverlay]);
+DEFINE_CLSID!(GameChatOverlay: "Windows.Gaming.UI.GameChatOverlay");
 DEFINE_IID!(IID_IGameChatOverlayMessageSource, 504853399, 23035, 20303, 142, 154, 128, 172, 248, 23, 116, 60);
 RT_INTERFACE!{interface IGameChatOverlayMessageSource(IGameChatOverlayMessageSourceVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatOverlayMessageSource] {
     fn add_MessageReceived(&self, handler: *mut super::super::foundation::TypedEventHandler<GameChatOverlayMessageSource, GameChatMessageReceivedEventArgs>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
@@ -153,7 +153,7 @@ impl IGameChatOverlayMessageSource {
 }
 RT_CLASS!{class GameChatOverlayMessageSource: IGameChatOverlayMessageSource}
 impl RtActivatable<IActivationFactory> for GameChatOverlayMessageSource {}
-DEFINE_CLSID!(GameChatOverlayMessageSource(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,67,104,97,116,79,118,101,114,108,97,121,77,101,115,115,97,103,101,83,111,117,114,99,101,0]) [CLSID_GameChatOverlayMessageSource]);
+DEFINE_CLSID!(GameChatOverlayMessageSource: "Windows.Gaming.UI.GameChatOverlayMessageSource");
 RT_ENUM! { enum GameChatOverlayPosition: i32 {
     BottomCenter (GameChatOverlayPosition_BottomCenter) = 0, BottomLeft (GameChatOverlayPosition_BottomLeft) = 1, BottomRight (GameChatOverlayPosition_BottomRight) = 2, MiddleRight (GameChatOverlayPosition_MiddleRight) = 3, MiddleLeft (GameChatOverlayPosition_MiddleLeft) = 4, TopCenter (GameChatOverlayPosition_TopCenter) = 5, TopLeft (GameChatOverlayPosition_TopLeft) = 6, TopRight (GameChatOverlayPosition_TopRight) = 7,
 }}
@@ -186,7 +186,7 @@ impl GameMonitor {
         <Self as RtActivatable<IGameMonitorStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(GameMonitor(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,77,111,110,105,116,111,114,0]) [CLSID_GameMonitor]);
+DEFINE_CLSID!(GameMonitor: "Windows.Gaming.UI.GameMonitor");
 RT_ENUM! { enum GameMonitoringPermission: i32 {
     Allowed (GameMonitoringPermission_Allowed) = 0, DeniedByUser (GameMonitoringPermission_DeniedByUser) = 1, DeniedBySystem (GameMonitoringPermission_DeniedBySystem) = 2,
 }}
@@ -261,7 +261,7 @@ impl ArcadeStick {
         <Self as RtActivatable<IArcadeStickStatics2>>::get_activation_factory().from_game_controller(gameController)
     }}
 }
-DEFINE_CLSID!(ArcadeStick(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,65,114,99,97,100,101,83,116,105,99,107,0]) [CLSID_ArcadeStick]);
+DEFINE_CLSID!(ArcadeStick: "Windows.Gaming.Input.ArcadeStick");
 RT_ENUM! { enum ArcadeStickButtons: u32 {
     None (ArcadeStickButtons_None) = 0, StickUp (ArcadeStickButtons_StickUp) = 1, StickDown (ArcadeStickButtons_StickDown) = 2, StickLeft (ArcadeStickButtons_StickLeft) = 4, StickRight (ArcadeStickButtons_StickRight) = 8, Action1 (ArcadeStickButtons_Action1) = 16, Action2 (ArcadeStickButtons_Action2) = 32, Action3 (ArcadeStickButtons_Action3) = 64, Action4 (ArcadeStickButtons_Action4) = 128, Action5 (ArcadeStickButtons_Action5) = 256, Action6 (ArcadeStickButtons_Action6) = 512, Special1 (ArcadeStickButtons_Special1) = 1024, Special2 (ArcadeStickButtons_Special2) = 2048,
 }}
@@ -357,7 +357,7 @@ impl FlightStick {
         <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().from_game_controller(gameController)
     }}
 }
-DEFINE_CLSID!(FlightStick(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,108,105,103,104,116,83,116,105,99,107,0]) [CLSID_FlightStick]);
+DEFINE_CLSID!(FlightStick: "Windows.Gaming.Input.FlightStick");
 RT_ENUM! { enum FlightStickButtons: u32 {
     None (FlightStickButtons_None) = 0, FirePrimary (FlightStickButtons_FirePrimary) = 1, FireSecondary (FlightStickButtons_FireSecondary) = 2,
 }}
@@ -524,7 +524,7 @@ impl Gamepad {
         <Self as RtActivatable<IGamepadStatics2>>::get_activation_factory().from_game_controller(gameController)
     }}
 }
-DEFINE_CLSID!(Gamepad(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,71,97,109,101,112,97,100,0]) [CLSID_Gamepad]);
+DEFINE_CLSID!(Gamepad: "Windows.Gaming.Input.Gamepad");
 DEFINE_IID!(IID_IGamepad2, 1008110013, 22805, 16965, 176, 192, 200, 159, 174, 3, 8, 255);
 RT_INTERFACE!{interface IGamepad2(IGamepad2Vtbl): IInspectable(IInspectableVtbl) [IID_IGamepad2] {
     fn GetButtonLabel(&self, button: GamepadButtons, out: *mut GameControllerButtonLabel) -> HRESULT
@@ -686,7 +686,7 @@ impl RacingWheel {
         <Self as RtActivatable<IRacingWheelStatics2>>::get_activation_factory().from_game_controller(gameController)
     }}
 }
-DEFINE_CLSID!(RacingWheel(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,82,97,99,105,110,103,87,104,101,101,108,0]) [CLSID_RacingWheel]);
+DEFINE_CLSID!(RacingWheel: "Windows.Gaming.Input.RacingWheel");
 RT_ENUM! { enum RacingWheelButtons: u32 {
     None (RacingWheelButtons_None) = 0, PreviousGear (RacingWheelButtons_PreviousGear) = 1, NextGear (RacingWheelButtons_NextGear) = 2, DPadUp (RacingWheelButtons_DPadUp) = 4, DPadDown (RacingWheelButtons_DPadDown) = 8, DPadLeft (RacingWheelButtons_DPadLeft) = 16, DPadRight (RacingWheelButtons_DPadRight) = 32, Button1 (RacingWheelButtons_Button1) = 64, Button2 (RacingWheelButtons_Button2) = 128, Button3 (RacingWheelButtons_Button3) = 256, Button4 (RacingWheelButtons_Button4) = 512, Button5 (RacingWheelButtons_Button5) = 1024, Button6 (RacingWheelButtons_Button6) = 2048, Button7 (RacingWheelButtons_Button7) = 4096, Button8 (RacingWheelButtons_Button8) = 8192, Button9 (RacingWheelButtons_Button9) = 16384, Button10 (RacingWheelButtons_Button10) = 32768, Button11 (RacingWheelButtons_Button11) = 65536, Button12 (RacingWheelButtons_Button12) = 131072, Button13 (RacingWheelButtons_Button13) = 262144, Button14 (RacingWheelButtons_Button14) = 524288, Button15 (RacingWheelButtons_Button15) = 1048576, Button16 (RacingWheelButtons_Button16) = 2097152,
 }}
@@ -818,7 +818,7 @@ impl RawGameController {
         <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().from_game_controller(gameController)
     }}
 }
-DEFINE_CLSID!(RawGameController(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,82,97,119,71,97,109,101,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_RawGameController]);
+DEFINE_CLSID!(RawGameController: "Windows.Gaming.Input.RawGameController");
 DEFINE_IID!(IID_IRawGameController2, 1136705589, 47987, 18262, 167, 135, 62, 214, 190, 166, 23, 189);
 RT_INTERFACE!{interface IRawGameController2(IRawGameController2Vtbl): IInspectable(IInspectableVtbl) [IID_IRawGameController2] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
@@ -931,7 +931,7 @@ impl UINavigationController {
         <Self as RtActivatable<IUINavigationControllerStatics2>>::get_activation_factory().from_game_controller(gameController)
     }}
 }
-DEFINE_CLSID!(UINavigationController(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,85,73,78,97,118,105,103,97,116,105,111,110,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_UINavigationController]);
+DEFINE_CLSID!(UINavigationController: "Windows.Gaming.Input.UINavigationController");
 DEFINE_IID!(IID_IUINavigationControllerStatics, 789877514, 63224, 19016, 141, 137, 148, 120, 108, 202, 12, 46);
 RT_INTERFACE!{static interface IUINavigationControllerStatics(IUINavigationControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUINavigationControllerStatics] {
     fn add_UINavigationControllerAdded(&self, value: *mut super::super::foundation::EventHandler<UINavigationController>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
@@ -1019,7 +1019,7 @@ impl GameControllerFactoryManager {
         <Self as RtActivatable<IGameControllerFactoryManagerStatics2>>::get_activation_factory().try_get_factory_controller_from_game_controller(factory, gameController)
     }}
 }
-DEFINE_CLSID!(GameControllerFactoryManager(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,67,117,115,116,111,109,46,71,97,109,101,67,111,110,116,114,111,108,108,101,114,70,97,99,116,111,114,121,77,97,110,97,103,101,114,0]) [CLSID_GameControllerFactoryManager]);
+DEFINE_CLSID!(GameControllerFactoryManager: "Windows.Gaming.Input.Custom.GameControllerFactoryManager");
 DEFINE_IID!(IID_IGameControllerFactoryManagerStatics, 919299811, 53409, 18822, 162, 76, 64, 177, 55, 222, 186, 158);
 RT_INTERFACE!{static interface IGameControllerFactoryManagerStatics(IGameControllerFactoryManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameControllerFactoryManagerStatics] {
     fn RegisterCustomFactoryForGipInterface(&self, factory: *mut ICustomGameControllerFactory, interfaceId: Guid) -> HRESULT,
@@ -1270,7 +1270,7 @@ impl ConditionForceEffect {
         <Self as RtActivatable<IConditionForceEffectFactory>>::get_activation_factory().create_instance(effectKind)
     }}
 }
-DEFINE_CLSID!(ConditionForceEffect(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,111,114,99,101,70,101,101,100,98,97,99,107,46,67,111,110,100,105,116,105,111,110,70,111,114,99,101,69,102,102,101,99,116,0]) [CLSID_ConditionForceEffect]);
+DEFINE_CLSID!(ConditionForceEffect: "Windows.Gaming.Input.ForceFeedback.ConditionForceEffect");
 DEFINE_IID!(IID_IConditionForceEffectFactory, 2443809380, 6160, 20150, 167, 115, 191, 211, 184, 205, 219, 171);
 RT_INTERFACE!{static interface IConditionForceEffectFactory(IConditionForceEffectFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IConditionForceEffectFactory] {
     fn CreateInstance(&self, effectKind: ConditionForceEffectKind, out: *mut *mut ConditionForceEffect) -> HRESULT
@@ -1302,7 +1302,7 @@ impl IConstantForceEffect {
 }
 RT_CLASS!{class ConstantForceEffect: IForceFeedbackEffect}
 impl RtActivatable<IActivationFactory> for ConstantForceEffect {}
-DEFINE_CLSID!(ConstantForceEffect(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,111,114,99,101,70,101,101,100,98,97,99,107,46,67,111,110,115,116,97,110,116,70,111,114,99,101,69,102,102,101,99,116,0]) [CLSID_ConstantForceEffect]);
+DEFINE_CLSID!(ConstantForceEffect: "Windows.Gaming.Input.ForceFeedback.ConstantForceEffect");
 DEFINE_IID!(IID_IForceFeedbackEffect, 2709502476, 10980, 18626, 128, 99, 234, 189, 7, 119, 203, 137);
 RT_INTERFACE!{interface IForceFeedbackEffect(IForceFeedbackEffectVtbl): IInspectable(IInspectableVtbl) [IID_IForceFeedbackEffect] {
     fn get_Gain(&self, out: *mut f64) -> HRESULT,
@@ -1452,7 +1452,7 @@ impl PeriodicForceEffect {
         <Self as RtActivatable<IPeriodicForceEffectFactory>>::get_activation_factory().create_instance(effectKind)
     }}
 }
-DEFINE_CLSID!(PeriodicForceEffect(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,111,114,99,101,70,101,101,100,98,97,99,107,46,80,101,114,105,111,100,105,99,70,111,114,99,101,69,102,102,101,99,116,0]) [CLSID_PeriodicForceEffect]);
+DEFINE_CLSID!(PeriodicForceEffect: "Windows.Gaming.Input.ForceFeedback.PeriodicForceEffect");
 DEFINE_IID!(IID_IPeriodicForceEffectFactory, 1868753690, 38993, 18299, 179, 24, 53, 236, 170, 21, 7, 15);
 RT_INTERFACE!{static interface IPeriodicForceEffectFactory(IPeriodicForceEffectFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPeriodicForceEffectFactory] {
     fn CreateInstance(&self, effectKind: PeriodicForceEffectKind, out: *mut *mut PeriodicForceEffect) -> HRESULT
@@ -1484,7 +1484,7 @@ impl IRampForceEffect {
 }
 RT_CLASS!{class RampForceEffect: IForceFeedbackEffect}
 impl RtActivatable<IActivationFactory> for RampForceEffect {}
-DEFINE_CLSID!(RampForceEffect(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,111,114,99,101,70,101,101,100,98,97,99,107,46,82,97,109,112,70,111,114,99,101,69,102,102,101,99,116,0]) [CLSID_RampForceEffect]);
+DEFINE_CLSID!(RampForceEffect: "Windows.Gaming.Input.ForceFeedback.RampForceEffect");
 } // Windows.Gaming.Input.ForceFeedback
 pub mod preview { // Windows.Gaming.Input.Preview
 use ::prelude::*;
@@ -1498,7 +1498,7 @@ impl GameControllerProviderInfo {
         <Self as RtActivatable<IGameControllerProviderInfoStatics>>::get_activation_factory().get_provider_id(provider)
     }}
 }
-DEFINE_CLSID!(GameControllerProviderInfo(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,71,97,109,101,67,111,110,116,114,111,108,108,101,114,80,114,111,118,105,100,101,114,73,110,102,111,0]) [CLSID_GameControllerProviderInfo]);
+DEFINE_CLSID!(GameControllerProviderInfo: "Windows.Gaming.Input.Preview.GameControllerProviderInfo");
 DEFINE_IID!(IID_IGameControllerProviderInfoStatics, 199354053, 55741, 17646, 131, 98, 72, 139, 46, 70, 75, 251);
 RT_INTERFACE!{static interface IGameControllerProviderInfoStatics(IGameControllerProviderInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameControllerProviderInfoStatics] {
     fn GetParentProviderId(&self, provider: *mut super::custom::IGameControllerProvider, out: *mut HSTRING) -> HRESULT,
@@ -1800,7 +1800,7 @@ impl GameSaveProvider {
         <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().get_sync_on_demand_for_user_async(user, serviceConfigId)
     }}
 }
-DEFINE_CLSID!(GameSaveProvider(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,88,98,111,120,76,105,118,101,46,83,116,111,114,97,103,101,46,71,97,109,101,83,97,118,101,80,114,111,118,105,100,101,114,0]) [CLSID_GameSaveProvider]);
+DEFINE_CLSID!(GameSaveProvider: "Windows.Gaming.XboxLive.Storage.GameSaveProvider");
 DEFINE_IID!(IID_IGameSaveProviderGetResult, 985204758, 54163, 19813, 172, 22, 65, 195, 230, 122, 185, 69);
 RT_INTERFACE!{interface IGameSaveProviderGetResult(IGameSaveProviderGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProviderGetResult] {
     fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
@@ -1876,7 +1876,7 @@ impl GameList {
         <Self as RtActivatable<IGameListStatics2>>::get_activation_factory().unmerge_entry_async(mergedEntry)
     }}
 }
-DEFINE_CLSID!(GameList(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,80,114,101,118,105,101,119,46,71,97,109,101,115,69,110,117,109,101,114,97,116,105,111,110,46,71,97,109,101,76,105,115,116,0]) [CLSID_GameList]);
+DEFINE_CLSID!(GameList: "Windows.Gaming.Preview.GamesEnumeration.GameList");
 RT_ENUM! { enum GameListCategory: i32 {
     Candidate (GameListCategory_Candidate) = 0, ConfirmedBySystem (GameListCategory_ConfirmedBySystem) = 1, ConfirmedByUser (GameListCategory_ConfirmedByUser) = 2,
 }}
@@ -2193,7 +2193,7 @@ impl GameModeUserConfiguration {
         <Self as RtActivatable<IGameModeUserConfigurationStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(GameModeUserConfiguration(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,80,114,101,118,105,101,119,46,71,97,109,101,115,69,110,117,109,101,114,97,116,105,111,110,46,71,97,109,101,77,111,100,101,85,115,101,114,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_GameModeUserConfiguration]);
+DEFINE_CLSID!(GameModeUserConfiguration: "Windows.Gaming.Preview.GamesEnumeration.GameModeUserConfiguration");
 DEFINE_IID!(IID_IGameModeUserConfigurationStatics, 1850792316, 26346, 18318, 164, 161, 245, 124, 14, 141, 0, 231);
 RT_INTERFACE!{static interface IGameModeUserConfigurationStatics(IGameModeUserConfigurationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameModeUserConfigurationStatics] {
     fn GetDefault(&self, out: *mut *mut GameModeUserConfiguration) -> HRESULT

@@ -41,7 +41,7 @@ impl LowLevelDevicesAggregateProvider {
         <Self as RtActivatable<ILowLevelDevicesAggregateProviderFactory>>::get_activation_factory().create(adc, pwm, gpio, i2c, spi)
     }}
 }
-DEFINE_CLSID!(LowLevelDevicesAggregateProvider(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,76,111,119,76,101,118,101,108,68,101,118,105,99,101,115,65,103,103,114,101,103,97,116,101,80,114,111,118,105,100,101,114,0]) [CLSID_LowLevelDevicesAggregateProvider]);
+DEFINE_CLSID!(LowLevelDevicesAggregateProvider: "Windows.Devices.LowLevelDevicesAggregateProvider");
 DEFINE_IID!(IID_ILowLevelDevicesAggregateProviderFactory, 2596580086, 13427, 18014, 150, 213, 54, 40, 26, 44, 87, 175);
 RT_INTERFACE!{static interface ILowLevelDevicesAggregateProviderFactory(ILowLevelDevicesAggregateProviderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILowLevelDevicesAggregateProviderFactory] {
     fn Create(&self, adc: *mut adc::provider::IAdcControllerProvider, pwm: *mut pwm::provider::IPwmControllerProvider, gpio: *mut gpio::provider::IGpioControllerProvider, i2c: *mut i2c::provider::II2cControllerProvider, spi: *mut spi::provider::ISpiControllerProvider, out: *mut *mut LowLevelDevicesAggregateProvider) -> HRESULT
@@ -67,7 +67,7 @@ impl LowLevelDevicesController {
         <Self as RtActivatable<ILowLevelDevicesControllerStatics>>::get_activation_factory().set_default_provider(value)
     }}
 }
-DEFINE_CLSID!(LowLevelDevicesController(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,76,111,119,76,101,118,101,108,68,101,118,105,99,101,115,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_LowLevelDevicesController]);
+DEFINE_CLSID!(LowLevelDevicesController: "Windows.Devices.LowLevelDevicesController");
 DEFINE_IID!(IID_ILowLevelDevicesControllerStatics, 155095658, 64715, 17300, 166, 151, 25, 222, 99, 124, 45, 179);
 RT_INTERFACE!{static interface ILowLevelDevicesControllerStatics(ILowLevelDevicesControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILowLevelDevicesControllerStatics] {
     fn get_DefaultProvider(&self, out: *mut *mut ILowLevelDevicesAggregateProvider) -> HRESULT,
@@ -125,7 +125,7 @@ impl CustomDevice {
         <Self as RtActivatable<ICustomDeviceStatics>>::get_activation_factory().from_id_async(deviceId, desiredAccess, sharingMode)
     }}
 }
-DEFINE_CLSID!(CustomDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,67,117,115,116,111,109,46,67,117,115,116,111,109,68,101,118,105,99,101,0]) [CLSID_CustomDevice]);
+DEFINE_CLSID!(CustomDevice: "Windows.Devices.Custom.CustomDevice");
 DEFINE_IID!(IID_ICustomDeviceStatics, 3357672210, 61260, 18097, 165, 142, 238, 179, 8, 220, 137, 23);
 RT_INTERFACE!{static interface ICustomDeviceStatics(ICustomDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICustomDeviceStatics] {
     fn GetDeviceSelector(&self, classGuid: Guid, out: *mut HSTRING) -> HRESULT,
@@ -202,7 +202,7 @@ impl KnownDeviceTypes {
         <Self as RtActivatable<IKnownDeviceTypesStatics>>::get_activation_factory().get_unknown()
     }}
 }
-DEFINE_CLSID!(KnownDeviceTypes(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,67,117,115,116,111,109,46,75,110,111,119,110,68,101,118,105,99,101,84,121,112,101,115,0]) [CLSID_KnownDeviceTypes]);
+DEFINE_CLSID!(KnownDeviceTypes: "Windows.Devices.Custom.KnownDeviceTypes");
 DEFINE_IID!(IID_IKnownDeviceTypesStatics, 3998513602, 21576, 17882, 173, 27, 36, 148, 140, 35, 144, 148);
 RT_INTERFACE!{static interface IKnownDeviceTypesStatics(IKnownDeviceTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownDeviceTypesStatics] {
     fn get_Unknown(&self, out: *mut u16) -> HRESULT
@@ -227,7 +227,7 @@ impl IOControlCode {
         <Self as RtActivatable<IIOControlCodeFactory>>::get_activation_factory().create_iocontrol_code(deviceType, function, accessMode, bufferingMethod)
     }}
 }
-DEFINE_CLSID!(IOControlCode(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,67,117,115,116,111,109,46,73,79,67,111,110,116,114,111,108,67,111,100,101,0]) [CLSID_IOControlCode]);
+DEFINE_CLSID!(IOControlCode: "Windows.Devices.Custom.IOControlCode");
 } // Windows.Devices.Custom
 pub mod printers { // Windows.Devices.Printers
 use ::prelude::*;
@@ -252,7 +252,7 @@ impl Print3DDevice {
         <Self as RtActivatable<IPrint3DDeviceStatics>>::get_activation_factory().get_device_selector()
     }}
 }
-DEFINE_CLSID!(Print3DDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,114,105,110,116,101,114,115,46,80,114,105,110,116,51,68,68,101,118,105,99,101,0]) [CLSID_Print3DDevice]);
+DEFINE_CLSID!(Print3DDevice: "Windows.Devices.Printers.Print3DDevice");
 DEFINE_IID!(IID_IPrint3DDeviceStatics, 4259537418, 26573, 16823, 163, 68, 81, 80, 161, 253, 117, 181);
 RT_INTERFACE!{static interface IPrint3DDeviceStatics(IPrint3DDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DDeviceStatics] {
     fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<Print3DDevice>) -> HRESULT,
@@ -404,7 +404,7 @@ impl PrintExtensionContext {
         <Self as RtActivatable<IPrintExtensionContextStatic>>::get_activation_factory().from_device_id(deviceId)
     }}
 }
-DEFINE_CLSID!(PrintExtensionContext(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,114,105,110,116,101,114,115,46,69,120,116,101,110,115,105,111,110,115,46,80,114,105,110,116,69,120,116,101,110,115,105,111,110,67,111,110,116,101,120,116,0]) [CLSID_PrintExtensionContext]);
+DEFINE_CLSID!(PrintExtensionContext: "Windows.Devices.Printers.Extensions.PrintExtensionContext");
 DEFINE_IID!(IID_IPrintExtensionContextStatic, 3876429761, 65401, 19108, 140, 155, 12, 147, 174, 223, 222, 138);
 RT_INTERFACE!{static interface IPrintExtensionContextStatic(IPrintExtensionContextStaticVtbl): IInspectable(IInspectableVtbl) [IID_IPrintExtensionContextStatic] {
     fn FromDeviceId(&self, deviceId: HSTRING, out: *mut *mut IInspectable) -> HRESULT
@@ -607,7 +607,7 @@ impl AdcController {
         <Self as RtActivatable<IAdcControllerStatics2>>::get_activation_factory().get_default_async()
     }}
 }
-DEFINE_CLSID!(AdcController(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,100,99,46,65,100,99,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_AdcController]);
+DEFINE_CLSID!(AdcController: "Windows.Devices.Adc.AdcController");
 DEFINE_IID!(IID_IAdcControllerStatics, 3437858316, 504, 18577, 188, 59, 190, 83, 239, 39, 156, 164);
 RT_INTERFACE!{static interface IAdcControllerStatics(IAdcControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAdcControllerStatics] {
     fn GetControllersAsync(&self, provider: *mut provider::IAdcProvider, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<AdcController>>) -> HRESULT
@@ -766,7 +766,7 @@ impl GpioChangeCounter {
         <Self as RtActivatable<IGpioChangeCounterFactory>>::get_activation_factory().create(pin)
     }}
 }
-DEFINE_CLSID!(GpioChangeCounter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,112,105,111,46,71,112,105,111,67,104,97,110,103,101,67,111,117,110,116,101,114,0]) [CLSID_GpioChangeCounter]);
+DEFINE_CLSID!(GpioChangeCounter: "Windows.Devices.Gpio.GpioChangeCounter");
 DEFINE_IID!(IID_IGpioChangeCounterFactory, 343774390, 2718, 16652, 180, 250, 248, 159, 64, 82, 8, 77);
 RT_INTERFACE!{static interface IGpioChangeCounterFactory(IGpioChangeCounterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGpioChangeCounterFactory] {
     fn Create(&self, pin: *mut GpioPin, out: *mut *mut GpioChangeCounter) -> HRESULT
@@ -876,7 +876,7 @@ impl GpioChangeReader {
         <Self as RtActivatable<IGpioChangeReaderFactory>>::get_activation_factory().create_with_capacity(pin, minCapacity)
     }}
 }
-DEFINE_CLSID!(GpioChangeReader(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,112,105,111,46,71,112,105,111,67,104,97,110,103,101,82,101,97,100,101,114,0]) [CLSID_GpioChangeReader]);
+DEFINE_CLSID!(GpioChangeReader: "Windows.Devices.Gpio.GpioChangeReader");
 DEFINE_IID!(IID_IGpioChangeReaderFactory, 2841218803, 14606, 17434, 157, 28, 232, 222, 11, 45, 240, 223);
 RT_INTERFACE!{static interface IGpioChangeReaderFactory(IGpioChangeReaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGpioChangeReaderFactory] {
     fn Create(&self, pin: *mut GpioPin, out: *mut *mut GpioChangeReader) -> HRESULT,
@@ -940,7 +940,7 @@ impl GpioController {
         <Self as RtActivatable<IGpioControllerStatics2>>::get_activation_factory().get_default_async()
     }}
 }
-DEFINE_CLSID!(GpioController(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,112,105,111,46,71,112,105,111,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_GpioController]);
+DEFINE_CLSID!(GpioController: "Windows.Devices.Gpio.GpioController");
 DEFINE_IID!(IID_IGpioControllerStatics, 785839150, 31479, 16662, 149, 51, 196, 61, 153, 161, 251, 100);
 RT_INTERFACE!{static interface IGpioControllerStatics(IGpioControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGpioControllerStatics] {
     fn GetDefault(&self, out: *mut *mut GpioController) -> HRESULT
@@ -1168,7 +1168,7 @@ impl GpioPinProviderValueChangedEventArgs {
         <Self as RtActivatable<IGpioPinProviderValueChangedEventArgsFactory>>::get_activation_factory().create(edge)
     }}
 }
-DEFINE_CLSID!(GpioPinProviderValueChangedEventArgs(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,112,105,111,46,80,114,111,118,105,100,101,114,46,71,112,105,111,80,105,110,80,114,111,118,105,100,101,114,86,97,108,117,101,67,104,97,110,103,101,100,69,118,101,110,116,65,114,103,115,0]) [CLSID_GpioPinProviderValueChangedEventArgs]);
+DEFINE_CLSID!(GpioPinProviderValueChangedEventArgs: "Windows.Devices.Gpio.Provider.GpioPinProviderValueChangedEventArgs");
 DEFINE_IID!(IID_IGpioPinProviderValueChangedEventArgsFactory, 1053494105, 22156, 17298, 178, 74, 138, 89, 169, 2, 177, 241);
 RT_INTERFACE!{static interface IGpioPinProviderValueChangedEventArgsFactory(IGpioPinProviderValueChangedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGpioPinProviderValueChangedEventArgsFactory] {
     fn Create(&self, edge: ProviderGpioPinEdge, out: *mut *mut GpioPinProviderValueChangedEventArgs) -> HRESULT
@@ -1255,7 +1255,7 @@ impl I2cConnectionSettings {
         <Self as RtActivatable<II2cConnectionSettingsFactory>>::get_activation_factory().create(slaveAddress)
     }}
 }
-DEFINE_CLSID!(I2cConnectionSettings(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,50,99,46,73,50,99,67,111,110,110,101,99,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_I2cConnectionSettings]);
+DEFINE_CLSID!(I2cConnectionSettings: "Windows.Devices.I2c.I2cConnectionSettings");
 DEFINE_IID!(IID_II2cConnectionSettingsFactory, 2176157363, 38547, 16817, 162, 67, 222, 212, 246, 230, 105, 38);
 RT_INTERFACE!{static interface II2cConnectionSettingsFactory(II2cConnectionSettingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_II2cConnectionSettingsFactory] {
     fn Create(&self, slaveAddress: i32, out: *mut *mut I2cConnectionSettings) -> HRESULT
@@ -1288,7 +1288,7 @@ impl I2cController {
         <Self as RtActivatable<II2cControllerStatics>>::get_activation_factory().get_default_async()
     }}
 }
-DEFINE_CLSID!(I2cController(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,50,99,46,73,50,99,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_I2cController]);
+DEFINE_CLSID!(I2cController: "Windows.Devices.I2c.I2cController");
 DEFINE_IID!(IID_II2cControllerStatics, 1090257765, 24325, 20094, 132, 189, 16, 13, 184, 224, 174, 197);
 RT_INTERFACE!{static interface II2cControllerStatics(II2cControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_II2cControllerStatics] {
     fn GetControllersAsync(&self, provider: *mut provider::II2cProvider, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<I2cController>>) -> HRESULT,
@@ -1369,7 +1369,7 @@ impl I2cDevice {
         <Self as RtActivatable<II2cDeviceStatics>>::get_activation_factory().from_id_async(deviceId, settings)
     }}
 }
-DEFINE_CLSID!(I2cDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,50,99,46,73,50,99,68,101,118,105,99,101,0]) [CLSID_I2cDevice]);
+DEFINE_CLSID!(I2cDevice: "Windows.Devices.I2c.I2cDevice");
 DEFINE_IID!(IID_II2cDeviceStatics, 2443394019, 29492, 17682, 150, 188, 251, 174, 148, 89, 245, 246);
 RT_INTERFACE!{static interface II2cDeviceStatics(II2cDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_II2cDeviceStatics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
@@ -1587,7 +1587,7 @@ impl PwmController {
         <Self as RtActivatable<IPwmControllerStatics3>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(PwmController(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,119,109,46,80,119,109,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_PwmController]);
+DEFINE_CLSID!(PwmController: "Windows.Devices.Pwm.PwmController");
 DEFINE_IID!(IID_IPwmControllerStatics, 1113832865, 35142, 17412, 189, 72, 129, 221, 18, 74, 244, 217);
 RT_INTERFACE!{static interface IPwmControllerStatics(IPwmControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPwmControllerStatics] {
     fn GetControllersAsync(&self, provider: *mut provider::IPwmProvider, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<PwmController>>) -> HRESULT
@@ -1860,7 +1860,7 @@ impl SpiConnectionSettings {
         <Self as RtActivatable<ISpiConnectionSettingsFactory>>::get_activation_factory().create(chipSelectLine)
     }}
 }
-DEFINE_CLSID!(SpiConnectionSettings(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,112,105,46,83,112,105,67,111,110,110,101,99,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_SpiConnectionSettings]);
+DEFINE_CLSID!(SpiConnectionSettings: "Windows.Devices.Spi.SpiConnectionSettings");
 DEFINE_IID!(IID_ISpiConnectionSettingsFactory, 4288219166, 4292, 17591, 159, 234, 167, 72, 181, 164, 111, 49);
 RT_INTERFACE!{static interface ISpiConnectionSettingsFactory(ISpiConnectionSettingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISpiConnectionSettingsFactory] {
     fn Create(&self, chipSelectLine: i32, out: *mut *mut SpiConnectionSettings) -> HRESULT
@@ -1893,7 +1893,7 @@ impl SpiController {
         <Self as RtActivatable<ISpiControllerStatics>>::get_activation_factory().get_controllers_async(provider)
     }}
 }
-DEFINE_CLSID!(SpiController(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,112,105,46,83,112,105,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_SpiController]);
+DEFINE_CLSID!(SpiController: "Windows.Devices.Spi.SpiController");
 DEFINE_IID!(IID_ISpiControllerStatics, 223488482, 5003, 20040, 185, 100, 79, 47, 121, 185, 197, 162);
 RT_INTERFACE!{static interface ISpiControllerStatics(ISpiControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpiControllerStatics] {
     fn GetDefaultAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<SpiController>) -> HRESULT,
@@ -1964,7 +1964,7 @@ impl SpiDevice {
         <Self as RtActivatable<ISpiDeviceStatics>>::get_activation_factory().from_id_async(busId, settings)
     }}
 }
-DEFINE_CLSID!(SpiDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,112,105,46,83,112,105,68,101,118,105,99,101,0]) [CLSID_SpiDevice]);
+DEFINE_CLSID!(SpiDevice: "Windows.Devices.Spi.SpiDevice");
 DEFINE_IID!(IID_ISpiDeviceStatics, 2725832025, 22304, 19775, 189, 147, 86, 245, 255, 90, 88, 121);
 RT_INTERFACE!{static interface ISpiDeviceStatics(ISpiDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpiDeviceStatics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
@@ -2069,7 +2069,7 @@ impl ProviderSpiConnectionSettings {
         <Self as RtActivatable<IProviderSpiConnectionSettingsFactory>>::get_activation_factory().create(chipSelectLine)
     }}
 }
-DEFINE_CLSID!(ProviderSpiConnectionSettings(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,112,105,46,80,114,111,118,105,100,101,114,46,80,114,111,118,105,100,101,114,83,112,105,67,111,110,110,101,99,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_ProviderSpiConnectionSettings]);
+DEFINE_CLSID!(ProviderSpiConnectionSettings: "Windows.Devices.Spi.Provider.ProviderSpiConnectionSettings");
 DEFINE_IID!(IID_IProviderSpiConnectionSettingsFactory, 1715825498, 3193, 17379, 159, 60, 229, 151, 128, 172, 24, 250);
 RT_INTERFACE!{static interface IProviderSpiConnectionSettingsFactory(IProviderSpiConnectionSettingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IProviderSpiConnectionSettingsFactory] {
     fn Create(&self, chipSelectLine: i32, out: *mut *mut ProviderSpiConnectionSettings) -> HRESULT
@@ -2269,7 +2269,7 @@ impl SmartCardAppletIdGroup {
         <Self as RtActivatable<ISmartCardAppletIdGroupStatics>>::get_activation_factory().get_max_applet_ids()
     }}
 }
-DEFINE_CLSID!(SmartCardAppletIdGroup(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,65,112,112,108,101,116,73,100,71,114,111,117,112,0]) [CLSID_SmartCardAppletIdGroup]);
+DEFINE_CLSID!(SmartCardAppletIdGroup: "Windows.Devices.SmartCards.SmartCardAppletIdGroup");
 RT_ENUM! { enum SmartCardAppletIdGroupActivationPolicy: i32 {
     Disabled (SmartCardAppletIdGroupActivationPolicy_Disabled) = 0, ForegroundOverride (SmartCardAppletIdGroupActivationPolicy_ForegroundOverride) = 1, Enabled (SmartCardAppletIdGroupActivationPolicy_Enabled) = 2,
 }}
@@ -2398,7 +2398,7 @@ impl SmartCardAutomaticResponseApdu {
         <Self as RtActivatable<ISmartCardAutomaticResponseApduFactory>>::get_activation_factory().create(commandApdu, responseApdu)
     }}
 }
-DEFINE_CLSID!(SmartCardAutomaticResponseApdu(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,65,117,116,111,109,97,116,105,99,82,101,115,112,111,110,115,101,65,112,100,117,0]) [CLSID_SmartCardAutomaticResponseApdu]);
+DEFINE_CLSID!(SmartCardAutomaticResponseApdu: "Windows.Devices.SmartCards.SmartCardAutomaticResponseApdu");
 DEFINE_IID!(IID_ISmartCardAutomaticResponseApdu2, 1152301844, 21917, 17713, 78, 81, 137, 219, 111, 168, 165, 122);
 RT_INTERFACE!{interface ISmartCardAutomaticResponseApdu2(ISmartCardAutomaticResponseApdu2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAutomaticResponseApdu2] {
     fn get_InputState(&self, out: *mut *mut super::super::foundation::IReference<u32>) -> HRESULT,
@@ -2609,7 +2609,7 @@ impl SmartCardCryptogramGenerator {
         <Self as RtActivatable<ISmartCardCryptogramGeneratorStatics2>>::get_activation_factory().is_supported()
     }}
 }
-DEFINE_CLSID!(SmartCardCryptogramGenerator(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,110,101,114,97,116,111,114,0]) [CLSID_SmartCardCryptogramGenerator]);
+DEFINE_CLSID!(SmartCardCryptogramGenerator: "Windows.Devices.SmartCards.SmartCardCryptogramGenerator");
 DEFINE_IID!(IID_ISmartCardCryptogramGenerator2, 1897310772, 23917, 19274, 150, 163, 239, 164, 125, 42, 126, 37);
 RT_INTERFACE!{interface ISmartCardCryptogramGenerator2(ISmartCardCryptogramGenerator2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGenerator2] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -2690,7 +2690,7 @@ impl ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult {
 }
 RT_CLASS!{class SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult {}
-DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,116,65,108,108,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,82,101,115,117,108,116,0]) [CLSID_SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult]);
+DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult: "Windows.Devices.SmartCards.SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult");
 DEFINE_IID!(IID_ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult, 1315605084, 38771, 18116, 163, 47, 177, 229, 67, 21, 158, 4);
 RT_INTERFACE!{interface ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult(ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResultVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult] {
     fn get_OperationStatus(&self, out: *mut SmartCardCryptogramGeneratorOperationStatus) -> HRESULT,
@@ -2710,7 +2710,7 @@ impl ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult {
 }
 RT_CLASS!{class SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult {}
-DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,116,65,108,108,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,80,97,99,107,97,103,101,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,82,101,115,117,108,116,0]) [CLSID_SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult]);
+DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult: "Windows.Devices.SmartCards.SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult");
 DEFINE_IID!(IID_ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult, 2356996183, 42983, 18589, 185, 214, 54, 128, 97, 81, 80, 18);
 RT_INTERFACE!{interface ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult(ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResultVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult] {
     fn get_OperationStatus(&self, out: *mut SmartCardCryptogramGeneratorOperationStatus) -> HRESULT,
@@ -2730,7 +2730,7 @@ impl ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult {
 }
 RT_CLASS!{class SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult {}
-DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,116,65,108,108,67,114,121,112,116,111,103,114,97,109,83,116,111,114,97,103,101,75,101,121,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,82,101,115,117,108,116,0]) [CLSID_SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult]);
+DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult: "Windows.Devices.SmartCards.SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult");
 DEFINE_IID!(IID_ISmartCardCryptogramMaterialCharacteristics, 4238001612, 49623, 16723, 146, 59, 162, 212, 60, 108, 141, 73);
 RT_INTERFACE!{interface ISmartCardCryptogramMaterialCharacteristics(ISmartCardCryptogramMaterialCharacteristicsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramMaterialCharacteristics] {
     fn get_MaterialName(&self, out: *mut HSTRING) -> HRESULT,
@@ -2786,7 +2786,7 @@ impl ISmartCardCryptogramMaterialCharacteristics {
 }
 RT_CLASS!{class SmartCardCryptogramMaterialCharacteristics: ISmartCardCryptogramMaterialCharacteristics}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramMaterialCharacteristics {}
-DEFINE_CLSID!(SmartCardCryptogramMaterialCharacteristics(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,0]) [CLSID_SmartCardCryptogramMaterialCharacteristics]);
+DEFINE_CLSID!(SmartCardCryptogramMaterialCharacteristics: "Windows.Devices.SmartCards.SmartCardCryptogramMaterialCharacteristics");
 DEFINE_IID!(IID_ISmartCardCryptogramMaterialPackageCharacteristics, 4290088479, 1682, 19527, 147, 207, 52, 217, 31, 157, 205, 0);
 RT_INTERFACE!{interface ISmartCardCryptogramMaterialPackageCharacteristics(ISmartCardCryptogramMaterialPackageCharacteristicsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramMaterialPackageCharacteristics] {
     fn get_PackageName(&self, out: *mut HSTRING) -> HRESULT,
@@ -2818,7 +2818,7 @@ impl ISmartCardCryptogramMaterialPackageCharacteristics {
 }
 RT_CLASS!{class SmartCardCryptogramMaterialPackageCharacteristics: ISmartCardCryptogramMaterialPackageCharacteristics}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramMaterialPackageCharacteristics {}
-DEFINE_CLSID!(SmartCardCryptogramMaterialPackageCharacteristics(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,80,97,99,107,97,103,101,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,0]) [CLSID_SmartCardCryptogramMaterialPackageCharacteristics]);
+DEFINE_CLSID!(SmartCardCryptogramMaterialPackageCharacteristics: "Windows.Devices.SmartCards.SmartCardCryptogramMaterialPackageCharacteristics");
 RT_ENUM! { enum SmartCardCryptogramMaterialPackageConfirmationResponseFormat: i32 {
     None (SmartCardCryptogramMaterialPackageConfirmationResponseFormat_None) = 0, VisaHmac (SmartCardCryptogramMaterialPackageConfirmationResponseFormat_VisaHmac) = 1,
 }}
@@ -2960,7 +2960,7 @@ impl ISmartCardCryptogramPlacementStep {
 }
 RT_CLASS!{class SmartCardCryptogramPlacementStep: ISmartCardCryptogramPlacementStep}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramPlacementStep {}
-DEFINE_CLSID!(SmartCardCryptogramPlacementStep(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,80,108,97,99,101,109,101,110,116,83,116,101,112,0]) [CLSID_SmartCardCryptogramPlacementStep]);
+DEFINE_CLSID!(SmartCardCryptogramPlacementStep: "Windows.Devices.SmartCards.SmartCardCryptogramPlacementStep");
 RT_ENUM! { enum SmartCardCryptogramStorageKeyAlgorithm: i32 {
     None (SmartCardCryptogramStorageKeyAlgorithm_None) = 0, Rsa2048 (SmartCardCryptogramStorageKeyAlgorithm_Rsa2048) = 1,
 }}
@@ -2998,7 +2998,7 @@ impl ISmartCardCryptogramStorageKeyCharacteristics {
 }
 RT_CLASS!{class SmartCardCryptogramStorageKeyCharacteristics: ISmartCardCryptogramStorageKeyCharacteristics}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramStorageKeyCharacteristics {}
-DEFINE_CLSID!(SmartCardCryptogramStorageKeyCharacteristics(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,83,116,111,114,97,103,101,75,101,121,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,0]) [CLSID_SmartCardCryptogramStorageKeyCharacteristics]);
+DEFINE_CLSID!(SmartCardCryptogramStorageKeyCharacteristics: "Windows.Devices.SmartCards.SmartCardCryptogramStorageKeyCharacteristics");
 DEFINE_IID!(IID_ISmartCardCryptogramStorageKeyInfo, 2008084493, 45207, 20321, 162, 106, 149, 97, 99, 156, 156, 58);
 RT_INTERFACE!{interface ISmartCardCryptogramStorageKeyInfo(ISmartCardCryptogramStorageKeyInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramStorageKeyInfo] {
     fn get_OperationStatus(&self, out: *mut SmartCardCryptogramGeneratorOperationStatus) -> HRESULT,
@@ -3106,7 +3106,7 @@ impl SmartCardEmulator {
         <Self as RtActivatable<ISmartCardEmulatorStatics3>>::get_activation_factory().is_supported()
     }}
 }
-DEFINE_CLSID!(SmartCardEmulator(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,69,109,117,108,97,116,111,114,0]) [CLSID_SmartCardEmulator]);
+DEFINE_CLSID!(SmartCardEmulator: "Windows.Devices.SmartCards.SmartCardEmulator");
 DEFINE_IID!(IID_ISmartCardEmulator2, 4265590968, 34089, 16666, 128, 123, 72, 237, 194, 160, 171, 68);
 RT_INTERFACE!{interface ISmartCardEmulator2(ISmartCardEmulator2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulator2] {
     fn add_ApduReceived(&self, value: *mut super::super::foundation::TypedEventHandler<SmartCardEmulator, SmartCardEmulatorApduReceivedEventArgs>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
@@ -3386,7 +3386,7 @@ impl ISmartCardPinPolicy {
 }
 RT_CLASS!{class SmartCardPinPolicy: ISmartCardPinPolicy}
 impl RtActivatable<IActivationFactory> for SmartCardPinPolicy {}
-DEFINE_CLSID!(SmartCardPinPolicy(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,80,105,110,80,111,108,105,99,121,0]) [CLSID_SmartCardPinPolicy]);
+DEFINE_CLSID!(SmartCardPinPolicy: "Windows.Devices.SmartCards.SmartCardPinPolicy");
 DEFINE_IID!(IID_ISmartCardPinResetDeferral, 415845036, 30725, 16388, 133, 228, 187, 239, 172, 143, 104, 132);
 RT_INTERFACE!{interface ISmartCardPinResetDeferral(ISmartCardPinResetDeferralVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardPinResetDeferral] {
     fn Complete(&self) -> HRESULT
@@ -3501,7 +3501,7 @@ impl SmartCardProvisioning {
         <Self as RtActivatable<ISmartCardProvisioningStatics2>>::get_activation_factory().request_attested_virtual_smart_card_creation_async_with_card_id(friendlyName, administrativeKey, pinPolicy, cardId)
     }}
 }
-DEFINE_CLSID!(SmartCardProvisioning(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,80,114,111,118,105,115,105,111,110,105,110,103,0]) [CLSID_SmartCardProvisioning]);
+DEFINE_CLSID!(SmartCardProvisioning: "Windows.Devices.SmartCards.SmartCardProvisioning");
 DEFINE_IID!(IID_ISmartCardProvisioning2, 285026539, 16249, 19302, 155, 124, 17, 193, 73, 183, 208, 188);
 RT_INTERFACE!{interface ISmartCardProvisioning2(ISmartCardProvisioning2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioning2] {
     fn GetAuthorityKeyContainerNameAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<HString>) -> HRESULT
@@ -3631,7 +3631,7 @@ impl SmartCardReader {
         <Self as RtActivatable<ISmartCardReaderStatics>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(SmartCardReader(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,82,101,97,100,101,114,0]) [CLSID_SmartCardReader]);
+DEFINE_CLSID!(SmartCardReader: "Windows.Devices.SmartCards.SmartCardReader");
 RT_ENUM! { enum SmartCardReaderKind: i32 {
     Any (SmartCardReaderKind_Any) = 0, Generic (SmartCardReaderKind_Generic) = 1, Tpm (SmartCardReaderKind_Tpm) = 2, Nfc (SmartCardReaderKind_Nfc) = 3, Uicc (SmartCardReaderKind_Uicc) = 4, EmbeddedSE (SmartCardReaderKind_EmbeddedSE) = 5,
 }}
@@ -3772,7 +3772,7 @@ impl Battery {
         <Self as RtActivatable<IBatteryStatics>>::get_activation_factory().get_device_selector()
     }}
 }
-DEFINE_CLSID!(Battery(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,119,101,114,46,66,97,116,116,101,114,121,0]) [CLSID_Battery]);
+DEFINE_CLSID!(Battery: "Windows.Devices.Power.Battery");
 DEFINE_IID!(IID_IBatteryReport, 3380972602, 19987, 16906, 168, 208, 36, 241, 143, 57, 84, 1);
 RT_INTERFACE!{interface IBatteryReport(IBatteryReportVtbl): IInspectable(IInspectableVtbl) [IID_IBatteryReport] {
     fn get_ChargeRateInMilliwatts(&self, out: *mut *mut super::super::foundation::IReference<i32>) -> HRESULT,
@@ -3973,7 +3973,7 @@ impl ISmsAppMessage {
 }
 RT_CLASS!{class SmsAppMessage: ISmsAppMessage}
 impl RtActivatable<IActivationFactory> for SmsAppMessage {}
-DEFINE_CLSID!(SmsAppMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,65,112,112,77,101,115,115,97,103,101,0]) [CLSID_SmsAppMessage]);
+DEFINE_CLSID!(SmsAppMessage: "Windows.Devices.Sms.SmsAppMessage");
 DEFINE_IID!(IID_ISmsBinaryMessage, 1542776851, 15187, 19566, 182, 26, 216, 106, 99, 117, 86, 80);
 RT_INTERFACE!{interface ISmsBinaryMessage(ISmsBinaryMessageVtbl): IInspectable(IInspectableVtbl) [IID_ISmsBinaryMessage] {
     fn get_Format(&self, out: *mut SmsDataFormat) -> HRESULT,
@@ -4003,7 +4003,7 @@ impl ISmsBinaryMessage {
 }
 RT_CLASS!{class SmsBinaryMessage: ISmsBinaryMessage}
 impl RtActivatable<IActivationFactory> for SmsBinaryMessage {}
-DEFINE_CLSID!(SmsBinaryMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,66,105,110,97,114,121,77,101,115,115,97,103,101,0]) [CLSID_SmsBinaryMessage]);
+DEFINE_CLSID!(SmsBinaryMessage: "Windows.Devices.Sms.SmsBinaryMessage");
 DEFINE_IID!(IID_ISmsBroadcastMessage, 1974385649, 58551, 18548, 160, 156, 41, 86, 229, 146, 249, 87);
 RT_INTERFACE!{interface ISmsBroadcastMessage(ISmsBroadcastMessageVtbl): IInspectable(IInspectableVtbl) [IID_ISmsBroadcastMessage] {
     fn get_Timestamp(&self, out: *mut super::super::foundation::DateTime) -> HRESULT,
@@ -4156,7 +4156,7 @@ impl SmsDevice {
         <Self as RtActivatable<ISmsDeviceStatics2>>::get_activation_factory().from_network_account_id_async(networkAccountId)
     }}
 }
-DEFINE_CLSID!(SmsDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,68,101,118,105,99,101,0]) [CLSID_SmsDevice]);
+DEFINE_CLSID!(SmsDevice: "Windows.Devices.Sms.SmsDevice");
 DEFINE_IID!(IID_ISmsDevice2, 3179961363, 58658, 18123, 184, 213, 158, 173, 48, 251, 108, 71);
 RT_INTERFACE!{interface ISmsDevice2(ISmsDevice2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmsDevice2] {
     fn get_SmscAddress(&self, out: *mut HSTRING) -> HRESULT,
@@ -4242,7 +4242,7 @@ impl SmsDevice2 {
         <Self as RtActivatable<ISmsDevice2Statics>>::get_activation_factory().from_parent_id(parentDeviceId)
     }}
 }
-DEFINE_CLSID!(SmsDevice2(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,68,101,118,105,99,101,50,0]) [CLSID_SmsDevice2]);
+DEFINE_CLSID!(SmsDevice2: "Windows.Devices.Sms.SmsDevice2");
 DEFINE_IID!(IID_ISmsDevice2Statics, 1707574053, 4145, 18718, 143, 182, 239, 153, 145, 175, 227, 99);
 RT_INTERFACE!{static interface ISmsDevice2Statics(ISmsDevice2StaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsDevice2Statics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
@@ -4459,7 +4459,7 @@ impl SmsFilterRule {
         <Self as RtActivatable<ISmsFilterRuleFactory>>::get_activation_factory().create_filter_rule(messageType)
     }}
 }
-DEFINE_CLSID!(SmsFilterRule(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,70,105,108,116,101,114,82,117,108,101,0]) [CLSID_SmsFilterRule]);
+DEFINE_CLSID!(SmsFilterRule: "Windows.Devices.Sms.SmsFilterRule");
 DEFINE_IID!(IID_ISmsFilterRuleFactory, 12805384, 25238, 20265, 154, 173, 137, 32, 206, 186, 60, 232);
 RT_INTERFACE!{static interface ISmsFilterRuleFactory(ISmsFilterRuleFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmsFilterRuleFactory] {
     fn CreateFilterRule(&self, messageType: SmsMessageType, out: *mut *mut SmsFilterRule) -> HRESULT
@@ -4495,7 +4495,7 @@ impl SmsFilterRules {
         <Self as RtActivatable<ISmsFilterRulesFactory>>::get_activation_factory().create_filter_rules(actionType)
     }}
 }
-DEFINE_CLSID!(SmsFilterRules(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,70,105,108,116,101,114,82,117,108,101,115,0]) [CLSID_SmsFilterRules]);
+DEFINE_CLSID!(SmsFilterRules: "Windows.Devices.Sms.SmsFilterRules");
 DEFINE_IID!(IID_ISmsFilterRulesFactory, 2694391021, 28206, 17712, 159, 222, 70, 93, 2, 238, 208, 14);
 RT_INTERFACE!{static interface ISmsFilterRulesFactory(ISmsFilterRulesFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmsFilterRulesFactory] {
     fn CreateFilterRules(&self, actionType: SmsFilterActionType, out: *mut *mut SmsFilterRules) -> HRESULT
@@ -4691,7 +4691,7 @@ impl SmsMessageRegistration {
         <Self as RtActivatable<ISmsMessageRegistrationStatics>>::get_activation_factory().register(id, filterRules)
     }}
 }
-DEFINE_CLSID!(SmsMessageRegistration(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,77,101,115,115,97,103,101,82,101,103,105,115,116,114,97,116,105,111,110,0]) [CLSID_SmsMessageRegistration]);
+DEFINE_CLSID!(SmsMessageRegistration: "Windows.Devices.Sms.SmsMessageRegistration");
 DEFINE_IID!(IID_ISmsMessageRegistrationStatics, 1671451748, 10392, 18296, 160, 60, 111, 153, 73, 7, 214, 58);
 RT_INTERFACE!{static interface ISmsMessageRegistrationStatics(ISmsMessageRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsMessageRegistrationStatics] {
     fn get_AllRegistrations(&self, out: *mut *mut super::super::foundation::collections::IVectorView<SmsMessageRegistration>) -> HRESULT,
@@ -4936,7 +4936,7 @@ impl SmsTextMessage {
         <Self as RtActivatable<ISmsTextMessageStatics>>::get_activation_factory().from_binary_data(format, value)
     }}
 }
-DEFINE_CLSID!(SmsTextMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,84,101,120,116,77,101,115,115,97,103,101,0]) [CLSID_SmsTextMessage]);
+DEFINE_CLSID!(SmsTextMessage: "Windows.Devices.Sms.SmsTextMessage");
 DEFINE_IID!(IID_ISmsTextMessage2, 580966547, 17749, 18261, 181, 161, 231, 253, 132, 149, 95, 141);
 RT_INTERFACE!{interface ISmsTextMessage2(ISmsTextMessage2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmsTextMessage2] {
     fn get_Timestamp(&self, out: *mut super::super::foundation::DateTime) -> HRESULT,
@@ -5034,7 +5034,7 @@ impl ISmsTextMessage2 {
 }
 RT_CLASS!{class SmsTextMessage2: ISmsTextMessage2}
 impl RtActivatable<IActivationFactory> for SmsTextMessage2 {}
-DEFINE_CLSID!(SmsTextMessage2(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,84,101,120,116,77,101,115,115,97,103,101,50,0]) [CLSID_SmsTextMessage2]);
+DEFINE_CLSID!(SmsTextMessage2: "Windows.Devices.Sms.SmsTextMessage2");
 DEFINE_IID!(IID_ISmsTextMessageStatics, 2137572845, 15564, 18339, 140, 85, 56, 13, 59, 1, 8, 146);
 RT_INTERFACE!{static interface ISmsTextMessageStatics(ISmsTextMessageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsTextMessageStatics] {
     fn FromBinaryMessage(&self, binaryMessage: *mut SmsBinaryMessage, out: *mut *mut SmsTextMessage) -> HRESULT,
@@ -5370,7 +5370,7 @@ impl AllJoynAboutDataView {
         <Self as RtActivatable<IAllJoynAboutDataViewStatics>>::get_activation_factory().get_data_by_session_port_with_language_async(uniqueName, busAttachment, sessionPort, language)
     }}
 }
-DEFINE_CLSID!(AllJoynAboutDataView(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,65,98,111,117,116,68,97,116,97,86,105,101,119,0]) [CLSID_AllJoynAboutDataView]);
+DEFINE_CLSID!(AllJoynAboutDataView: "Windows.Devices.AllJoyn.AllJoynAboutDataView");
 DEFINE_IID!(IID_IAllJoynAboutDataViewStatics, 1475196552, 3166, 16750, 136, 181, 57, 179, 45, 37, 196, 125);
 RT_INTERFACE!{static interface IAllJoynAboutDataViewStatics(IAllJoynAboutDataViewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynAboutDataViewStatics] {
     fn GetDataBySessionPortAsync(&self, uniqueName: HSTRING, busAttachment: *mut AllJoynBusAttachment, sessionPort: u16, out: *mut *mut super::super::foundation::IAsyncOperation<AllJoynAboutDataView>) -> HRESULT,
@@ -5445,7 +5445,7 @@ impl AllJoynAcceptSessionJoinerEventArgs {
         <Self as RtActivatable<IAllJoynAcceptSessionJoinerEventArgsFactory>>::get_activation_factory().create(uniqueName, sessionPort, trafficType, proximity, acceptSessionJoiner)
     }}
 }
-DEFINE_CLSID!(AllJoynAcceptSessionJoinerEventArgs(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,65,99,99,101,112,116,83,101,115,115,105,111,110,74,111,105,110,101,114,69,118,101,110,116,65,114,103,115,0]) [CLSID_AllJoynAcceptSessionJoinerEventArgs]);
+DEFINE_CLSID!(AllJoynAcceptSessionJoinerEventArgs: "Windows.Devices.AllJoyn.AllJoynAcceptSessionJoinerEventArgs");
 DEFINE_IID!(IID_IAllJoynAcceptSessionJoinerEventArgsFactory, 3024313280, 24901, 17054, 132, 219, 213, 191, 231, 114, 177, 79);
 RT_INTERFACE!{static interface IAllJoynAcceptSessionJoinerEventArgsFactory(IAllJoynAcceptSessionJoinerEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynAcceptSessionJoinerEventArgsFactory] {
     fn Create(&self, uniqueName: HSTRING, sessionPort: u16, trafficType: AllJoynTrafficType, proximity: u8, acceptSessionJoiner: *mut IAllJoynAcceptSessionJoiner, out: *mut *mut AllJoynAcceptSessionJoinerEventArgs) -> HRESULT
@@ -5594,7 +5594,7 @@ impl AllJoynBusAttachment {
         <Self as RtActivatable<IAllJoynBusAttachmentStatics>>::get_activation_factory().get_watcher(requiredInterfaces)
     }}
 }
-DEFINE_CLSID!(AllJoynBusAttachment(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,66,117,115,65,116,116,97,99,104,109,101,110,116,0]) [CLSID_AllJoynBusAttachment]);
+DEFINE_CLSID!(AllJoynBusAttachment: "Windows.Devices.AllJoyn.AllJoynBusAttachment");
 DEFINE_IID!(IID_IAllJoynBusAttachment2, 880069406, 9064, 17330, 180, 62, 106, 58, 193, 39, 141, 152);
 RT_INTERFACE!{interface IAllJoynBusAttachment2(IAllJoynBusAttachment2Vtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusAttachment2] {
     fn GetAboutDataAsync(&self, serviceInfo: *mut AllJoynServiceInfo, out: *mut *mut super::super::foundation::IAsyncOperation<AllJoynAboutDataView>) -> HRESULT,
@@ -5738,7 +5738,7 @@ impl AllJoynBusObject {
         <Self as RtActivatable<IAllJoynBusObjectFactory>>::get_activation_factory().create_with_bus_attachment(objectPath, busAttachment)
     }}
 }
-DEFINE_CLSID!(AllJoynBusObject(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,66,117,115,79,98,106,101,99,116,0]) [CLSID_AllJoynBusObject]);
+DEFINE_CLSID!(AllJoynBusObject: "Windows.Devices.AllJoyn.AllJoynBusObject");
 DEFINE_IID!(IID_IAllJoynBusObjectFactory, 741318411, 36354, 20380, 172, 39, 234, 109, 173, 93, 59, 80);
 RT_INTERFACE!{static interface IAllJoynBusObjectFactory(IAllJoynBusObjectFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusObjectFactory] {
     fn Create(&self, objectPath: HSTRING, out: *mut *mut AllJoynBusObject) -> HRESULT,
@@ -5774,7 +5774,7 @@ impl AllJoynBusObjectStoppedEventArgs {
         <Self as RtActivatable<IAllJoynBusObjectStoppedEventArgsFactory>>::get_activation_factory().create(status)
     }}
 }
-DEFINE_CLSID!(AllJoynBusObjectStoppedEventArgs(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,66,117,115,79,98,106,101,99,116,83,116,111,112,112,101,100,69,118,101,110,116,65,114,103,115,0]) [CLSID_AllJoynBusObjectStoppedEventArgs]);
+DEFINE_CLSID!(AllJoynBusObjectStoppedEventArgs: "Windows.Devices.AllJoyn.AllJoynBusObjectStoppedEventArgs");
 DEFINE_IID!(IID_IAllJoynBusObjectStoppedEventArgsFactory, 1797455176, 53411, 16981, 149, 58, 71, 114, 180, 2, 128, 115);
 RT_INTERFACE!{static interface IAllJoynBusObjectStoppedEventArgsFactory(IAllJoynBusObjectStoppedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusObjectStoppedEventArgsFactory] {
     fn Create(&self, status: i32, out: *mut *mut AllJoynBusObjectStoppedEventArgs) -> HRESULT
@@ -5946,7 +5946,7 @@ impl AllJoynMessageInfo {
         <Self as RtActivatable<IAllJoynMessageInfoFactory>>::get_activation_factory().create(senderUniqueName)
     }}
 }
-DEFINE_CLSID!(AllJoynMessageInfo(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,77,101,115,115,97,103,101,73,110,102,111,0]) [CLSID_AllJoynMessageInfo]);
+DEFINE_CLSID!(AllJoynMessageInfo: "Windows.Devices.AllJoyn.AllJoynMessageInfo");
 DEFINE_IID!(IID_IAllJoynMessageInfoFactory, 879119402, 33417, 17364, 180, 168, 63, 77, 227, 89, 240, 67);
 RT_INTERFACE!{static interface IAllJoynMessageInfoFactory(IAllJoynMessageInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynMessageInfoFactory] {
     fn Create(&self, senderUniqueName: HSTRING, out: *mut *mut AllJoynMessageInfo) -> HRESULT
@@ -5986,7 +5986,7 @@ impl AllJoynProducerStoppedEventArgs {
         <Self as RtActivatable<IAllJoynProducerStoppedEventArgsFactory>>::get_activation_factory().create(status)
     }}
 }
-DEFINE_CLSID!(AllJoynProducerStoppedEventArgs(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,80,114,111,100,117,99,101,114,83,116,111,112,112,101,100,69,118,101,110,116,65,114,103,115,0]) [CLSID_AllJoynProducerStoppedEventArgs]);
+DEFINE_CLSID!(AllJoynProducerStoppedEventArgs: "Windows.Devices.AllJoyn.AllJoynProducerStoppedEventArgs");
 DEFINE_IID!(IID_IAllJoynProducerStoppedEventArgsFactory, 1448253793, 45593, 19822, 159, 120, 250, 63, 153, 250, 143, 229);
 RT_INTERFACE!{static interface IAllJoynProducerStoppedEventArgsFactory(IAllJoynProducerStoppedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynProducerStoppedEventArgsFactory] {
     fn Create(&self, status: i32, out: *mut *mut AllJoynProducerStoppedEventArgs) -> HRESULT
@@ -6032,7 +6032,7 @@ impl AllJoynServiceInfo {
         <Self as RtActivatable<IAllJoynServiceInfoStatics>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(AllJoynServiceInfo(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,114,118,105,99,101,73,110,102,111,0]) [CLSID_AllJoynServiceInfo]);
+DEFINE_CLSID!(AllJoynServiceInfo: "Windows.Devices.AllJoyn.AllJoynServiceInfo");
 DEFINE_IID!(IID_IAllJoynServiceInfoFactory, 1971444413, 65027, 20299, 148, 164, 240, 47, 220, 189, 17, 184);
 RT_INTERFACE!{static interface IAllJoynServiceInfoFactory(IAllJoynServiceInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynServiceInfoFactory] {
     fn Create(&self, uniqueName: HSTRING, objectPath: HSTRING, sessionPort: u16, out: *mut *mut AllJoynServiceInfo) -> HRESULT
@@ -6062,7 +6062,7 @@ impl AllJoynServiceInfoRemovedEventArgs {
         <Self as RtActivatable<IAllJoynServiceInfoRemovedEventArgsFactory>>::get_activation_factory().create(uniqueName)
     }}
 }
-DEFINE_CLSID!(AllJoynServiceInfoRemovedEventArgs(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,114,118,105,99,101,73,110,102,111,82,101,109,111,118,101,100,69,118,101,110,116,65,114,103,115,0]) [CLSID_AllJoynServiceInfoRemovedEventArgs]);
+DEFINE_CLSID!(AllJoynServiceInfoRemovedEventArgs: "Windows.Devices.AllJoyn.AllJoynServiceInfoRemovedEventArgs");
 DEFINE_IID!(IID_IAllJoynServiceInfoRemovedEventArgsFactory, 230655527, 39679, 18773, 146, 39, 105, 83, 186, 244, 21, 105);
 RT_INTERFACE!{static interface IAllJoynServiceInfoRemovedEventArgsFactory(IAllJoynServiceInfoRemovedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynServiceInfoRemovedEventArgsFactory] {
     fn Create(&self, uniqueName: HSTRING, out: *mut *mut AllJoynServiceInfoRemovedEventArgs) -> HRESULT
@@ -6151,7 +6151,7 @@ impl AllJoynSession {
         <Self as RtActivatable<IAllJoynSessionStatics>>::get_activation_factory().get_from_service_info_and_bus_attachment_async(serviceInfo, busAttachment)
     }}
 }
-DEFINE_CLSID!(AllJoynSession(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,115,115,105,111,110,0]) [CLSID_AllJoynSession]);
+DEFINE_CLSID!(AllJoynSession: "Windows.Devices.AllJoyn.AllJoynSession");
 DEFINE_IID!(IID_IAllJoynSessionJoinedEventArgs, 2661243856, 46551, 18373, 141, 171, 176, 64, 204, 25, 40, 113);
 RT_INTERFACE!{interface IAllJoynSessionJoinedEventArgs(IAllJoynSessionJoinedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionJoinedEventArgs] {
     fn get_Session(&self, out: *mut *mut AllJoynSession) -> HRESULT
@@ -6170,7 +6170,7 @@ impl AllJoynSessionJoinedEventArgs {
         <Self as RtActivatable<IAllJoynSessionJoinedEventArgsFactory>>::get_activation_factory().create(session)
     }}
 }
-DEFINE_CLSID!(AllJoynSessionJoinedEventArgs(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,115,115,105,111,110,74,111,105,110,101,100,69,118,101,110,116,65,114,103,115,0]) [CLSID_AllJoynSessionJoinedEventArgs]);
+DEFINE_CLSID!(AllJoynSessionJoinedEventArgs: "Windows.Devices.AllJoyn.AllJoynSessionJoinedEventArgs");
 DEFINE_IID!(IID_IAllJoynSessionJoinedEventArgsFactory, 1747244681, 54987, 19870, 160, 158, 53, 128, 104, 112, 177, 127);
 RT_INTERFACE!{static interface IAllJoynSessionJoinedEventArgsFactory(IAllJoynSessionJoinedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionJoinedEventArgsFactory] {
     fn Create(&self, session: *mut AllJoynSession, out: *mut *mut AllJoynSessionJoinedEventArgs) -> HRESULT
@@ -6200,7 +6200,7 @@ impl AllJoynSessionLostEventArgs {
         <Self as RtActivatable<IAllJoynSessionLostEventArgsFactory>>::get_activation_factory().create(reason)
     }}
 }
-DEFINE_CLSID!(AllJoynSessionLostEventArgs(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,115,115,105,111,110,76,111,115,116,69,118,101,110,116,65,114,103,115,0]) [CLSID_AllJoynSessionLostEventArgs]);
+DEFINE_CLSID!(AllJoynSessionLostEventArgs: "Windows.Devices.AllJoyn.AllJoynSessionLostEventArgs");
 DEFINE_IID!(IID_IAllJoynSessionLostEventArgsFactory, 331087154, 54004, 18889, 152, 14, 40, 5, 225, 53, 134, 177);
 RT_INTERFACE!{static interface IAllJoynSessionLostEventArgsFactory(IAllJoynSessionLostEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionLostEventArgsFactory] {
     fn Create(&self, reason: AllJoynSessionLostReason, out: *mut *mut AllJoynSessionLostEventArgs) -> HRESULT
@@ -6233,7 +6233,7 @@ impl AllJoynSessionMemberAddedEventArgs {
         <Self as RtActivatable<IAllJoynSessionMemberAddedEventArgsFactory>>::get_activation_factory().create(uniqueName)
     }}
 }
-DEFINE_CLSID!(AllJoynSessionMemberAddedEventArgs(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,115,115,105,111,110,77,101,109,98,101,114,65,100,100,101,100,69,118,101,110,116,65,114,103,115,0]) [CLSID_AllJoynSessionMemberAddedEventArgs]);
+DEFINE_CLSID!(AllJoynSessionMemberAddedEventArgs: "Windows.Devices.AllJoyn.AllJoynSessionMemberAddedEventArgs");
 DEFINE_IID!(IID_IAllJoynSessionMemberAddedEventArgsFactory, 874373970, 7475, 16545, 161, 211, 229, 119, 112, 32, 225, 241);
 RT_INTERFACE!{static interface IAllJoynSessionMemberAddedEventArgsFactory(IAllJoynSessionMemberAddedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionMemberAddedEventArgsFactory] {
     fn Create(&self, uniqueName: HSTRING, out: *mut *mut AllJoynSessionMemberAddedEventArgs) -> HRESULT
@@ -6263,7 +6263,7 @@ impl AllJoynSessionMemberRemovedEventArgs {
         <Self as RtActivatable<IAllJoynSessionMemberRemovedEventArgsFactory>>::get_activation_factory().create(uniqueName)
     }}
 }
-DEFINE_CLSID!(AllJoynSessionMemberRemovedEventArgs(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,101,115,115,105,111,110,77,101,109,98,101,114,82,101,109,111,118,101,100,69,118,101,110,116,65,114,103,115,0]) [CLSID_AllJoynSessionMemberRemovedEventArgs]);
+DEFINE_CLSID!(AllJoynSessionMemberRemovedEventArgs: "Windows.Devices.AllJoyn.AllJoynSessionMemberRemovedEventArgs");
 DEFINE_IID!(IID_IAllJoynSessionMemberRemovedEventArgsFactory, 3302184424, 17080, 19303, 183, 87, 208, 207, 202, 213, 146, 128);
 RT_INTERFACE!{static interface IAllJoynSessionMemberRemovedEventArgsFactory(IAllJoynSessionMemberRemovedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionMemberRemovedEventArgsFactory] {
     fn Create(&self, uniqueName: HSTRING, out: *mut *mut AllJoynSessionMemberRemovedEventArgs) -> HRESULT
@@ -6350,7 +6350,7 @@ impl AllJoynStatus {
         <Self as RtActivatable<IAllJoynStatusStatics>>::get_activation_factory().get_invalid_argument8()
     }}
 }
-DEFINE_CLSID!(AllJoynStatus(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,83,116,97,116,117,115,0]) [CLSID_AllJoynStatus]);
+DEFINE_CLSID!(AllJoynStatus: "Windows.Devices.AllJoyn.AllJoynStatus");
 DEFINE_IID!(IID_IAllJoynStatusStatics, 3501695358, 3369, 19881, 138, 198, 84, 197, 84, 190, 219, 197);
 RT_INTERFACE!{static interface IAllJoynStatusStatics(IAllJoynStatusStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynStatusStatics] {
     fn get_Ok(&self, out: *mut i32) -> HRESULT,
@@ -6485,7 +6485,7 @@ impl AllJoynWatcherStoppedEventArgs {
         <Self as RtActivatable<IAllJoynWatcherStoppedEventArgsFactory>>::get_activation_factory().create(status)
     }}
 }
-DEFINE_CLSID!(AllJoynWatcherStoppedEventArgs(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,108,108,74,111,121,110,46,65,108,108,74,111,121,110,87,97,116,99,104,101,114,83,116,111,112,112,101,100,69,118,101,110,116,65,114,103,115,0]) [CLSID_AllJoynWatcherStoppedEventArgs]);
+DEFINE_CLSID!(AllJoynWatcherStoppedEventArgs: "Windows.Devices.AllJoyn.AllJoynWatcherStoppedEventArgs");
 DEFINE_IID!(IID_IAllJoynWatcherStoppedEventArgsFactory, 2274338216, 11600, 18401, 144, 74, 32, 191, 13, 72, 199, 130);
 RT_INTERFACE!{static interface IAllJoynWatcherStoppedEventArgsFactory(IAllJoynWatcherStoppedEventArgsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynWatcherStoppedEventArgsFactory] {
     fn Create(&self, status: i32, out: *mut *mut AllJoynWatcherStoppedEventArgs) -> HRESULT
@@ -6611,7 +6611,7 @@ impl BluetoothAdapter {
         <Self as RtActivatable<IBluetoothAdapterStatics>>::get_activation_factory().get_default_async()
     }}
 }
-DEFINE_CLSID!(BluetoothAdapter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,65,100,97,112,116,101,114,0]) [CLSID_BluetoothAdapter]);
+DEFINE_CLSID!(BluetoothAdapter: "Windows.Devices.Bluetooth.BluetoothAdapter");
 DEFINE_IID!(IID_IBluetoothAdapterStatics, 2332228458, 44108, 18241, 134, 97, 142, 171, 125, 23, 234, 159);
 RT_INTERFACE!{static interface IBluetoothAdapterStatics(IBluetoothAdapterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothAdapterStatics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
@@ -6680,7 +6680,7 @@ impl BluetoothClassOfDevice {
         <Self as RtActivatable<IBluetoothClassOfDeviceStatics>>::get_activation_factory().from_parts(majorClass, minorClass, serviceCapabilities)
     }}
 }
-DEFINE_CLSID!(BluetoothClassOfDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,67,108,97,115,115,79,102,68,101,118,105,99,101,0]) [CLSID_BluetoothClassOfDevice]);
+DEFINE_CLSID!(BluetoothClassOfDevice: "Windows.Devices.Bluetooth.BluetoothClassOfDevice");
 DEFINE_IID!(IID_IBluetoothClassOfDeviceStatics, 3831575997, 4002, 16748, 145, 180, 193, 228, 140, 160, 97, 193);
 RT_INTERFACE!{static interface IBluetoothClassOfDeviceStatics(IBluetoothClassOfDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothClassOfDeviceStatics] {
     fn FromRawValue(&self, rawValue: u32, out: *mut *mut BluetoothClassOfDevice) -> HRESULT,
@@ -6821,7 +6821,7 @@ impl BluetoothDevice {
         <Self as RtActivatable<IBluetoothDeviceStatics2>>::get_activation_factory().get_device_selector_from_class_of_device(classOfDevice)
     }}
 }
-DEFINE_CLSID!(BluetoothDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,68,101,118,105,99,101,0]) [CLSID_BluetoothDevice]);
+DEFINE_CLSID!(BluetoothDevice: "Windows.Devices.Bluetooth.BluetoothDevice");
 DEFINE_IID!(IID_IBluetoothDevice2, 20183380, 45398, 19920, 177, 245, 193, 27, 195, 26, 81, 99);
 RT_INTERFACE!{interface IBluetoothDevice2(IBluetoothDevice2Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDevice2] {
     fn get_DeviceInformation(&self, out: *mut *mut super::enumeration::DeviceInformation) -> HRESULT
@@ -6915,7 +6915,7 @@ impl BluetoothDeviceId {
         <Self as RtActivatable<IBluetoothDeviceIdStatics>>::get_activation_factory().from_id(deviceId)
     }}
 }
-DEFINE_CLSID!(BluetoothDeviceId(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,68,101,118,105,99,101,73,100,0]) [CLSID_BluetoothDeviceId]);
+DEFINE_CLSID!(BluetoothDeviceId: "Windows.Devices.Bluetooth.BluetoothDeviceId");
 DEFINE_IID!(IID_IBluetoothDeviceIdStatics, 2810728039, 16123, 20273, 187, 194, 129, 14, 9, 151, 116, 4);
 RT_INTERFACE!{static interface IBluetoothDeviceIdStatics(IBluetoothDeviceIdStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDeviceIdStatics] {
     fn FromId(&self, deviceId: HSTRING, out: *mut *mut BluetoothDeviceId) -> HRESULT
@@ -7028,7 +7028,7 @@ impl BluetoothLEAppearance {
         <Self as RtActivatable<IBluetoothLEAppearanceStatics>>::get_activation_factory().from_parts(appearanceCategory, appearanceSubCategory)
     }}
 }
-DEFINE_CLSID!(BluetoothLEAppearance(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,76,69,65,112,112,101,97,114,97,110,99,101,0]) [CLSID_BluetoothLEAppearance]);
+DEFINE_CLSID!(BluetoothLEAppearance: "Windows.Devices.Bluetooth.BluetoothLEAppearance");
 RT_CLASS!{static class BluetoothLEAppearanceCategories}
 impl RtActivatable<IBluetoothLEAppearanceCategoriesStatics> for BluetoothLEAppearanceCategories {}
 impl BluetoothLEAppearanceCategories {
@@ -7099,7 +7099,7 @@ impl BluetoothLEAppearanceCategories {
         <Self as RtActivatable<IBluetoothLEAppearanceCategoriesStatics>>::get_activation_factory().get_outdoor_sport_activity()
     }}
 }
-DEFINE_CLSID!(BluetoothLEAppearanceCategories(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,76,69,65,112,112,101,97,114,97,110,99,101,67,97,116,101,103,111,114,105,101,115,0]) [CLSID_BluetoothLEAppearanceCategories]);
+DEFINE_CLSID!(BluetoothLEAppearanceCategories: "Windows.Devices.Bluetooth.BluetoothLEAppearanceCategories");
 DEFINE_IID!(IID_IBluetoothLEAppearanceCategoriesStatics, 1833784574, 1130, 16773, 170, 182, 130, 76, 240, 97, 8, 97);
 RT_INTERFACE!{static interface IBluetoothLEAppearanceCategoriesStatics(IBluetoothLEAppearanceCategoriesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAppearanceCategoriesStatics] {
     fn get_Uncategorized(&self, out: *mut u16) -> HRESULT,
@@ -7342,7 +7342,7 @@ impl BluetoothLEAppearanceSubcategories {
         <Self as RtActivatable<IBluetoothLEAppearanceSubcategoriesStatics>>::get_activation_factory().get_location_navigation_pod()
     }}
 }
-DEFINE_CLSID!(BluetoothLEAppearanceSubcategories(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,76,69,65,112,112,101,97,114,97,110,99,101,83,117,98,99,97,116,101,103,111,114,105,101,115,0]) [CLSID_BluetoothLEAppearanceSubcategories]);
+DEFINE_CLSID!(BluetoothLEAppearanceSubcategories: "Windows.Devices.Bluetooth.BluetoothLEAppearanceSubcategories");
 DEFINE_IID!(IID_IBluetoothLEAppearanceSubcategoriesStatics, 3850085894, 8516, 16730, 131, 18, 113, 204, 242, 145, 248, 209);
 RT_INTERFACE!{static interface IBluetoothLEAppearanceSubcategoriesStatics(IBluetoothLEAppearanceSubcategoriesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAppearanceSubcategoriesStatics] {
     fn get_Generic(&self, out: *mut u16) -> HRESULT,
@@ -7625,7 +7625,7 @@ impl BluetoothLEDevice {
         <Self as RtActivatable<IBluetoothLEDeviceStatics2>>::get_activation_factory().from_bluetooth_address_with_bluetooth_address_type_async(bluetoothAddress, bluetoothAddressType)
     }}
 }
-DEFINE_CLSID!(BluetoothLEDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,76,69,68,101,118,105,99,101,0]) [CLSID_BluetoothLEDevice]);
+DEFINE_CLSID!(BluetoothLEDevice: "Windows.Devices.Bluetooth.BluetoothLEDevice");
 DEFINE_IID!(IID_IBluetoothLEDevice2, 653288115, 31470, 19761, 186, 186, 177, 185, 119, 95, 89, 22);
 RT_INTERFACE!{interface IBluetoothLEDevice2(IBluetoothLEDevice2Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEDevice2] {
     fn get_DeviceInformation(&self, out: *mut *mut super::enumeration::DeviceInformation) -> HRESULT,
@@ -7831,7 +7831,7 @@ impl IBluetoothSignalStrengthFilter {
 }
 RT_CLASS!{class BluetoothSignalStrengthFilter: IBluetoothSignalStrengthFilter}
 impl RtActivatable<IActivationFactory> for BluetoothSignalStrengthFilter {}
-DEFINE_CLSID!(BluetoothSignalStrengthFilter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,83,105,103,110,97,108,83,116,114,101,110,103,116,104,70,105,108,116,101,114,0]) [CLSID_BluetoothSignalStrengthFilter]);
+DEFINE_CLSID!(BluetoothSignalStrengthFilter: "Windows.Devices.Bluetooth.BluetoothSignalStrengthFilter");
 RT_CLASS!{static class BluetoothUuidHelper}
 impl RtActivatable<IBluetoothUuidHelperStatics> for BluetoothUuidHelper {}
 impl BluetoothUuidHelper {
@@ -7842,7 +7842,7 @@ impl BluetoothUuidHelper {
         <Self as RtActivatable<IBluetoothUuidHelperStatics>>::get_activation_factory().try_get_short_id(uuid)
     }}
 }
-DEFINE_CLSID!(BluetoothUuidHelper(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,85,117,105,100,72,101,108,112,101,114,0]) [CLSID_BluetoothUuidHelper]);
+DEFINE_CLSID!(BluetoothUuidHelper: "Windows.Devices.Bluetooth.BluetoothUuidHelper");
 DEFINE_IID!(IID_IBluetoothUuidHelperStatics, 400493784, 53108, 19233, 175, 230, 245, 122, 17, 188, 222, 160);
 RT_INTERFACE!{static interface IBluetoothUuidHelperStatics(IBluetoothUuidHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothUuidHelperStatics] {
     fn FromShortId(&self, shortId: u32, out: *mut Guid) -> HRESULT,
@@ -7935,7 +7935,7 @@ impl RfcommDeviceService {
         <Self as RtActivatable<IRfcommDeviceServiceStatics2>>::get_activation_factory().get_device_selector_for_bluetooth_device_and_service_id_with_cache_mode(bluetoothDevice, serviceId, cacheMode)
     }}
 }
-DEFINE_CLSID!(RfcommDeviceService(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,82,102,99,111,109,109,46,82,102,99,111,109,109,68,101,118,105,99,101,83,101,114,118,105,99,101,0]) [CLSID_RfcommDeviceService]);
+DEFINE_CLSID!(RfcommDeviceService: "Windows.Devices.Bluetooth.Rfcomm.RfcommDeviceService");
 DEFINE_IID!(IID_IRfcommDeviceService2, 1399647508, 60365, 18942, 191, 159, 64, 239, 198, 137, 178, 13);
 RT_INTERFACE!{interface IRfcommDeviceService2(IRfcommDeviceService2Vtbl): IInspectable(IInspectableVtbl) [IID_IRfcommDeviceService2] {
     fn get_Device(&self, out: *mut *mut super::BluetoothDevice) -> HRESULT
@@ -8079,7 +8079,7 @@ impl RfcommServiceId {
         <Self as RtActivatable<IRfcommServiceIdStatics>>::get_activation_factory().get_generic_file_transfer()
     }}
 }
-DEFINE_CLSID!(RfcommServiceId(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,82,102,99,111,109,109,46,82,102,99,111,109,109,83,101,114,118,105,99,101,73,100,0]) [CLSID_RfcommServiceId]);
+DEFINE_CLSID!(RfcommServiceId: "Windows.Devices.Bluetooth.Rfcomm.RfcommServiceId");
 DEFINE_IID!(IID_IRfcommServiceIdStatics, 706191034, 43381, 18147, 181, 107, 8, 255, 215, 131, 165, 254);
 RT_INTERFACE!{static interface IRfcommServiceIdStatics(IRfcommServiceIdStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommServiceIdStatics] {
     fn FromUuid(&self, uuid: Guid, out: *mut *mut RfcommServiceId) -> HRESULT,
@@ -8169,7 +8169,7 @@ impl RfcommServiceProvider {
         <Self as RtActivatable<IRfcommServiceProviderStatics>>::get_activation_factory().create_async(serviceId)
     }}
 }
-DEFINE_CLSID!(RfcommServiceProvider(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,82,102,99,111,109,109,46,82,102,99,111,109,109,83,101,114,118,105,99,101,80,114,111,118,105,100,101,114,0]) [CLSID_RfcommServiceProvider]);
+DEFINE_CLSID!(RfcommServiceProvider: "Windows.Devices.Bluetooth.Rfcomm.RfcommServiceProvider");
 DEFINE_IID!(IID_IRfcommServiceProvider2, 1936449478, 15489, 19742, 186, 242, 221, 187, 129, 40, 69, 18);
 RT_INTERFACE!{interface IRfcommServiceProvider2(IRfcommServiceProvider2Vtbl): IInspectable(IInspectableVtbl) [IID_IRfcommServiceProvider2] {
     #[cfg(feature="windows-networking")] fn StartAdvertisingWithRadioDiscoverability(&self, listener: *mut ::rt::gen::windows::networking::sockets::StreamSocketListener, radioDiscoverable: bool) -> HRESULT
@@ -8302,7 +8302,7 @@ impl GattCharacteristic {
         <Self as RtActivatable<IGattCharacteristicStatics>>::get_activation_factory().convert_short_id_to_uuid(shortId)
     }}
 }
-DEFINE_CLSID!(GattCharacteristic(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,67,104,97,114,97,99,116,101,114,105,115,116,105,99,0]) [CLSID_GattCharacteristic]);
+DEFINE_CLSID!(GattCharacteristic: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattCharacteristic");
 DEFINE_IID!(IID_IGattCharacteristic2, 2920985976, 60422, 18276, 183, 128, 152, 53, 161, 211, 93, 110);
 RT_INTERFACE!{interface IGattCharacteristic2(IGattCharacteristic2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristic2] {
     fn get_Service(&self, out: *mut *mut GattDeviceService) -> HRESULT,
@@ -8655,7 +8655,7 @@ impl GattCharacteristicUuids {
         <Self as RtActivatable<IGattCharacteristicUuidsStatics2>>::get_activation_factory().get_unread_alert_status()
     }}
 }
-DEFINE_CLSID!(GattCharacteristicUuids(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,67,104,97,114,97,99,116,101,114,105,115,116,105,99,85,117,105,100,115,0]) [CLSID_GattCharacteristicUuids]);
+DEFINE_CLSID!(GattCharacteristicUuids: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattCharacteristicUuids");
 DEFINE_IID!(IID_IGattCharacteristicUuidsStatics, 1492796806, 45534, 18188, 183, 222, 13, 17, 255, 68, 244, 183);
 RT_INTERFACE!{static interface IGattCharacteristicUuidsStatics(IGattCharacteristicUuidsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicUuidsStatics] {
     fn get_BatteryLevel(&self, out: *mut Guid) -> HRESULT,
@@ -9246,7 +9246,7 @@ impl GattDescriptor {
         <Self as RtActivatable<IGattDescriptorStatics>>::get_activation_factory().convert_short_id_to_uuid(shortId)
     }}
 }
-DEFINE_CLSID!(GattDescriptor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_GattDescriptor]);
+DEFINE_CLSID!(GattDescriptor: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattDescriptor");
 DEFINE_IID!(IID_IGattDescriptor2, 2404793657, 54832, 16492, 186, 17, 16, 205, 209, 107, 14, 94);
 RT_INTERFACE!{interface IGattDescriptor2(IGattDescriptor2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattDescriptor2] {
     #[cfg(feature="windows-storage")] fn WriteValueWithResultAsync(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GattWriteResult>) -> HRESULT
@@ -9315,7 +9315,7 @@ impl GattDescriptorUuids {
         <Self as RtActivatable<IGattDescriptorUuidsStatics>>::get_activation_factory().get_server_characteristic_configuration()
     }}
 }
-DEFINE_CLSID!(GattDescriptorUuids(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,68,101,115,99,114,105,112,116,111,114,85,117,105,100,115,0]) [CLSID_GattDescriptorUuids]);
+DEFINE_CLSID!(GattDescriptorUuids: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattDescriptorUuids");
 DEFINE_IID!(IID_IGattDescriptorUuidsStatics, 2801296078, 40188, 17137, 145, 133, 255, 55, 183, 81, 129, 211);
 RT_INTERFACE!{static interface IGattDescriptorUuidsStatics(IGattDescriptorUuidsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattDescriptorUuidsStatics] {
     fn get_CharacteristicAggregateFormat(&self, out: *mut Guid) -> HRESULT,
@@ -9424,7 +9424,7 @@ impl GattDeviceService {
         <Self as RtActivatable<IGattDeviceServiceStatics2>>::get_activation_factory().get_device_selector_for_bluetooth_device_id_and_uuid_with_cache_mode(bluetoothDeviceId, serviceUuid, cacheMode)
     }}
 }
-DEFINE_CLSID!(GattDeviceService(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,68,101,118,105,99,101,83,101,114,118,105,99,101,0]) [CLSID_GattDeviceService]);
+DEFINE_CLSID!(GattDeviceService: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattDeviceService");
 DEFINE_IID!(IID_IGattDeviceService2, 4233384459, 2829, 18184, 186, 224, 159, 253, 148, 137, 188, 89);
 RT_INTERFACE!{interface IGattDeviceService2(IGattDeviceService2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattDeviceService2] {
     fn get_Device(&self, out: *mut *mut super::BluetoothLEDevice) -> HRESULT,
@@ -9806,7 +9806,7 @@ impl IGattLocalCharacteristicParameters {
 }
 RT_CLASS!{class GattLocalCharacteristicParameters: IGattLocalCharacteristicParameters}
 impl RtActivatable<IActivationFactory> for GattLocalCharacteristicParameters {}
-DEFINE_CLSID!(GattLocalCharacteristicParameters(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,76,111,99,97,108,67,104,97,114,97,99,116,101,114,105,115,116,105,99,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_GattLocalCharacteristicParameters]);
+DEFINE_CLSID!(GattLocalCharacteristicParameters: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattLocalCharacteristicParameters");
 DEFINE_IID!(IID_IGattLocalCharacteristicResult, 2037767835, 368, 17303, 150, 102, 146, 248, 99, 241, 46, 230);
 RT_INTERFACE!{interface IGattLocalCharacteristicResult(IGattLocalCharacteristicResultVtbl): IInspectable(IInspectableVtbl) [IID_IGattLocalCharacteristicResult] {
     fn get_Characteristic(&self, out: *mut *mut GattLocalCharacteristic) -> HRESULT,
@@ -9920,7 +9920,7 @@ impl IGattLocalDescriptorParameters {
 }
 RT_CLASS!{class GattLocalDescriptorParameters: IGattLocalDescriptorParameters}
 impl RtActivatable<IActivationFactory> for GattLocalDescriptorParameters {}
-DEFINE_CLSID!(GattLocalDescriptorParameters(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,76,111,99,97,108,68,101,115,99,114,105,112,116,111,114,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_GattLocalDescriptorParameters]);
+DEFINE_CLSID!(GattLocalDescriptorParameters: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattLocalDescriptorParameters");
 DEFINE_IID!(IID_IGattLocalDescriptorResult, 928485822, 12831, 17254, 191, 193, 59, 198, 184, 44, 121, 248);
 RT_INTERFACE!{interface IGattLocalDescriptorResult(IGattLocalDescriptorResultVtbl): IInspectable(IInspectableVtbl) [IID_IGattLocalDescriptorResult] {
     fn get_Descriptor(&self, out: *mut *mut GattLocalDescriptor) -> HRESULT,
@@ -10012,7 +10012,7 @@ impl GattPresentationFormat {
         <Self as RtActivatable<IGattPresentationFormatStatics2>>::get_activation_factory().from_parts(formatType, exponent, unit, namespaceId, description)
     }}
 }
-DEFINE_CLSID!(GattPresentationFormat(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,80,114,101,115,101,110,116,97,116,105,111,110,70,111,114,109,97,116,0]) [CLSID_GattPresentationFormat]);
+DEFINE_CLSID!(GattPresentationFormat: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattPresentationFormat");
 DEFINE_IID!(IID_IGattPresentationFormatStatics, 426573856, 64173, 17884, 174, 91, 42, 195, 24, 78, 132, 219);
 RT_INTERFACE!{static interface IGattPresentationFormatStatics(IGattPresentationFormatStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattPresentationFormatStatics] {
     fn get_BluetoothSigAssignedNumbers(&self, out: *mut u8) -> HRESULT
@@ -10120,7 +10120,7 @@ impl GattPresentationFormatTypes {
         <Self as RtActivatable<IGattPresentationFormatTypesStatics>>::get_activation_factory().get_struct()
     }}
 }
-DEFINE_CLSID!(GattPresentationFormatTypes(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,80,114,101,115,101,110,116,97,116,105,111,110,70,111,114,109,97,116,84,121,112,101,115,0]) [CLSID_GattPresentationFormatTypes]);
+DEFINE_CLSID!(GattPresentationFormatTypes: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattPresentationFormatTypes");
 DEFINE_IID!(IID_IGattPresentationFormatTypesStatics, 4210145802, 12474, 16540, 190, 247, 207, 251, 109, 3, 184, 251);
 RT_INTERFACE!{static interface IGattPresentationFormatTypesStatics(IGattPresentationFormatTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattPresentationFormatTypesStatics] {
     fn get_Boolean(&self, out: *mut u8) -> HRESULT,
@@ -10346,7 +10346,7 @@ impl GattProtocolError {
         <Self as RtActivatable<IGattProtocolErrorStatics>>::get_activation_factory().get_insufficient_resources()
     }}
 }
-DEFINE_CLSID!(GattProtocolError(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,80,114,111,116,111,99,111,108,69,114,114,111,114,0]) [CLSID_GattProtocolError]);
+DEFINE_CLSID!(GattProtocolError: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattProtocolError");
 DEFINE_IID!(IID_IGattProtocolErrorStatics, 3393635781, 3788, 18441, 190, 163, 207, 121, 188, 153, 30, 55);
 RT_INTERFACE!{static interface IGattProtocolErrorStatics(IGattProtocolErrorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattProtocolErrorStatics] {
     fn get_InvalidHandle(&self, out: *mut u8) -> HRESULT,
@@ -10601,7 +10601,7 @@ impl IGattReliableWriteTransaction {
 }
 RT_CLASS!{class GattReliableWriteTransaction: IGattReliableWriteTransaction}
 impl RtActivatable<IActivationFactory> for GattReliableWriteTransaction {}
-DEFINE_CLSID!(GattReliableWriteTransaction(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,82,101,108,105,97,98,108,101,87,114,105,116,101,84,114,97,110,115,97,99,116,105,111,110,0]) [CLSID_GattReliableWriteTransaction]);
+DEFINE_CLSID!(GattReliableWriteTransaction: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattReliableWriteTransaction");
 DEFINE_IID!(IID_IGattReliableWriteTransaction2, 1360083335, 61202, 17967, 159, 178, 161, 164, 58, 103, 148, 22);
 RT_INTERFACE!{interface IGattReliableWriteTransaction2(IGattReliableWriteTransaction2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattReliableWriteTransaction2] {
     fn CommitWithResultAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GattWriteResult>) -> HRESULT
@@ -10684,7 +10684,7 @@ impl GattServiceProvider {
         <Self as RtActivatable<IGattServiceProviderStatics>>::get_activation_factory().create_async(serviceUuid)
     }}
 }
-DEFINE_CLSID!(GattServiceProvider(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,83,101,114,118,105,99,101,80,114,111,118,105,100,101,114,0]) [CLSID_GattServiceProvider]);
+DEFINE_CLSID!(GattServiceProvider: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattServiceProvider");
 RT_ENUM! { enum GattServiceProviderAdvertisementStatus: i32 {
     Created (GattServiceProviderAdvertisementStatus_Created) = 0, Stopped (GattServiceProviderAdvertisementStatus_Stopped) = 1, Started (GattServiceProviderAdvertisementStatus_Started) = 2, Aborted (GattServiceProviderAdvertisementStatus_Aborted) = 3,
 }}
@@ -10735,7 +10735,7 @@ impl IGattServiceProviderAdvertisingParameters {
 }
 RT_CLASS!{class GattServiceProviderAdvertisingParameters: IGattServiceProviderAdvertisingParameters}
 impl RtActivatable<IActivationFactory> for GattServiceProviderAdvertisingParameters {}
-DEFINE_CLSID!(GattServiceProviderAdvertisingParameters(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,83,101,114,118,105,99,101,80,114,111,118,105,100,101,114,65,100,118,101,114,116,105,115,105,110,103,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_GattServiceProviderAdvertisingParameters]);
+DEFINE_CLSID!(GattServiceProviderAdvertisingParameters: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattServiceProviderAdvertisingParameters");
 DEFINE_IID!(IID_IGattServiceProviderResult, 1984337624, 50494, 17036, 138, 72, 103, 175, 224, 44, 58, 230);
 RT_INTERFACE!{interface IGattServiceProviderResult(IGattServiceProviderResultVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProviderResult] {
     fn get_Error(&self, out: *mut super::BluetoothError) -> HRESULT,
@@ -10836,7 +10836,7 @@ impl GattServiceUuids {
         <Self as RtActivatable<IGattServiceUuidsStatics2>>::get_activation_factory().get_tx_power()
     }}
 }
-DEFINE_CLSID!(GattServiceUuids(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,83,101,114,118,105,99,101,85,117,105,100,115,0]) [CLSID_GattServiceUuids]);
+DEFINE_CLSID!(GattServiceUuids: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattServiceUuids");
 DEFINE_IID!(IID_IGattServiceUuidsStatics, 1841655896, 39610, 17431, 184, 242, 220, 224, 22, 211, 78, 226);
 RT_INTERFACE!{static interface IGattServiceUuidsStatics(IGattServiceUuidsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceUuidsStatics] {
     fn get_Battery(&self, out: *mut Guid) -> HRESULT,
@@ -11048,7 +11048,7 @@ impl GattSession {
         <Self as RtActivatable<IGattSessionStatics>>::get_activation_factory().from_device_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(GattSession(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,83,101,115,115,105,111,110,0]) [CLSID_GattSession]);
+DEFINE_CLSID!(GattSession: "Windows.Devices.Bluetooth.GenericAttributeProfile.GattSession");
 DEFINE_IID!(IID_IGattSessionStatics, 778418524, 21407, 19895, 130, 168, 115, 189, 187, 247, 62, 191);
 RT_INTERFACE!{static interface IGattSessionStatics(IGattSessionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattSessionStatics] {
     fn FromDeviceIdAsync(&self, deviceId: *mut super::BluetoothDeviceId, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GattSession>) -> HRESULT
@@ -11291,7 +11291,7 @@ impl IBluetoothLEAdvertisement {
 }
 RT_CLASS!{class BluetoothLEAdvertisement: IBluetoothLEAdvertisement}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisement {}
-DEFINE_CLSID!(BluetoothLEAdvertisement(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,0]) [CLSID_BluetoothLEAdvertisement]);
+DEFINE_CLSID!(BluetoothLEAdvertisement: "Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisement");
 DEFINE_IID!(IID_IBluetoothLEAdvertisementBytePattern, 4227520498, 47557, 18952, 188, 81, 80, 47, 142, 246, 138, 121);
 RT_INTERFACE!{interface IBluetoothLEAdvertisementBytePattern(IBluetoothLEAdvertisementBytePatternVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementBytePattern] {
     fn get_DataType(&self, out: *mut u8) -> HRESULT,
@@ -11338,7 +11338,7 @@ impl BluetoothLEAdvertisementBytePattern {
         <Self as RtActivatable<IBluetoothLEAdvertisementBytePatternFactory>>::get_activation_factory().create(dataType, offset, data)
     }}
 }
-DEFINE_CLSID!(BluetoothLEAdvertisementBytePattern(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,66,121,116,101,80,97,116,116,101,114,110,0]) [CLSID_BluetoothLEAdvertisementBytePattern]);
+DEFINE_CLSID!(BluetoothLEAdvertisementBytePattern: "Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementBytePattern");
 DEFINE_IID!(IID_IBluetoothLEAdvertisementBytePatternFactory, 3269610867, 64860, 20163, 190, 42, 156, 166, 250, 17, 183, 189);
 RT_INTERFACE!{static interface IBluetoothLEAdvertisementBytePatternFactory(IBluetoothLEAdvertisementBytePatternFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementBytePatternFactory] {
     #[cfg(feature="windows-storage")] fn Create(&self, dataType: u8, offset: i16, data: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut BluetoothLEAdvertisementBytePattern) -> HRESULT
@@ -11385,7 +11385,7 @@ impl BluetoothLEAdvertisementDataSection {
         <Self as RtActivatable<IBluetoothLEAdvertisementDataSectionFactory>>::get_activation_factory().create(dataType, data)
     }}
 }
-DEFINE_CLSID!(BluetoothLEAdvertisementDataSection(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,68,97,116,97,83,101,99,116,105,111,110,0]) [CLSID_BluetoothLEAdvertisementDataSection]);
+DEFINE_CLSID!(BluetoothLEAdvertisementDataSection: "Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementDataSection");
 DEFINE_IID!(IID_IBluetoothLEAdvertisementDataSectionFactory, 3886287170, 43077, 16453, 191, 126, 62, 153, 113, 219, 138, 107);
 RT_INTERFACE!{static interface IBluetoothLEAdvertisementDataSectionFactory(IBluetoothLEAdvertisementDataSectionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementDataSectionFactory] {
     #[cfg(feature="windows-storage")] fn Create(&self, dataType: u8, data: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut BluetoothLEAdvertisementDataSection) -> HRESULT
@@ -11467,7 +11467,7 @@ impl BluetoothLEAdvertisementDataTypes {
         <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_manufacturer_specific_data()
     }}
 }
-DEFINE_CLSID!(BluetoothLEAdvertisementDataTypes(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,68,97,116,97,84,121,112,101,115,0]) [CLSID_BluetoothLEAdvertisementDataTypes]);
+DEFINE_CLSID!(BluetoothLEAdvertisementDataTypes: "Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementDataTypes");
 DEFINE_IID!(IID_IBluetoothLEAdvertisementDataTypesStatics, 1001801519, 1542, 17227, 167, 110, 116, 21, 159, 6, 132, 211);
 RT_INTERFACE!{static interface IBluetoothLEAdvertisementDataTypesStatics(IBluetoothLEAdvertisementDataTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementDataTypesStatics] {
     fn get_Flags(&self, out: *mut u8) -> HRESULT,
@@ -11629,7 +11629,7 @@ impl IBluetoothLEAdvertisementFilter {
 }
 RT_CLASS!{class BluetoothLEAdvertisementFilter: IBluetoothLEAdvertisementFilter}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementFilter {}
-DEFINE_CLSID!(BluetoothLEAdvertisementFilter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,70,105,108,116,101,114,0]) [CLSID_BluetoothLEAdvertisementFilter]);
+DEFINE_CLSID!(BluetoothLEAdvertisementFilter: "Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementFilter");
 RT_ENUM! { enum BluetoothLEAdvertisementFlags: u32 {
     None (BluetoothLEAdvertisementFlags_None) = 0, LimitedDiscoverableMode (BluetoothLEAdvertisementFlags_LimitedDiscoverableMode) = 1, GeneralDiscoverableMode (BluetoothLEAdvertisementFlags_GeneralDiscoverableMode) = 2, ClassicNotSupported (BluetoothLEAdvertisementFlags_ClassicNotSupported) = 4, DualModeControllerCapable (BluetoothLEAdvertisementFlags_DualModeControllerCapable) = 8, DualModeHostCapable (BluetoothLEAdvertisementFlags_DualModeHostCapable) = 16,
 }}
@@ -11679,7 +11679,7 @@ impl BluetoothLEAdvertisementPublisher {
         <Self as RtActivatable<IBluetoothLEAdvertisementPublisherFactory>>::get_activation_factory().create(advertisement)
     }}
 }
-DEFINE_CLSID!(BluetoothLEAdvertisementPublisher(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,80,117,98,108,105,115,104,101,114,0]) [CLSID_BluetoothLEAdvertisementPublisher]);
+DEFINE_CLSID!(BluetoothLEAdvertisementPublisher: "Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementPublisher");
 DEFINE_IID!(IID_IBluetoothLEAdvertisementPublisherFactory, 1549731422, 47203, 18817, 161, 175, 28, 84, 77, 139, 12, 13);
 RT_INTERFACE!{static interface IBluetoothLEAdvertisementPublisherFactory(IBluetoothLEAdvertisementPublisherFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementPublisherFactory] {
     fn Create(&self, advertisement: *mut BluetoothLEAdvertisement, out: *mut *mut BluetoothLEAdvertisementPublisher) -> HRESULT
@@ -11859,7 +11859,7 @@ impl BluetoothLEAdvertisementWatcher {
         <Self as RtActivatable<IBluetoothLEAdvertisementWatcherFactory>>::get_activation_factory().create(advertisementFilter)
     }}
 }
-DEFINE_CLSID!(BluetoothLEAdvertisementWatcher(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,87,97,116,99,104,101,114,0]) [CLSID_BluetoothLEAdvertisementWatcher]);
+DEFINE_CLSID!(BluetoothLEAdvertisementWatcher: "Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementWatcher");
 DEFINE_IID!(IID_IBluetoothLEAdvertisementWatcherFactory, 2595171670, 14764, 17726, 179, 42, 133, 198, 87, 224, 23, 241);
 RT_INTERFACE!{static interface IBluetoothLEAdvertisementWatcherFactory(IBluetoothLEAdvertisementWatcherFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementWatcherFactory] {
     fn Create(&self, advertisementFilter: *mut BluetoothLEAdvertisementFilter, out: *mut *mut BluetoothLEAdvertisementWatcher) -> HRESULT
@@ -11921,7 +11921,7 @@ impl BluetoothLEManufacturerData {
         <Self as RtActivatable<IBluetoothLEManufacturerDataFactory>>::get_activation_factory().create(companyId, data)
     }}
 }
-DEFINE_CLSID!(BluetoothLEManufacturerData(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,77,97,110,117,102,97,99,116,117,114,101,114,68,97,116,97,0]) [CLSID_BluetoothLEManufacturerData]);
+DEFINE_CLSID!(BluetoothLEManufacturerData: "Windows.Devices.Bluetooth.Advertisement.BluetoothLEManufacturerData");
 DEFINE_IID!(IID_IBluetoothLEManufacturerDataFactory, 3231398392, 12698, 17438, 141, 229, 102, 168, 30, 135, 122, 108);
 RT_INTERFACE!{static interface IBluetoothLEManufacturerDataFactory(IBluetoothLEManufacturerDataFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEManufacturerDataFactory] {
     #[cfg(feature="windows-storage")] fn Create(&self, companyId: u16, data: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut BluetoothLEManufacturerData) -> HRESULT
@@ -12054,7 +12054,7 @@ impl GattServiceProviderConnection {
         <Self as RtActivatable<IGattServiceProviderConnectionStatics>>::get_activation_factory().get_all_services()
     }}
 }
-DEFINE_CLSID!(GattServiceProviderConnection(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,97,99,107,103,114,111,117,110,100,46,71,97,116,116,83,101,114,118,105,99,101,80,114,111,118,105,100,101,114,67,111,110,110,101,99,116,105,111,110,0]) [CLSID_GattServiceProviderConnection]);
+DEFINE_CLSID!(GattServiceProviderConnection: "Windows.Devices.Bluetooth.Background.GattServiceProviderConnection");
 DEFINE_IID!(IID_IGattServiceProviderConnectionStatics, 1028693835, 2830, 17510, 184, 205, 110, 189, 218, 31, 161, 125);
 RT_INTERFACE!{static interface IGattServiceProviderConnectionStatics(IGattServiceProviderConnectionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProviderConnectionStatics] {
     fn get_AllServices(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IMapView<HString, GattServiceProviderConnection>) -> HRESULT
@@ -12223,7 +12223,7 @@ impl DeviceAccessInformation {
         <Self as RtActivatable<IDeviceAccessInformationStatics>>::get_activation_factory().create_from_device_class(deviceClass)
     }}
 }
-DEFINE_CLSID!(DeviceAccessInformation(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,69,110,117,109,101,114,97,116,105,111,110,46,68,101,118,105,99,101,65,99,99,101,115,115,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_DeviceAccessInformation]);
+DEFINE_CLSID!(DeviceAccessInformation: "Windows.Devices.Enumeration.DeviceAccessInformation");
 DEFINE_IID!(IID_IDeviceAccessInformationStatics, 1464587219, 24368, 17869, 138, 148, 114, 79, 229, 151, 48, 132);
 RT_INTERFACE!{static interface IDeviceAccessInformationStatics(IDeviceAccessInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceAccessInformationStatics] {
     fn CreateFromId(&self, deviceId: HSTRING, out: *mut *mut DeviceAccessInformation) -> HRESULT,
@@ -12382,7 +12382,7 @@ impl DeviceInformation {
         <Self as RtActivatable<IDeviceInformationStatics2>>::get_activation_factory().create_watcher_with_kind_aqs_filter_and_additional_properties(aqsFilter, additionalProperties, kind)
     }}
 }
-DEFINE_CLSID!(DeviceInformation(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,69,110,117,109,101,114,97,116,105,111,110,46,68,101,118,105,99,101,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_DeviceInformation]);
+DEFINE_CLSID!(DeviceInformation: "Windows.Devices.Enumeration.DeviceInformation");
 DEFINE_IID!(IID_IDeviceInformation2, 4048987704, 31127, 18649, 161, 12, 38, 157, 70, 83, 63, 72);
 RT_INTERFACE!{interface IDeviceInformation2(IDeviceInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformation2] {
     fn get_Kind(&self, out: *mut DeviceInformationKind) -> HRESULT,
@@ -12475,7 +12475,7 @@ impl DeviceInformationPairing {
         <Self as RtActivatable<IDeviceInformationPairingStatics>>::get_activation_factory().try_register_for_all_inbound_pairing_requests(pairingKindsSupported)
     }}
 }
-DEFINE_CLSID!(DeviceInformationPairing(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,69,110,117,109,101,114,97,116,105,111,110,46,68,101,118,105,99,101,73,110,102,111,114,109,97,116,105,111,110,80,97,105,114,105,110,103,0]) [CLSID_DeviceInformationPairing]);
+DEFINE_CLSID!(DeviceInformationPairing: "Windows.Devices.Enumeration.DeviceInformationPairing");
 DEFINE_IID!(IID_IDeviceInformationPairing2, 4135981821, 2798, 17192, 133, 204, 28, 116, 43, 177, 121, 13);
 RT_INTERFACE!{interface IDeviceInformationPairing2(IDeviceInformationPairing2Vtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationPairing2] {
     fn get_ProtectionLevel(&self, out: *mut DevicePairingProtectionLevel) -> HRESULT,
@@ -12802,7 +12802,7 @@ impl IDevicePicker {
 }
 RT_CLASS!{class DevicePicker: IDevicePicker}
 impl RtActivatable<IActivationFactory> for DevicePicker {}
-DEFINE_CLSID!(DevicePicker(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,69,110,117,109,101,114,97,116,105,111,110,46,68,101,118,105,99,101,80,105,99,107,101,114,0]) [CLSID_DevicePicker]);
+DEFINE_CLSID!(DevicePicker: "Windows.Devices.Enumeration.DevicePicker");
 DEFINE_IID!(IID_IDevicePickerAppearance, 3868857030, 58919, 20184, 155, 108, 70, 10, 244, 69, 229, 109);
 RT_INTERFACE!{interface IDevicePickerAppearance(IDevicePickerAppearanceVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePickerAppearance] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
@@ -13153,7 +13153,7 @@ impl PnpObject {
         <Self as RtActivatable<IPnpObjectStatics>>::get_activation_factory().create_watcher_aqs_filter(type_, requestedProperties, aqsFilter)
     }}
 }
-DEFINE_CLSID!(PnpObject(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,69,110,117,109,101,114,97,116,105,111,110,46,80,110,112,46,80,110,112,79,98,106,101,99,116,0]) [CLSID_PnpObject]);
+DEFINE_CLSID!(PnpObject: "Windows.Devices.Enumeration.Pnp.PnpObject");
 RT_CLASS!{class PnpObjectCollection: ::rt::gen::windows::foundation::collections::IVectorView<PnpObject>}
 DEFINE_IID!(IID_IPnpObjectStatics, 3015911997, 53608, 18016, 187, 243, 167, 51, 177, 75, 110, 1);
 RT_INTERFACE!{static interface IPnpObjectStatics(IPnpObjectStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPnpObjectStatics] {
@@ -13398,7 +13398,7 @@ impl GeoboundingBox {
         <Self as RtActivatable<IGeoboundingBoxStatics>>::get_activation_factory().try_compute_with_altitude_reference_and_spatial_reference(positions, altitudeRefSystem, spatialReferenceId)
     }}
 }
-DEFINE_CLSID!(GeoboundingBox(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,98,111,117,110,100,105,110,103,66,111,120,0]) [CLSID_GeoboundingBox]);
+DEFINE_CLSID!(GeoboundingBox: "Windows.Devices.Geolocation.GeoboundingBox");
 DEFINE_IID!(IID_IGeoboundingBoxFactory, 1308337545, 1041, 19132, 179, 181, 91, 188, 203, 87, 217, 140);
 RT_INTERFACE!{static interface IGeoboundingBoxFactory(IGeoboundingBoxFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeoboundingBoxFactory] {
     fn Create(&self, northwestCorner: BasicGeoposition, southeastCorner: BasicGeoposition, out: *mut *mut GeoboundingBox) -> HRESULT,
@@ -13475,7 +13475,7 @@ impl Geocircle {
         <Self as RtActivatable<IGeocircleFactory>>::get_activation_factory().create_with_altitude_reference_system_and_spatial_reference_id(position, radius, altitudeReferenceSystem, spatialReferenceId)
     }}
 }
-DEFINE_CLSID!(Geocircle(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,99,105,114,99,108,101,0]) [CLSID_Geocircle]);
+DEFINE_CLSID!(Geocircle: "Windows.Devices.Geolocation.Geocircle");
 DEFINE_IID!(IID_IGeocircleFactory, 2950058783, 29361, 20349, 135, 204, 78, 212, 201, 132, 156, 5);
 RT_INTERFACE!{static interface IGeocircleFactory(IGeocircleFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeocircleFactory] {
     fn Create(&self, position: BasicGeoposition, radius: f64, out: *mut *mut Geocircle) -> HRESULT,
@@ -13721,7 +13721,7 @@ impl Geolocator {
         <Self as RtActivatable<IGeolocatorStatics2>>::get_activation_factory().get_default_geoposition()
     }}
 }
-DEFINE_CLSID!(Geolocator(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,108,111,99,97,116,111,114,0]) [CLSID_Geolocator]);
+DEFINE_CLSID!(Geolocator: "Windows.Devices.Geolocation.Geolocator");
 DEFINE_IID!(IID_IGeolocator2, 3518246509, 34961, 17332, 173, 54, 39, 198, 254, 154, 151, 177);
 RT_INTERFACE!{interface IGeolocator2(IGeolocator2Vtbl): IInspectable(IInspectableVtbl) [IID_IGeolocator2] {
     fn AllowFallbackToConsentlessPositions(&self) -> HRESULT
@@ -13817,7 +13817,7 @@ impl Geopath {
         <Self as RtActivatable<IGeopathFactory>>::get_activation_factory().create_with_altitude_reference_and_spatial_reference(positions, altitudeReferenceSystem, spatialReferenceId)
     }}
 }
-DEFINE_CLSID!(Geopath(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,112,97,116,104,0]) [CLSID_Geopath]);
+DEFINE_CLSID!(Geopath: "Windows.Devices.Geolocation.Geopath");
 DEFINE_IID!(IID_IGeopathFactory, 666806728, 51175, 17241, 155, 155, 252, 163, 224, 94, 245, 147);
 RT_INTERFACE!{static interface IGeopathFactory(IGeopathFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeopathFactory] {
     fn Create(&self, positions: *mut super::super::foundation::collections::IIterable<BasicGeoposition>, out: *mut *mut Geopath) -> HRESULT,
@@ -13865,7 +13865,7 @@ impl Geopoint {
         <Self as RtActivatable<IGeopointFactory>>::get_activation_factory().create_with_altitude_reference_system_and_spatial_reference_id(position, altitudeReferenceSystem, spatialReferenceId)
     }}
 }
-DEFINE_CLSID!(Geopoint(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,112,111,105,110,116,0]) [CLSID_Geopoint]);
+DEFINE_CLSID!(Geopoint: "Windows.Devices.Geolocation.Geopoint");
 DEFINE_IID!(IID_IGeopointFactory, 3681258803, 30397, 20016, 138, 247, 168, 68, 220, 55, 183, 160);
 RT_INTERFACE!{static interface IGeopointFactory(IGeopointFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeopointFactory] {
     fn Create(&self, position: BasicGeoposition, out: *mut *mut Geopoint) -> HRESULT,
@@ -14008,7 +14008,7 @@ impl GeovisitMonitor {
         <Self as RtActivatable<IGeovisitMonitorStatics>>::get_activation_factory().get_last_report_async()
     }}
 }
-DEFINE_CLSID!(GeovisitMonitor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,118,105,115,105,116,77,111,110,105,116,111,114,0]) [CLSID_GeovisitMonitor]);
+DEFINE_CLSID!(GeovisitMonitor: "Windows.Devices.Geolocation.GeovisitMonitor");
 DEFINE_IID!(IID_IGeovisitMonitorStatics, 3170465447, 48114, 19677, 149, 207, 85, 76, 130, 237, 251, 135);
 RT_INTERFACE!{static interface IGeovisitMonitorStatics(IGeovisitMonitorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeovisitMonitorStatics] {
     fn GetLastReportAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<Geovisit>) -> HRESULT
@@ -14166,7 +14166,7 @@ impl Geofence {
         <Self as RtActivatable<IGeofenceFactory>>::get_activation_factory().create_with_monitor_states_dwell_time_start_time_and_duration(id, geoshape, monitoredStates, singleUse, dwellTime, startTime, duration)
     }}
 }
-DEFINE_CLSID!(Geofence(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,102,101,110,99,105,110,103,46,71,101,111,102,101,110,99,101,0]) [CLSID_Geofence]);
+DEFINE_CLSID!(Geofence: "Windows.Devices.Geolocation.Geofencing.Geofence");
 DEFINE_IID!(IID_IGeofenceFactory, 2216649291, 12895, 19344, 188, 167, 43, 128, 34, 169, 55, 150);
 RT_INTERFACE!{static interface IGeofenceFactory(IGeofenceFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeofenceFactory] {
     fn Create(&self, id: HSTRING, geoshape: *mut super::IGeoshape, out: *mut *mut Geofence) -> HRESULT,
@@ -14254,7 +14254,7 @@ impl GeofenceMonitor {
         <Self as RtActivatable<IGeofenceMonitorStatics>>::get_activation_factory().get_current()
     }}
 }
-DEFINE_CLSID!(GeofenceMonitor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,102,101,110,99,105,110,103,46,71,101,111,102,101,110,99,101,77,111,110,105,116,111,114,0]) [CLSID_GeofenceMonitor]);
+DEFINE_CLSID!(GeofenceMonitor: "Windows.Devices.Geolocation.Geofencing.GeofenceMonitor");
 DEFINE_IID!(IID_IGeofenceMonitorStatics, 768815055, 32373, 18585, 172, 227, 43, 208, 166, 92, 206, 6);
 RT_INTERFACE!{static interface IGeofenceMonitorStatics(IGeofenceMonitorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeofenceMonitorStatics] {
     fn get_Current(&self, out: *mut *mut GeofenceMonitor) -> HRESULT
@@ -14331,7 +14331,7 @@ impl KnownSimpleHapticsControllerWaveforms {
         <Self as RtActivatable<IKnownSimpleHapticsControllerWaveformsStatics>>::get_activation_factory().get_release()
     }}
 }
-DEFINE_CLSID!(KnownSimpleHapticsControllerWaveforms(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,72,97,112,116,105,99,115,46,75,110,111,119,110,83,105,109,112,108,101,72,97,112,116,105,99,115,67,111,110,116,114,111,108,108,101,114,87,97,118,101,102,111,114,109,115,0]) [CLSID_KnownSimpleHapticsControllerWaveforms]);
+DEFINE_CLSID!(KnownSimpleHapticsControllerWaveforms: "Windows.Devices.Haptics.KnownSimpleHapticsControllerWaveforms");
 DEFINE_IID!(IID_IKnownSimpleHapticsControllerWaveformsStatics, 1029144311, 19694, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{static interface IKnownSimpleHapticsControllerWaveformsStatics(IKnownSimpleHapticsControllerWaveformsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownSimpleHapticsControllerWaveformsStatics] {
     fn get_Click(&self, out: *mut u16) -> HRESULT,
@@ -14491,7 +14491,7 @@ impl VibrationDevice {
         <Self as RtActivatable<IVibrationDeviceStatics>>::get_activation_factory().find_all_async()
     }}
 }
-DEFINE_CLSID!(VibrationDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,72,97,112,116,105,99,115,46,86,105,98,114,97,116,105,111,110,68,101,118,105,99,101,0]) [CLSID_VibrationDevice]);
+DEFINE_CLSID!(VibrationDevice: "Windows.Devices.Haptics.VibrationDevice");
 DEFINE_IID!(IID_IVibrationDeviceStatics, 1407380973, 8848, 19145, 142, 179, 26, 132, 18, 46, 183, 28);
 RT_INTERFACE!{static interface IVibrationDeviceStatics(IVibrationDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVibrationDeviceStatics] {
     fn RequestAccessAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<VibrationAccessStatus>) -> HRESULT,
@@ -14788,7 +14788,7 @@ impl HidDevice {
         <Self as RtActivatable<IHidDeviceStatics>>::get_activation_factory().from_id_async(deviceId, accessMode)
     }}
 }
-DEFINE_CLSID!(HidDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,72,117,109,97,110,73,110,116,101,114,102,97,99,101,68,101,118,105,99,101,46,72,105,100,68,101,118,105,99,101,0]) [CLSID_HidDevice]);
+DEFINE_CLSID!(HidDevice: "Windows.Devices.HumanInterfaceDevice.HidDevice");
 DEFINE_IID!(IID_IHidDeviceStatics, 2656666084, 38998, 16780, 159, 115, 119, 222, 12, 216, 87, 84);
 RT_INTERFACE!{static interface IHidDeviceStatics(IHidDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHidDeviceStatics] {
     fn GetDeviceSelector(&self, usagePage: u16, usageId: u16, out: *mut HSTRING) -> HRESULT,
@@ -15156,7 +15156,7 @@ impl IKeyboardCapabilities {
 }
 RT_CLASS!{class KeyboardCapabilities: IKeyboardCapabilities}
 impl RtActivatable<IActivationFactory> for KeyboardCapabilities {}
-DEFINE_CLSID!(KeyboardCapabilities(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,110,112,117,116,46,75,101,121,98,111,97,114,100,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_KeyboardCapabilities]);
+DEFINE_CLSID!(KeyboardCapabilities: "Windows.Devices.Input.KeyboardCapabilities");
 DEFINE_IID!(IID_IMouseCapabilities, 3164987427, 32217, 19307, 154, 146, 85, 212, 60, 179, 143, 115);
 RT_INTERFACE!{interface IMouseCapabilities(IMouseCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IMouseCapabilities] {
     fn get_MousePresent(&self, out: *mut i32) -> HRESULT,
@@ -15194,7 +15194,7 @@ impl IMouseCapabilities {
 }
 RT_CLASS!{class MouseCapabilities: IMouseCapabilities}
 impl RtActivatable<IActivationFactory> for MouseCapabilities {}
-DEFINE_CLSID!(MouseCapabilities(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,110,112,117,116,46,77,111,117,115,101,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_MouseCapabilities]);
+DEFINE_CLSID!(MouseCapabilities: "Windows.Devices.Input.MouseCapabilities");
 RT_STRUCT! { struct MouseDelta {
     X: i32, Y: i32,
 }}
@@ -15221,7 +15221,7 @@ impl MouseDevice {
         <Self as RtActivatable<IMouseDeviceStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(MouseDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,110,112,117,116,46,77,111,117,115,101,68,101,118,105,99,101,0]) [CLSID_MouseDevice]);
+DEFINE_CLSID!(MouseDevice: "Windows.Devices.Input.MouseDevice");
 DEFINE_IID!(IID_IMouseDeviceStatics, 1212846149, 28016, 18907, 142, 104, 70, 255, 189, 23, 211, 141);
 RT_INTERFACE!{static interface IMouseDeviceStatics(IMouseDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMouseDeviceStatics] {
     fn GetForCurrentView(&self, out: *mut *mut MouseDevice) -> HRESULT
@@ -15296,7 +15296,7 @@ impl PointerDevice {
         <Self as RtActivatable<IPointerDeviceStatics>>::get_activation_factory().get_pointer_devices()
     }}
 }
-DEFINE_CLSID!(PointerDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,110,112,117,116,46,80,111,105,110,116,101,114,68,101,118,105,99,101,0]) [CLSID_PointerDevice]);
+DEFINE_CLSID!(PointerDevice: "Windows.Devices.Input.PointerDevice");
 DEFINE_IID!(IID_IPointerDevice2, 4171682464, 50308, 18591, 174, 62, 48, 210, 238, 31, 253, 62);
 RT_INTERFACE!{interface IPointerDevice2(IPointerDevice2Vtbl): IInspectable(IInspectableVtbl) [IID_IPointerDevice2] {
     fn get_MaxPointersWithZDistance(&self, out: *mut u32) -> HRESULT
@@ -15350,7 +15350,7 @@ impl ITouchCapabilities {
 }
 RT_CLASS!{class TouchCapabilities: ITouchCapabilities}
 impl RtActivatable<IActivationFactory> for TouchCapabilities {}
-DEFINE_CLSID!(TouchCapabilities(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,110,112,117,116,46,84,111,117,99,104,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_TouchCapabilities]);
+DEFINE_CLSID!(TouchCapabilities: "Windows.Devices.Input.TouchCapabilities");
 } // Windows.Devices.Input
 pub mod lights { // Windows.Devices.Lights
 use ::prelude::*;
@@ -15430,7 +15430,7 @@ impl Lamp {
         <Self as RtActivatable<ILampStatics>>::get_activation_factory().get_default_async()
     }}
 }
-DEFINE_CLSID!(Lamp(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,76,105,103,104,116,115,46,76,97,109,112,0]) [CLSID_Lamp]);
+DEFINE_CLSID!(Lamp: "Windows.Devices.Lights.Lamp");
 DEFINE_IID!(IID_ILampAvailabilityChangedEventArgs, 1332624877, 1954, 18845, 146, 96, 103, 227, 4, 83, 43, 164);
 RT_INTERFACE!{interface ILampAvailabilityChangedEventArgs(ILampAvailabilityChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ILampAvailabilityChangedEventArgs] {
     fn get_IsAvailable(&self, out: *mut bool) -> HRESULT
@@ -15471,7 +15471,7 @@ pub mod midi { // Windows.Devices.Midi
 use ::prelude::*;
 RT_CLASS!{class MidiActiveSensingMessage: IMidiMessage}
 impl RtActivatable<IActivationFactory> for MidiActiveSensingMessage {}
-DEFINE_CLSID!(MidiActiveSensingMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,65,99,116,105,118,101,83,101,110,115,105,110,103,77,101,115,115,97,103,101,0]) [CLSID_MidiActiveSensingMessage]);
+DEFINE_CLSID!(MidiActiveSensingMessage: "Windows.Devices.Midi.MidiActiveSensingMessage");
 DEFINE_IID!(IID_IMidiChannelPressureMessage, 3189745760, 25268, 19794, 163, 126, 146, 229, 77, 53, 185, 9);
 RT_INTERFACE!{interface IMidiChannelPressureMessage(IMidiChannelPressureMessageVtbl): IInspectable(IInspectableVtbl) [IID_IMidiChannelPressureMessage] {
     fn get_Channel(&self, out: *mut u8) -> HRESULT,
@@ -15496,7 +15496,7 @@ impl MidiChannelPressureMessage {
         <Self as RtActivatable<IMidiChannelPressureMessageFactory>>::get_activation_factory().create_midi_channel_pressure_message(channel, pressure)
     }}
 }
-DEFINE_CLSID!(MidiChannelPressureMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,67,104,97,110,110,101,108,80,114,101,115,115,117,114,101,77,101,115,115,97,103,101,0]) [CLSID_MidiChannelPressureMessage]);
+DEFINE_CLSID!(MidiChannelPressureMessage: "Windows.Devices.Midi.MidiChannelPressureMessage");
 DEFINE_IID!(IID_IMidiChannelPressureMessageFactory, 1645800751, 8836, 16682, 148, 207, 16, 251, 4, 132, 44, 108);
 RT_INTERFACE!{static interface IMidiChannelPressureMessageFactory(IMidiChannelPressureMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiChannelPressureMessageFactory] {
     fn CreateMidiChannelPressureMessage(&self, channel: u8, pressure: u8, out: *mut *mut MidiChannelPressureMessage) -> HRESULT
@@ -15510,7 +15510,7 @@ impl IMidiChannelPressureMessageFactory {
 }
 RT_CLASS!{class MidiContinueMessage: IMidiMessage}
 impl RtActivatable<IActivationFactory> for MidiContinueMessage {}
-DEFINE_CLSID!(MidiContinueMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,67,111,110,116,105,110,117,101,77,101,115,115,97,103,101,0]) [CLSID_MidiContinueMessage]);
+DEFINE_CLSID!(MidiContinueMessage: "Windows.Devices.Midi.MidiContinueMessage");
 DEFINE_IID!(IID_IMidiControlChangeMessage, 3085000579, 30733, 16479, 183, 129, 62, 21, 152, 201, 127, 64);
 RT_INTERFACE!{interface IMidiControlChangeMessage(IMidiControlChangeMessageVtbl): IInspectable(IInspectableVtbl) [IID_IMidiControlChangeMessage] {
     fn get_Channel(&self, out: *mut u8) -> HRESULT,
@@ -15541,7 +15541,7 @@ impl MidiControlChangeMessage {
         <Self as RtActivatable<IMidiControlChangeMessageFactory>>::get_activation_factory().create_midi_control_change_message(channel, controller, controlValue)
     }}
 }
-DEFINE_CLSID!(MidiControlChangeMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,67,111,110,116,114,111,108,67,104,97,110,103,101,77,101,115,115,97,103,101,0]) [CLSID_MidiControlChangeMessage]);
+DEFINE_CLSID!(MidiControlChangeMessage: "Windows.Devices.Midi.MidiControlChangeMessage");
 DEFINE_IID!(IID_IMidiControlChangeMessageFactory, 716260129, 38252, 18093, 151, 82, 248, 127, 85, 5, 47, 227);
 RT_INTERFACE!{static interface IMidiControlChangeMessageFactory(IMidiControlChangeMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiControlChangeMessageFactory] {
     fn CreateMidiControlChangeMessage(&self, channel: u8, controller: u8, controlValue: u8, out: *mut *mut MidiControlChangeMessage) -> HRESULT
@@ -15585,7 +15585,7 @@ impl MidiInPort {
         <Self as RtActivatable<IMidiInPortStatics>>::get_activation_factory().get_device_selector()
     }}
 }
-DEFINE_CLSID!(MidiInPort(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,73,110,80,111,114,116,0]) [CLSID_MidiInPort]);
+DEFINE_CLSID!(MidiInPort: "Windows.Devices.Midi.MidiInPort");
 DEFINE_IID!(IID_IMidiInPortStatics, 1153710556, 26623, 19054, 139, 172, 253, 182, 97, 12, 242, 150);
 RT_INTERFACE!{static interface IMidiInPortStatics(IMidiInPortStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiInPortStatics] {
     fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<MidiInPort>) -> HRESULT,
@@ -15672,7 +15672,7 @@ impl MidiNoteOffMessage {
         <Self as RtActivatable<IMidiNoteOffMessageFactory>>::get_activation_factory().create_midi_note_off_message(channel, note, velocity)
     }}
 }
-DEFINE_CLSID!(MidiNoteOffMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,78,111,116,101,79,102,102,77,101,115,115,97,103,101,0]) [CLSID_MidiNoteOffMessage]);
+DEFINE_CLSID!(MidiNoteOffMessage: "Windows.Devices.Midi.MidiNoteOffMessage");
 DEFINE_IID!(IID_IMidiNoteOffMessageFactory, 2796699872, 42825, 16991, 138, 244, 164, 217, 121, 204, 21, 181);
 RT_INTERFACE!{static interface IMidiNoteOffMessageFactory(IMidiNoteOffMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiNoteOffMessageFactory] {
     fn CreateMidiNoteOffMessage(&self, channel: u8, note: u8, velocity: u8, out: *mut *mut MidiNoteOffMessage) -> HRESULT
@@ -15714,7 +15714,7 @@ impl MidiNoteOnMessage {
         <Self as RtActivatable<IMidiNoteOnMessageFactory>>::get_activation_factory().create_midi_note_on_message(channel, note, velocity)
     }}
 }
-DEFINE_CLSID!(MidiNoteOnMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,78,111,116,101,79,110,77,101,115,115,97,103,101,0]) [CLSID_MidiNoteOnMessage]);
+DEFINE_CLSID!(MidiNoteOnMessage: "Windows.Devices.Midi.MidiNoteOnMessage");
 DEFINE_IID!(IID_IMidiNoteOnMessageFactory, 2604826784, 22977, 16910, 181, 23, 21, 161, 10, 169, 96, 107);
 RT_INTERFACE!{static interface IMidiNoteOnMessageFactory(IMidiNoteOnMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiNoteOnMessageFactory] {
     fn CreateMidiNoteOnMessage(&self, channel: u8, note: u8, velocity: u8, out: *mut *mut MidiNoteOnMessage) -> HRESULT
@@ -15758,7 +15758,7 @@ impl MidiOutPort {
         <Self as RtActivatable<IMidiOutPortStatics>>::get_activation_factory().get_device_selector()
     }}
 }
-DEFINE_CLSID!(MidiOutPort(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,79,117,116,80,111,114,116,0]) [CLSID_MidiOutPort]);
+DEFINE_CLSID!(MidiOutPort: "Windows.Devices.Midi.MidiOutPort");
 DEFINE_IID!(IID_IMidiOutPortStatics, 106742761, 3976, 17547, 155, 100, 169, 88, 38, 198, 91, 143);
 RT_INTERFACE!{static interface IMidiOutPortStatics(IMidiOutPortStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiOutPortStatics] {
     fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<IMidiOutPort>) -> HRESULT,
@@ -15800,7 +15800,7 @@ impl MidiPitchBendChangeMessage {
         <Self as RtActivatable<IMidiPitchBendChangeMessageFactory>>::get_activation_factory().create_midi_pitch_bend_change_message(channel, bend)
     }}
 }
-DEFINE_CLSID!(MidiPitchBendChangeMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,80,105,116,99,104,66,101,110,100,67,104,97,110,103,101,77,101,115,115,97,103,101,0]) [CLSID_MidiPitchBendChangeMessage]);
+DEFINE_CLSID!(MidiPitchBendChangeMessage: "Windows.Devices.Midi.MidiPitchBendChangeMessage");
 DEFINE_IID!(IID_IMidiPitchBendChangeMessageFactory, 4126072661, 53192, 18726, 179, 14, 163, 98, 35, 147, 48, 108);
 RT_INTERFACE!{static interface IMidiPitchBendChangeMessageFactory(IMidiPitchBendChangeMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiPitchBendChangeMessageFactory] {
     fn CreateMidiPitchBendChangeMessage(&self, channel: u8, bend: u16, out: *mut *mut MidiPitchBendChangeMessage) -> HRESULT
@@ -15842,7 +15842,7 @@ impl MidiPolyphonicKeyPressureMessage {
         <Self as RtActivatable<IMidiPolyphonicKeyPressureMessageFactory>>::get_activation_factory().create_midi_polyphonic_key_pressure_message(channel, note, pressure)
     }}
 }
-DEFINE_CLSID!(MidiPolyphonicKeyPressureMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,80,111,108,121,112,104,111,110,105,99,75,101,121,80,114,101,115,115,117,114,101,77,101,115,115,97,103,101,0]) [CLSID_MidiPolyphonicKeyPressureMessage]);
+DEFINE_CLSID!(MidiPolyphonicKeyPressureMessage: "Windows.Devices.Midi.MidiPolyphonicKeyPressureMessage");
 DEFINE_IID!(IID_IMidiPolyphonicKeyPressureMessageFactory, 3918481470, 50355, 19922, 145, 124, 227, 73, 129, 90, 27, 59);
 RT_INTERFACE!{static interface IMidiPolyphonicKeyPressureMessageFactory(IMidiPolyphonicKeyPressureMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiPolyphonicKeyPressureMessageFactory] {
     fn CreateMidiPolyphonicKeyPressureMessage(&self, channel: u8, note: u8, pressure: u8, out: *mut *mut MidiPolyphonicKeyPressureMessage) -> HRESULT
@@ -15878,7 +15878,7 @@ impl MidiProgramChangeMessage {
         <Self as RtActivatable<IMidiProgramChangeMessageFactory>>::get_activation_factory().create_midi_program_change_message(channel, program)
     }}
 }
-DEFINE_CLSID!(MidiProgramChangeMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,80,114,111,103,114,97,109,67,104,97,110,103,101,77,101,115,115,97,103,101,0]) [CLSID_MidiProgramChangeMessage]);
+DEFINE_CLSID!(MidiProgramChangeMessage: "Windows.Devices.Midi.MidiProgramChangeMessage");
 DEFINE_IID!(IID_IMidiProgramChangeMessageFactory, 3601875847, 21067, 16644, 156, 153, 101, 114, 191, 210, 226, 97);
 RT_INTERFACE!{static interface IMidiProgramChangeMessageFactory(IMidiProgramChangeMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiProgramChangeMessageFactory] {
     fn CreateMidiProgramChangeMessage(&self, channel: u8, program: u8, out: *mut *mut MidiProgramChangeMessage) -> HRESULT
@@ -15908,7 +15908,7 @@ impl MidiSongPositionPointerMessage {
         <Self as RtActivatable<IMidiSongPositionPointerMessageFactory>>::get_activation_factory().create_midi_song_position_pointer_message(beats)
     }}
 }
-DEFINE_CLSID!(MidiSongPositionPointerMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,83,111,110,103,80,111,115,105,116,105,111,110,80,111,105,110,116,101,114,77,101,115,115,97,103,101,0]) [CLSID_MidiSongPositionPointerMessage]);
+DEFINE_CLSID!(MidiSongPositionPointerMessage: "Windows.Devices.Midi.MidiSongPositionPointerMessage");
 DEFINE_IID!(IID_IMidiSongPositionPointerMessageFactory, 2617305494, 61707, 20458, 179, 149, 245, 214, 207, 128, 246, 78);
 RT_INTERFACE!{static interface IMidiSongPositionPointerMessageFactory(IMidiSongPositionPointerMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiSongPositionPointerMessageFactory] {
     fn CreateMidiSongPositionPointerMessage(&self, beats: u16, out: *mut *mut MidiSongPositionPointerMessage) -> HRESULT
@@ -15938,7 +15938,7 @@ impl MidiSongSelectMessage {
         <Self as RtActivatable<IMidiSongSelectMessageFactory>>::get_activation_factory().create_midi_song_select_message(song)
     }}
 }
-DEFINE_CLSID!(MidiSongSelectMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,83,111,110,103,83,101,108,101,99,116,77,101,115,115,97,103,101,0]) [CLSID_MidiSongSelectMessage]);
+DEFINE_CLSID!(MidiSongSelectMessage: "Windows.Devices.Midi.MidiSongSelectMessage");
 DEFINE_IID!(IID_IMidiSongSelectMessageFactory, 2223536356, 34632, 16681, 166, 108, 160, 84, 147, 247, 93, 170);
 RT_INTERFACE!{static interface IMidiSongSelectMessageFactory(IMidiSongSelectMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiSongSelectMessageFactory] {
     fn CreateMidiSongSelectMessage(&self, song: u8, out: *mut *mut MidiSongSelectMessage) -> HRESULT
@@ -15952,10 +15952,10 @@ impl IMidiSongSelectMessageFactory {
 }
 RT_CLASS!{class MidiStartMessage: IMidiMessage}
 impl RtActivatable<IActivationFactory> for MidiStartMessage {}
-DEFINE_CLSID!(MidiStartMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,83,116,97,114,116,77,101,115,115,97,103,101,0]) [CLSID_MidiStartMessage]);
+DEFINE_CLSID!(MidiStartMessage: "Windows.Devices.Midi.MidiStartMessage");
 RT_CLASS!{class MidiStopMessage: IMidiMessage}
 impl RtActivatable<IActivationFactory> for MidiStopMessage {}
-DEFINE_CLSID!(MidiStopMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,83,116,111,112,77,101,115,115,97,103,101,0]) [CLSID_MidiStopMessage]);
+DEFINE_CLSID!(MidiStopMessage: "Windows.Devices.Midi.MidiStopMessage");
 DEFINE_IID!(IID_IMidiSynthesizer, 4040824158, 56208, 16479, 184, 174, 33, 210, 225, 127, 46, 69);
 RT_INTERFACE!{interface IMidiSynthesizer(IMidiSynthesizerVtbl): IInspectable(IInspectableVtbl) [IID_IMidiSynthesizer] {
     fn get_AudioDevice(&self, out: *mut *mut super::enumeration::DeviceInformation) -> HRESULT,
@@ -15991,7 +15991,7 @@ impl MidiSynthesizer {
         <Self as RtActivatable<IMidiSynthesizerStatics>>::get_activation_factory().is_synthesizer(midiDevice)
     }}
 }
-DEFINE_CLSID!(MidiSynthesizer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,83,121,110,116,104,101,115,105,122,101,114,0]) [CLSID_MidiSynthesizer]);
+DEFINE_CLSID!(MidiSynthesizer: "Windows.Devices.Midi.MidiSynthesizer");
 DEFINE_IID!(IID_IMidiSynthesizerStatics, 1109715624, 26153, 19819, 170, 143, 212, 82, 26, 90, 49, 206);
 RT_INTERFACE!{static interface IMidiSynthesizerStatics(IMidiSynthesizerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMidiSynthesizerStatics] {
     fn CreateAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<MidiSynthesizer>) -> HRESULT,
@@ -16022,7 +16022,7 @@ impl MidiSystemExclusiveMessage {
         <Self as RtActivatable<IMidiSystemExclusiveMessageFactory>>::get_activation_factory().create_midi_system_exclusive_message(rawData)
     }}
 }
-DEFINE_CLSID!(MidiSystemExclusiveMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,83,121,115,116,101,109,69,120,99,108,117,115,105,118,101,77,101,115,115,97,103,101,0]) [CLSID_MidiSystemExclusiveMessage]);
+DEFINE_CLSID!(MidiSystemExclusiveMessage: "Windows.Devices.Midi.MidiSystemExclusiveMessage");
 DEFINE_IID!(IID_IMidiSystemExclusiveMessageFactory, 138273314, 15220, 17184, 155, 66, 12, 168, 84, 95, 138, 36);
 RT_INTERFACE!{static interface IMidiSystemExclusiveMessageFactory(IMidiSystemExclusiveMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiSystemExclusiveMessageFactory] {
     #[cfg(feature="windows-storage")] fn CreateMidiSystemExclusiveMessage(&self, rawData: *mut super::super::storage::streams::IBuffer, out: *mut *mut MidiSystemExclusiveMessage) -> HRESULT
@@ -16036,7 +16036,7 @@ impl IMidiSystemExclusiveMessageFactory {
 }
 RT_CLASS!{class MidiSystemResetMessage: IMidiMessage}
 impl RtActivatable<IActivationFactory> for MidiSystemResetMessage {}
-DEFINE_CLSID!(MidiSystemResetMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,83,121,115,116,101,109,82,101,115,101,116,77,101,115,115,97,103,101,0]) [CLSID_MidiSystemResetMessage]);
+DEFINE_CLSID!(MidiSystemResetMessage: "Windows.Devices.Midi.MidiSystemResetMessage");
 DEFINE_IID!(IID_IMidiTimeCodeMessage, 200738941, 64099, 18972, 141, 235, 192, 232, 119, 150, 166, 215);
 RT_INTERFACE!{interface IMidiTimeCodeMessage(IMidiTimeCodeMessageVtbl): IInspectable(IInspectableVtbl) [IID_IMidiTimeCodeMessage] {
     fn get_FrameType(&self, out: *mut u8) -> HRESULT,
@@ -16061,7 +16061,7 @@ impl MidiTimeCodeMessage {
         <Self as RtActivatable<IMidiTimeCodeMessageFactory>>::get_activation_factory().create_midi_time_code_message(frameType, values)
     }}
 }
-DEFINE_CLSID!(MidiTimeCodeMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,84,105,109,101,67,111,100,101,77,101,115,115,97,103,101,0]) [CLSID_MidiTimeCodeMessage]);
+DEFINE_CLSID!(MidiTimeCodeMessage: "Windows.Devices.Midi.MidiTimeCodeMessage");
 DEFINE_IID!(IID_IMidiTimeCodeMessageFactory, 3945830853, 30492, 16606, 185, 97, 23, 90, 116, 137, 168, 94);
 RT_INTERFACE!{static interface IMidiTimeCodeMessageFactory(IMidiTimeCodeMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMidiTimeCodeMessageFactory] {
     fn CreateMidiTimeCodeMessage(&self, frameType: u8, values: u8, out: *mut *mut MidiTimeCodeMessage) -> HRESULT
@@ -16075,10 +16075,10 @@ impl IMidiTimeCodeMessageFactory {
 }
 RT_CLASS!{class MidiTimingClockMessage: IMidiMessage}
 impl RtActivatable<IActivationFactory> for MidiTimingClockMessage {}
-DEFINE_CLSID!(MidiTimingClockMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,84,105,109,105,110,103,67,108,111,99,107,77,101,115,115,97,103,101,0]) [CLSID_MidiTimingClockMessage]);
+DEFINE_CLSID!(MidiTimingClockMessage: "Windows.Devices.Midi.MidiTimingClockMessage");
 RT_CLASS!{class MidiTuneRequestMessage: IMidiMessage}
 impl RtActivatable<IActivationFactory> for MidiTuneRequestMessage {}
-DEFINE_CLSID!(MidiTuneRequestMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,84,117,110,101,82,101,113,117,101,115,116,77,101,115,115,97,103,101,0]) [CLSID_MidiTuneRequestMessage]);
+DEFINE_CLSID!(MidiTuneRequestMessage: "Windows.Devices.Midi.MidiTuneRequestMessage");
 } // Windows.Devices.Midi
 pub mod perception { // Windows.Devices.Perception
 use ::prelude::*;
@@ -16098,7 +16098,7 @@ impl KnownCameraIntrinsicsProperties {
         <Self as RtActivatable<IKnownCameraIntrinsicsPropertiesStatics>>::get_activation_factory().get_tangential_distortion()
     }}
 }
-DEFINE_CLSID!(KnownCameraIntrinsicsProperties(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,75,110,111,119,110,67,97,109,101,114,97,73,110,116,114,105,110,115,105,99,115,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownCameraIntrinsicsProperties]);
+DEFINE_CLSID!(KnownCameraIntrinsicsProperties: "Windows.Devices.Perception.KnownCameraIntrinsicsProperties");
 DEFINE_IID!(IID_IKnownCameraIntrinsicsPropertiesStatics, 146815352, 17274, 19863, 166, 99, 253, 49, 149, 96, 2, 73);
 RT_INTERFACE!{static interface IKnownCameraIntrinsicsPropertiesStatics(IKnownCameraIntrinsicsPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownCameraIntrinsicsPropertiesStatics] {
     fn get_FocalLength(&self, out: *mut HSTRING) -> HRESULT,
@@ -16141,7 +16141,7 @@ impl KnownPerceptionColorFrameSourceProperties {
         <Self as RtActivatable<IKnownPerceptionColorFrameSourcePropertiesStatics>>::get_activation_factory().get_exposure_compensation()
     }}
 }
-DEFINE_CLSID!(KnownPerceptionColorFrameSourceProperties(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,75,110,111,119,110,80,101,114,99,101,112,116,105,111,110,67,111,108,111,114,70,114,97,109,101,83,111,117,114,99,101,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownPerceptionColorFrameSourceProperties]);
+DEFINE_CLSID!(KnownPerceptionColorFrameSourceProperties: "Windows.Devices.Perception.KnownPerceptionColorFrameSourceProperties");
 DEFINE_IID!(IID_IKnownPerceptionColorFrameSourcePropertiesStatics, 1576127650, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 75);
 RT_INTERFACE!{static interface IKnownPerceptionColorFrameSourcePropertiesStatics(IKnownPerceptionColorFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionColorFrameSourcePropertiesStatics] {
     fn get_Exposure(&self, out: *mut HSTRING) -> HRESULT,
@@ -16175,7 +16175,7 @@ impl KnownPerceptionDepthFrameSourceProperties {
         <Self as RtActivatable<IKnownPerceptionDepthFrameSourcePropertiesStatics>>::get_activation_factory().get_max_depth()
     }}
 }
-DEFINE_CLSID!(KnownPerceptionDepthFrameSourceProperties(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,75,110,111,119,110,80,101,114,99,101,112,116,105,111,110,68,101,112,116,104,70,114,97,109,101,83,111,117,114,99,101,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownPerceptionDepthFrameSourceProperties]);
+DEFINE_CLSID!(KnownPerceptionDepthFrameSourceProperties: "Windows.Devices.Perception.KnownPerceptionDepthFrameSourceProperties");
 DEFINE_IID!(IID_IKnownPerceptionDepthFrameSourcePropertiesStatics, 1576127650, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 74);
 RT_INTERFACE!{static interface IKnownPerceptionDepthFrameSourcePropertiesStatics(IKnownPerceptionDepthFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionDepthFrameSourcePropertiesStatics] {
     fn get_MinDepth(&self, out: *mut HSTRING) -> HRESULT,
@@ -16216,7 +16216,7 @@ impl KnownPerceptionFrameSourceProperties {
         <Self as RtActivatable<IKnownPerceptionFrameSourcePropertiesStatics2>>::get_activation_factory().get_device_id()
     }}
 }
-DEFINE_CLSID!(KnownPerceptionFrameSourceProperties(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,75,110,111,119,110,80,101,114,99,101,112,116,105,111,110,70,114,97,109,101,83,111,117,114,99,101,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownPerceptionFrameSourceProperties]);
+DEFINE_CLSID!(KnownPerceptionFrameSourceProperties: "Windows.Devices.Perception.KnownPerceptionFrameSourceProperties");
 DEFINE_IID!(IID_IKnownPerceptionFrameSourcePropertiesStatics, 1576127650, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 71);
 RT_INTERFACE!{static interface IKnownPerceptionFrameSourcePropertiesStatics(IKnownPerceptionFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionFrameSourcePropertiesStatics] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -16288,7 +16288,7 @@ impl KnownPerceptionInfraredFrameSourceProperties {
         <Self as RtActivatable<IKnownPerceptionInfraredFrameSourcePropertiesStatics>>::get_activation_factory().get_interleaved_illumination_enabled()
     }}
 }
-DEFINE_CLSID!(KnownPerceptionInfraredFrameSourceProperties(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,75,110,111,119,110,80,101,114,99,101,112,116,105,111,110,73,110,102,114,97,114,101,100,70,114,97,109,101,83,111,117,114,99,101,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownPerceptionInfraredFrameSourceProperties]);
+DEFINE_CLSID!(KnownPerceptionInfraredFrameSourceProperties: "Windows.Devices.Perception.KnownPerceptionInfraredFrameSourceProperties");
 DEFINE_IID!(IID_IKnownPerceptionInfraredFrameSourcePropertiesStatics, 1576127650, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 73);
 RT_INTERFACE!{static interface IKnownPerceptionInfraredFrameSourcePropertiesStatics(IKnownPerceptionInfraredFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionInfraredFrameSourcePropertiesStatics] {
     fn get_Exposure(&self, out: *mut HSTRING) -> HRESULT,
@@ -16355,7 +16355,7 @@ impl KnownPerceptionVideoFrameSourceProperties {
         <Self as RtActivatable<IKnownPerceptionVideoFrameSourcePropertiesStatics>>::get_activation_factory().get_camera_intrinsics()
     }}
 }
-DEFINE_CLSID!(KnownPerceptionVideoFrameSourceProperties(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,75,110,111,119,110,80,101,114,99,101,112,116,105,111,110,86,105,100,101,111,70,114,97,109,101,83,111,117,114,99,101,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownPerceptionVideoFrameSourceProperties]);
+DEFINE_CLSID!(KnownPerceptionVideoFrameSourceProperties: "Windows.Devices.Perception.KnownPerceptionVideoFrameSourceProperties");
 DEFINE_IID!(IID_IKnownPerceptionVideoFrameSourcePropertiesStatics, 1576127650, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 72);
 RT_INTERFACE!{static interface IKnownPerceptionVideoFrameSourcePropertiesStatics(IKnownPerceptionVideoFrameSourcePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionVideoFrameSourcePropertiesStatics] {
     fn get_VideoProfile(&self, out: *mut HSTRING) -> HRESULT,
@@ -16410,7 +16410,7 @@ impl KnownPerceptionVideoProfileProperties {
         <Self as RtActivatable<IKnownPerceptionVideoProfilePropertiesStatics>>::get_activation_factory().get_frame_duration()
     }}
 }
-DEFINE_CLSID!(KnownPerceptionVideoProfileProperties(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,75,110,111,119,110,80,101,114,99,101,112,116,105,111,110,86,105,100,101,111,80,114,111,102,105,108,101,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownPerceptionVideoProfileProperties]);
+DEFINE_CLSID!(KnownPerceptionVideoProfileProperties: "Windows.Devices.Perception.KnownPerceptionVideoProfileProperties");
 DEFINE_IID!(IID_IKnownPerceptionVideoProfilePropertiesStatics, 2399724263, 23158, 17379, 161, 58, 218, 61, 145, 169, 239, 152);
 RT_INTERFACE!{static interface IKnownPerceptionVideoProfilePropertiesStatics(IKnownPerceptionVideoProfilePropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionVideoProfilePropertiesStatics] {
     fn get_BitmapPixelFormat(&self, out: *mut HSTRING) -> HRESULT,
@@ -16707,7 +16707,7 @@ impl PerceptionColorFrameSource {
         <Self as RtActivatable<IPerceptionColorFrameSourceStatics>>::get_activation_factory().request_access_async()
     }}
 }
-DEFINE_CLSID!(PerceptionColorFrameSource(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,80,101,114,99,101,112,116,105,111,110,67,111,108,111,114,70,114,97,109,101,83,111,117,114,99,101,0]) [CLSID_PerceptionColorFrameSource]);
+DEFINE_CLSID!(PerceptionColorFrameSource: "Windows.Devices.Perception.PerceptionColorFrameSource");
 DEFINE_IID!(IID_IPerceptionColorFrameSource2, 4169140453, 22065, 17901, 173, 152, 140, 106, 160, 76, 251, 145);
 RT_INTERFACE!{interface IPerceptionColorFrameSource2(IPerceptionColorFrameSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionColorFrameSource2] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT
@@ -17180,7 +17180,7 @@ impl PerceptionDepthFrameSource {
         <Self as RtActivatable<IPerceptionDepthFrameSourceStatics>>::get_activation_factory().request_access_async()
     }}
 }
-DEFINE_CLSID!(PerceptionDepthFrameSource(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,80,101,114,99,101,112,116,105,111,110,68,101,112,116,104,70,114,97,109,101,83,111,117,114,99,101,0]) [CLSID_PerceptionDepthFrameSource]);
+DEFINE_CLSID!(PerceptionDepthFrameSource: "Windows.Devices.Perception.PerceptionDepthFrameSource");
 DEFINE_IID!(IID_IPerceptionDepthFrameSource2, 3822206254, 28204, 20077, 145, 217, 112, 76, 216, 223, 247, 157);
 RT_INTERFACE!{interface IPerceptionDepthFrameSource2(IPerceptionDepthFrameSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionDepthFrameSource2] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT
@@ -17614,7 +17614,7 @@ impl PerceptionInfraredFrameSource {
         <Self as RtActivatable<IPerceptionInfraredFrameSourceStatics>>::get_activation_factory().request_access_async()
     }}
 }
-DEFINE_CLSID!(PerceptionInfraredFrameSource(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,80,101,114,99,101,112,116,105,111,110,73,110,102,114,97,114,101,100,70,114,97,109,101,83,111,117,114,99,101,0]) [CLSID_PerceptionInfraredFrameSource]);
+DEFINE_CLSID!(PerceptionInfraredFrameSource: "Windows.Devices.Perception.PerceptionInfraredFrameSource");
 DEFINE_IID!(IID_IPerceptionInfraredFrameSource2, 3704936344, 19211, 17152, 141, 133, 65, 8, 23, 250, 160, 50);
 RT_INTERFACE!{interface IPerceptionInfraredFrameSource2(IPerceptionInfraredFrameSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionInfraredFrameSource2] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT
@@ -17804,7 +17804,7 @@ impl KnownPerceptionFrameKind {
         <Self as RtActivatable<IKnownPerceptionFrameKindStatics>>::get_activation_factory().get_infrared()
     }}
 }
-DEFINE_CLSID!(KnownPerceptionFrameKind(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,80,114,111,118,105,100,101,114,46,75,110,111,119,110,80,101,114,99,101,112,116,105,111,110,70,114,97,109,101,75,105,110,100,0]) [CLSID_KnownPerceptionFrameKind]);
+DEFINE_CLSID!(KnownPerceptionFrameKind: "Windows.Devices.Perception.Provider.KnownPerceptionFrameKind");
 DEFINE_IID!(IID_IKnownPerceptionFrameKindStatics, 988172758, 38505, 16646, 159, 174, 72, 53, 193, 185, 97, 4);
 RT_INTERFACE!{static interface IKnownPerceptionFrameKindStatics(IKnownPerceptionFrameKindStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownPerceptionFrameKindStatics] {
     fn get_Color(&self, out: *mut HSTRING) -> HRESULT,
@@ -17846,7 +17846,7 @@ impl PerceptionControlGroup {
         <Self as RtActivatable<IPerceptionControlGroupFactory>>::get_activation_factory().create(ids)
     }}
 }
-DEFINE_CLSID!(PerceptionControlGroup(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,80,114,111,118,105,100,101,114,46,80,101,114,99,101,112,116,105,111,110,67,111,110,116,114,111,108,71,114,111,117,112,0]) [CLSID_PerceptionControlGroup]);
+DEFINE_CLSID!(PerceptionControlGroup: "Windows.Devices.Perception.Provider.PerceptionControlGroup");
 DEFINE_IID!(IID_IPerceptionControlGroupFactory, 790295264, 47857, 17723, 190, 212, 205, 157, 70, 25, 21, 76);
 RT_INTERFACE!{static interface IPerceptionControlGroupFactory(IPerceptionControlGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionControlGroupFactory] {
     fn Create(&self, ids: *mut ::rt::gen::windows::foundation::collections::IIterable<HString>, out: *mut *mut PerceptionControlGroup) -> HRESULT
@@ -17888,7 +17888,7 @@ impl PerceptionCorrelation {
         <Self as RtActivatable<IPerceptionCorrelationFactory>>::get_activation_factory().create(targetId, position, orientation)
     }}
 }
-DEFINE_CLSID!(PerceptionCorrelation(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,80,114,111,118,105,100,101,114,46,80,101,114,99,101,112,116,105,111,110,67,111,114,114,101,108,97,116,105,111,110,0]) [CLSID_PerceptionCorrelation]);
+DEFINE_CLSID!(PerceptionCorrelation: "Windows.Devices.Perception.Provider.PerceptionCorrelation");
 DEFINE_IID!(IID_IPerceptionCorrelationFactory, 3567698981, 10372, 19087, 129, 52, 40, 53, 215, 40, 108, 191);
 RT_INTERFACE!{static interface IPerceptionCorrelationFactory(IPerceptionCorrelationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionCorrelationFactory] {
     fn Create(&self, targetId: HSTRING, position: ::rt::gen::windows::foundation::numerics::Vector3, orientation: ::rt::gen::windows::foundation::numerics::Quaternion, out: *mut *mut PerceptionCorrelation) -> HRESULT
@@ -17918,7 +17918,7 @@ impl PerceptionCorrelationGroup {
         <Self as RtActivatable<IPerceptionCorrelationGroupFactory>>::get_activation_factory().create(relativeLocations)
     }}
 }
-DEFINE_CLSID!(PerceptionCorrelationGroup(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,80,114,111,118,105,100,101,114,46,80,101,114,99,101,112,116,105,111,110,67,111,114,114,101,108,97,116,105,111,110,71,114,111,117,112,0]) [CLSID_PerceptionCorrelationGroup]);
+DEFINE_CLSID!(PerceptionCorrelationGroup: "Windows.Devices.Perception.Provider.PerceptionCorrelationGroup");
 DEFINE_IID!(IID_IPerceptionCorrelationGroupFactory, 2113806472, 25567, 18669, 131, 177, 74, 184, 41, 19, 41, 149);
 RT_INTERFACE!{static interface IPerceptionCorrelationGroupFactory(IPerceptionCorrelationGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionCorrelationGroupFactory] {
     fn Create(&self, relativeLocations: *mut ::rt::gen::windows::foundation::collections::IIterable<PerceptionCorrelation>, out: *mut *mut PerceptionCorrelationGroup) -> HRESULT
@@ -17948,7 +17948,7 @@ impl PerceptionFaceAuthenticationGroup {
         <Self as RtActivatable<IPerceptionFaceAuthenticationGroupFactory>>::get_activation_factory().create(ids, startHandler, stopHandler)
     }}
 }
-DEFINE_CLSID!(PerceptionFaceAuthenticationGroup(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,80,114,111,118,105,100,101,114,46,80,101,114,99,101,112,116,105,111,110,70,97,99,101,65,117,116,104,101,110,116,105,99,97,116,105,111,110,71,114,111,117,112,0]) [CLSID_PerceptionFaceAuthenticationGroup]);
+DEFINE_CLSID!(PerceptionFaceAuthenticationGroup: "Windows.Devices.Perception.Provider.PerceptionFaceAuthenticationGroup");
 DEFINE_IID!(IID_IPerceptionFaceAuthenticationGroupFactory, 3867805140, 46604, 16628, 188, 185, 242, 77, 70, 70, 115, 32);
 RT_INTERFACE!{static interface IPerceptionFaceAuthenticationGroupFactory(IPerceptionFaceAuthenticationGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionFaceAuthenticationGroupFactory] {
     fn Create(&self, ids: *mut ::rt::gen::windows::foundation::collections::IIterable<HString>, startHandler: *mut PerceptionStartFaceAuthenticationHandler, stopHandler: *mut PerceptionStopFaceAuthenticationHandler, out: *mut *mut PerceptionFaceAuthenticationGroup) -> HRESULT
@@ -18089,7 +18089,7 @@ impl IPerceptionFrameProviderInfo {
 }
 RT_CLASS!{class PerceptionFrameProviderInfo: IPerceptionFrameProviderInfo}
 impl RtActivatable<IActivationFactory> for PerceptionFrameProviderInfo {}
-DEFINE_CLSID!(PerceptionFrameProviderInfo(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,80,114,111,118,105,100,101,114,46,80,101,114,99,101,112,116,105,111,110,70,114,97,109,101,80,114,111,118,105,100,101,114,73,110,102,111,0]) [CLSID_PerceptionFrameProviderInfo]);
+DEFINE_CLSID!(PerceptionFrameProviderInfo: "Windows.Devices.Perception.Provider.PerceptionFrameProviderInfo");
 DEFINE_IID!(IID_IPerceptionFrameProviderManager, 2841234951, 60115, 13279, 142, 193, 185, 36, 171, 224, 25, 196);
 RT_INTERFACE!{interface IPerceptionFrameProviderManager(IPerceptionFrameProviderManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionFrameProviderManager] {
     fn GetFrameProvider(&self, frameProviderInfo: *mut PerceptionFrameProviderInfo, out: *mut *mut IPerceptionFrameProvider) -> HRESULT
@@ -18135,7 +18135,7 @@ impl PerceptionFrameProviderManagerService {
         <Self as RtActivatable<IPerceptionFrameProviderManagerServiceStatics>>::get_activation_factory().publish_frame_for_provider(provider, frame)
     }}
 }
-DEFINE_CLSID!(PerceptionFrameProviderManagerService(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,80,114,111,118,105,100,101,114,46,80,101,114,99,101,112,116,105,111,110,70,114,97,109,101,80,114,111,118,105,100,101,114,77,97,110,97,103,101,114,83,101,114,118,105,99,101,0]) [CLSID_PerceptionFrameProviderManagerService]);
+DEFINE_CLSID!(PerceptionFrameProviderManagerService: "Windows.Devices.Perception.Provider.PerceptionFrameProviderManagerService");
 DEFINE_IID!(IID_IPerceptionFrameProviderManagerServiceStatics, 2927855334, 51929, 17241, 143, 150, 142, 174, 81, 129, 5, 38);
 RT_INTERFACE!{static interface IPerceptionFrameProviderManagerServiceStatics(IPerceptionFrameProviderManagerServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionFrameProviderManagerServiceStatics] {
     fn RegisterFrameProviderInfo(&self, manager: *mut IPerceptionFrameProviderManager, frameProviderInfo: *mut PerceptionFrameProviderInfo) -> HRESULT,
@@ -18271,7 +18271,7 @@ impl PerceptionVideoFrameAllocator {
         <Self as RtActivatable<IPerceptionVideoFrameAllocatorFactory>>::get_activation_factory().create(maxOutstandingFrameCountForWrite, format, resolution, alpha)
     }}
 }
-DEFINE_CLSID!(PerceptionVideoFrameAllocator(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,80,114,111,118,105,100,101,114,46,80,101,114,99,101,112,116,105,111,110,86,105,100,101,111,70,114,97,109,101,65,108,108,111,99,97,116,111,114,0]) [CLSID_PerceptionVideoFrameAllocator]);
+DEFINE_CLSID!(PerceptionVideoFrameAllocator: "Windows.Devices.Perception.Provider.PerceptionVideoFrameAllocator");
 DEFINE_IID!(IID_IPerceptionVideoFrameAllocatorFactory, 442020065, 59674, 18462, 184, 118, 168, 158, 43, 188, 107, 51);
 RT_INTERFACE!{static interface IPerceptionVideoFrameAllocatorFactory(IPerceptionVideoFrameAllocatorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionVideoFrameAllocatorFactory] {
     #[cfg(feature="windows-graphics")] fn Create(&self, maxOutstandingFrameCountForWrite: u32, format: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, resolution: ::rt::gen::windows::foundation::Size, alpha: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode, out: *mut *mut PerceptionVideoFrameAllocator) -> HRESULT
@@ -18375,7 +18375,7 @@ impl BarcodeScanner {
         <Self as RtActivatable<IBarcodeScannerStatics2>>::get_activation_factory().get_device_selector_with_connection_types(connectionTypes)
     }}
 }
-DEFINE_CLSID!(BarcodeScanner(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,66,97,114,99,111,100,101,83,99,97,110,110,101,114,0]) [CLSID_BarcodeScanner]);
+DEFINE_CLSID!(BarcodeScanner: "Windows.Devices.PointOfService.BarcodeScanner");
 DEFINE_IID!(IID_IBarcodeScanner2, 2300662119, 36078, 17261, 137, 171, 141, 251, 67, 187, 66, 134);
 RT_INTERFACE!{interface IBarcodeScanner2(IBarcodeScanner2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScanner2] {
     fn get_VideoDeviceId(&self, out: *mut HSTRING) -> HRESULT
@@ -18845,7 +18845,7 @@ impl BarcodeSymbologies {
         <Self as RtActivatable<IBarcodeSymbologiesStatics2>>::get_activation_factory().get_gs1_dwcode()
     }}
 }
-DEFINE_CLSID!(BarcodeSymbologies(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,66,97,114,99,111,100,101,83,121,109,98,111,108,111,103,105,101,115,0]) [CLSID_BarcodeSymbologies]);
+DEFINE_CLSID!(BarcodeSymbologies: "Windows.Devices.PointOfService.BarcodeSymbologies");
 DEFINE_IID!(IID_IBarcodeSymbologiesStatics, 3397732795, 1746, 17396, 164, 75, 198, 32, 103, 159, 216, 208);
 RT_INTERFACE!{static interface IBarcodeSymbologiesStatics(IBarcodeSymbologiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeSymbologiesStatics] {
     fn get_Unknown(&self, out: *mut u32) -> HRESULT,
@@ -19589,7 +19589,7 @@ impl CashDrawer {
         <Self as RtActivatable<ICashDrawerStatics2>>::get_activation_factory().get_device_selector_with_connection_types(connectionTypes)
     }}
 }
-DEFINE_CLSID!(CashDrawer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,67,97,115,104,68,114,97,119,101,114,0]) [CLSID_CashDrawer]);
+DEFINE_CLSID!(CashDrawer: "Windows.Devices.PointOfService.CashDrawer");
 DEFINE_IID!(IID_ICashDrawerCapabilities, 197582347, 59623, 19231, 177, 209, 62, 80, 26, 208, 130, 71);
 RT_INTERFACE!{interface ICashDrawerCapabilities(ICashDrawerCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_ICashDrawerCapabilities] {
     fn get_PowerReportingType(&self, out: *mut UnifiedPosPowerReportingType) -> HRESULT,
@@ -20159,7 +20159,7 @@ impl ClaimedLineDisplay {
         <Self as RtActivatable<IClaimedLineDisplayStatics>>::get_activation_factory().get_device_selector_with_connection_types(connectionTypes)
     }}
 }
-DEFINE_CLSID!(ClaimedLineDisplay(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,67,108,97,105,109,101,100,76,105,110,101,68,105,115,112,108,97,121,0]) [CLSID_ClaimedLineDisplay]);
+DEFINE_CLSID!(ClaimedLineDisplay: "Windows.Devices.PointOfService.ClaimedLineDisplay");
 DEFINE_IID!(IID_IClaimedLineDisplay2, 2736551405, 16885, 20086, 160, 116, 121, 94, 71, 164, 110, 151);
 RT_INTERFACE!{interface IClaimedLineDisplay2(IClaimedLineDisplay2Vtbl): IInspectable(IInspectableVtbl) [IID_IClaimedLineDisplay2] {
     fn GetStatisticsAsync(&self, statisticsCategories: *mut super::super::foundation::collections::IIterable<HString>, out: *mut *mut super::super::foundation::IAsyncOperation<HString>) -> HRESULT,
@@ -21056,7 +21056,7 @@ impl LineDisplay {
         <Self as RtActivatable<ILineDisplayStatics2>>::get_activation_factory().get_statistics_category_selector()
     }}
 }
-DEFINE_CLSID!(LineDisplay(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,76,105,110,101,68,105,115,112,108,97,121,0]) [CLSID_LineDisplay]);
+DEFINE_CLSID!(LineDisplay: "Windows.Devices.PointOfService.LineDisplay");
 DEFINE_IID!(IID_ILineDisplay2, 3264652840, 61252, 16627, 189, 28, 176, 76, 106, 92, 220, 125);
 RT_INTERFACE!{interface ILineDisplay2(ILineDisplay2Vtbl): IInspectable(IInspectableVtbl) [IID_ILineDisplay2] {
     fn CheckPowerStatusAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<LineDisplayPowerStatus>) -> HRESULT
@@ -21771,7 +21771,7 @@ impl MagneticStripeReader {
         <Self as RtActivatable<IMagneticStripeReaderStatics2>>::get_activation_factory().get_device_selector_with_connection_types(connectionTypes)
     }}
 }
-DEFINE_CLSID!(MagneticStripeReader(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,77,97,103,110,101,116,105,99,83,116,114,105,112,101,82,101,97,100,101,114,0]) [CLSID_MagneticStripeReader]);
+DEFINE_CLSID!(MagneticStripeReader: "Windows.Devices.PointOfService.MagneticStripeReader");
 DEFINE_IID!(IID_IMagneticStripeReaderAamvaCardDataReceivedEventArgs, 172735825, 49942, 18704, 135, 243, 122, 98, 186, 134, 45, 49);
 RT_INTERFACE!{interface IMagneticStripeReaderAamvaCardDataReceivedEventArgs(IMagneticStripeReaderAamvaCardDataReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderAamvaCardDataReceivedEventArgs] {
     fn get_Report(&self, out: *mut *mut MagneticStripeReaderReport) -> HRESULT,
@@ -22046,7 +22046,7 @@ impl MagneticStripeReaderCardTypes {
         <Self as RtActivatable<IMagneticStripeReaderCardTypesStatics>>::get_activation_factory().get_extended_base()
     }}
 }
-DEFINE_CLSID!(MagneticStripeReaderCardTypes(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,77,97,103,110,101,116,105,99,83,116,114,105,112,101,82,101,97,100,101,114,67,97,114,100,84,121,112,101,115,0]) [CLSID_MagneticStripeReaderCardTypes]);
+DEFINE_CLSID!(MagneticStripeReaderCardTypes: "Windows.Devices.PointOfService.MagneticStripeReaderCardTypes");
 DEFINE_IID!(IID_IMagneticStripeReaderCardTypesStatics, 1385114717, 10630, 18255, 132, 84, 124, 205, 5, 146, 141, 95);
 RT_INTERFACE!{static interface IMagneticStripeReaderCardTypesStatics(IMagneticStripeReaderCardTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderCardTypesStatics] {
     fn get_Unknown(&self, out: *mut u32) -> HRESULT,
@@ -22089,7 +22089,7 @@ impl MagneticStripeReaderEncryptionAlgorithms {
         <Self as RtActivatable<IMagneticStripeReaderEncryptionAlgorithmsStatics>>::get_activation_factory().get_extended_base()
     }}
 }
-DEFINE_CLSID!(MagneticStripeReaderEncryptionAlgorithms(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,77,97,103,110,101,116,105,99,83,116,114,105,112,101,82,101,97,100,101,114,69,110,99,114,121,112,116,105,111,110,65,108,103,111,114,105,116,104,109,115,0]) [CLSID_MagneticStripeReaderEncryptionAlgorithms]);
+DEFINE_CLSID!(MagneticStripeReaderEncryptionAlgorithms: "Windows.Devices.PointOfService.MagneticStripeReaderEncryptionAlgorithms");
 DEFINE_IID!(IID_IMagneticStripeReaderEncryptionAlgorithmsStatics, 1404400464, 50139, 18260, 156, 0, 65, 57, 35, 116, 161, 9);
 RT_INTERFACE!{static interface IMagneticStripeReaderEncryptionAlgorithmsStatics(IMagneticStripeReaderEncryptionAlgorithmsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderEncryptionAlgorithmsStatics] {
     fn get_None(&self, out: *mut u32) -> HRESULT,
@@ -22399,7 +22399,7 @@ impl PosPrinter {
         <Self as RtActivatable<IPosPrinterStatics2>>::get_activation_factory().get_device_selector_with_connection_types(connectionTypes)
     }}
 }
-DEFINE_CLSID!(PosPrinter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,80,111,115,80,114,105,110,116,101,114,0]) [CLSID_PosPrinter]);
+DEFINE_CLSID!(PosPrinter: "Windows.Devices.PointOfService.PosPrinter");
 RT_ENUM! { enum PosPrinterAlignment: i32 {
     Left (PosPrinterAlignment_Left) = 0, Center (PosPrinterAlignment_Center) = 1, Right (PosPrinterAlignment_Right) = 2,
 }}
@@ -22488,7 +22488,7 @@ impl PosPrinterCharacterSetIds {
         <Self as RtActivatable<IPosPrinterCharacterSetIdsStatics>>::get_activation_factory().get_ansi()
     }}
 }
-DEFINE_CLSID!(PosPrinterCharacterSetIds(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,80,111,115,80,114,105,110,116,101,114,67,104,97,114,97,99,116,101,114,83,101,116,73,100,115,0]) [CLSID_PosPrinterCharacterSetIds]);
+DEFINE_CLSID!(PosPrinterCharacterSetIds: "Windows.Devices.PointOfService.PosPrinterCharacterSetIds");
 DEFINE_IID!(IID_IPosPrinterCharacterSetIdsStatics, 1550884607, 28826, 20455, 178, 21, 6, 167, 72, 163, 139, 57);
 RT_INTERFACE!{static interface IPosPrinterCharacterSetIdsStatics(IPosPrinterCharacterSetIdsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPosPrinterCharacterSetIdsStatics] {
     fn get_Utf16LE(&self, out: *mut u32) -> HRESULT,
@@ -22885,7 +22885,7 @@ impl Radio {
         <Self as RtActivatable<IRadioStatics>>::get_activation_factory().request_access_async()
     }}
 }
-DEFINE_CLSID!(Radio(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,82,97,100,105,111,115,46,82,97,100,105,111,0]) [CLSID_Radio]);
+DEFINE_CLSID!(Radio: "Windows.Devices.Radios.Radio");
 RT_ENUM! { enum RadioAccessStatus: i32 {
     Unspecified (RadioAccessStatus_Unspecified) = 0, Allowed (RadioAccessStatus_Allowed) = 1, DeniedByUser (RadioAccessStatus_DeniedByUser) = 2, DeniedBySystem (RadioAccessStatus_DeniedBySystem) = 3,
 }}
@@ -22995,7 +22995,7 @@ impl Accelerometer {
         <Self as RtActivatable<IAccelerometerStatics3>>::get_activation_factory().get_device_selector(readingType)
     }}
 }
-DEFINE_CLSID!(Accelerometer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,65,99,99,101,108,101,114,111,109,101,116,101,114,0]) [CLSID_Accelerometer]);
+DEFINE_CLSID!(Accelerometer: "Windows.Devices.Sensors.Accelerometer");
 DEFINE_IID!(IID_IAccelerometer2, 3908080366, 18788, 16410, 182, 2, 34, 13, 113, 83, 198, 10);
 RT_INTERFACE!{interface IAccelerometer2(IAccelerometer2Vtbl): IInspectable(IInspectableVtbl) [IID_IAccelerometer2] {
     #[cfg(feature="windows-graphics")] fn put_ReadingTransform(&self, value: super::super::graphics::display::DisplayOrientations) -> HRESULT,
@@ -23240,7 +23240,7 @@ impl ActivitySensor {
         <Self as RtActivatable<IActivitySensorStatics>>::get_activation_factory().get_system_history_with_duration_async(fromTime, duration)
     }}
 }
-DEFINE_CLSID!(ActivitySensor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,65,99,116,105,118,105,116,121,83,101,110,115,111,114,0]) [CLSID_ActivitySensor]);
+DEFINE_CLSID!(ActivitySensor: "Windows.Devices.Sensors.ActivitySensor");
 DEFINE_IID!(IID_IActivitySensorReading, 2232572566, 5234, 16546, 178, 174, 225, 239, 41, 34, 108, 120);
 RT_INTERFACE!{interface IActivitySensorReading(IActivitySensorReadingVtbl): IInspectable(IInspectableVtbl) [IID_IActivitySensorReading] {
     fn get_Timestamp(&self, out: *mut super::super::foundation::DateTime) -> HRESULT,
@@ -23394,7 +23394,7 @@ impl Altimeter {
         <Self as RtActivatable<IAltimeterStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(Altimeter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,65,108,116,105,109,101,116,101,114,0]) [CLSID_Altimeter]);
+DEFINE_CLSID!(Altimeter: "Windows.Devices.Sensors.Altimeter");
 DEFINE_IID!(IID_IAltimeter2, 3376880633, 10973, 18677, 159, 8, 61, 12, 118, 96, 217, 56);
 RT_INTERFACE!{interface IAltimeter2(IAltimeter2Vtbl): IInspectable(IInspectableVtbl) [IID_IAltimeter2] {
     fn put_ReportLatency(&self, value: u32) -> HRESULT,
@@ -23534,7 +23534,7 @@ impl Barometer {
         <Self as RtActivatable<IBarometerStatics2>>::get_activation_factory().get_device_selector()
     }}
 }
-DEFINE_CLSID!(Barometer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,66,97,114,111,109,101,116,101,114,0]) [CLSID_Barometer]);
+DEFINE_CLSID!(Barometer: "Windows.Devices.Sensors.Barometer");
 DEFINE_IID!(IID_IBarometer2, 851231768, 16107, 19716, 149, 116, 118, 51, 168, 120, 31, 159);
 RT_INTERFACE!{interface IBarometer2(IBarometer2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarometer2] {
     fn put_ReportLatency(&self, value: u32) -> HRESULT,
@@ -23685,7 +23685,7 @@ impl Compass {
         <Self as RtActivatable<ICompassStatics2>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(Compass(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,67,111,109,112,97,115,115,0]) [CLSID_Compass]);
+DEFINE_CLSID!(Compass: "Windows.Devices.Sensors.Compass");
 DEFINE_IID!(IID_ICompass2, 921857289, 51159, 17231, 180, 97, 151, 157, 223, 194, 50, 47);
 RT_INTERFACE!{interface ICompass2(ICompass2Vtbl): IInspectable(IInspectableVtbl) [IID_ICompass2] {
     #[cfg(feature="windows-graphics")] fn put_ReadingTransform(&self, value: super::super::graphics::display::DisplayOrientations) -> HRESULT,
@@ -23880,7 +23880,7 @@ impl Gyrometer {
         <Self as RtActivatable<IGyrometerStatics2>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(Gyrometer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,71,121,114,111,109,101,116,101,114,0]) [CLSID_Gyrometer]);
+DEFINE_CLSID!(Gyrometer: "Windows.Devices.Sensors.Gyrometer");
 DEFINE_IID!(IID_IGyrometer2, 1675568195, 36072, 16835, 172, 68, 134, 152, 129, 11, 85, 127);
 RT_INTERFACE!{interface IGyrometer2(IGyrometer2Vtbl): IInspectable(IInspectableVtbl) [IID_IGyrometer2] {
     #[cfg(feature="windows-graphics")] fn put_ReadingTransform(&self, value: super::super::graphics::display::DisplayOrientations) -> HRESULT,
@@ -24078,7 +24078,7 @@ impl Inclinometer {
         <Self as RtActivatable<IInclinometerStatics4>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(Inclinometer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,73,110,99,108,105,110,111,109,101,116,101,114,0]) [CLSID_Inclinometer]);
+DEFINE_CLSID!(Inclinometer: "Windows.Devices.Sensors.Inclinometer");
 DEFINE_IID!(IID_IInclinometer2, 43987859, 10418, 17912, 187, 22, 97, 232, 106, 127, 174, 110);
 RT_INTERFACE!{interface IInclinometer2(IInclinometer2Vtbl): IInspectable(IInspectableVtbl) [IID_IInclinometer2] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
@@ -24309,7 +24309,7 @@ impl LightSensor {
         <Self as RtActivatable<ILightSensorStatics2>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(LightSensor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,76,105,103,104,116,83,101,110,115,111,114,0]) [CLSID_LightSensor]);
+DEFINE_CLSID!(LightSensor: "Windows.Devices.Sensors.LightSensor");
 DEFINE_IID!(IID_ILightSensor2, 1214981352, 43340, 16528, 143, 72, 9, 247, 130, 169, 247, 213);
 RT_INTERFACE!{interface ILightSensor2(ILightSensor2Vtbl): IInspectable(IInspectableVtbl) [IID_ILightSensor2] {
     fn put_ReportLatency(&self, value: u32) -> HRESULT,
@@ -24471,7 +24471,7 @@ impl Magnetometer {
         <Self as RtActivatable<IMagnetometerStatics2>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(Magnetometer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,77,97,103,110,101,116,111,109,101,116,101,114,0]) [CLSID_Magnetometer]);
+DEFINE_CLSID!(Magnetometer: "Windows.Devices.Sensors.Magnetometer");
 DEFINE_IID!(IID_IMagnetometer2, 3026545797, 9974, 17483, 169, 226, 162, 63, 150, 108, 211, 104);
 RT_INTERFACE!{interface IMagnetometer2(IMagnetometer2Vtbl): IInspectable(IInspectableVtbl) [IID_IMagnetometer2] {
     #[cfg(feature="windows-graphics")] fn put_ReadingTransform(&self, value: super::super::graphics::display::DisplayOrientations) -> HRESULT,
@@ -24684,7 +24684,7 @@ impl OrientationSensor {
         <Self as RtActivatable<IOrientationSensorStatics4>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(OrientationSensor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,79,114,105,101,110,116,97,116,105,111,110,83,101,110,115,111,114,0]) [CLSID_OrientationSensor]);
+DEFINE_CLSID!(OrientationSensor: "Windows.Devices.Sensors.OrientationSensor");
 DEFINE_IID!(IID_IOrientationSensor2, 227691769, 12063, 18889, 128, 66, 74, 24, 19, 214, 119, 96);
 RT_INTERFACE!{interface IOrientationSensor2(IOrientationSensor2Vtbl): IInspectable(IInspectableVtbl) [IID_IOrientationSensor2] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
@@ -24936,7 +24936,7 @@ impl Pedometer {
         <Self as RtActivatable<IPedometerStatics2>>::get_activation_factory().get_readings_from_trigger_details(triggerDetails)
     }}
 }
-DEFINE_CLSID!(Pedometer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,80,101,100,111,109,101,116,101,114,0]) [CLSID_Pedometer]);
+DEFINE_CLSID!(Pedometer: "Windows.Devices.Sensors.Pedometer");
 DEFINE_IID!(IID_IPedometer2, 3852732127, 11137, 19165, 178, 255, 119, 171, 108, 152, 186, 25);
 RT_INTERFACE!{interface IPedometer2(IPedometer2Vtbl): IInspectable(IInspectableVtbl) [IID_IPedometer2] {
     fn GetCurrentReadings(&self, out: *mut *mut super::super::foundation::collections::IMapView<PedometerStepKind, PedometerReading>) -> HRESULT
@@ -24955,7 +24955,7 @@ impl PedometerDataThreshold {
         <Self as RtActivatable<IPedometerDataThresholdFactory>>::get_activation_factory().create(sensor, stepGoal)
     }}
 }
-DEFINE_CLSID!(PedometerDataThreshold(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,80,101,100,111,109,101,116,101,114,68,97,116,97,84,104,114,101,115,104,111,108,100,0]) [CLSID_PedometerDataThreshold]);
+DEFINE_CLSID!(PedometerDataThreshold: "Windows.Devices.Sensors.PedometerDataThreshold");
 DEFINE_IID!(IID_IPedometerDataThresholdFactory, 3417149264, 31316, 18027, 144, 16, 119, 161, 98, 252, 165, 215);
 RT_INTERFACE!{static interface IPedometerDataThresholdFactory(IPedometerDataThresholdFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPedometerDataThresholdFactory] {
     fn Create(&self, sensor: *mut Pedometer, stepGoal: i32, out: *mut *mut PedometerDataThreshold) -> HRESULT
@@ -25118,7 +25118,7 @@ impl ProximitySensor {
         <Self as RtActivatable<IProximitySensorStatics2>>::get_activation_factory().get_readings_from_trigger_details(triggerDetails)
     }}
 }
-DEFINE_CLSID!(ProximitySensor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,80,114,111,120,105,109,105,116,121,83,101,110,115,111,114,0]) [CLSID_ProximitySensor]);
+DEFINE_CLSID!(ProximitySensor: "Windows.Devices.Sensors.ProximitySensor");
 RT_CLASS!{class ProximitySensorDataThreshold: ISensorDataThreshold}
 impl RtActivatable<IProximitySensorDataThresholdFactory> for ProximitySensorDataThreshold {}
 impl ProximitySensorDataThreshold {
@@ -25126,7 +25126,7 @@ impl ProximitySensorDataThreshold {
         <Self as RtActivatable<IProximitySensorDataThresholdFactory>>::get_activation_factory().create(sensor)
     }}
 }
-DEFINE_CLSID!(ProximitySensorDataThreshold(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,80,114,111,120,105,109,105,116,121,83,101,110,115,111,114,68,97,116,97,84,104,114,101,115,104,111,108,100,0]) [CLSID_ProximitySensorDataThreshold]);
+DEFINE_CLSID!(ProximitySensorDataThreshold: "Windows.Devices.Sensors.ProximitySensorDataThreshold");
 DEFINE_IID!(IID_IProximitySensorDataThresholdFactory, 2421866785, 27943, 19155, 157, 181, 100, 103, 242, 165, 173, 157);
 RT_INTERFACE!{static interface IProximitySensorDataThresholdFactory(IProximitySensorDataThresholdFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IProximitySensorDataThresholdFactory] {
     fn Create(&self, sensor: *mut ProximitySensor, out: *mut *mut ProximitySensorDataThreshold) -> HRESULT
@@ -25356,7 +25356,7 @@ impl SimpleOrientationSensor {
         <Self as RtActivatable<ISimpleOrientationSensorStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(SimpleOrientationSensor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,83,105,109,112,108,101,79,114,105,101,110,116,97,116,105,111,110,83,101,110,115,111,114,0]) [CLSID_SimpleOrientationSensor]);
+DEFINE_CLSID!(SimpleOrientationSensor: "Windows.Devices.Sensors.SimpleOrientationSensor");
 DEFINE_IID!(IID_ISimpleOrientationSensor2, 2725750680, 34928, 17726, 139, 214, 184, 245, 216, 215, 148, 27);
 RT_INTERFACE!{interface ISimpleOrientationSensor2(ISimpleOrientationSensor2Vtbl): IInspectable(IInspectableVtbl) [IID_ISimpleOrientationSensor2] {
     #[cfg(feature="windows-graphics")] fn put_ReadingTransform(&self, value: super::super::graphics::display::DisplayOrientations) -> HRESULT,
@@ -25470,7 +25470,7 @@ impl CustomSensor {
         <Self as RtActivatable<ICustomSensorStatics>>::get_activation_factory().from_id_async(sensorId)
     }}
 }
-DEFINE_CLSID!(CustomSensor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,67,117,115,116,111,109,46,67,117,115,116,111,109,83,101,110,115,111,114,0]) [CLSID_CustomSensor]);
+DEFINE_CLSID!(CustomSensor: "Windows.Devices.Sensors.Custom.CustomSensor");
 DEFINE_IID!(IID_ICustomSensor2, 551235857, 60504, 19871, 191, 189, 231, 120, 37, 8, 133, 16);
 RT_INTERFACE!{interface ICustomSensor2(ICustomSensor2Vtbl): IInspectable(IInspectableVtbl) [IID_ICustomSensor2] {
     fn put_ReportLatency(&self, value: u32) -> HRESULT,
@@ -25788,7 +25788,7 @@ impl SerialDevice {
         <Self as RtActivatable<ISerialDeviceStatics>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(SerialDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,114,105,97,108,67,111,109,109,117,110,105,99,97,116,105,111,110,46,83,101,114,105,97,108,68,101,118,105,99,101,0]) [CLSID_SerialDevice]);
+DEFINE_CLSID!(SerialDevice: "Windows.Devices.SerialCommunication.SerialDevice");
 DEFINE_IID!(IID_ISerialDeviceStatics, 93080176, 2102, 18835, 174, 26, 182, 26, 227, 190, 5, 107);
 RT_INTERFACE!{static interface ISerialDeviceStatics(ISerialDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISerialDeviceStatics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
@@ -26028,7 +26028,7 @@ impl UsbConfigurationDescriptor {
         <Self as RtActivatable<IUsbConfigurationDescriptorStatics>>::get_activation_factory().parse(descriptor)
     }}
 }
-DEFINE_CLSID!(UsbConfigurationDescriptor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,67,111,110,102,105,103,117,114,97,116,105,111,110,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_UsbConfigurationDescriptor]);
+DEFINE_CLSID!(UsbConfigurationDescriptor: "Windows.Devices.Usb.UsbConfigurationDescriptor");
 DEFINE_IID!(IID_IUsbConfigurationDescriptorStatics, 1112337811, 59200, 16545, 146, 189, 218, 18, 14, 160, 73, 20);
 RT_INTERFACE!{static interface IUsbConfigurationDescriptorStatics(IUsbConfigurationDescriptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbConfigurationDescriptorStatics] {
     fn TryParse(&self, descriptor: *mut UsbDescriptor, parsed: *mut *mut UsbConfigurationDescriptor, out: *mut bool) -> HRESULT,
@@ -26100,7 +26100,7 @@ impl IUsbControlRequestType {
 }
 RT_CLASS!{class UsbControlRequestType: IUsbControlRequestType}
 impl RtActivatable<IActivationFactory> for UsbControlRequestType {}
-DEFINE_CLSID!(UsbControlRequestType(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,67,111,110,116,114,111,108,82,101,113,117,101,115,116,84,121,112,101,0]) [CLSID_UsbControlRequestType]);
+DEFINE_CLSID!(UsbControlRequestType: "Windows.Devices.Usb.UsbControlRequestType");
 RT_ENUM! { enum UsbControlTransferType: i32 {
     Standard (UsbControlTransferType_Standard) = 0, Class (UsbControlTransferType_Class) = 1, Vendor (UsbControlTransferType_Vendor) = 2,
 }}
@@ -26196,7 +26196,7 @@ impl UsbDevice {
         <Self as RtActivatable<IUsbDeviceStatics>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(UsbDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,68,101,118,105,99,101,0]) [CLSID_UsbDevice]);
+DEFINE_CLSID!(UsbDevice: "Windows.Devices.Usb.UsbDevice");
 DEFINE_IID!(IID_IUsbDeviceClass, 85541625, 33886, 18411, 177, 42, 56, 242, 246, 23, 175, 231);
 RT_INTERFACE!{interface IUsbDeviceClass(IUsbDeviceClassVtbl): IInspectable(IInspectableVtbl) [IID_IUsbDeviceClass] {
     fn get_ClassCode(&self, out: *mut u8) -> HRESULT,
@@ -26237,7 +26237,7 @@ impl IUsbDeviceClass {
 }
 RT_CLASS!{class UsbDeviceClass: IUsbDeviceClass}
 impl RtActivatable<IActivationFactory> for UsbDeviceClass {}
-DEFINE_CLSID!(UsbDeviceClass(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,68,101,118,105,99,101,67,108,97,115,115,0]) [CLSID_UsbDeviceClass]);
+DEFINE_CLSID!(UsbDeviceClass: "Windows.Devices.Usb.UsbDeviceClass");
 DEFINE_IID!(IID_IUsbDeviceClasses, 1752143197, 39826, 19248, 151, 129, 194, 44, 85, 172, 53, 203);
 RT_INTERFACE!{interface IUsbDeviceClasses(IUsbDeviceClassesVtbl): IInspectable(IInspectableVtbl) [IID_IUsbDeviceClasses] {
     
@@ -26273,7 +26273,7 @@ impl UsbDeviceClasses {
         <Self as RtActivatable<IUsbDeviceClassesStatics>>::get_activation_factory().get_vendor_specific()
     }}
 }
-DEFINE_CLSID!(UsbDeviceClasses(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,68,101,118,105,99,101,67,108,97,115,115,101,115,0]) [CLSID_UsbDeviceClasses]);
+DEFINE_CLSID!(UsbDeviceClasses: "Windows.Devices.Usb.UsbDeviceClasses");
 DEFINE_IID!(IID_IUsbDeviceClassesStatics, 2987066663, 50560, 17817, 161, 101, 152, 27, 79, 208, 50, 48);
 RT_INTERFACE!{static interface IUsbDeviceClassesStatics(IUsbDeviceClassesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbDeviceClassesStatics] {
     fn get_CdcControl(&self, out: *mut *mut UsbDeviceClass) -> HRESULT,
@@ -26467,7 +26467,7 @@ impl UsbEndpointDescriptor {
         <Self as RtActivatable<IUsbEndpointDescriptorStatics>>::get_activation_factory().parse(descriptor)
     }}
 }
-DEFINE_CLSID!(UsbEndpointDescriptor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,69,110,100,112,111,105,110,116,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_UsbEndpointDescriptor]);
+DEFINE_CLSID!(UsbEndpointDescriptor: "Windows.Devices.Usb.UsbEndpointDescriptor");
 DEFINE_IID!(IID_IUsbEndpointDescriptorStatics, 3364925953, 39530, 18782, 168, 44, 41, 91, 158, 112, 129, 6);
 RT_INTERFACE!{static interface IUsbEndpointDescriptorStatics(IUsbEndpointDescriptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbEndpointDescriptorStatics] {
     fn TryParse(&self, descriptor: *mut UsbDescriptor, parsed: *mut *mut UsbEndpointDescriptor, out: *mut bool) -> HRESULT,
@@ -26581,7 +26581,7 @@ impl UsbInterfaceDescriptor {
         <Self as RtActivatable<IUsbInterfaceDescriptorStatics>>::get_activation_factory().parse(descriptor)
     }}
 }
-DEFINE_CLSID!(UsbInterfaceDescriptor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,73,110,116,101,114,102,97,99,101,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_UsbInterfaceDescriptor]);
+DEFINE_CLSID!(UsbInterfaceDescriptor: "Windows.Devices.Usb.UsbInterfaceDescriptor");
 DEFINE_IID!(IID_IUsbInterfaceDescriptorStatics, 3813318645, 30678, 18614, 176, 190, 22, 198, 66, 35, 22, 254);
 RT_INTERFACE!{static interface IUsbInterfaceDescriptorStatics(IUsbInterfaceDescriptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbInterfaceDescriptorStatics] {
     fn TryParse(&self, descriptor: *mut UsbDescriptor, parsed: *mut *mut UsbInterfaceDescriptor, out: *mut bool) -> HRESULT,
@@ -26860,7 +26860,7 @@ impl UsbSetupPacket {
         <Self as RtActivatable<IUsbSetupPacketFactory>>::get_activation_factory().create_with_eight_byte_buffer(eightByteBuffer)
     }}
 }
-DEFINE_CLSID!(UsbSetupPacket(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,83,101,116,117,112,80,97,99,107,101,116,0]) [CLSID_UsbSetupPacket]);
+DEFINE_CLSID!(UsbSetupPacket: "Windows.Devices.Usb.UsbSetupPacket");
 DEFINE_IID!(IID_IUsbSetupPacketFactory, 3374677328, 6958, 19009, 162, 167, 51, 143, 12, 239, 60, 20);
 RT_INTERFACE!{static interface IUsbSetupPacketFactory(IUsbSetupPacketFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUsbSetupPacketFactory] {
     #[cfg(feature="windows-storage")] fn CreateWithEightByteBuffer(&self, eightByteBuffer: *mut super::super::storage::streams::IBuffer, out: *mut *mut UsbSetupPacket) -> HRESULT
@@ -26960,7 +26960,7 @@ impl WiFiAdapter {
         <Self as RtActivatable<IWiFiAdapterStatics>>::get_activation_factory().request_access_async()
     }}
 }
-DEFINE_CLSID!(WiFiAdapter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,46,87,105,70,105,65,100,97,112,116,101,114,0]) [CLSID_WiFiAdapter]);
+DEFINE_CLSID!(WiFiAdapter: "Windows.Devices.WiFi.WiFiAdapter");
 DEFINE_IID!(IID_IWiFiAdapter2, 1539592221, 33252, 17725, 148, 48, 31, 202, 251, 173, 214, 182);
 RT_INTERFACE!{interface IWiFiAdapter2(IWiFiAdapter2Vtbl): IInspectable(IInspectableVtbl) [IID_IWiFiAdapter2] {
     fn GetWpsConfigurationAsync(&self, availableNetwork: *mut WiFiAvailableNetwork, out: *mut *mut super::super::foundation::IAsyncOperation<WiFiWpsConfigurationResult>) -> HRESULT,
@@ -27251,7 +27251,7 @@ impl IWiFiDirectAdvertisementPublisher {
 }
 RT_CLASS!{class WiFiDirectAdvertisementPublisher: IWiFiDirectAdvertisementPublisher}
 impl RtActivatable<IActivationFactory> for WiFiDirectAdvertisementPublisher {}
-DEFINE_CLSID!(WiFiDirectAdvertisementPublisher(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,87,105,70,105,68,105,114,101,99,116,65,100,118,101,114,116,105,115,101,109,101,110,116,80,117,98,108,105,115,104,101,114,0]) [CLSID_WiFiDirectAdvertisementPublisher]);
+DEFINE_CLSID!(WiFiDirectAdvertisementPublisher: "Windows.Devices.WiFiDirect.WiFiDirectAdvertisementPublisher");
 RT_ENUM! { enum WiFiDirectAdvertisementPublisherStatus: i32 {
     Created (WiFiDirectAdvertisementPublisherStatus_Created) = 0, Started (WiFiDirectAdvertisementPublisherStatus_Started) = 1, Stopped (WiFiDirectAdvertisementPublisherStatus_Stopped) = 2, Aborted (WiFiDirectAdvertisementPublisherStatus_Aborted) = 3,
 }}
@@ -27294,7 +27294,7 @@ impl IWiFiDirectConnectionListener {
 }
 RT_CLASS!{class WiFiDirectConnectionListener: IWiFiDirectConnectionListener}
 impl RtActivatable<IActivationFactory> for WiFiDirectConnectionListener {}
-DEFINE_CLSID!(WiFiDirectConnectionListener(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,87,105,70,105,68,105,114,101,99,116,67,111,110,110,101,99,116,105,111,110,76,105,115,116,101,110,101,114,0]) [CLSID_WiFiDirectConnectionListener]);
+DEFINE_CLSID!(WiFiDirectConnectionListener: "Windows.Devices.WiFiDirect.WiFiDirectConnectionListener");
 DEFINE_IID!(IID_IWiFiDirectConnectionParameters, 3001373701, 22274, 19222, 160, 44, 187, 205, 33, 239, 96, 152);
 RT_INTERFACE!{interface IWiFiDirectConnectionParameters(IWiFiDirectConnectionParametersVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectConnectionParameters] {
     fn get_GroupOwnerIntent(&self, out: *mut i16) -> HRESULT,
@@ -27319,7 +27319,7 @@ impl WiFiDirectConnectionParameters {
         <Self as RtActivatable<IWiFiDirectConnectionParametersStatics>>::get_activation_factory().get_device_pairing_kinds(configurationMethod)
     }}
 }
-DEFINE_CLSID!(WiFiDirectConnectionParameters(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,87,105,70,105,68,105,114,101,99,116,67,111,110,110,101,99,116,105,111,110,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_WiFiDirectConnectionParameters]);
+DEFINE_CLSID!(WiFiDirectConnectionParameters: "Windows.Devices.WiFiDirect.WiFiDirectConnectionParameters");
 DEFINE_IID!(IID_IWiFiDirectConnectionParameters2, 2872774590, 43650, 17588, 136, 200, 227, 5, 107, 137, 128, 29);
 RT_INTERFACE!{interface IWiFiDirectConnectionParameters2(IWiFiDirectConnectionParameters2Vtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectConnectionParameters2] {
     fn get_PreferenceOrderedConfigurationMethods(&self, out: *mut *mut super::super::foundation::collections::IVector<WiFiDirectConfigurationMethod>) -> HRESULT,
@@ -27431,7 +27431,7 @@ impl WiFiDirectDevice {
         <Self as RtActivatable<IWiFiDirectDeviceStatics2>>::get_activation_factory().from_id_async(deviceId, connectionParameters)
     }}
 }
-DEFINE_CLSID!(WiFiDirectDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,87,105,70,105,68,105,114,101,99,116,68,101,118,105,99,101,0]) [CLSID_WiFiDirectDevice]);
+DEFINE_CLSID!(WiFiDirectDevice: "Windows.Devices.WiFiDirect.WiFiDirectDevice");
 RT_ENUM! { enum WiFiDirectDeviceSelectorType: i32 {
     DeviceInterface (WiFiDirectDeviceSelectorType_DeviceInterface) = 0, AssociationEndpoint (WiFiDirectDeviceSelectorType_AssociationEndpoint) = 1,
 }}
@@ -27521,7 +27521,7 @@ impl WiFiDirectInformationElement {
         <Self as RtActivatable<IWiFiDirectInformationElementStatics>>::get_activation_factory().create_from_device_information(deviceInformation)
     }}
 }
-DEFINE_CLSID!(WiFiDirectInformationElement(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,87,105,70,105,68,105,114,101,99,116,73,110,102,111,114,109,97,116,105,111,110,69,108,101,109,101,110,116,0]) [CLSID_WiFiDirectInformationElement]);
+DEFINE_CLSID!(WiFiDirectInformationElement: "Windows.Devices.WiFiDirect.WiFiDirectInformationElement");
 DEFINE_IID!(IID_IWiFiDirectInformationElementStatics, 3687853846, 4517, 20064, 140, 170, 52, 119, 33, 72, 55, 138);
 RT_INTERFACE!{static interface IWiFiDirectInformationElementStatics(IWiFiDirectInformationElementStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectInformationElementStatics] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -27674,7 +27674,7 @@ impl WiFiDirectService {
         <Self as RtActivatable<IWiFiDirectServiceStatics>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
-DEFINE_CLSID!(WiFiDirectService(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,83,101,114,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,83,101,114,118,105,99,101,0]) [CLSID_WiFiDirectService]);
+DEFINE_CLSID!(WiFiDirectService: "Windows.Devices.WiFiDirect.Services.WiFiDirectService");
 RT_ENUM! { enum WiFiDirectServiceAdvertisementStatus: i32 {
     Created (WiFiDirectServiceAdvertisementStatus_Created) = 0, Started (WiFiDirectServiceAdvertisementStatus_Started) = 1, Stopped (WiFiDirectServiceAdvertisementStatus_Stopped) = 2, Aborted (WiFiDirectServiceAdvertisementStatus_Aborted) = 3,
 }}
@@ -27845,7 +27845,7 @@ impl WiFiDirectServiceAdvertiser {
         <Self as RtActivatable<IWiFiDirectServiceAdvertiserFactory>>::get_activation_factory().create_wi_fi_direct_service_advertiser(serviceName)
     }}
 }
-DEFINE_CLSID!(WiFiDirectServiceAdvertiser(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,83,101,114,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,83,101,114,118,105,99,101,65,100,118,101,114,116,105,115,101,114,0]) [CLSID_WiFiDirectServiceAdvertiser]);
+DEFINE_CLSID!(WiFiDirectServiceAdvertiser: "Windows.Devices.WiFiDirect.Services.WiFiDirectServiceAdvertiser");
 DEFINE_IID!(IID_IWiFiDirectServiceAdvertiserFactory, 822520845, 46150, 20243, 159, 154, 138, 233, 37, 254, 186, 43);
 RT_INTERFACE!{static interface IWiFiDirectServiceAdvertiserFactory(IWiFiDirectServiceAdvertiserFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceAdvertiserFactory] {
     fn CreateWiFiDirectServiceAdvertiser(&self, serviceName: HSTRING, out: *mut *mut WiFiDirectServiceAdvertiser) -> HRESULT
@@ -28107,7 +28107,7 @@ impl ServiceDevice {
         <Self as RtActivatable<IServiceDeviceStatics>>::get_activation_factory().get_device_selector_from_service_id(serviceId)
     }}
 }
-DEFINE_CLSID!(ServiceDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,114,116,97,98,108,101,46,83,101,114,118,105,99,101,68,101,118,105,99,101,0]) [CLSID_ServiceDevice]);
+DEFINE_CLSID!(ServiceDevice: "Windows.Devices.Portable.ServiceDevice");
 DEFINE_IID!(IID_IServiceDeviceStatics, 2827097313, 22983, 18976, 171, 166, 159, 103, 7, 147, 114, 48);
 RT_INTERFACE!{static interface IServiceDeviceStatics(IServiceDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IServiceDeviceStatics] {
     fn GetDeviceSelector(&self, serviceType: ServiceDeviceType, out: *mut HSTRING) -> HRESULT,
@@ -28138,7 +28138,7 @@ impl StorageDevice {
         <Self as RtActivatable<IStorageDeviceStatics>>::get_activation_factory().get_device_selector()
     }}
 }
-DEFINE_CLSID!(StorageDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,114,116,97,98,108,101,46,83,116,111,114,97,103,101,68,101,118,105,99,101,0]) [CLSID_StorageDevice]);
+DEFINE_CLSID!(StorageDevice: "Windows.Devices.Portable.StorageDevice");
 DEFINE_IID!(IID_IStorageDeviceStatics, 1590576366, 6947, 19922, 134, 82, 188, 22, 79, 0, 49, 40);
 RT_INTERFACE!{static interface IStorageDeviceStatics(IStorageDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageDeviceStatics] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -28229,7 +28229,7 @@ impl ImageScanner {
         <Self as RtActivatable<IImageScannerStatics>>::get_activation_factory().get_device_selector()
     }}
 }
-DEFINE_CLSID!(ImageScanner(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,99,97,110,110,101,114,115,46,73,109,97,103,101,83,99,97,110,110,101,114,0]) [CLSID_ImageScanner]);
+DEFINE_CLSID!(ImageScanner: "Windows.Devices.Scanners.ImageScanner");
 RT_CLASS!{class ImageScannerAutoConfiguration: IImageScannerFormatConfiguration}
 RT_ENUM! { enum ImageScannerAutoCroppingMode: i32 {
     Disabled (ImageScannerAutoCroppingMode_Disabled) = 0, SingleRegion (ImageScannerAutoCroppingMode_SingleRegion) = 1, MultipleRegion (ImageScannerAutoCroppingMode_MultipleRegion) = 2,

@@ -17,7 +17,7 @@ impl ColorHelper {
         <Self as RtActivatable<IColorHelperStatics2>>::get_activation_factory().to_display_name(color)
     }}
 }
-DEFINE_CLSID!(ColorHelper(&[87,105,110,100,111,119,115,46,85,73,46,67,111,108,111,114,72,101,108,112,101,114,0]) [CLSID_ColorHelper]);
+DEFINE_CLSID!(ColorHelper: "Windows.UI.ColorHelper");
 DEFINE_IID!(IID_IColorHelperStatics, 2231688170, 64362, 16708, 166, 194, 51, 73, 156, 146, 132, 245);
 RT_INTERFACE!{static interface IColorHelperStatics(IColorHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IColorHelperStatics] {
     fn FromArgb(&self, a: u8, r: u8, g: u8, b: u8, out: *mut Color) -> HRESULT
@@ -471,7 +471,7 @@ impl Colors {
         <Self as RtActivatable<IColorsStatics>>::get_activation_factory().get_yellow_green()
     }}
 }
-DEFINE_CLSID!(Colors(&[87,105,110,100,111,119,115,46,85,73,46,67,111,108,111,114,115,0]) [CLSID_Colors]);
+DEFINE_CLSID!(Colors: "Windows.UI.Colors");
 DEFINE_IID!(IID_IColorsStatics, 3488951812, 52390, 17940, 161, 126, 117, 73, 16, 200, 74, 153);
 RT_INTERFACE!{static interface IColorsStatics(IColorsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IColorsStatics] {
     fn get_AliceBlue(&self, out: *mut Color) -> HRESULT,
@@ -1539,7 +1539,7 @@ impl CoreCursor {
         <Self as RtActivatable<ICoreCursorFactory>>::get_activation_factory().create_cursor(type_, id)
     }}
 }
-DEFINE_CLSID!(CoreCursor(&[87,105,110,100,111,119,115,46,85,73,46,67,111,114,101,46,67,111,114,101,67,117,114,115,111,114,0]) [CLSID_CoreCursor]);
+DEFINE_CLSID!(CoreCursor: "Windows.UI.Core.CoreCursor");
 DEFINE_IID!(IID_ICoreCursorFactory, 4130706977, 42909, 20179, 140, 50, 169, 239, 157, 107, 118, 164);
 RT_INTERFACE!{static interface ICoreCursorFactory(ICoreCursorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICoreCursorFactory] {
     fn CreateCursor(&self, type_: CoreCursorType, id: u32, out: *mut *mut CoreCursor) -> HRESULT
@@ -2215,7 +2215,7 @@ impl CoreWindow {
         <Self as RtActivatable<ICoreWindowStatic>>::get_activation_factory().get_for_current_thread()
     }}
 }
-DEFINE_CLSID!(CoreWindow(&[87,105,110,100,111,119,115,46,85,73,46,67,111,114,101,46,67,111,114,101,87,105,110,100,111,119,0]) [CLSID_CoreWindow]);
+DEFINE_CLSID!(CoreWindow: "Windows.UI.Core.CoreWindow");
 DEFINE_IID!(IID_ICoreWindow2, 2083199877, 26903, 17249, 156, 2, 13, 158, 58, 66, 11, 149);
 RT_INTERFACE!{interface ICoreWindow2(ICoreWindow2Vtbl): IInspectable(IInspectableVtbl) [IID_ICoreWindow2] {
     fn put_PointerPosition(&self, value: super::super::foundation::Point) -> HRESULT
@@ -2402,7 +2402,7 @@ impl CoreWindowDialog {
         <Self as RtActivatable<ICoreWindowDialogFactory>>::get_activation_factory().create_with_title(title)
     }}
 }
-DEFINE_CLSID!(CoreWindowDialog(&[87,105,110,100,111,119,115,46,85,73,46,67,111,114,101,46,67,111,114,101,87,105,110,100,111,119,68,105,97,108,111,103,0]) [CLSID_CoreWindowDialog]);
+DEFINE_CLSID!(CoreWindowDialog: "Windows.UI.Core.CoreWindowDialog");
 DEFINE_IID!(IID_ICoreWindowDialogFactory, 3484592213, 7257, 19219, 177, 229, 22, 226, 152, 5, 247, 196);
 RT_INTERFACE!{static interface ICoreWindowDialogFactory(ICoreWindowDialogFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICoreWindowDialogFactory] {
     fn CreateWithTitle(&self, title: HSTRING, out: *mut *mut CoreWindowDialog) -> HRESULT
@@ -2528,7 +2528,7 @@ impl CoreWindowFlyout {
         <Self as RtActivatable<ICoreWindowFlyoutFactory>>::get_activation_factory().create_with_title(position, title)
     }}
 }
-DEFINE_CLSID!(CoreWindowFlyout(&[87,105,110,100,111,119,115,46,85,73,46,67,111,114,101,46,67,111,114,101,87,105,110,100,111,119,70,108,121,111,117,116,0]) [CLSID_CoreWindowFlyout]);
+DEFINE_CLSID!(CoreWindowFlyout: "Windows.UI.Core.CoreWindowFlyout");
 DEFINE_IID!(IID_ICoreWindowFlyoutFactory, 3737437892, 37864, 20348, 190, 39, 206, 250, 161, 175, 104, 167);
 RT_INTERFACE!{static interface ICoreWindowFlyoutFactory(ICoreWindowFlyoutFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICoreWindowFlyoutFactory] {
     fn Create(&self, position: super::super::foundation::Point, out: *mut *mut CoreWindowFlyout) -> HRESULT,
@@ -2574,7 +2574,7 @@ impl CoreWindowResizeManager {
         <Self as RtActivatable<ICoreWindowResizeManagerStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(CoreWindowResizeManager(&[87,105,110,100,111,119,115,46,85,73,46,67,111,114,101,46,67,111,114,101,87,105,110,100,111,119,82,101,115,105,122,101,77,97,110,97,103,101,114,0]) [CLSID_CoreWindowResizeManager]);
+DEFINE_CLSID!(CoreWindowResizeManager: "Windows.UI.Core.CoreWindowResizeManager");
 DEFINE_IID!(IID_ICoreWindowResizeManagerLayoutCapability, 3145003643, 42308, 17153, 128, 230, 10, 224, 51, 239, 69, 54);
 RT_INTERFACE!{interface ICoreWindowResizeManagerLayoutCapability(ICoreWindowResizeManagerLayoutCapabilityVtbl): IInspectable(IInspectableVtbl) [IID_ICoreWindowResizeManagerLayoutCapability] {
     fn put_ShouldWaitForLayoutCompletion(&self, value: bool) -> HRESULT,
@@ -2745,7 +2745,7 @@ impl SystemNavigationManager {
         <Self as RtActivatable<ISystemNavigationManagerStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(SystemNavigationManager(&[87,105,110,100,111,119,115,46,85,73,46,67,111,114,101,46,83,121,115,116,101,109,78,97,118,105,103,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_SystemNavigationManager]);
+DEFINE_CLSID!(SystemNavigationManager: "Windows.UI.Core.SystemNavigationManager");
 DEFINE_IID!(IID_ISystemNavigationManager2, 2354119681, 26558, 18862, 149, 9, 103, 28, 30, 84, 163, 137);
 RT_INTERFACE!{interface ISystemNavigationManager2(ISystemNavigationManager2Vtbl): IInspectable(IInspectableVtbl) [IID_ISystemNavigationManager2] {
     fn get_AppViewBackButtonVisibility(&self, out: *mut AppViewBackButtonVisibility) -> HRESULT,
@@ -2898,7 +2898,7 @@ impl SystemNavigationManagerPreview {
         <Self as RtActivatable<ISystemNavigationManagerPreviewStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(SystemNavigationManagerPreview(&[87,105,110,100,111,119,115,46,85,73,46,67,111,114,101,46,80,114,101,118,105,101,119,46,83,121,115,116,101,109,78,97,118,105,103,97,116,105,111,110,77,97,110,97,103,101,114,80,114,101,118,105,101,119,0]) [CLSID_SystemNavigationManagerPreview]);
+DEFINE_CLSID!(SystemNavigationManagerPreview: "Windows.UI.Core.Preview.SystemNavigationManagerPreview");
 DEFINE_IID!(IID_ISystemNavigationManagerPreviewStatics, 244781920, 57204, 19406, 132, 203, 189, 17, 129, 172, 10, 113);
 RT_INTERFACE!{static interface ISystemNavigationManagerPreviewStatics(ISystemNavigationManagerPreviewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemNavigationManagerPreviewStatics] {
     fn GetForCurrentView(&self, out: *mut *mut SystemNavigationManagerPreview) -> HRESULT
@@ -2955,7 +2955,7 @@ impl AnimationDescription {
         <Self as RtActivatable<IAnimationDescriptionFactory>>::get_activation_factory().create_instance(effect, target)
     }}
 }
-DEFINE_CLSID!(AnimationDescription(&[87,105,110,100,111,119,115,46,85,73,46,67,111,114,101,46,65,110,105,109,97,116,105,111,110,77,101,116,114,105,99,115,46,65,110,105,109,97,116,105,111,110,68,101,115,99,114,105,112,116,105,111,110,0]) [CLSID_AnimationDescription]);
+DEFINE_CLSID!(AnimationDescription: "Windows.UI.Core.AnimationMetrics.AnimationDescription");
 DEFINE_IID!(IID_IAnimationDescriptionFactory, 3336731326, 49659, 18613, 146, 113, 236, 199, 10, 200, 110, 240);
 RT_INTERFACE!{static interface IAnimationDescriptionFactory(IAnimationDescriptionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAnimationDescriptionFactory] {
     fn CreateInstance(&self, effect: AnimationEffect, target: AnimationEffectTarget, out: *mut *mut AnimationDescription) -> HRESULT
@@ -3175,7 +3175,7 @@ impl EdgeGesture {
         <Self as RtActivatable<IEdgeGestureStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(EdgeGesture(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,69,100,103,101,71,101,115,116,117,114,101,0]) [CLSID_EdgeGesture]);
+DEFINE_CLSID!(EdgeGesture: "Windows.UI.Input.EdgeGesture");
 DEFINE_IID!(IID_IEdgeGestureEventArgs, 1157253668, 11529, 17121, 139, 94, 54, 130, 8, 121, 106, 76);
 RT_INTERFACE!{interface IEdgeGestureEventArgs(IEdgeGestureEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEdgeGestureEventArgs] {
     fn get_Kind(&self, out: *mut EdgeGestureKind) -> HRESULT
@@ -3527,7 +3527,7 @@ impl IGestureRecognizer {
 }
 RT_CLASS!{class GestureRecognizer: IGestureRecognizer}
 impl RtActivatable<IActivationFactory> for GestureRecognizer {}
-DEFINE_CLSID!(GestureRecognizer(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,71,101,115,116,117,114,101,82,101,99,111,103,110,105,122,101,114,0]) [CLSID_GestureRecognizer]);
+DEFINE_CLSID!(GestureRecognizer: "Windows.UI.Input.GestureRecognizer");
 RT_ENUM! { enum GestureSettings: u32 {
     None (GestureSettings_None) = 0, Tap (GestureSettings_Tap) = 1, DoubleTap (GestureSettings_DoubleTap) = 2, Hold (GestureSettings_Hold) = 4, HoldWithMouse (GestureSettings_HoldWithMouse) = 8, RightTap (GestureSettings_RightTap) = 16, Drag (GestureSettings_Drag) = 32, ManipulationTranslateX (GestureSettings_ManipulationTranslateX) = 64, ManipulationTranslateY (GestureSettings_ManipulationTranslateY) = 128, ManipulationTranslateRailsX (GestureSettings_ManipulationTranslateRailsX) = 256, ManipulationTranslateRailsY (GestureSettings_ManipulationTranslateRailsY) = 512, ManipulationRotate (GestureSettings_ManipulationRotate) = 1024, ManipulationScale (GestureSettings_ManipulationScale) = 2048, ManipulationTranslateInertia (GestureSettings_ManipulationTranslateInertia) = 4096, ManipulationRotateInertia (GestureSettings_ManipulationRotateInertia) = 8192, ManipulationScaleInertia (GestureSettings_ManipulationScaleInertia) = 16384, CrossSlide (GestureSettings_CrossSlide) = 32768, ManipulationMultipleFingerPanning (GestureSettings_ManipulationMultipleFingerPanning) = 65536,
 }}
@@ -3604,7 +3604,7 @@ impl KeyboardDeliveryInterceptor {
         <Self as RtActivatable<IKeyboardDeliveryInterceptorStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(KeyboardDeliveryInterceptor(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,75,101,121,98,111,97,114,100,68,101,108,105,118,101,114,121,73,110,116,101,114,99,101,112,116,111,114,0]) [CLSID_KeyboardDeliveryInterceptor]);
+DEFINE_CLSID!(KeyboardDeliveryInterceptor: "Windows.UI.Input.KeyboardDeliveryInterceptor");
 DEFINE_IID!(IID_IKeyboardDeliveryInterceptorStatics, 4193663906, 52922, 18261, 138, 126, 20, 192, 255, 236, 210, 57);
 RT_INTERFACE!{static interface IKeyboardDeliveryInterceptorStatics(IKeyboardDeliveryInterceptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyboardDeliveryInterceptorStatics] {
     fn GetForCurrentView(&self, out: *mut *mut KeyboardDeliveryInterceptor) -> HRESULT
@@ -3872,7 +3872,7 @@ impl PointerPoint {
         <Self as RtActivatable<IPointerPointStatics>>::get_activation_factory().get_intermediate_points_transformed(pointerId, transform)
     }}
 }
-DEFINE_CLSID!(PointerPoint(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,111,105,110,116,101,114,80,111,105,110,116,0]) [CLSID_PointerPoint]);
+DEFINE_CLSID!(PointerPoint: "Windows.UI.Input.PointerPoint");
 DEFINE_IID!(IID_IPointerPointProperties, 3348990539, 49507, 20199, 128, 63, 103, 206, 121, 249, 151, 45);
 RT_INTERFACE!{interface IPointerPointProperties(IPointerPointPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IPointerPointProperties] {
     fn get_Pressure(&self, out: *mut f32) -> HRESULT,
@@ -4123,7 +4123,7 @@ impl PointerVisualizationSettings {
         <Self as RtActivatable<IPointerVisualizationSettingsStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(PointerVisualizationSettings(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,111,105,110,116,101,114,86,105,115,117,97,108,105,122,97,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_PointerVisualizationSettings]);
+DEFINE_CLSID!(PointerVisualizationSettings: "Windows.UI.Input.PointerVisualizationSettings");
 DEFINE_IID!(IID_IPointerVisualizationSettingsStatics, 1753681627, 5723, 16916, 180, 243, 88, 78, 202, 140, 138, 105);
 RT_INTERFACE!{static interface IPointerVisualizationSettingsStatics(IPointerVisualizationSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPointerVisualizationSettingsStatics] {
     fn GetForCurrentView(&self, out: *mut *mut PointerVisualizationSettings) -> HRESULT
@@ -4255,7 +4255,7 @@ impl RadialController {
         <Self as RtActivatable<IRadialControllerStatics>>::get_activation_factory().create_for_current_view()
     }}
 }
-DEFINE_CLSID!(RadialController(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,82,97,100,105,97,108,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_RadialController]);
+DEFINE_CLSID!(RadialController: "Windows.UI.Input.RadialController");
 DEFINE_IID!(IID_IRadialController2, 1029144319, 19694, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{interface IRadialController2(IRadialController2Vtbl): IInspectable(IInspectableVtbl) [IID_IRadialController2] {
     fn add_ButtonPressed(&self, handler: *mut super::super::foundation::TypedEventHandler<RadialController, RadialControllerButtonPressedEventArgs>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
@@ -4412,7 +4412,7 @@ impl RadialControllerConfiguration {
         <Self as RtActivatable<IRadialControllerConfigurationStatics2>>::get_activation_factory().get_is_app_controller_enabled()
     }}
 }
-DEFINE_CLSID!(RadialControllerConfiguration(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,82,97,100,105,97,108,67,111,110,116,114,111,108,108,101,114,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_RadialControllerConfiguration]);
+DEFINE_CLSID!(RadialControllerConfiguration: "Windows.UI.Input.RadialControllerConfiguration");
 DEFINE_IID!(IID_IRadialControllerConfiguration2, 1029144311, 15598, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{interface IRadialControllerConfiguration2(IRadialControllerConfiguration2Vtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerConfiguration2] {
     fn put_ActiveControllerWhenMenuIsSuppressed(&self, value: *mut RadialController) -> HRESULT,
@@ -4597,7 +4597,7 @@ impl RadialControllerMenuItem {
         <Self as RtActivatable<IRadialControllerMenuItemStatics2>>::get_activation_factory().create_from_font_glyph_with_uri(displayText, glyph, fontFamily, fontUri)
     }}
 }
-DEFINE_CLSID!(RadialControllerMenuItem(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,82,97,100,105,97,108,67,111,110,116,114,111,108,108,101,114,77,101,110,117,73,116,101,109,0]) [CLSID_RadialControllerMenuItem]);
+DEFINE_CLSID!(RadialControllerMenuItem: "Windows.UI.Input.RadialControllerMenuItem");
 DEFINE_IID!(IID_IRadialControllerMenuItemStatics, 614336647, 55362, 17700, 157, 248, 224, 214, 71, 237, 200, 135);
 RT_INTERFACE!{static interface IRadialControllerMenuItemStatics(IRadialControllerMenuItemStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerMenuItemStatics] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -4927,7 +4927,7 @@ impl InjectedInputGamepadInfo {
         <Self as RtActivatable<IInjectedInputGamepadInfoFactory>>::get_activation_factory().create_instance_from_gamepad_reading(reading)
     }}
 }
-DEFINE_CLSID!(InjectedInputGamepadInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,71,97,109,101,112,97,100,73,110,102,111,0]) [CLSID_InjectedInputGamepadInfo]);
+DEFINE_CLSID!(InjectedInputGamepadInfo: "Windows.UI.Input.Preview.Injection.InjectedInputGamepadInfo");
 DEFINE_IID!(IID_IInjectedInputGamepadInfoFactory, 1499031670, 27705, 20164, 139, 42, 41, 239, 125, 225, 138, 202);
 RT_INTERFACE!{static interface IInjectedInputGamepadInfoFactory(IInjectedInputGamepadInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IInjectedInputGamepadInfoFactory] {
     #[cfg(feature="windows-gaming")] fn CreateInstanceFromGamepadReading(&self, reading: ::rt::gen::windows::gaming::input::GamepadReading, out: *mut *mut InjectedInputGamepadInfo) -> HRESULT
@@ -4979,7 +4979,7 @@ impl IInjectedInputKeyboardInfo {
 }
 RT_CLASS!{class InjectedInputKeyboardInfo: IInjectedInputKeyboardInfo}
 impl RtActivatable<IActivationFactory> for InjectedInputKeyboardInfo {}
-DEFINE_CLSID!(InjectedInputKeyboardInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,75,101,121,98,111,97,114,100,73,110,102,111,0]) [CLSID_InjectedInputKeyboardInfo]);
+DEFINE_CLSID!(InjectedInputKeyboardInfo: "Windows.UI.Input.Preview.Injection.InjectedInputKeyboardInfo");
 RT_ENUM! { enum InjectedInputKeyOptions: u32 {
     None (InjectedInputKeyOptions_None) = 0, ExtendedKey (InjectedInputKeyOptions_ExtendedKey) = 1, KeyUp (InjectedInputKeyOptions_KeyUp) = 2, ScanCode (InjectedInputKeyOptions_ScanCode) = 8, Unicode (InjectedInputKeyOptions_Unicode) = 4,
 }}
@@ -5045,7 +5045,7 @@ impl IInjectedInputMouseInfo {
 }
 RT_CLASS!{class InjectedInputMouseInfo: IInjectedInputMouseInfo}
 impl RtActivatable<IActivationFactory> for InjectedInputMouseInfo {}
-DEFINE_CLSID!(InjectedInputMouseInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,77,111,117,115,101,73,110,102,111,0]) [CLSID_InjectedInputMouseInfo]);
+DEFINE_CLSID!(InjectedInputMouseInfo: "Windows.UI.Input.Preview.Injection.InjectedInputMouseInfo");
 RT_ENUM! { enum InjectedInputMouseOptions: u32 {
     None (InjectedInputMouseOptions_None) = 0, Move (InjectedInputMouseOptions_Move) = 1, LeftDown (InjectedInputMouseOptions_LeftDown) = 2, LeftUp (InjectedInputMouseOptions_LeftUp) = 4, RightDown (InjectedInputMouseOptions_RightDown) = 8, RightUp (InjectedInputMouseOptions_RightUp) = 16, MiddleDown (InjectedInputMouseOptions_MiddleDown) = 32, MiddleUp (InjectedInputMouseOptions_MiddleUp) = 64, XDown (InjectedInputMouseOptions_XDown) = 128, XUp (InjectedInputMouseOptions_XUp) = 256, Wheel (InjectedInputMouseOptions_Wheel) = 2048, HWheel (InjectedInputMouseOptions_HWheel) = 4096, MoveNoCoalesce (InjectedInputMouseOptions_MoveNoCoalesce) = 8192, VirtualDesk (InjectedInputMouseOptions_VirtualDesk) = 16384, Absolute (InjectedInputMouseOptions_Absolute) = 32768,
 }}
@@ -5136,7 +5136,7 @@ impl IInjectedInputPenInfo {
 }
 RT_CLASS!{class InjectedInputPenInfo: IInjectedInputPenInfo}
 impl RtActivatable<IActivationFactory> for InjectedInputPenInfo {}
-DEFINE_CLSID!(InjectedInputPenInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,80,101,110,73,110,102,111,0]) [CLSID_InjectedInputPenInfo]);
+DEFINE_CLSID!(InjectedInputPenInfo: "Windows.UI.Input.Preview.Injection.InjectedInputPenInfo");
 RT_ENUM! { enum InjectedInputPenParameters: u32 {
     None (InjectedInputPenParameters_None) = 0, Pressure (InjectedInputPenParameters_Pressure) = 1, Rotation (InjectedInputPenParameters_Rotation) = 2, TiltX (InjectedInputPenParameters_TiltX) = 4, TiltY (InjectedInputPenParameters_TiltY) = 8,
 }}
@@ -5217,7 +5217,7 @@ impl IInjectedInputTouchInfo {
 }
 RT_CLASS!{class InjectedInputTouchInfo: IInjectedInputTouchInfo}
 impl RtActivatable<IActivationFactory> for InjectedInputTouchInfo {}
-DEFINE_CLSID!(InjectedInputTouchInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,84,111,117,99,104,73,110,102,111,0]) [CLSID_InjectedInputTouchInfo]);
+DEFINE_CLSID!(InjectedInputTouchInfo: "Windows.UI.Input.Preview.Injection.InjectedInputTouchInfo");
 RT_ENUM! { enum InjectedInputTouchParameters: u32 {
     None (InjectedInputTouchParameters_None) = 0, Contact (InjectedInputTouchParameters_Contact) = 1, Orientation (InjectedInputTouchParameters_Orientation) = 2, Pressure (InjectedInputTouchParameters_Pressure) = 4,
 }}
@@ -5285,7 +5285,7 @@ impl InputInjector {
         <Self as RtActivatable<IInputInjectorStatics2>>::get_activation_factory().try_create_for_app_broadcast_only()
     }}
 }
-DEFINE_CLSID!(InputInjector(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,112,117,116,73,110,106,101,99,116,111,114,0]) [CLSID_InputInjector]);
+DEFINE_CLSID!(InputInjector: "Windows.UI.Input.Preview.Injection.InputInjector");
 DEFINE_IID!(IID_IInputInjector2, 2390397021, 5203, 17319, 155, 203, 6, 214, 215, 179, 5, 247);
 RT_INTERFACE!{interface IInputInjector2(IInputInjector2Vtbl): IInspectable(IInspectableVtbl) [IID_IInputInjector2] {
     fn InitializeGamepadInjection(&self) -> HRESULT,
@@ -5520,7 +5520,7 @@ impl SpatialGestureRecognizer {
         <Self as RtActivatable<ISpatialGestureRecognizerFactory>>::get_activation_factory().create(settings)
     }}
 }
-DEFINE_CLSID!(SpatialGestureRecognizer(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,71,101,115,116,117,114,101,82,101,99,111,103,110,105,122,101,114,0]) [CLSID_SpatialGestureRecognizer]);
+DEFINE_CLSID!(SpatialGestureRecognizer: "Windows.UI.Input.Spatial.SpatialGestureRecognizer");
 DEFINE_IID!(IID_ISpatialGestureRecognizerFactory, 1998668166, 22457, 12624, 131, 130, 105, 139, 36, 226, 100, 208);
 RT_INTERFACE!{static interface ISpatialGestureRecognizerFactory(ISpatialGestureRecognizerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialGestureRecognizerFactory] {
     fn Create(&self, settings: SpatialGestureSettings, out: *mut *mut SpatialGestureRecognizer) -> HRESULT
@@ -5811,7 +5811,7 @@ impl SpatialInteractionManager {
         <Self as RtActivatable<ISpatialInteractionManagerStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(SpatialInteractionManager(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,73,110,116,101,114,97,99,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_SpatialInteractionManager]);
+DEFINE_CLSID!(SpatialInteractionManager: "Windows.UI.Input.Spatial.SpatialInteractionManager");
 DEFINE_IID!(IID_ISpatialInteractionManagerStatics, 14884774, 36002, 12479, 145, 254, 217, 203, 74, 0, 137, 144);
 RT_INTERFACE!{static interface ISpatialInteractionManagerStatics(ISpatialInteractionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionManagerStatics] {
     fn GetForCurrentView(&self, out: *mut *mut SpatialInteractionManager) -> HRESULT
@@ -6297,7 +6297,7 @@ impl SpatialPointerPose {
         <Self as RtActivatable<ISpatialPointerPoseStatics>>::get_activation_factory().try_get_at_timestamp(coordinateSystem, timestamp)
     }}
 }
-DEFINE_CLSID!(SpatialPointerPose(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,80,111,105,110,116,101,114,80,111,115,101,0]) [CLSID_SpatialPointerPose]);
+DEFINE_CLSID!(SpatialPointerPose: "Windows.UI.Input.Spatial.SpatialPointerPose");
 DEFINE_IID!(IID_ISpatialPointerPose2, 2636131095, 38222, 19980, 150, 209, 182, 121, 11, 111, 194, 253);
 RT_INTERFACE!{interface ISpatialPointerPose2(ISpatialPointerPose2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialPointerPose2] {
     fn TryGetInteractionSourcePose(&self, source: *mut SpatialInteractionSource, out: *mut *mut SpatialPointerInteractionSourcePose) -> HRESULT
@@ -6409,7 +6409,7 @@ impl RadialControllerIndependentInputSource {
         <Self as RtActivatable<IRadialControllerIndependentInputSourceStatics>>::get_activation_factory().create_for_view(view)
     }}
 }
-DEFINE_CLSID!(RadialControllerIndependentInputSource(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,67,111,114,101,46,82,97,100,105,97,108,67,111,110,116,114,111,108,108,101,114,73,110,100,101,112,101,110,100,101,110,116,73,110,112,117,116,83,111,117,114,99,101,0]) [CLSID_RadialControllerIndependentInputSource]);
+DEFINE_CLSID!(RadialControllerIndependentInputSource: "Windows.UI.Input.Core.RadialControllerIndependentInputSource");
 DEFINE_IID!(IID_IRadialControllerIndependentInputSourceStatics, 1029144309, 19694, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{static interface IRadialControllerIndependentInputSourceStatics(IRadialControllerIndependentInputSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerIndependentInputSourceStatics] {
     #[cfg(feature="windows-applicationmodel")] fn CreateForView(&self, view: *mut ::rt::gen::windows::applicationmodel::core::CoreApplicationView, out: *mut *mut RadialControllerIndependentInputSource) -> HRESULT
@@ -6492,7 +6492,7 @@ impl InkDrawingAttributes {
         <Self as RtActivatable<IInkDrawingAttributesStatics>>::get_activation_factory().create_for_pencil()
     }}
 }
-DEFINE_CLSID!(InkDrawingAttributes(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,73,110,107,68,114,97,119,105,110,103,65,116,116,114,105,98,117,116,101,115,0]) [CLSID_InkDrawingAttributes]);
+DEFINE_CLSID!(InkDrawingAttributes: "Windows.UI.Input.Inking.InkDrawingAttributes");
 DEFINE_IID!(IID_IInkDrawingAttributes2, 2091607304, 36548, 17149, 165, 165, 228, 183, 209, 213, 49, 109);
 RT_INTERFACE!{interface IInkDrawingAttributes2(IInkDrawingAttributes2Vtbl): IInspectable(IInspectableVtbl) [IID_IInkDrawingAttributes2] {
     fn get_PenTipTransform(&self, out: *mut ::rt::gen::windows::foundation::numerics::Matrix3x2) -> HRESULT,
@@ -6667,7 +6667,7 @@ impl IInkManager {
 }
 RT_CLASS!{class InkManager: IInkManager}
 impl RtActivatable<IActivationFactory> for InkManager {}
-DEFINE_CLSID!(InkManager(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,73,110,107,77,97,110,97,103,101,114,0]) [CLSID_InkManager]);
+DEFINE_CLSID!(InkManager: "Windows.UI.Input.Inking.InkManager");
 RT_ENUM! { enum InkManipulationMode: i32 {
     Inking (InkManipulationMode_Inking) = 0, Erasing (InkManipulationMode_Erasing) = 1, Selecting (InkManipulationMode_Selecting) = 2,
 }}
@@ -6702,7 +6702,7 @@ impl InkPoint {
         <Self as RtActivatable<IInkPointFactory2>>::get_activation_factory().create_ink_point_with_tilt_and_timestamp(position, pressure, tiltX, tiltY, timestamp)
     }}
 }
-DEFINE_CLSID!(InkPoint(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,73,110,107,80,111,105,110,116,0]) [CLSID_InkPoint]);
+DEFINE_CLSID!(InkPoint: "Windows.UI.Input.Inking.InkPoint");
 DEFINE_IID!(IID_IInkPoint2, 4222206967, 44630, 19804, 189, 47, 10, 196, 95, 94, 74, 249);
 RT_INTERFACE!{interface IInkPoint2(IInkPoint2Vtbl): IInspectable(IInspectableVtbl) [IID_IInkPoint2] {
     fn get_TiltX(&self, out: *mut f32) -> HRESULT,
@@ -6957,7 +6957,7 @@ impl InkPresenterProtractor {
         <Self as RtActivatable<IInkPresenterProtractorFactory>>::get_activation_factory().create(inkPresenter)
     }}
 }
-DEFINE_CLSID!(InkPresenterProtractor(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,73,110,107,80,114,101,115,101,110,116,101,114,80,114,111,116,114,97,99,116,111,114,0]) [CLSID_InkPresenterProtractor]);
+DEFINE_CLSID!(InkPresenterProtractor: "Windows.UI.Input.Inking.InkPresenterProtractor");
 DEFINE_IID!(IID_IInkPresenterProtractorFactory, 838927305, 26874, 18409, 129, 39, 131, 112, 113, 31, 196, 108);
 RT_INTERFACE!{static interface IInkPresenterProtractorFactory(IInkPresenterProtractorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IInkPresenterProtractorFactory] {
     fn Create(&self, inkPresenter: *mut InkPresenter, out: *mut *mut InkPresenterProtractor) -> HRESULT
@@ -7003,7 +7003,7 @@ impl InkPresenterRuler {
         <Self as RtActivatable<IInkPresenterRulerFactory>>::get_activation_factory().create(inkPresenter)
     }}
 }
-DEFINE_CLSID!(InkPresenterRuler(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,73,110,107,80,114,101,115,101,110,116,101,114,82,117,108,101,114,0]) [CLSID_InkPresenterRuler]);
+DEFINE_CLSID!(InkPresenterRuler: "Windows.UI.Input.Inking.InkPresenterRuler");
 DEFINE_IID!(IID_IInkPresenterRuler2, 1158876609, 48225, 17620, 164, 35, 84, 113, 42, 230, 113, 196);
 RT_INTERFACE!{interface IInkPresenterRuler2(IInkPresenterRuler2Vtbl): IInspectable(IInspectableVtbl) [IID_IInkPresenterRuler2] {
     fn get_AreTickMarksVisible(&self, out: *mut bool) -> HRESULT,
@@ -7163,7 +7163,7 @@ impl IInkRecognizerContainer {
 }
 RT_CLASS!{class InkRecognizerContainer: IInkRecognizerContainer}
 impl RtActivatable<IActivationFactory> for InkRecognizerContainer {}
-DEFINE_CLSID!(InkRecognizerContainer(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,73,110,107,82,101,99,111,103,110,105,122,101,114,67,111,110,116,97,105,110,101,114,0]) [CLSID_InkRecognizerContainer]);
+DEFINE_CLSID!(InkRecognizerContainer: "Windows.UI.Input.Inking.InkRecognizerContainer");
 DEFINE_IID!(IID_IInkStroke, 353652064, 52451, 20431, 157, 82, 17, 81, 138, 182, 175, 212);
 RT_INTERFACE!{interface IInkStroke(IInkStrokeVtbl): IInspectable(IInspectableVtbl) [IID_IInkStroke] {
     fn get_DrawingAttributes(&self, out: *mut *mut InkDrawingAttributes) -> HRESULT,
@@ -7306,7 +7306,7 @@ impl IInkStrokeBuilder {
 }
 RT_CLASS!{class InkStrokeBuilder: IInkStrokeBuilder}
 impl RtActivatable<IActivationFactory> for InkStrokeBuilder {}
-DEFINE_CLSID!(InkStrokeBuilder(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,73,110,107,83,116,114,111,107,101,66,117,105,108,100,101,114,0]) [CLSID_InkStrokeBuilder]);
+DEFINE_CLSID!(InkStrokeBuilder: "Windows.UI.Input.Inking.InkStrokeBuilder");
 DEFINE_IID!(IID_IInkStrokeBuilder2, 3179461671, 29471, 19644, 187, 191, 109, 70, 128, 68, 241, 229);
 RT_INTERFACE!{interface IInkStrokeBuilder2(IInkStrokeBuilder2Vtbl): IInspectable(IInspectableVtbl) [IID_IInkStrokeBuilder2] {
     fn CreateStrokeFromInkPoints(&self, inkPoints: *mut ::rt::gen::windows::foundation::collections::IIterable<InkPoint>, transform: ::rt::gen::windows::foundation::numerics::Matrix3x2, out: *mut *mut InkStroke) -> HRESULT
@@ -7419,7 +7419,7 @@ impl IInkStrokeContainer {
 }
 RT_CLASS!{class InkStrokeContainer: IInkStrokeContainer}
 impl RtActivatable<IActivationFactory> for InkStrokeContainer {}
-DEFINE_CLSID!(InkStrokeContainer(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,73,110,107,83,116,114,111,107,101,67,111,110,116,97,105,110,101,114,0]) [CLSID_InkStrokeContainer]);
+DEFINE_CLSID!(InkStrokeContainer: "Windows.UI.Input.Inking.InkStrokeContainer");
 DEFINE_IID!(IID_IInkStrokeContainer2, 2298598244, 55862, 19407, 158, 92, 209, 149, 130, 89, 149, 180);
 RT_INTERFACE!{interface IInkStrokeContainer2(IInkStrokeContainer2Vtbl): IInspectable(IInspectableVtbl) [IID_IInkStrokeContainer2] {
     fn AddStrokes(&self, strokes: *mut ::rt::gen::windows::foundation::collections::IIterable<InkStroke>) -> HRESULT,
@@ -7950,7 +7950,7 @@ impl IInkAnalyzer {
 }
 RT_CLASS!{class InkAnalyzer: IInkAnalyzer}
 impl RtActivatable<IActivationFactory> for InkAnalyzer {}
-DEFINE_CLSID!(InkAnalyzer(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,65,110,97,108,121,115,105,115,46,73,110,107,65,110,97,108,121,122,101,114,0]) [CLSID_InkAnalyzer]);
+DEFINE_CLSID!(InkAnalyzer: "Windows.UI.Input.Inking.Analysis.InkAnalyzer");
 DEFINE_IID!(IID_IInkAnalyzerFactory, 689145478, 6499, 18904, 149, 137, 225, 67, 132, 199, 105, 227);
 RT_INTERFACE!{interface IInkAnalyzerFactory(IInkAnalyzerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IInkAnalyzerFactory] {
     fn CreateAnalyzer(&self, out: *mut *mut InkAnalyzer) -> HRESULT
@@ -8007,7 +8007,7 @@ impl CoreIncrementalInkStroke {
         <Self as RtActivatable<ICoreIncrementalInkStrokeFactory>>::get_activation_factory().create(drawingAttributes, pointTransform)
     }}
 }
-DEFINE_CLSID!(CoreIncrementalInkStroke(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,67,111,114,101,46,67,111,114,101,73,110,99,114,101,109,101,110,116,97,108,73,110,107,83,116,114,111,107,101,0]) [CLSID_CoreIncrementalInkStroke]);
+DEFINE_CLSID!(CoreIncrementalInkStroke: "Windows.UI.Input.Inking.Core.CoreIncrementalInkStroke");
 DEFINE_IID!(IID_ICoreIncrementalInkStrokeFactory, 3620052806, 36264, 20336, 151, 81, 229, 59, 182, 223, 69, 150);
 RT_INTERFACE!{static interface ICoreIncrementalInkStrokeFactory(ICoreIncrementalInkStrokeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICoreIncrementalInkStrokeFactory] {
     fn Create(&self, drawingAttributes: *mut super::InkDrawingAttributes, pointTransform: ::rt::gen::windows::foundation::numerics::Matrix3x2, out: *mut *mut CoreIncrementalInkStroke) -> HRESULT
@@ -8114,7 +8114,7 @@ impl CoreInkIndependentInputSource {
         <Self as RtActivatable<ICoreInkIndependentInputSourceStatics>>::get_activation_factory().create(inkPresenter)
     }}
 }
-DEFINE_CLSID!(CoreInkIndependentInputSource(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,67,111,114,101,46,67,111,114,101,73,110,107,73,110,100,101,112,101,110,100,101,110,116,73,110,112,117,116,83,111,117,114,99,101,0]) [CLSID_CoreInkIndependentInputSource]);
+DEFINE_CLSID!(CoreInkIndependentInputSource: "Windows.UI.Input.Inking.Core.CoreInkIndependentInputSource");
 DEFINE_IID!(IID_ICoreInkIndependentInputSourceStatics, 1944453403, 32960, 19963, 155, 102, 16, 186, 127, 63, 156, 132);
 RT_INTERFACE!{static interface ICoreInkIndependentInputSourceStatics(ICoreInkIndependentInputSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreInkIndependentInputSourceStatics] {
     fn Create(&self, inkPresenter: *mut super::InkPresenter, out: *mut *mut CoreInkIndependentInputSource) -> HRESULT
@@ -8150,7 +8150,7 @@ impl ICoreInkPresenterHost {
 }
 RT_CLASS!{class CoreInkPresenterHost: ICoreInkPresenterHost}
 impl RtActivatable<IActivationFactory> for CoreInkPresenterHost {}
-DEFINE_CLSID!(CoreInkPresenterHost(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,67,111,114,101,46,67,111,114,101,73,110,107,80,114,101,115,101,110,116,101,114,72,111,115,116,0]) [CLSID_CoreInkPresenterHost]);
+DEFINE_CLSID!(CoreInkPresenterHost: "Windows.UI.Input.Inking.Core.CoreInkPresenterHost");
 RT_ENUM! { enum CoreWetStrokeDisposition: i32 {
     Inking (CoreWetStrokeDisposition_Inking) = 0, Completed (CoreWetStrokeDisposition_Completed) = 1, Canceled (CoreWetStrokeDisposition_Canceled) = 2,
 }}
@@ -8256,7 +8256,7 @@ impl CoreWetStrokeUpdateSource {
         <Self as RtActivatable<ICoreWetStrokeUpdateSourceStatics>>::get_activation_factory().create(inkPresenter)
     }}
 }
-DEFINE_CLSID!(CoreWetStrokeUpdateSource(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,67,111,114,101,46,67,111,114,101,87,101,116,83,116,114,111,107,101,85,112,100,97,116,101,83,111,117,114,99,101,0]) [CLSID_CoreWetStrokeUpdateSource]);
+DEFINE_CLSID!(CoreWetStrokeUpdateSource: "Windows.UI.Input.Inking.Core.CoreWetStrokeUpdateSource");
 DEFINE_IID!(IID_ICoreWetStrokeUpdateSourceStatics, 1034788026, 7485, 18094, 171, 157, 134, 71, 72, 108, 111, 144);
 RT_INTERFACE!{static interface ICoreWetStrokeUpdateSourceStatics(ICoreWetStrokeUpdateSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreWetStrokeUpdateSourceStatics] {
     fn Create(&self, inkPresenter: *mut super::InkPresenter, out: *mut *mut CoreWetStrokeUpdateSource) -> HRESULT
@@ -8329,7 +8329,7 @@ impl FontWeights {
         <Self as RtActivatable<IFontWeightsStatics>>::get_activation_factory().get_thin()
     }}
 }
-DEFINE_CLSID!(FontWeights(&[87,105,110,100,111,119,115,46,85,73,46,84,101,120,116,46,70,111,110,116,87,101,105,103,104,116,115,0]) [CLSID_FontWeights]);
+DEFINE_CLSID!(FontWeights: "Windows.UI.Text.FontWeights");
 DEFINE_IID!(IID_IFontWeightsStatics, 3015014869, 7081, 18667, 157, 173, 192, 149, 232, 194, 59, 163);
 RT_INTERFACE!{static interface IFontWeightsStatics(IFontWeightsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFontWeightsStatics] {
     fn get_Black(&self, out: *mut FontWeight) -> HRESULT,
@@ -8759,7 +8759,7 @@ impl TextConstants {
         <Self as RtActivatable<ITextConstantsStatics>>::get_activation_factory().get_undefined_font_style()
     }}
 }
-DEFINE_CLSID!(TextConstants(&[87,105,110,100,111,119,115,46,85,73,46,84,101,120,116,46,84,101,120,116,67,111,110,115,116,97,110,116,115,0]) [CLSID_TextConstants]);
+DEFINE_CLSID!(TextConstants: "Windows.UI.Text.TextConstants");
 DEFINE_IID!(IID_ITextConstantsStatics, 2006875187, 6301, 19450, 151, 200, 16, 219, 19, 93, 151, 110);
 RT_INTERFACE!{static interface ITextConstantsStatics(ITextConstantsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITextConstantsStatics] {
     fn get_AutoColor(&self, out: *mut super::Color) -> HRESULT,
@@ -10136,7 +10136,7 @@ impl CoreTextServicesConstants {
         <Self as RtActivatable<ICoreTextServicesStatics>>::get_activation_factory().get_hidden_character()
     }}
 }
-DEFINE_CLSID!(CoreTextServicesConstants(&[87,105,110,100,111,119,115,46,85,73,46,84,101,120,116,46,67,111,114,101,46,67,111,114,101,84,101,120,116,83,101,114,118,105,99,101,115,67,111,110,115,116,97,110,116,115,0]) [CLSID_CoreTextServicesConstants]);
+DEFINE_CLSID!(CoreTextServicesConstants: "Windows.UI.Text.Core.CoreTextServicesConstants");
 DEFINE_IID!(IID_ICoreTextServicesManager, 3260054915, 28170, 19082, 189, 248, 25, 72, 135, 72, 84, 186);
 RT_INTERFACE!{interface ICoreTextServicesManager(ICoreTextServicesManagerVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextServicesManager] {
     #[cfg(not(feature="windows-globalization"))] fn __Dummy0(&self) -> (),
@@ -10173,7 +10173,7 @@ impl CoreTextServicesManager {
         <Self as RtActivatable<ICoreTextServicesManagerStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(CoreTextServicesManager(&[87,105,110,100,111,119,115,46,85,73,46,84,101,120,116,46,67,111,114,101,46,67,111,114,101,84,101,120,116,83,101,114,118,105,99,101,115,77,97,110,97,103,101,114,0]) [CLSID_CoreTextServicesManager]);
+DEFINE_CLSID!(CoreTextServicesManager: "Windows.UI.Text.Core.CoreTextServicesManager");
 DEFINE_IID!(IID_ICoreTextServicesManagerStatics, 354460552, 58063, 19813, 174, 185, 179, 45, 134, 254, 57, 185);
 RT_INTERFACE!{static interface ICoreTextServicesManagerStatics(ICoreTextServicesManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextServicesManagerStatics] {
     fn GetForCurrentView(&self, out: *mut *mut CoreTextServicesManager) -> HRESULT
@@ -10334,7 +10334,7 @@ impl IAccessibilitySettings {
 }
 RT_CLASS!{class AccessibilitySettings: IAccessibilitySettings}
 impl RtActivatable<IActivationFactory> for AccessibilitySettings {}
-DEFINE_CLSID!(AccessibilitySettings(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,65,99,99,101,115,115,105,98,105,108,105,116,121,83,101,116,116,105,110,103,115,0]) [CLSID_AccessibilitySettings]);
+DEFINE_CLSID!(AccessibilitySettings: "Windows.UI.ViewManagement.AccessibilitySettings");
 DEFINE_IID!(IID_IActivationViewSwitcher, 3701939126, 29520, 18731, 170, 199, 200, 161, 61, 114, 36, 173);
 RT_INTERFACE!{interface IActivationViewSwitcher(IActivationViewSwitcherVtbl): IInspectable(IInspectableVtbl) [IID_IActivationViewSwitcher] {
     fn ShowAsStandaloneAsync(&self, viewId: i32, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT,
@@ -10474,7 +10474,7 @@ impl ApplicationView {
         <Self as RtActivatable<IApplicationViewStatics3>>::get_activation_factory().set_preferred_launch_view_size(value)
     }}
 }
-DEFINE_CLSID!(ApplicationView(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,65,112,112,108,105,99,97,116,105,111,110,86,105,101,119,0]) [CLSID_ApplicationView]);
+DEFINE_CLSID!(ApplicationView: "Windows.UI.ViewManagement.ApplicationView");
 DEFINE_IID!(IID_IApplicationView2, 3900092822, 42309, 16604, 181, 148, 69, 12, 186, 104, 204, 0);
 RT_INTERFACE!{interface IApplicationView2(IApplicationView2Vtbl): IInspectable(IInspectableVtbl) [IID_IApplicationView2] {
     fn get_SuppressSystemOverlays(&self, out: *mut bool) -> HRESULT,
@@ -10678,7 +10678,7 @@ impl ApplicationViewScaling {
         <Self as RtActivatable<IApplicationViewScalingStatics>>::get_activation_factory().try_set_disable_layout_scaling(disableLayoutScaling)
     }}
 }
-DEFINE_CLSID!(ApplicationViewScaling(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,65,112,112,108,105,99,97,116,105,111,110,86,105,101,119,83,99,97,108,105,110,103,0]) [CLSID_ApplicationViewScaling]);
+DEFINE_CLSID!(ApplicationViewScaling: "Windows.UI.ViewManagement.ApplicationViewScaling");
 DEFINE_IID!(IID_IApplicationViewScalingStatics, 2962222320, 47430, 17864, 165, 227, 113, 245, 170, 120, 248, 97);
 RT_INTERFACE!{static interface IApplicationViewScalingStatics(IApplicationViewScalingStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationViewScalingStatics] {
     fn get_DisableLayoutScaling(&self, out: *mut bool) -> HRESULT,
@@ -10804,7 +10804,7 @@ impl ApplicationViewSwitcher {
         <Self as RtActivatable<IApplicationViewSwitcherStatics3>>::get_activation_factory().try_show_as_view_mode_with_preferences_async(viewId, viewMode, viewModePreferences)
     }}
 }
-DEFINE_CLSID!(ApplicationViewSwitcher(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,65,112,112,108,105,99,97,116,105,111,110,86,105,101,119,83,119,105,116,99,104,101,114,0]) [CLSID_ApplicationViewSwitcher]);
+DEFINE_CLSID!(ApplicationViewSwitcher: "Windows.UI.ViewManagement.ApplicationViewSwitcher");
 DEFINE_IID!(IID_IApplicationViewSwitcherStatics, 2539597598, 58966, 19550, 160, 161, 113, 124, 111, 250, 125, 100);
 RT_INTERFACE!{static interface IApplicationViewSwitcherStatics(IApplicationViewSwitcherStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationViewSwitcherStatics] {
     fn DisableShowingMainViewOnActivation(&self) -> HRESULT,
@@ -11049,7 +11049,7 @@ impl ApplicationViewTransferContext {
         <Self as RtActivatable<IApplicationViewTransferContextStatics>>::get_activation_factory().get_data_package_format_id()
     }}
 }
-DEFINE_CLSID!(ApplicationViewTransferContext(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,65,112,112,108,105,99,97,116,105,111,110,86,105,101,119,84,114,97,110,115,102,101,114,67,111,110,116,101,120,116,0]) [CLSID_ApplicationViewTransferContext]);
+DEFINE_CLSID!(ApplicationViewTransferContext: "Windows.UI.ViewManagement.ApplicationViewTransferContext");
 DEFINE_IID!(IID_IApplicationViewTransferContextStatics, 363371922, 56697, 19211, 188, 71, 213, 241, 149, 241, 70, 97);
 RT_INTERFACE!{static interface IApplicationViewTransferContextStatics(IApplicationViewTransferContextStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationViewTransferContextStatics] {
     fn get_DataPackageFormatId(&self, out: *mut HSTRING) -> HRESULT
@@ -11110,7 +11110,7 @@ impl InputPane {
         <Self as RtActivatable<IInputPaneStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(InputPane(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,73,110,112,117,116,80,97,110,101,0]) [CLSID_InputPane]);
+DEFINE_CLSID!(InputPane: "Windows.UI.ViewManagement.InputPane");
 DEFINE_IID!(IID_IInputPane2, 2322284326, 28816, 18323, 148, 76, 195, 242, 205, 226, 98, 118);
 RT_INTERFACE!{interface IInputPane2(IInputPane2Vtbl): IInspectable(IInspectableVtbl) [IID_IInputPane2] {
     fn TryShow(&self, out: *mut bool) -> HRESULT,
@@ -11213,7 +11213,7 @@ impl ProjectionManager {
         <Self as RtActivatable<IProjectionManagerStatics2>>::get_activation_factory().get_device_selector()
     }}
 }
-DEFINE_CLSID!(ProjectionManager(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,80,114,111,106,101,99,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_ProjectionManager]);
+DEFINE_CLSID!(ProjectionManager: "Windows.UI.ViewManagement.ProjectionManager");
 DEFINE_IID!(IID_IProjectionManagerStatics, 3059716413, 58096, 20477, 186, 149, 52, 36, 22, 71, 228, 92);
 RT_INTERFACE!{static interface IProjectionManagerStatics(IProjectionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IProjectionManagerStatics] {
     fn StartProjectingAsync(&self, projectionViewId: i32, anchorViewId: i32, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT,
@@ -11375,7 +11375,7 @@ impl IUISettings {
 }
 RT_CLASS!{class UISettings: IUISettings}
 impl RtActivatable<IActivationFactory> for UISettings {}
-DEFINE_CLSID!(UISettings(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,85,73,83,101,116,116,105,110,103,115,0]) [CLSID_UISettings]);
+DEFINE_CLSID!(UISettings: "Windows.UI.ViewManagement.UISettings");
 DEFINE_IID!(IID_IUISettings2, 3134727169, 10017, 17657, 187, 145, 43, 178, 40, 190, 68, 47);
 RT_INTERFACE!{interface IUISettings2(IUISettings2Vtbl): IInspectable(IInspectableVtbl) [IID_IUISettings2] {
     fn get_TextScaleFactor(&self, out: *mut f64) -> HRESULT,
@@ -11460,7 +11460,7 @@ impl UIViewSettings {
         <Self as RtActivatable<IUIViewSettingsStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(UIViewSettings(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,85,73,86,105,101,119,83,101,116,116,105,110,103,115,0]) [CLSID_UIViewSettings]);
+DEFINE_CLSID!(UIViewSettings: "Windows.UI.ViewManagement.UIViewSettings");
 DEFINE_IID!(IID_IUIViewSettingsStatics, 1499240357, 63734, 16847, 176, 251, 170, 205, 184, 31, 213, 246);
 RT_INTERFACE!{static interface IUIViewSettingsStatics(IUIViewSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUIViewSettingsStatics] {
     fn GetForCurrentView(&self, out: *mut *mut UIViewSettings) -> HRESULT
@@ -11509,7 +11509,7 @@ impl ViewModePreferences {
         <Self as RtActivatable<IViewModePreferencesStatics>>::get_activation_factory().create_default(mode)
     }}
 }
-DEFINE_CLSID!(ViewModePreferences(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,86,105,101,119,77,111,100,101,80,114,101,102,101,114,101,110,99,101,115,0]) [CLSID_ViewModePreferences]);
+DEFINE_CLSID!(ViewModePreferences: "Windows.UI.ViewManagement.ViewModePreferences");
 DEFINE_IID!(IID_IViewModePreferencesStatics, 1773537893, 24037, 16600, 131, 6, 56, 51, 223, 122, 34, 116);
 RT_INTERFACE!{static interface IViewModePreferencesStatics(IViewModePreferencesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IViewModePreferencesStatics] {
     fn CreateDefault(&self, mode: ApplicationViewMode, out: *mut *mut ViewModePreferences) -> HRESULT
@@ -11567,7 +11567,7 @@ impl CoreInputView {
         <Self as RtActivatable<ICoreInputViewStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(CoreInputView(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,67,111,114,101,46,67,111,114,101,73,110,112,117,116,86,105,101,119,0]) [CLSID_CoreInputView]);
+DEFINE_CLSID!(CoreInputView: "Windows.UI.ViewManagement.Core.CoreInputView");
 DEFINE_IID!(IID_ICoreInputViewOcclusion, 3426143750, 14437, 16759, 181, 245, 139, 101, 224, 185, 206, 132);
 RT_INTERFACE!{interface ICoreInputViewOcclusion(ICoreInputViewOcclusionVtbl): IInspectable(IInspectableVtbl) [IID_ICoreInputViewOcclusion] {
     fn get_OccludingRect(&self, out: *mut ::rt::gen::windows::foundation::Rect) -> HRESULT,
@@ -11660,7 +11660,7 @@ impl AccountsSettingsPane {
         <Self as RtActivatable<IAccountsSettingsPaneStatics2>>::get_activation_factory().show_add_account_async()
     }}
 }
-DEFINE_CLSID!(AccountsSettingsPane(&[87,105,110,100,111,119,115,46,85,73,46,65,112,112,108,105,99,97,116,105,111,110,83,101,116,116,105,110,103,115,46,65,99,99,111,117,110,116,115,83,101,116,116,105,110,103,115,80,97,110,101,0]) [CLSID_AccountsSettingsPane]);
+DEFINE_CLSID!(AccountsSettingsPane: "Windows.UI.ApplicationSettings.AccountsSettingsPane");
 DEFINE_IID!(IID_IAccountsSettingsPaneCommandsRequestedEventArgs, 996720793, 56089, 17872, 154, 191, 149, 211, 119, 60, 147, 48);
 RT_INTERFACE!{interface IAccountsSettingsPaneCommandsRequestedEventArgs(IAccountsSettingsPaneCommandsRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAccountsSettingsPaneCommandsRequestedEventArgs] {
     fn get_WebAccountProviderCommands(&self, out: *mut *mut super::super::foundation::collections::IVector<WebAccountProviderCommand>) -> HRESULT,
@@ -11780,7 +11780,7 @@ impl CredentialCommand {
         <Self as RtActivatable<ICredentialCommandFactory>>::get_activation_factory().create_credential_command_with_handler(passwordCredential, deleted)
     }}
 }
-DEFINE_CLSID!(CredentialCommand(&[87,105,110,100,111,119,115,46,85,73,46,65,112,112,108,105,99,97,116,105,111,110,83,101,116,116,105,110,103,115,46,67,114,101,100,101,110,116,105,97,108,67,111,109,109,97,110,100,0]) [CLSID_CredentialCommand]);
+DEFINE_CLSID!(CredentialCommand: "Windows.UI.ApplicationSettings.CredentialCommand");
 DEFINE_IID!(IID_CredentialCommandCredentialDeletedHandler, 1640030597, 2423, 18040, 180, 226, 152, 114, 122, 251, 238, 217);
 RT_DELEGATE!{delegate CredentialCommandCredentialDeletedHandler(CredentialCommandCredentialDeletedHandlerVtbl, CredentialCommandCredentialDeletedHandlerImpl) [IID_CredentialCommandCredentialDeletedHandler] {
     fn Invoke(&self, command: *mut CredentialCommand) -> HRESULT
@@ -11819,7 +11819,7 @@ impl SettingsCommand {
         <Self as RtActivatable<ISettingsCommandStatics>>::get_activation_factory().get_accounts_command()
     }}
 }
-DEFINE_CLSID!(SettingsCommand(&[87,105,110,100,111,119,115,46,85,73,46,65,112,112,108,105,99,97,116,105,111,110,83,101,116,116,105,110,103,115,46,83,101,116,116,105,110,103,115,67,111,109,109,97,110,100,0]) [CLSID_SettingsCommand]);
+DEFINE_CLSID!(SettingsCommand: "Windows.UI.ApplicationSettings.SettingsCommand");
 DEFINE_IID!(IID_ISettingsCommandFactory, 1759599411, 7299, 17210, 170, 90, 206, 238, 165, 189, 71, 100);
 RT_INTERFACE!{static interface ISettingsCommandFactory(ISettingsCommandFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISettingsCommandFactory] {
     fn CreateSettingsCommand(&self, settingsCommandId: *mut IInspectable, label: HSTRING, handler: *mut super::popups::UICommandInvokedHandler, out: *mut *mut SettingsCommand) -> HRESULT
@@ -11874,7 +11874,7 @@ impl SettingsPane {
         <Self as RtActivatable<ISettingsPaneStatics>>::get_activation_factory().get_edge()
     }}
 }
-DEFINE_CLSID!(SettingsPane(&[87,105,110,100,111,119,115,46,85,73,46,65,112,112,108,105,99,97,116,105,111,110,83,101,116,116,105,110,103,115,46,83,101,116,116,105,110,103,115,80,97,110,101,0]) [CLSID_SettingsPane]);
+DEFINE_CLSID!(SettingsPane: "Windows.UI.ApplicationSettings.SettingsPane");
 DEFINE_IID!(IID_ISettingsPaneCommandsRequest, 1155474350, 23918, 16488, 161, 104, 244, 118, 67, 24, 33, 20);
 RT_INTERFACE!{interface ISettingsPaneCommandsRequest(ISettingsPaneCommandsRequestVtbl): IInspectable(IInspectableVtbl) [IID_ISettingsPaneCommandsRequest] {
     fn get_ApplicationCommands(&self, out: *mut *mut super::super::foundation::collections::IVector<SettingsCommand>) -> HRESULT
@@ -11958,7 +11958,7 @@ impl WebAccountCommand {
         <Self as RtActivatable<IWebAccountCommandFactory>>::get_activation_factory().create_web_account_command(webAccount, invoked, actions)
     }}
 }
-DEFINE_CLSID!(WebAccountCommand(&[87,105,110,100,111,119,115,46,85,73,46,65,112,112,108,105,99,97,116,105,111,110,83,101,116,116,105,110,103,115,46,87,101,98,65,99,99,111,117,110,116,67,111,109,109,97,110,100,0]) [CLSID_WebAccountCommand]);
+DEFINE_CLSID!(WebAccountCommand: "Windows.UI.ApplicationSettings.WebAccountCommand");
 DEFINE_IID!(IID_IWebAccountCommandFactory, 3215379967, 12077, 17141, 129, 222, 29, 86, 186, 252, 73, 109);
 RT_INTERFACE!{static interface IWebAccountCommandFactory(IWebAccountCommandFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountCommandFactory] {
     #[cfg(feature="windows-security")] fn CreateWebAccountCommand(&self, webAccount: *mut super::super::security::credentials::WebAccount, invoked: *mut WebAccountCommandInvokedHandler, actions: SupportedWebAccountActions, out: *mut *mut WebAccountCommand) -> HRESULT
@@ -12017,7 +12017,7 @@ impl WebAccountProviderCommand {
         <Self as RtActivatable<IWebAccountProviderCommandFactory>>::get_activation_factory().create_web_account_provider_command(webAccountProvider, invoked)
     }}
 }
-DEFINE_CLSID!(WebAccountProviderCommand(&[87,105,110,100,111,119,115,46,85,73,46,65,112,112,108,105,99,97,116,105,111,110,83,101,116,116,105,110,103,115,46,87,101,98,65,99,99,111,117,110,116,80,114,111,118,105,100,101,114,67,111,109,109,97,110,100,0]) [CLSID_WebAccountProviderCommand]);
+DEFINE_CLSID!(WebAccountProviderCommand: "Windows.UI.ApplicationSettings.WebAccountProviderCommand");
 DEFINE_IID!(IID_IWebAccountProviderCommandFactory, 3580201499, 45430, 18294, 132, 105, 169, 211, 255, 11, 63, 89);
 RT_INTERFACE!{static interface IWebAccountProviderCommandFactory(IWebAccountProviderCommandFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderCommandFactory] {
     #[cfg(feature="windows-security")] fn CreateWebAccountProviderCommand(&self, webAccountProvider: *mut super::super::security::credentials::WebAccountProvider, invoked: *mut WebAccountProviderCommandInvokedHandler, out: *mut *mut WebAccountProviderCommand) -> HRESULT
@@ -12405,7 +12405,7 @@ impl WebUIApplication {
         <Self as RtActivatable<IWebUIActivationStatics3>>::get_activation_factory().request_restart_for_user_async(user, launchArguments)
     }}
 }
-DEFINE_CLSID!(WebUIApplication(&[87,105,110,100,111,119,115,46,85,73,46,87,101,98,85,73,46,87,101,98,85,73,65,112,112,108,105,99,97,116,105,111,110,0]) [CLSID_WebUIApplication]);
+DEFINE_CLSID!(WebUIApplication: "Windows.UI.WebUI.WebUIApplication");
 #[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIAppointmentsProviderAddAppointmentActivatedEventArgs: super::super::applicationmodel::activation::IAppointmentsProviderAddAppointmentActivatedEventArgs}
 #[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIAppointmentsProviderAddAppointmentActivatedEventArgs: IInspectable}
 #[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIAppointmentsProviderRemoveAppointmentActivatedEventArgs: super::super::applicationmodel::activation::IAppointmentsProviderRemoveAppointmentActivatedEventArgs}
@@ -12439,7 +12439,7 @@ impl WebUIBackgroundTaskInstance {
         <Self as RtActivatable<IWebUIBackgroundTaskInstanceStatics>>::get_activation_factory().get_current()
     }}
 }
-DEFINE_CLSID!(WebUIBackgroundTaskInstance(&[87,105,110,100,111,119,115,46,85,73,46,87,101,98,85,73,46,87,101,98,85,73,66,97,99,107,103,114,111,117,110,100,84,97,115,107,73,110,115,116,97,110,99,101,0]) [CLSID_WebUIBackgroundTaskInstance]);
+DEFINE_CLSID!(WebUIBackgroundTaskInstance: "Windows.UI.WebUI.WebUIBackgroundTaskInstance");
 RT_CLASS!{class WebUIBackgroundTaskInstanceRuntimeClass: IWebUIBackgroundTaskInstance}
 DEFINE_IID!(IID_IWebUIBackgroundTaskInstanceStatics, 2625262225, 6574, 19619, 185, 75, 254, 78, 199, 68, 167, 64);
 RT_INTERFACE!{static interface IWebUIBackgroundTaskInstanceStatics(IWebUIBackgroundTaskInstanceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebUIBackgroundTaskInstanceStatics] {
@@ -12584,7 +12584,7 @@ impl AdaptiveCardBuilder {
         <Self as RtActivatable<IAdaptiveCardBuilderStatics>>::get_activation_factory().create_adaptive_card_from_json(value)
     }}
 }
-DEFINE_CLSID!(AdaptiveCardBuilder(&[87,105,110,100,111,119,115,46,85,73,46,83,104,101,108,108,46,65,100,97,112,116,105,118,101,67,97,114,100,66,117,105,108,100,101,114,0]) [CLSID_AdaptiveCardBuilder]);
+DEFINE_CLSID!(AdaptiveCardBuilder: "Windows.UI.Shell.AdaptiveCardBuilder");
 DEFINE_IID!(IID_IAdaptiveCardBuilderStatics, 1986891528, 54270, 17223, 160, 188, 185, 234, 154, 109, 194, 142);
 RT_INTERFACE!{static interface IAdaptiveCardBuilderStatics(IAdaptiveCardBuilderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveCardBuilderStatics] {
     fn CreateAdaptiveCardFromJson(&self, value: HSTRING, out: *mut *mut IAdaptiveCard) -> HRESULT
@@ -12644,7 +12644,7 @@ impl TaskbarManager {
         <Self as RtActivatable<ITaskbarManagerStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(TaskbarManager(&[87,105,110,100,111,119,115,46,85,73,46,83,104,101,108,108,46,84,97,115,107,98,97,114,77,97,110,97,103,101,114,0]) [CLSID_TaskbarManager]);
+DEFINE_CLSID!(TaskbarManager: "Windows.UI.Shell.TaskbarManager");
 DEFINE_IID!(IID_ITaskbarManagerStatics, 3677530996, 56914, 20454, 183, 182, 149, 255, 159, 131, 149, 223);
 RT_INTERFACE!{static interface ITaskbarManagerStatics(ITaskbarManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITaskbarManagerStatics] {
     fn GetDefault(&self, out: *mut *mut TaskbarManager) -> HRESULT
@@ -12700,7 +12700,7 @@ impl JumpList {
         <Self as RtActivatable<IJumpListStatics>>::get_activation_factory().is_supported()
     }}
 }
-DEFINE_CLSID!(JumpList(&[87,105,110,100,111,119,115,46,85,73,46,83,116,97,114,116,83,99,114,101,101,110,46,74,117,109,112,76,105,115,116,0]) [CLSID_JumpList]);
+DEFINE_CLSID!(JumpList: "Windows.UI.StartScreen.JumpList");
 DEFINE_IID!(IID_IJumpListItem, 2061199127, 35677, 18464, 153, 91, 155, 65, 141, 190, 72, 176);
 RT_INTERFACE!{interface IJumpListItem(IJumpListItemVtbl): IInspectable(IInspectableVtbl) [IID_IJumpListItem] {
     fn get_Kind(&self, out: *mut JumpListItemKind) -> HRESULT,
@@ -12778,7 +12778,7 @@ impl JumpListItem {
         <Self as RtActivatable<IJumpListItemStatics>>::get_activation_factory().create_separator()
     }}
 }
-DEFINE_CLSID!(JumpListItem(&[87,105,110,100,111,119,115,46,85,73,46,83,116,97,114,116,83,99,114,101,101,110,46,74,117,109,112,76,105,115,116,73,116,101,109,0]) [CLSID_JumpListItem]);
+DEFINE_CLSID!(JumpListItem: "Windows.UI.StartScreen.JumpListItem");
 RT_ENUM! { enum JumpListItemKind: i32 {
     Arguments (JumpListItemKind_Arguments) = 0, Separator (JumpListItemKind_Separator) = 1,
 }}
@@ -13041,7 +13041,7 @@ impl SecondaryTile {
         <Self as RtActivatable<ISecondaryTileStatics>>::get_activation_factory().find_all_for_package_async()
     }}
 }
-DEFINE_CLSID!(SecondaryTile(&[87,105,110,100,111,119,115,46,85,73,46,83,116,97,114,116,83,99,114,101,101,110,46,83,101,99,111,110,100,97,114,121,84,105,108,101,0]) [CLSID_SecondaryTile]);
+DEFINE_CLSID!(SecondaryTile: "Windows.UI.StartScreen.SecondaryTile");
 DEFINE_IID!(IID_ISecondaryTile2, 3002518581, 12880, 18832, 146, 60, 41, 74, 180, 182, 148, 221);
 RT_INTERFACE!{interface ISecondaryTile2(ISecondaryTile2Vtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryTile2] {
     fn put_PhoneticName(&self, value: HSTRING) -> HRESULT,
@@ -13348,7 +13348,7 @@ impl StartScreenManager {
         <Self as RtActivatable<IStartScreenManagerStatics>>::get_activation_factory().get_for_user(user)
     }}
 }
-DEFINE_CLSID!(StartScreenManager(&[87,105,110,100,111,119,115,46,85,73,46,83,116,97,114,116,83,99,114,101,101,110,46,83,116,97,114,116,83,99,114,101,101,110,77,97,110,97,103,101,114,0]) [CLSID_StartScreenManager]);
+DEFINE_CLSID!(StartScreenManager: "Windows.UI.StartScreen.StartScreenManager");
 DEFINE_IID!(IID_IStartScreenManagerStatics, 2019946255, 46469, 17998, 137, 147, 52, 232, 248, 115, 141, 72);
 RT_INTERFACE!{static interface IStartScreenManagerStatics(IStartScreenManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStartScreenManagerStatics] {
     fn GetDefault(&self, out: *mut *mut StartScreenManager) -> HRESULT,
@@ -13538,7 +13538,7 @@ impl MessageDialog {
         <Self as RtActivatable<IMessageDialogFactory>>::get_activation_factory().create_with_title(content, title)
     }}
 }
-DEFINE_CLSID!(MessageDialog(&[87,105,110,100,111,119,115,46,85,73,46,80,111,112,117,112,115,46,77,101,115,115,97,103,101,68,105,97,108,111,103,0]) [CLSID_MessageDialog]);
+DEFINE_CLSID!(MessageDialog: "Windows.UI.Popups.MessageDialog");
 DEFINE_IID!(IID_IMessageDialogFactory, 756422519, 42607, 20133, 187, 135, 121, 63, 250, 73, 65, 242);
 RT_INTERFACE!{static interface IMessageDialogFactory(IMessageDialogFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMessageDialogFactory] {
     fn Create(&self, content: HSTRING, out: *mut *mut MessageDialog) -> HRESULT,
@@ -13593,7 +13593,7 @@ impl IPopupMenu {
 }
 RT_CLASS!{class PopupMenu: IPopupMenu}
 impl RtActivatable<IActivationFactory> for PopupMenu {}
-DEFINE_CLSID!(PopupMenu(&[87,105,110,100,111,119,115,46,85,73,46,80,111,112,117,112,115,46,80,111,112,117,112,77,101,110,117,0]) [CLSID_PopupMenu]);
+DEFINE_CLSID!(PopupMenu: "Windows.UI.Popups.PopupMenu");
 DEFINE_IID!(IID_IUICommand, 1341733493, 16709, 18431, 172, 127, 223, 241, 193, 250, 91, 15);
 RT_INTERFACE!{interface IUICommand(IUICommandVtbl): IInspectable(IInspectableVtbl) [IID_IUICommand] {
     fn get_Label(&self, out: *mut HSTRING) -> HRESULT,
@@ -13646,7 +13646,7 @@ impl UICommand {
         <Self as RtActivatable<IUICommandFactory>>::get_activation_factory().create_with_handler_and_id(label, action, commandId)
     }}
 }
-DEFINE_CLSID!(UICommand(&[87,105,110,100,111,119,115,46,85,73,46,80,111,112,117,112,115,46,85,73,67,111,109,109,97,110,100,0]) [CLSID_UICommand]);
+DEFINE_CLSID!(UICommand: "Windows.UI.Popups.UICommand");
 DEFINE_IID!(IID_IUICommandFactory, 2719646089, 9904, 18038, 174, 148, 84, 4, 27, 193, 37, 232);
 RT_INTERFACE!{static interface IUICommandFactory(IUICommandFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUICommandFactory] {
     fn Create(&self, label: HSTRING, out: *mut *mut UICommand) -> HRESULT,
@@ -13682,7 +13682,7 @@ impl UICommandInvokedHandler {
 }
 RT_CLASS!{class UICommandSeparator: IUICommand}
 impl RtActivatable<IActivationFactory> for UICommandSeparator {}
-DEFINE_CLSID!(UICommandSeparator(&[87,105,110,100,111,119,115,46,85,73,46,80,111,112,117,112,115,46,85,73,67,111,109,109,97,110,100,83,101,112,97,114,97,116,111,114,0]) [CLSID_UICommandSeparator]);
+DEFINE_CLSID!(UICommandSeparator: "Windows.UI.Popups.UICommandSeparator");
 } // Windows.UI.Popups
 pub mod notifications { // Windows.UI.Notifications
 use ::prelude::*;
@@ -13735,7 +13735,7 @@ impl IAdaptiveNotificationText {
 }
 RT_CLASS!{class AdaptiveNotificationText: IAdaptiveNotificationText}
 impl RtActivatable<IActivationFactory> for AdaptiveNotificationText {}
-DEFINE_CLSID!(AdaptiveNotificationText(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,65,100,97,112,116,105,118,101,78,111,116,105,102,105,99,97,116,105,111,110,84,101,120,116,0]) [CLSID_AdaptiveNotificationText]);
+DEFINE_CLSID!(AdaptiveNotificationText: "Windows.UI.Notifications.AdaptiveNotificationText");
 DEFINE_IID!(IID_IBadgeNotification, 123516106, 53386, 20015, 146, 51, 126, 40, 156, 31, 119, 34);
 RT_INTERFACE!{interface IBadgeNotification(IBadgeNotificationVtbl): IInspectable(IInspectableVtbl) [IID_IBadgeNotification] {
     #[cfg(not(feature="windows-data"))] fn __Dummy0(&self) -> (),
@@ -13766,7 +13766,7 @@ impl BadgeNotification {
         <Self as RtActivatable<IBadgeNotificationFactory>>::get_activation_factory().create_badge_notification(content)
     }}
 }
-DEFINE_CLSID!(BadgeNotification(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,66,97,100,103,101,78,111,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_BadgeNotification]);
+DEFINE_CLSID!(BadgeNotification: "Windows.UI.Notifications.BadgeNotification");
 DEFINE_IID!(IID_IBadgeNotificationFactory, 3992081870, 1560, 19801, 148, 138, 90, 97, 4, 12, 82, 249);
 RT_INTERFACE!{static interface IBadgeNotificationFactory(IBadgeNotificationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBadgeNotificationFactory] {
     #[cfg(feature="windows-data")] fn CreateBadgeNotification(&self, content: *mut super::super::data::xml::dom::XmlDocument, out: *mut *mut BadgeNotification) -> HRESULT
@@ -13801,7 +13801,7 @@ impl BadgeUpdateManager {
         <Self as RtActivatable<IBadgeUpdateManagerStatics2>>::get_activation_factory().get_for_user(user)
     }}
 }
-DEFINE_CLSID!(BadgeUpdateManager(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,66,97,100,103,101,85,112,100,97,116,101,77,97,110,97,103,101,114,0]) [CLSID_BadgeUpdateManager]);
+DEFINE_CLSID!(BadgeUpdateManager: "Windows.UI.Notifications.BadgeUpdateManager");
 DEFINE_IID!(IID_IBadgeUpdateManagerForUser, 2573935036, 902, 17637, 186, 141, 12, 16, 119, 166, 46, 146);
 RT_INTERFACE!{interface IBadgeUpdateManagerForUser(IBadgeUpdateManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_IBadgeUpdateManagerForUser] {
     fn CreateBadgeUpdaterForApplication(&self, out: *mut *mut BadgeUpdater) -> HRESULT,
@@ -13925,7 +13925,7 @@ impl KnownAdaptiveNotificationHints {
         <Self as RtActivatable<IKnownAdaptiveNotificationHintsStatics>>::get_activation_factory().get_align()
     }}
 }
-DEFINE_CLSID!(KnownAdaptiveNotificationHints(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,75,110,111,119,110,65,100,97,112,116,105,118,101,78,111,116,105,102,105,99,97,116,105,111,110,72,105,110,116,115,0]) [CLSID_KnownAdaptiveNotificationHints]);
+DEFINE_CLSID!(KnownAdaptiveNotificationHints: "Windows.UI.Notifications.KnownAdaptiveNotificationHints");
 DEFINE_IID!(IID_IKnownAdaptiveNotificationHintsStatics, 102786456, 54422, 18813, 134, 146, 79, 125, 124, 39, 112, 223);
 RT_INTERFACE!{static interface IKnownAdaptiveNotificationHintsStatics(IKnownAdaptiveNotificationHintsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownAdaptiveNotificationHintsStatics] {
     fn get_Style(&self, out: *mut HSTRING) -> HRESULT,
@@ -14028,7 +14028,7 @@ impl KnownAdaptiveNotificationTextStyles {
         <Self as RtActivatable<IKnownAdaptiveNotificationTextStylesStatics>>::get_activation_factory().get_header_numeral_subtle()
     }}
 }
-DEFINE_CLSID!(KnownAdaptiveNotificationTextStyles(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,75,110,111,119,110,65,100,97,112,116,105,118,101,78,111,116,105,102,105,99,97,116,105,111,110,84,101,120,116,83,116,121,108,101,115,0]) [CLSID_KnownAdaptiveNotificationTextStyles]);
+DEFINE_CLSID!(KnownAdaptiveNotificationTextStyles: "Windows.UI.Notifications.KnownAdaptiveNotificationTextStyles");
 DEFINE_IID!(IID_IKnownAdaptiveNotificationTextStylesStatics, 539071191, 35222, 17834, 139, 161, 212, 97, 215, 44, 42, 27);
 RT_INTERFACE!{static interface IKnownAdaptiveNotificationTextStylesStatics(IKnownAdaptiveNotificationTextStylesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownAdaptiveNotificationTextStylesStatics] {
     fn get_Caption(&self, out: *mut HSTRING) -> HRESULT,
@@ -14155,7 +14155,7 @@ impl KnownNotificationBindings {
         <Self as RtActivatable<IKnownNotificationBindingsStatics>>::get_activation_factory().get_toast_generic()
     }}
 }
-DEFINE_CLSID!(KnownNotificationBindings(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,75,110,111,119,110,78,111,116,105,102,105,99,97,116,105,111,110,66,105,110,100,105,110,103,115,0]) [CLSID_KnownNotificationBindings]);
+DEFINE_CLSID!(KnownNotificationBindings: "Windows.UI.Notifications.KnownNotificationBindings");
 DEFINE_IID!(IID_IKnownNotificationBindingsStatics, 2034400174, 43191, 19800, 137, 234, 118, 167, 183, 188, 205, 237);
 RT_INTERFACE!{static interface IKnownNotificationBindingsStatics(IKnownNotificationBindingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownNotificationBindingsStatics] {
     fn get_ToastGeneric(&self, out: *mut HSTRING) -> HRESULT
@@ -14196,7 +14196,7 @@ impl INotification {
 }
 RT_CLASS!{class Notification: INotification}
 impl RtActivatable<IActivationFactory> for Notification {}
-DEFINE_CLSID!(Notification(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,78,111,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_Notification]);
+DEFINE_CLSID!(Notification: "Windows.UI.Notifications.Notification");
 DEFINE_IID!(IID_INotificationBinding, 4070460293, 880, 19155, 180, 234, 218, 158, 53, 231, 234, 191);
 RT_INTERFACE!{interface INotificationBinding(INotificationBindingVtbl): IInspectable(IInspectableVtbl) [IID_INotificationBinding] {
     fn get_Template(&self, out: *mut HSTRING) -> HRESULT,
@@ -14270,7 +14270,7 @@ impl NotificationData {
         <Self as RtActivatable<INotificationDataFactory>>::get_activation_factory().create_notification_data_with_values(initialValues)
     }}
 }
-DEFINE_CLSID!(NotificationData(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,78,111,116,105,102,105,99,97,116,105,111,110,68,97,116,97,0]) [CLSID_NotificationData]);
+DEFINE_CLSID!(NotificationData: "Windows.UI.Notifications.NotificationData");
 DEFINE_IID!(IID_INotificationDataFactory, 599909178, 7184, 18171, 128, 64, 222, 195, 132, 98, 28, 248);
 RT_INTERFACE!{static interface INotificationDataFactory(INotificationDataFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INotificationDataFactory] {
     fn CreateNotificationDataWithValuesAndSequenceNumber(&self, initialValues: *mut super::super::foundation::collections::IIterable<super::super::foundation::collections::IKeyValuePair<HString, HString>>, sequenceNumber: u32, out: *mut *mut NotificationData) -> HRESULT,
@@ -14390,7 +14390,7 @@ impl ScheduledTileNotification {
         <Self as RtActivatable<IScheduledTileNotificationFactory>>::get_activation_factory().create_scheduled_tile_notification(content, deliveryTime)
     }}
 }
-DEFINE_CLSID!(ScheduledTileNotification(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,83,99,104,101,100,117,108,101,100,84,105,108,101,78,111,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_ScheduledTileNotification]);
+DEFINE_CLSID!(ScheduledTileNotification: "Windows.UI.Notifications.ScheduledTileNotification");
 DEFINE_IID!(IID_IScheduledTileNotificationFactory, 864228234, 39104, 19515, 187, 214, 74, 99, 60, 124, 252, 41);
 RT_INTERFACE!{static interface IScheduledTileNotificationFactory(IScheduledTileNotificationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IScheduledTileNotificationFactory] {
     #[cfg(feature="windows-data")] fn CreateScheduledTileNotification(&self, content: *mut super::super::data::xml::dom::XmlDocument, deliveryTime: super::super::foundation::DateTime, out: *mut *mut ScheduledTileNotification) -> HRESULT
@@ -14453,7 +14453,7 @@ impl ScheduledToastNotification {
         <Self as RtActivatable<IScheduledToastNotificationFactory>>::get_activation_factory().create_scheduled_toast_notification_recurring(content, deliveryTime, snoozeInterval, maximumSnoozeCount)
     }}
 }
-DEFINE_CLSID!(ScheduledToastNotification(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,83,99,104,101,100,117,108,101,100,84,111,97,115,116,78,111,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_ScheduledToastNotification]);
+DEFINE_CLSID!(ScheduledToastNotification: "Windows.UI.Notifications.ScheduledToastNotification");
 DEFINE_IID!(IID_IScheduledToastNotification2, 2792267932, 12724, 17328, 181, 221, 122, 64, 232, 83, 99, 177);
 RT_INTERFACE!{interface IScheduledToastNotification2(IScheduledToastNotification2Vtbl): IInspectable(IInspectableVtbl) [IID_IScheduledToastNotification2] {
     fn put_Tag(&self, value: HSTRING) -> HRESULT,
@@ -14578,7 +14578,7 @@ impl TileFlyoutNotification {
         <Self as RtActivatable<ITileFlyoutNotificationFactory>>::get_activation_factory().create_tile_flyout_notification(content)
     }}
 }
-DEFINE_CLSID!(TileFlyoutNotification(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,84,105,108,101,70,108,121,111,117,116,78,111,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_TileFlyoutNotification]);
+DEFINE_CLSID!(TileFlyoutNotification: "Windows.UI.Notifications.TileFlyoutNotification");
 DEFINE_IID!(IID_ITileFlyoutNotificationFactory, 4015353845, 21030, 20267, 178, 120, 136, 163, 93, 254, 86, 159);
 RT_INTERFACE!{static interface ITileFlyoutNotificationFactory(ITileFlyoutNotificationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITileFlyoutNotificationFactory] {
     #[cfg(feature="windows-data")] fn CreateTileFlyoutNotification(&self, content: *mut super::super::data::xml::dom::XmlDocument, out: *mut *mut TileFlyoutNotification) -> HRESULT
@@ -14609,7 +14609,7 @@ impl TileFlyoutUpdateManager {
         <Self as RtActivatable<ITileFlyoutUpdateManagerStatics>>::get_activation_factory().get_template_content(type_)
     }}
 }
-DEFINE_CLSID!(TileFlyoutUpdateManager(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,84,105,108,101,70,108,121,111,117,116,85,112,100,97,116,101,77,97,110,97,103,101,114,0]) [CLSID_TileFlyoutUpdateManager]);
+DEFINE_CLSID!(TileFlyoutUpdateManager: "Windows.UI.Notifications.TileFlyoutUpdateManager");
 DEFINE_IID!(IID_ITileFlyoutUpdateManagerStatics, 70662923, 6848, 19353, 136, 231, 173, 168, 62, 149, 61, 72);
 RT_INTERFACE!{static interface ITileFlyoutUpdateManagerStatics(ITileFlyoutUpdateManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITileFlyoutUpdateManagerStatics] {
     fn CreateTileFlyoutUpdaterForApplication(&self, out: *mut *mut TileFlyoutUpdater) -> HRESULT,
@@ -14717,7 +14717,7 @@ impl TileNotification {
         <Self as RtActivatable<ITileNotificationFactory>>::get_activation_factory().create_tile_notification(content)
     }}
 }
-DEFINE_CLSID!(TileNotification(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,84,105,108,101,78,111,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_TileNotification]);
+DEFINE_CLSID!(TileNotification: "Windows.UI.Notifications.TileNotification");
 DEFINE_IID!(IID_ITileNotificationFactory, 3333152110, 18728, 18120, 189, 191, 129, 160, 71, 222, 160, 212);
 RT_INTERFACE!{static interface ITileNotificationFactory(ITileNotificationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITileNotificationFactory] {
     #[cfg(feature="windows-data")] fn CreateTileNotification(&self, content: *mut super::super::data::xml::dom::XmlDocument, out: *mut *mut TileNotification) -> HRESULT
@@ -14752,7 +14752,7 @@ impl TileUpdateManager {
         <Self as RtActivatable<ITileUpdateManagerStatics2>>::get_activation_factory().get_for_user(user)
     }}
 }
-DEFINE_CLSID!(TileUpdateManager(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,84,105,108,101,85,112,100,97,116,101,77,97,110,97,103,101,114,0]) [CLSID_TileUpdateManager]);
+DEFINE_CLSID!(TileUpdateManager: "Windows.UI.Notifications.TileUpdateManager");
 DEFINE_IID!(IID_ITileUpdateManagerForUser, 1427379016, 12002, 20013, 156, 193, 33, 106, 32, 222, 204, 159);
 RT_INTERFACE!{interface ITileUpdateManagerForUser(ITileUpdateManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_ITileUpdateManagerForUser] {
     fn CreateTileUpdaterForApplication(&self, out: *mut *mut TileUpdater) -> HRESULT,
@@ -14974,7 +14974,7 @@ impl ToastCollection {
         <Self as RtActivatable<IToastCollectionFactory>>::get_activation_factory().create_instance(collectionId, displayName, launchArgs, iconUri)
     }}
 }
-DEFINE_CLSID!(ToastCollection(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,84,111,97,115,116,67,111,108,108,101,99,116,105,111,110,0]) [CLSID_ToastCollection]);
+DEFINE_CLSID!(ToastCollection: "Windows.UI.Notifications.ToastCollection");
 DEFINE_IID!(IID_IToastCollectionFactory, 374199255, 29636, 17655, 180, 255, 251, 109, 75, 241, 244, 198);
 RT_INTERFACE!{static interface IToastCollectionFactory(IToastCollectionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IToastCollectionFactory] {
     fn CreateInstance(&self, collectionId: HSTRING, displayName: HSTRING, launchArgs: HSTRING, iconUri: *mut super::super::foundation::Uri, out: *mut *mut ToastCollection) -> HRESULT
@@ -15128,7 +15128,7 @@ impl ToastNotification {
         <Self as RtActivatable<IToastNotificationFactory>>::get_activation_factory().create_toast_notification(content)
     }}
 }
-DEFINE_CLSID!(ToastNotification(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,84,111,97,115,116,78,111,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_ToastNotification]);
+DEFINE_CLSID!(ToastNotification: "Windows.UI.Notifications.ToastNotification");
 DEFINE_IID!(IID_IToastNotification2, 2650513361, 5178, 18702, 144, 191, 185, 251, 167, 19, 45, 231);
 RT_INTERFACE!{interface IToastNotification2(IToastNotification2Vtbl): IInspectable(IInspectableVtbl) [IID_IToastNotification2] {
     fn put_Tag(&self, value: HSTRING) -> HRESULT,
@@ -15359,7 +15359,7 @@ impl ToastNotificationManager {
         <Self as RtActivatable<IToastNotificationManagerStatics5>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(ToastNotificationManager(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,84,111,97,115,116,78,111,116,105,102,105,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_ToastNotificationManager]);
+DEFINE_CLSID!(ToastNotificationManager: "Windows.UI.Notifications.ToastNotificationManager");
 DEFINE_IID!(IID_IToastNotificationManagerForUser, 2041272310, 17406, 18555, 138, 127, 153, 86, 114, 0, 174, 148);
 RT_INTERFACE!{interface IToastNotificationManagerForUser(IToastNotificationManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_IToastNotificationManagerForUser] {
     fn CreateToastNotifier(&self, out: *mut *mut ToastNotifier) -> HRESULT,
@@ -15653,7 +15653,7 @@ impl UserNotificationListener {
         <Self as RtActivatable<IUserNotificationListenerStatics>>::get_activation_factory().get_current()
     }}
 }
-DEFINE_CLSID!(UserNotificationListener(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,77,97,110,97,103,101,109,101,110,116,46,85,115,101,114,78,111,116,105,102,105,99,97,116,105,111,110,76,105,115,116,101,110,101,114,0]) [CLSID_UserNotificationListener]);
+DEFINE_CLSID!(UserNotificationListener: "Windows.UI.Notifications.Management.UserNotificationListener");
 RT_ENUM! { enum UserNotificationListenerAccessStatus: i32 {
     Unspecified (UserNotificationListenerAccessStatus_Unspecified) = 0, Allowed (UserNotificationListenerAccessStatus_Allowed) = 1, Denied (UserNotificationListenerAccessStatus_Denied) = 2,
 }}
@@ -15938,7 +15938,7 @@ impl CompositionCapabilities {
         <Self as RtActivatable<ICompositionCapabilitiesStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(CompositionCapabilities(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,67,111,109,112,111,115,105,116,105,111,110,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_CompositionCapabilities]);
+DEFINE_CLSID!(CompositionCapabilities: "Windows.UI.Composition.CompositionCapabilities");
 DEFINE_IID!(IID_ICompositionCapabilitiesStatics, 4156008558, 25622, 18917, 141, 223, 175, 233, 73, 226, 5, 98);
 RT_INTERFACE!{static interface ICompositionCapabilitiesStatics(ICompositionCapabilitiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionCapabilitiesStatics] {
     fn GetForCurrentView(&self, out: *mut *mut CompositionCapabilities) -> HRESULT
@@ -16266,7 +16266,7 @@ impl CompositionEffectSourceParameter {
         <Self as RtActivatable<ICompositionEffectSourceParameterFactory>>::get_activation_factory().create(name)
     }}
 }
-DEFINE_CLSID!(CompositionEffectSourceParameter(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,67,111,109,112,111,115,105,116,105,111,110,69,102,102,101,99,116,83,111,117,114,99,101,80,97,114,97,109,101,116,101,114,0]) [CLSID_CompositionEffectSourceParameter]);
+DEFINE_CLSID!(CompositionEffectSourceParameter: "Windows.UI.Composition.CompositionEffectSourceParameter");
 DEFINE_IID!(IID_ICompositionEffectSourceParameterFactory, 3017405046, 43939, 18212, 172, 243, 208, 57, 116, 100, 219, 28);
 RT_INTERFACE!{static interface ICompositionEffectSourceParameterFactory(ICompositionEffectSourceParameterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionEffectSourceParameterFactory] {
     fn Create(&self, name: HSTRING, out: *mut *mut CompositionEffectSourceParameter) -> HRESULT
@@ -17247,7 +17247,7 @@ impl ICompositor {
 }
 RT_CLASS!{class Compositor: ICompositor}
 impl RtActivatable<IActivationFactory> for Compositor {}
-DEFINE_CLSID!(Compositor(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,67,111,109,112,111,115,105,116,111,114,0]) [CLSID_Compositor]);
+DEFINE_CLSID!(Compositor: "Windows.UI.Composition.Compositor");
 DEFINE_IID!(IID_ICompositor2, 1934655964, 24100, 17882, 163, 143, 227, 44, 195, 73, 169, 160);
 RT_INTERFACE!{interface ICompositor2(ICompositor2Vtbl): IInspectable(IInspectableVtbl) [IID_ICompositor2] {
     fn CreateAmbientLight(&self, out: *mut *mut AmbientLight) -> HRESULT,
@@ -18833,7 +18833,7 @@ impl ISceneLightingEffect {
 }
 RT_CLASS!{class SceneLightingEffect: ISceneLightingEffect}
 impl RtActivatable<IActivationFactory> for SceneLightingEffect {}
-DEFINE_CLSID!(SceneLightingEffect(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,69,102,102,101,99,116,115,46,83,99,101,110,101,76,105,103,104,116,105,110,103,69,102,102,101,99,116,0]) [CLSID_SceneLightingEffect]);
+DEFINE_CLSID!(SceneLightingEffect: "Windows.UI.Composition.Effects.SceneLightingEffect");
 DEFINE_IID!(IID_ISceneLightingEffect2, 2653359745, 29424, 19548, 149, 248, 138, 110, 0, 36, 244, 9);
 RT_INTERFACE!{interface ISceneLightingEffect2(ISceneLightingEffect2Vtbl): IInspectable(IInspectableVtbl) [IID_ISceneLightingEffect2] {
     fn get_ReflectanceModel(&self, out: *mut SceneLightingEffectReflectanceModel) -> HRESULT,
@@ -18890,7 +18890,7 @@ impl CompositionConditionalValue {
         <Self as RtActivatable<ICompositionConditionalValueStatics>>::get_activation_factory().create(compositor)
     }}
 }
-DEFINE_CLSID!(CompositionConditionalValue(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,73,110,116,101,114,97,99,116,105,111,110,115,46,67,111,109,112,111,115,105,116,105,111,110,67,111,110,100,105,116,105,111,110,97,108,86,97,108,117,101,0]) [CLSID_CompositionConditionalValue]);
+DEFINE_CLSID!(CompositionConditionalValue: "Windows.UI.Composition.Interactions.CompositionConditionalValue");
 DEFINE_IID!(IID_ICompositionConditionalValueStatics, 151800690, 33895, 19722, 144, 101, 172, 70, 184, 10, 85, 34);
 RT_INTERFACE!{static interface ICompositionConditionalValueStatics(ICompositionConditionalValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionConditionalValueStatics] {
     fn Create(&self, compositor: *mut super::Compositor, out: *mut *mut CompositionConditionalValue) -> HRESULT
@@ -19141,7 +19141,7 @@ impl InteractionTracker {
         <Self as RtActivatable<IInteractionTrackerStatics>>::get_activation_factory().create_with_owner(compositor, owner)
     }}
 }
-DEFINE_CLSID!(InteractionTracker(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,73,110,116,101,114,97,99,116,105,111,110,115,46,73,110,116,101,114,97,99,116,105,111,110,84,114,97,99,107,101,114,0]) [CLSID_InteractionTracker]);
+DEFINE_CLSID!(InteractionTracker: "Windows.UI.Composition.Interactions.InteractionTracker");
 DEFINE_IID!(IID_IInteractionTracker2, 628529726, 52845, 17548, 131, 134, 146, 98, 13, 36, 7, 86);
 RT_INTERFACE!{interface IInteractionTracker2(IInteractionTracker2Vtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTracker2] {
     fn ConfigureCenterPointXInertiaModifiers(&self, conditionalValues: *mut ::rt::gen::windows::foundation::collections::IIterable<CompositionConditionalValue>) -> HRESULT,
@@ -19234,7 +19234,7 @@ impl InteractionTrackerInertiaMotion {
         <Self as RtActivatable<IInteractionTrackerInertiaMotionStatics>>::get_activation_factory().create(compositor)
     }}
 }
-DEFINE_CLSID!(InteractionTrackerInertiaMotion(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,73,110,116,101,114,97,99,116,105,111,110,115,46,73,110,116,101,114,97,99,116,105,111,110,84,114,97,99,107,101,114,73,110,101,114,116,105,97,77,111,116,105,111,110,0]) [CLSID_InteractionTrackerInertiaMotion]);
+DEFINE_CLSID!(InteractionTrackerInertiaMotion: "Windows.UI.Composition.Interactions.InteractionTrackerInertiaMotion");
 DEFINE_IID!(IID_IInteractionTrackerInertiaMotionStatics, 2361933270, 47739, 17178, 132, 75, 110, 172, 145, 48, 249, 154);
 RT_INTERFACE!{static interface IInteractionTrackerInertiaMotionStatics(IInteractionTrackerInertiaMotionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTrackerInertiaMotionStatics] {
     fn Create(&self, compositor: *mut super::Compositor, out: *mut *mut InteractionTrackerInertiaMotion) -> HRESULT
@@ -19280,7 +19280,7 @@ impl InteractionTrackerInertiaNaturalMotion {
         <Self as RtActivatable<IInteractionTrackerInertiaNaturalMotionStatics>>::get_activation_factory().create(compositor)
     }}
 }
-DEFINE_CLSID!(InteractionTrackerInertiaNaturalMotion(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,73,110,116,101,114,97,99,116,105,111,110,115,46,73,110,116,101,114,97,99,116,105,111,110,84,114,97,99,107,101,114,73,110,101,114,116,105,97,78,97,116,117,114,97,108,77,111,116,105,111,110,0]) [CLSID_InteractionTrackerInertiaNaturalMotion]);
+DEFINE_CLSID!(InteractionTrackerInertiaNaturalMotion: "Windows.UI.Composition.Interactions.InteractionTrackerInertiaNaturalMotion");
 DEFINE_IID!(IID_IInteractionTrackerInertiaNaturalMotionStatics, 3487192496, 24126, 17033, 147, 45, 238, 95, 80, 231, 66, 131);
 RT_INTERFACE!{static interface IInteractionTrackerInertiaNaturalMotionStatics(IInteractionTrackerInertiaNaturalMotionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTrackerInertiaNaturalMotionStatics] {
     fn Create(&self, compositor: *mut super::Compositor, out: *mut *mut InteractionTrackerInertiaNaturalMotion) -> HRESULT
@@ -19326,7 +19326,7 @@ impl InteractionTrackerInertiaRestingValue {
         <Self as RtActivatable<IInteractionTrackerInertiaRestingValueStatics>>::get_activation_factory().create(compositor)
     }}
 }
-DEFINE_CLSID!(InteractionTrackerInertiaRestingValue(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,73,110,116,101,114,97,99,116,105,111,110,115,46,73,110,116,101,114,97,99,116,105,111,110,84,114,97,99,107,101,114,73,110,101,114,116,105,97,82,101,115,116,105,110,103,86,97,108,117,101,0]) [CLSID_InteractionTrackerInertiaRestingValue]);
+DEFINE_CLSID!(InteractionTrackerInertiaRestingValue: "Windows.UI.Composition.Interactions.InteractionTrackerInertiaRestingValue");
 DEFINE_IID!(IID_IInteractionTrackerInertiaRestingValueStatics, 418203289, 1861, 16534, 188, 171, 58, 78, 153, 86, 155, 207);
 RT_INTERFACE!{static interface IInteractionTrackerInertiaRestingValueStatics(IInteractionTrackerInertiaRestingValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTrackerInertiaRestingValueStatics] {
     fn Create(&self, compositor: *mut super::Compositor, out: *mut *mut InteractionTrackerInertiaRestingValue) -> HRESULT
@@ -19529,7 +19529,7 @@ impl InteractionTrackerVector2InertiaNaturalMotion {
         <Self as RtActivatable<IInteractionTrackerVector2InertiaNaturalMotionStatics>>::get_activation_factory().create(compositor)
     }}
 }
-DEFINE_CLSID!(InteractionTrackerVector2InertiaNaturalMotion(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,73,110,116,101,114,97,99,116,105,111,110,115,46,73,110,116,101,114,97,99,116,105,111,110,84,114,97,99,107,101,114,86,101,99,116,111,114,50,73,110,101,114,116,105,97,78,97,116,117,114,97,108,77,111,116,105,111,110,0]) [CLSID_InteractionTrackerVector2InertiaNaturalMotion]);
+DEFINE_CLSID!(InteractionTrackerVector2InertiaNaturalMotion: "Windows.UI.Composition.Interactions.InteractionTrackerVector2InertiaNaturalMotion");
 DEFINE_IID!(IID_IInteractionTrackerVector2InertiaNaturalMotionStatics, 2181044808, 2496, 17231, 129, 137, 20, 28, 102, 223, 54, 47);
 RT_INTERFACE!{static interface IInteractionTrackerVector2InertiaNaturalMotionStatics(IInteractionTrackerVector2InertiaNaturalMotionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTrackerVector2InertiaNaturalMotionStatics] {
     fn Create(&self, compositor: *mut super::Compositor, out: *mut *mut InteractionTrackerVector2InertiaNaturalMotion) -> HRESULT
@@ -19663,7 +19663,7 @@ impl VisualInteractionSource {
         <Self as RtActivatable<IVisualInteractionSourceStatics>>::get_activation_factory().create(source)
     }}
 }
-DEFINE_CLSID!(VisualInteractionSource(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,73,110,116,101,114,97,99,116,105,111,110,115,46,86,105,115,117,97,108,73,110,116,101,114,97,99,116,105,111,110,83,111,117,114,99,101,0]) [CLSID_VisualInteractionSource]);
+DEFINE_CLSID!(VisualInteractionSource: "Windows.UI.Composition.Interactions.VisualInteractionSource");
 DEFINE_IID!(IID_IVisualInteractionSource2, 2861648019, 42812, 16717, 128, 208, 36, 155, 173, 47, 189, 147);
 RT_INTERFACE!{interface IVisualInteractionSource2(IVisualInteractionSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IVisualInteractionSource2] {
     fn get_DeltaPosition(&self, out: *mut ::rt::gen::windows::foundation::numerics::Vector3) -> HRESULT,
