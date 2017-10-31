@@ -363,7 +363,7 @@ pub struct HString(HSTRING);
 impl HString {
     /// Creates a new `HString` whose memory is managed by the Windows Runtime.
     /// This allocates twice (once for the conversion to UTF-16, and again within `WindowsCreateString`),
-    /// therefore this should not be used. Use `FastHString::new()` instead.
+    /// therefore this should not be used. Use the `hstr!` macro or `FastHString::new()` instead.
     pub fn new<'a>(s: &'a str) -> HString {
         // Every UTF-8 byte results in either 1 or 2 UTF-16 bytes and we need one
         // more for the null terminator. This size expectation is correct in most cases,
@@ -584,6 +584,22 @@ mod tests {
     }
 
     #[test]
+    fn roundtrip_macro() {
+        let hstr = hstr!("12345");
+        assert!(hstr.len() as usize == "12345".len());
+        assert!("12345" == hstr.to_string());
+    }
+
+    #[test]
+    fn roundtrip_utf16_internal_nul() {
+        let s = "This is some\0test string\0with internal nuls";
+        let utf16: Vec<_> = s.encode_utf16().chain(Some(0)).collect();
+        let hstr = HStringReference::from_utf16(&utf16);
+        assert!(hstr.len() as usize == s.len());
+        assert!(s == hstr.to_string());
+    }
+
+    #[test]
     fn make_reference() {
         let s1 = HString::new("AAA");
         assert_eq!(s1.make_reference().to_string(), "AAA");
@@ -670,7 +686,7 @@ mod tests {
     fn bench_create(b: &mut Bencher) {
         let s = "123456789";
         b.iter(|| {
-            let _ = HString::new(s);
+            HString::new(s)
         });;
     }
 
@@ -678,7 +694,14 @@ mod tests {
     fn bench_create_fast(b: &mut Bencher) {
         let s = "123456789";
         b.iter(|| {
-            let _ = FastHString::new(s);
+            FastHString::new(s)
+        });
+    }
+
+    #[bench]
+    fn bench_create_macro_literal(b: &mut Bencher) {
+        b.iter(|| {
+            hstr!("123456789")
         });
     }
 
@@ -686,7 +709,7 @@ mod tests {
     fn bench_make_reference(b: &mut Bencher) {
         let s = HString::new("123456789");
         b.iter(|| {
-            let _ = s.make_reference();
+            s.make_reference()
         });
     }
 
@@ -694,7 +717,7 @@ mod tests {
     fn bench_make_reference_fast(b: &mut Bencher) {
         let s = FastHString::new("123456789");
         b.iter(|| {
-            let _ = s.make_reference();
+            s.make_reference()
         });
     }
 
@@ -702,7 +725,7 @@ mod tests {
     fn bench_from_utf16(b: &mut Bencher) {
         let utf16: Vec<_> = "This is some test string".encode_utf16().chain(Some(0)).collect();
         b.iter(|| {
-            let _ = HStringReference::from_utf16(&utf16);
+            HStringReference::from_utf16(&utf16)
         });
     }
     
@@ -710,7 +733,7 @@ mod tests {
     fn bench_to_string(b: &mut Bencher) {
         let hstr = FastHString::new("123456789");
         b.iter(|| {
-            let _ = hstr.to_string();
+            hstr.to_string()
         });
     }
 }

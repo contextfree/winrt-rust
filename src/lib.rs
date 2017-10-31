@@ -28,10 +28,26 @@
 
 #![allow(dead_code,non_upper_case_globals,non_snake_case)]
 
+#[macro_use]
+extern crate wstr;
+pub use wstr::*;
+
 extern crate winapi as w;
 
 mod guid;
 pub use guid::Guid;
+
+/// Creates an `HStringReference` from a string literal.
+/// This is the fastest and easiest way to pass `HString` literals
+/// to WinRT functions.
+#[macro_export]
+macro_rules! hstr {
+    ($str: tt) => {{
+        let s = wstrz!($str);
+        #[allow(unused_unsafe)]
+        unsafe { HStringReference::from_utf16_unchecked(s) }
+    }}
+}
 
 ///Represents the trust level of an activatable class (re-export from WinAPI crate)
 pub type TrustLevel = ::w::winrt::inspectable::TrustLevel;
