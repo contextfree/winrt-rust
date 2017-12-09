@@ -1,7 +1,5 @@
 extern crate winapi as w;
 extern crate winrt;
-// TODO: don't use functions from runtimeobject directly 
-extern crate runtimeobject;
 
 use std::ptr;
 
@@ -36,8 +34,8 @@ fn run() {
     println!("{}", device_selector);
     
     unsafe {
-        use runtimeobject::*;
-        use ::w::S_OK;
+        use w::shared::winerror::S_OK;
+        use w::winrt::roerrorapi::GetRestrictedErrorInfo;
 
         // Test some error reporting by using an invalid device selector
         let wrong_deviceselector: FastHString = "Foobar".into();

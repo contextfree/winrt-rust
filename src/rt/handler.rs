@@ -1,15 +1,14 @@
 use std::sync::atomic;
 
-use ::{
-    IUnknown,
-    IAgileObject,
-    ComInterface,
-    ComIid,
-    ComPtr,
-    Guid
-};
+use {IUnknown, IAgileObject, ComInterface, ComIid, ComPtr, Guid};
 
-use ::w::{S_OK, HRESULT, VOID, REFIID, ULONG, IUnknownVtbl};
+use w::shared::ntdef::{VOID, ULONG};
+use w::shared::winerror::S_OK;
+use w::shared::winerror::E_NOINTERFACE;
+use w::shared::guiddef::REFIID;
+use w::um::unknwnbase::IUnknownVtbl;
+
+use result::HRESULT;
 
 #[repr(C)]
 pub struct ComRepr<T, Vtbl> {
@@ -56,7 +55,7 @@ pub unsafe extern "system" fn ComReprHandler_QueryInterface<T, I>(this_: *mut IU
     // IAgileObject is only supported for Send objects
     if guid != *IUnknown::iid() && guid != *IAgileObject::iid() && guid != *<I as ComIid>::iid() { 
         *ppv = ::std::ptr::null_mut();
-        return ::w::E_NOINTERFACE;
+        return E_NOINTERFACE;
     }
     *ppv = this_ as *mut _ as *mut VOID;
     ComRepr_AddRef::<T>(this_ as *mut IUnknown);

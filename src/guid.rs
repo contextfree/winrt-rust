@@ -1,5 +1,7 @@
 use std::{fmt, cmp, mem};
 
+use w::shared::guiddef::GUID;
+
 /// Represents a GUID type in the Windows Runtime type system.
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -10,16 +12,16 @@ pub struct Guid { // TODO: fields should not be public (requires const fn constr
     pub Data4: [u8; 8]
 }
 
-impl AsRef<::w::GUID> for Guid {
+impl AsRef<GUID> for Guid {
     #[inline]
-    fn as_ref(&self) -> &::w::GUID {
+    fn as_ref(&self) -> &GUID {
         unsafe { mem::transmute(self) }
     } 
 }
 
-impl From<::w::GUID> for Guid {
+impl From<GUID> for Guid {
     #[inline]
-    fn from(guid: ::w::GUID) -> Self {
+    fn from(guid: GUID) -> Self {
         unsafe { mem::transmute(guid) }
     }
 }

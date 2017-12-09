@@ -1,12 +1,17 @@
-use ::std::ptr;
-use ::std::fmt;
-use ::std::cmp;
-use ::std::mem;
-use ::std::marker::PhantomData;
-use ::std::ops::Deref;
+use std::ptr;
+use std::fmt;
+use std::cmp;
+use std::mem;
+use std::marker::PhantomData;
+use std::ops::Deref;
 
-use ::w::*;
-use ::runtimeobject::*;
+use w::shared::basetsd::UINT32;
+use w::shared::ntdef::LPCWSTR;
+use w::shared::winerror::S_OK;
+use w::winrt::hstring::{HSTRING, HSTRING__, HSTRING_HEADER};
+use w::winrt::winstring::{WindowsCreateString, WindowsGetStringLen, WindowsIsStringEmpty,
+                          WindowsGetStringRawBuffer, WindowsCreateStringReference,
+                          WindowsDuplicateString, WindowsDeleteString, WindowsCompareStringOrdinal};
 
 // For some information about HSTRINGs, see http://ksav.com.np/tech/2016/06/16/raymonds-complete-guide-to-hstring-semantics/
 
@@ -34,20 +39,9 @@ fn internal_cmp(left: HSTRING, right: HSTRING) -> cmp::Ordering {
 }
 
 #[inline]
-#[cfg(target_arch = "x86_64")]
 fn zero_header() -> HSTRING_HEADER {
     HSTRING_HEADER {
-        Reserved: [ptr::null_mut(); 0],
-        Reserved2: [0; 24]
-    }
-}
-
-#[inline]
-#[cfg(target_arch = "x86")]
-fn zero_header() -> HSTRING_HEADER {
-    HSTRING_HEADER {
-        Reserved: [ptr::null_mut(); 0],
-        Reserved2: [0; 20]
+        Reserved: unsafe { mem::zeroed() }
     }
 }
 
@@ -569,8 +563,8 @@ mod tests {
     #[test]
     fn check_sizes() {
         use ::std::mem::size_of;
-        assert_eq!(size_of::<::HString>(), size_of::<::w::HSTRING>());
-        assert_eq!(size_of::<&::HStringArg>(), size_of::<::w::HSTRING>());
+        assert_eq!(size_of::<::HString>(), size_of::<::w::winrt::hstring::HSTRING>());
+        assert_eq!(size_of::<&::HStringArg>(), size_of::<::w::winrt::hstring::HSTRING>());
     }
 
     #[test]
