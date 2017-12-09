@@ -20,6 +20,7 @@ oleaut32-sys = "0.2.0"
 
 [features]
 nightly = []
+lang-compat = []
 windows-applicationmodel = []
 windows-data = []
 windows-devices = []

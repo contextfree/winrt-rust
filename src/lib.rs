@@ -25,7 +25,6 @@
 #![cfg_attr(test,feature(test))]
 
 #![cfg_attr(feature = "nightly", feature(specialization))]
-#![cfg_attr(feature = "nightly", feature(associated_consts))]
 
 #![allow(dead_code,non_upper_case_globals,non_snake_case)]
 
@@ -94,4 +93,15 @@ mod prelude {
     pub fn err<T>(hr: ::result::HRESULT) -> ::result::Result<T> {
         Err(::result::Error::from_hresult(hr))
     }
+}
+
+// For definitions that are different depending on the lang-compat feature
+#[cfg(not(feature = "lang-compat"))]
+mod langcompat {
+    pub const ASYNC_STATUS_COMPLETED: ::windows::foundation::AsyncStatus = ::windows::foundation::AsyncStatus::Completed;
+}
+
+#[cfg(feature = "lang-compat")]
+mod langcompat {
+    pub const ASYNC_STATUS_COMPLETED: ::windows::foundation::AsyncStatus = ::windows::foundation::AsyncStatus_Completed;
 }
