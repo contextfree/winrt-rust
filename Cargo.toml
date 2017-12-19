@@ -13,7 +13,7 @@ license = "MIT OR Apache-2.0"
 exclude = ["Generator/**"]
 
 [dependencies]
-winapi = { git = "https://github.com/retep998/winapi-rs", branch = "dev", features = ["winnt", "roapi", "hstring", "winstring", "winerror", "roerrorapi", "restrictederrorinfo", "oleauto", "combaseapi"] }
+winapi = { version = "0.3", features = ["winnt", "combaseapi", "oleauto", "roapi", "roerrorapi", "hstring", "winstring", "winerror", "restrictederrorinfo"] }
 
 [features]
 nightly = []
