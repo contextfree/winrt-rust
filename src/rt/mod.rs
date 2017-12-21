@@ -4,7 +4,7 @@ use super::{ComInterface, HString, HStringReference, HStringArg, ComPtr, ComArra
 use HRESULT;
 
 use w::shared::ntdef::{VOID, ULONG};
-use w::shared::winerror::{S_OK, S_FALSE, CO_E_NOTINITIALIZED};
+use w::shared::winerror::{S_OK, S_FALSE, CO_E_NOTINITIALIZED, REGDB_E_CLASSNOTREG};
 use w::shared::guiddef::IID;
 use w::um::unknwnbase::IUnknownVtbl;
 use w::winrt::hstring::HSTRING;
@@ -114,8 +114,11 @@ pub trait RtActivatable<Interface> : RtNamedClass {
             unsafe { ComPtr::wrap(res) }
         } else if hr == CO_E_NOTINITIALIZED {
             panic!("WinRT is not initialized")
+        } else if hr == REGDB_E_CLASSNOTREG {
+            let name = Self::name();
+            panic!("WinRT class \"{}\" not registered", String::from_utf16_lossy(&name[0..name.len()-1]))
         } else {
-            panic!("RoGetActivationFactory failed with error code {}", hr)
+            panic!("RoGetActivationFactory failed with error code 0x{:X}", hr as u32)
         }     
     }
 }
