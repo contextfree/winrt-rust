@@ -611,18 +611,18 @@ impl ICalendar {
     }
 }
 RT_CLASS!{class Calendar: ICalendar}
-impl RtActivatable<ICalendarFactory2> for Calendar {}
 impl RtActivatable<ICalendarFactory> for Calendar {}
+impl RtActivatable<ICalendarFactory2> for Calendar {}
 impl RtActivatable<IActivationFactory> for Calendar {}
 impl Calendar {
-    #[inline] pub fn create_calendar_with_time_zone(languages: &super::foundation::collections::IIterable<HString>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<ComPtr<Calendar>> { unsafe {
-        <Self as RtActivatable<ICalendarFactory2>>::get_activation_factory().create_calendar_with_time_zone(languages, calendar, clock, timeZoneId)
-    }}
     #[inline] pub fn create_calendar_default_calendar_and_clock(languages: &super::foundation::collections::IIterable<HString>) -> Result<ComPtr<Calendar>> { unsafe {
         <Self as RtActivatable<ICalendarFactory>>::get_activation_factory().create_calendar_default_calendar_and_clock(languages)
     }}
     #[inline] pub fn create_calendar(languages: &super::foundation::collections::IIterable<HString>, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<Calendar>> { unsafe {
         <Self as RtActivatable<ICalendarFactory>>::get_activation_factory().create_calendar(languages, calendar, clock)
+    }}
+    #[inline] pub fn create_calendar_with_time_zone(languages: &super::foundation::collections::IIterable<HString>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<ComPtr<Calendar>> { unsafe {
+        <Self as RtActivatable<ICalendarFactory2>>::get_activation_factory().create_calendar_with_time_zone(languages, calendar, clock, timeZoneId)
     }}
 }
 DEFINE_CLSID!(Calendar(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,97,108,101,110,100,97,114,0]) [CLSID_Calendar]);
@@ -655,28 +655,10 @@ impl ICalendarFactory2 {
     }
 }
 RT_CLASS!{static class CalendarIdentifiers}
-impl RtActivatable<ICalendarIdentifiersStatics3> for CalendarIdentifiers {}
-impl RtActivatable<ICalendarIdentifiersStatics2> for CalendarIdentifiers {}
 impl RtActivatable<ICalendarIdentifiersStatics> for CalendarIdentifiers {}
+impl RtActivatable<ICalendarIdentifiersStatics2> for CalendarIdentifiers {}
+impl RtActivatable<ICalendarIdentifiersStatics3> for CalendarIdentifiers {}
 impl CalendarIdentifiers {
-    #[inline] pub fn get_chinese_lunar() -> Result<HString> { unsafe {
-        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_chinese_lunar()
-    }}
-    #[inline] pub fn get_japanese_lunar() -> Result<HString> { unsafe {
-        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_japanese_lunar()
-    }}
-    #[inline] pub fn get_korean_lunar() -> Result<HString> { unsafe {
-        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_korean_lunar()
-    }}
-    #[inline] pub fn get_taiwan_lunar() -> Result<HString> { unsafe {
-        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_taiwan_lunar()
-    }}
-    #[inline] pub fn get_vietnamese_lunar() -> Result<HString> { unsafe {
-        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_vietnamese_lunar()
-    }}
-    #[inline] pub fn get_persian() -> Result<HString> { unsafe {
-        <Self as RtActivatable<ICalendarIdentifiersStatics2>>::get_activation_factory().get_persian()
-    }}
     #[inline] pub fn get_gregorian() -> Result<HString> { unsafe {
         <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().get_gregorian()
     }}
@@ -703,6 +685,24 @@ impl CalendarIdentifiers {
     }}
     #[inline] pub fn get_um_al_qura() -> Result<HString> { unsafe {
         <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().get_um_al_qura()
+    }}
+    #[inline] pub fn get_persian() -> Result<HString> { unsafe {
+        <Self as RtActivatable<ICalendarIdentifiersStatics2>>::get_activation_factory().get_persian()
+    }}
+    #[inline] pub fn get_chinese_lunar() -> Result<HString> { unsafe {
+        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_chinese_lunar()
+    }}
+    #[inline] pub fn get_japanese_lunar() -> Result<HString> { unsafe {
+        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_japanese_lunar()
+    }}
+    #[inline] pub fn get_korean_lunar() -> Result<HString> { unsafe {
+        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_korean_lunar()
+    }}
+    #[inline] pub fn get_taiwan_lunar() -> Result<HString> { unsafe {
+        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_taiwan_lunar()
+    }}
+    #[inline] pub fn get_vietnamese_lunar() -> Result<HString> { unsafe {
+        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_vietnamese_lunar()
     }}
 }
 DEFINE_CLSID!(CalendarIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,97,108,101,110,100,97,114,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_CalendarIdentifiers]);
@@ -840,12 +840,9 @@ impl IClockIdentifiersStatics {
     }
 }
 RT_CLASS!{static class CurrencyIdentifiers}
-impl RtActivatable<ICurrencyIdentifiersStatics2> for CurrencyIdentifiers {}
 impl RtActivatable<ICurrencyIdentifiersStatics> for CurrencyIdentifiers {}
+impl RtActivatable<ICurrencyIdentifiersStatics2> for CurrencyIdentifiers {}
 impl CurrencyIdentifiers {
-    #[inline] pub fn get_byn() -> Result<HString> { unsafe {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics2>>::get_activation_factory().get_byn()
-    }}
     #[inline] pub fn get_aed() -> Result<HString> { unsafe {
         <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_aed()
     }}
@@ -1316,6 +1313,9 @@ impl CurrencyIdentifiers {
     }}
     #[inline] pub fn get_zwl() -> Result<HString> { unsafe {
         <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_zwl()
+    }}
+    #[inline] pub fn get_byn() -> Result<HString> { unsafe {
+        <Self as RtActivatable<ICurrencyIdentifiersStatics2>>::get_activation_factory().get_byn()
     }}
 }
 DEFINE_CLSID!(CurrencyIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,117,114,114,101,110,99,121,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_CurrencyIdentifiers]);
@@ -2445,20 +2445,20 @@ impl ILanguage {
 }
 RT_CLASS!{class Language: ILanguage}
 impl RtActivatable<ILanguageFactory> for Language {}
-impl RtActivatable<ILanguageStatics2> for Language {}
 impl RtActivatable<ILanguageStatics> for Language {}
+impl RtActivatable<ILanguageStatics2> for Language {}
 impl Language {
     #[inline] pub fn create_language(languageTag: &HStringArg) -> Result<ComPtr<Language>> { unsafe {
         <Self as RtActivatable<ILanguageFactory>>::get_activation_factory().create_language(languageTag)
-    }}
-    #[inline] pub fn try_set_input_method_language_tag(languageTag: &HStringArg) -> Result<bool> { unsafe {
-        <Self as RtActivatable<ILanguageStatics2>>::get_activation_factory().try_set_input_method_language_tag(languageTag)
     }}
     #[inline] pub fn is_well_formed(languageTag: &HStringArg) -> Result<bool> { unsafe {
         <Self as RtActivatable<ILanguageStatics>>::get_activation_factory().is_well_formed(languageTag)
     }}
     #[inline] pub fn get_current_input_method_language_tag() -> Result<HString> { unsafe {
         <Self as RtActivatable<ILanguageStatics>>::get_activation_factory().get_current_input_method_language_tag()
+    }}
+    #[inline] pub fn try_set_input_method_language_tag(languageTag: &HStringArg) -> Result<bool> { unsafe {
+        <Self as RtActivatable<ILanguageStatics2>>::get_activation_factory().try_set_input_method_language_tag(languageTag)
     }}
 }
 DEFINE_CLSID!(Language(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,76,97,110,103,117,97,103,101,0]) [CLSID_Language]);

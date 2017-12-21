@@ -2835,17 +2835,17 @@ impl IPrintManager {
     }
 }
 RT_CLASS!{class PrintManager: IPrintManager}
-impl RtActivatable<IPrintManagerStatic2> for PrintManager {}
 impl RtActivatable<IPrintManagerStatic> for PrintManager {}
+impl RtActivatable<IPrintManagerStatic2> for PrintManager {}
 impl PrintManager {
-    #[inline] pub fn is_supported() -> Result<bool> { unsafe {
-        <Self as RtActivatable<IPrintManagerStatic2>>::get_activation_factory().is_supported()
-    }}
     #[inline] pub fn get_for_current_view() -> Result<ComPtr<PrintManager>> { unsafe {
         <Self as RtActivatable<IPrintManagerStatic>>::get_activation_factory().get_for_current_view()
     }}
     #[inline] pub fn show_print_uiasync() -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
         <Self as RtActivatable<IPrintManagerStatic>>::get_activation_factory().show_print_uiasync()
+    }}
+    #[inline] pub fn is_supported() -> Result<bool> { unsafe {
+        <Self as RtActivatable<IPrintManagerStatic2>>::get_activation_factory().is_supported()
     }}
 }
 DEFINE_CLSID!(PrintManager(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,80,114,105,110,116,77,97,110,97,103,101,114,0]) [CLSID_PrintManager]);
@@ -5187,12 +5187,12 @@ impl IHolographicSpace {
     }
 }
 RT_CLASS!{class HolographicSpace: IHolographicSpace}
-impl RtActivatable<IHolographicSpaceStatics3> for HolographicSpace {}
-impl RtActivatable<IHolographicSpaceStatics2> for HolographicSpace {}
 impl RtActivatable<IHolographicSpaceStatics> for HolographicSpace {}
+impl RtActivatable<IHolographicSpaceStatics2> for HolographicSpace {}
+impl RtActivatable<IHolographicSpaceStatics3> for HolographicSpace {}
 impl HolographicSpace {
-    #[inline] pub fn get_is_configured() -> Result<bool> { unsafe {
-        <Self as RtActivatable<IHolographicSpaceStatics3>>::get_activation_factory().get_is_configured()
+    #[cfg(feature="windows-ui")] #[inline] pub fn create_for_core_window(window: &super::super::ui::core::CoreWindow) -> Result<ComPtr<HolographicSpace>> { unsafe {
+        <Self as RtActivatable<IHolographicSpaceStatics>>::get_activation_factory().create_for_core_window(window)
     }}
     #[inline] pub fn get_is_supported() -> Result<bool> { unsafe {
         <Self as RtActivatable<IHolographicSpaceStatics2>>::get_activation_factory().get_is_supported()
@@ -5206,8 +5206,8 @@ impl HolographicSpace {
     #[inline] pub fn remove_is_available_changed(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IHolographicSpaceStatics2>>::get_activation_factory().remove_is_available_changed(token)
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn create_for_core_window(window: &super::super::ui::core::CoreWindow) -> Result<ComPtr<HolographicSpace>> { unsafe {
-        <Self as RtActivatable<IHolographicSpaceStatics>>::get_activation_factory().create_for_core_window(window)
+    #[inline] pub fn get_is_configured() -> Result<bool> { unsafe {
+        <Self as RtActivatable<IHolographicSpaceStatics3>>::get_activation_factory().get_is_configured()
     }}
 }
 DEFINE_CLSID!(HolographicSpace(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,83,112,97,99,101,0]) [CLSID_HolographicSpace]);

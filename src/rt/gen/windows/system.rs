@@ -789,16 +789,22 @@ impl IKnownUserPropertiesStatics {
     }
 }
 RT_CLASS!{static class Launcher}
-impl RtActivatable<ILauncherStatics3> for Launcher {}
-impl RtActivatable<ILauncherStatics2> for Launcher {}
-impl RtActivatable<ILauncherStatics4> for Launcher {}
 impl RtActivatable<ILauncherStatics> for Launcher {}
+impl RtActivatable<ILauncherStatics2> for Launcher {}
+impl RtActivatable<ILauncherStatics3> for Launcher {}
+impl RtActivatable<ILauncherStatics4> for Launcher {}
 impl Launcher {
-    #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_async(folder: &super::storage::IStorageFolder) -> Result<ComPtr<super::foundation::IAsyncOperation<bool>>> { unsafe {
-        <Self as RtActivatable<ILauncherStatics3>>::get_activation_factory().launch_folder_async(folder)
+    #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_async(file: &super::storage::IStorageFile) -> Result<ComPtr<super::foundation::IAsyncOperation<bool>>> { unsafe {
+        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().launch_file_async(file)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_with_options_async(folder: &super::storage::IStorageFolder, options: &FolderLauncherOptions) -> Result<ComPtr<super::foundation::IAsyncOperation<bool>>> { unsafe {
-        <Self as RtActivatable<ILauncherStatics3>>::get_activation_factory().launch_folder_with_options_async(folder, options)
+    #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_with_options_async(file: &super::storage::IStorageFile, options: &LauncherOptions) -> Result<ComPtr<super::foundation::IAsyncOperation<bool>>> { unsafe {
+        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().launch_file_with_options_async(file, options)
+    }}
+    #[inline] pub fn launch_uri_async(uri: &super::foundation::Uri) -> Result<ComPtr<super::foundation::IAsyncOperation<bool>>> { unsafe {
+        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().launch_uri_async(uri)
+    }}
+    #[inline] pub fn launch_uri_with_options_async(uri: &super::foundation::Uri, options: &LauncherOptions) -> Result<ComPtr<super::foundation::IAsyncOperation<bool>>> { unsafe {
+        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().launch_uri_with_options_async(uri, options)
     }}
     #[inline] pub fn launch_uri_for_results_async(uri: &super::foundation::Uri, options: &LauncherOptions) -> Result<ComPtr<super::foundation::IAsyncOperation<LaunchUriResult>>> { unsafe {
         <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().launch_uri_for_results_async(uri, options)
@@ -830,6 +836,12 @@ impl Launcher {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_file_handlers_async(extension: &HStringArg) -> Result<ComPtr<super::foundation::IAsyncOperation<super::foundation::collections::IVectorView<super::applicationmodel::AppInfo>>>> { unsafe {
         <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().find_file_handlers_async(extension)
     }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_async(folder: &super::storage::IStorageFolder) -> Result<ComPtr<super::foundation::IAsyncOperation<bool>>> { unsafe {
+        <Self as RtActivatable<ILauncherStatics3>>::get_activation_factory().launch_folder_async(folder)
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_with_options_async(folder: &super::storage::IStorageFolder, options: &FolderLauncherOptions) -> Result<ComPtr<super::foundation::IAsyncOperation<bool>>> { unsafe {
+        <Self as RtActivatable<ILauncherStatics3>>::get_activation_factory().launch_folder_with_options_async(folder, options)
+    }}
     #[inline] pub fn query_app_uri_support_async(uri: &super::foundation::Uri) -> Result<ComPtr<super::foundation::IAsyncOperation<LaunchQuerySupportStatus>>> { unsafe {
         <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().query_app_uri_support_async(uri)
     }}
@@ -853,18 +865,6 @@ impl Launcher {
     }}
     #[inline] pub fn launch_uri_for_results_with_data_for_user_async(user: &User, uri: &super::foundation::Uri, options: &LauncherOptions, inputData: &super::foundation::collections::ValueSet) -> Result<ComPtr<super::foundation::IAsyncOperation<LaunchUriResult>>> { unsafe {
         <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().launch_uri_for_results_with_data_for_user_async(user, uri, options, inputData)
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_async(file: &super::storage::IStorageFile) -> Result<ComPtr<super::foundation::IAsyncOperation<bool>>> { unsafe {
-        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().launch_file_async(file)
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_with_options_async(file: &super::storage::IStorageFile, options: &LauncherOptions) -> Result<ComPtr<super::foundation::IAsyncOperation<bool>>> { unsafe {
-        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().launch_file_with_options_async(file, options)
-    }}
-    #[inline] pub fn launch_uri_async(uri: &super::foundation::Uri) -> Result<ComPtr<super::foundation::IAsyncOperation<bool>>> { unsafe {
-        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().launch_uri_async(uri)
-    }}
-    #[inline] pub fn launch_uri_with_options_async(uri: &super::foundation::Uri, options: &LauncherOptions) -> Result<ComPtr<super::foundation::IAsyncOperation<bool>>> { unsafe {
-        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().launch_uri_with_options_async(uri, options)
     }}
 }
 DEFINE_CLSID!(Launcher(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,76,97,117,110,99,104,101,114,0]) [CLSID_Launcher]);
@@ -1262,17 +1262,11 @@ RT_ENUM! { enum LaunchUriStatus: i32 {
     Success (LaunchUriStatus_Success) = 0, AppUnavailable (LaunchUriStatus_AppUnavailable) = 1, ProtocolUnavailable (LaunchUriStatus_ProtocolUnavailable) = 2, Unknown (LaunchUriStatus_Unknown) = 3,
 }}
 RT_CLASS!{static class MemoryManager}
-impl RtActivatable<IMemoryManagerStatics3> for MemoryManager {}
-impl RtActivatable<IMemoryManagerStatics4> for MemoryManager {}
 impl RtActivatable<IMemoryManagerStatics> for MemoryManager {}
 impl RtActivatable<IMemoryManagerStatics2> for MemoryManager {}
+impl RtActivatable<IMemoryManagerStatics3> for MemoryManager {}
+impl RtActivatable<IMemoryManagerStatics4> for MemoryManager {}
 impl MemoryManager {
-    #[inline] pub fn try_set_app_memory_usage_limit(value: u64) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IMemoryManagerStatics3>>::get_activation_factory().try_set_app_memory_usage_limit(value)
-    }}
-    #[inline] pub fn get_expected_app_memory_usage_limit() -> Result<u64> { unsafe {
-        <Self as RtActivatable<IMemoryManagerStatics4>>::get_activation_factory().get_expected_app_memory_usage_limit()
-    }}
     #[inline] pub fn get_app_memory_usage() -> Result<u64> { unsafe {
         <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().get_app_memory_usage()
     }}
@@ -1305,6 +1299,12 @@ impl MemoryManager {
     }}
     #[inline] pub fn get_process_memory_report() -> Result<ComPtr<ProcessMemoryReport>> { unsafe {
         <Self as RtActivatable<IMemoryManagerStatics2>>::get_activation_factory().get_process_memory_report()
+    }}
+    #[inline] pub fn try_set_app_memory_usage_limit(value: u64) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IMemoryManagerStatics3>>::get_activation_factory().try_set_app_memory_usage_limit(value)
+    }}
+    #[inline] pub fn get_expected_app_memory_usage_limit() -> Result<u64> { unsafe {
+        <Self as RtActivatable<IMemoryManagerStatics4>>::get_activation_factory().get_expected_app_memory_usage_limit()
     }}
 }
 DEFINE_CLSID!(MemoryManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,77,101,109,111,114,121,77,97,110,97,103,101,114,0]) [CLSID_MemoryManager]);
@@ -1605,9 +1605,15 @@ RT_ENUM! { enum ShutdownKind: i32 {
     Shutdown (ShutdownKind_Shutdown) = 0, Restart (ShutdownKind_Restart) = 1,
 }}
 RT_CLASS!{static class ShutdownManager}
-impl RtActivatable<IShutdownManagerStatics2> for ShutdownManager {}
 impl RtActivatable<IShutdownManagerStatics> for ShutdownManager {}
+impl RtActivatable<IShutdownManagerStatics2> for ShutdownManager {}
 impl ShutdownManager {
+    #[inline] pub fn begin_shutdown(shutdownKind: ShutdownKind, timeout: super::foundation::TimeSpan) -> Result<()> { unsafe {
+        <Self as RtActivatable<IShutdownManagerStatics>>::get_activation_factory().begin_shutdown(shutdownKind, timeout)
+    }}
+    #[inline] pub fn cancel_shutdown() -> Result<()> { unsafe {
+        <Self as RtActivatable<IShutdownManagerStatics>>::get_activation_factory().cancel_shutdown()
+    }}
     #[inline] pub fn is_power_state_supported(powerState: PowerState) -> Result<bool> { unsafe {
         <Self as RtActivatable<IShutdownManagerStatics2>>::get_activation_factory().is_power_state_supported(powerState)
     }}
@@ -1616,12 +1622,6 @@ impl ShutdownManager {
     }}
     #[inline] pub fn enter_power_state_with_time_span(powerState: PowerState, wakeUpAfter: super::foundation::TimeSpan) -> Result<()> { unsafe {
         <Self as RtActivatable<IShutdownManagerStatics2>>::get_activation_factory().enter_power_state_with_time_span(powerState, wakeUpAfter)
-    }}
-    #[inline] pub fn begin_shutdown(shutdownKind: ShutdownKind, timeout: super::foundation::TimeSpan) -> Result<()> { unsafe {
-        <Self as RtActivatable<IShutdownManagerStatics>>::get_activation_factory().begin_shutdown(shutdownKind, timeout)
-    }}
-    #[inline] pub fn cancel_shutdown() -> Result<()> { unsafe {
-        <Self as RtActivatable<IShutdownManagerStatics>>::get_activation_factory().cancel_shutdown()
     }}
 }
 DEFINE_CLSID!(ShutdownManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,83,104,117,116,100,111,119,110,77,97,110,97,103,101,114,0]) [CLSID_ShutdownManager]);
@@ -3734,17 +3734,17 @@ impl IProcessDiagnosticInfo {
     }
 }
 RT_CLASS!{class ProcessDiagnosticInfo: IProcessDiagnosticInfo}
-impl RtActivatable<IProcessDiagnosticInfoStatics2> for ProcessDiagnosticInfo {}
 impl RtActivatable<IProcessDiagnosticInfoStatics> for ProcessDiagnosticInfo {}
+impl RtActivatable<IProcessDiagnosticInfoStatics2> for ProcessDiagnosticInfo {}
 impl ProcessDiagnosticInfo {
-    #[inline] pub fn try_get_for_process_id(processId: u32) -> Result<ComPtr<ProcessDiagnosticInfo>> { unsafe {
-        <Self as RtActivatable<IProcessDiagnosticInfoStatics2>>::get_activation_factory().try_get_for_process_id(processId)
-    }}
     #[inline] pub fn get_for_processes() -> Result<ComPtr<super::super::foundation::collections::IVectorView<ProcessDiagnosticInfo>>> { unsafe {
         <Self as RtActivatable<IProcessDiagnosticInfoStatics>>::get_activation_factory().get_for_processes()
     }}
     #[inline] pub fn get_for_current_process() -> Result<ComPtr<ProcessDiagnosticInfo>> { unsafe {
         <Self as RtActivatable<IProcessDiagnosticInfoStatics>>::get_activation_factory().get_for_current_process()
+    }}
+    #[inline] pub fn try_get_for_process_id(processId: u32) -> Result<ComPtr<ProcessDiagnosticInfo>> { unsafe {
+        <Self as RtActivatable<IProcessDiagnosticInfoStatics2>>::get_activation_factory().try_get_for_process_id(processId)
     }}
 }
 DEFINE_CLSID!(ProcessDiagnosticInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,80,114,111,99,101,115,115,68,105,97,103,110,111,115,116,105,99,73,110,102,111,0]) [CLSID_ProcessDiagnosticInfo]);
@@ -4451,12 +4451,9 @@ impl IRemoteSystem {
     }
 }
 RT_CLASS!{class RemoteSystem: IRemoteSystem}
-impl RtActivatable<IRemoteSystemStatics2> for RemoteSystem {}
 impl RtActivatable<IRemoteSystemStatics> for RemoteSystem {}
+impl RtActivatable<IRemoteSystemStatics2> for RemoteSystem {}
 impl RemoteSystem {
-    #[inline] pub fn is_authorization_kind_enabled(kind: RemoteSystemAuthorizationKind) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IRemoteSystemStatics2>>::get_activation_factory().is_authorization_kind_enabled(kind)
-    }}
     #[cfg(feature="windows-networking")] #[inline] pub fn find_by_host_name_async(hostName: &super::super::networking::HostName) -> Result<ComPtr<super::super::foundation::IAsyncOperation<RemoteSystem>>> { unsafe {
         <Self as RtActivatable<IRemoteSystemStatics>>::get_activation_factory().find_by_host_name_async(hostName)
     }}
@@ -4468,6 +4465,9 @@ impl RemoteSystem {
     }}
     #[inline] pub fn request_access_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<RemoteSystemAccessStatus>>> { unsafe {
         <Self as RtActivatable<IRemoteSystemStatics>>::get_activation_factory().request_access_async()
+    }}
+    #[inline] pub fn is_authorization_kind_enabled(kind: RemoteSystemAuthorizationKind) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IRemoteSystemStatics2>>::get_activation_factory().is_authorization_kind_enabled(kind)
     }}
 }
 DEFINE_CLSID!(RemoteSystem(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,0]) [CLSID_RemoteSystem]);

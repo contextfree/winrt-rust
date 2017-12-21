@@ -597,14 +597,14 @@ impl IAdcController {
     }
 }
 RT_CLASS!{class AdcController: IAdcController}
-impl RtActivatable<IAdcControllerStatics2> for AdcController {}
 impl RtActivatable<IAdcControllerStatics> for AdcController {}
+impl RtActivatable<IAdcControllerStatics2> for AdcController {}
 impl AdcController {
-    #[inline] pub fn get_default_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<AdcController>>> { unsafe {
-        <Self as RtActivatable<IAdcControllerStatics2>>::get_activation_factory().get_default_async()
-    }}
     #[inline] pub fn get_controllers_async(provider: &provider::IAdcProvider) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<AdcController>>>> { unsafe {
         <Self as RtActivatable<IAdcControllerStatics>>::get_activation_factory().get_controllers_async(provider)
+    }}
+    #[inline] pub fn get_default_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<AdcController>>> { unsafe {
+        <Self as RtActivatable<IAdcControllerStatics2>>::get_activation_factory().get_default_async()
     }}
 }
 DEFINE_CLSID!(AdcController(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,65,100,99,46,65,100,99,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_AdcController]);
@@ -1567,10 +1567,13 @@ impl IPwmController {
     }
 }
 RT_CLASS!{class PwmController: IPwmController}
+impl RtActivatable<IPwmControllerStatics> for PwmController {}
 impl RtActivatable<IPwmControllerStatics2> for PwmController {}
 impl RtActivatable<IPwmControllerStatics3> for PwmController {}
-impl RtActivatable<IPwmControllerStatics> for PwmController {}
 impl PwmController {
+    #[inline] pub fn get_controllers_async(provider: &provider::IPwmProvider) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<PwmController>>>> { unsafe {
+        <Self as RtActivatable<IPwmControllerStatics>>::get_activation_factory().get_controllers_async(provider)
+    }}
     #[inline] pub fn get_default_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<PwmController>>> { unsafe {
         <Self as RtActivatable<IPwmControllerStatics2>>::get_activation_factory().get_default_async()
     }}
@@ -1582,9 +1585,6 @@ impl PwmController {
     }}
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<PwmController>>> { unsafe {
         <Self as RtActivatable<IPwmControllerStatics3>>::get_activation_factory().from_id_async(deviceId)
-    }}
-    #[inline] pub fn get_controllers_async(provider: &provider::IPwmProvider) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<PwmController>>>> { unsafe {
-        <Self as RtActivatable<IPwmControllerStatics>>::get_activation_factory().get_controllers_async(provider)
     }}
 }
 DEFINE_CLSID!(PwmController(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,119,109,46,80,119,109,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_PwmController]);
@@ -2599,14 +2599,14 @@ impl ISmartCardCryptogramGenerator {
     }
 }
 RT_CLASS!{class SmartCardCryptogramGenerator: ISmartCardCryptogramGenerator}
-impl RtActivatable<ISmartCardCryptogramGeneratorStatics2> for SmartCardCryptogramGenerator {}
 impl RtActivatable<ISmartCardCryptogramGeneratorStatics> for SmartCardCryptogramGenerator {}
+impl RtActivatable<ISmartCardCryptogramGeneratorStatics2> for SmartCardCryptogramGenerator {}
 impl SmartCardCryptogramGenerator {
-    #[inline] pub fn is_supported() -> Result<bool> { unsafe {
-        <Self as RtActivatable<ISmartCardCryptogramGeneratorStatics2>>::get_activation_factory().is_supported()
-    }}
     #[inline] pub fn get_smart_card_cryptogram_generator_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<SmartCardCryptogramGenerator>>> { unsafe {
         <Self as RtActivatable<ISmartCardCryptogramGeneratorStatics>>::get_activation_factory().get_smart_card_cryptogram_generator_async()
+    }}
+    #[inline] pub fn is_supported() -> Result<bool> { unsafe {
+        <Self as RtActivatable<ISmartCardCryptogramGeneratorStatics2>>::get_activation_factory().is_supported()
     }}
 }
 DEFINE_CLSID!(SmartCardCryptogramGenerator(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,110,101,114,97,116,111,114,0]) [CLSID_SmartCardCryptogramGenerator]);
@@ -3083,12 +3083,12 @@ impl ISmartCardEmulator {
     }
 }
 RT_CLASS!{class SmartCardEmulator: ISmartCardEmulator}
-impl RtActivatable<ISmartCardEmulatorStatics3> for SmartCardEmulator {}
-impl RtActivatable<ISmartCardEmulatorStatics2> for SmartCardEmulator {}
 impl RtActivatable<ISmartCardEmulatorStatics> for SmartCardEmulator {}
+impl RtActivatable<ISmartCardEmulatorStatics2> for SmartCardEmulator {}
+impl RtActivatable<ISmartCardEmulatorStatics3> for SmartCardEmulator {}
 impl SmartCardEmulator {
-    #[inline] pub fn is_supported() -> Result<bool> { unsafe {
-        <Self as RtActivatable<ISmartCardEmulatorStatics3>>::get_activation_factory().is_supported()
+    #[inline] pub fn get_default_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<SmartCardEmulator>>> { unsafe {
+        <Self as RtActivatable<ISmartCardEmulatorStatics>>::get_activation_factory().get_default_async()
     }}
     #[inline] pub fn get_applet_id_group_registrations_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<SmartCardAppletIdGroupRegistration>>>> { unsafe {
         <Self as RtActivatable<ISmartCardEmulatorStatics2>>::get_activation_factory().get_applet_id_group_registrations_async()
@@ -3102,8 +3102,8 @@ impl SmartCardEmulator {
     #[inline] pub fn get_max_applet_id_group_registrations() -> Result<u16> { unsafe {
         <Self as RtActivatable<ISmartCardEmulatorStatics2>>::get_activation_factory().get_max_applet_id_group_registrations()
     }}
-    #[inline] pub fn get_default_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<SmartCardEmulator>>> { unsafe {
-        <Self as RtActivatable<ISmartCardEmulatorStatics>>::get_activation_factory().get_default_async()
+    #[inline] pub fn is_supported() -> Result<bool> { unsafe {
+        <Self as RtActivatable<ISmartCardEmulatorStatics3>>::get_activation_factory().is_supported()
     }}
 }
 DEFINE_CLSID!(SmartCardEmulator(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,69,109,117,108,97,116,111,114,0]) [CLSID_SmartCardEmulator]);
@@ -6790,9 +6790,21 @@ impl IBluetoothDevice {
     }
 }
 RT_CLASS!{class BluetoothDevice: IBluetoothDevice}
-impl RtActivatable<IBluetoothDeviceStatics2> for BluetoothDevice {}
 impl RtActivatable<IBluetoothDeviceStatics> for BluetoothDevice {}
+impl RtActivatable<IBluetoothDeviceStatics2> for BluetoothDevice {}
 impl BluetoothDevice {
+    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<BluetoothDevice>>> { unsafe {
+        <Self as RtActivatable<IBluetoothDeviceStatics>>::get_activation_factory().from_id_async(deviceId)
+    }}
+    #[cfg(feature="windows-networking")] #[inline] pub fn from_host_name_async(hostName: &super::super::networking::HostName) -> Result<ComPtr<super::super::foundation::IAsyncOperation<BluetoothDevice>>> { unsafe {
+        <Self as RtActivatable<IBluetoothDeviceStatics>>::get_activation_factory().from_host_name_async(hostName)
+    }}
+    #[inline] pub fn from_bluetooth_address_async(address: u64) -> Result<ComPtr<super::super::foundation::IAsyncOperation<BluetoothDevice>>> { unsafe {
+        <Self as RtActivatable<IBluetoothDeviceStatics>>::get_activation_factory().from_bluetooth_address_async(address)
+    }}
+    #[inline] pub fn get_device_selector() -> Result<HString> { unsafe {
+        <Self as RtActivatable<IBluetoothDeviceStatics>>::get_activation_factory().get_device_selector()
+    }}
     #[inline] pub fn get_device_selector_from_pairing_state(pairingState: bool) -> Result<HString> { unsafe {
         <Self as RtActivatable<IBluetoothDeviceStatics2>>::get_activation_factory().get_device_selector_from_pairing_state(pairingState)
     }}
@@ -6807,18 +6819,6 @@ impl BluetoothDevice {
     }}
     #[inline] pub fn get_device_selector_from_class_of_device(classOfDevice: &BluetoothClassOfDevice) -> Result<HString> { unsafe {
         <Self as RtActivatable<IBluetoothDeviceStatics2>>::get_activation_factory().get_device_selector_from_class_of_device(classOfDevice)
-    }}
-    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<BluetoothDevice>>> { unsafe {
-        <Self as RtActivatable<IBluetoothDeviceStatics>>::get_activation_factory().from_id_async(deviceId)
-    }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn from_host_name_async(hostName: &super::super::networking::HostName) -> Result<ComPtr<super::super::foundation::IAsyncOperation<BluetoothDevice>>> { unsafe {
-        <Self as RtActivatable<IBluetoothDeviceStatics>>::get_activation_factory().from_host_name_async(hostName)
-    }}
-    #[inline] pub fn from_bluetooth_address_async(address: u64) -> Result<ComPtr<super::super::foundation::IAsyncOperation<BluetoothDevice>>> { unsafe {
-        <Self as RtActivatable<IBluetoothDeviceStatics>>::get_activation_factory().from_bluetooth_address_async(address)
-    }}
-    #[inline] pub fn get_device_selector() -> Result<HString> { unsafe {
-        <Self as RtActivatable<IBluetoothDeviceStatics>>::get_activation_factory().get_device_selector()
     }}
 }
 DEFINE_CLSID!(BluetoothDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,68,101,118,105,99,101,0]) [CLSID_BluetoothDevice]);
@@ -7591,9 +7591,18 @@ impl IBluetoothLEDevice {
     }
 }
 RT_CLASS!{class BluetoothLEDevice: IBluetoothLEDevice}
-impl RtActivatable<IBluetoothLEDeviceStatics2> for BluetoothLEDevice {}
 impl RtActivatable<IBluetoothLEDeviceStatics> for BluetoothLEDevice {}
+impl RtActivatable<IBluetoothLEDeviceStatics2> for BluetoothLEDevice {}
 impl BluetoothLEDevice {
+    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<BluetoothLEDevice>>> { unsafe {
+        <Self as RtActivatable<IBluetoothLEDeviceStatics>>::get_activation_factory().from_id_async(deviceId)
+    }}
+    #[inline] pub fn from_bluetooth_address_async(bluetoothAddress: u64) -> Result<ComPtr<super::super::foundation::IAsyncOperation<BluetoothLEDevice>>> { unsafe {
+        <Self as RtActivatable<IBluetoothLEDeviceStatics>>::get_activation_factory().from_bluetooth_address_async(bluetoothAddress)
+    }}
+    #[inline] pub fn get_device_selector() -> Result<HString> { unsafe {
+        <Self as RtActivatable<IBluetoothLEDeviceStatics>>::get_activation_factory().get_device_selector()
+    }}
     #[inline] pub fn get_device_selector_from_pairing_state(pairingState: bool) -> Result<HString> { unsafe {
         <Self as RtActivatable<IBluetoothLEDeviceStatics2>>::get_activation_factory().get_device_selector_from_pairing_state(pairingState)
     }}
@@ -7614,15 +7623,6 @@ impl BluetoothLEDevice {
     }}
     #[inline] pub fn from_bluetooth_address_with_bluetooth_address_type_async(bluetoothAddress: u64, bluetoothAddressType: BluetoothAddressType) -> Result<ComPtr<super::super::foundation::IAsyncOperation<BluetoothLEDevice>>> { unsafe {
         <Self as RtActivatable<IBluetoothLEDeviceStatics2>>::get_activation_factory().from_bluetooth_address_with_bluetooth_address_type_async(bluetoothAddress, bluetoothAddressType)
-    }}
-    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<BluetoothLEDevice>>> { unsafe {
-        <Self as RtActivatable<IBluetoothLEDeviceStatics>>::get_activation_factory().from_id_async(deviceId)
-    }}
-    #[inline] pub fn from_bluetooth_address_async(bluetoothAddress: u64) -> Result<ComPtr<super::super::foundation::IAsyncOperation<BluetoothLEDevice>>> { unsafe {
-        <Self as RtActivatable<IBluetoothLEDeviceStatics>>::get_activation_factory().from_bluetooth_address_async(bluetoothAddress)
-    }}
-    #[inline] pub fn get_device_selector() -> Result<HString> { unsafe {
-        <Self as RtActivatable<IBluetoothLEDeviceStatics>>::get_activation_factory().get_device_selector()
     }}
 }
 DEFINE_CLSID!(BluetoothLEDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,76,69,68,101,118,105,99,101,0]) [CLSID_BluetoothLEDevice]);
@@ -7913,9 +7913,15 @@ impl IRfcommDeviceService {
     }
 }
 RT_CLASS!{class RfcommDeviceService: IRfcommDeviceService}
-impl RtActivatable<IRfcommDeviceServiceStatics2> for RfcommDeviceService {}
 impl RtActivatable<IRfcommDeviceServiceStatics> for RfcommDeviceService {}
+impl RtActivatable<IRfcommDeviceServiceStatics2> for RfcommDeviceService {}
 impl RfcommDeviceService {
+    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<RfcommDeviceService>>> { unsafe {
+        <Self as RtActivatable<IRfcommDeviceServiceStatics>>::get_activation_factory().from_id_async(deviceId)
+    }}
+    #[inline] pub fn get_device_selector(serviceId: &RfcommServiceId) -> Result<HString> { unsafe {
+        <Self as RtActivatable<IRfcommDeviceServiceStatics>>::get_activation_factory().get_device_selector(serviceId)
+    }}
     #[inline] pub fn get_device_selector_for_bluetooth_device(bluetoothDevice: &super::BluetoothDevice) -> Result<HString> { unsafe {
         <Self as RtActivatable<IRfcommDeviceServiceStatics2>>::get_activation_factory().get_device_selector_for_bluetooth_device(bluetoothDevice)
     }}
@@ -7927,12 +7933,6 @@ impl RfcommDeviceService {
     }}
     #[inline] pub fn get_device_selector_for_bluetooth_device_and_service_id_with_cache_mode(bluetoothDevice: &super::BluetoothDevice, serviceId: &RfcommServiceId, cacheMode: super::BluetoothCacheMode) -> Result<HString> { unsafe {
         <Self as RtActivatable<IRfcommDeviceServiceStatics2>>::get_activation_factory().get_device_selector_for_bluetooth_device_and_service_id_with_cache_mode(bluetoothDevice, serviceId, cacheMode)
-    }}
-    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<RfcommDeviceService>>> { unsafe {
-        <Self as RtActivatable<IRfcommDeviceServiceStatics>>::get_activation_factory().from_id_async(deviceId)
-    }}
-    #[inline] pub fn get_device_selector(serviceId: &RfcommServiceId) -> Result<HString> { unsafe {
-        <Self as RtActivatable<IRfcommDeviceServiceStatics>>::get_activation_factory().get_device_selector(serviceId)
     }}
 }
 DEFINE_CLSID!(RfcommDeviceService(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,82,102,99,111,109,109,46,82,102,99,111,109,109,68,101,118,105,99,101,83,101,114,118,105,99,101,0]) [CLSID_RfcommDeviceService]);
@@ -9393,9 +9393,21 @@ impl IGattDeviceService {
     }
 }
 RT_CLASS!{class GattDeviceService: IGattDeviceService}
-impl RtActivatable<IGattDeviceServiceStatics2> for GattDeviceService {}
 impl RtActivatable<IGattDeviceServiceStatics> for GattDeviceService {}
+impl RtActivatable<IGattDeviceServiceStatics2> for GattDeviceService {}
 impl GattDeviceService {
+    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GattDeviceService>>> { unsafe {
+        <Self as RtActivatable<IGattDeviceServiceStatics>>::get_activation_factory().from_id_async(deviceId)
+    }}
+    #[inline] pub fn get_device_selector_from_uuid(serviceUuid: Guid) -> Result<HString> { unsafe {
+        <Self as RtActivatable<IGattDeviceServiceStatics>>::get_activation_factory().get_device_selector_from_uuid(serviceUuid)
+    }}
+    #[inline] pub fn get_device_selector_from_short_id(serviceShortId: u16) -> Result<HString> { unsafe {
+        <Self as RtActivatable<IGattDeviceServiceStatics>>::get_activation_factory().get_device_selector_from_short_id(serviceShortId)
+    }}
+    #[inline] pub fn convert_short_id_to_uuid(shortId: u16) -> Result<Guid> { unsafe {
+        <Self as RtActivatable<IGattDeviceServiceStatics>>::get_activation_factory().convert_short_id_to_uuid(shortId)
+    }}
     #[inline] pub fn from_id_with_sharing_mode_async(deviceId: &HStringArg, sharingMode: GattSharingMode) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GattDeviceService>>> { unsafe {
         <Self as RtActivatable<IGattDeviceServiceStatics2>>::get_activation_factory().from_id_with_sharing_mode_async(deviceId, sharingMode)
     }}
@@ -9410,18 +9422,6 @@ impl GattDeviceService {
     }}
     #[inline] pub fn get_device_selector_for_bluetooth_device_id_and_uuid_with_cache_mode(bluetoothDeviceId: &super::BluetoothDeviceId, serviceUuid: Guid, cacheMode: super::BluetoothCacheMode) -> Result<HString> { unsafe {
         <Self as RtActivatable<IGattDeviceServiceStatics2>>::get_activation_factory().get_device_selector_for_bluetooth_device_id_and_uuid_with_cache_mode(bluetoothDeviceId, serviceUuid, cacheMode)
-    }}
-    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GattDeviceService>>> { unsafe {
-        <Self as RtActivatable<IGattDeviceServiceStatics>>::get_activation_factory().from_id_async(deviceId)
-    }}
-    #[inline] pub fn get_device_selector_from_uuid(serviceUuid: Guid) -> Result<HString> { unsafe {
-        <Self as RtActivatable<IGattDeviceServiceStatics>>::get_activation_factory().get_device_selector_from_uuid(serviceUuid)
-    }}
-    #[inline] pub fn get_device_selector_from_short_id(serviceShortId: u16) -> Result<HString> { unsafe {
-        <Self as RtActivatable<IGattDeviceServiceStatics>>::get_activation_factory().get_device_selector_from_short_id(serviceShortId)
-    }}
-    #[inline] pub fn convert_short_id_to_uuid(shortId: u16) -> Result<Guid> { unsafe {
-        <Self as RtActivatable<IGattDeviceServiceStatics>>::get_activation_factory().convert_short_id_to_uuid(shortId)
     }}
 }
 DEFINE_CLSID!(GattDeviceService(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,68,101,118,105,99,101,83,101,114,118,105,99,101,0]) [CLSID_GattDeviceService]);
@@ -10002,14 +10002,14 @@ impl IGattPresentationFormat {
     }
 }
 RT_CLASS!{class GattPresentationFormat: IGattPresentationFormat}
-impl RtActivatable<IGattPresentationFormatStatics2> for GattPresentationFormat {}
 impl RtActivatable<IGattPresentationFormatStatics> for GattPresentationFormat {}
+impl RtActivatable<IGattPresentationFormatStatics2> for GattPresentationFormat {}
 impl GattPresentationFormat {
-    #[inline] pub fn from_parts(formatType: u8, exponent: i32, unit: u16, namespaceId: u8, description: u16) -> Result<ComPtr<GattPresentationFormat>> { unsafe {
-        <Self as RtActivatable<IGattPresentationFormatStatics2>>::get_activation_factory().from_parts(formatType, exponent, unit, namespaceId, description)
-    }}
     #[inline] pub fn get_bluetooth_sig_assigned_numbers() -> Result<u8> { unsafe {
         <Self as RtActivatable<IGattPresentationFormatStatics>>::get_activation_factory().get_bluetooth_sig_assigned_numbers()
+    }}
+    #[inline] pub fn from_parts(formatType: u8, exponent: i32, unit: u16, namespaceId: u8, description: u16) -> Result<ComPtr<GattPresentationFormat>> { unsafe {
+        <Self as RtActivatable<IGattPresentationFormatStatics2>>::get_activation_factory().from_parts(formatType, exponent, unit, namespaceId, description)
     }}
 }
 DEFINE_CLSID!(GattPresentationFormat(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,80,114,101,115,101,110,116,97,116,105,111,110,70,111,114,109,97,116,0]) [CLSID_GattPresentationFormat]);
@@ -10766,9 +10766,36 @@ impl IGattServiceProviderStatics {
     }
 }
 RT_CLASS!{static class GattServiceUuids}
-impl RtActivatable<IGattServiceUuidsStatics2> for GattServiceUuids {}
 impl RtActivatable<IGattServiceUuidsStatics> for GattServiceUuids {}
+impl RtActivatable<IGattServiceUuidsStatics2> for GattServiceUuids {}
 impl GattServiceUuids {
+    #[inline] pub fn get_battery() -> Result<Guid> { unsafe {
+        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_battery()
+    }}
+    #[inline] pub fn get_blood_pressure() -> Result<Guid> { unsafe {
+        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_blood_pressure()
+    }}
+    #[inline] pub fn get_cycling_speed_and_cadence() -> Result<Guid> { unsafe {
+        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_cycling_speed_and_cadence()
+    }}
+    #[inline] pub fn get_generic_access() -> Result<Guid> { unsafe {
+        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_generic_access()
+    }}
+    #[inline] pub fn get_generic_attribute() -> Result<Guid> { unsafe {
+        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_generic_attribute()
+    }}
+    #[inline] pub fn get_glucose() -> Result<Guid> { unsafe {
+        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_glucose()
+    }}
+    #[inline] pub fn get_health_thermometer() -> Result<Guid> { unsafe {
+        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_health_thermometer()
+    }}
+    #[inline] pub fn get_heart_rate() -> Result<Guid> { unsafe {
+        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_heart_rate()
+    }}
+    #[inline] pub fn get_running_speed_and_cadence() -> Result<Guid> { unsafe {
+        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_running_speed_and_cadence()
+    }}
     #[inline] pub fn get_alert_notification() -> Result<Guid> { unsafe {
         <Self as RtActivatable<IGattServiceUuidsStatics2>>::get_activation_factory().get_alert_notification()
     }}
@@ -10807,33 +10834,6 @@ impl GattServiceUuids {
     }}
     #[inline] pub fn get_tx_power() -> Result<Guid> { unsafe {
         <Self as RtActivatable<IGattServiceUuidsStatics2>>::get_activation_factory().get_tx_power()
-    }}
-    #[inline] pub fn get_battery() -> Result<Guid> { unsafe {
-        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_battery()
-    }}
-    #[inline] pub fn get_blood_pressure() -> Result<Guid> { unsafe {
-        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_blood_pressure()
-    }}
-    #[inline] pub fn get_cycling_speed_and_cadence() -> Result<Guid> { unsafe {
-        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_cycling_speed_and_cadence()
-    }}
-    #[inline] pub fn get_generic_access() -> Result<Guid> { unsafe {
-        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_generic_access()
-    }}
-    #[inline] pub fn get_generic_attribute() -> Result<Guid> { unsafe {
-        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_generic_attribute()
-    }}
-    #[inline] pub fn get_glucose() -> Result<Guid> { unsafe {
-        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_glucose()
-    }}
-    #[inline] pub fn get_health_thermometer() -> Result<Guid> { unsafe {
-        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_health_thermometer()
-    }}
-    #[inline] pub fn get_heart_rate() -> Result<Guid> { unsafe {
-        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_heart_rate()
-    }}
-    #[inline] pub fn get_running_speed_and_cadence() -> Result<Guid> { unsafe {
-        <Self as RtActivatable<IGattServiceUuidsStatics>>::get_activation_factory().get_running_speed_and_cadence()
     }}
 }
 DEFINE_CLSID!(GattServiceUuids(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,83,101,114,118,105,99,101,85,117,105,100,115,0]) [CLSID_GattServiceUuids]);
@@ -13698,19 +13698,10 @@ impl IGeolocator {
     }
 }
 RT_CLASS!{class Geolocator: IGeolocator}
-impl RtActivatable<IGeolocatorStatics2> for Geolocator {}
 impl RtActivatable<IGeolocatorStatics> for Geolocator {}
+impl RtActivatable<IGeolocatorStatics2> for Geolocator {}
 impl RtActivatable<IActivationFactory> for Geolocator {}
 impl Geolocator {
-    #[inline] pub fn get_is_default_geoposition_recommended() -> Result<bool> { unsafe {
-        <Self as RtActivatable<IGeolocatorStatics2>>::get_activation_factory().get_is_default_geoposition_recommended()
-    }}
-    #[inline] pub fn set_default_geoposition(value: &super::super::foundation::IReference<BasicGeoposition>) -> Result<()> { unsafe {
-        <Self as RtActivatable<IGeolocatorStatics2>>::get_activation_factory().set_default_geoposition(value)
-    }}
-    #[inline] pub fn get_default_geoposition() -> Result<ComPtr<super::super::foundation::IReference<BasicGeoposition>>> { unsafe {
-        <Self as RtActivatable<IGeolocatorStatics2>>::get_activation_factory().get_default_geoposition()
-    }}
     #[inline] pub fn request_access_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<GeolocationAccessStatus>>> { unsafe {
         <Self as RtActivatable<IGeolocatorStatics>>::get_activation_factory().request_access_async()
     }}
@@ -13719,6 +13710,15 @@ impl Geolocator {
     }}
     #[inline] pub fn get_geoposition_history_with_duration_async(startTime: super::super::foundation::DateTime, duration: super::super::foundation::TimeSpan) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<Geoposition>>>> { unsafe {
         <Self as RtActivatable<IGeolocatorStatics>>::get_activation_factory().get_geoposition_history_with_duration_async(startTime, duration)
+    }}
+    #[inline] pub fn get_is_default_geoposition_recommended() -> Result<bool> { unsafe {
+        <Self as RtActivatable<IGeolocatorStatics2>>::get_activation_factory().get_is_default_geoposition_recommended()
+    }}
+    #[inline] pub fn set_default_geoposition(value: &super::super::foundation::IReference<BasicGeoposition>) -> Result<()> { unsafe {
+        <Self as RtActivatable<IGeolocatorStatics2>>::get_activation_factory().set_default_geoposition(value)
+    }}
+    #[inline] pub fn get_default_geoposition() -> Result<ComPtr<super::super::foundation::IReference<BasicGeoposition>>> { unsafe {
+        <Self as RtActivatable<IGeolocatorStatics2>>::get_activation_factory().get_default_geoposition()
     }}
 }
 DEFINE_CLSID!(Geolocator(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,71,101,111,108,111,99,97,116,105,111,110,46,71,101,111,108,111,99,97,116,111,114,0]) [CLSID_Geolocator]);
@@ -19573,12 +19573,9 @@ impl ICashDrawer {
     }
 }
 RT_CLASS!{class CashDrawer: ICashDrawer}
-impl RtActivatable<ICashDrawerStatics2> for CashDrawer {}
 impl RtActivatable<ICashDrawerStatics> for CashDrawer {}
+impl RtActivatable<ICashDrawerStatics2> for CashDrawer {}
 impl CashDrawer {
-    #[inline] pub fn get_device_selector_with_connection_types(connectionTypes: PosConnectionTypes) -> Result<HString> { unsafe {
-        <Self as RtActivatable<ICashDrawerStatics2>>::get_activation_factory().get_device_selector_with_connection_types(connectionTypes)
-    }}
     #[inline] pub fn get_default_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<CashDrawer>>> { unsafe {
         <Self as RtActivatable<ICashDrawerStatics>>::get_activation_factory().get_default_async()
     }}
@@ -19587,6 +19584,9 @@ impl CashDrawer {
     }}
     #[inline] pub fn get_device_selector() -> Result<HString> { unsafe {
         <Self as RtActivatable<ICashDrawerStatics>>::get_activation_factory().get_device_selector()
+    }}
+    #[inline] pub fn get_device_selector_with_connection_types(connectionTypes: PosConnectionTypes) -> Result<HString> { unsafe {
+        <Self as RtActivatable<ICashDrawerStatics2>>::get_activation_factory().get_device_selector_with_connection_types(connectionTypes)
     }}
 }
 DEFINE_CLSID!(CashDrawer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,67,97,115,104,68,114,97,119,101,114,0]) [CLSID_CashDrawer]);
@@ -21037,12 +21037,9 @@ impl ILineDisplay {
     }
 }
 RT_CLASS!{class LineDisplay: ILineDisplay}
-impl RtActivatable<ILineDisplayStatics2> for LineDisplay {}
 impl RtActivatable<ILineDisplayStatics> for LineDisplay {}
+impl RtActivatable<ILineDisplayStatics2> for LineDisplay {}
 impl LineDisplay {
-    #[inline] pub fn get_statistics_category_selector() -> Result<ComPtr<LineDisplayStatisticsCategorySelector>> { unsafe {
-        <Self as RtActivatable<ILineDisplayStatics2>>::get_activation_factory().get_statistics_category_selector()
-    }}
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<LineDisplay>>> { unsafe {
         <Self as RtActivatable<ILineDisplayStatics>>::get_activation_factory().from_id_async(deviceId)
     }}
@@ -21054,6 +21051,9 @@ impl LineDisplay {
     }}
     #[inline] pub fn get_device_selector_with_connection_types(connectionTypes: PosConnectionTypes) -> Result<HString> { unsafe {
         <Self as RtActivatable<ILineDisplayStatics>>::get_activation_factory().get_device_selector_with_connection_types(connectionTypes)
+    }}
+    #[inline] pub fn get_statistics_category_selector() -> Result<ComPtr<LineDisplayStatisticsCategorySelector>> { unsafe {
+        <Self as RtActivatable<ILineDisplayStatics2>>::get_activation_factory().get_statistics_category_selector()
     }}
 }
 DEFINE_CLSID!(LineDisplay(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,76,105,110,101,68,105,115,112,108,97,121,0]) [CLSID_LineDisplay]);
@@ -22383,12 +22383,9 @@ impl IPosPrinter {
     }
 }
 RT_CLASS!{class PosPrinter: IPosPrinter}
-impl RtActivatable<IPosPrinterStatics2> for PosPrinter {}
 impl RtActivatable<IPosPrinterStatics> for PosPrinter {}
+impl RtActivatable<IPosPrinterStatics2> for PosPrinter {}
 impl PosPrinter {
-    #[inline] pub fn get_device_selector_with_connection_types(connectionTypes: PosConnectionTypes) -> Result<HString> { unsafe {
-        <Self as RtActivatable<IPosPrinterStatics2>>::get_activation_factory().get_device_selector_with_connection_types(connectionTypes)
-    }}
     #[inline] pub fn get_default_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<PosPrinter>>> { unsafe {
         <Self as RtActivatable<IPosPrinterStatics>>::get_activation_factory().get_default_async()
     }}
@@ -22397,6 +22394,9 @@ impl PosPrinter {
     }}
     #[inline] pub fn get_device_selector() -> Result<HString> { unsafe {
         <Self as RtActivatable<IPosPrinterStatics>>::get_activation_factory().get_device_selector()
+    }}
+    #[inline] pub fn get_device_selector_with_connection_types(connectionTypes: PosConnectionTypes) -> Result<HString> { unsafe {
+        <Self as RtActivatable<IPosPrinterStatics2>>::get_activation_factory().get_device_selector_with_connection_types(connectionTypes)
     }}
 }
 DEFINE_CLSID!(PosPrinter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,80,111,115,80,114,105,110,116,101,114,0]) [CLSID_PosPrinter]);
@@ -22978,21 +22978,21 @@ impl IAccelerometer {
     }
 }
 RT_CLASS!{class Accelerometer: IAccelerometer}
-impl RtActivatable<IAccelerometerStatics3> for Accelerometer {}
 impl RtActivatable<IAccelerometerStatics> for Accelerometer {}
 impl RtActivatable<IAccelerometerStatics2> for Accelerometer {}
+impl RtActivatable<IAccelerometerStatics3> for Accelerometer {}
 impl Accelerometer {
-    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<Accelerometer>>> { unsafe {
-        <Self as RtActivatable<IAccelerometerStatics3>>::get_activation_factory().from_id_async(deviceId)
-    }}
-    #[inline] pub fn get_device_selector(readingType: AccelerometerReadingType) -> Result<HString> { unsafe {
-        <Self as RtActivatable<IAccelerometerStatics3>>::get_activation_factory().get_device_selector(readingType)
-    }}
     #[inline] pub fn get_default() -> Result<ComPtr<Accelerometer>> { unsafe {
         <Self as RtActivatable<IAccelerometerStatics>>::get_activation_factory().get_default()
     }}
     #[inline] pub fn get_default_with_accelerometer_reading_type(readingType: AccelerometerReadingType) -> Result<ComPtr<Accelerometer>> { unsafe {
         <Self as RtActivatable<IAccelerometerStatics2>>::get_activation_factory().get_default_with_accelerometer_reading_type(readingType)
+    }}
+    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<Accelerometer>>> { unsafe {
+        <Self as RtActivatable<IAccelerometerStatics3>>::get_activation_factory().from_id_async(deviceId)
+    }}
+    #[inline] pub fn get_device_selector(readingType: AccelerometerReadingType) -> Result<HString> { unsafe {
+        <Self as RtActivatable<IAccelerometerStatics3>>::get_activation_factory().get_device_selector(readingType)
     }}
 }
 DEFINE_CLSID!(Accelerometer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,65,99,99,101,108,101,114,111,109,101,116,101,114,0]) [CLSID_Accelerometer]);
@@ -23521,17 +23521,17 @@ impl IBarometer {
     }
 }
 RT_CLASS!{class Barometer: IBarometer}
-impl RtActivatable<IBarometerStatics2> for Barometer {}
 impl RtActivatable<IBarometerStatics> for Barometer {}
+impl RtActivatable<IBarometerStatics2> for Barometer {}
 impl Barometer {
+    #[inline] pub fn get_default() -> Result<ComPtr<Barometer>> { unsafe {
+        <Self as RtActivatable<IBarometerStatics>>::get_activation_factory().get_default()
+    }}
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<Barometer>>> { unsafe {
         <Self as RtActivatable<IBarometerStatics2>>::get_activation_factory().from_id_async(deviceId)
     }}
     #[inline] pub fn get_device_selector() -> Result<HString> { unsafe {
         <Self as RtActivatable<IBarometerStatics2>>::get_activation_factory().get_device_selector()
-    }}
-    #[inline] pub fn get_default() -> Result<ComPtr<Barometer>> { unsafe {
-        <Self as RtActivatable<IBarometerStatics>>::get_activation_factory().get_default()
     }}
 }
 DEFINE_CLSID!(Barometer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,66,97,114,111,109,101,116,101,114,0]) [CLSID_Barometer]);
@@ -23867,17 +23867,17 @@ impl IGyrometer {
     }
 }
 RT_CLASS!{class Gyrometer: IGyrometer}
-impl RtActivatable<IGyrometerStatics2> for Gyrometer {}
 impl RtActivatable<IGyrometerStatics> for Gyrometer {}
+impl RtActivatable<IGyrometerStatics2> for Gyrometer {}
 impl Gyrometer {
+    #[inline] pub fn get_default() -> Result<ComPtr<Gyrometer>> { unsafe {
+        <Self as RtActivatable<IGyrometerStatics>>::get_activation_factory().get_default()
+    }}
     #[inline] pub fn get_device_selector() -> Result<HString> { unsafe {
         <Self as RtActivatable<IGyrometerStatics2>>::get_activation_factory().get_device_selector()
     }}
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<Gyrometer>>> { unsafe {
         <Self as RtActivatable<IGyrometerStatics2>>::get_activation_factory().from_id_async(deviceId)
-    }}
-    #[inline] pub fn get_default() -> Result<ComPtr<Gyrometer>> { unsafe {
-        <Self as RtActivatable<IGyrometerStatics>>::get_activation_factory().get_default()
     }}
 }
 DEFINE_CLSID!(Gyrometer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,71,121,114,111,109,101,116,101,114,0]) [CLSID_Gyrometer]);
@@ -24057,25 +24057,25 @@ impl IInclinometer {
     }
 }
 RT_CLASS!{class Inclinometer: IInclinometer}
-impl RtActivatable<IInclinometerStatics3> for Inclinometer {}
 impl RtActivatable<IInclinometerStatics> for Inclinometer {}
-impl RtActivatable<IInclinometerStatics4> for Inclinometer {}
 impl RtActivatable<IInclinometerStatics2> for Inclinometer {}
+impl RtActivatable<IInclinometerStatics3> for Inclinometer {}
+impl RtActivatable<IInclinometerStatics4> for Inclinometer {}
 impl Inclinometer {
-    #[inline] pub fn get_default_with_sensor_reading_type(sensorReadingtype: SensorReadingType) -> Result<ComPtr<Inclinometer>> { unsafe {
-        <Self as RtActivatable<IInclinometerStatics3>>::get_activation_factory().get_default_with_sensor_reading_type(sensorReadingtype)
-    }}
     #[inline] pub fn get_default() -> Result<ComPtr<Inclinometer>> { unsafe {
         <Self as RtActivatable<IInclinometerStatics>>::get_activation_factory().get_default()
+    }}
+    #[inline] pub fn get_default_for_relative_readings() -> Result<ComPtr<Inclinometer>> { unsafe {
+        <Self as RtActivatable<IInclinometerStatics2>>::get_activation_factory().get_default_for_relative_readings()
+    }}
+    #[inline] pub fn get_default_with_sensor_reading_type(sensorReadingtype: SensorReadingType) -> Result<ComPtr<Inclinometer>> { unsafe {
+        <Self as RtActivatable<IInclinometerStatics3>>::get_activation_factory().get_default_with_sensor_reading_type(sensorReadingtype)
     }}
     #[inline] pub fn get_device_selector(readingType: SensorReadingType) -> Result<HString> { unsafe {
         <Self as RtActivatable<IInclinometerStatics4>>::get_activation_factory().get_device_selector(readingType)
     }}
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<Inclinometer>>> { unsafe {
         <Self as RtActivatable<IInclinometerStatics4>>::get_activation_factory().from_id_async(deviceId)
-    }}
-    #[inline] pub fn get_default_for_relative_readings() -> Result<ComPtr<Inclinometer>> { unsafe {
-        <Self as RtActivatable<IInclinometerStatics2>>::get_activation_factory().get_default_for_relative_readings()
     }}
 }
 DEFINE_CLSID!(Inclinometer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,73,110,99,108,105,110,111,109,101,116,101,114,0]) [CLSID_Inclinometer]);
@@ -24657,20 +24657,11 @@ impl IOrientationSensor {
     }
 }
 RT_CLASS!{class OrientationSensor: IOrientationSensor}
-impl RtActivatable<IOrientationSensorStatics4> for OrientationSensor {}
 impl RtActivatable<IOrientationSensorStatics> for OrientationSensor {}
 impl RtActivatable<IOrientationSensorStatics2> for OrientationSensor {}
 impl RtActivatable<IOrientationSensorStatics3> for OrientationSensor {}
+impl RtActivatable<IOrientationSensorStatics4> for OrientationSensor {}
 impl OrientationSensor {
-    #[inline] pub fn get_device_selector(readingType: SensorReadingType) -> Result<HString> { unsafe {
-        <Self as RtActivatable<IOrientationSensorStatics4>>::get_activation_factory().get_device_selector(readingType)
-    }}
-    #[inline] pub fn get_device_selector_with_sensor_reading_type_and_sensor_optimization_goal(readingType: SensorReadingType, optimizationGoal: SensorOptimizationGoal) -> Result<HString> { unsafe {
-        <Self as RtActivatable<IOrientationSensorStatics4>>::get_activation_factory().get_device_selector_with_sensor_reading_type_and_sensor_optimization_goal(readingType, optimizationGoal)
-    }}
-    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<OrientationSensor>>> { unsafe {
-        <Self as RtActivatable<IOrientationSensorStatics4>>::get_activation_factory().from_id_async(deviceId)
-    }}
     #[inline] pub fn get_default() -> Result<ComPtr<OrientationSensor>> { unsafe {
         <Self as RtActivatable<IOrientationSensorStatics>>::get_activation_factory().get_default()
     }}
@@ -24682,6 +24673,15 @@ impl OrientationSensor {
     }}
     #[inline] pub fn get_default_with_sensor_reading_type_and_sensor_optimization_goal(sensorReadingType: SensorReadingType, optimizationGoal: SensorOptimizationGoal) -> Result<ComPtr<OrientationSensor>> { unsafe {
         <Self as RtActivatable<IOrientationSensorStatics3>>::get_activation_factory().get_default_with_sensor_reading_type_and_sensor_optimization_goal(sensorReadingType, optimizationGoal)
+    }}
+    #[inline] pub fn get_device_selector(readingType: SensorReadingType) -> Result<HString> { unsafe {
+        <Self as RtActivatable<IOrientationSensorStatics4>>::get_activation_factory().get_device_selector(readingType)
+    }}
+    #[inline] pub fn get_device_selector_with_sensor_reading_type_and_sensor_optimization_goal(readingType: SensorReadingType, optimizationGoal: SensorOptimizationGoal) -> Result<HString> { unsafe {
+        <Self as RtActivatable<IOrientationSensorStatics4>>::get_activation_factory().get_device_selector_with_sensor_reading_type_and_sensor_optimization_goal(readingType, optimizationGoal)
+    }}
+    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<OrientationSensor>>> { unsafe {
+        <Self as RtActivatable<IOrientationSensorStatics4>>::get_activation_factory().from_id_async(deviceId)
     }}
 }
 DEFINE_CLSID!(OrientationSensor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,79,114,105,101,110,116,97,116,105,111,110,83,101,110,115,111,114,0]) [CLSID_OrientationSensor]);
@@ -24914,12 +24914,9 @@ impl IPedometer {
     }
 }
 RT_CLASS!{class Pedometer: IPedometer}
-impl RtActivatable<IPedometerStatics2> for Pedometer {}
 impl RtActivatable<IPedometerStatics> for Pedometer {}
+impl RtActivatable<IPedometerStatics2> for Pedometer {}
 impl Pedometer {
-    #[inline] pub fn get_readings_from_trigger_details(triggerDetails: &SensorDataThresholdTriggerDetails) -> Result<ComPtr<super::super::foundation::collections::IVectorView<PedometerReading>>> { unsafe {
-        <Self as RtActivatable<IPedometerStatics2>>::get_activation_factory().get_readings_from_trigger_details(triggerDetails)
-    }}
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<Pedometer>>> { unsafe {
         <Self as RtActivatable<IPedometerStatics>>::get_activation_factory().from_id_async(deviceId)
     }}
@@ -24934,6 +24931,9 @@ impl Pedometer {
     }}
     #[inline] pub fn get_system_history_with_duration_async(fromTime: super::super::foundation::DateTime, duration: super::super::foundation::TimeSpan) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<PedometerReading>>>> { unsafe {
         <Self as RtActivatable<IPedometerStatics>>::get_activation_factory().get_system_history_with_duration_async(fromTime, duration)
+    }}
+    #[inline] pub fn get_readings_from_trigger_details(triggerDetails: &SensorDataThresholdTriggerDetails) -> Result<ComPtr<super::super::foundation::collections::IVectorView<PedometerReading>>> { unsafe {
+        <Self as RtActivatable<IPedometerStatics2>>::get_activation_factory().get_readings_from_trigger_details(triggerDetails)
     }}
 }
 DEFINE_CLSID!(Pedometer(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,80,101,100,111,109,101,116,101,114,0]) [CLSID_Pedometer]);
@@ -25105,17 +25105,17 @@ impl IProximitySensor {
     }
 }
 RT_CLASS!{class ProximitySensor: IProximitySensor}
-impl RtActivatable<IProximitySensorStatics2> for ProximitySensor {}
 impl RtActivatable<IProximitySensorStatics> for ProximitySensor {}
+impl RtActivatable<IProximitySensorStatics2> for ProximitySensor {}
 impl ProximitySensor {
-    #[inline] pub fn get_readings_from_trigger_details(triggerDetails: &SensorDataThresholdTriggerDetails) -> Result<ComPtr<super::super::foundation::collections::IVectorView<ProximitySensorReading>>> { unsafe {
-        <Self as RtActivatable<IProximitySensorStatics2>>::get_activation_factory().get_readings_from_trigger_details(triggerDetails)
-    }}
     #[inline] pub fn get_device_selector() -> Result<HString> { unsafe {
         <Self as RtActivatable<IProximitySensorStatics>>::get_activation_factory().get_device_selector()
     }}
     #[inline] pub fn from_id(sensorId: &HStringArg) -> Result<ComPtr<ProximitySensor>> { unsafe {
         <Self as RtActivatable<IProximitySensorStatics>>::get_activation_factory().from_id(sensorId)
+    }}
+    #[inline] pub fn get_readings_from_trigger_details(triggerDetails: &SensorDataThresholdTriggerDetails) -> Result<ComPtr<super::super::foundation::collections::IVectorView<ProximitySensorReading>>> { unsafe {
+        <Self as RtActivatable<IProximitySensorStatics2>>::get_activation_factory().get_readings_from_trigger_details(triggerDetails)
     }}
 }
 DEFINE_CLSID!(ProximitySensor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,80,114,111,120,105,109,105,116,121,83,101,110,115,111,114,0]) [CLSID_ProximitySensor]);
@@ -27415,20 +27415,20 @@ impl IWiFiDirectDevice {
     }
 }
 RT_CLASS!{class WiFiDirectDevice: IWiFiDirectDevice}
-impl RtActivatable<IWiFiDirectDeviceStatics2> for WiFiDirectDevice {}
 impl RtActivatable<IWiFiDirectDeviceStatics> for WiFiDirectDevice {}
+impl RtActivatable<IWiFiDirectDeviceStatics2> for WiFiDirectDevice {}
 impl WiFiDirectDevice {
-    #[inline] pub fn get_device_selector2(type_: WiFiDirectDeviceSelectorType) -> Result<HString> { unsafe {
-        <Self as RtActivatable<IWiFiDirectDeviceStatics2>>::get_activation_factory().get_device_selector(type_)
-    }}
-    #[inline] pub fn from_id_async2(deviceId: &HStringArg, connectionParameters: &WiFiDirectConnectionParameters) -> Result<ComPtr<super::super::foundation::IAsyncOperation<WiFiDirectDevice>>> { unsafe {
-        <Self as RtActivatable<IWiFiDirectDeviceStatics2>>::get_activation_factory().from_id_async(deviceId, connectionParameters)
-    }}
     #[inline] pub fn get_device_selector() -> Result<HString> { unsafe {
         <Self as RtActivatable<IWiFiDirectDeviceStatics>>::get_activation_factory().get_device_selector()
     }}
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<WiFiDirectDevice>>> { unsafe {
         <Self as RtActivatable<IWiFiDirectDeviceStatics>>::get_activation_factory().from_id_async(deviceId)
+    }}
+    #[inline] pub fn get_device_selector2(type_: WiFiDirectDeviceSelectorType) -> Result<HString> { unsafe {
+        <Self as RtActivatable<IWiFiDirectDeviceStatics2>>::get_activation_factory().get_device_selector(type_)
+    }}
+    #[inline] pub fn from_id_async2(deviceId: &HStringArg, connectionParameters: &WiFiDirectConnectionParameters) -> Result<ComPtr<super::super::foundation::IAsyncOperation<WiFiDirectDevice>>> { unsafe {
+        <Self as RtActivatable<IWiFiDirectDeviceStatics2>>::get_activation_factory().from_id_async(deviceId, connectionParameters)
     }}
 }
 DEFINE_CLSID!(WiFiDirectDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,87,105,70,105,68,105,114,101,99,116,68,101,118,105,99,101,0]) [CLSID_WiFiDirectDevice]);

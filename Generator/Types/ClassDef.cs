@@ -44,16 +44,16 @@ namespace Generator.Types
             }
 
             factories = GetFactoryTypes().Select(f => TypeHelpers.GetTypeName(Generator, this, f, TypeUsage.Alias)).ToArray();
-            
+
             if (Type.Interfaces.Count > 0)
             {
                 var defaultInterface = TypeHelpers.GetDefaultInterface(Type);
                 aliasedType = TypeHelpers.GetTypeName(Generator, this, defaultInterface, TypeUsage.Alias);
             }
 
-            var factoryMethods = GetFactoryTypes().SelectMany(f => Generator.GetTypeDefinition(f).Methods).ToArray();
-            var staticMethods = statics.SelectMany(s => Generator.GetTypeDefinition(s).Methods).ToArray();
-            
+            var factoryMethods = GetFactoryTypes().OrderBy(f => f.FullName).SelectMany(f => Generator.GetTypeDefinition(f).Methods).ToArray();
+            var staticMethods = statics.OrderBy(s => s.FullName).SelectMany(s => Generator.GetTypeDefinition(s).Methods).ToArray();
+
             foreach (var m in factoryMethods)
             {
                 methodWrappers.Add(new ClassMethodDef(m, this));
@@ -97,7 +97,7 @@ namespace Generator.Types
 { features.GetInvertedAttribute() }RT_CLASS!{{class { DefinitionName }: IInspectable}}");
                 }
 
-                foreach (var factory in factories)
+                foreach (var factory in factories.OrderBy(f => f))
                 {
                     needClassID = true;
                     Module.Append($@"
@@ -111,7 +111,7 @@ impl RtActivatable<{ factory }> for { classType } {{}}");
 RT_CLASS!{{static class { DefinitionName }}}");
             }
 
-            foreach (var staticType in statics)
+            foreach (var staticType in statics.OrderBy(t => t.FullName))
             {
                 var staticName = Generator.GetTypeDefinition(staticType).DefinitionName;
                 needClassID = true;

@@ -2187,13 +2187,10 @@ impl INetworkOperatorTetheringManager {
     }
 }
 RT_CLASS!{class NetworkOperatorTetheringManager: INetworkOperatorTetheringManager}
-impl RtActivatable<INetworkOperatorTetheringManagerStatics3> for NetworkOperatorTetheringManager {}
 impl RtActivatable<INetworkOperatorTetheringManagerStatics> for NetworkOperatorTetheringManager {}
 impl RtActivatable<INetworkOperatorTetheringManagerStatics2> for NetworkOperatorTetheringManager {}
+impl RtActivatable<INetworkOperatorTetheringManagerStatics3> for NetworkOperatorTetheringManager {}
 impl NetworkOperatorTetheringManager {
-    #[inline] pub fn create_from_connection_profile_with_target_adapter(profile: &super::connectivity::ConnectionProfile, adapter: &super::connectivity::NetworkAdapter) -> Result<ComPtr<NetworkOperatorTetheringManager>> { unsafe {
-        <Self as RtActivatable<INetworkOperatorTetheringManagerStatics3>>::get_activation_factory().create_from_connection_profile_with_target_adapter(profile, adapter)
-    }}
     #[inline] pub fn get_tethering_capability(networkAccountId: &HStringArg) -> Result<TetheringCapability> { unsafe {
         <Self as RtActivatable<INetworkOperatorTetheringManagerStatics>>::get_activation_factory().get_tethering_capability(networkAccountId)
     }}
@@ -2205,6 +2202,9 @@ impl NetworkOperatorTetheringManager {
     }}
     #[inline] pub fn create_from_connection_profile(profile: &super::connectivity::ConnectionProfile) -> Result<ComPtr<NetworkOperatorTetheringManager>> { unsafe {
         <Self as RtActivatable<INetworkOperatorTetheringManagerStatics2>>::get_activation_factory().create_from_connection_profile(profile)
+    }}
+    #[inline] pub fn create_from_connection_profile_with_target_adapter(profile: &super::connectivity::ConnectionProfile, adapter: &super::connectivity::NetworkAdapter) -> Result<ComPtr<NetworkOperatorTetheringManager>> { unsafe {
+        <Self as RtActivatable<INetworkOperatorTetheringManagerStatics3>>::get_activation_factory().create_from_connection_profile_with_target_adapter(profile, adapter)
     }}
 }
 DEFINE_CLSID!(NetworkOperatorTetheringManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,84,101,116,104,101,114,105,110,103,77,97,110,97,103,101,114,0]) [CLSID_NetworkOperatorTetheringManager]);
@@ -3159,12 +3159,9 @@ RT_ENUM! { enum NetworkEncryptionType: i32 {
     None (NetworkEncryptionType_None) = 0, Unknown (NetworkEncryptionType_Unknown) = 1, Wep (NetworkEncryptionType_Wep) = 2, Wep40 (NetworkEncryptionType_Wep40) = 3, Wep104 (NetworkEncryptionType_Wep104) = 4, Tkip (NetworkEncryptionType_Tkip) = 5, Ccmp (NetworkEncryptionType_Ccmp) = 6, WpaUseGroup (NetworkEncryptionType_WpaUseGroup) = 7, RsnUseGroup (NetworkEncryptionType_RsnUseGroup) = 8, Ihv (NetworkEncryptionType_Ihv) = 9,
 }}
 RT_CLASS!{static class NetworkInformation}
-impl RtActivatable<INetworkInformationStatics2> for NetworkInformation {}
 impl RtActivatable<INetworkInformationStatics> for NetworkInformation {}
+impl RtActivatable<INetworkInformationStatics2> for NetworkInformation {}
 impl NetworkInformation {
-    #[inline] pub fn find_connection_profiles_async(pProfileFilter: &ConnectionProfileFilter) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<ConnectionProfile>>>> { unsafe {
-        <Self as RtActivatable<INetworkInformationStatics2>>::get_activation_factory().find_connection_profiles_async(pProfileFilter)
-    }}
     #[inline] pub fn get_connection_profiles() -> Result<ComPtr<super::super::foundation::collections::IVectorView<ConnectionProfile>>> { unsafe {
         <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_connection_profiles()
     }}
@@ -3188,6 +3185,9 @@ impl NetworkInformation {
     }}
     #[inline] pub fn remove_network_status_changed(eventCookie: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().remove_network_status_changed(eventCookie)
+    }}
+    #[inline] pub fn find_connection_profiles_async(pProfileFilter: &ConnectionProfileFilter) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<ConnectionProfile>>>> { unsafe {
+        <Self as RtActivatable<INetworkInformationStatics2>>::get_activation_factory().find_connection_profiles_async(pProfileFilter)
     }}
 }
 DEFINE_CLSID!(NetworkInformation(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,78,101,116,119,111,114,107,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_NetworkInformation]);
@@ -4071,16 +4071,13 @@ impl IBackgroundUploader {
 }
 RT_CLASS!{class BackgroundUploader: IBackgroundUploader}
 impl RtActivatable<IBackgroundUploaderFactory> for BackgroundUploader {}
-impl RtActivatable<IBackgroundUploaderUserConsent> for BackgroundUploader {}
 impl RtActivatable<IBackgroundUploaderStaticMethods> for BackgroundUploader {}
 impl RtActivatable<IBackgroundUploaderStaticMethods2> for BackgroundUploader {}
+impl RtActivatable<IBackgroundUploaderUserConsent> for BackgroundUploader {}
 impl RtActivatable<IActivationFactory> for BackgroundUploader {}
 impl BackgroundUploader {
     #[inline] pub fn create_with_completion_group(completionGroup: &BackgroundTransferCompletionGroup) -> Result<ComPtr<BackgroundUploader>> { unsafe {
         <Self as RtActivatable<IBackgroundUploaderFactory>>::get_activation_factory().create_with_completion_group(completionGroup)
-    }}
-    #[inline] pub fn request_unconstrained_uploads_async(operations: &super::super::foundation::collections::IIterable<UploadOperation>) -> Result<ComPtr<super::super::foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> { unsafe {
-        <Self as RtActivatable<IBackgroundUploaderUserConsent>>::get_activation_factory().request_unconstrained_uploads_async(operations)
     }}
     #[inline] pub fn get_current_uploads_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<UploadOperation>>>> { unsafe {
         <Self as RtActivatable<IBackgroundUploaderStaticMethods>>::get_activation_factory().get_current_uploads_async()
@@ -4090,6 +4087,9 @@ impl BackgroundUploader {
     }}
     #[inline] pub fn get_current_uploads_for_transfer_group_async(group: &BackgroundTransferGroup) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<UploadOperation>>>> { unsafe {
         <Self as RtActivatable<IBackgroundUploaderStaticMethods2>>::get_activation_factory().get_current_uploads_for_transfer_group_async(group)
+    }}
+    #[inline] pub fn request_unconstrained_uploads_async(operations: &super::super::foundation::collections::IIterable<UploadOperation>) -> Result<ComPtr<super::super::foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> { unsafe {
+        <Self as RtActivatable<IBackgroundUploaderUserConsent>>::get_activation_factory().request_unconstrained_uploads_async(operations)
     }}
 }
 DEFINE_CLSID!(BackgroundUploader(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,85,112,108,111,97,100,101,114,0]) [CLSID_BackgroundUploader]);
@@ -4520,24 +4520,9 @@ RT_ENUM! { enum PeerDiscoveryTypes: u32 {
     None (PeerDiscoveryTypes_None) = 0, Browse (PeerDiscoveryTypes_Browse) = 1, Triggered (PeerDiscoveryTypes_Triggered) = 2,
 }}
 RT_CLASS!{static class PeerFinder}
-impl RtActivatable<IPeerFinderStatics2> for PeerFinder {}
 impl RtActivatable<IPeerFinderStatics> for PeerFinder {}
+impl RtActivatable<IPeerFinderStatics2> for PeerFinder {}
 impl PeerFinder {
-    #[inline] pub fn get_role() -> Result<PeerRole> { unsafe {
-        <Self as RtActivatable<IPeerFinderStatics2>>::get_activation_factory().get_role()
-    }}
-    #[inline] pub fn set_role(value: PeerRole) -> Result<()> { unsafe {
-        <Self as RtActivatable<IPeerFinderStatics2>>::get_activation_factory().set_role(value)
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_discovery_data() -> Result<ComPtr<super::super::storage::streams::IBuffer>> { unsafe {
-        <Self as RtActivatable<IPeerFinderStatics2>>::get_activation_factory().get_discovery_data()
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_discovery_data(value: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe {
-        <Self as RtActivatable<IPeerFinderStatics2>>::get_activation_factory().set_discovery_data(value)
-    }}
-    #[inline] pub fn create_watcher() -> Result<ComPtr<PeerWatcher>> { unsafe {
-        <Self as RtActivatable<IPeerFinderStatics2>>::get_activation_factory().create_watcher()
-    }}
     #[inline] pub fn get_allow_bluetooth() -> Result<bool> { unsafe {
         <Self as RtActivatable<IPeerFinderStatics>>::get_activation_factory().get_allow_bluetooth()
     }}
@@ -4594,6 +4579,21 @@ impl PeerFinder {
     }}
     #[inline] pub fn connect_async(peerInformation: &PeerInformation) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::sockets::StreamSocket>>> { unsafe {
         <Self as RtActivatable<IPeerFinderStatics>>::get_activation_factory().connect_async(peerInformation)
+    }}
+    #[inline] pub fn get_role() -> Result<PeerRole> { unsafe {
+        <Self as RtActivatable<IPeerFinderStatics2>>::get_activation_factory().get_role()
+    }}
+    #[inline] pub fn set_role(value: PeerRole) -> Result<()> { unsafe {
+        <Self as RtActivatable<IPeerFinderStatics2>>::get_activation_factory().set_role(value)
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_discovery_data() -> Result<ComPtr<super::super::storage::streams::IBuffer>> { unsafe {
+        <Self as RtActivatable<IPeerFinderStatics2>>::get_activation_factory().get_discovery_data()
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_discovery_data(value: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe {
+        <Self as RtActivatable<IPeerFinderStatics2>>::get_activation_factory().set_discovery_data(value)
+    }}
+    #[inline] pub fn create_watcher() -> Result<ComPtr<PeerWatcher>> { unsafe {
+        <Self as RtActivatable<IPeerFinderStatics2>>::get_activation_factory().create_watcher()
     }}
 }
 DEFINE_CLSID!(PeerFinder(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,80,114,111,120,105,109,105,116,121,46,80,101,101,114,70,105,110,100,101,114,0]) [CLSID_PeerFinder]);
@@ -8501,13 +8501,10 @@ impl IPushNotificationChannel {
 }
 RT_CLASS!{class PushNotificationChannel: IPushNotificationChannel}
 RT_CLASS!{static class PushNotificationChannelManager}
-impl RtActivatable<IPushNotificationChannelManagerStatics3> for PushNotificationChannelManager {}
 impl RtActivatable<IPushNotificationChannelManagerStatics> for PushNotificationChannelManager {}
 impl RtActivatable<IPushNotificationChannelManagerStatics2> for PushNotificationChannelManager {}
+impl RtActivatable<IPushNotificationChannelManagerStatics3> for PushNotificationChannelManager {}
 impl PushNotificationChannelManager {
-    #[inline] pub fn get_default() -> Result<ComPtr<PushNotificationChannelManagerForUser>> { unsafe {
-        <Self as RtActivatable<IPushNotificationChannelManagerStatics3>>::get_activation_factory().get_default()
-    }}
     #[inline] pub fn create_push_notification_channel_for_application_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe {
         <Self as RtActivatable<IPushNotificationChannelManagerStatics>>::get_activation_factory().create_push_notification_channel_for_application_async()
     }}
@@ -8519,6 +8516,9 @@ impl PushNotificationChannelManager {
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<PushNotificationChannelManagerForUser>> { unsafe {
         <Self as RtActivatable<IPushNotificationChannelManagerStatics2>>::get_activation_factory().get_for_user(user)
+    }}
+    #[inline] pub fn get_default() -> Result<ComPtr<PushNotificationChannelManagerForUser>> { unsafe {
+        <Self as RtActivatable<IPushNotificationChannelManagerStatics3>>::get_activation_factory().get_default()
     }}
 }
 DEFINE_CLSID!(PushNotificationChannelManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,80,117,115,104,78,111,116,105,102,105,99,97,116,105,111,110,115,46,80,117,115,104,78,111,116,105,102,105,99,97,116,105,111,110,67,104,97,110,110,101,108,77,97,110,97,103,101,114,0]) [CLSID_PushNotificationChannelManager]);

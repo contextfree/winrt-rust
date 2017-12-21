@@ -239,12 +239,9 @@ impl IArcadeStick {
     }
 }
 RT_CLASS!{class ArcadeStick: IArcadeStick}
-impl RtActivatable<IArcadeStickStatics2> for ArcadeStick {}
 impl RtActivatable<IArcadeStickStatics> for ArcadeStick {}
+impl RtActivatable<IArcadeStickStatics2> for ArcadeStick {}
 impl ArcadeStick {
-    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<ComPtr<ArcadeStick>> { unsafe {
-        <Self as RtActivatable<IArcadeStickStatics2>>::get_activation_factory().from_game_controller(gameController)
-    }}
     #[inline] pub fn add_arcade_stick_added(value: &super::super::foundation::EventHandler<ArcadeStick>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().add_arcade_stick_added(value)
     }}
@@ -259,6 +256,9 @@ impl ArcadeStick {
     }}
     #[inline] pub fn get_arcade_sticks() -> Result<ComPtr<super::super::foundation::collections::IVectorView<ArcadeStick>>> { unsafe {
         <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().get_arcade_sticks()
+    }}
+    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<ComPtr<ArcadeStick>> { unsafe {
+        <Self as RtActivatable<IArcadeStickStatics2>>::get_activation_factory().from_game_controller(gameController)
     }}
 }
 DEFINE_CLSID!(ArcadeStick(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,65,114,99,97,100,101,83,116,105,99,107,0]) [CLSID_ArcadeStick]);
@@ -502,12 +502,9 @@ impl IGamepad {
     }
 }
 RT_CLASS!{class Gamepad: IGamepad}
-impl RtActivatable<IGamepadStatics2> for Gamepad {}
 impl RtActivatable<IGamepadStatics> for Gamepad {}
+impl RtActivatable<IGamepadStatics2> for Gamepad {}
 impl Gamepad {
-    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<ComPtr<Gamepad>> { unsafe {
-        <Self as RtActivatable<IGamepadStatics2>>::get_activation_factory().from_game_controller(gameController)
-    }}
     #[inline] pub fn add_gamepad_added(value: &super::super::foundation::EventHandler<Gamepad>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().add_gamepad_added(value)
     }}
@@ -522,6 +519,9 @@ impl Gamepad {
     }}
     #[inline] pub fn get_gamepads() -> Result<ComPtr<super::super::foundation::collections::IVectorView<Gamepad>>> { unsafe {
         <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().get_gamepads()
+    }}
+    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<ComPtr<Gamepad>> { unsafe {
+        <Self as RtActivatable<IGamepadStatics2>>::get_activation_factory().from_game_controller(gameController)
     }}
 }
 DEFINE_CLSID!(Gamepad(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,71,97,109,101,112,97,100,0]) [CLSID_Gamepad]);
@@ -664,12 +664,9 @@ impl IRacingWheel {
     }
 }
 RT_CLASS!{class RacingWheel: IRacingWheel}
-impl RtActivatable<IRacingWheelStatics2> for RacingWheel {}
 impl RtActivatable<IRacingWheelStatics> for RacingWheel {}
+impl RtActivatable<IRacingWheelStatics2> for RacingWheel {}
 impl RacingWheel {
-    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<ComPtr<RacingWheel>> { unsafe {
-        <Self as RtActivatable<IRacingWheelStatics2>>::get_activation_factory().from_game_controller(gameController)
-    }}
     #[inline] pub fn add_racing_wheel_added(value: &super::super::foundation::EventHandler<RacingWheel>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().add_racing_wheel_added(value)
     }}
@@ -684,6 +681,9 @@ impl RacingWheel {
     }}
     #[inline] pub fn get_racing_wheels() -> Result<ComPtr<super::super::foundation::collections::IVectorView<RacingWheel>>> { unsafe {
         <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().get_racing_wheels()
+    }}
+    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<ComPtr<RacingWheel>> { unsafe {
+        <Self as RtActivatable<IRacingWheelStatics2>>::get_activation_factory().from_game_controller(gameController)
     }}
 }
 DEFINE_CLSID!(RacingWheel(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,82,97,99,105,110,103,87,104,101,101,108,0]) [CLSID_RacingWheel]);
@@ -909,12 +909,9 @@ impl IUINavigationController {
     }
 }
 RT_CLASS!{class UINavigationController: IUINavigationController}
-impl RtActivatable<IUINavigationControllerStatics2> for UINavigationController {}
 impl RtActivatable<IUINavigationControllerStatics> for UINavigationController {}
+impl RtActivatable<IUINavigationControllerStatics2> for UINavigationController {}
 impl UINavigationController {
-    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<ComPtr<UINavigationController>> { unsafe {
-        <Self as RtActivatable<IUINavigationControllerStatics2>>::get_activation_factory().from_game_controller(gameController)
-    }}
     #[inline] pub fn add_uinavigation_controller_added(value: &super::super::foundation::EventHandler<UINavigationController>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().add_uinavigation_controller_added(value)
     }}
@@ -929,6 +926,9 @@ impl UINavigationController {
     }}
     #[inline] pub fn get_uinavigation_controllers() -> Result<ComPtr<super::super::foundation::collections::IVectorView<UINavigationController>>> { unsafe {
         <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().get_uinavigation_controllers()
+    }}
+    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<ComPtr<UINavigationController>> { unsafe {
+        <Self as RtActivatable<IUINavigationControllerStatics2>>::get_activation_factory().from_game_controller(gameController)
     }}
 }
 DEFINE_CLSID!(UINavigationController(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,85,73,78,97,118,105,103,97,116,105,111,110,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_UINavigationController]);
@@ -1003,12 +1003,9 @@ impl ICustomGameControllerFactory {
     }
 }
 RT_CLASS!{static class GameControllerFactoryManager}
-impl RtActivatable<IGameControllerFactoryManagerStatics2> for GameControllerFactoryManager {}
 impl RtActivatable<IGameControllerFactoryManagerStatics> for GameControllerFactoryManager {}
+impl RtActivatable<IGameControllerFactoryManagerStatics2> for GameControllerFactoryManager {}
 impl GameControllerFactoryManager {
-    #[inline] pub fn try_get_factory_controller_from_game_controller(factory: &ICustomGameControllerFactory, gameController: &super::IGameController) -> Result<ComPtr<super::IGameController>> { unsafe {
-        <Self as RtActivatable<IGameControllerFactoryManagerStatics2>>::get_activation_factory().try_get_factory_controller_from_game_controller(factory, gameController)
-    }}
     #[inline] pub fn register_custom_factory_for_gip_interface(factory: &ICustomGameControllerFactory, interfaceId: Guid) -> Result<()> { unsafe {
         <Self as RtActivatable<IGameControllerFactoryManagerStatics>>::get_activation_factory().register_custom_factory_for_gip_interface(factory, interfaceId)
     }}
@@ -1017,6 +1014,9 @@ impl GameControllerFactoryManager {
     }}
     #[inline] pub fn register_custom_factory_for_xusb_type(factory: &ICustomGameControllerFactory, xusbType: XusbDeviceType, xusbSubtype: XusbDeviceSubtype) -> Result<()> { unsafe {
         <Self as RtActivatable<IGameControllerFactoryManagerStatics>>::get_activation_factory().register_custom_factory_for_xusb_type(factory, xusbType, xusbSubtype)
+    }}
+    #[inline] pub fn try_get_factory_controller_from_game_controller(factory: &ICustomGameControllerFactory, gameController: &super::IGameController) -> Result<ComPtr<super::IGameController>> { unsafe {
+        <Self as RtActivatable<IGameControllerFactoryManagerStatics2>>::get_activation_factory().try_get_factory_controller_from_game_controller(factory, gameController)
     }}
 }
 DEFINE_CLSID!(GameControllerFactoryManager(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,67,117,115,116,111,109,46,71,97,109,101,67,111,110,116,114,111,108,108,101,114,70,97,99,116,111,114,121,77,97,110,97,103,101,114,0]) [CLSID_GameControllerFactoryManager]);

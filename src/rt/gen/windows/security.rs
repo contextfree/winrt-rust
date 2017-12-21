@@ -1630,9 +1630,18 @@ RT_ENUM! { enum TokenBindingKeyType: i32 {
     Rsa2048 (TokenBindingKeyType_Rsa2048) = 0, EcdsaP256 (TokenBindingKeyType_EcdsaP256) = 1, AnyExisting (TokenBindingKeyType_AnyExisting) = 2,
 }}
 RT_CLASS!{static class WebAuthenticationBroker}
-impl RtActivatable<IWebAuthenticationBrokerStatics2> for WebAuthenticationBroker {}
 impl RtActivatable<IWebAuthenticationBrokerStatics> for WebAuthenticationBroker {}
+impl RtActivatable<IWebAuthenticationBrokerStatics2> for WebAuthenticationBroker {}
 impl WebAuthenticationBroker {
+    #[inline] pub fn authenticate_with_callback_uri_async(options: WebAuthenticationOptions, requestUri: &::rt::gen::windows::foundation::Uri, callbackUri: &::rt::gen::windows::foundation::Uri) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().authenticate_with_callback_uri_async(options, requestUri, callbackUri)
+    }}
+    #[inline] pub fn authenticate_without_callback_uri_async(options: WebAuthenticationOptions, requestUri: &::rt::gen::windows::foundation::Uri) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().authenticate_without_callback_uri_async(options, requestUri)
+    }}
+    #[inline] pub fn get_current_application_callback_uri() -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> { unsafe {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().get_current_application_callback_uri()
+    }}
     #[inline] pub fn authenticate_and_continue(requestUri: &::rt::gen::windows::foundation::Uri) -> Result<()> { unsafe {
         <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_and_continue(requestUri)
     }}
@@ -1647,15 +1656,6 @@ impl WebAuthenticationBroker {
     }}
     #[inline] pub fn authenticate_silently_with_options_async(requestUri: &::rt::gen::windows::foundation::Uri, options: WebAuthenticationOptions) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe {
         <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_silently_with_options_async(requestUri, options)
-    }}
-    #[inline] pub fn authenticate_with_callback_uri_async(options: WebAuthenticationOptions, requestUri: &::rt::gen::windows::foundation::Uri, callbackUri: &::rt::gen::windows::foundation::Uri) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().authenticate_with_callback_uri_async(options, requestUri, callbackUri)
-    }}
-    #[inline] pub fn authenticate_without_callback_uri_async(options: WebAuthenticationOptions, requestUri: &::rt::gen::windows::foundation::Uri) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().authenticate_without_callback_uri_async(options, requestUri)
-    }}
-    #[inline] pub fn get_current_application_callback_uri() -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> { unsafe {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().get_current_application_callback_uri()
     }}
 }
 DEFINE_CLSID!(WebAuthenticationBroker(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,66,114,111,107,101,114,0]) [CLSID_WebAuthenticationBroker]);
@@ -1801,49 +1801,13 @@ RT_ENUM! { enum WebAccountClientViewType: i32 {
     IdOnly (WebAccountClientViewType_IdOnly) = 0, IdAndProperties (WebAccountClientViewType_IdAndProperties) = 1,
 }}
 RT_CLASS!{static class WebAccountManager}
-impl RtActivatable<IWebAccountManagerStatics3> for WebAccountManager {}
-impl RtActivatable<IWebAccountScopeManagerStatics> for WebAccountManager {}
-impl RtActivatable<IWebAccountMapManagerStatics> for WebAccountManager {}
-impl RtActivatable<IWebAccountManagerStatics2> for WebAccountManager {}
 impl RtActivatable<IWebAccountManagerStatics> for WebAccountManager {}
+impl RtActivatable<IWebAccountManagerStatics2> for WebAccountManager {}
+impl RtActivatable<IWebAccountManagerStatics3> for WebAccountManager {}
 impl RtActivatable<IWebAccountManagerStatics4> for WebAccountManager {}
+impl RtActivatable<IWebAccountMapManagerStatics> for WebAccountManager {}
+impl RtActivatable<IWebAccountScopeManagerStatics> for WebAccountManager {}
 impl WebAccountManager {
-    #[cfg(feature="windows-system")] #[inline] pub fn find_all_provider_web_accounts_for_user_async(user: &::rt::gen::windows::system::User) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe {
-        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().find_all_provider_web_accounts_for_user_async(user)
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_for_user_async(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &::rt::gen::windows::foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe {
-        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_for_user_async(user, webAccountId, webAccountUserName, props)
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_for_user_async(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &::rt::gen::windows::foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe {
-        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_with_scope_for_user_async(user, webAccountId, webAccountUserName, props, scope)
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_and_map_for_user_async(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &::rt::gen::windows::foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe {
-        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_with_scope_and_map_for_user_async(user, webAccountId, webAccountUserName, props, scope, perUserWebAccountId)
-    }}
-    #[inline] pub fn add_web_account_with_scope_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &::rt::gen::windows::foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe {
-        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().add_web_account_with_scope_async(webAccountId, webAccountUserName, props, scope)
-    }}
-    #[inline] pub fn set_scope_async(webAccount: &super::super::super::credentials::WebAccount, scope: WebAccountScope) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
-        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().set_scope_async(webAccount, scope)
-    }}
-    #[inline] pub fn get_scope(webAccount: &super::super::super::credentials::WebAccount) -> Result<WebAccountScope> { unsafe {
-        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().get_scope(webAccount)
-    }}
-    #[inline] pub fn add_web_account_with_scope_and_map_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &::rt::gen::windows::foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe {
-        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().add_web_account_with_scope_and_map_async(webAccountId, webAccountUserName, props, scope, perUserWebAccountId)
-    }}
-    #[inline] pub fn set_per_app_to_per_user_account_async(perAppAccount: &super::super::super::credentials::WebAccount, perUserWebAccountId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
-        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().set_per_app_to_per_user_account_async(perAppAccount, perUserWebAccountId)
-    }}
-    #[inline] pub fn get_per_user_from_per_app_account_async(perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe {
-        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().get_per_user_from_per_app_account_async(perAppAccount)
-    }}
-    #[inline] pub fn clear_per_user_from_per_app_account_async(perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
-        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().clear_per_user_from_per_app_account_async(perAppAccount)
-    }}
-    #[inline] pub fn pull_cookies_async(uriString: &HStringArg, callerPFN: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
-        <Self as RtActivatable<IWebAccountManagerStatics2>>::get_activation_factory().pull_cookies_async(uriString, callerPFN)
-    }}
     #[inline] pub fn update_web_account_properties_async(webAccount: &super::super::super::credentials::WebAccount, webAccountUserName: &HStringArg, additionalProperties: &::rt::gen::windows::foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
         <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().update_web_account_properties_async(webAccount, webAccountUserName, additionalProperties)
     }}
@@ -1874,11 +1838,47 @@ impl WebAccountManager {
     #[inline] pub fn clear_web_account_picture_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
         <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().clear_web_account_picture_async(webAccount)
     }}
+    #[inline] pub fn pull_cookies_async(uriString: &HStringArg, callerPFN: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
+        <Self as RtActivatable<IWebAccountManagerStatics2>>::get_activation_factory().pull_cookies_async(uriString, callerPFN)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn find_all_provider_web_accounts_for_user_async(user: &::rt::gen::windows::system::User) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe {
+        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().find_all_provider_web_accounts_for_user_async(user)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_for_user_async(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &::rt::gen::windows::foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe {
+        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_for_user_async(user, webAccountId, webAccountUserName, props)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_for_user_async(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &::rt::gen::windows::foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe {
+        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_with_scope_for_user_async(user, webAccountId, webAccountUserName, props, scope)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_and_map_for_user_async(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &::rt::gen::windows::foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe {
+        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_with_scope_and_map_for_user_async(user, webAccountId, webAccountUserName, props, scope, perUserWebAccountId)
+    }}
     #[inline] pub fn invalidate_app_cache_for_all_accounts_async() -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
         <Self as RtActivatable<IWebAccountManagerStatics4>>::get_activation_factory().invalidate_app_cache_for_all_accounts_async()
     }}
     #[inline] pub fn invalidate_app_cache_for_account_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
         <Self as RtActivatable<IWebAccountManagerStatics4>>::get_activation_factory().invalidate_app_cache_for_account_async(webAccount)
+    }}
+    #[inline] pub fn add_web_account_with_scope_and_map_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &::rt::gen::windows::foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe {
+        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().add_web_account_with_scope_and_map_async(webAccountId, webAccountUserName, props, scope, perUserWebAccountId)
+    }}
+    #[inline] pub fn set_per_app_to_per_user_account_async(perAppAccount: &super::super::super::credentials::WebAccount, perUserWebAccountId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
+        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().set_per_app_to_per_user_account_async(perAppAccount, perUserWebAccountId)
+    }}
+    #[inline] pub fn get_per_user_from_per_app_account_async(perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe {
+        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().get_per_user_from_per_app_account_async(perAppAccount)
+    }}
+    #[inline] pub fn clear_per_user_from_per_app_account_async(perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
+        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().clear_per_user_from_per_app_account_async(perAppAccount)
+    }}
+    #[inline] pub fn add_web_account_with_scope_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &::rt::gen::windows::foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe {
+        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().add_web_account_with_scope_async(webAccountId, webAccountUserName, props, scope)
+    }}
+    #[inline] pub fn set_scope_async(webAccount: &super::super::super::credentials::WebAccount, scope: WebAccountScope) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
+        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().set_scope_async(webAccount, scope)
+    }}
+    #[inline] pub fn get_scope(webAccount: &super::super::super::credentials::WebAccount) -> Result<WebAccountScope> { unsafe {
+        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().get_scope(webAccount)
     }}
 }
 DEFINE_CLSID!(WebAccountManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,65,99,99,111,117,110,116,77,97,110,97,103,101,114,0]) [CLSID_WebAccountManager]);
@@ -2403,16 +2403,10 @@ impl IWebAccountMonitor {
 }
 RT_CLASS!{class WebAccountMonitor: IWebAccountMonitor}
 RT_CLASS!{static class WebAuthenticationCoreManager}
+impl RtActivatable<IWebAuthenticationCoreManagerStatics> for WebAuthenticationCoreManager {}
 impl RtActivatable<IWebAuthenticationCoreManagerStatics2> for WebAuthenticationCoreManager {}
 impl RtActivatable<IWebAuthenticationCoreManagerStatics3> for WebAuthenticationCoreManager {}
-impl RtActivatable<IWebAuthenticationCoreManagerStatics> for WebAuthenticationCoreManager {}
 impl WebAuthenticationCoreManager {
-    #[cfg(feature="windows-system")] #[inline] pub fn find_account_provider_with_authority_for_user_async(webAccountProviderId: &HStringArg, authority: &HStringArg, user: &::rt::gen::windows::system::User) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics2>>::get_activation_factory().find_account_provider_with_authority_for_user_async(webAccountProviderId, authority, user)
-    }}
-    #[inline] pub fn create_web_account_monitor(webAccounts: &::rt::gen::windows::foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<ComPtr<WebAccountMonitor>> { unsafe {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics3>>::get_activation_factory().create_web_account_monitor(webAccounts)
-    }}
     #[inline] pub fn get_token_silently_async(request: &WebTokenRequest) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe {
         <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().get_token_silently_async(request)
     }}
@@ -2433,6 +2427,12 @@ impl WebAuthenticationCoreManager {
     }}
     #[inline] pub fn find_account_provider_with_authority_async(webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe {
         <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().find_account_provider_with_authority_async(webAccountProviderId, authority)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn find_account_provider_with_authority_for_user_async(webAccountProviderId: &HStringArg, authority: &HStringArg, user: &::rt::gen::windows::system::User) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics2>>::get_activation_factory().find_account_provider_with_authority_for_user_async(webAccountProviderId, authority, user)
+    }}
+    #[inline] pub fn create_web_account_monitor(webAccounts: &::rt::gen::windows::foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<ComPtr<WebAccountMonitor>> { unsafe {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics3>>::get_activation_factory().create_web_account_monitor(webAccounts)
     }}
 }
 DEFINE_CLSID!(WebAuthenticationCoreManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,67,111,114,101,77,97,110,97,103,101,114,0]) [CLSID_WebAuthenticationCoreManager]);
@@ -3072,19 +3072,10 @@ RT_ENUM! { enum CertificateChainPolicy: i32 {
     Base (CertificateChainPolicy_Base) = 0, Ssl (CertificateChainPolicy_Ssl) = 1, NTAuthentication (CertificateChainPolicy_NTAuthentication) = 2, MicrosoftRoot (CertificateChainPolicy_MicrosoftRoot) = 3,
 }}
 RT_CLASS!{static class CertificateEnrollmentManager}
-impl RtActivatable<ICertificateEnrollmentManagerStatics3> for CertificateEnrollmentManager {}
-impl RtActivatable<ICertificateEnrollmentManagerStatics2> for CertificateEnrollmentManager {}
 impl RtActivatable<ICertificateEnrollmentManagerStatics> for CertificateEnrollmentManager {}
+impl RtActivatable<ICertificateEnrollmentManagerStatics2> for CertificateEnrollmentManager {}
+impl RtActivatable<ICertificateEnrollmentManagerStatics3> for CertificateEnrollmentManager {}
 impl CertificateEnrollmentManager {
-    #[inline] pub fn import_pfx_data_to_ksp_with_parameters_async(pfxData: &HStringArg, password: &HStringArg, pfxImportParameters: &PfxImportParameters) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
-        <Self as RtActivatable<ICertificateEnrollmentManagerStatics3>>::get_activation_factory().import_pfx_data_to_ksp_with_parameters_async(pfxData, password, pfxImportParameters)
-    }}
-    #[inline] pub fn get_user_certificate_enrollment_manager() -> Result<ComPtr<UserCertificateEnrollmentManager>> { unsafe {
-        <Self as RtActivatable<ICertificateEnrollmentManagerStatics2>>::get_activation_factory().get_user_certificate_enrollment_manager()
-    }}
-    #[inline] pub fn import_pfx_data_to_ksp_async(pfxData: &HStringArg, password: &HStringArg, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: &HStringArg, keyStorageProvider: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
-        <Self as RtActivatable<ICertificateEnrollmentManagerStatics2>>::get_activation_factory().import_pfx_data_to_ksp_async(pfxData, password, exportable, keyProtectionLevel, installOption, friendlyName, keyStorageProvider)
-    }}
     #[inline] pub fn create_request_async(request: &CertificateRequestProperties) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<HString>>> { unsafe {
         <Self as RtActivatable<ICertificateEnrollmentManagerStatics>>::get_activation_factory().create_request_async(request)
     }}
@@ -3093,6 +3084,15 @@ impl CertificateEnrollmentManager {
     }}
     #[inline] pub fn import_pfx_data_async(pfxData: &HStringArg, password: &HStringArg, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
         <Self as RtActivatable<ICertificateEnrollmentManagerStatics>>::get_activation_factory().import_pfx_data_async(pfxData, password, exportable, keyProtectionLevel, installOption, friendlyName)
+    }}
+    #[inline] pub fn get_user_certificate_enrollment_manager() -> Result<ComPtr<UserCertificateEnrollmentManager>> { unsafe {
+        <Self as RtActivatable<ICertificateEnrollmentManagerStatics2>>::get_activation_factory().get_user_certificate_enrollment_manager()
+    }}
+    #[inline] pub fn import_pfx_data_to_ksp_async(pfxData: &HStringArg, password: &HStringArg, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: &HStringArg, keyStorageProvider: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
+        <Self as RtActivatable<ICertificateEnrollmentManagerStatics2>>::get_activation_factory().import_pfx_data_to_ksp_async(pfxData, password, exportable, keyProtectionLevel, installOption, friendlyName, keyStorageProvider)
+    }}
+    #[inline] pub fn import_pfx_data_to_ksp_with_parameters_async(pfxData: &HStringArg, password: &HStringArg, pfxImportParameters: &PfxImportParameters) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
+        <Self as RtActivatable<ICertificateEnrollmentManagerStatics3>>::get_activation_factory().import_pfx_data_to_ksp_with_parameters_async(pfxData, password, pfxImportParameters)
     }}
 }
 DEFINE_CLSID!(CertificateEnrollmentManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,69,110,114,111,108,108,109,101,110,116,77,97,110,97,103,101,114,0]) [CLSID_CertificateEnrollmentManager]);
@@ -3652,12 +3652,9 @@ impl ICertificateStore2 {
     }
 }
 RT_CLASS!{static class CertificateStores}
-impl RtActivatable<ICertificateStoresStatics2> for CertificateStores {}
 impl RtActivatable<ICertificateStoresStatics> for CertificateStores {}
+impl RtActivatable<ICertificateStoresStatics2> for CertificateStores {}
 impl CertificateStores {
-    #[inline] pub fn get_user_store_by_name(storeName: &HStringArg) -> Result<ComPtr<UserCertificateStore>> { unsafe {
-        <Self as RtActivatable<ICertificateStoresStatics2>>::get_activation_factory().get_user_store_by_name(storeName)
-    }}
     #[inline] pub fn find_all_async() -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<Certificate>>>> { unsafe {
         <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().find_all_async()
     }}
@@ -3672,6 +3669,9 @@ impl CertificateStores {
     }}
     #[inline] pub fn get_store_by_name(storeName: &HStringArg) -> Result<ComPtr<CertificateStore>> { unsafe {
         <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().get_store_by_name(storeName)
+    }}
+    #[inline] pub fn get_user_store_by_name(storeName: &HStringArg) -> Result<ComPtr<UserCertificateStore>> { unsafe {
+        <Self as RtActivatable<ICertificateStoresStatics2>>::get_activation_factory().get_user_store_by_name(storeName)
     }}
 }
 DEFINE_CLSID!(CertificateStores(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,83,116,111,114,101,115,0]) [CLSID_CertificateStores]);
@@ -4125,17 +4125,17 @@ impl IKeyAlgorithmNamesStatics2 {
     }
 }
 RT_CLASS!{static class KeyAttestationHelper}
-impl RtActivatable<IKeyAttestationHelperStatics2> for KeyAttestationHelper {}
 impl RtActivatable<IKeyAttestationHelperStatics> for KeyAttestationHelper {}
+impl RtActivatable<IKeyAttestationHelperStatics2> for KeyAttestationHelper {}
 impl KeyAttestationHelper {
-    #[inline] pub fn decrypt_tpm_attestation_credential_with_container_name_async(credential: &HStringArg, containerName: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<HString>>> { unsafe {
-        <Self as RtActivatable<IKeyAttestationHelperStatics2>>::get_activation_factory().decrypt_tpm_attestation_credential_with_container_name_async(credential, containerName)
-    }}
     #[inline] pub fn decrypt_tpm_attestation_credential_async(credential: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<HString>>> { unsafe {
         <Self as RtActivatable<IKeyAttestationHelperStatics>>::get_activation_factory().decrypt_tpm_attestation_credential_async(credential)
     }}
     #[inline] pub fn get_tpm_attestation_credential_id(credential: &HStringArg) -> Result<HString> { unsafe {
         <Self as RtActivatable<IKeyAttestationHelperStatics>>::get_activation_factory().get_tpm_attestation_credential_id(credential)
+    }}
+    #[inline] pub fn decrypt_tpm_attestation_credential_with_container_name_async(credential: &HStringArg, containerName: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<HString>>> { unsafe {
+        <Self as RtActivatable<IKeyAttestationHelperStatics2>>::get_activation_factory().decrypt_tpm_attestation_credential_with_container_name_async(credential, containerName)
     }}
 }
 DEFINE_CLSID!(KeyAttestationHelper(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,75,101,121,65,116,116,101,115,116,97,116,105,111,110,72,101,108,112,101,114,0]) [CLSID_KeyAttestationHelper]);
@@ -4174,12 +4174,9 @@ RT_ENUM! { enum KeySize: i32 {
     Invalid (KeySize_Invalid) = 0, Rsa2048 (KeySize_Rsa2048) = 2048, Rsa4096 (KeySize_Rsa4096) = 4096,
 }}
 RT_CLASS!{static class KeyStorageProviderNames}
-impl RtActivatable<IKeyStorageProviderNamesStatics2> for KeyStorageProviderNames {}
 impl RtActivatable<IKeyStorageProviderNamesStatics> for KeyStorageProviderNames {}
+impl RtActivatable<IKeyStorageProviderNamesStatics2> for KeyStorageProviderNames {}
 impl KeyStorageProviderNames {
-    #[inline] pub fn get_passport_key_storage_provider() -> Result<HString> { unsafe {
-        <Self as RtActivatable<IKeyStorageProviderNamesStatics2>>::get_activation_factory().get_passport_key_storage_provider()
-    }}
     #[inline] pub fn get_software_key_storage_provider() -> Result<HString> { unsafe {
         <Self as RtActivatable<IKeyStorageProviderNamesStatics>>::get_activation_factory().get_software_key_storage_provider()
     }}
@@ -4188,6 +4185,9 @@ impl KeyStorageProviderNames {
     }}
     #[inline] pub fn get_platform_key_storage_provider() -> Result<HString> { unsafe {
         <Self as RtActivatable<IKeyStorageProviderNamesStatics>>::get_activation_factory().get_platform_key_storage_provider()
+    }}
+    #[inline] pub fn get_passport_key_storage_provider() -> Result<HString> { unsafe {
+        <Self as RtActivatable<IKeyStorageProviderNamesStatics2>>::get_activation_factory().get_passport_key_storage_provider()
     }}
 }
 DEFINE_CLSID!(KeyStorageProviderNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,75,101,121,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,78,97,109,101,115,0]) [CLSID_KeyStorageProviderNames]);
@@ -5783,12 +5783,9 @@ impl IKeyDerivationParameters {
     }
 }
 RT_CLASS!{class KeyDerivationParameters: IKeyDerivationParameters}
-impl RtActivatable<IKeyDerivationParametersStatics2> for KeyDerivationParameters {}
 impl RtActivatable<IKeyDerivationParametersStatics> for KeyDerivationParameters {}
+impl RtActivatable<IKeyDerivationParametersStatics2> for KeyDerivationParameters {}
 impl KeyDerivationParameters {
-    #[inline] pub fn build_for_capi1_kdf(capi1KdfTargetAlgorithm: Capi1KdfTargetAlgorithm) -> Result<ComPtr<KeyDerivationParameters>> { unsafe {
-        <Self as RtActivatable<IKeyDerivationParametersStatics2>>::get_activation_factory().build_for_capi1_kdf(capi1KdfTargetAlgorithm)
-    }}
     #[cfg(feature="windows-storage")] #[inline] pub fn build_for_pbkdf2(pbkdf2Salt: &::rt::gen::windows::storage::streams::IBuffer, iterationCount: u32) -> Result<ComPtr<KeyDerivationParameters>> { unsafe {
         <Self as RtActivatable<IKeyDerivationParametersStatics>>::get_activation_factory().build_for_pbkdf2(pbkdf2Salt, iterationCount)
     }}
@@ -5797,6 +5794,9 @@ impl KeyDerivationParameters {
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp80056a(algorithmId: &::rt::gen::windows::storage::streams::IBuffer, partyUInfo: &::rt::gen::windows::storage::streams::IBuffer, partyVInfo: &::rt::gen::windows::storage::streams::IBuffer, suppPubInfo: &::rt::gen::windows::storage::streams::IBuffer, suppPrivInfo: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<KeyDerivationParameters>> { unsafe {
         <Self as RtActivatable<IKeyDerivationParametersStatics>>::get_activation_factory().build_for_sp80056a(algorithmId, partyUInfo, partyVInfo, suppPubInfo, suppPrivInfo)
+    }}
+    #[inline] pub fn build_for_capi1_kdf(capi1KdfTargetAlgorithm: Capi1KdfTargetAlgorithm) -> Result<ComPtr<KeyDerivationParameters>> { unsafe {
+        <Self as RtActivatable<IKeyDerivationParametersStatics2>>::get_activation_factory().build_for_capi1_kdf(capi1KdfTargetAlgorithm)
     }}
 }
 DEFINE_CLSID!(KeyDerivationParameters(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,75,101,121,68,101,114,105,118,97,116,105,111,110,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_KeyDerivationParameters]);
@@ -6418,8 +6418,8 @@ impl IFileProtectionInfo2 {
 }
 RT_CLASS!{static class FileProtectionManager}
 impl RtActivatable<IFileProtectionManagerStatics> for FileProtectionManager {}
-impl RtActivatable<IFileProtectionManagerStatics3> for FileProtectionManager {}
 impl RtActivatable<IFileProtectionManagerStatics2> for FileProtectionManager {}
+impl RtActivatable<IFileProtectionManagerStatics3> for FileProtectionManager {}
 impl FileProtectionManager {
     #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(target: &super::super::storage::IStorageItem, identity: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<FileProtectionInfo>>> { unsafe {
         <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().protect_async(target, identity)
@@ -6442,12 +6442,6 @@ impl FileProtectionManager {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_protected_and_open_async(parentFolder: &super::super::storage::IStorageFolder, desiredName: &HStringArg, identity: &HStringArg, collisionOption: super::super::storage::CreationCollisionOption) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectedFileCreateResult>>> { unsafe {
         <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().create_protected_and_open_async(parentFolder, desiredName, identity, collisionOption)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(target: &super::super::storage::IStorageItem) -> Result<ComPtr<super::super::foundation::IAsyncOperation<FileProtectionInfo>>> { unsafe {
-        <Self as RtActivatable<IFileProtectionManagerStatics3>>::get_activation_factory().unprotect_async(target)
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_with_options_async(target: &super::super::storage::IStorageItem, options: &FileUnprotectOptions) -> Result<ComPtr<super::super::foundation::IAsyncOperation<FileProtectionInfo>>> { unsafe {
-        <Self as RtActivatable<IFileProtectionManagerStatics3>>::get_activation_factory().unprotect_with_options_async(target, options)
-    }}
     #[cfg(feature="windows-storage")] #[inline] pub fn is_container_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
         <Self as RtActivatable<IFileProtectionManagerStatics2>>::get_activation_factory().is_container_async(file)
     }}
@@ -6456,6 +6450,12 @@ impl FileProtectionManager {
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn save_file_as_container_with_sharing_async(protectedFile: &super::super::storage::IStorageFile, sharedWithIdentities: &super::super::foundation::collections::IIterable<HString>) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectedContainerExportResult>>> { unsafe {
         <Self as RtActivatable<IFileProtectionManagerStatics2>>::get_activation_factory().save_file_as_container_with_sharing_async(protectedFile, sharedWithIdentities)
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(target: &super::super::storage::IStorageItem) -> Result<ComPtr<super::super::foundation::IAsyncOperation<FileProtectionInfo>>> { unsafe {
+        <Self as RtActivatable<IFileProtectionManagerStatics3>>::get_activation_factory().unprotect_async(target)
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_with_options_async(target: &super::super::storage::IStorageItem, options: &FileUnprotectOptions) -> Result<ComPtr<super::super::foundation::IAsyncOperation<FileProtectionInfo>>> { unsafe {
+        <Self as RtActivatable<IFileProtectionManagerStatics3>>::get_activation_factory().unprotect_with_options_async(target, options)
     }}
 }
 DEFINE_CLSID!(FileProtectionManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,70,105,108,101,80,114,111,116,101,99,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_FileProtectionManager]);
@@ -6842,86 +6842,11 @@ impl IProtectionPolicyManager {
     }
 }
 RT_CLASS!{class ProtectionPolicyManager: IProtectionPolicyManager}
-impl RtActivatable<IProtectionPolicyManagerStatics2> for ProtectionPolicyManager {}
-impl RtActivatable<IProtectionPolicyManagerStatics4> for ProtectionPolicyManager {}
-impl RtActivatable<IProtectionPolicyManagerStatics3> for ProtectionPolicyManager {}
 impl RtActivatable<IProtectionPolicyManagerStatics> for ProtectionPolicyManager {}
+impl RtActivatable<IProtectionPolicyManagerStatics2> for ProtectionPolicyManager {}
+impl RtActivatable<IProtectionPolicyManagerStatics3> for ProtectionPolicyManager {}
+impl RtActivatable<IProtectionPolicyManagerStatics4> for ProtectionPolicyManager {}
 impl ProtectionPolicyManager {
-    #[inline] pub fn has_content_been_revoked_since(identity: &HStringArg, since: super::super::foundation::DateTime) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().has_content_been_revoked_since(identity, since)
-    }}
-    #[inline] pub fn check_access_for_app(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg) -> Result<ProtectionPolicyEvaluationResult> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().check_access_for_app(sourceIdentity, appPackageFamilyName)
-    }}
-    #[inline] pub fn request_access_for_app_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().request_access_for_app_async(sourceIdentity, appPackageFamilyName)
-    }}
-    #[inline] pub fn get_enforcement_level(identity: &HStringArg) -> Result<EnforcementLevel> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().get_enforcement_level(identity)
-    }}
-    #[inline] pub fn is_user_decryption_allowed(identity: &HStringArg) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().is_user_decryption_allowed(identity)
-    }}
-    #[inline] pub fn is_protection_under_lock_required(identity: &HStringArg) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().is_protection_under_lock_required(identity)
-    }}
-    #[inline] pub fn add_policy_changed(handler: &super::super::foundation::EventHandler<IInspectable>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().add_policy_changed(handler)
-    }}
-    #[inline] pub fn remove_policy_changed(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().remove_policy_changed(token)
-    }}
-    #[inline] pub fn get_is_protection_enabled() -> Result<bool> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().get_is_protection_enabled()
-    }}
-    #[inline] pub fn is_roamable_protection_enabled(identity: &HStringArg) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().is_roamable_protection_enabled(identity)
-    }}
-    #[inline] pub fn request_access_with_behavior_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_with_behavior_async(sourceIdentity, targetIdentity, auditInfo, messageFromApp, behavior)
-    }}
-    #[inline] pub fn request_access_for_app_with_behavior_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_for_app_with_behavior_async(sourceIdentity, appPackageFamilyName, auditInfo, messageFromApp, behavior)
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_async(sourceItemList: &super::super::foundation::collections::IIterable<super::super::storage::IStorageItem>, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_to_files_for_app_async(sourceItemList, appPackageFamilyName, auditInfo)
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_with_message_and_behavior_async(sourceItemList: &super::super::foundation::collections::IIterable<super::super::storage::IStorageItem>, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_to_files_for_app_with_message_and_behavior_async(sourceItemList, appPackageFamilyName, auditInfo, messageFromApp, behavior)
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_async(sourceItemList: &super::super::foundation::collections::IIterable<super::super::storage::IStorageItem>, processId: u32, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_to_files_for_process_async(sourceItemList, processId, auditInfo)
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_with_message_and_behavior_async(sourceItemList: &super::super::foundation::collections::IIterable<super::super::storage::IStorageItem>, processId: u32, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_to_files_for_process_with_message_and_behavior_async(sourceItemList, processId, auditInfo, messageFromApp, behavior)
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_async(target: &super::super::storage::IStorageItem, identity: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().is_file_protection_required_async(target, identity)
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_for_new_file_async(parentFolder: &super::super::storage::IStorageFolder, identity: &HStringArg, desiredName: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().is_file_protection_required_for_new_file_async(parentFolder, identity, desiredName)
-    }}
-    #[inline] pub fn get_primary_managed_identity() -> Result<HString> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().get_primary_managed_identity()
-    }}
-    #[inline] pub fn get_primary_managed_identity_for_identity(identity: &HStringArg) -> Result<HString> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().get_primary_managed_identity_for_identity(identity)
-    }}
-    #[inline] pub fn request_access_with_auditing_info_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().request_access_with_auditing_info_async(sourceIdentity, targetIdentity, auditInfo)
-    }}
-    #[inline] pub fn request_access_with_message_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().request_access_with_message_async(sourceIdentity, targetIdentity, auditInfo, messageFromApp)
-    }}
-    #[inline] pub fn request_access_for_app_with_auditing_info_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().request_access_for_app_with_auditing_info_async(sourceIdentity, appPackageFamilyName, auditInfo)
-    }}
-    #[inline] pub fn request_access_for_app_with_message_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().request_access_for_app_with_message_async(sourceIdentity, appPackageFamilyName, auditInfo, messageFromApp)
-    }}
-    #[inline] pub fn log_audit_event(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<()> { unsafe {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().log_audit_event(sourceIdentity, targetIdentity, auditInfo)
-    }}
     #[inline] pub fn is_identity_managed(identity: &HStringArg) -> Result<bool> { unsafe {
         <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().is_identity_managed(identity)
     }}
@@ -6966,6 +6891,81 @@ impl ProtectionPolicyManager {
     }}
     #[inline] pub fn request_access_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
         <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().request_access_async(sourceIdentity, targetIdentity)
+    }}
+    #[inline] pub fn has_content_been_revoked_since(identity: &HStringArg, since: super::super::foundation::DateTime) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().has_content_been_revoked_since(identity, since)
+    }}
+    #[inline] pub fn check_access_for_app(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg) -> Result<ProtectionPolicyEvaluationResult> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().check_access_for_app(sourceIdentity, appPackageFamilyName)
+    }}
+    #[inline] pub fn request_access_for_app_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().request_access_for_app_async(sourceIdentity, appPackageFamilyName)
+    }}
+    #[inline] pub fn get_enforcement_level(identity: &HStringArg) -> Result<EnforcementLevel> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().get_enforcement_level(identity)
+    }}
+    #[inline] pub fn is_user_decryption_allowed(identity: &HStringArg) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().is_user_decryption_allowed(identity)
+    }}
+    #[inline] pub fn is_protection_under_lock_required(identity: &HStringArg) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().is_protection_under_lock_required(identity)
+    }}
+    #[inline] pub fn add_policy_changed(handler: &super::super::foundation::EventHandler<IInspectable>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().add_policy_changed(handler)
+    }}
+    #[inline] pub fn remove_policy_changed(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().remove_policy_changed(token)
+    }}
+    #[inline] pub fn get_is_protection_enabled() -> Result<bool> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().get_is_protection_enabled()
+    }}
+    #[inline] pub fn request_access_with_auditing_info_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().request_access_with_auditing_info_async(sourceIdentity, targetIdentity, auditInfo)
+    }}
+    #[inline] pub fn request_access_with_message_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().request_access_with_message_async(sourceIdentity, targetIdentity, auditInfo, messageFromApp)
+    }}
+    #[inline] pub fn request_access_for_app_with_auditing_info_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().request_access_for_app_with_auditing_info_async(sourceIdentity, appPackageFamilyName, auditInfo)
+    }}
+    #[inline] pub fn request_access_for_app_with_message_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().request_access_for_app_with_message_async(sourceIdentity, appPackageFamilyName, auditInfo, messageFromApp)
+    }}
+    #[inline] pub fn log_audit_event(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<()> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().log_audit_event(sourceIdentity, targetIdentity, auditInfo)
+    }}
+    #[inline] pub fn is_roamable_protection_enabled(identity: &HStringArg) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().is_roamable_protection_enabled(identity)
+    }}
+    #[inline] pub fn request_access_with_behavior_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_with_behavior_async(sourceIdentity, targetIdentity, auditInfo, messageFromApp, behavior)
+    }}
+    #[inline] pub fn request_access_for_app_with_behavior_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_for_app_with_behavior_async(sourceIdentity, appPackageFamilyName, auditInfo, messageFromApp, behavior)
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_async(sourceItemList: &super::super::foundation::collections::IIterable<super::super::storage::IStorageItem>, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_to_files_for_app_async(sourceItemList, appPackageFamilyName, auditInfo)
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_with_message_and_behavior_async(sourceItemList: &super::super::foundation::collections::IIterable<super::super::storage::IStorageItem>, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_to_files_for_app_with_message_and_behavior_async(sourceItemList, appPackageFamilyName, auditInfo, messageFromApp, behavior)
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_async(sourceItemList: &super::super::foundation::collections::IIterable<super::super::storage::IStorageItem>, processId: u32, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_to_files_for_process_async(sourceItemList, processId, auditInfo)
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_with_message_and_behavior_async(sourceItemList: &super::super::foundation::collections::IIterable<super::super::storage::IStorageItem>, processId: u32, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_to_files_for_process_with_message_and_behavior_async(sourceItemList, processId, auditInfo, messageFromApp, behavior)
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_async(target: &super::super::storage::IStorageItem, identity: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().is_file_protection_required_async(target, identity)
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_for_new_file_async(parentFolder: &super::super::storage::IStorageFolder, identity: &HStringArg, desiredName: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().is_file_protection_required_for_new_file_async(parentFolder, identity, desiredName)
+    }}
+    #[inline] pub fn get_primary_managed_identity() -> Result<HString> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().get_primary_managed_identity()
+    }}
+    #[inline] pub fn get_primary_managed_identity_for_identity(identity: &HStringArg) -> Result<HString> { unsafe {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().get_primary_managed_identity_for_identity(identity)
     }}
 }
 DEFINE_CLSID!(ProtectionPolicyManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,80,114,111,116,101,99,116,105,111,110,80,111,108,105,99,121,77,97,110,97,103,101,114,0]) [CLSID_ProtectionPolicyManager]);

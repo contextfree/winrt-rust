@@ -3042,14 +3042,14 @@ impl IAppCapture {
     }
 }
 RT_CLASS!{class AppCapture: IAppCapture}
-impl RtActivatable<IAppCaptureStatics2> for AppCapture {}
 impl RtActivatable<IAppCaptureStatics> for AppCapture {}
+impl RtActivatable<IAppCaptureStatics2> for AppCapture {}
 impl AppCapture {
-    #[inline] pub fn set_allowed_async(allowed: bool) -> Result<ComPtr<super::super::foundation::IAsyncAction>> { unsafe {
-        <Self as RtActivatable<IAppCaptureStatics2>>::get_activation_factory().set_allowed_async(allowed)
-    }}
     #[inline] pub fn get_for_current_view() -> Result<ComPtr<AppCapture>> { unsafe {
         <Self as RtActivatable<IAppCaptureStatics>>::get_activation_factory().get_for_current_view()
+    }}
+    #[inline] pub fn set_allowed_async(allowed: bool) -> Result<ComPtr<super::super::foundation::IAsyncAction>> { unsafe {
+        <Self as RtActivatable<IAppCaptureStatics2>>::get_activation_factory().set_allowed_async(allowed)
     }}
 }
 DEFINE_CLSID!(AppCapture(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,67,97,112,116,117,114,101,0]) [CLSID_AppCapture]);
@@ -9711,13 +9711,10 @@ RT_INTERFACE!{interface IMediaSource(IMediaSourceVtbl): IInspectable(IInspectabl
     
 }}
 RT_CLASS!{class MediaSource: IMediaSource2}
-impl RtActivatable<IMediaSourceStatics3> for MediaSource {}
 impl RtActivatable<IMediaSourceStatics> for MediaSource {}
 impl RtActivatable<IMediaSourceStatics2> for MediaSource {}
+impl RtActivatable<IMediaSourceStatics3> for MediaSource {}
 impl MediaSource {
-    #[inline] pub fn create_from_media_frame_source(frameSource: &super::capture::frames::MediaFrameSource) -> Result<ComPtr<MediaSource>> { unsafe {
-        <Self as RtActivatable<IMediaSourceStatics3>>::get_activation_factory().create_from_media_frame_source(frameSource)
-    }}
     #[inline] pub fn create_from_adaptive_media_source(mediaSource: &super::streaming::adaptive::AdaptiveMediaSource) -> Result<ComPtr<MediaSource>> { unsafe {
         <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_adaptive_media_source(mediaSource)
     }}
@@ -9744,6 +9741,9 @@ impl MediaSource {
     }}
     #[inline] pub fn create_from_media_binder(binder: &MediaBinder) -> Result<ComPtr<MediaSource>> { unsafe {
         <Self as RtActivatable<IMediaSourceStatics2>>::get_activation_factory().create_from_media_binder(binder)
+    }}
+    #[inline] pub fn create_from_media_frame_source(frameSource: &super::capture::frames::MediaFrameSource) -> Result<ComPtr<MediaSource>> { unsafe {
+        <Self as RtActivatable<IMediaSourceStatics3>>::get_activation_factory().create_from_media_frame_source(frameSource)
     }}
 }
 DEFINE_CLSID!(MediaSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,111,117,114,99,101,0]) [CLSID_MediaSource]);
@@ -18418,18 +18418,18 @@ impl IMediaPlaybackItem {
     }
 }
 RT_CLASS!{class MediaPlaybackItem: IMediaPlaybackItem}
-impl RtActivatable<IMediaPlaybackItemFactory2> for MediaPlaybackItem {}
 impl RtActivatable<IMediaPlaybackItemFactory> for MediaPlaybackItem {}
+impl RtActivatable<IMediaPlaybackItemFactory2> for MediaPlaybackItem {}
 impl RtActivatable<IMediaPlaybackItemStatics> for MediaPlaybackItem {}
 impl MediaPlaybackItem {
+    #[inline] pub fn create(source: &super::core::MediaSource) -> Result<ComPtr<MediaPlaybackItem>> { unsafe {
+        <Self as RtActivatable<IMediaPlaybackItemFactory>>::get_activation_factory().create(source)
+    }}
     #[inline] pub fn create_with_start_time(source: &super::core::MediaSource, startTime: super::super::foundation::TimeSpan) -> Result<ComPtr<MediaPlaybackItem>> { unsafe {
         <Self as RtActivatable<IMediaPlaybackItemFactory2>>::get_activation_factory().create_with_start_time(source, startTime)
     }}
     #[inline] pub fn create_with_start_time_and_duration_limit(source: &super::core::MediaSource, startTime: super::super::foundation::TimeSpan, durationLimit: super::super::foundation::TimeSpan) -> Result<ComPtr<MediaPlaybackItem>> { unsafe {
         <Self as RtActivatable<IMediaPlaybackItemFactory2>>::get_activation_factory().create_with_start_time_and_duration_limit(source, startTime, durationLimit)
-    }}
-    #[inline] pub fn create(source: &super::core::MediaSource) -> Result<ComPtr<MediaPlaybackItem>> { unsafe {
-        <Self as RtActivatable<IMediaPlaybackItemFactory>>::get_activation_factory().create(source)
     }}
     #[inline] pub fn find_from_media_source(source: &super::core::MediaSource) -> Result<ComPtr<MediaPlaybackItem>> { unsafe {
         <Self as RtActivatable<IMediaPlaybackItemStatics>>::get_activation_factory().find_from_media_source(source)
@@ -21585,12 +21585,9 @@ impl IPlayReadyContentHeader {
     }
 }
 RT_CLASS!{class PlayReadyContentHeader: IPlayReadyContentHeader}
-impl RtActivatable<IPlayReadyContentHeaderFactory2> for PlayReadyContentHeader {}
 impl RtActivatable<IPlayReadyContentHeaderFactory> for PlayReadyContentHeader {}
+impl RtActivatable<IPlayReadyContentHeaderFactory2> for PlayReadyContentHeader {}
 impl PlayReadyContentHeader {
-    #[inline] pub fn create_instance_from_components2(dwFlags: u32, contentKeyIds: &[Guid], contentKeyIdStrings: &[&HStringArg], contentEncryptionAlgorithm: PlayReadyEncryptionAlgorithm, licenseAcquisitionUrl: &::rt::gen::windows::foundation::Uri, licenseAcquisitionUserInterfaceUrl: &::rt::gen::windows::foundation::Uri, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> { unsafe {
-        <Self as RtActivatable<IPlayReadyContentHeaderFactory2>>::get_activation_factory().create_instance_from_components2(dwFlags, contentKeyIds, contentKeyIdStrings, contentEncryptionAlgorithm, licenseAcquisitionUrl, licenseAcquisitionUserInterfaceUrl, customAttributes, domainServiceId)
-    }}
     #[inline] pub fn create_instance_from_windows_media_drm_header(headerBytes: &[u8], licenseAcquisitionUrl: &::rt::gen::windows::foundation::Uri, licenseAcquisitionUserInterfaceUrl: &::rt::gen::windows::foundation::Uri, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> { unsafe {
         <Self as RtActivatable<IPlayReadyContentHeaderFactory>>::get_activation_factory().create_instance_from_windows_media_drm_header(headerBytes, licenseAcquisitionUrl, licenseAcquisitionUserInterfaceUrl, customAttributes, domainServiceId)
     }}
@@ -21599,6 +21596,9 @@ impl PlayReadyContentHeader {
     }}
     #[inline] pub fn create_instance_from_play_ready_header(headerBytes: &[u8]) -> Result<ComPtr<PlayReadyContentHeader>> { unsafe {
         <Self as RtActivatable<IPlayReadyContentHeaderFactory>>::get_activation_factory().create_instance_from_play_ready_header(headerBytes)
+    }}
+    #[inline] pub fn create_instance_from_components2(dwFlags: u32, contentKeyIds: &[Guid], contentKeyIdStrings: &[&HStringArg], contentEncryptionAlgorithm: PlayReadyEncryptionAlgorithm, licenseAcquisitionUrl: &::rt::gen::windows::foundation::Uri, licenseAcquisitionUserInterfaceUrl: &::rt::gen::windows::foundation::Uri, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> { unsafe {
+        <Self as RtActivatable<IPlayReadyContentHeaderFactory2>>::get_activation_factory().create_instance_from_components2(dwFlags, contentKeyIds, contentKeyIdStrings, contentEncryptionAlgorithm, licenseAcquisitionUrl, licenseAcquisitionUserInterfaceUrl, customAttributes, domainServiceId)
     }}
 }
 DEFINE_CLSID!(PlayReadyContentHeader(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,67,111,110,116,101,110,116,72,101,97,100,101,114,0]) [CLSID_PlayReadyContentHeader]);
@@ -22291,17 +22291,11 @@ impl IPlayReadyStatics {
     }
 }
 RT_CLASS!{static class PlayReadyStatics}
-impl RtActivatable<IPlayReadyStatics3> for PlayReadyStatics {}
 impl RtActivatable<IPlayReadyStatics> for PlayReadyStatics {}
 impl RtActivatable<IPlayReadyStatics2> for PlayReadyStatics {}
+impl RtActivatable<IPlayReadyStatics3> for PlayReadyStatics {}
 impl RtActivatable<IPlayReadyStatics4> for PlayReadyStatics {}
 impl PlayReadyStatics {
-    #[inline] pub fn get_secure_stop_service_request_type() -> Result<Guid> { unsafe {
-        <Self as RtActivatable<IPlayReadyStatics3>>::get_activation_factory().get_secure_stop_service_request_type()
-    }}
-    #[inline] pub fn check_supported_hardware(hwdrmFeature: PlayReadyHardwareDRMFeatures) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IPlayReadyStatics3>>::get_activation_factory().check_supported_hardware(hwdrmFeature)
-    }}
     #[inline] pub fn get_domain_join_service_request_type() -> Result<Guid> { unsafe {
         <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().get_domain_join_service_request_type()
     }}
@@ -22328,6 +22322,12 @@ impl PlayReadyStatics {
     }}
     #[inline] pub fn get_play_ready_certificate_security_level() -> Result<u32> { unsafe {
         <Self as RtActivatable<IPlayReadyStatics2>>::get_activation_factory().get_play_ready_certificate_security_level()
+    }}
+    #[inline] pub fn get_secure_stop_service_request_type() -> Result<Guid> { unsafe {
+        <Self as RtActivatable<IPlayReadyStatics3>>::get_activation_factory().get_secure_stop_service_request_type()
+    }}
+    #[inline] pub fn check_supported_hardware(hwdrmFeature: PlayReadyHardwareDRMFeatures) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IPlayReadyStatics3>>::get_activation_factory().check_supported_hardware(hwdrmFeature)
     }}
     #[inline] pub fn get_input_trust_authority_to_create() -> Result<HString> { unsafe {
         <Self as RtActivatable<IPlayReadyStatics4>>::get_activation_factory().get_input_trust_authority_to_create()
@@ -23156,18 +23156,18 @@ impl ISpeechSynthesizer {
     }
 }
 RT_CLASS!{class SpeechSynthesizer: ISpeechSynthesizer}
-impl RtActivatable<IInstalledVoicesStatic2> for SpeechSynthesizer {}
 impl RtActivatable<IInstalledVoicesStatic> for SpeechSynthesizer {}
+impl RtActivatable<IInstalledVoicesStatic2> for SpeechSynthesizer {}
 impl RtActivatable<IActivationFactory> for SpeechSynthesizer {}
 impl SpeechSynthesizer {
-    #[inline] pub fn try_set_default_voice_async(voice: &VoiceInformation) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
-        <Self as RtActivatable<IInstalledVoicesStatic2>>::get_activation_factory().try_set_default_voice_async(voice)
-    }}
     #[inline] pub fn get_all_voices() -> Result<ComPtr<super::super::foundation::collections::IVectorView<VoiceInformation>>> { unsafe {
         <Self as RtActivatable<IInstalledVoicesStatic>>::get_activation_factory().get_all_voices()
     }}
     #[inline] pub fn get_default_voice() -> Result<ComPtr<VoiceInformation>> { unsafe {
         <Self as RtActivatable<IInstalledVoicesStatic>>::get_activation_factory().get_default_voice()
+    }}
+    #[inline] pub fn try_set_default_voice_async(voice: &VoiceInformation) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
+        <Self as RtActivatable<IInstalledVoicesStatic2>>::get_activation_factory().try_set_default_voice_async(voice)
     }}
 }
 DEFINE_CLSID!(SpeechSynthesizer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,83,121,110,116,104,101,115,105,115,46,83,112,101,101,99,104,83,121,110,116,104,101,115,105,122,101,114,0]) [CLSID_SpeechSynthesizer]);
@@ -23729,16 +23729,10 @@ impl IImageEncodingProperties {
     }
 }
 RT_CLASS!{class ImageEncodingProperties: IImageEncodingProperties}
-impl RtActivatable<IImageEncodingPropertiesStatics2> for ImageEncodingProperties {}
 impl RtActivatable<IImageEncodingPropertiesStatics> for ImageEncodingProperties {}
+impl RtActivatable<IImageEncodingPropertiesStatics2> for ImageEncodingProperties {}
 impl RtActivatable<IActivationFactory> for ImageEncodingProperties {}
 impl ImageEncodingProperties {
-    #[inline] pub fn create_uncompressed(format: MediaPixelFormat) -> Result<ComPtr<ImageEncodingProperties>> { unsafe {
-        <Self as RtActivatable<IImageEncodingPropertiesStatics2>>::get_activation_factory().create_uncompressed(format)
-    }}
-    #[inline] pub fn create_bmp() -> Result<ComPtr<ImageEncodingProperties>> { unsafe {
-        <Self as RtActivatable<IImageEncodingPropertiesStatics2>>::get_activation_factory().create_bmp()
-    }}
     #[inline] pub fn create_jpeg() -> Result<ComPtr<ImageEncodingProperties>> { unsafe {
         <Self as RtActivatable<IImageEncodingPropertiesStatics>>::get_activation_factory().create_jpeg()
     }}
@@ -23747,6 +23741,12 @@ impl ImageEncodingProperties {
     }}
     #[inline] pub fn create_jpeg_xr() -> Result<ComPtr<ImageEncodingProperties>> { unsafe {
         <Self as RtActivatable<IImageEncodingPropertiesStatics>>::get_activation_factory().create_jpeg_xr()
+    }}
+    #[inline] pub fn create_uncompressed(format: MediaPixelFormat) -> Result<ComPtr<ImageEncodingProperties>> { unsafe {
+        <Self as RtActivatable<IImageEncodingPropertiesStatics2>>::get_activation_factory().create_uncompressed(format)
+    }}
+    #[inline] pub fn create_bmp() -> Result<ComPtr<ImageEncodingProperties>> { unsafe {
+        <Self as RtActivatable<IImageEncodingPropertiesStatics2>>::get_activation_factory().create_bmp()
     }}
 }
 DEFINE_CLSID!(ImageEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,73,109,97,103,101,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_ImageEncodingProperties]);
@@ -23829,20 +23829,11 @@ impl IMediaEncodingProfile {
     }
 }
 RT_CLASS!{class MediaEncodingProfile: IMediaEncodingProfile}
-impl RtActivatable<IMediaEncodingProfileStatics3> for MediaEncodingProfile {}
 impl RtActivatable<IMediaEncodingProfileStatics> for MediaEncodingProfile {}
 impl RtActivatable<IMediaEncodingProfileStatics2> for MediaEncodingProfile {}
+impl RtActivatable<IMediaEncodingProfileStatics3> for MediaEncodingProfile {}
 impl RtActivatable<IActivationFactory> for MediaEncodingProfile {}
 impl MediaEncodingProfile {
-    #[inline] pub fn create_alac(quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
-        <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().create_alac(quality)
-    }}
-    #[inline] pub fn create_flac(quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
-        <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().create_flac(quality)
-    }}
-    #[inline] pub fn create_hevc(quality: VideoEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
-        <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().create_hevc(quality)
-    }}
     #[inline] pub fn create_m4a(quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
         <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_m4a(quality)
     }}
@@ -23869,6 +23860,15 @@ impl MediaEncodingProfile {
     }}
     #[inline] pub fn create_avi(quality: VideoEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
         <Self as RtActivatable<IMediaEncodingProfileStatics2>>::get_activation_factory().create_avi(quality)
+    }}
+    #[inline] pub fn create_alac(quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
+        <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().create_alac(quality)
+    }}
+    #[inline] pub fn create_flac(quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
+        <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().create_flac(quality)
+    }}
+    #[inline] pub fn create_hevc(quality: VideoEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
+        <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().create_hevc(quality)
     }}
 }
 DEFINE_CLSID!(MediaEncodingProfile(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,101,100,105,97,69,110,99,111,100,105,110,103,80,114,111,102,105,108,101,0]) [CLSID_MediaEncodingProfile]);
@@ -24015,16 +24015,10 @@ impl IMediaEncodingProperties {
     }
 }
 RT_CLASS!{static class MediaEncodingSubtypes}
-impl RtActivatable<IMediaEncodingSubtypesStatics3> for MediaEncodingSubtypes {}
 impl RtActivatable<IMediaEncodingSubtypesStatics> for MediaEncodingSubtypes {}
 impl RtActivatable<IMediaEncodingSubtypesStatics2> for MediaEncodingSubtypes {}
+impl RtActivatable<IMediaEncodingSubtypesStatics3> for MediaEncodingSubtypes {}
 impl MediaEncodingSubtypes {
-    #[inline] pub fn get_alac() -> Result<HString> { unsafe {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics3>>::get_activation_factory().get_alac()
-    }}
-    #[inline] pub fn get_flac() -> Result<HString> { unsafe {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics3>>::get_activation_factory().get_flac()
-    }}
     #[inline] pub fn get_aac() -> Result<HString> { unsafe {
         <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_aac()
     }}
@@ -24156,6 +24150,12 @@ impl MediaEncodingSubtypes {
     }}
     #[inline] pub fn get_d16() -> Result<HString> { unsafe {
         <Self as RtActivatable<IMediaEncodingSubtypesStatics2>>::get_activation_factory().get_d16()
+    }}
+    #[inline] pub fn get_alac() -> Result<HString> { unsafe {
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics3>>::get_activation_factory().get_alac()
+    }}
+    #[inline] pub fn get_flac() -> Result<HString> { unsafe {
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics3>>::get_activation_factory().get_flac()
     }}
 }
 DEFINE_CLSID!(MediaEncodingSubtypes(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,101,100,105,97,69,110,99,111,100,105,110,103,83,117,98,116,121,112,101,115,0]) [CLSID_MediaEncodingSubtypes]);
@@ -24605,13 +24605,10 @@ impl IVideoEncodingProperties {
     }
 }
 RT_CLASS!{class VideoEncodingProperties: IVideoEncodingProperties}
-impl RtActivatable<IVideoEncodingPropertiesStatics2> for VideoEncodingProperties {}
 impl RtActivatable<IVideoEncodingPropertiesStatics> for VideoEncodingProperties {}
+impl RtActivatable<IVideoEncodingPropertiesStatics2> for VideoEncodingProperties {}
 impl RtActivatable<IActivationFactory> for VideoEncodingProperties {}
 impl VideoEncodingProperties {
-    #[inline] pub fn create_hevc() -> Result<ComPtr<VideoEncodingProperties>> { unsafe {
-        <Self as RtActivatable<IVideoEncodingPropertiesStatics2>>::get_activation_factory().create_hevc()
-    }}
     #[inline] pub fn create_h264() -> Result<ComPtr<VideoEncodingProperties>> { unsafe {
         <Self as RtActivatable<IVideoEncodingPropertiesStatics>>::get_activation_factory().create_h264()
     }}
@@ -24620,6 +24617,9 @@ impl VideoEncodingProperties {
     }}
     #[inline] pub fn create_uncompressed(subtype: &HStringArg, width: u32, height: u32) -> Result<ComPtr<VideoEncodingProperties>> { unsafe {
         <Self as RtActivatable<IVideoEncodingPropertiesStatics>>::get_activation_factory().create_uncompressed(subtype, width, height)
+    }}
+    #[inline] pub fn create_hevc() -> Result<ComPtr<VideoEncodingProperties>> { unsafe {
+        <Self as RtActivatable<IVideoEncodingPropertiesStatics2>>::get_activation_factory().create_hevc()
     }}
 }
 DEFINE_CLSID!(VideoEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,86,105,100,101,111,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_VideoEncodingProperties]);

@@ -7,14 +7,14 @@ RT_INTERFACE!{interface IColorHelper(IColorHelperVtbl): IInspectable(IInspectabl
     
 }}
 RT_CLASS!{class ColorHelper: IColorHelper}
-impl RtActivatable<IColorHelperStatics2> for ColorHelper {}
 impl RtActivatable<IColorHelperStatics> for ColorHelper {}
+impl RtActivatable<IColorHelperStatics2> for ColorHelper {}
 impl ColorHelper {
-    #[inline] pub fn to_display_name(color: Color) -> Result<HString> { unsafe {
-        <Self as RtActivatable<IColorHelperStatics2>>::get_activation_factory().to_display_name(color)
-    }}
     #[inline] pub fn from_argb(a: u8, r: u8, g: u8, b: u8) -> Result<Color> { unsafe {
         <Self as RtActivatable<IColorHelperStatics>>::get_activation_factory().from_argb(a, r, g, b)
+    }}
+    #[inline] pub fn to_display_name(color: Color) -> Result<HString> { unsafe {
+        <Self as RtActivatable<IColorHelperStatics2>>::get_activation_factory().to_display_name(color)
     }}
 }
 DEFINE_CLSID!(ColorHelper(&[87,105,110,100,111,119,115,46,85,73,46,67,111,108,111,114,72,101,108,112,101,114,0]) [CLSID_ColorHelper]);
@@ -4581,20 +4581,20 @@ impl IRadialControllerMenuItem {
     }
 }
 RT_CLASS!{class RadialControllerMenuItem: IRadialControllerMenuItem}
-impl RtActivatable<IRadialControllerMenuItemStatics2> for RadialControllerMenuItem {}
 impl RtActivatable<IRadialControllerMenuItemStatics> for RadialControllerMenuItem {}
+impl RtActivatable<IRadialControllerMenuItemStatics2> for RadialControllerMenuItem {}
 impl RadialControllerMenuItem {
-    #[inline] pub fn create_from_font_glyph(displayText: &HStringArg, glyph: &HStringArg, fontFamily: &HStringArg) -> Result<ComPtr<RadialControllerMenuItem>> { unsafe {
-        <Self as RtActivatable<IRadialControllerMenuItemStatics2>>::get_activation_factory().create_from_font_glyph(displayText, glyph, fontFamily)
-    }}
-    #[inline] pub fn create_from_font_glyph_with_uri(displayText: &HStringArg, glyph: &HStringArg, fontFamily: &HStringArg, fontUri: &super::super::foundation::Uri) -> Result<ComPtr<RadialControllerMenuItem>> { unsafe {
-        <Self as RtActivatable<IRadialControllerMenuItemStatics2>>::get_activation_factory().create_from_font_glyph_with_uri(displayText, glyph, fontFamily, fontUri)
-    }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_icon(displayText: &HStringArg, icon: &super::super::storage::streams::RandomAccessStreamReference) -> Result<ComPtr<RadialControllerMenuItem>> { unsafe {
         <Self as RtActivatable<IRadialControllerMenuItemStatics>>::get_activation_factory().create_from_icon(displayText, icon)
     }}
     #[inline] pub fn create_from_known_icon(displayText: &HStringArg, value: RadialControllerMenuKnownIcon) -> Result<ComPtr<RadialControllerMenuItem>> { unsafe {
         <Self as RtActivatable<IRadialControllerMenuItemStatics>>::get_activation_factory().create_from_known_icon(displayText, value)
+    }}
+    #[inline] pub fn create_from_font_glyph(displayText: &HStringArg, glyph: &HStringArg, fontFamily: &HStringArg) -> Result<ComPtr<RadialControllerMenuItem>> { unsafe {
+        <Self as RtActivatable<IRadialControllerMenuItemStatics2>>::get_activation_factory().create_from_font_glyph(displayText, glyph, fontFamily)
+    }}
+    #[inline] pub fn create_from_font_glyph_with_uri(displayText: &HStringArg, glyph: &HStringArg, fontFamily: &HStringArg, fontUri: &super::super::foundation::Uri) -> Result<ComPtr<RadialControllerMenuItem>> { unsafe {
+        <Self as RtActivatable<IRadialControllerMenuItemStatics2>>::get_activation_factory().create_from_font_glyph_with_uri(displayText, glyph, fontFamily, fontUri)
     }}
 }
 DEFINE_CLSID!(RadialControllerMenuItem(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,82,97,100,105,97,108,67,111,110,116,114,111,108,108,101,114,77,101,110,117,73,116,101,109,0]) [CLSID_RadialControllerMenuItem]);
@@ -5275,14 +5275,14 @@ impl IInputInjector {
     }
 }
 RT_CLASS!{class InputInjector: IInputInjector}
-impl RtActivatable<IInputInjectorStatics2> for InputInjector {}
 impl RtActivatable<IInputInjectorStatics> for InputInjector {}
+impl RtActivatable<IInputInjectorStatics2> for InputInjector {}
 impl InputInjector {
-    #[inline] pub fn try_create_for_app_broadcast_only() -> Result<ComPtr<InputInjector>> { unsafe {
-        <Self as RtActivatable<IInputInjectorStatics2>>::get_activation_factory().try_create_for_app_broadcast_only()
-    }}
     #[inline] pub fn try_create() -> Result<ComPtr<InputInjector>> { unsafe {
         <Self as RtActivatable<IInputInjectorStatics>>::get_activation_factory().try_create()
+    }}
+    #[inline] pub fn try_create_for_app_broadcast_only() -> Result<ComPtr<InputInjector>> { unsafe {
+        <Self as RtActivatable<IInputInjectorStatics2>>::get_activation_factory().try_create_for_app_broadcast_only()
     }}
 }
 DEFINE_CLSID!(InputInjector(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,112,117,116,73,110,106,101,99,116,111,114,0]) [CLSID_InputInjector]);
@@ -10434,23 +10434,17 @@ impl IApplicationView {
     }
 }
 RT_CLASS!{class ApplicationView: IApplicationView}
-impl RtActivatable<IApplicationViewStatics3> for ApplicationView {}
-impl RtActivatable<IApplicationViewStatics> for ApplicationView {}
-impl RtActivatable<IApplicationViewStatics2> for ApplicationView {}
 impl RtActivatable<IApplicationViewFullscreenStatics> for ApplicationView {}
 impl RtActivatable<IApplicationViewInteropStatics> for ApplicationView {}
+impl RtActivatable<IApplicationViewStatics> for ApplicationView {}
+impl RtActivatable<IApplicationViewStatics2> for ApplicationView {}
+impl RtActivatable<IApplicationViewStatics3> for ApplicationView {}
 impl ApplicationView {
-    #[inline] pub fn get_preferred_launch_windowing_mode() -> Result<ApplicationViewWindowingMode> { unsafe {
-        <Self as RtActivatable<IApplicationViewStatics3>>::get_activation_factory().get_preferred_launch_windowing_mode()
+    #[inline] pub fn try_unsnap_to_fullscreen() -> Result<bool> { unsafe {
+        <Self as RtActivatable<IApplicationViewFullscreenStatics>>::get_activation_factory().try_unsnap_to_fullscreen()
     }}
-    #[inline] pub fn set_preferred_launch_windowing_mode(value: ApplicationViewWindowingMode) -> Result<()> { unsafe {
-        <Self as RtActivatable<IApplicationViewStatics3>>::get_activation_factory().set_preferred_launch_windowing_mode(value)
-    }}
-    #[inline] pub fn get_preferred_launch_view_size() -> Result<super::super::foundation::Size> { unsafe {
-        <Self as RtActivatable<IApplicationViewStatics3>>::get_activation_factory().get_preferred_launch_view_size()
-    }}
-    #[inline] pub fn set_preferred_launch_view_size(value: super::super::foundation::Size) -> Result<()> { unsafe {
-        <Self as RtActivatable<IApplicationViewStatics3>>::get_activation_factory().set_preferred_launch_view_size(value)
+    #[inline] pub fn get_application_view_id_for_window(window: &super::core::ICoreWindow) -> Result<i32> { unsafe {
+        <Self as RtActivatable<IApplicationViewInteropStatics>>::get_activation_factory().get_application_view_id_for_window(window)
     }}
     #[inline] pub fn get_value() -> Result<ApplicationViewState> { unsafe {
         <Self as RtActivatable<IApplicationViewStatics>>::get_activation_factory().get_value()
@@ -10467,11 +10461,17 @@ impl ApplicationView {
     #[inline] pub fn set_terminate_app_on_final_view_close(value: bool) -> Result<()> { unsafe {
         <Self as RtActivatable<IApplicationViewStatics2>>::get_activation_factory().set_terminate_app_on_final_view_close(value)
     }}
-    #[inline] pub fn try_unsnap_to_fullscreen() -> Result<bool> { unsafe {
-        <Self as RtActivatable<IApplicationViewFullscreenStatics>>::get_activation_factory().try_unsnap_to_fullscreen()
+    #[inline] pub fn get_preferred_launch_windowing_mode() -> Result<ApplicationViewWindowingMode> { unsafe {
+        <Self as RtActivatable<IApplicationViewStatics3>>::get_activation_factory().get_preferred_launch_windowing_mode()
     }}
-    #[inline] pub fn get_application_view_id_for_window(window: &super::core::ICoreWindow) -> Result<i32> { unsafe {
-        <Self as RtActivatable<IApplicationViewInteropStatics>>::get_activation_factory().get_application_view_id_for_window(window)
+    #[inline] pub fn set_preferred_launch_windowing_mode(value: ApplicationViewWindowingMode) -> Result<()> { unsafe {
+        <Self as RtActivatable<IApplicationViewStatics3>>::get_activation_factory().set_preferred_launch_windowing_mode(value)
+    }}
+    #[inline] pub fn get_preferred_launch_view_size() -> Result<super::super::foundation::Size> { unsafe {
+        <Self as RtActivatable<IApplicationViewStatics3>>::get_activation_factory().get_preferred_launch_view_size()
+    }}
+    #[inline] pub fn set_preferred_launch_view_size(value: super::super::foundation::Size) -> Result<()> { unsafe {
+        <Self as RtActivatable<IApplicationViewStatics3>>::get_activation_factory().set_preferred_launch_view_size(value)
     }}
 }
 DEFINE_CLSID!(ApplicationView(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,65,112,112,108,105,99,97,116,105,111,110,86,105,101,119,0]) [CLSID_ApplicationView]);
@@ -10766,19 +10766,10 @@ impl IApplicationViewStatics3 {
     }
 }
 RT_CLASS!{static class ApplicationViewSwitcher}
-impl RtActivatable<IApplicationViewSwitcherStatics3> for ApplicationViewSwitcher {}
-impl RtActivatable<IApplicationViewSwitcherStatics2> for ApplicationViewSwitcher {}
 impl RtActivatable<IApplicationViewSwitcherStatics> for ApplicationViewSwitcher {}
+impl RtActivatable<IApplicationViewSwitcherStatics2> for ApplicationViewSwitcher {}
+impl RtActivatable<IApplicationViewSwitcherStatics3> for ApplicationViewSwitcher {}
 impl ApplicationViewSwitcher {
-    #[inline] pub fn try_show_as_view_mode_async(viewId: i32, viewMode: ApplicationViewMode) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
-        <Self as RtActivatable<IApplicationViewSwitcherStatics3>>::get_activation_factory().try_show_as_view_mode_async(viewId, viewMode)
-    }}
-    #[inline] pub fn try_show_as_view_mode_with_preferences_async(viewId: i32, viewMode: ApplicationViewMode, viewModePreferences: &ViewModePreferences) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
-        <Self as RtActivatable<IApplicationViewSwitcherStatics3>>::get_activation_factory().try_show_as_view_mode_with_preferences_async(viewId, viewMode, viewModePreferences)
-    }}
-    #[inline] pub fn disable_system_view_activation_policy() -> Result<()> { unsafe {
-        <Self as RtActivatable<IApplicationViewSwitcherStatics2>>::get_activation_factory().disable_system_view_activation_policy()
-    }}
     #[inline] pub fn disable_showing_main_view_on_activation() -> Result<()> { unsafe {
         <Self as RtActivatable<IApplicationViewSwitcherStatics>>::get_activation_factory().disable_showing_main_view_on_activation()
     }}
@@ -10802,6 +10793,15 @@ impl ApplicationViewSwitcher {
     }}
     #[inline] pub fn prepare_for_custom_animated_switch_async(toViewId: i32, fromViewId: i32, options: ApplicationViewSwitchingOptions) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
         <Self as RtActivatable<IApplicationViewSwitcherStatics>>::get_activation_factory().prepare_for_custom_animated_switch_async(toViewId, fromViewId, options)
+    }}
+    #[inline] pub fn disable_system_view_activation_policy() -> Result<()> { unsafe {
+        <Self as RtActivatable<IApplicationViewSwitcherStatics2>>::get_activation_factory().disable_system_view_activation_policy()
+    }}
+    #[inline] pub fn try_show_as_view_mode_async(viewId: i32, viewMode: ApplicationViewMode) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
+        <Self as RtActivatable<IApplicationViewSwitcherStatics3>>::get_activation_factory().try_show_as_view_mode_async(viewId, viewMode)
+    }}
+    #[inline] pub fn try_show_as_view_mode_with_preferences_async(viewId: i32, viewMode: ApplicationViewMode, viewModePreferences: &ViewModePreferences) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
+        <Self as RtActivatable<IApplicationViewSwitcherStatics3>>::get_activation_factory().try_show_as_view_mode_with_preferences_async(viewId, viewMode, viewModePreferences)
     }}
 }
 DEFINE_CLSID!(ApplicationViewSwitcher(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,65,112,112,108,105,99,97,116,105,111,110,86,105,101,119,83,119,105,116,99,104,101,114,0]) [CLSID_ApplicationViewSwitcher]);
@@ -11179,21 +11179,9 @@ impl IInputPaneVisibilityEventArgs {
 }
 RT_CLASS!{class InputPaneVisibilityEventArgs: IInputPaneVisibilityEventArgs}
 RT_CLASS!{static class ProjectionManager}
-impl RtActivatable<IProjectionManagerStatics2> for ProjectionManager {}
 impl RtActivatable<IProjectionManagerStatics> for ProjectionManager {}
+impl RtActivatable<IProjectionManagerStatics2> for ProjectionManager {}
 impl ProjectionManager {
-    #[cfg(feature="windows-devices")] #[inline] pub fn start_projecting_with_device_info_async(projectionViewId: i32, anchorViewId: i32, displayDeviceInfo: &super::super::devices::enumeration::DeviceInformation) -> Result<ComPtr<super::super::foundation::IAsyncAction>> { unsafe {
-        <Self as RtActivatable<IProjectionManagerStatics2>>::get_activation_factory().start_projecting_with_device_info_async(projectionViewId, anchorViewId, displayDeviceInfo)
-    }}
-    #[inline] pub fn request_start_projecting_async(projectionViewId: i32, anchorViewId: i32, selection: super::super::foundation::Rect) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
-        <Self as RtActivatable<IProjectionManagerStatics2>>::get_activation_factory().request_start_projecting_async(projectionViewId, anchorViewId, selection)
-    }}
-    #[inline] pub fn request_start_projecting_with_placement_async(projectionViewId: i32, anchorViewId: i32, selection: super::super::foundation::Rect, prefferedPlacement: super::popups::Placement) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
-        <Self as RtActivatable<IProjectionManagerStatics2>>::get_activation_factory().request_start_projecting_with_placement_async(projectionViewId, anchorViewId, selection, prefferedPlacement)
-    }}
-    #[inline] pub fn get_device_selector() -> Result<HString> { unsafe {
-        <Self as RtActivatable<IProjectionManagerStatics2>>::get_activation_factory().get_device_selector()
-    }}
     #[inline] pub fn start_projecting_async(projectionViewId: i32, anchorViewId: i32) -> Result<ComPtr<super::super::foundation::IAsyncAction>> { unsafe {
         <Self as RtActivatable<IProjectionManagerStatics>>::get_activation_factory().start_projecting_async(projectionViewId, anchorViewId)
     }}
@@ -11211,6 +11199,18 @@ impl ProjectionManager {
     }}
     #[inline] pub fn remove_projection_display_available_changed(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IProjectionManagerStatics>>::get_activation_factory().remove_projection_display_available_changed(token)
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn start_projecting_with_device_info_async(projectionViewId: i32, anchorViewId: i32, displayDeviceInfo: &super::super::devices::enumeration::DeviceInformation) -> Result<ComPtr<super::super::foundation::IAsyncAction>> { unsafe {
+        <Self as RtActivatable<IProjectionManagerStatics2>>::get_activation_factory().start_projecting_with_device_info_async(projectionViewId, anchorViewId, displayDeviceInfo)
+    }}
+    #[inline] pub fn request_start_projecting_async(projectionViewId: i32, anchorViewId: i32, selection: super::super::foundation::Rect) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
+        <Self as RtActivatable<IProjectionManagerStatics2>>::get_activation_factory().request_start_projecting_async(projectionViewId, anchorViewId, selection)
+    }}
+    #[inline] pub fn request_start_projecting_with_placement_async(projectionViewId: i32, anchorViewId: i32, selection: super::super::foundation::Rect, prefferedPlacement: super::popups::Placement) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
+        <Self as RtActivatable<IProjectionManagerStatics2>>::get_activation_factory().request_start_projecting_with_placement_async(projectionViewId, anchorViewId, selection, prefferedPlacement)
+    }}
+    #[inline] pub fn get_device_selector() -> Result<HString> { unsafe {
+        <Self as RtActivatable<IProjectionManagerStatics2>>::get_activation_factory().get_device_selector()
     }}
 }
 DEFINE_CLSID!(ProjectionManager(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,80,114,111,106,101,99,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_ProjectionManager]);
@@ -12355,31 +12355,10 @@ impl IWebUIActivationStatics3 {
     }
 }
 RT_CLASS!{static class WebUIApplication}
-impl RtActivatable<IWebUIActivationStatics3> for WebUIApplication {}
-impl RtActivatable<IWebUIActivationStatics2> for WebUIApplication {}
 impl RtActivatable<IWebUIActivationStatics> for WebUIApplication {}
+impl RtActivatable<IWebUIActivationStatics2> for WebUIApplication {}
+impl RtActivatable<IWebUIActivationStatics3> for WebUIApplication {}
 impl WebUIApplication {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn request_restart_async(launchArguments: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::applicationmodel::core::AppRestartFailureReason>>> { unsafe {
-        <Self as RtActivatable<IWebUIActivationStatics3>>::get_activation_factory().request_restart_async(launchArguments)
-    }}
-    #[cfg(all(feature="windows-applicationmodel",feature="windows-system"))] #[inline] pub fn request_restart_for_user_async(user: &super::super::system::User, launchArguments: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::applicationmodel::core::AppRestartFailureReason>>> { unsafe {
-        <Self as RtActivatable<IWebUIActivationStatics3>>::get_activation_factory().request_restart_for_user_async(user, launchArguments)
-    }}
-    #[inline] pub fn add_leaving_background(handler: &LeavingBackgroundEventHandler) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
-        <Self as RtActivatable<IWebUIActivationStatics2>>::get_activation_factory().add_leaving_background(handler)
-    }}
-    #[inline] pub fn remove_leaving_background(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
-        <Self as RtActivatable<IWebUIActivationStatics2>>::get_activation_factory().remove_leaving_background(token)
-    }}
-    #[inline] pub fn add_entered_background(handler: &EnteredBackgroundEventHandler) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
-        <Self as RtActivatable<IWebUIActivationStatics2>>::get_activation_factory().add_entered_background(handler)
-    }}
-    #[inline] pub fn remove_entered_background(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
-        <Self as RtActivatable<IWebUIActivationStatics2>>::get_activation_factory().remove_entered_background(token)
-    }}
-    #[inline] pub fn enable_prelaunch(value: bool) -> Result<()> { unsafe {
-        <Self as RtActivatable<IWebUIActivationStatics2>>::get_activation_factory().enable_prelaunch(value)
-    }}
     #[inline] pub fn add_activated(handler: &ActivatedEventHandler) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IWebUIActivationStatics>>::get_activation_factory().add_activated(handler)
     }}
@@ -12403,6 +12382,27 @@ impl WebUIApplication {
     }}
     #[inline] pub fn remove_navigated(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IWebUIActivationStatics>>::get_activation_factory().remove_navigated(token)
+    }}
+    #[inline] pub fn add_leaving_background(handler: &LeavingBackgroundEventHandler) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+        <Self as RtActivatable<IWebUIActivationStatics2>>::get_activation_factory().add_leaving_background(handler)
+    }}
+    #[inline] pub fn remove_leaving_background(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+        <Self as RtActivatable<IWebUIActivationStatics2>>::get_activation_factory().remove_leaving_background(token)
+    }}
+    #[inline] pub fn add_entered_background(handler: &EnteredBackgroundEventHandler) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+        <Self as RtActivatable<IWebUIActivationStatics2>>::get_activation_factory().add_entered_background(handler)
+    }}
+    #[inline] pub fn remove_entered_background(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+        <Self as RtActivatable<IWebUIActivationStatics2>>::get_activation_factory().remove_entered_background(token)
+    }}
+    #[inline] pub fn enable_prelaunch(value: bool) -> Result<()> { unsafe {
+        <Self as RtActivatable<IWebUIActivationStatics2>>::get_activation_factory().enable_prelaunch(value)
+    }}
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn request_restart_async(launchArguments: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::applicationmodel::core::AppRestartFailureReason>>> { unsafe {
+        <Self as RtActivatable<IWebUIActivationStatics3>>::get_activation_factory().request_restart_async(launchArguments)
+    }}
+    #[cfg(all(feature="windows-applicationmodel",feature="windows-system"))] #[inline] pub fn request_restart_for_user_async(user: &super::super::system::User, launchArguments: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::applicationmodel::core::AppRestartFailureReason>>> { unsafe {
+        <Self as RtActivatable<IWebUIActivationStatics3>>::get_activation_factory().request_restart_for_user_async(user, launchArguments)
     }}
 }
 DEFINE_CLSID!(WebUIApplication(&[87,105,110,100,111,119,115,46,85,73,46,87,101,98,85,73,46,87,101,98,85,73,65,112,112,108,105,99,97,116,105,111,110,0]) [CLSID_WebUIApplication]);
@@ -13782,12 +13782,9 @@ RT_ENUM! { enum BadgeTemplateType: i32 {
     BadgeGlyph (BadgeTemplateType_BadgeGlyph) = 0, BadgeNumber (BadgeTemplateType_BadgeNumber) = 1,
 }}
 RT_CLASS!{static class BadgeUpdateManager}
-impl RtActivatable<IBadgeUpdateManagerStatics2> for BadgeUpdateManager {}
 impl RtActivatable<IBadgeUpdateManagerStatics> for BadgeUpdateManager {}
+impl RtActivatable<IBadgeUpdateManagerStatics2> for BadgeUpdateManager {}
 impl BadgeUpdateManager {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<BadgeUpdateManagerForUser>> { unsafe {
-        <Self as RtActivatable<IBadgeUpdateManagerStatics2>>::get_activation_factory().get_for_user(user)
-    }}
     #[inline] pub fn create_badge_updater_for_application() -> Result<ComPtr<BadgeUpdater>> { unsafe {
         <Self as RtActivatable<IBadgeUpdateManagerStatics>>::get_activation_factory().create_badge_updater_for_application()
     }}
@@ -13799,6 +13796,9 @@ impl BadgeUpdateManager {
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_template_content(type_: BadgeTemplateType) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> { unsafe {
         <Self as RtActivatable<IBadgeUpdateManagerStatics>>::get_activation_factory().get_template_content(type_)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<BadgeUpdateManagerForUser>> { unsafe {
+        <Self as RtActivatable<IBadgeUpdateManagerStatics2>>::get_activation_factory().get_for_user(user)
     }}
 }
 DEFINE_CLSID!(BadgeUpdateManager(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,66,97,100,103,101,85,112,100,97,116,101,77,97,110,97,103,101,114,0]) [CLSID_BadgeUpdateManager]);
@@ -14733,12 +14733,9 @@ RT_ENUM! { enum TileTemplateType: i32 {
     TileSquareImage (TileTemplateType_TileSquareImage) = 0, TileSquareBlock (TileTemplateType_TileSquareBlock) = 1, TileSquareText01 (TileTemplateType_TileSquareText01) = 2, TileSquareText02 (TileTemplateType_TileSquareText02) = 3, TileSquareText03 (TileTemplateType_TileSquareText03) = 4, TileSquareText04 (TileTemplateType_TileSquareText04) = 5, TileSquarePeekImageAndText01 (TileTemplateType_TileSquarePeekImageAndText01) = 6, TileSquarePeekImageAndText02 (TileTemplateType_TileSquarePeekImageAndText02) = 7, TileSquarePeekImageAndText03 (TileTemplateType_TileSquarePeekImageAndText03) = 8, TileSquarePeekImageAndText04 (TileTemplateType_TileSquarePeekImageAndText04) = 9, TileWideImage (TileTemplateType_TileWideImage) = 10, TileWideImageCollection (TileTemplateType_TileWideImageCollection) = 11, TileWideImageAndText01 (TileTemplateType_TileWideImageAndText01) = 12, TileWideImageAndText02 (TileTemplateType_TileWideImageAndText02) = 13, TileWideBlockAndText01 (TileTemplateType_TileWideBlockAndText01) = 14, TileWideBlockAndText02 (TileTemplateType_TileWideBlockAndText02) = 15, TileWidePeekImageCollection01 (TileTemplateType_TileWidePeekImageCollection01) = 16, TileWidePeekImageCollection02 (TileTemplateType_TileWidePeekImageCollection02) = 17, TileWidePeekImageCollection03 (TileTemplateType_TileWidePeekImageCollection03) = 18, TileWidePeekImageCollection04 (TileTemplateType_TileWidePeekImageCollection04) = 19, TileWidePeekImageCollection05 (TileTemplateType_TileWidePeekImageCollection05) = 20, TileWidePeekImageCollection06 (TileTemplateType_TileWidePeekImageCollection06) = 21, TileWidePeekImageAndText01 (TileTemplateType_TileWidePeekImageAndText01) = 22, TileWidePeekImageAndText02 (TileTemplateType_TileWidePeekImageAndText02) = 23, TileWidePeekImage01 (TileTemplateType_TileWidePeekImage01) = 24, TileWidePeekImage02 (TileTemplateType_TileWidePeekImage02) = 25, TileWidePeekImage03 (TileTemplateType_TileWidePeekImage03) = 26, TileWidePeekImage04 (TileTemplateType_TileWidePeekImage04) = 27, TileWidePeekImage05 (TileTemplateType_TileWidePeekImage05) = 28, TileWidePeekImage06 (TileTemplateType_TileWidePeekImage06) = 29, TileWideSmallImageAndText01 (TileTemplateType_TileWideSmallImageAndText01) = 30, TileWideSmallImageAndText02 (TileTemplateType_TileWideSmallImageAndText02) = 31, TileWideSmallImageAndText03 (TileTemplateType_TileWideSmallImageAndText03) = 32, TileWideSmallImageAndText04 (TileTemplateType_TileWideSmallImageAndText04) = 33, TileWideSmallImageAndText05 (TileTemplateType_TileWideSmallImageAndText05) = 34, TileWideText01 (TileTemplateType_TileWideText01) = 35, TileWideText02 (TileTemplateType_TileWideText02) = 36, TileWideText03 (TileTemplateType_TileWideText03) = 37, TileWideText04 (TileTemplateType_TileWideText04) = 38, TileWideText05 (TileTemplateType_TileWideText05) = 39, TileWideText06 (TileTemplateType_TileWideText06) = 40, TileWideText07 (TileTemplateType_TileWideText07) = 41, TileWideText08 (TileTemplateType_TileWideText08) = 42, TileWideText09 (TileTemplateType_TileWideText09) = 43, TileWideText10 (TileTemplateType_TileWideText10) = 44, TileWideText11 (TileTemplateType_TileWideText11) = 45, TileSquare150x150Image (TileTemplateType_TileSquare150x150Image) = 0, TileSquare150x150Block (TileTemplateType_TileSquare150x150Block) = 1, TileSquare150x150Text01 (TileTemplateType_TileSquare150x150Text01) = 2, TileSquare150x150Text02 (TileTemplateType_TileSquare150x150Text02) = 3, TileSquare150x150Text03 (TileTemplateType_TileSquare150x150Text03) = 4, TileSquare150x150Text04 (TileTemplateType_TileSquare150x150Text04) = 5, TileSquare150x150PeekImageAndText01 (TileTemplateType_TileSquare150x150PeekImageAndText01) = 6, TileSquare150x150PeekImageAndText02 (TileTemplateType_TileSquare150x150PeekImageAndText02) = 7, TileSquare150x150PeekImageAndText03 (TileTemplateType_TileSquare150x150PeekImageAndText03) = 8, TileSquare150x150PeekImageAndText04 (TileTemplateType_TileSquare150x150PeekImageAndText04) = 9, TileWide310x150Image (TileTemplateType_TileWide310x150Image) = 10, TileWide310x150ImageCollection (TileTemplateType_TileWide310x150ImageCollection) = 11, TileWide310x150ImageAndText01 (TileTemplateType_TileWide310x150ImageAndText01) = 12, TileWide310x150ImageAndText02 (TileTemplateType_TileWide310x150ImageAndText02) = 13, TileWide310x150BlockAndText01 (TileTemplateType_TileWide310x150BlockAndText01) = 14, TileWide310x150BlockAndText02 (TileTemplateType_TileWide310x150BlockAndText02) = 15, TileWide310x150PeekImageCollection01 (TileTemplateType_TileWide310x150PeekImageCollection01) = 16, TileWide310x150PeekImageCollection02 (TileTemplateType_TileWide310x150PeekImageCollection02) = 17, TileWide310x150PeekImageCollection03 (TileTemplateType_TileWide310x150PeekImageCollection03) = 18, TileWide310x150PeekImageCollection04 (TileTemplateType_TileWide310x150PeekImageCollection04) = 19, TileWide310x150PeekImageCollection05 (TileTemplateType_TileWide310x150PeekImageCollection05) = 20, TileWide310x150PeekImageCollection06 (TileTemplateType_TileWide310x150PeekImageCollection06) = 21, TileWide310x150PeekImageAndText01 (TileTemplateType_TileWide310x150PeekImageAndText01) = 22, TileWide310x150PeekImageAndText02 (TileTemplateType_TileWide310x150PeekImageAndText02) = 23, TileWide310x150PeekImage01 (TileTemplateType_TileWide310x150PeekImage01) = 24, TileWide310x150PeekImage02 (TileTemplateType_TileWide310x150PeekImage02) = 25, TileWide310x150PeekImage03 (TileTemplateType_TileWide310x150PeekImage03) = 26, TileWide310x150PeekImage04 (TileTemplateType_TileWide310x150PeekImage04) = 27, TileWide310x150PeekImage05 (TileTemplateType_TileWide310x150PeekImage05) = 28, TileWide310x150PeekImage06 (TileTemplateType_TileWide310x150PeekImage06) = 29, TileWide310x150SmallImageAndText01 (TileTemplateType_TileWide310x150SmallImageAndText01) = 30, TileWide310x150SmallImageAndText02 (TileTemplateType_TileWide310x150SmallImageAndText02) = 31, TileWide310x150SmallImageAndText03 (TileTemplateType_TileWide310x150SmallImageAndText03) = 32, TileWide310x150SmallImageAndText04 (TileTemplateType_TileWide310x150SmallImageAndText04) = 33, TileWide310x150SmallImageAndText05 (TileTemplateType_TileWide310x150SmallImageAndText05) = 34, TileWide310x150Text01 (TileTemplateType_TileWide310x150Text01) = 35, TileWide310x150Text02 (TileTemplateType_TileWide310x150Text02) = 36, TileWide310x150Text03 (TileTemplateType_TileWide310x150Text03) = 37, TileWide310x150Text04 (TileTemplateType_TileWide310x150Text04) = 38, TileWide310x150Text05 (TileTemplateType_TileWide310x150Text05) = 39, TileWide310x150Text06 (TileTemplateType_TileWide310x150Text06) = 40, TileWide310x150Text07 (TileTemplateType_TileWide310x150Text07) = 41, TileWide310x150Text08 (TileTemplateType_TileWide310x150Text08) = 42, TileWide310x150Text09 (TileTemplateType_TileWide310x150Text09) = 43, TileWide310x150Text10 (TileTemplateType_TileWide310x150Text10) = 44, TileWide310x150Text11 (TileTemplateType_TileWide310x150Text11) = 45, TileSquare310x310BlockAndText01 (TileTemplateType_TileSquare310x310BlockAndText01) = 46, TileSquare310x310BlockAndText02 (TileTemplateType_TileSquare310x310BlockAndText02) = 47, TileSquare310x310Image (TileTemplateType_TileSquare310x310Image) = 48, TileSquare310x310ImageAndText01 (TileTemplateType_TileSquare310x310ImageAndText01) = 49, TileSquare310x310ImageAndText02 (TileTemplateType_TileSquare310x310ImageAndText02) = 50, TileSquare310x310ImageAndTextOverlay01 (TileTemplateType_TileSquare310x310ImageAndTextOverlay01) = 51, TileSquare310x310ImageAndTextOverlay02 (TileTemplateType_TileSquare310x310ImageAndTextOverlay02) = 52, TileSquare310x310ImageAndTextOverlay03 (TileTemplateType_TileSquare310x310ImageAndTextOverlay03) = 53, TileSquare310x310ImageCollectionAndText01 (TileTemplateType_TileSquare310x310ImageCollectionAndText01) = 54, TileSquare310x310ImageCollectionAndText02 (TileTemplateType_TileSquare310x310ImageCollectionAndText02) = 55, TileSquare310x310ImageCollection (TileTemplateType_TileSquare310x310ImageCollection) = 56, TileSquare310x310SmallImagesAndTextList01 (TileTemplateType_TileSquare310x310SmallImagesAndTextList01) = 57, TileSquare310x310SmallImagesAndTextList02 (TileTemplateType_TileSquare310x310SmallImagesAndTextList02) = 58, TileSquare310x310SmallImagesAndTextList03 (TileTemplateType_TileSquare310x310SmallImagesAndTextList03) = 59, TileSquare310x310SmallImagesAndTextList04 (TileTemplateType_TileSquare310x310SmallImagesAndTextList04) = 60, TileSquare310x310Text01 (TileTemplateType_TileSquare310x310Text01) = 61, TileSquare310x310Text02 (TileTemplateType_TileSquare310x310Text02) = 62, TileSquare310x310Text03 (TileTemplateType_TileSquare310x310Text03) = 63, TileSquare310x310Text04 (TileTemplateType_TileSquare310x310Text04) = 64, TileSquare310x310Text05 (TileTemplateType_TileSquare310x310Text05) = 65, TileSquare310x310Text06 (TileTemplateType_TileSquare310x310Text06) = 66, TileSquare310x310Text07 (TileTemplateType_TileSquare310x310Text07) = 67, TileSquare310x310Text08 (TileTemplateType_TileSquare310x310Text08) = 68, TileSquare310x310TextList01 (TileTemplateType_TileSquare310x310TextList01) = 69, TileSquare310x310TextList02 (TileTemplateType_TileSquare310x310TextList02) = 70, TileSquare310x310TextList03 (TileTemplateType_TileSquare310x310TextList03) = 71, TileSquare310x310SmallImageAndText01 (TileTemplateType_TileSquare310x310SmallImageAndText01) = 72, TileSquare310x310SmallImagesAndTextList05 (TileTemplateType_TileSquare310x310SmallImagesAndTextList05) = 73, TileSquare310x310Text09 (TileTemplateType_TileSquare310x310Text09) = 74, TileSquare71x71IconWithBadge (TileTemplateType_TileSquare71x71IconWithBadge) = 75, TileSquare150x150IconWithBadge (TileTemplateType_TileSquare150x150IconWithBadge) = 76, TileWide310x150IconWithBadgeAndText (TileTemplateType_TileWide310x150IconWithBadgeAndText) = 77, TileSquare71x71Image (TileTemplateType_TileSquare71x71Image) = 78, TileTall150x310Image (TileTemplateType_TileTall150x310Image) = 79,
 }}
 RT_CLASS!{static class TileUpdateManager}
-impl RtActivatable<ITileUpdateManagerStatics2> for TileUpdateManager {}
 impl RtActivatable<ITileUpdateManagerStatics> for TileUpdateManager {}
+impl RtActivatable<ITileUpdateManagerStatics2> for TileUpdateManager {}
 impl TileUpdateManager {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<TileUpdateManagerForUser>> { unsafe {
-        <Self as RtActivatable<ITileUpdateManagerStatics2>>::get_activation_factory().get_for_user(user)
-    }}
     #[inline] pub fn create_tile_updater_for_application() -> Result<ComPtr<TileUpdater>> { unsafe {
         <Self as RtActivatable<ITileUpdateManagerStatics>>::get_activation_factory().create_tile_updater_for_application()
     }}
@@ -14750,6 +14747,9 @@ impl TileUpdateManager {
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_template_content(type_: TileTemplateType) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> { unsafe {
         <Self as RtActivatable<ITileUpdateManagerStatics>>::get_activation_factory().get_template_content(type_)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<TileUpdateManagerForUser>> { unsafe {
+        <Self as RtActivatable<ITileUpdateManagerStatics2>>::get_activation_factory().get_for_user(user)
     }}
 }
 DEFINE_CLSID!(TileUpdateManager(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,84,105,108,101,85,112,100,97,116,101,77,97,110,97,103,101,114,0]) [CLSID_TileUpdateManager]);
@@ -15332,23 +15332,11 @@ impl IToastNotificationHistoryChangedTriggerDetail2 {
     }
 }
 RT_CLASS!{static class ToastNotificationManager}
-impl RtActivatable<IToastNotificationManagerStatics4> for ToastNotificationManager {}
-impl RtActivatable<IToastNotificationManagerStatics2> for ToastNotificationManager {}
-impl RtActivatable<IToastNotificationManagerStatics5> for ToastNotificationManager {}
 impl RtActivatable<IToastNotificationManagerStatics> for ToastNotificationManager {}
+impl RtActivatable<IToastNotificationManagerStatics2> for ToastNotificationManager {}
+impl RtActivatable<IToastNotificationManagerStatics4> for ToastNotificationManager {}
+impl RtActivatable<IToastNotificationManagerStatics5> for ToastNotificationManager {}
 impl ToastNotificationManager {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<ToastNotificationManagerForUser>> { unsafe {
-        <Self as RtActivatable<IToastNotificationManagerStatics4>>::get_activation_factory().get_for_user(user)
-    }}
-    #[inline] pub fn configure_notification_mirroring(value: NotificationMirroring) -> Result<()> { unsafe {
-        <Self as RtActivatable<IToastNotificationManagerStatics4>>::get_activation_factory().configure_notification_mirroring(value)
-    }}
-    #[inline] pub fn get_history() -> Result<ComPtr<ToastNotificationHistory>> { unsafe {
-        <Self as RtActivatable<IToastNotificationManagerStatics2>>::get_activation_factory().get_history()
-    }}
-    #[inline] pub fn get_default() -> Result<ComPtr<ToastNotificationManagerForUser>> { unsafe {
-        <Self as RtActivatable<IToastNotificationManagerStatics5>>::get_activation_factory().get_default()
-    }}
     #[inline] pub fn create_toast_notifier() -> Result<ComPtr<ToastNotifier>> { unsafe {
         <Self as RtActivatable<IToastNotificationManagerStatics>>::get_activation_factory().create_toast_notifier()
     }}
@@ -15357,6 +15345,18 @@ impl ToastNotificationManager {
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_template_content(type_: ToastTemplateType) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> { unsafe {
         <Self as RtActivatable<IToastNotificationManagerStatics>>::get_activation_factory().get_template_content(type_)
+    }}
+    #[inline] pub fn get_history() -> Result<ComPtr<ToastNotificationHistory>> { unsafe {
+        <Self as RtActivatable<IToastNotificationManagerStatics2>>::get_activation_factory().get_history()
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<ToastNotificationManagerForUser>> { unsafe {
+        <Self as RtActivatable<IToastNotificationManagerStatics4>>::get_activation_factory().get_for_user(user)
+    }}
+    #[inline] pub fn configure_notification_mirroring(value: NotificationMirroring) -> Result<()> { unsafe {
+        <Self as RtActivatable<IToastNotificationManagerStatics4>>::get_activation_factory().configure_notification_mirroring(value)
+    }}
+    #[inline] pub fn get_default() -> Result<ComPtr<ToastNotificationManagerForUser>> { unsafe {
+        <Self as RtActivatable<IToastNotificationManagerStatics5>>::get_activation_factory().get_default()
     }}
 }
 DEFINE_CLSID!(ToastNotificationManager(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,84,111,97,115,116,78,111,116,105,102,105,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_ToastNotificationManager]);

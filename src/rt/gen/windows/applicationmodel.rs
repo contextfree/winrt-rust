@@ -3765,17 +3765,17 @@ impl IBackgroundTaskRegistration {
     }
 }
 RT_CLASS!{class BackgroundTaskRegistration: IBackgroundTaskRegistration}
-impl RtActivatable<IBackgroundTaskRegistrationStatics2> for BackgroundTaskRegistration {}
 impl RtActivatable<IBackgroundTaskRegistrationStatics> for BackgroundTaskRegistration {}
+impl RtActivatable<IBackgroundTaskRegistrationStatics2> for BackgroundTaskRegistration {}
 impl BackgroundTaskRegistration {
+    #[inline] pub fn get_all_tasks() -> Result<ComPtr<super::super::foundation::collections::IMapView<Guid, IBackgroundTaskRegistration>>> { unsafe {
+        <Self as RtActivatable<IBackgroundTaskRegistrationStatics>>::get_activation_factory().get_all_tasks()
+    }}
     #[inline] pub fn get_all_task_groups() -> Result<ComPtr<super::super::foundation::collections::IMapView<HString, BackgroundTaskRegistrationGroup>>> { unsafe {
         <Self as RtActivatable<IBackgroundTaskRegistrationStatics2>>::get_activation_factory().get_all_task_groups()
     }}
     #[inline] pub fn get_task_group(groupId: &HStringArg) -> Result<ComPtr<BackgroundTaskRegistrationGroup>> { unsafe {
         <Self as RtActivatable<IBackgroundTaskRegistrationStatics2>>::get_activation_factory().get_task_group(groupId)
-    }}
-    #[inline] pub fn get_all_tasks() -> Result<ComPtr<super::super::foundation::collections::IMapView<Guid, IBackgroundTaskRegistration>>> { unsafe {
-        <Self as RtActivatable<IBackgroundTaskRegistrationStatics>>::get_activation_factory().get_all_tasks()
     }}
 }
 DEFINE_CLSID!(BackgroundTaskRegistration(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,84,97,115,107,82,101,103,105,115,116,114,97,116,105,111,110,0]) [CLSID_BackgroundTaskRegistration]);
@@ -4223,14 +4223,14 @@ impl IGattCharacteristicNotificationTrigger {
     }
 }
 RT_CLASS!{class GattCharacteristicNotificationTrigger: IGattCharacteristicNotificationTrigger}
-impl RtActivatable<IGattCharacteristicNotificationTriggerFactory2> for GattCharacteristicNotificationTrigger {}
 impl RtActivatable<IGattCharacteristicNotificationTriggerFactory> for GattCharacteristicNotificationTrigger {}
+impl RtActivatable<IGattCharacteristicNotificationTriggerFactory2> for GattCharacteristicNotificationTrigger {}
 impl GattCharacteristicNotificationTrigger {
-    #[cfg(feature="windows-devices")] #[inline] pub fn create_with_event_triggering_mode(characteristic: &super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic, eventTriggeringMode: super::super::devices::bluetooth::background::BluetoothEventTriggeringMode) -> Result<ComPtr<GattCharacteristicNotificationTrigger>> { unsafe {
-        <Self as RtActivatable<IGattCharacteristicNotificationTriggerFactory2>>::get_activation_factory().create_with_event_triggering_mode(characteristic, eventTriggeringMode)
-    }}
     #[cfg(feature="windows-devices")] #[inline] pub fn create(characteristic: &super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic) -> Result<ComPtr<GattCharacteristicNotificationTrigger>> { unsafe {
         <Self as RtActivatable<IGattCharacteristicNotificationTriggerFactory>>::get_activation_factory().create(characteristic)
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn create_with_event_triggering_mode(characteristic: &super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic, eventTriggeringMode: super::super::devices::bluetooth::background::BluetoothEventTriggeringMode) -> Result<ComPtr<GattCharacteristicNotificationTrigger>> { unsafe {
+        <Self as RtActivatable<IGattCharacteristicNotificationTriggerFactory2>>::get_activation_factory().create_with_event_triggering_mode(characteristic, eventTriggeringMode)
     }}
 }
 DEFINE_CLSID!(GattCharacteristicNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,71,97,116,116,67,104,97,114,97,99,116,101,114,105,115,116,105,99,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_GattCharacteristicNotificationTrigger]);
@@ -4996,46 +4996,16 @@ impl ICoreApplication {
     }
 }
 RT_CLASS!{static class CoreApplication}
-impl RtActivatable<ICoreApplication3> for CoreApplication {}
-impl RtActivatable<ICoreApplication2> for CoreApplication {}
-impl RtActivatable<ICoreImmersiveApplication2> for CoreApplication {}
 impl RtActivatable<ICoreApplication> for CoreApplication {}
+impl RtActivatable<ICoreApplication2> for CoreApplication {}
+impl RtActivatable<ICoreApplication3> for CoreApplication {}
 impl RtActivatable<ICoreApplicationExit> for CoreApplication {}
-impl RtActivatable<ICoreImmersiveApplication> for CoreApplication {}
-impl RtActivatable<ICoreApplicationUseCount> for CoreApplication {}
 impl RtActivatable<ICoreApplicationUnhandledError> for CoreApplication {}
+impl RtActivatable<ICoreApplicationUseCount> for CoreApplication {}
+impl RtActivatable<ICoreImmersiveApplication> for CoreApplication {}
+impl RtActivatable<ICoreImmersiveApplication2> for CoreApplication {}
 impl RtActivatable<ICoreImmersiveApplication3> for CoreApplication {}
 impl CoreApplication {
-    #[inline] pub fn request_restart_async(launchArguments: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<AppRestartFailureReason>>> { unsafe {
-        <Self as RtActivatable<ICoreApplication3>>::get_activation_factory().request_restart_async(launchArguments)
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn request_restart_for_user_async(user: &super::super::system::User, launchArguments: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<AppRestartFailureReason>>> { unsafe {
-        <Self as RtActivatable<ICoreApplication3>>::get_activation_factory().request_restart_for_user_async(user, launchArguments)
-    }}
-    #[inline] pub fn add_background_activated(handler: &super::super::foundation::EventHandler<super::activation::BackgroundActivatedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
-        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().add_background_activated(handler)
-    }}
-    #[inline] pub fn remove_background_activated(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
-        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().remove_background_activated(token)
-    }}
-    #[inline] pub fn add_leaving_background(handler: &super::super::foundation::EventHandler<super::LeavingBackgroundEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
-        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().add_leaving_background(handler)
-    }}
-    #[inline] pub fn remove_leaving_background(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
-        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().remove_leaving_background(token)
-    }}
-    #[inline] pub fn add_entered_background(handler: &super::super::foundation::EventHandler<super::EnteredBackgroundEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
-        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().add_entered_background(handler)
-    }}
-    #[inline] pub fn remove_entered_background(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
-        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().remove_entered_background(token)
-    }}
-    #[inline] pub fn enable_prelaunch(value: bool) -> Result<()> { unsafe {
-        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().enable_prelaunch(value)
-    }}
-    #[inline] pub fn create_new_view_from_main_view() -> Result<ComPtr<CoreApplicationView>> { unsafe {
-        <Self as RtActivatable<ICoreImmersiveApplication2>>::get_activation_factory().create_new_view_from_main_view()
-    }}
     #[inline] pub fn get_id() -> Result<HString> { unsafe {
         <Self as RtActivatable<ICoreApplication>>::get_activation_factory().get_id()
     }}
@@ -5063,6 +5033,33 @@ impl CoreApplication {
     #[inline] pub fn run_with_activation_factories(activationFactoryCallback: &super::super::foundation::IGetActivationFactory) -> Result<()> { unsafe {
         <Self as RtActivatable<ICoreApplication>>::get_activation_factory().run_with_activation_factories(activationFactoryCallback)
     }}
+    #[inline] pub fn add_background_activated(handler: &super::super::foundation::EventHandler<super::activation::BackgroundActivatedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().add_background_activated(handler)
+    }}
+    #[inline] pub fn remove_background_activated(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().remove_background_activated(token)
+    }}
+    #[inline] pub fn add_leaving_background(handler: &super::super::foundation::EventHandler<super::LeavingBackgroundEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().add_leaving_background(handler)
+    }}
+    #[inline] pub fn remove_leaving_background(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().remove_leaving_background(token)
+    }}
+    #[inline] pub fn add_entered_background(handler: &super::super::foundation::EventHandler<super::EnteredBackgroundEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().add_entered_background(handler)
+    }}
+    #[inline] pub fn remove_entered_background(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().remove_entered_background(token)
+    }}
+    #[inline] pub fn enable_prelaunch(value: bool) -> Result<()> { unsafe {
+        <Self as RtActivatable<ICoreApplication2>>::get_activation_factory().enable_prelaunch(value)
+    }}
+    #[inline] pub fn request_restart_async(launchArguments: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<AppRestartFailureReason>>> { unsafe {
+        <Self as RtActivatable<ICoreApplication3>>::get_activation_factory().request_restart_async(launchArguments)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn request_restart_for_user_async(user: &super::super::system::User, launchArguments: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<AppRestartFailureReason>>> { unsafe {
+        <Self as RtActivatable<ICoreApplication3>>::get_activation_factory().request_restart_for_user_async(user, launchArguments)
+    }}
     #[inline] pub fn exit() -> Result<()> { unsafe {
         <Self as RtActivatable<ICoreApplicationExit>>::get_activation_factory().exit()
     }}
@@ -5071,6 +5068,18 @@ impl CoreApplication {
     }}
     #[inline] pub fn remove_exiting(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<ICoreApplicationExit>>::get_activation_factory().remove_exiting(token)
+    }}
+    #[inline] pub fn add_unhandled_error_detected(handler: &super::super::foundation::EventHandler<UnhandledErrorDetectedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+        <Self as RtActivatable<ICoreApplicationUnhandledError>>::get_activation_factory().add_unhandled_error_detected(handler)
+    }}
+    #[inline] pub fn remove_unhandled_error_detected(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+        <Self as RtActivatable<ICoreApplicationUnhandledError>>::get_activation_factory().remove_unhandled_error_detected(token)
+    }}
+    #[inline] pub fn increment_application_use_count() -> Result<()> { unsafe {
+        <Self as RtActivatable<ICoreApplicationUseCount>>::get_activation_factory().increment_application_use_count()
+    }}
+    #[inline] pub fn decrement_application_use_count() -> Result<()> { unsafe {
+        <Self as RtActivatable<ICoreApplicationUseCount>>::get_activation_factory().decrement_application_use_count()
     }}
     #[inline] pub fn get_views() -> Result<ComPtr<super::super::foundation::collections::IVectorView<CoreApplicationView>>> { unsafe {
         <Self as RtActivatable<ICoreImmersiveApplication>>::get_activation_factory().get_views()
@@ -5081,17 +5090,8 @@ impl CoreApplication {
     #[inline] pub fn get_main_view() -> Result<ComPtr<CoreApplicationView>> { unsafe {
         <Self as RtActivatable<ICoreImmersiveApplication>>::get_activation_factory().get_main_view()
     }}
-    #[inline] pub fn increment_application_use_count() -> Result<()> { unsafe {
-        <Self as RtActivatable<ICoreApplicationUseCount>>::get_activation_factory().increment_application_use_count()
-    }}
-    #[inline] pub fn decrement_application_use_count() -> Result<()> { unsafe {
-        <Self as RtActivatable<ICoreApplicationUseCount>>::get_activation_factory().decrement_application_use_count()
-    }}
-    #[inline] pub fn add_unhandled_error_detected(handler: &super::super::foundation::EventHandler<UnhandledErrorDetectedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
-        <Self as RtActivatable<ICoreApplicationUnhandledError>>::get_activation_factory().add_unhandled_error_detected(handler)
-    }}
-    #[inline] pub fn remove_unhandled_error_detected(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
-        <Self as RtActivatable<ICoreApplicationUnhandledError>>::get_activation_factory().remove_unhandled_error_detected(token)
+    #[inline] pub fn create_new_view_from_main_view() -> Result<ComPtr<CoreApplicationView>> { unsafe {
+        <Self as RtActivatable<ICoreImmersiveApplication2>>::get_activation_factory().create_new_view_from_main_view()
     }}
     #[inline] pub fn create_new_view_with_view_source(viewSource: &IFrameworkViewSource) -> Result<ComPtr<CoreApplicationView>> { unsafe {
         <Self as RtActivatable<ICoreImmersiveApplication3>>::get_activation_factory().create_new_view_with_view_source(viewSource)
@@ -6792,18 +6792,9 @@ RT_ENUM! { enum AppointmentParticipantRole: i32 {
     RequiredAttendee (AppointmentParticipantRole_RequiredAttendee) = 0, OptionalAttendee (AppointmentParticipantRole_OptionalAttendee) = 1, Resource (AppointmentParticipantRole_Resource) = 2,
 }}
 RT_CLASS!{static class AppointmentProperties}
-impl RtActivatable<IAppointmentPropertiesStatics2> for AppointmentProperties {}
 impl RtActivatable<IAppointmentPropertiesStatics> for AppointmentProperties {}
+impl RtActivatable<IAppointmentPropertiesStatics2> for AppointmentProperties {}
 impl AppointmentProperties {
-    #[inline] pub fn get_change_number() -> Result<HString> { unsafe {
-        <Self as RtActivatable<IAppointmentPropertiesStatics2>>::get_activation_factory().get_change_number()
-    }}
-    #[inline] pub fn get_remote_change_number() -> Result<HString> { unsafe {
-        <Self as RtActivatable<IAppointmentPropertiesStatics2>>::get_activation_factory().get_remote_change_number()
-    }}
-    #[inline] pub fn get_details_kind() -> Result<HString> { unsafe {
-        <Self as RtActivatable<IAppointmentPropertiesStatics2>>::get_activation_factory().get_details_kind()
-    }}
     #[inline] pub fn get_subject() -> Result<HString> { unsafe {
         <Self as RtActivatable<IAppointmentPropertiesStatics>>::get_activation_factory().get_subject()
     }}
@@ -6872,6 +6863,15 @@ impl AppointmentProperties {
     }}
     #[inline] pub fn get_default_properties() -> Result<ComPtr<super::super::foundation::collections::IVector<HString>>> { unsafe {
         <Self as RtActivatable<IAppointmentPropertiesStatics>>::get_activation_factory().get_default_properties()
+    }}
+    #[inline] pub fn get_change_number() -> Result<HString> { unsafe {
+        <Self as RtActivatable<IAppointmentPropertiesStatics2>>::get_activation_factory().get_change_number()
+    }}
+    #[inline] pub fn get_remote_change_number() -> Result<HString> { unsafe {
+        <Self as RtActivatable<IAppointmentPropertiesStatics2>>::get_activation_factory().get_remote_change_number()
+    }}
+    #[inline] pub fn get_details_kind() -> Result<HString> { unsafe {
+        <Self as RtActivatable<IAppointmentPropertiesStatics2>>::get_activation_factory().get_details_kind()
     }}
 }
 DEFINE_CLSID!(AppointmentProperties(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,65,112,112,111,105,110,116,109,101,110,116,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_AppointmentProperties]);
@@ -9931,13 +9931,10 @@ RT_ENUM! { enum ChatMessageKind: i32 {
     Standard (ChatMessageKind_Standard) = 0, FileTransferRequest (ChatMessageKind_FileTransferRequest) = 1, TransportCustom (ChatMessageKind_TransportCustom) = 2, JoinedConversation (ChatMessageKind_JoinedConversation) = 3, LeftConversation (ChatMessageKind_LeftConversation) = 4, OtherParticipantJoinedConversation (ChatMessageKind_OtherParticipantJoinedConversation) = 5, OtherParticipantLeftConversation (ChatMessageKind_OtherParticipantLeftConversation) = 6,
 }}
 RT_CLASS!{static class ChatMessageManager}
-impl RtActivatable<IChatMessageManagerStatics3> for ChatMessageManager {}
 impl RtActivatable<IChatMessageManager2Statics> for ChatMessageManager {}
 impl RtActivatable<IChatMessageManagerStatic> for ChatMessageManager {}
+impl RtActivatable<IChatMessageManagerStatics3> for ChatMessageManager {}
 impl ChatMessageManager {
-    #[inline] pub fn request_sync_manager_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<ChatSyncManager>>> { unsafe {
-        <Self as RtActivatable<IChatMessageManagerStatics3>>::get_activation_factory().request_sync_manager_async()
-    }}
     #[inline] pub fn register_transport_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<HString>>> { unsafe {
         <Self as RtActivatable<IChatMessageManager2Statics>>::get_activation_factory().register_transport_async()
     }}
@@ -9955,6 +9952,9 @@ impl ChatMessageManager {
     }}
     #[inline] pub fn show_sms_settings() -> Result<()> { unsafe {
         <Self as RtActivatable<IChatMessageManagerStatic>>::get_activation_factory().show_sms_settings()
+    }}
+    #[inline] pub fn request_sync_manager_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<ChatSyncManager>>> { unsafe {
+        <Self as RtActivatable<IChatMessageManagerStatics3>>::get_activation_factory().request_sync_manager_async()
     }}
 }
 DEFINE_CLSID!(ChatMessageManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,77,101,115,115,97,103,101,77,97,110,97,103,101,114,0]) [CLSID_ChatMessageManager]);
@@ -12862,12 +12862,21 @@ impl IContactLocationFieldFactory {
     }
 }
 RT_CLASS!{static class ContactManager}
+impl RtActivatable<IContactManagerStatics> for ContactManager {}
 impl RtActivatable<IContactManagerStatics2> for ContactManager {}
 impl RtActivatable<IContactManagerStatics3> for ContactManager {}
-impl RtActivatable<IContactManagerStatics5> for ContactManager {}
 impl RtActivatable<IContactManagerStatics4> for ContactManager {}
-impl RtActivatable<IContactManagerStatics> for ContactManager {}
+impl RtActivatable<IContactManagerStatics5> for ContactManager {}
 impl ContactManager {
+    #[inline] pub fn show_contact_card(contact: &Contact, selection: super::super::foundation::Rect) -> Result<()> { unsafe {
+        <Self as RtActivatable<IContactManagerStatics>>::get_activation_factory().show_contact_card(contact, selection)
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn show_contact_card_with_placement(contact: &Contact, selection: super::super::foundation::Rect, preferredPlacement: super::super::ui::popups::Placement) -> Result<()> { unsafe {
+        <Self as RtActivatable<IContactManagerStatics>>::get_activation_factory().show_contact_card_with_placement(contact, selection, preferredPlacement)
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn show_delay_loaded_contact_card(contact: &Contact, selection: super::super::foundation::Rect, preferredPlacement: super::super::ui::popups::Placement) -> Result<ComPtr<ContactCardDelayedDataLoader>> { unsafe {
+        <Self as RtActivatable<IContactManagerStatics>>::get_activation_factory().show_delay_loaded_contact_card(contact, selection, preferredPlacement)
+    }}
     #[inline] pub fn request_store_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<ContactStore>>> { unsafe {
         <Self as RtActivatable<IContactManagerStatics2>>::get_activation_factory().request_store_async()
     }}
@@ -12913,6 +12922,9 @@ impl ContactManager {
     #[inline] pub fn set_system_sort_order(value: ContactNameOrder) -> Result<()> { unsafe {
         <Self as RtActivatable<IContactManagerStatics3>>::get_activation_factory().set_system_sort_order(value)
     }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<ContactManagerForUser>> { unsafe {
+        <Self as RtActivatable<IContactManagerStatics4>>::get_activation_factory().get_for_user(user)
+    }}
     #[inline] pub fn is_show_full_contact_card_supported_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
         <Self as RtActivatable<IContactManagerStatics5>>::get_activation_factory().is_show_full_contact_card_supported_async()
     }}
@@ -12921,18 +12933,6 @@ impl ContactManager {
     }}
     #[inline] pub fn set_include_middle_name_in_system_display_and_sort(value: bool) -> Result<()> { unsafe {
         <Self as RtActivatable<IContactManagerStatics5>>::get_activation_factory().set_include_middle_name_in_system_display_and_sort(value)
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<ContactManagerForUser>> { unsafe {
-        <Self as RtActivatable<IContactManagerStatics4>>::get_activation_factory().get_for_user(user)
-    }}
-    #[inline] pub fn show_contact_card(contact: &Contact, selection: super::super::foundation::Rect) -> Result<()> { unsafe {
-        <Self as RtActivatable<IContactManagerStatics>>::get_activation_factory().show_contact_card(contact, selection)
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn show_contact_card_with_placement(contact: &Contact, selection: super::super::foundation::Rect, preferredPlacement: super::super::ui::popups::Placement) -> Result<()> { unsafe {
-        <Self as RtActivatable<IContactManagerStatics>>::get_activation_factory().show_contact_card_with_placement(contact, selection, preferredPlacement)
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn show_delay_loaded_contact_card(contact: &Contact, selection: super::super::foundation::Rect, preferredPlacement: super::super::ui::popups::Placement) -> Result<ComPtr<ContactCardDelayedDataLoader>> { unsafe {
-        <Self as RtActivatable<IContactManagerStatics>>::get_activation_factory().show_delay_loaded_contact_card(contact, selection, preferredPlacement)
     }}
 }
 DEFINE_CLSID!(ContactManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,77,97,110,97,103,101,114,0]) [CLSID_ContactManager]);
@@ -15145,8 +15145,8 @@ impl IDataTransferManager {
 }
 RT_CLASS!{class DataTransferManager: IDataTransferManager}
 impl RtActivatable<IDataTransferManagerStatics> for DataTransferManager {}
-impl RtActivatable<IDataTransferManagerStatics3> for DataTransferManager {}
 impl RtActivatable<IDataTransferManagerStatics2> for DataTransferManager {}
+impl RtActivatable<IDataTransferManagerStatics3> for DataTransferManager {}
 impl DataTransferManager {
     #[inline] pub fn show_share_ui() -> Result<()> { unsafe {
         <Self as RtActivatable<IDataTransferManagerStatics>>::get_activation_factory().show_share_ui()
@@ -15154,11 +15154,11 @@ impl DataTransferManager {
     #[inline] pub fn get_for_current_view() -> Result<ComPtr<DataTransferManager>> { unsafe {
         <Self as RtActivatable<IDataTransferManagerStatics>>::get_activation_factory().get_for_current_view()
     }}
-    #[inline] pub fn show_share_uiwith_options(options: &ShareUIOptions) -> Result<()> { unsafe {
-        <Self as RtActivatable<IDataTransferManagerStatics3>>::get_activation_factory().show_share_uiwith_options(options)
-    }}
     #[inline] pub fn is_supported() -> Result<bool> { unsafe {
         <Self as RtActivatable<IDataTransferManagerStatics2>>::get_activation_factory().is_supported()
+    }}
+    #[inline] pub fn show_share_uiwith_options(options: &ShareUIOptions) -> Result<()> { unsafe {
+        <Self as RtActivatable<IDataTransferManagerStatics3>>::get_activation_factory().show_share_uiwith_options(options)
     }}
 }
 DEFINE_CLSID!(DataTransferManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,68,97,116,97,84,114,97,110,115,102,101,114,77,97,110,97,103,101,114,0]) [CLSID_DataTransferManager]);
@@ -17630,15 +17630,15 @@ RT_ENUM! { enum EmailMailboxSyncStatus: i32 {
     Idle (EmailMailboxSyncStatus_Idle) = 0, Syncing (EmailMailboxSyncStatus_Syncing) = 1, UpToDate (EmailMailboxSyncStatus_UpToDate) = 2, AuthenticationError (EmailMailboxSyncStatus_AuthenticationError) = 3, PolicyError (EmailMailboxSyncStatus_PolicyError) = 4, UnknownError (EmailMailboxSyncStatus_UnknownError) = 5, ManualAccountRemovalRequired (EmailMailboxSyncStatus_ManualAccountRemovalRequired) = 6,
 }}
 RT_CLASS!{static class EmailManager}
-impl RtActivatable<IEmailManagerStatics2> for EmailManager {}
 impl RtActivatable<IEmailManagerStatics> for EmailManager {}
+impl RtActivatable<IEmailManagerStatics2> for EmailManager {}
 impl RtActivatable<IEmailManagerStatics3> for EmailManager {}
 impl EmailManager {
-    #[inline] pub fn request_store_async(accessType: EmailStoreAccessType) -> Result<ComPtr<super::super::foundation::IAsyncOperation<EmailStore>>> { unsafe {
-        <Self as RtActivatable<IEmailManagerStatics2>>::get_activation_factory().request_store_async(accessType)
-    }}
     #[inline] pub fn show_compose_new_email_async(message: &EmailMessage) -> Result<ComPtr<super::super::foundation::IAsyncAction>> { unsafe {
         <Self as RtActivatable<IEmailManagerStatics>>::get_activation_factory().show_compose_new_email_async(message)
+    }}
+    #[inline] pub fn request_store_async(accessType: EmailStoreAccessType) -> Result<ComPtr<super::super::foundation::IAsyncOperation<EmailStore>>> { unsafe {
+        <Self as RtActivatable<IEmailManagerStatics2>>::get_activation_factory().request_store_async(accessType)
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<EmailManagerForUser>> { unsafe {
         <Self as RtActivatable<IEmailManagerStatics3>>::get_activation_factory().get_for_user(user)
@@ -21281,12 +21281,9 @@ RT_ENUM! { enum UserDataAccountContentKinds: u32 {
     Email (UserDataAccountContentKinds_Email) = 1, Contact (UserDataAccountContentKinds_Contact) = 2, Appointment (UserDataAccountContentKinds_Appointment) = 4,
 }}
 RT_CLASS!{static class UserDataAccountManager}
-impl RtActivatable<IUserDataAccountManagerStatics2> for UserDataAccountManager {}
 impl RtActivatable<IUserDataAccountManagerStatics> for UserDataAccountManager {}
+impl RtActivatable<IUserDataAccountManagerStatics2> for UserDataAccountManager {}
 impl UserDataAccountManager {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<UserDataAccountManagerForUser>> { unsafe {
-        <Self as RtActivatable<IUserDataAccountManagerStatics2>>::get_activation_factory().get_for_user(user)
-    }}
     #[inline] pub fn request_store_async(storeAccessType: UserDataAccountStoreAccessType) -> Result<ComPtr<super::super::foundation::IAsyncOperation<UserDataAccountStore>>> { unsafe {
         <Self as RtActivatable<IUserDataAccountManagerStatics>>::get_activation_factory().request_store_async(storeAccessType)
     }}
@@ -21298,6 +21295,9 @@ impl UserDataAccountManager {
     }}
     #[inline] pub fn show_account_error_resolver_async(id: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncAction>> { unsafe {
         <Self as RtActivatable<IUserDataAccountManagerStatics>>::get_activation_factory().show_account_error_resolver_async(id)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<UserDataAccountManagerForUser>> { unsafe {
+        <Self as RtActivatable<IUserDataAccountManagerStatics2>>::get_activation_factory().get_for_user(user)
     }}
 }
 DEFINE_CLSID!(UserDataAccountManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,65,99,99,111,117,110,116,115,46,85,115,101,114,68,97,116,97,65,99,99,111,117,110,116,77,97,110,97,103,101,114,0]) [CLSID_UserDataAccountManager]);
@@ -22055,9 +22055,12 @@ RT_ENUM! { enum DeviceAccountSyncScheduleKind: i32 {
     Manual (DeviceAccountSyncScheduleKind_Manual) = 0, Every15Minutes (DeviceAccountSyncScheduleKind_Every15Minutes) = 1, Every30Minutes (DeviceAccountSyncScheduleKind_Every30Minutes) = 2, Every60Minutes (DeviceAccountSyncScheduleKind_Every60Minutes) = 3, Every2Hours (DeviceAccountSyncScheduleKind_Every2Hours) = 4, Daily (DeviceAccountSyncScheduleKind_Daily) = 5, AsItemsArrive (DeviceAccountSyncScheduleKind_AsItemsArrive) = 6,
 }}
 RT_CLASS!{static class UserDataAccountSystemAccessManager}
-impl RtActivatable<IUserDataAccountSystemAccessManagerStatics2> for UserDataAccountSystemAccessManager {}
 impl RtActivatable<IUserDataAccountSystemAccessManagerStatics> for UserDataAccountSystemAccessManager {}
+impl RtActivatable<IUserDataAccountSystemAccessManagerStatics2> for UserDataAccountSystemAccessManager {}
 impl UserDataAccountSystemAccessManager {
+    #[inline] pub fn add_and_show_device_accounts_async(accounts: &::rt::gen::windows::foundation::collections::IIterable<DeviceAccountConfiguration>) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> { unsafe {
+        <Self as RtActivatable<IUserDataAccountSystemAccessManagerStatics>>::get_activation_factory().add_and_show_device_accounts_async(accounts)
+    }}
     #[inline] pub fn suppress_local_account_with_account_async(userDataAccountId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
         <Self as RtActivatable<IUserDataAccountSystemAccessManagerStatics2>>::get_activation_factory().suppress_local_account_with_account_async(userDataAccountId)
     }}
@@ -22069,9 +22072,6 @@ impl UserDataAccountSystemAccessManager {
     }}
     #[inline] pub fn get_device_account_configuration_async(accountId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<DeviceAccountConfiguration>>> { unsafe {
         <Self as RtActivatable<IUserDataAccountSystemAccessManagerStatics2>>::get_activation_factory().get_device_account_configuration_async(accountId)
-    }}
-    #[inline] pub fn add_and_show_device_accounts_async(accounts: &::rt::gen::windows::foundation::collections::IIterable<DeviceAccountConfiguration>) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> { unsafe {
-        <Self as RtActivatable<IUserDataAccountSystemAccessManagerStatics>>::get_activation_factory().add_and_show_device_accounts_async(accounts)
     }}
 }
 DEFINE_CLSID!(UserDataAccountSystemAccessManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,65,99,99,111,117,110,116,115,46,83,121,115,116,101,109,65,99,99,101,115,115,46,85,115,101,114,68,97,116,97,65,99,99,111,117,110,116,83,121,115,116,101,109,65,99,99,101,115,115,77,97,110,97,103,101,114,0]) [CLSID_UserDataAccountSystemAccessManager]);
@@ -23196,12 +23196,9 @@ impl IPaymentRequest {
     }
 }
 RT_CLASS!{class PaymentRequest: IPaymentRequest}
-impl RtActivatable<IPaymentRequestFactory2> for PaymentRequest {}
 impl RtActivatable<IPaymentRequestFactory> for PaymentRequest {}
+impl RtActivatable<IPaymentRequestFactory2> for PaymentRequest {}
 impl PaymentRequest {
-    #[inline] pub fn create_with_merchant_info_options_and_id(details: &PaymentDetails, methodData: &super::super::foundation::collections::IIterable<PaymentMethodData>, merchantInfo: &PaymentMerchantInfo, options: &PaymentOptions, id: &HStringArg) -> Result<ComPtr<PaymentRequest>> { unsafe {
-        <Self as RtActivatable<IPaymentRequestFactory2>>::get_activation_factory().create_with_merchant_info_options_and_id(details, methodData, merchantInfo, options, id)
-    }}
     #[inline] pub fn create(details: &PaymentDetails, methodData: &super::super::foundation::collections::IIterable<PaymentMethodData>) -> Result<ComPtr<PaymentRequest>> { unsafe {
         <Self as RtActivatable<IPaymentRequestFactory>>::get_activation_factory().create(details, methodData)
     }}
@@ -23210,6 +23207,9 @@ impl PaymentRequest {
     }}
     #[inline] pub fn create_with_merchant_info_and_options(details: &PaymentDetails, methodData: &super::super::foundation::collections::IIterable<PaymentMethodData>, merchantInfo: &PaymentMerchantInfo, options: &PaymentOptions) -> Result<ComPtr<PaymentRequest>> { unsafe {
         <Self as RtActivatable<IPaymentRequestFactory>>::get_activation_factory().create_with_merchant_info_and_options(details, methodData, merchantInfo, options)
+    }}
+    #[inline] pub fn create_with_merchant_info_options_and_id(details: &PaymentDetails, methodData: &super::super::foundation::collections::IIterable<PaymentMethodData>, merchantInfo: &PaymentMerchantInfo, options: &PaymentOptions, id: &HStringArg) -> Result<ComPtr<PaymentRequest>> { unsafe {
+        <Self as RtActivatable<IPaymentRequestFactory2>>::get_activation_factory().create_with_merchant_info_options_and_id(details, methodData, merchantInfo, options, id)
     }}
 }
 DEFINE_CLSID!(PaymentRequest(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,82,101,113,117,101,115,116,0]) [CLSID_PaymentRequest]);
@@ -23742,12 +23742,15 @@ impl IResourceLoader {
 }
 RT_CLASS!{class ResourceLoader: IResourceLoader}
 impl RtActivatable<IResourceLoaderFactory> for ResourceLoader {}
-impl RtActivatable<IResourceLoaderStatics2> for ResourceLoader {}
 impl RtActivatable<IResourceLoaderStatics> for ResourceLoader {}
+impl RtActivatable<IResourceLoaderStatics2> for ResourceLoader {}
 impl RtActivatable<IActivationFactory> for ResourceLoader {}
 impl ResourceLoader {
     #[inline] pub fn create_resource_loader_by_name(name: &HStringArg) -> Result<ComPtr<ResourceLoader>> { unsafe {
         <Self as RtActivatable<IResourceLoaderFactory>>::get_activation_factory().create_resource_loader_by_name(name)
+    }}
+    #[inline] pub fn get_string_for_reference(uri: &super::super::foundation::Uri) -> Result<HString> { unsafe {
+        <Self as RtActivatable<IResourceLoaderStatics>>::get_activation_factory().get_string_for_reference(uri)
     }}
     #[inline] pub fn get_for_current_view() -> Result<ComPtr<ResourceLoader>> { unsafe {
         <Self as RtActivatable<IResourceLoaderStatics2>>::get_activation_factory().get_for_current_view()
@@ -23760,9 +23763,6 @@ impl ResourceLoader {
     }}
     #[inline] pub fn get_for_view_independent_use_with_name(name: &HStringArg) -> Result<ComPtr<ResourceLoader>> { unsafe {
         <Self as RtActivatable<IResourceLoaderStatics2>>::get_activation_factory().get_for_view_independent_use_with_name(name)
-    }}
-    #[inline] pub fn get_string_for_reference(uri: &super::super::foundation::Uri) -> Result<HString> { unsafe {
-        <Self as RtActivatable<IResourceLoaderStatics>>::get_activation_factory().get_string_for_reference(uri)
     }}
 }
 DEFINE_CLSID!(ResourceLoader(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,82,101,115,111,117,114,99,101,115,46,82,101,115,111,117,114,99,101,76,111,97,100,101,114,0]) [CLSID_ResourceLoader]);
@@ -24390,27 +24390,12 @@ impl ICurrentApp {
     }
 }
 RT_CLASS!{static class CurrentApp}
+impl RtActivatable<ICurrentApp> for CurrentApp {}
 impl RtActivatable<ICurrentApp2Statics> for CurrentApp {}
 impl RtActivatable<ICurrentAppStaticsWithFiltering> for CurrentApp {}
-impl RtActivatable<ICurrentApp> for CurrentApp {}
 impl RtActivatable<ICurrentAppWithCampaignId> for CurrentApp {}
 impl RtActivatable<ICurrentAppWithConsumables> for CurrentApp {}
 impl CurrentApp {
-    #[inline] pub fn get_customer_purchase_id_async(serviceTicket: &HStringArg, publisherUserId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<HString>>> { unsafe {
-        <Self as RtActivatable<ICurrentApp2Statics>>::get_activation_factory().get_customer_purchase_id_async(serviceTicket, publisherUserId)
-    }}
-    #[inline] pub fn get_customer_collections_id_async(serviceTicket: &HStringArg, publisherUserId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<HString>>> { unsafe {
-        <Self as RtActivatable<ICurrentApp2Statics>>::get_activation_factory().get_customer_collections_id_async(serviceTicket, publisherUserId)
-    }}
-    #[inline] pub fn load_listing_information_by_product_ids_async(productIds: &super::super::foundation::collections::IIterable<HString>) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ListingInformation>>> { unsafe {
-        <Self as RtActivatable<ICurrentAppStaticsWithFiltering>>::get_activation_factory().load_listing_information_by_product_ids_async(productIds)
-    }}
-    #[inline] pub fn load_listing_information_by_keywords_async(keywords: &super::super::foundation::collections::IIterable<HString>) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ListingInformation>>> { unsafe {
-        <Self as RtActivatable<ICurrentAppStaticsWithFiltering>>::get_activation_factory().load_listing_information_by_keywords_async(keywords)
-    }}
-    #[inline] pub fn report_product_fulfillment(productId: &HStringArg) -> Result<()> { unsafe {
-        <Self as RtActivatable<ICurrentAppStaticsWithFiltering>>::get_activation_factory().report_product_fulfillment(productId)
-    }}
     #[inline] pub fn get_license_information() -> Result<ComPtr<LicenseInformation>> { unsafe {
         <Self as RtActivatable<ICurrentApp>>::get_activation_factory().get_license_information()
     }}
@@ -24434,6 +24419,21 @@ impl CurrentApp {
     }}
     #[inline] pub fn get_product_receipt_async(productId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<HString>>> { unsafe {
         <Self as RtActivatable<ICurrentApp>>::get_activation_factory().get_product_receipt_async(productId)
+    }}
+    #[inline] pub fn get_customer_purchase_id_async(serviceTicket: &HStringArg, publisherUserId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<HString>>> { unsafe {
+        <Self as RtActivatable<ICurrentApp2Statics>>::get_activation_factory().get_customer_purchase_id_async(serviceTicket, publisherUserId)
+    }}
+    #[inline] pub fn get_customer_collections_id_async(serviceTicket: &HStringArg, publisherUserId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<HString>>> { unsafe {
+        <Self as RtActivatable<ICurrentApp2Statics>>::get_activation_factory().get_customer_collections_id_async(serviceTicket, publisherUserId)
+    }}
+    #[inline] pub fn load_listing_information_by_product_ids_async(productIds: &super::super::foundation::collections::IIterable<HString>) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ListingInformation>>> { unsafe {
+        <Self as RtActivatable<ICurrentAppStaticsWithFiltering>>::get_activation_factory().load_listing_information_by_product_ids_async(productIds)
+    }}
+    #[inline] pub fn load_listing_information_by_keywords_async(keywords: &super::super::foundation::collections::IIterable<HString>) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ListingInformation>>> { unsafe {
+        <Self as RtActivatable<ICurrentAppStaticsWithFiltering>>::get_activation_factory().load_listing_information_by_keywords_async(keywords)
+    }}
+    #[inline] pub fn report_product_fulfillment(productId: &HStringArg) -> Result<()> { unsafe {
+        <Self as RtActivatable<ICurrentAppStaticsWithFiltering>>::get_activation_factory().report_product_fulfillment(productId)
     }}
     #[inline] pub fn get_app_purchase_campaign_id_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<HString>>> { unsafe {
         <Self as RtActivatable<ICurrentAppWithCampaignId>>::get_activation_factory().get_app_purchase_campaign_id_async()
@@ -24530,9 +24530,9 @@ impl ICurrentAppSimulator {
 }
 RT_CLASS!{static class CurrentAppSimulator}
 impl RtActivatable<ICurrentAppSimulator> for CurrentAppSimulator {}
-impl RtActivatable<ICurrentAppSimulatorWithConsumables> for CurrentAppSimulator {}
 impl RtActivatable<ICurrentAppSimulatorStaticsWithFiltering> for CurrentAppSimulator {}
 impl RtActivatable<ICurrentAppSimulatorWithCampaignId> for CurrentAppSimulator {}
+impl RtActivatable<ICurrentAppSimulatorWithConsumables> for CurrentAppSimulator {}
 impl CurrentAppSimulator {
     #[inline] pub fn get_license_information() -> Result<ComPtr<LicenseInformation>> { unsafe {
         <Self as RtActivatable<ICurrentAppSimulator>>::get_activation_factory().get_license_information()
@@ -24561,6 +24561,15 @@ impl CurrentAppSimulator {
     #[cfg(feature="windows-storage")] #[inline] pub fn reload_simulator_async(simulatorSettingsFile: &super::super::storage::StorageFile) -> Result<ComPtr<super::super::foundation::IAsyncAction>> { unsafe {
         <Self as RtActivatable<ICurrentAppSimulator>>::get_activation_factory().reload_simulator_async(simulatorSettingsFile)
     }}
+    #[inline] pub fn load_listing_information_by_product_ids_async(productIds: &super::super::foundation::collections::IIterable<HString>) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ListingInformation>>> { unsafe {
+        <Self as RtActivatable<ICurrentAppSimulatorStaticsWithFiltering>>::get_activation_factory().load_listing_information_by_product_ids_async(productIds)
+    }}
+    #[inline] pub fn load_listing_information_by_keywords_async(keywords: &super::super::foundation::collections::IIterable<HString>) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ListingInformation>>> { unsafe {
+        <Self as RtActivatable<ICurrentAppSimulatorStaticsWithFiltering>>::get_activation_factory().load_listing_information_by_keywords_async(keywords)
+    }}
+    #[inline] pub fn get_app_purchase_campaign_id_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<HString>>> { unsafe {
+        <Self as RtActivatable<ICurrentAppSimulatorWithCampaignId>>::get_activation_factory().get_app_purchase_campaign_id_async()
+    }}
     #[inline] pub fn report_consumable_fulfillment_async(productId: &HStringArg, transactionId: Guid) -> Result<ComPtr<super::super::foundation::IAsyncOperation<FulfillmentResult>>> { unsafe {
         <Self as RtActivatable<ICurrentAppSimulatorWithConsumables>>::get_activation_factory().report_consumable_fulfillment_async(productId, transactionId)
     }}
@@ -24572,15 +24581,6 @@ impl CurrentAppSimulator {
     }}
     #[inline] pub fn get_unfulfilled_consumables_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<UnfulfilledConsumable>>>> { unsafe {
         <Self as RtActivatable<ICurrentAppSimulatorWithConsumables>>::get_activation_factory().get_unfulfilled_consumables_async()
-    }}
-    #[inline] pub fn load_listing_information_by_product_ids_async(productIds: &super::super::foundation::collections::IIterable<HString>) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ListingInformation>>> { unsafe {
-        <Self as RtActivatable<ICurrentAppSimulatorStaticsWithFiltering>>::get_activation_factory().load_listing_information_by_product_ids_async(productIds)
-    }}
-    #[inline] pub fn load_listing_information_by_keywords_async(keywords: &super::super::foundation::collections::IIterable<HString>) -> Result<ComPtr<super::super::foundation::IAsyncOperation<ListingInformation>>> { unsafe {
-        <Self as RtActivatable<ICurrentAppSimulatorStaticsWithFiltering>>::get_activation_factory().load_listing_information_by_keywords_async(keywords)
-    }}
-    #[inline] pub fn get_app_purchase_campaign_id_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<HString>>> { unsafe {
-        <Self as RtActivatable<ICurrentAppSimulatorWithCampaignId>>::get_activation_factory().get_app_purchase_campaign_id_async()
     }}
 }
 DEFINE_CLSID!(CurrentAppSimulator(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,67,117,114,114,101,110,116,65,112,112,83,105,109,117,108,97,116,111,114,0]) [CLSID_CurrentAppSimulator]);
@@ -25085,8 +25085,8 @@ use ::prelude::*;
 RT_CLASS!{static class StoreConfiguration}
 impl RtActivatable<IStoreConfigurationStatics> for StoreConfiguration {}
 impl RtActivatable<IStoreConfigurationStatics2> for StoreConfiguration {}
-impl RtActivatable<IStoreConfigurationStatics4> for StoreConfiguration {}
 impl RtActivatable<IStoreConfigurationStatics3> for StoreConfiguration {}
+impl RtActivatable<IStoreConfigurationStatics4> for StoreConfiguration {}
 impl StoreConfiguration {
     #[inline] pub fn set_system_configuration(catalogHardwareManufacturerId: &HStringArg, catalogStoreContentModifierId: &HStringArg, systemConfigurationExpiration: ::rt::gen::windows::foundation::DateTime, catalogHardwareDescriptor: &HStringArg) -> Result<()> { unsafe {
         <Self as RtActivatable<IStoreConfigurationStatics>>::get_activation_factory().set_system_configuration(catalogHardwareManufacturerId, catalogStoreContentModifierId, systemConfigurationExpiration, catalogHardwareDescriptor)
@@ -25112,6 +25112,27 @@ impl StoreConfiguration {
     #[inline] pub fn set_purchase_prompting_policy(value: &::rt::gen::windows::foundation::IReference<u32>) -> Result<()> { unsafe {
         <Self as RtActivatable<IStoreConfigurationStatics2>>::get_activation_factory().set_purchase_prompting_policy(value)
     }}
+    #[inline] pub fn has_store_web_account() -> Result<bool> { unsafe {
+        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().has_store_web_account()
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn has_store_web_account_for_user(user: &::rt::gen::windows::system::User) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().has_store_web_account_for_user(user)
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_store_log_data_async(options: StoreLogOptions) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IRandomAccessStreamReference>>> { unsafe {
+        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().get_store_log_data_async(options)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn set_store_web_account_id_for_user(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg) -> Result<()> { unsafe {
+        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().set_store_web_account_id_for_user(user, webAccountId)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn is_store_web_account_id_for_user(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg) -> Result<bool> { unsafe {
+        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().is_store_web_account_id_for_user(user, webAccountId)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_purchase_prompting_policy_for_user(user: &::rt::gen::windows::system::User) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u32>>> { unsafe {
+        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().get_purchase_prompting_policy_for_user(user)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn set_purchase_prompting_policy_for_user(user: &::rt::gen::windows::system::User, value: &::rt::gen::windows::foundation::IReference<u32>) -> Result<()> { unsafe {
+        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().set_purchase_prompting_policy_for_user(user, value)
+    }}
     #[inline] pub fn get_store_web_account_id() -> Result<HString> { unsafe {
         <Self as RtActivatable<IStoreConfigurationStatics4>>::get_activation_factory().get_store_web_account_id()
     }}
@@ -25135,27 +25156,6 @@ impl StoreConfiguration {
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn should_restrict_to_enterprise_store_only_for_user(user: &::rt::gen::windows::system::User) -> Result<bool> { unsafe {
         <Self as RtActivatable<IStoreConfigurationStatics4>>::get_activation_factory().should_restrict_to_enterprise_store_only_for_user(user)
-    }}
-    #[inline] pub fn has_store_web_account() -> Result<bool> { unsafe {
-        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().has_store_web_account()
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn has_store_web_account_for_user(user: &::rt::gen::windows::system::User) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().has_store_web_account_for_user(user)
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_store_log_data_async(options: StoreLogOptions) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IRandomAccessStreamReference>>> { unsafe {
-        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().get_store_log_data_async(options)
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn set_store_web_account_id_for_user(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg) -> Result<()> { unsafe {
-        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().set_store_web_account_id_for_user(user, webAccountId)
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn is_store_web_account_id_for_user(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg) -> Result<bool> { unsafe {
-        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().is_store_web_account_id_for_user(user, webAccountId)
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_purchase_prompting_policy_for_user(user: &::rt::gen::windows::system::User) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u32>>> { unsafe {
-        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().get_purchase_prompting_policy_for_user(user)
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn set_purchase_prompting_policy_for_user(user: &::rt::gen::windows::system::User, value: &::rt::gen::windows::foundation::IReference<u32>) -> Result<()> { unsafe {
-        <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().set_purchase_prompting_policy_for_user(user, value)
     }}
 }
 DEFINE_CLSID!(StoreConfiguration(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,80,114,101,118,105,101,119,46,83,116,111,114,101,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_StoreConfiguration]);

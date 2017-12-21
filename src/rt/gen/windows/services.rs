@@ -310,12 +310,9 @@ RT_ENUM! { enum MapLocationDesiredAccuracy: i32 {
     High (MapLocationDesiredAccuracy_High) = 0, Low (MapLocationDesiredAccuracy_Low) = 1,
 }}
 RT_CLASS!{static class MapLocationFinder}
-impl RtActivatable<IMapLocationFinderStatics2> for MapLocationFinder {}
 impl RtActivatable<IMapLocationFinderStatics> for MapLocationFinder {}
+impl RtActivatable<IMapLocationFinderStatics2> for MapLocationFinder {}
 impl MapLocationFinder {
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_locations_at_with_accuracy_async(queryPoint: &super::super::devices::geolocation::Geopoint, accuracy: MapLocationDesiredAccuracy) -> Result<ComPtr<super::super::foundation::IAsyncOperation<MapLocationFinderResult>>> { unsafe {
-        <Self as RtActivatable<IMapLocationFinderStatics2>>::get_activation_factory().find_locations_at_with_accuracy_async(queryPoint, accuracy)
-    }}
     #[cfg(feature="windows-devices")] #[inline] pub fn find_locations_at_async(queryPoint: &super::super::devices::geolocation::Geopoint) -> Result<ComPtr<super::super::foundation::IAsyncOperation<MapLocationFinderResult>>> { unsafe {
         <Self as RtActivatable<IMapLocationFinderStatics>>::get_activation_factory().find_locations_at_async(queryPoint)
     }}
@@ -324,6 +321,9 @@ impl MapLocationFinder {
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn find_locations_with_max_count_async(searchText: &HStringArg, referencePoint: &super::super::devices::geolocation::Geopoint, maxCount: u32) -> Result<ComPtr<super::super::foundation::IAsyncOperation<MapLocationFinderResult>>> { unsafe {
         <Self as RtActivatable<IMapLocationFinderStatics>>::get_activation_factory().find_locations_with_max_count_async(searchText, referencePoint, maxCount)
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_locations_at_with_accuracy_async(queryPoint: &super::super::devices::geolocation::Geopoint, accuracy: MapLocationDesiredAccuracy) -> Result<ComPtr<super::super::foundation::IAsyncOperation<MapLocationFinderResult>>> { unsafe {
+        <Self as RtActivatable<IMapLocationFinderStatics2>>::get_activation_factory().find_locations_at_with_accuracy_async(queryPoint, accuracy)
     }}
 }
 DEFINE_CLSID!(MapLocationFinder(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,77,97,112,76,111,99,97,116,105,111,110,70,105,110,100,101,114,0]) [CLSID_MapLocationFinder]);
@@ -865,28 +865,28 @@ RT_ENUM! { enum MapRouteRestrictions: u32 {
     None (MapRouteRestrictions_None) = 0, Highways (MapRouteRestrictions_Highways) = 1, TollRoads (MapRouteRestrictions_TollRoads) = 2, Ferries (MapRouteRestrictions_Ferries) = 4, Tunnels (MapRouteRestrictions_Tunnels) = 8, DirtRoads (MapRouteRestrictions_DirtRoads) = 16, Motorail (MapRouteRestrictions_Motorail) = 32,
 }}
 RT_CLASS!{static class MapService}
-impl RtActivatable<IMapServiceStatics4> for MapService {}
 impl RtActivatable<IMapServiceStatics> for MapService {}
-impl RtActivatable<IMapServiceStatics3> for MapService {}
 impl RtActivatable<IMapServiceStatics2> for MapService {}
+impl RtActivatable<IMapServiceStatics3> for MapService {}
+impl RtActivatable<IMapServiceStatics4> for MapService {}
 impl MapService {
-    #[inline] pub fn set_data_usage_preference(value: MapServiceDataUsagePreference) -> Result<()> { unsafe {
-        <Self as RtActivatable<IMapServiceStatics4>>::get_activation_factory().set_data_usage_preference(value)
-    }}
-    #[inline] pub fn get_data_usage_preference() -> Result<MapServiceDataUsagePreference> { unsafe {
-        <Self as RtActivatable<IMapServiceStatics4>>::get_activation_factory().get_data_usage_preference()
-    }}
     #[inline] pub fn set_service_token(value: &HStringArg) -> Result<()> { unsafe {
         <Self as RtActivatable<IMapServiceStatics>>::get_activation_factory().set_service_token(value)
     }}
     #[inline] pub fn get_service_token() -> Result<HString> { unsafe {
         <Self as RtActivatable<IMapServiceStatics>>::get_activation_factory().get_service_token()
     }}
+    #[inline] pub fn get_world_view_region_code() -> Result<HString> { unsafe {
+        <Self as RtActivatable<IMapServiceStatics2>>::get_activation_factory().get_world_view_region_code()
+    }}
     #[inline] pub fn get_data_attributions() -> Result<HString> { unsafe {
         <Self as RtActivatable<IMapServiceStatics3>>::get_activation_factory().get_data_attributions()
     }}
-    #[inline] pub fn get_world_view_region_code() -> Result<HString> { unsafe {
-        <Self as RtActivatable<IMapServiceStatics2>>::get_activation_factory().get_world_view_region_code()
+    #[inline] pub fn set_data_usage_preference(value: MapServiceDataUsagePreference) -> Result<()> { unsafe {
+        <Self as RtActivatable<IMapServiceStatics4>>::get_activation_factory().set_data_usage_preference(value)
+    }}
+    #[inline] pub fn get_data_usage_preference() -> Result<MapServiceDataUsagePreference> { unsafe {
+        <Self as RtActivatable<IMapServiceStatics4>>::get_activation_factory().get_data_usage_preference()
     }}
 }
 DEFINE_CLSID!(MapService(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,77,97,112,83,101,114,118,105,99,101,0]) [CLSID_MapService]);

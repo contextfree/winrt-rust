@@ -169,14 +169,14 @@ impl IApplicationData {
     }
 }
 RT_CLASS!{class ApplicationData: IApplicationData}
-impl RtActivatable<IApplicationDataStatics2> for ApplicationData {}
 impl RtActivatable<IApplicationDataStatics> for ApplicationData {}
+impl RtActivatable<IApplicationDataStatics2> for ApplicationData {}
 impl ApplicationData {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &super::system::User) -> Result<ComPtr<super::foundation::IAsyncOperation<ApplicationData>>> { unsafe {
-        <Self as RtActivatable<IApplicationDataStatics2>>::get_activation_factory().get_for_user_async(user)
-    }}
     #[inline] pub fn get_current() -> Result<ComPtr<ApplicationData>> { unsafe {
         <Self as RtActivatable<IApplicationDataStatics>>::get_activation_factory().get_current()
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &super::system::User) -> Result<ComPtr<super::foundation::IAsyncOperation<ApplicationData>>> { unsafe {
+        <Self as RtActivatable<IApplicationDataStatics2>>::get_activation_factory().get_for_user_async(user)
     }}
 }
 DEFINE_CLSID!(ApplicationData(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,112,112,108,105,99,97,116,105,111,110,68,97,116,97,0]) [CLSID_ApplicationData]);
@@ -328,21 +328,9 @@ RT_ENUM! { enum CreationCollisionOption: i32 {
     GenerateUniqueName (CreationCollisionOption_GenerateUniqueName) = 0, ReplaceExisting (CreationCollisionOption_ReplaceExisting) = 1, FailIfExists (CreationCollisionOption_FailIfExists) = 2, OpenIfExists (CreationCollisionOption_OpenIfExists) = 3,
 }}
 RT_CLASS!{static class DownloadsFolder}
-impl RtActivatable<IDownloadsFolderStatics2> for DownloadsFolder {}
 impl RtActivatable<IDownloadsFolderStatics> for DownloadsFolder {}
+impl RtActivatable<IDownloadsFolderStatics2> for DownloadsFolder {}
 impl DownloadsFolder {
-    #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_async(user: &super::system::User, desiredName: &HStringArg) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageFile>>> { unsafe {
-        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_file_for_user_async(user, desiredName)
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_async(user: &super::system::User, desiredName: &HStringArg) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageFolder>>> { unsafe {
-        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_folder_for_user_async(user, desiredName)
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_with_collision_option_async(user: &super::system::User, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageFile>>> { unsafe {
-        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_file_for_user_with_collision_option_async(user, desiredName, option)
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_with_collision_option_async(user: &super::system::User, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageFolder>>> { unsafe {
-        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_folder_for_user_with_collision_option_async(user, desiredName, option)
-    }}
     #[inline] pub fn create_file_async(desiredName: &HStringArg) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageFile>>> { unsafe {
         <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().create_file_async(desiredName)
     }}
@@ -354,6 +342,18 @@ impl DownloadsFolder {
     }}
     #[inline] pub fn create_folder_with_collision_option_async(desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageFolder>>> { unsafe {
         <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().create_folder_with_collision_option_async(desiredName, option)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_async(user: &super::system::User, desiredName: &HStringArg) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageFile>>> { unsafe {
+        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_file_for_user_async(user, desiredName)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_async(user: &super::system::User, desiredName: &HStringArg) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageFolder>>> { unsafe {
+        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_folder_for_user_async(user, desiredName)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_with_collision_option_async(user: &super::system::User, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageFile>>> { unsafe {
+        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_file_for_user_with_collision_option_async(user, desiredName, option)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_with_collision_option_async(user: &super::system::User, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageFolder>>> { unsafe {
+        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_folder_for_user_with_collision_option_async(user, desiredName, option)
     }}
 }
 DEFINE_CLSID!(DownloadsFolder(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,68,111,119,110,108,111,97,100,115,70,111,108,100,101,114,0]) [CLSID_DownloadsFolder]);
@@ -570,15 +570,21 @@ RT_ENUM! { enum KnownFolderId: i32 {
     AppCaptures (KnownFolderId_AppCaptures) = 0, CameraRoll (KnownFolderId_CameraRoll) = 1, DocumentsLibrary (KnownFolderId_DocumentsLibrary) = 2, HomeGroup (KnownFolderId_HomeGroup) = 3, MediaServerDevices (KnownFolderId_MediaServerDevices) = 4, MusicLibrary (KnownFolderId_MusicLibrary) = 5, Objects3D (KnownFolderId_Objects3D) = 6, PicturesLibrary (KnownFolderId_PicturesLibrary) = 7, Playlists (KnownFolderId_Playlists) = 8, RecordedCalls (KnownFolderId_RecordedCalls) = 9, RemovableDevices (KnownFolderId_RemovableDevices) = 10, SavedPictures (KnownFolderId_SavedPictures) = 11, Screenshots (KnownFolderId_Screenshots) = 12, VideosLibrary (KnownFolderId_VideosLibrary) = 13, AllAppMods (KnownFolderId_AllAppMods) = 14, CurrentAppMods (KnownFolderId_CurrentAppMods) = 15,
 }}
 RT_CLASS!{static class KnownFolders}
+impl RtActivatable<IKnownFoldersCameraRollStatics> for KnownFolders {}
 impl RtActivatable<IKnownFoldersPlaylistsStatics> for KnownFolders {}
+impl RtActivatable<IKnownFoldersSavedPicturesStatics> for KnownFolders {}
 impl RtActivatable<IKnownFoldersStatics> for KnownFolders {}
 impl RtActivatable<IKnownFoldersStatics2> for KnownFolders {}
-impl RtActivatable<IKnownFoldersCameraRollStatics> for KnownFolders {}
-impl RtActivatable<IKnownFoldersSavedPicturesStatics> for KnownFolders {}
 impl RtActivatable<IKnownFoldersStatics3> for KnownFolders {}
 impl KnownFolders {
+    #[inline] pub fn get_camera_roll() -> Result<ComPtr<StorageFolder>> { unsafe {
+        <Self as RtActivatable<IKnownFoldersCameraRollStatics>>::get_activation_factory().get_camera_roll()
+    }}
     #[inline] pub fn get_playlists() -> Result<ComPtr<StorageFolder>> { unsafe {
         <Self as RtActivatable<IKnownFoldersPlaylistsStatics>>::get_activation_factory().get_playlists()
+    }}
+    #[inline] pub fn get_saved_pictures() -> Result<ComPtr<StorageFolder>> { unsafe {
+        <Self as RtActivatable<IKnownFoldersSavedPicturesStatics>>::get_activation_factory().get_saved_pictures()
     }}
     #[inline] pub fn get_music_library() -> Result<ComPtr<StorageFolder>> { unsafe {
         <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_music_library()
@@ -609,12 +615,6 @@ impl KnownFolders {
     }}
     #[inline] pub fn get_recorded_calls() -> Result<ComPtr<StorageFolder>> { unsafe {
         <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().get_recorded_calls()
-    }}
-    #[inline] pub fn get_camera_roll() -> Result<ComPtr<StorageFolder>> { unsafe {
-        <Self as RtActivatable<IKnownFoldersCameraRollStatics>>::get_activation_factory().get_camera_roll()
-    }}
-    #[inline] pub fn get_saved_pictures() -> Result<ComPtr<StorageFolder>> { unsafe {
-        <Self as RtActivatable<IKnownFoldersSavedPicturesStatics>>::get_activation_factory().get_saved_pictures()
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn get_folder_for_user_async(user: &super::system::User, folderId: KnownFolderId) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageFolder>>> { unsafe {
         <Self as RtActivatable<IKnownFoldersStatics3>>::get_activation_factory().get_folder_for_user_async(user, folderId)
@@ -1395,14 +1395,14 @@ impl IStorageLibrary {
     }
 }
 RT_CLASS!{class StorageLibrary: IStorageLibrary}
-impl RtActivatable<IStorageLibraryStatics2> for StorageLibrary {}
 impl RtActivatable<IStorageLibraryStatics> for StorageLibrary {}
+impl RtActivatable<IStorageLibraryStatics2> for StorageLibrary {}
 impl StorageLibrary {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_library_for_user_async(user: &super::system::User, libraryId: KnownLibraryId) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageLibrary>>> { unsafe {
-        <Self as RtActivatable<IStorageLibraryStatics2>>::get_activation_factory().get_library_for_user_async(user, libraryId)
-    }}
     #[inline] pub fn get_library_async(libraryId: KnownLibraryId) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageLibrary>>> { unsafe {
         <Self as RtActivatable<IStorageLibraryStatics>>::get_activation_factory().get_library_async(libraryId)
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_library_for_user_async(user: &super::system::User, libraryId: KnownLibraryId) -> Result<ComPtr<super::foundation::IAsyncOperation<StorageLibrary>>> { unsafe {
+        <Self as RtActivatable<IStorageLibraryStatics2>>::get_activation_factory().get_library_for_user_async(user, libraryId)
     }}
 }
 DEFINE_CLSID!(StorageLibrary(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,76,105,98,114,97,114,121,0]) [CLSID_StorageLibrary]);
