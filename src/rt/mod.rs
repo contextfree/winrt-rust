@@ -679,6 +679,37 @@ impl IActivationFactory {
     }
 }
 
+DEFINE_IID!(IID_IMemoryBufferByteAccess, 0x5b0d3235, 0x4dba, 0x4d44, 0x86, 0x5e, 0x8f, 0x1d, 0x0e, 0x4f, 0xd0, 0x4d);
+RT_INTERFACE!{
+interface IMemoryBufferByteAccess(IMemoryBufferByteAccessVtbl) : IUnknown(IUnknownVtbl) [IID_IMemoryBufferByteAccess]  {
+    fn GetBuffer(&self, value: *mut *mut u8, capacity: *mut u32) -> HRESULT
+}}
+
+impl IMemoryBufferByteAccess {
+    /// Provides direct byte access to the memory buffer underlying an `IMemoryBuffer`.
+    /// To use `IMemoryBufferByteAccess`, you first need to obtain an `IMemoryBufferReference`, then
+    /// call `query_interface::<IMemoryBufferByteAccess>()` on that.
+    ///
+    /// This method is marked `unsafe`, because the buffer might be invalidated during its lifetime.
+    /// Due to the nature of COM objects, the buffer might be referenced and modified or closed
+    /// by some other instance, which Rust's type system cannot know about. The `Close` event on
+    /// `IMemoryBufferReference` can be used to be notified when the buffer is closed.
+    ///
+    /// An empty slice is returned if the underlying buffer has already been closed.
+    #[inline]
+    pub unsafe fn get_buffer(&self) -> &[u8] {
+        let mut ptr = ::std::ptr::null_mut();
+        let mut capacity: u32 = 0;
+        let hr = ((*self.lpVtbl).GetBuffer)(self as *const _ as *mut _, &mut ptr, &mut capacity);
+        assert_eq!(hr, S_OK);
+        if capacity == 0 {
+            ptr = 1 as *mut u8; // null pointer is not allowed
+        }
+        ::std::slice::from_raw_parts(ptr, capacity as usize)
+    }
+}
+
+
 /// Manages initialization and uninitialization of the Windows Runtime.
 pub struct RuntimeContext {
     token: ()
