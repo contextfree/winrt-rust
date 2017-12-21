@@ -118,8 +118,14 @@ pub trait RtActivatable<Interface> : RtNamedClass {
             panic!("RoGetActivationFactory failed with error code {}", hr)
         }     
     }
+}
 
+pub trait RtDefaultConstructible {
     /// Uses the default constructor to create an instance of this class.
+    fn new() -> ComPtr<Self> where Self: Sized + RtActivatable<IActivationFactory> + ComInterface;
+}
+
+impl<T> RtDefaultConstructible for T where T: RtActivatable<IActivationFactory> {
     #[inline]
     fn new() -> ComPtr<Self> where Self: Sized + RtActivatable<IActivationFactory> + ComInterface {
         let factory: ComPtr<IActivationFactory> = Self::get_activation_factory();

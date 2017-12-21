@@ -63,7 +63,7 @@ mod cominterfaces;
 pub use cominterfaces::{ComInterface, ComIid, IUnknown, IRestrictedErrorInfo, IAgileObject};
 
 mod rt;
-pub use rt::{RtInterface, RtClassInterface, RtNamedClass, RtValueType, RtType, RtActivatable, IInspectable, IInspectableVtbl, IActivationFactory, Char, RuntimeContext};
+pub use rt::{RtInterface, RtClassInterface, RtNamedClass, RtValueType, RtType, RtActivatable, RtDefaultConstructible, IInspectable, IInspectableVtbl, IActivationFactory, Char, RuntimeContext};
 pub use rt::async::{RtAsyncAction, RtAsyncOperation};
 
 mod result;
