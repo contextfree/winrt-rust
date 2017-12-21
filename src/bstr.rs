@@ -1,8 +1,10 @@
 use ::std::ptr;
 use ::std::fmt;
 
-use ::w::*;
-use ::oleaut32::*;
+use w::shared::wtypes::BSTR;
+use w::shared::basetsd::UINT32;
+use w::shared::wtypesbase::OLECHAR;
+use w::um::oleauto::{SysStringLen, SysAllocStringLen, SysFreeString};
 
 // TODO: move to separate crate?
 

@@ -1,7 +1,5 @@
 extern crate winapi as w;
 extern crate winrt;
-// TODO: don't use functions from runtimeobject directly 
-extern crate runtimeobject;
 
 use std::ptr;
 
@@ -36,8 +34,8 @@ fn run() {
     println!("{}", device_selector);
     
     unsafe {
-        use runtimeobject::*;
-        use ::w::S_OK;
+        use w::shared::winerror::S_OK;
+        use w::winrt::roerrorapi::GetRestrictedErrorInfo;
 
         // Test some error reporting by using an invalid device selector
         let wrong_deviceselector: FastHString = "Foobar".into();
@@ -122,7 +120,7 @@ fn run() {
     let array = &mut [true, false, false, true];
     let boxed_array = PropertyValue::create_boolean_array(array);
     let boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
-    assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType_BooleanArray);
+    assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType::BooleanArray);
     let boxed_array = boxed_array.query_interface::<IReferenceArray<bool>>().unwrap();
     let returned_array = unsafe { boxed_array.get_value().unwrap() };
     println!("{:?} = {:?}", array, &returned_array[..]);
@@ -133,7 +131,7 @@ fn run() {
     let array = &mut [&*str1, &*str2, &*str1, &*str2];
     let boxed_array = PropertyValue::create_string_array(array);
     let boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
-    assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType_StringArray);
+    assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType::StringArray);
     let boxed_array = boxed_array.query_interface::<IReferenceArray<HString>>().unwrap();
     let returned_array = unsafe { boxed_array.get_value().unwrap() };
     assert_eq!(array.len(), returned_array.len());

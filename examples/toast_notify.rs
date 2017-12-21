@@ -17,7 +17,7 @@ fn main() {
 
 fn run() { unsafe {
     // Get a toast XML template
-    let toast_xml = ToastNotificationManager::get_template_content(ToastTemplateType_ToastText02).unwrap();
+    let toast_xml = ToastNotificationManager::get_template_content(ToastTemplateType::ToastText02).unwrap();
 
     // Fill in the text elements
     let toast_text_elements = toast_xml.get_elements_by_tag_name(&FastHString::new("text")).unwrap();

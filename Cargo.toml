@@ -13,13 +13,11 @@ license = "MIT OR Apache-2.0"
 exclude = ["Generator/**"]
 
 [dependencies]
-winapi = "0.2.8"
-runtimeobject-sys = "0.2.0"
-ole32-sys = "0.2.0"
-oleaut32-sys = "0.2.0"
+winapi = { version = "0.3", features = ["winnt", "combaseapi", "oleauto", "roapi", "roerrorapi", "hstring", "winstring", "winerror", "restrictederrorinfo"] }
 
 [features]
 nightly = []
+lang-compat = []
 windows-applicationmodel = []
 windows-data = []
 windows-devices = []

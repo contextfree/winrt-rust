@@ -1,5 +1,5 @@
 /// Re-export from WinAPI crate
-pub type HRESULT = ::w::HRESULT;
+pub type HRESULT = ::w::um::winnt::HRESULT;
 
 // TODO: add more codes from https://msdn.microsoft.com/en-us/library/windows/desktop/dd542643(v=vs.85).aspx, especially the `RO_`-prefixed
 
@@ -25,20 +25,21 @@ impl Error {
     #[inline]
     pub fn from_hresult(hr: HRESULT) -> Error {
         use Error::*;
+        use ::w::shared::winerror::*;
 
         match hr {
-            ::w::E_ABORT => OperationAborted,
-            ::w::E_ACCESSDENIED => AccessDenied,
-            ::w::E_FAIL => UnspecifiedFailure,
-            ::w::E_HANDLE => InvalidHandle,
-            ::w::E_INVALIDARG => InvalidArgument,
-            ::w::E_NOINTERFACE => NoSuchInterface,
-            ::w::E_NOTIMPL => NotImplemented,
-            ::w::E_OUTOFMEMORY => OutOfMemory,
-            ::w::E_POINTER => InvalidPointer,
-            ::w::E_UNEXPECTED => UnexpectedFailure,
-            ::w::E_BOUNDS => OutOfBounds,
-            ::w::E_ILLEGAL_METHOD_CALL => IllegalMethodCall,
+            E_ABORT => OperationAborted,
+            E_ACCESSDENIED => AccessDenied,
+            E_FAIL => UnspecifiedFailure,
+            E_HANDLE => InvalidHandle,
+            E_INVALIDARG => InvalidArgument,
+            E_NOINTERFACE => NoSuchInterface,
+            E_NOTIMPL => NotImplemented,
+            E_OUTOFMEMORY => OutOfMemory,
+            E_POINTER => InvalidPointer,
+            E_UNEXPECTED => UnexpectedFailure,
+            E_BOUNDS => OutOfBounds,
+            E_ILLEGAL_METHOD_CALL => IllegalMethodCall,
             _ => Other(hr)
         }
     }
@@ -46,20 +47,21 @@ impl Error {
     #[inline]
     pub fn as_hresult(&self) -> HRESULT {
         use Error::*;
+        use ::w::shared::winerror::*;
 
         match *self { 
-            OperationAborted => ::w::E_ABORT,
-            AccessDenied => ::w::E_ACCESSDENIED,
-            UnspecifiedFailure => ::w::E_FAIL,
-            InvalidHandle => ::w::E_HANDLE,
-            InvalidArgument => ::w::E_INVALIDARG,
-            NoSuchInterface => ::w::E_NOINTERFACE,
-            NotImplemented => ::w::E_NOTIMPL,
-            OutOfMemory => ::w::E_OUTOFMEMORY,
-            InvalidPointer => ::w::E_POINTER,
-            UnexpectedFailure => ::w::E_UNEXPECTED,
-            OutOfBounds => ::w::E_BOUNDS,
-            IllegalMethodCall => ::w::E_ILLEGAL_METHOD_CALL,
+            OperationAborted => E_ABORT,
+            AccessDenied => E_ACCESSDENIED,
+            UnspecifiedFailure => E_FAIL,
+            InvalidHandle => E_HANDLE,
+            InvalidArgument => E_INVALIDARG,
+            NoSuchInterface => E_NOINTERFACE,
+            NotImplemented => E_NOTIMPL,
+            OutOfMemory => E_OUTOFMEMORY,
+            InvalidPointer => E_POINTER,
+            UnexpectedFailure => E_UNEXPECTED,
+            OutOfBounds => E_BOUNDS,
+            IllegalMethodCall => E_ILLEGAL_METHOD_CALL,
             Other(hr) => hr,
         }
     }

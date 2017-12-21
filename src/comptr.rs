@@ -3,6 +3,12 @@ use std::fmt;
 use std::ptr;
 use ::{ComIid, ComInterface, RtInterface, RtClassInterface, IInspectable, Guid};
 
+use w::shared::ntdef::VOID;
+use w::shared::minwindef::LPVOID;
+use w::shared::winerror::S_OK;
+use w::um::unknwnbase::IUnknown;
+use w::um::combaseapi::CoTaskMemFree;
+
 /// Smart pointer for Windows Runtime objects. This pointer automatically maintains the
 /// reference count of the underlying COM object.
 #[repr(C)] #[derive(Debug)]
@@ -19,11 +25,11 @@ impl<T> fmt::Pointer for ComPtr<T> {
 #[inline]
 pub fn query_interface<T, Target>(interface: &T) -> Option<ComPtr<Target>> where Target: ComIid, T: ComInterface {
     let iid: &'static Guid = Target::iid();
-    let as_unknown = unsafe { &mut *(interface  as *const T as *mut T as *mut ::w::IUnknown) };
+    let as_unknown = unsafe { &mut *(interface  as *const T as *mut T as *mut IUnknown) };
     let mut res = ptr::null_mut();
     unsafe {
-        match as_unknown.QueryInterface(iid.as_ref(), &mut res as *mut _ as *mut *mut ::w::VOID) {
-            ::w::S_OK => Some(ComPtr::wrap(res)),
+        match as_unknown.QueryInterface(iid.as_ref(), &mut res as *mut _ as *mut *mut VOID) {
+            S_OK => Some(ComPtr::wrap(res)),
             _ => None
         }
     }
@@ -53,8 +59,8 @@ impl<T> ComPtr<T> {
     
     /// Returns the underlying WinRT or COM object as a reference to an `IUnknown` object.
     #[inline]
-    fn as_unknown(&self) -> &mut ::w::IUnknown {
-        unsafe { &mut *(self.0 as *mut ::w::IUnknown) }
+    fn as_unknown(&self) -> &mut IUnknown {
+        unsafe { &mut *(self.0 as *mut IUnknown) }
     }
 
     /// Changes the type of the underlying COM object to a different interface without doing `QueryInterface`.
@@ -173,7 +179,7 @@ impl<T> Drop for ComArray<T> where T: ::RtType {
     fn drop(&mut self) {
         unsafe {
             ::std::ptr::drop_in_place(&mut self[..]);
-            ::ole32::CoTaskMemFree(self.first as ::w::LPVOID)
+            CoTaskMemFree(self.first as LPVOID)
         };
     }
 }

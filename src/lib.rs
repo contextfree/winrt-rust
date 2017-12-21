@@ -25,20 +25,16 @@
 #![cfg_attr(test,feature(test))]
 
 #![cfg_attr(feature = "nightly", feature(specialization))]
-#![cfg_attr(feature = "nightly", feature(associated_consts))]
 
 #![allow(dead_code,non_upper_case_globals,non_snake_case)]
 
 extern crate winapi as w;
-extern crate runtimeobject;
-extern crate ole32;
-extern crate oleaut32;
 
 mod guid;
 pub use guid::Guid;
 
 ///Represents the trust level of an activatable class (re-export from WinAPI crate)
-pub type TrustLevel = ::w::TrustLevel;
+pub type TrustLevel = ::w::winrt::inspectable::TrustLevel;
 
 // Compared to the DEFINE_GUID macro from winapi, this one creates a private const
 macro_rules! DEFINE_IID {
@@ -85,7 +81,9 @@ mod prelude {
     pub use ::comptr::{ComPtr, ComArray};
     pub use ::hstring::{HString, HStringArg};
     pub use ::result::{Result, HRESULT};
-    pub use ::w::{IUnknownVtbl, S_OK, HSTRING};
+    pub use ::w::winrt::hstring::HSTRING;
+    pub use ::w::shared::winerror::S_OK;
+    pub use ::w::um::unknwnbase::IUnknownVtbl;
     pub use ::std::ptr::null_mut;
     pub use ::std::mem::zeroed;
     pub use ::guid::Guid;
@@ -94,4 +92,15 @@ mod prelude {
     pub fn err<T>(hr: ::result::HRESULT) -> ::result::Result<T> {
         Err(::result::Error::from_hresult(hr))
     }
+}
+
+// For definitions that are different depending on the lang-compat feature
+#[cfg(not(feature = "lang-compat"))]
+mod langcompat {
+    pub const ASYNC_STATUS_COMPLETED: ::windows::foundation::AsyncStatus = ::windows::foundation::AsyncStatus::Completed;
+}
+
+#[cfg(feature = "lang-compat")]
+mod langcompat {
+    pub const ASYNC_STATUS_COMPLETED: ::windows::foundation::AsyncStatus = ::windows::foundation::AsyncStatus_Completed;
 }

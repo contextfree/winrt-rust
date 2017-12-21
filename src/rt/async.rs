@@ -40,7 +40,8 @@ macro_rules! impl_blocking_wait {
         fn blocking_wait(&self) {
             let info = ::comptr::query_interface::<_, IAsyncInfo>(self).unwrap();
             let status = unsafe { info.get_status().unwrap() };
-            if status == ::windows::foundation::AsyncStatus_Completed {
+
+            if status == ::langcompat::ASYNC_STATUS_COMPLETED {
                 return;
             }
             
