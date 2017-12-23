@@ -7,13 +7,13 @@ pub type HRESULT = ::w::um::winnt::HRESULT;
 #[derive(Debug, PartialEq, Eq)]
 pub enum Error {
     OperationAborted,
-    AccessDenied, // UnauthorizedAccessException in .NET (https://msdn.microsoft.com/en-us/library/awy7adbx(v=vs.110).aspx)
+    AccessDenied, // UnauthorizedAccessException in .NET (https://docs.microsoft.com/en-us/dotnet/standard/exceptions/handling-com-interop-exceptions)
     UnspecifiedFailure,
     InvalidHandle,
-    InvalidArgument,
+    InvalidArgument, // ArgumentException in .NET (https://docs.microsoft.com/en-us/dotnet/framework/interop/how-to-map-hresults-and-exceptions)
     NoSuchInterface,
-    NotImplemented, // NotImplementedException in .NET (https://msdn.microsoft.com/en-us/library/9ztbc5s1(v=vs.110).aspx)
-    OutOfMemory, // OutOfMemoryException in .NET (https://msdn.microsoft.com/en-us/library/9ztbc5s1(v=vs.110).aspx)
+    NotImplemented, // NotImplementedException in .NET (https://docs.microsoft.com/en-us/dotnet/framework/interop/how-to-map-hresults-and-exceptions)
+    OutOfMemory, // OutOfMemoryException in .NET (https://docs.microsoft.com/en-us/dotnet/framework/interop/how-to-map-hresults-and-exceptions)
     InvalidPointer,
     UnexpectedFailure,
     OutOfBounds,
