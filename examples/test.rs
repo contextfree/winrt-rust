@@ -41,7 +41,7 @@ fn run() {
         let wrong_deviceselector: FastHString = "Foobar".into();
         let res = DeviceInformation::find_all_async_aqs_filter(&wrong_deviceselector);
         if let Err(e) = res {
-            println!("HRESULT (FindAllAsyncAqsFilter) = {:?}", e.as_hresult());
+            println!("HRESULT (FindAllAsyncAqsFilter) = {:?}", e);
             let mut error_info = {
                 let mut res = ptr::null_mut();
                 assert_eq!(GetRestrictedErrorInfo(&mut res), S_OK);
@@ -79,7 +79,7 @@ fn run() {
     let status = unsafe { asi.get_status().unwrap() };
     println!("status: {:?}", status);
 
-    let device_information_collection = async_op.blocking_get();
+    let device_information_collection = async_op.blocking_get().unwrap();
     println!("CLS: {}", device_information_collection.get_runtime_class_name());
     let count = unsafe { device_information_collection.get_size().unwrap() };
     println!("Device Count: {}", count);

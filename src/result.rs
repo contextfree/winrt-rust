@@ -1,10 +1,12 @@
+use std::fmt;
+
 /// Re-export from WinAPI crate
 pub type HRESULT = ::w::um::winnt::HRESULT;
 
 // TODO: add more codes from https://msdn.microsoft.com/en-us/library/windows/desktop/dd542643(v=vs.85).aspx, especially the `RO_`-prefixed
 
 /// Represents an error as a result of a Windows Runtime method call.
-#[derive(Debug, PartialEq, Eq)]
+#[derive(PartialEq, Eq)]
 pub enum Error {
     OperationAborted,
     AccessDenied, // UnauthorizedAccessException in .NET (https://docs.microsoft.com/en-us/dotnet/standard/exceptions/handling-com-interop-exceptions)
@@ -19,6 +21,28 @@ pub enum Error {
     OutOfBounds,
     IllegalMethodCall,
     Other(HRESULT)
+}
+
+impl fmt::Debug for Error {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        use Error::*;
+
+        match *self { 
+            OperationAborted => write!(f, "E_ABORT"),
+            AccessDenied => write!(f, "E_ACCESSDENIED"),
+            UnspecifiedFailure => write!(f, "E_FAIL"),
+            InvalidHandle => write!(f, "E_HANDLE"),
+            InvalidArgument => write!(f, "E_INVALIDARG"),
+            NoSuchInterface => write!(f, "E_NOINTERFACE"),
+            NotImplemented => write!(f, "E_NOTIMPL"),
+            OutOfMemory => write!(f, "E_OUTOFMEMORY"),
+            InvalidPointer => write!(f, "E_POINTER"),
+            UnexpectedFailure => write!(f, "E_UNEXPECTED"),
+            OutOfBounds => write!(f, "E_BOUNDS"),
+            IllegalMethodCall => write!(f, "E_ILLEGAL_METHOD_CALL"),
+            Other(hr) => write!(f, "0x{:X}", hr as u32),
+        }
+    }
 }
 
 impl Error {
