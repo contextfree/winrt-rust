@@ -14220,12 +14220,12 @@ impl ICameraIntrinsics {
         let hr = ((*self.lpVtbl).UnprojectAtUnitDepth)(self as *const _ as *mut _, pixelCoordinate, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn project_many_onto_frame(&self, coordinates: &[::rt::gen::windows::foundation::numerics::Vector3], resultsSize: u32, results: *mut ::rt::gen::windows::foundation::Point) -> Result<()> {
-        let hr = ((*self.lpVtbl).ProjectManyOntoFrame)(self as *const _ as *mut _, coordinates.len() as u32, coordinates.as_ptr() as *mut _, resultsSize, results);
+    #[inline] pub unsafe fn project_many_onto_frame(&self, coordinates: &[::rt::gen::windows::foundation::numerics::Vector3], results: &mut [::rt::gen::windows::foundation::Point]) -> Result<()> {
+        let hr = ((*self.lpVtbl).ProjectManyOntoFrame)(self as *const _ as *mut _, coordinates.len() as u32, coordinates.as_ptr() as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn unproject_pixels_at_unit_depth(&self, pixelCoordinates: &[::rt::gen::windows::foundation::Point], resultsSize: u32, results: *mut ::rt::gen::windows::foundation::numerics::Vector2) -> Result<()> {
-        let hr = ((*self.lpVtbl).UnprojectPixelsAtUnitDepth)(self as *const _ as *mut _, pixelCoordinates.len() as u32, pixelCoordinates.as_ptr() as *mut _, resultsSize, results);
+    #[inline] pub unsafe fn unproject_pixels_at_unit_depth(&self, pixelCoordinates: &[::rt::gen::windows::foundation::Point], results: &mut [::rt::gen::windows::foundation::numerics::Vector2]) -> Result<()> {
+        let hr = ((*self.lpVtbl).UnprojectPixelsAtUnitDepth)(self as *const _ as *mut _, pixelCoordinates.len() as u32, pixelCoordinates.as_ptr() as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
@@ -14249,8 +14249,8 @@ impl ICameraIntrinsics2 {
         let hr = ((*self.lpVtbl).DistortPoint)(self as *const _ as *mut _, input, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn distort_points(&self, inputs: &[::rt::gen::windows::foundation::Point], resultsSize: u32, results: *mut ::rt::gen::windows::foundation::Point) -> Result<()> {
-        let hr = ((*self.lpVtbl).DistortPoints)(self as *const _ as *mut _, inputs.len() as u32, inputs.as_ptr() as *mut _, resultsSize, results);
+    #[inline] pub unsafe fn distort_points(&self, inputs: &[::rt::gen::windows::foundation::Point], results: &mut [::rt::gen::windows::foundation::Point]) -> Result<()> {
+        let hr = ((*self.lpVtbl).DistortPoints)(self as *const _ as *mut _, inputs.len() as u32, inputs.as_ptr() as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
     #[inline] pub unsafe fn undistort_point(&self, input: ::rt::gen::windows::foundation::Point) -> Result<::rt::gen::windows::foundation::Point> {
@@ -14258,8 +14258,8 @@ impl ICameraIntrinsics2 {
         let hr = ((*self.lpVtbl).UndistortPoint)(self as *const _ as *mut _, input, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn undistort_points(&self, inputs: &[::rt::gen::windows::foundation::Point], resultsSize: u32, results: *mut ::rt::gen::windows::foundation::Point) -> Result<()> {
-        let hr = ((*self.lpVtbl).UndistortPoints)(self as *const _ as *mut _, inputs.len() as u32, inputs.as_ptr() as *mut _, resultsSize, results);
+    #[inline] pub unsafe fn undistort_points(&self, inputs: &[::rt::gen::windows::foundation::Point], results: &mut [::rt::gen::windows::foundation::Point]) -> Result<()> {
+        let hr = ((*self.lpVtbl).UndistortPoints)(self as *const _ as *mut _, inputs.len() as u32, inputs.as_ptr() as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
@@ -14287,8 +14287,8 @@ impl IDepthCorrelatedCoordinateMapper {
         let hr = ((*self.lpVtbl).UnprojectPoint)(self as *const _ as *mut _, sourcePoint, targetCoordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn unproject_points(&self, sourcePoints: &[::rt::gen::windows::foundation::Point], targetCoordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, resultsSize: u32, results: *mut ::rt::gen::windows::foundation::numerics::Vector3) -> Result<()> {
-        let hr = ((*self.lpVtbl).UnprojectPoints)(self as *const _ as *mut _, sourcePoints.len() as u32, sourcePoints.as_ptr() as *mut _, targetCoordinateSystem as *const _ as *mut _, resultsSize, results);
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn unproject_points(&self, sourcePoints: &[::rt::gen::windows::foundation::Point], targetCoordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, results: &mut [::rt::gen::windows::foundation::numerics::Vector3]) -> Result<()> {
+        let hr = ((*self.lpVtbl).UnprojectPoints)(self as *const _ as *mut _, sourcePoints.len() as u32, sourcePoints.as_ptr() as *mut _, targetCoordinateSystem as *const _ as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
     #[cfg(feature="windows-perception")] #[inline] pub unsafe fn map_point(&self, sourcePoint: ::rt::gen::windows::foundation::Point, targetCoordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: &CameraIntrinsics) -> Result<::rt::gen::windows::foundation::Point> {
@@ -14296,8 +14296,8 @@ impl IDepthCorrelatedCoordinateMapper {
         let hr = ((*self.lpVtbl).MapPoint)(self as *const _ as *mut _, sourcePoint, targetCoordinateSystem as *const _ as *mut _, targetCameraIntrinsics as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn map_points(&self, sourcePoints: &[::rt::gen::windows::foundation::Point], targetCoordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: &CameraIntrinsics, resultsSize: u32, results: *mut ::rt::gen::windows::foundation::Point) -> Result<()> {
-        let hr = ((*self.lpVtbl).MapPoints)(self as *const _ as *mut _, sourcePoints.len() as u32, sourcePoints.as_ptr() as *mut _, targetCoordinateSystem as *const _ as *mut _, targetCameraIntrinsics as *const _ as *mut _, resultsSize, results);
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn map_points(&self, sourcePoints: &[::rt::gen::windows::foundation::Point], targetCoordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: &CameraIntrinsics, results: &mut [::rt::gen::windows::foundation::Point]) -> Result<()> {
+        let hr = ((*self.lpVtbl).MapPoints)(self as *const _ as *mut _, sourcePoints.len() as u32, sourcePoints.as_ptr() as *mut _, targetCoordinateSystem as *const _ as *mut _, targetCameraIntrinsics as *const _ as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }

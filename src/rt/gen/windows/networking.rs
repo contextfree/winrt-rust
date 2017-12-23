@@ -8732,9 +8732,9 @@ impl IXboxLiveDeviceAddress {
         let hr = ((*self.lpVtbl).GetSnapshotAsBuffer)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_snapshot_as_bytes(&self, bufferSize: u32, buffer: *mut u8) -> Result<u32> {
+    #[inline] pub unsafe fn get_snapshot_as_bytes(&self, buffer: &mut [u8]) -> Result<u32> {
         let mut bytesWritten = zeroed();
-        let hr = ((*self.lpVtbl).GetSnapshotAsBytes)(self as *const _ as *mut _, bufferSize, buffer, &mut bytesWritten);
+        let hr = ((*self.lpVtbl).GetSnapshotAsBytes)(self as *const _ as *mut _, buffer.len() as u32, buffer.as_mut_ptr() as *mut _, &mut bytesWritten);
         if hr == S_OK { Ok(bytesWritten) } else { err(hr) }
     }
     #[inline] pub unsafe fn compare(&self, otherDeviceAddress: &XboxLiveDeviceAddress) -> Result<i32> {
@@ -8844,12 +8844,12 @@ impl IXboxLiveEndpointPair {
         let hr = ((*self.lpVtbl).DeleteAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_remote_socket_address_bytes(&self, socketAddressSize: u32, socketAddress: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).GetRemoteSocketAddressBytes)(self as *const _ as *mut _, socketAddressSize, socketAddress);
+    #[inline] pub unsafe fn get_remote_socket_address_bytes(&self, socketAddress: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).GetRemoteSocketAddressBytes)(self as *const _ as *mut _, socketAddress.len() as u32, socketAddress.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_local_socket_address_bytes(&self, socketAddressSize: u32, socketAddress: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).GetLocalSocketAddressBytes)(self as *const _ as *mut _, socketAddressSize, socketAddress);
+    #[inline] pub unsafe fn get_local_socket_address_bytes(&self, socketAddress: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).GetLocalSocketAddressBytes)(self as *const _ as *mut _, socketAddress.len() as u32, socketAddress.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_state(&self) -> Result<XboxLiveEndpointPairState> {

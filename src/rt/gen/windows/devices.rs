@@ -1337,22 +1337,22 @@ impl II2cDevice {
         let hr = ((*self.lpVtbl).WritePartial)(self as *const _ as *mut _, buffer.len() as u32, buffer.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn read(&self, bufferSize: u32, buffer: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).Read)(self as *const _ as *mut _, bufferSize, buffer);
+    #[inline] pub unsafe fn read(&self, buffer: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).Read)(self as *const _ as *mut _, buffer.len() as u32, buffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn read_partial(&self, bufferSize: u32, buffer: *mut u8) -> Result<I2cTransferResult> {
+    #[inline] pub unsafe fn read_partial(&self, buffer: &mut [u8]) -> Result<I2cTransferResult> {
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadPartial)(self as *const _ as *mut _, bufferSize, buffer, &mut out);
+        let hr = ((*self.lpVtbl).ReadPartial)(self as *const _ as *mut _, buffer.len() as u32, buffer.as_mut_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn write_read(&self, writeBuffer: &[u8], readBufferSize: u32, readBuffer: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).WriteRead)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBufferSize, readBuffer);
+    #[inline] pub unsafe fn write_read(&self, writeBuffer: &[u8], readBuffer: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).WriteRead)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBuffer.len() as u32, readBuffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn write_read_partial(&self, writeBuffer: &[u8], readBufferSize: u32, readBuffer: *mut u8) -> Result<I2cTransferResult> {
+    #[inline] pub unsafe fn write_read_partial(&self, writeBuffer: &[u8], readBuffer: &mut [u8]) -> Result<I2cTransferResult> {
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).WriteReadPartial)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBufferSize, readBuffer, &mut out);
+        let hr = ((*self.lpVtbl).WriteReadPartial)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBuffer.len() as u32, readBuffer.as_mut_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
 }
@@ -1440,22 +1440,22 @@ impl II2cDeviceProvider {
         let hr = ((*self.lpVtbl).WritePartial)(self as *const _ as *mut _, buffer.len() as u32, buffer.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn read(&self, bufferSize: u32, buffer: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).Read)(self as *const _ as *mut _, bufferSize, buffer);
+    #[inline] pub unsafe fn read(&self, buffer: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).Read)(self as *const _ as *mut _, buffer.len() as u32, buffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn read_partial(&self, bufferSize: u32, buffer: *mut u8) -> Result<ProviderI2cTransferResult> {
+    #[inline] pub unsafe fn read_partial(&self, buffer: &mut [u8]) -> Result<ProviderI2cTransferResult> {
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadPartial)(self as *const _ as *mut _, bufferSize, buffer, &mut out);
+        let hr = ((*self.lpVtbl).ReadPartial)(self as *const _ as *mut _, buffer.len() as u32, buffer.as_mut_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn write_read(&self, writeBuffer: &[u8], readBufferSize: u32, readBuffer: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).WriteRead)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBufferSize, readBuffer);
+    #[inline] pub unsafe fn write_read(&self, writeBuffer: &[u8], readBuffer: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).WriteRead)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBuffer.len() as u32, readBuffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn write_read_partial(&self, writeBuffer: &[u8], readBufferSize: u32, readBuffer: *mut u8) -> Result<ProviderI2cTransferResult> {
+    #[inline] pub unsafe fn write_read_partial(&self, writeBuffer: &[u8], readBuffer: &mut [u8]) -> Result<ProviderI2cTransferResult> {
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).WriteReadPartial)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBufferSize, readBuffer, &mut out);
+        let hr = ((*self.lpVtbl).WriteReadPartial)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBuffer.len() as u32, readBuffer.as_mut_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
 }
@@ -1935,16 +1935,16 @@ impl ISpiDevice {
         let hr = ((*self.lpVtbl).Write)(self as *const _ as *mut _, buffer.len() as u32, buffer.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn read(&self, bufferSize: u32, buffer: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).Read)(self as *const _ as *mut _, bufferSize, buffer);
+    #[inline] pub unsafe fn read(&self, buffer: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).Read)(self as *const _ as *mut _, buffer.len() as u32, buffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn transfer_sequential(&self, writeBuffer: &[u8], readBufferSize: u32, readBuffer: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).TransferSequential)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBufferSize, readBuffer);
+    #[inline] pub unsafe fn transfer_sequential(&self, writeBuffer: &[u8], readBuffer: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).TransferSequential)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBuffer.len() as u32, readBuffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn transfer_full_duplex(&self, writeBuffer: &[u8], readBufferSize: u32, readBuffer: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).TransferFullDuplex)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBufferSize, readBuffer);
+    #[inline] pub unsafe fn transfer_full_duplex(&self, writeBuffer: &[u8], readBuffer: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).TransferFullDuplex)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBuffer.len() as u32, readBuffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
@@ -2122,16 +2122,16 @@ impl ISpiDeviceProvider {
         let hr = ((*self.lpVtbl).Write)(self as *const _ as *mut _, buffer.len() as u32, buffer.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn read(&self, bufferSize: u32, buffer: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).Read)(self as *const _ as *mut _, bufferSize, buffer);
+    #[inline] pub unsafe fn read(&self, buffer: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).Read)(self as *const _ as *mut _, buffer.len() as u32, buffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn transfer_sequential(&self, writeBuffer: &[u8], readBufferSize: u32, readBuffer: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).TransferSequential)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBufferSize, readBuffer);
+    #[inline] pub unsafe fn transfer_sequential(&self, writeBuffer: &[u8], readBuffer: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).TransferSequential)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBuffer.len() as u32, readBuffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn transfer_full_duplex(&self, writeBuffer: &[u8], readBufferSize: u32, readBuffer: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).TransferFullDuplex)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBufferSize, readBuffer);
+    #[inline] pub unsafe fn transfer_full_duplex(&self, writeBuffer: &[u8], readBuffer: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).TransferFullDuplex)(self as *const _ as *mut _, writeBuffer.len() as u32, writeBuffer.as_ptr() as *mut _, readBuffer.len() as u32, readBuffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
@@ -16874,18 +16874,18 @@ impl IPerceptionDepthCorrelatedCameraIntrinsics {
         let hr = ((*self.lpVtbl).UnprojectPixelAtCorrelatedDepth)(self as *const _ as *mut _, pixelCoordinate, depthFrame as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn unproject_pixels_at_correlated_depth(&self, sourceCoordinates: &[super::super::foundation::Point], depthFrame: &PerceptionDepthFrame, resultsSize: u32, results: *mut super::super::foundation::numerics::Vector3) -> Result<()> {
-        let hr = ((*self.lpVtbl).UnprojectPixelsAtCorrelatedDepth)(self as *const _ as *mut _, sourceCoordinates.len() as u32, sourceCoordinates.as_ptr() as *mut _, depthFrame as *const _ as *mut _, resultsSize, results);
+    #[inline] pub unsafe fn unproject_pixels_at_correlated_depth(&self, sourceCoordinates: &[super::super::foundation::Point], depthFrame: &PerceptionDepthFrame, results: &mut [super::super::foundation::numerics::Vector3]) -> Result<()> {
+        let hr = ((*self.lpVtbl).UnprojectPixelsAtCorrelatedDepth)(self as *const _ as *mut _, sourceCoordinates.len() as u32, sourceCoordinates.as_ptr() as *mut _, depthFrame as *const _ as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn unproject_region_pixels_at_correlated_depth_async(&self, region: super::super::foundation::Rect, depthFrame: &PerceptionDepthFrame, resultsSize: u32, results: *mut super::super::foundation::numerics::Vector3) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
+    #[inline] pub unsafe fn unproject_region_pixels_at_correlated_depth_async(&self, region: super::super::foundation::Rect, depthFrame: &PerceptionDepthFrame, results: &mut [super::super::foundation::numerics::Vector3]) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnprojectRegionPixelsAtCorrelatedDepthAsync)(self as *const _ as *mut _, region, depthFrame as *const _ as *mut _, resultsSize, results, &mut out);
+        let hr = ((*self.lpVtbl).UnprojectRegionPixelsAtCorrelatedDepthAsync)(self as *const _ as *mut _, region, depthFrame as *const _ as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn unproject_all_pixels_at_correlated_depth_async(&self, depthFrame: &PerceptionDepthFrame, resultsSize: u32, results: *mut super::super::foundation::numerics::Vector3) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
+    #[inline] pub unsafe fn unproject_all_pixels_at_correlated_depth_async(&self, depthFrame: &PerceptionDepthFrame, results: &mut [super::super::foundation::numerics::Vector3]) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnprojectAllPixelsAtCorrelatedDepthAsync)(self as *const _ as *mut _, depthFrame as *const _ as *mut _, resultsSize, results, &mut out);
+        let hr = ((*self.lpVtbl).UnprojectAllPixelsAtCorrelatedDepthAsync)(self as *const _ as *mut _, depthFrame as *const _ as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }
@@ -16903,18 +16903,18 @@ impl IPerceptionDepthCorrelatedCoordinateMapper {
         let hr = ((*self.lpVtbl).MapPixelToTarget)(self as *const _ as *mut _, sourcePixelCoordinate, depthFrame as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn map_pixels_to_target(&self, sourceCoordinates: &[super::super::foundation::Point], depthFrame: &PerceptionDepthFrame, resultsSize: u32, results: *mut super::super::foundation::Point) -> Result<()> {
-        let hr = ((*self.lpVtbl).MapPixelsToTarget)(self as *const _ as *mut _, sourceCoordinates.len() as u32, sourceCoordinates.as_ptr() as *mut _, depthFrame as *const _ as *mut _, resultsSize, results);
+    #[inline] pub unsafe fn map_pixels_to_target(&self, sourceCoordinates: &[super::super::foundation::Point], depthFrame: &PerceptionDepthFrame, results: &mut [super::super::foundation::Point]) -> Result<()> {
+        let hr = ((*self.lpVtbl).MapPixelsToTarget)(self as *const _ as *mut _, sourceCoordinates.len() as u32, sourceCoordinates.as_ptr() as *mut _, depthFrame as *const _ as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn map_region_of_pixels_to_target_async(&self, region: super::super::foundation::Rect, depthFrame: &PerceptionDepthFrame, targetCoordinatesSize: u32, targetCoordinates: *mut super::super::foundation::Point) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
+    #[inline] pub unsafe fn map_region_of_pixels_to_target_async(&self, region: super::super::foundation::Rect, depthFrame: &PerceptionDepthFrame, targetCoordinates: &mut [super::super::foundation::Point]) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).MapRegionOfPixelsToTargetAsync)(self as *const _ as *mut _, region, depthFrame as *const _ as *mut _, targetCoordinatesSize, targetCoordinates, &mut out);
+        let hr = ((*self.lpVtbl).MapRegionOfPixelsToTargetAsync)(self as *const _ as *mut _, region, depthFrame as *const _ as *mut _, targetCoordinates.len() as u32, targetCoordinates.as_mut_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn map_all_pixels_to_target_async(&self, depthFrame: &PerceptionDepthFrame, targetCoordinatesSize: u32, targetCoordinates: *mut super::super::foundation::Point) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
+    #[inline] pub unsafe fn map_all_pixels_to_target_async(&self, depthFrame: &PerceptionDepthFrame, targetCoordinates: &mut [super::super::foundation::Point]) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).MapAllPixelsToTargetAsync)(self as *const _ as *mut _, depthFrame as *const _ as *mut _, targetCoordinatesSize, targetCoordinates, &mut out);
+        let hr = ((*self.lpVtbl).MapAllPixelsToTargetAsync)(self as *const _ as *mut _, depthFrame as *const _ as *mut _, targetCoordinates.len() as u32, targetCoordinates.as_mut_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
 }

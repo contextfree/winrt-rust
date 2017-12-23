@@ -785,9 +785,9 @@ impl IRawGameController {
         let hr = ((*self.lpVtbl).GetButtonLabel)(self as *const _ as *mut _, buttonIndex, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_current_reading(&self, buttonArraySize: u32, buttonArray: *mut bool, switchArraySize: u32, switchArray: *mut GameControllerSwitchPosition, axisArraySize: u32, axisArray: *mut f64) -> Result<u64> {
+    #[inline] pub unsafe fn get_current_reading(&self, buttonArray: &mut [bool], switchArray: &mut [GameControllerSwitchPosition], axisArray: &mut [f64]) -> Result<u64> {
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetCurrentReading)(self as *const _ as *mut _, buttonArraySize, buttonArray, switchArraySize, switchArray, axisArraySize, axisArray, &mut out);
+        let hr = ((*self.lpVtbl).GetCurrentReading)(self as *const _ as *mut _, buttonArray.len() as u32, buttonArray.as_mut_ptr() as *mut _, switchArray.len() as u32, switchArray.as_mut_ptr() as *mut _, axisArray.len() as u32, axisArray.as_mut_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_switch_kind(&self, switchIndex: i32) -> Result<GameControllerSwitchKind> {
@@ -1160,8 +1160,8 @@ impl IGipGameControllerProvider {
         let hr = ((*self.lpVtbl).SendMessage)(self as *const _ as *mut _, messageClass, messageId, messageBuffer.len() as u32, messageBuffer.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn send_receive_message(&self, messageClass: GipMessageClass, messageId: u8, requestMessageBuffer: &[u8], responseMessageBufferSize: u32, responseMessageBuffer: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).SendReceiveMessage)(self as *const _ as *mut _, messageClass, messageId, requestMessageBuffer.len() as u32, requestMessageBuffer.as_ptr() as *mut _, responseMessageBufferSize, responseMessageBuffer);
+    #[inline] pub unsafe fn send_receive_message(&self, messageClass: GipMessageClass, messageId: u8, requestMessageBuffer: &[u8], responseMessageBuffer: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).SendReceiveMessage)(self as *const _ as *mut _, messageClass, messageId, requestMessageBuffer.len() as u32, requestMessageBuffer.as_ptr() as *mut _, responseMessageBuffer.len() as u32, responseMessageBuffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn update_firmware_async(&self, firmwareImage: &::rt::gen::windows::storage::streams::IInputStream) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperationWithProgress<GipFirmwareUpdateResult, GipFirmwareUpdateProgress>>> {
@@ -1203,8 +1203,8 @@ impl IHidGameControllerProvider {
         let hr = ((*self.lpVtbl).get_UsagePage)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_feature_report(&self, reportId: u8, reportBufferSize: u32, reportBuffer: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).GetFeatureReport)(self as *const _ as *mut _, reportId, reportBufferSize, reportBuffer);
+    #[inline] pub unsafe fn get_feature_report(&self, reportId: u8, reportBuffer: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).GetFeatureReport)(self as *const _ as *mut _, reportId, reportBuffer.len() as u32, reportBuffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
     #[inline] pub unsafe fn send_feature_report(&self, reportId: u8, reportBuffer: &[u8]) -> Result<()> {

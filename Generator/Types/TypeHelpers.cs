@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Diagnostics.Debug;
 
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
@@ -186,6 +187,9 @@ namespace Generator.Types
                 case InputKind.Default: return GetTypeName(gen, source, t, TypeUsage.In);
                 case InputKind.Raw: return GetTypeName(gen, source, t, TypeUsage.Raw);
                 case InputKind.Slice: return $"&[{ GetTypeName(gen, source, t, TypeUsage.In) }]";
+                case InputKind.MutSlice:
+                    Assert(t.IsValueType);
+                    return $"&mut [{ GetTypeName(gen, source, t, TypeUsage.In) }]";
                 case InputKind.VecBuffer: return $"&mut Vec<{ GetTypeName(gen, source, t, TypeUsage.Out) }>";
                 default: throw new InvalidOperationException();
             }
@@ -388,6 +392,7 @@ namespace Generator.Types
         Default,
         Raw,
         Slice,
+        MutSlice,
         VecBuffer
     }
 }

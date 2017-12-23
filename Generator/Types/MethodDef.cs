@@ -106,10 +106,10 @@ namespace Generator.Types
 
         public string GetWrapperName(string rawName)
         {
-            string name = NameHelpers.PreventKeywords(NameHelpers.CamelToSnakeCase(rawName.Replace("put_", "set_")));
+            string name = NameHelpers.PreventKeywords(NameHelpers.CamelToSnakeCase(rawName.StartsWith("put_") ? "set_" + rawName.Substring(4) : rawName));
             if (rawName.Contains("_")) // name already contains '_' -> might result in a name clash after renaming, e.g. caused by original names `get_Name` (property getter) and `GetName` (method)
             {
-                if (DeclaringType.Methods.Select(mm => new Tuple<MethodDef, string>(mm, mm.GetRawName())).Where(mm => !mm.Item2.Contains("_")).Any(mm => mm.Item1.GetWrapperName(mm.Item2) == name))
+                if (DeclaringType.Methods.Select(mm => Tuple.Create(mm, mm.GetRawName())).Where(mm => !mm.Item2.Contains("_")).Any(mm => mm.Item1.GetWrapperName(mm.Item2) == name))
                 {
                     name += "_";
                 }
@@ -148,7 +148,7 @@ namespace Generator.Types
                 {
                     Assert(p.IsOut);
                     var realType = ((ByReferenceType)p.ParameterType).ElementType;
-                    output.Add(new Tuple<string, TypeReference>(pname, realType));
+                    output.Add(Tuple.Create(pname, realType));
                 }
                 else
                 {
@@ -160,23 +160,21 @@ namespace Generator.Types
                             {
                                 Assert(getManyPname == null); // there should only be one out-array parameter for GetMany
                                 getManyPname = pname;
-                                input.Add(new Tuple<string, TypeReference, InputKind>(pname, ((ArrayType)p.ParameterType).ElementType, InputKind.VecBuffer));
+                                input.Add(Tuple.Create(pname, ((ArrayType)p.ParameterType).ElementType, InputKind.VecBuffer));
                             }
                             else
                             {
-                                //TODO: this should probably be a mutable, write-only, empty slice -> what type?
-                                input.Add(new Tuple<string, TypeReference, InputKind>(pname + "Size", Method.Module.ImportReference(typeof(uint)), InputKind.Default));
-                                input.Add(new Tuple<string, TypeReference, InputKind>(pname, p.ParameterType, InputKind.Raw));
+                                input.Add(Tuple.Create(pname, ((ArrayType)p.ParameterType).ElementType, InputKind.MutSlice));
                             }
                         }
                         else
                         {
-                            input.Add(new Tuple<string, TypeReference, InputKind>(pname, ((ArrayType)p.ParameterType).ElementType, InputKind.Slice));
+                            input.Add(Tuple.Create(pname, ((ArrayType)p.ParameterType).ElementType, InputKind.Slice));
                         }
                     }
                     else
                     {
-                        input.Add(new Tuple<string, TypeReference, InputKind>(pname, p.ParameterType, InputKind.Default));
+                        input.Add(Tuple.Create(pname, p.ParameterType, InputKind.Default));
                     }
                 }
             }
@@ -184,7 +182,7 @@ namespace Generator.Types
             if (Method.ReturnType.FullName != "System.Void")
             {
                 // this makes the actual return value the last in the tuple (if multiple)
-                output.Add(new Tuple<string, TypeReference>("out", Method.ReturnType));
+                output.Add(Tuple.Create("out", Method.ReturnType));
             }
 
             var outTypes = output.Select(o => o.Item2).ToArray();
@@ -237,9 +235,8 @@ namespace Generator.Types
                             }
                             else
                             {
-                                //TODO: this should probably be a mutable, write-only, empty slice -> what type?
-                                rawParams.Add(pname + "Size");
-                                rawParams.Add(TypeHelpers.UnwrapInputParameter(pname, p.ParameterType));
+                                rawParams.Add(pname + ".len() as u32");
+                                rawParams.Add(pname + ".as_mut_ptr() as *mut _");
                             }
                         }
                         else

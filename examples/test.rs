@@ -7,6 +7,7 @@ use winrt::*;
 use winrt::windows::foundation::*;
 use winrt::windows::devices::enumeration::*;
 use winrt::windows::devices::midi::*;
+use winrt::windows::storage::*;
 
 fn main() {
     let rt = RuntimeContext::init();
@@ -144,4 +145,16 @@ fn run() {
     println!("status: {:?}", status);
     
     assert!(unsafe { asi.close().is_ok() });
+
+    // Walk directories up to root
+    let exe_path = ::std::env::current_exe().expect("current_exe failed");
+    let exe_path_str = exe_path.to_str().expect("invalid unicode path");
+    let file = StorageFile::get_file_from_path_async(&*FastHString::new(&exe_path_str)).unwrap().blocking_get().expect("get_file_from_path_async failed");
+    println!("File: {}", unsafe { file.query_interface::<IStorageItem>().unwrap().get_path().unwrap() });
+    /*let mut parent = file.query_interface::<IStorageItem>().unwrap();
+    loop {
+        parent = parent.query_interface::<IStorageItem2>().unwrap().get_parent_async().unwrap().blocking_get().unwrap().query_interface::<IStorageItem>().unwrap();
+        println!("Parent: {}", parent.get_path().unwrap());
+        // ... until parent == null, but this currently does not work because we don't support methods returning null
+    }*/
 }

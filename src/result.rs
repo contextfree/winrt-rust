@@ -20,6 +20,7 @@ pub enum Error {
     UnexpectedFailure,
     OutOfBounds,
     IllegalMethodCall,
+    ObjectClosed, // ObjectDisposedException in .NET
     Other(HRESULT)
 }
 
@@ -40,6 +41,7 @@ impl fmt::Debug for Error {
             UnexpectedFailure => write!(f, "E_UNEXPECTED"),
             OutOfBounds => write!(f, "E_BOUNDS"),
             IllegalMethodCall => write!(f, "E_ILLEGAL_METHOD_CALL"),
+            ObjectClosed => write!(f, "RO_E_CLOSED"),
             Other(hr) => write!(f, "0x{:X}", hr as u32),
         }
     }
@@ -64,6 +66,7 @@ impl Error {
             E_UNEXPECTED => UnexpectedFailure,
             E_BOUNDS => OutOfBounds,
             E_ILLEGAL_METHOD_CALL => IllegalMethodCall,
+            RO_E_CLOSED => ObjectClosed,
             _ => Other(hr)
         }
     }
@@ -86,6 +89,7 @@ impl Error {
             UnexpectedFailure => E_UNEXPECTED,
             OutOfBounds => E_BOUNDS,
             IllegalMethodCall => E_ILLEGAL_METHOD_CALL,
+            ObjectClosed => RO_E_CLOSED,
             Other(hr) => hr,
         }
     }

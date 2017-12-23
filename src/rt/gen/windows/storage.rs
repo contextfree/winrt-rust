@@ -2362,8 +2362,8 @@ impl IDataReader {
         let hr = ((*self.lpVtbl).ReadByte)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn read_bytes(&self, valueSize: u32, value: *mut u8) -> Result<()> {
-        let hr = ((*self.lpVtbl).ReadBytes)(self as *const _ as *mut _, valueSize, value);
+    #[inline] pub unsafe fn read_bytes(&self, value: &mut [u8]) -> Result<()> {
+        let hr = ((*self.lpVtbl).ReadBytes)(self as *const _ as *mut _, value.len() as u32, value.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
     #[inline] pub unsafe fn read_buffer(&self, length: u32) -> Result<ComPtr<IBuffer>> {
