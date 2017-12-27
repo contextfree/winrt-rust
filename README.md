@@ -71,7 +71,25 @@ The *Windows Runtime (WinRT)* has been introduced in Windows 8 and provides the 
 Windows apps that run on different devices using different programming languages. The *Universal Windows Platform (UWP)* is
 an extension of WinRT, introduced in Windows 10, that allows using additional, more platform-specific APIs besides those provided by WinRT (according to
 [MSDN](https://msdn.microsoft.com/en-us/windows/uwp/get-started/universal-application-platform-guide)).
-*WinRT* is not to be confused with the discontinued flavor of the Windows operating system for ARM devices, *Windows RT*.  
+*WinRT* is not to be confused with the discontinued flavor of the Windows operating system for ARM devices, *Windows RT*.
+
+## Changelog
+
+#### Version 0.3.0 (2017-07-21)
+- [Breaking] The `self` parameter for interface calls is now passed as `&self` instead of `&mut self`
+- [Breaking] Remove (empty) contract structs from generated code
+- Documentation improvements
+
+#### Version 0.2.1 (2017-04-01)
+- Add `blocking_get()` for async operations
+- Add toast notification example
+
+#### Version 0.2.0 (2017-03-10)
+- Factories and statics now actually work
+- [Breaking] Feature names use dash instead of underscore
+
+#### Version 0.1.0 (2016-09-28)
+- First release
 
 ## License
 
