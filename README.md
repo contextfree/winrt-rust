@@ -75,6 +75,14 @@ an extension of WinRT, introduced in Windows 10, that allows using additional, m
 
 ## Changelog
 
+#### Version 0.4.0 (2017-12-27)
+- [Breaking] Upgrade to winapi 0.3
+- [Breaking] Default constructors are now accessible via `RtDefaultConstructible` trait
+- [Breaking] Fixed and improved error handling (among other changes, `blocking_get()` now returns `Result`)
+- [Breaking] Output array parameters are now passed as mutable slices (`&mut [T]`)
+- Provide access to [`IMemoryBufferByteAccess`](https://docs.microsoft.com/en-us/uwp/api/windows.foundation.memorybuffer)
+- Add another example (`hexdump`)
+
 #### Version 0.3.0 (2017-07-21)
 - [Breaking] The `self` parameter for interface calls is now passed as `&self` instead of `&mut self`
 - [Breaking] Remove (empty) contract structs from generated code
