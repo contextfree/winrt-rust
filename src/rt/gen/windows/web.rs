@@ -17,7 +17,7 @@ impl WebError {
         <Self as RtActivatable<IWebErrorStatics>>::get_activation_factory().get_status(hresult)
     }}
 }
-DEFINE_CLSID!(WebError(&[87,105,110,100,111,119,115,46,87,101,98,46,87,101,98,69,114,114,111,114,0]) [CLSID_WebError]);
+DEFINE_CLSID!(WebError: "Windows.Web.WebError");
 DEFINE_IID!(IID_IWebErrorStatics, 4267796326, 48935, 16484, 135, 183, 101, 99, 187, 17, 206, 46);
 RT_INTERFACE!{static interface IWebErrorStatics(IWebErrorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebErrorStatics] {
     fn GetStatus(&self, hresult: i32, out: *mut WebErrorStatus) -> HRESULT
@@ -44,7 +44,7 @@ impl HttpBufferContent {
         <Self as RtActivatable<IHttpBufferContentFactory>>::get_activation_factory().create_from_buffer_with_offset(content, offset, count)
     }}
 }
-DEFINE_CLSID!(HttpBufferContent(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,66,117,102,102,101,114,67,111,110,116,101,110,116,0]) [CLSID_HttpBufferContent]);
+DEFINE_CLSID!(HttpBufferContent: "Windows.Web.Http.HttpBufferContent");
 DEFINE_IID!(IID_IHttpBufferContentFactory, 3156263315, 50207, 20471, 145, 35, 100, 53, 115, 110, 173, 194);
 RT_INTERFACE!{static interface IHttpBufferContentFactory(IHttpBufferContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpBufferContentFactory] {
     #[cfg(feature="windows-storage")] fn CreateFromBuffer(&self, content: *mut super::super::storage::streams::IBuffer, out: *mut *mut HttpBufferContent) -> HRESULT,
@@ -143,7 +143,7 @@ impl HttpClient {
         <Self as RtActivatable<IHttpClientFactory>>::get_activation_factory().create(filter)
     }}
 }
-DEFINE_CLSID!(HttpClient(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,67,108,105,101,110,116,0]) [CLSID_HttpClient]);
+DEFINE_CLSID!(HttpClient: "Windows.Web.Http.HttpClient");
 DEFINE_IID!(IID_IHttpClientFactory, 3272363722, 58362, 20377, 175, 180, 99, 204, 101, 0, 148, 98);
 RT_INTERFACE!{static interface IHttpClientFactory(IHttpClientFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpClientFactory] {
     fn Create(&self, filter: *mut filters::IHttpFilter, out: *mut *mut HttpClient) -> HRESULT
@@ -279,7 +279,7 @@ impl HttpCookie {
         <Self as RtActivatable<IHttpCookieFactory>>::get_activation_factory().create(name, domain, path)
     }}
 }
-DEFINE_CLSID!(HttpCookie(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,67,111,111,107,105,101,0]) [CLSID_HttpCookie]);
+DEFINE_CLSID!(HttpCookie: "Windows.Web.Http.HttpCookie");
 RT_CLASS!{class HttpCookieCollection: super::super::foundation::collections::IVectorView<HttpCookie>}
 DEFINE_IID!(IID_IHttpCookieFactory, 1778746793, 37660, 19665, 169, 109, 194, 23, 1, 120, 92, 95);
 RT_INTERFACE!{static interface IHttpCookieFactory(IHttpCookieFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCookieFactory] {
@@ -328,7 +328,7 @@ impl HttpFormUrlEncodedContent {
         <Self as RtActivatable<IHttpFormUrlEncodedContentFactory>>::get_activation_factory().create(content)
     }}
 }
-DEFINE_CLSID!(HttpFormUrlEncodedContent(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,70,111,114,109,85,114,108,69,110,99,111,100,101,100,67,111,110,116,101,110,116,0]) [CLSID_HttpFormUrlEncodedContent]);
+DEFINE_CLSID!(HttpFormUrlEncodedContent: "Windows.Web.Http.HttpFormUrlEncodedContent");
 DEFINE_IID!(IID_IHttpFormUrlEncodedContentFactory, 1139807116, 12147, 17154, 181, 243, 234, 233, 35, 138, 94, 1);
 RT_INTERFACE!{static interface IHttpFormUrlEncodedContentFactory(IHttpFormUrlEncodedContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpFormUrlEncodedContentFactory] {
     fn Create(&self, content: *mut super::super::foundation::collections::IIterable<super::super::foundation::collections::IKeyValuePair<HString, HString>>, out: *mut *mut HttpFormUrlEncodedContent) -> HRESULT
@@ -380,7 +380,7 @@ impl HttpMethod {
         <Self as RtActivatable<IHttpMethodStatics>>::get_activation_factory().get_put()
     }}
 }
-DEFINE_CLSID!(HttpMethod(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,77,101,116,104,111,100,0]) [CLSID_HttpMethod]);
+DEFINE_CLSID!(HttpMethod: "Windows.Web.Http.HttpMethod");
 DEFINE_IID!(IID_IHttpMethodFactory, 1011994893, 14039, 16632, 168, 109, 231, 89, 202, 242, 248, 63);
 RT_INTERFACE!{static interface IHttpMethodFactory(IHttpMethodFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMethodFactory] {
     fn Create(&self, method: HSTRING, out: *mut *mut HttpMethod) -> HRESULT
@@ -460,7 +460,7 @@ impl HttpMultipartContent {
         <Self as RtActivatable<IHttpMultipartContentFactory>>::get_activation_factory().create_with_subtype_and_boundary(subtype, boundary)
     }}
 }
-DEFINE_CLSID!(HttpMultipartContent(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,77,117,108,116,105,112,97,114,116,67,111,110,116,101,110,116,0]) [CLSID_HttpMultipartContent]);
+DEFINE_CLSID!(HttpMultipartContent: "Windows.Web.Http.HttpMultipartContent");
 DEFINE_IID!(IID_IHttpMultipartContentFactory, 2125737570, 546, 20256, 179, 114, 71, 213, 219, 93, 51, 180);
 RT_INTERFACE!{static interface IHttpMultipartContentFactory(IHttpMultipartContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMultipartContentFactory] {
     fn CreateWithSubtype(&self, subtype: HSTRING, out: *mut *mut HttpMultipartContent) -> HRESULT,
@@ -506,7 +506,7 @@ impl HttpMultipartFormDataContent {
         <Self as RtActivatable<IHttpMultipartFormDataContentFactory>>::get_activation_factory().create_with_boundary(boundary)
     }}
 }
-DEFINE_CLSID!(HttpMultipartFormDataContent(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,77,117,108,116,105,112,97,114,116,70,111,114,109,68,97,116,97,67,111,110,116,101,110,116,0]) [CLSID_HttpMultipartFormDataContent]);
+DEFINE_CLSID!(HttpMultipartFormDataContent: "Windows.Web.Http.HttpMultipartFormDataContent");
 DEFINE_IID!(IID_IHttpMultipartFormDataContentFactory, 2689430289, 20503, 17954, 147, 168, 73, 178, 74, 79, 203, 252);
 RT_INTERFACE!{static interface IHttpMultipartFormDataContentFactory(IHttpMultipartFormDataContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMultipartFormDataContentFactory] {
     fn CreateWithBoundary(&self, boundary: HSTRING, out: *mut *mut HttpMultipartFormDataContent) -> HRESULT
@@ -588,7 +588,7 @@ impl HttpRequestMessage {
         <Self as RtActivatable<IHttpRequestMessageFactory>>::get_activation_factory().create(method, uri)
     }}
 }
-DEFINE_CLSID!(HttpRequestMessage(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,82,101,113,117,101,115,116,77,101,115,115,97,103,101,0]) [CLSID_HttpRequestMessage]);
+DEFINE_CLSID!(HttpRequestMessage: "Windows.Web.Http.HttpRequestMessage");
 DEFINE_IID!(IID_IHttpRequestMessageFactory, 1538038094, 14470, 16686, 174, 195, 82, 236, 127, 37, 97, 111);
 RT_INTERFACE!{static interface IHttpRequestMessageFactory(IHttpRequestMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpRequestMessageFactory] {
     fn Create(&self, method: *mut HttpMethod, uri: *mut super::super::foundation::Uri, out: *mut *mut HttpRequestMessage) -> HRESULT
@@ -697,7 +697,7 @@ impl HttpResponseMessage {
         <Self as RtActivatable<IHttpResponseMessageFactory>>::get_activation_factory().create(statusCode)
     }}
 }
-DEFINE_CLSID!(HttpResponseMessage(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,82,101,115,112,111,110,115,101,77,101,115,115,97,103,101,0]) [CLSID_HttpResponseMessage]);
+DEFINE_CLSID!(HttpResponseMessage: "Windows.Web.Http.HttpResponseMessage");
 DEFINE_IID!(IID_IHttpResponseMessageFactory, 1386786713, 61589, 17370, 182, 15, 124, 252, 43, 199, 234, 47);
 RT_INTERFACE!{static interface IHttpResponseMessageFactory(IHttpResponseMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpResponseMessageFactory] {
     fn Create(&self, statusCode: HttpStatusCode, out: *mut *mut HttpResponseMessage) -> HRESULT
@@ -722,7 +722,7 @@ impl HttpStreamContent {
         <Self as RtActivatable<IHttpStreamContentFactory>>::get_activation_factory().create_from_input_stream(content)
     }}
 }
-DEFINE_CLSID!(HttpStreamContent(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,83,116,114,101,97,109,67,111,110,116,101,110,116,0]) [CLSID_HttpStreamContent]);
+DEFINE_CLSID!(HttpStreamContent: "Windows.Web.Http.HttpStreamContent");
 DEFINE_IID!(IID_IHttpStreamContentFactory, 4091956637, 63269, 16510, 148, 47, 14, 218, 24, 152, 9, 244);
 RT_INTERFACE!{static interface IHttpStreamContentFactory(IHttpStreamContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpStreamContentFactory] {
     #[cfg(feature="windows-storage")] fn CreateFromInputStream(&self, content: *mut super::super::storage::streams::IInputStream, out: *mut *mut HttpStreamContent) -> HRESULT
@@ -747,7 +747,7 @@ impl HttpStringContent {
         <Self as RtActivatable<IHttpStringContentFactory>>::get_activation_factory().create_from_string_with_encoding_and_media_type(content, encoding, mediaType)
     }}
 }
-DEFINE_CLSID!(HttpStringContent(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,83,116,114,105,110,103,67,111,110,116,101,110,116,0]) [CLSID_HttpStringContent]);
+DEFINE_CLSID!(HttpStringContent: "Windows.Web.Http.HttpStringContent");
 DEFINE_IID!(IID_IHttpStringContentFactory, 1180999003, 11923, 18667, 142, 97, 25, 103, 120, 120, 229, 127);
 RT_INTERFACE!{static interface IHttpStringContentFactory(IHttpStringContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpStringContentFactory] {
     fn CreateFromString(&self, content: HSTRING, out: *mut *mut HttpStringContent) -> HRESULT,
@@ -927,7 +927,7 @@ impl IHttpBaseProtocolFilter {
 }
 RT_CLASS!{class HttpBaseProtocolFilter: IHttpBaseProtocolFilter}
 impl RtActivatable<IActivationFactory> for HttpBaseProtocolFilter {}
-DEFINE_CLSID!(HttpBaseProtocolFilter(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,70,105,108,116,101,114,115,46,72,116,116,112,66,97,115,101,80,114,111,116,111,99,111,108,70,105,108,116,101,114,0]) [CLSID_HttpBaseProtocolFilter]);
+DEFINE_CLSID!(HttpBaseProtocolFilter: "Windows.Web.Http.Filters.HttpBaseProtocolFilter");
 DEFINE_IID!(IID_IHttpBaseProtocolFilter2, 784531475, 37927, 18688, 160, 23, 250, 125, 163, 181, 201, 174);
 RT_INTERFACE!{interface IHttpBaseProtocolFilter2(IHttpBaseProtocolFilter2Vtbl): IInspectable(IInspectableVtbl) [IID_IHttpBaseProtocolFilter2] {
     fn get_MaxVersion(&self, out: *mut super::HttpVersion) -> HRESULT,
@@ -1184,7 +1184,7 @@ impl HttpChallengeHeaderValue {
         <Self as RtActivatable<IHttpChallengeHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpChallengeHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,104,97,108,108,101,110,103,101,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpChallengeHeaderValue]);
+DEFINE_CLSID!(HttpChallengeHeaderValue: "Windows.Web.Http.Headers.HttpChallengeHeaderValue");
 DEFINE_IID!(IID_IHttpChallengeHeaderValueCollection, 3399376769, 44768, 17235, 161, 11, 230, 37, 186, 189, 100, 194);
 RT_INTERFACE!{interface IHttpChallengeHeaderValueCollection(IHttpChallengeHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpChallengeHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
@@ -1261,7 +1261,7 @@ impl HttpConnectionOptionHeaderValue {
         <Self as RtActivatable<IHttpConnectionOptionHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpConnectionOptionHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,110,101,99,116,105,111,110,79,112,116,105,111,110,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpConnectionOptionHeaderValue]);
+DEFINE_CLSID!(HttpConnectionOptionHeaderValue: "Windows.Web.Http.Headers.HttpConnectionOptionHeaderValue");
 DEFINE_IID!(IID_IHttpConnectionOptionHeaderValueCollection, 3841289245, 20802, 19968, 142, 15, 1, 149, 9, 51, 118, 41);
 RT_INTERFACE!{interface IHttpConnectionOptionHeaderValueCollection(IHttpConnectionOptionHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpConnectionOptionHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
@@ -1332,7 +1332,7 @@ impl HttpContentCodingHeaderValue {
         <Self as RtActivatable<IHttpContentCodingHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpContentCodingHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,116,101,110,116,67,111,100,105,110,103,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpContentCodingHeaderValue]);
+DEFINE_CLSID!(HttpContentCodingHeaderValue: "Windows.Web.Http.Headers.HttpContentCodingHeaderValue");
 DEFINE_IID!(IID_IHttpContentCodingHeaderValueCollection, 2099386145, 42715, 17262, 142, 131, 145, 89, 97, 146, 129, 156);
 RT_INTERFACE!{interface IHttpContentCodingHeaderValueCollection(IHttpContentCodingHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentCodingHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
@@ -1412,7 +1412,7 @@ impl HttpContentCodingWithQualityHeaderValue {
         <Self as RtActivatable<IHttpContentCodingWithQualityHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpContentCodingWithQualityHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,116,101,110,116,67,111,100,105,110,103,87,105,116,104,81,117,97,108,105,116,121,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpContentCodingWithQualityHeaderValue]);
+DEFINE_CLSID!(HttpContentCodingWithQualityHeaderValue: "Windows.Web.Http.Headers.HttpContentCodingWithQualityHeaderValue");
 DEFINE_IID!(IID_IHttpContentCodingWithQualityHeaderValueCollection, 2081256766, 59545, 17272, 181, 200, 65, 45, 130, 7, 17, 204);
 RT_INTERFACE!{interface IHttpContentCodingWithQualityHeaderValueCollection(IHttpContentCodingWithQualityHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentCodingWithQualityHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
@@ -1544,7 +1544,7 @@ impl HttpContentDispositionHeaderValue {
         <Self as RtActivatable<IHttpContentDispositionHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpContentDispositionHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,116,101,110,116,68,105,115,112,111,115,105,116,105,111,110,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpContentDispositionHeaderValue]);
+DEFINE_CLSID!(HttpContentDispositionHeaderValue: "Windows.Web.Http.Headers.HttpContentDispositionHeaderValue");
 DEFINE_IID!(IID_IHttpContentDispositionHeaderValueFactory, 2568338372, 17772, 20097, 130, 149, 178, 171, 60, 188, 245, 69);
 RT_INTERFACE!{static interface IHttpContentDispositionHeaderValueFactory(IHttpContentDispositionHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentDispositionHeaderValueFactory] {
     fn Create(&self, dispositionType: HSTRING, out: *mut *mut HttpContentDispositionHeaderValue) -> HRESULT
@@ -1693,7 +1693,7 @@ impl IHttpContentHeaderCollection {
 }
 RT_CLASS!{class HttpContentHeaderCollection: IHttpContentHeaderCollection}
 impl RtActivatable<IActivationFactory> for HttpContentHeaderCollection {}
-DEFINE_CLSID!(HttpContentHeaderCollection(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,116,101,110,116,72,101,97,100,101,114,67,111,108,108,101,99,116,105,111,110,0]) [CLSID_HttpContentHeaderCollection]);
+DEFINE_CLSID!(HttpContentHeaderCollection: "Windows.Web.Http.Headers.HttpContentHeaderCollection");
 DEFINE_IID!(IID_IHttpContentRangeHeaderValue, 81356755, 42230, 18780, 149, 48, 133, 121, 252, 186, 138, 169);
 RT_INTERFACE!{interface IHttpContentRangeHeaderValue(IHttpContentRangeHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentRangeHeaderValue] {
     fn get_FirstBytePosition(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<u64>) -> HRESULT,
@@ -1748,7 +1748,7 @@ impl HttpContentRangeHeaderValue {
         <Self as RtActivatable<IHttpContentRangeHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpContentRangeHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,116,101,110,116,82,97,110,103,101,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpContentRangeHeaderValue]);
+DEFINE_CLSID!(HttpContentRangeHeaderValue: "Windows.Web.Http.Headers.HttpContentRangeHeaderValue");
 DEFINE_IID!(IID_IHttpContentRangeHeaderValueFactory, 1062983313, 41020, 17494, 154, 111, 239, 39, 236, 208, 60, 174);
 RT_INTERFACE!{static interface IHttpContentRangeHeaderValueFactory(IHttpContentRangeHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentRangeHeaderValueFactory] {
     fn CreateFromLength(&self, length: u64, out: *mut *mut HttpContentRangeHeaderValue) -> HRESULT,
@@ -1828,7 +1828,7 @@ impl HttpCookiePairHeaderValue {
         <Self as RtActivatable<IHttpCookiePairHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpCookiePairHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,111,107,105,101,80,97,105,114,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpCookiePairHeaderValue]);
+DEFINE_CLSID!(HttpCookiePairHeaderValue: "Windows.Web.Http.Headers.HttpCookiePairHeaderValue");
 DEFINE_IID!(IID_IHttpCookiePairHeaderValueCollection, 4092871504, 22558, 20172, 159, 89, 229, 7, 208, 79, 6, 230);
 RT_INTERFACE!{interface IHttpCookiePairHeaderValueCollection(IHttpCookiePairHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCookiePairHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
@@ -1920,7 +1920,7 @@ impl HttpCredentialsHeaderValue {
         <Self as RtActivatable<IHttpCredentialsHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpCredentialsHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,114,101,100,101,110,116,105,97,108,115,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpCredentialsHeaderValue]);
+DEFINE_CLSID!(HttpCredentialsHeaderValue: "Windows.Web.Http.Headers.HttpCredentialsHeaderValue");
 DEFINE_IID!(IID_IHttpCredentialsHeaderValueFactory, 4062027409, 19740, 16770, 191, 209, 52, 71, 10, 98, 249, 80);
 RT_INTERFACE!{static interface IHttpCredentialsHeaderValueFactory(IHttpCredentialsHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCredentialsHeaderValueFactory] {
     fn CreateFromScheme(&self, scheme: HSTRING, out: *mut *mut HttpCredentialsHeaderValue) -> HRESULT,
@@ -1982,7 +1982,7 @@ impl HttpDateOrDeltaHeaderValue {
         <Self as RtActivatable<IHttpDateOrDeltaHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpDateOrDeltaHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,68,97,116,101,79,114,68,101,108,116,97,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpDateOrDeltaHeaderValue]);
+DEFINE_CLSID!(HttpDateOrDeltaHeaderValue: "Windows.Web.Http.Headers.HttpDateOrDeltaHeaderValue");
 DEFINE_IID!(IID_IHttpDateOrDeltaHeaderValueStatics, 2082888104, 26226, 20112, 154, 154, 243, 151, 102, 247, 245, 118);
 RT_INTERFACE!{static interface IHttpDateOrDeltaHeaderValueStatics(IHttpDateOrDeltaHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDateOrDeltaHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut *mut HttpDateOrDeltaHeaderValue) -> HRESULT,
@@ -2045,7 +2045,7 @@ impl HttpExpectationHeaderValue {
         <Self as RtActivatable<IHttpExpectationHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpExpectationHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,69,120,112,101,99,116,97,116,105,111,110,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpExpectationHeaderValue]);
+DEFINE_CLSID!(HttpExpectationHeaderValue: "Windows.Web.Http.Headers.HttpExpectationHeaderValue");
 DEFINE_IID!(IID_IHttpExpectationHeaderValueCollection, 3884261811, 41186, 19140, 158, 102, 121, 112, 108, 185, 253, 88);
 RT_INTERFACE!{interface IHttpExpectationHeaderValueCollection(IHttpExpectationHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpExpectationHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
@@ -2148,7 +2148,7 @@ impl HttpLanguageRangeWithQualityHeaderValue {
         <Self as RtActivatable<IHttpLanguageRangeWithQualityHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpLanguageRangeWithQualityHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,76,97,110,103,117,97,103,101,82,97,110,103,101,87,105,116,104,81,117,97,108,105,116,121,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpLanguageRangeWithQualityHeaderValue]);
+DEFINE_CLSID!(HttpLanguageRangeWithQualityHeaderValue: "Windows.Web.Http.Headers.HttpLanguageRangeWithQualityHeaderValue");
 DEFINE_IID!(IID_IHttpLanguageRangeWithQualityHeaderValueCollection, 2287819453, 19279, 18442, 137, 206, 138, 237, 206, 230, 227, 160);
 RT_INTERFACE!{interface IHttpLanguageRangeWithQualityHeaderValueCollection(IHttpLanguageRangeWithQualityHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpLanguageRangeWithQualityHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
@@ -2247,7 +2247,7 @@ impl HttpMediaTypeHeaderValue {
         <Self as RtActivatable<IHttpMediaTypeHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpMediaTypeHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,77,101,100,105,97,84,121,112,101,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpMediaTypeHeaderValue]);
+DEFINE_CLSID!(HttpMediaTypeHeaderValue: "Windows.Web.Http.Headers.HttpMediaTypeHeaderValue");
 DEFINE_IID!(IID_IHttpMediaTypeHeaderValueFactory, 3201779624, 52503, 17117, 147, 103, 171, 156, 91, 86, 221, 125);
 RT_INTERFACE!{static interface IHttpMediaTypeHeaderValueFactory(IHttpMediaTypeHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMediaTypeHeaderValueFactory] {
     fn Create(&self, mediaType: HSTRING, out: *mut *mut HttpMediaTypeHeaderValue) -> HRESULT
@@ -2337,7 +2337,7 @@ impl HttpMediaTypeWithQualityHeaderValue {
         <Self as RtActivatable<IHttpMediaTypeWithQualityHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpMediaTypeWithQualityHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,77,101,100,105,97,84,121,112,101,87,105,116,104,81,117,97,108,105,116,121,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpMediaTypeWithQualityHeaderValue]);
+DEFINE_CLSID!(HttpMediaTypeWithQualityHeaderValue: "Windows.Web.Http.Headers.HttpMediaTypeWithQualityHeaderValue");
 DEFINE_IID!(IID_IHttpMediaTypeWithQualityHeaderValueCollection, 1007446899, 4930, 17799, 160, 86, 24, 208, 47, 246, 113, 101);
 RT_INTERFACE!{interface IHttpMediaTypeWithQualityHeaderValueCollection(IHttpMediaTypeWithQualityHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMediaTypeWithQualityHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
@@ -2445,7 +2445,7 @@ impl HttpNameValueHeaderValue {
         <Self as RtActivatable<IHttpNameValueHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpNameValueHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,78,97,109,101,86,97,108,117,101,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpNameValueHeaderValue]);
+DEFINE_CLSID!(HttpNameValueHeaderValue: "Windows.Web.Http.Headers.HttpNameValueHeaderValue");
 DEFINE_IID!(IID_IHttpNameValueHeaderValueFactory, 1997415015, 52216, 18230, 169, 37, 147, 251, 225, 12, 124, 168);
 RT_INTERFACE!{static interface IHttpNameValueHeaderValueFactory(IHttpNameValueHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpNameValueHeaderValueFactory] {
     fn CreateFromName(&self, name: HSTRING, out: *mut *mut HttpNameValueHeaderValue) -> HRESULT,
@@ -2514,7 +2514,7 @@ impl HttpProductHeaderValue {
         <Self as RtActivatable<IHttpProductHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpProductHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,80,114,111,100,117,99,116,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpProductHeaderValue]);
+DEFINE_CLSID!(HttpProductHeaderValue: "Windows.Web.Http.Headers.HttpProductHeaderValue");
 DEFINE_IID!(IID_IHttpProductHeaderValueFactory, 1629136117, 33468, 17147, 151, 123, 220, 0, 83, 110, 94, 134);
 RT_INTERFACE!{static interface IHttpProductHeaderValueFactory(IHttpProductHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpProductHeaderValueFactory] {
     fn CreateFromName(&self, productName: HSTRING, out: *mut *mut HttpProductHeaderValue) -> HRESULT,
@@ -2583,7 +2583,7 @@ impl HttpProductInfoHeaderValue {
         <Self as RtActivatable<IHttpProductInfoHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpProductInfoHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,80,114,111,100,117,99,116,73,110,102,111,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpProductInfoHeaderValue]);
+DEFINE_CLSID!(HttpProductInfoHeaderValue: "Windows.Web.Http.Headers.HttpProductInfoHeaderValue");
 DEFINE_IID!(IID_IHttpProductInfoHeaderValueCollection, 2273179466, 54939, 17656, 173, 79, 69, 58, 249, 196, 46, 208);
 RT_INTERFACE!{interface IHttpProductInfoHeaderValueCollection(IHttpProductInfoHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpProductInfoHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
@@ -2935,7 +2935,7 @@ impl HttpTransferCodingHeaderValue {
         <Self as RtActivatable<IHttpTransferCodingHeaderValueStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(HttpTransferCodingHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,84,114,97,110,115,102,101,114,67,111,100,105,110,103,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpTransferCodingHeaderValue]);
+DEFINE_CLSID!(HttpTransferCodingHeaderValue: "Windows.Web.Http.Headers.HttpTransferCodingHeaderValue");
 DEFINE_IID!(IID_IHttpTransferCodingHeaderValueCollection, 539790388, 11267, 18872, 150, 101, 115, 226, 124, 178, 252, 121);
 RT_INTERFACE!{interface IHttpTransferCodingHeaderValueCollection(IHttpTransferCodingHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpTransferCodingHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
@@ -3039,7 +3039,7 @@ impl HttpDiagnosticProvider {
         <Self as RtActivatable<IHttpDiagnosticProviderStatics>>::get_activation_factory().create_from_process_diagnostic_info(processDiagnosticInfo)
     }}
 }
-DEFINE_CLSID!(HttpDiagnosticProvider(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,68,105,97,103,110,111,115,116,105,99,115,46,72,116,116,112,68,105,97,103,110,111,115,116,105,99,80,114,111,118,105,100,101,114,0]) [CLSID_HttpDiagnosticProvider]);
+DEFINE_CLSID!(HttpDiagnosticProvider: "Windows.Web.Http.Diagnostics.HttpDiagnosticProvider");
 DEFINE_IID!(IID_IHttpDiagnosticProviderRequestResponseCompletedEventArgs, 1935644910, 38134, 17714, 178, 110, 97, 225, 177, 228, 239, 212);
 RT_INTERFACE!{interface IHttpDiagnosticProviderRequestResponseCompletedEventArgs(IHttpDiagnosticProviderRequestResponseCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderRequestResponseCompletedEventArgs] {
     fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
@@ -3311,7 +3311,7 @@ impl SyndicationAttribute {
         <Self as RtActivatable<ISyndicationAttributeFactory>>::get_activation_factory().create_syndication_attribute(attributeName, attributeNamespace, attributeValue)
     }}
 }
-DEFINE_CLSID!(SyndicationAttribute(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,65,116,116,114,105,98,117,116,101,0]) [CLSID_SyndicationAttribute]);
+DEFINE_CLSID!(SyndicationAttribute: "Windows.Web.Syndication.SyndicationAttribute");
 DEFINE_IID!(IID_ISyndicationAttributeFactory, 1649350041, 60734, 16911, 190, 134, 100, 4, 20, 136, 110, 75);
 RT_INTERFACE!{static interface ISyndicationAttributeFactory(ISyndicationAttributeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationAttributeFactory] {
     fn CreateSyndicationAttribute(&self, attributeName: HSTRING, attributeNamespace: HSTRING, attributeValue: HSTRING, out: *mut *mut SyndicationAttribute) -> HRESULT
@@ -3372,7 +3372,7 @@ impl SyndicationCategory {
         <Self as RtActivatable<ISyndicationCategoryFactory>>::get_activation_factory().create_syndication_category_ex(term, scheme, label)
     }}
 }
-DEFINE_CLSID!(SyndicationCategory(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,67,97,116,101,103,111,114,121,0]) [CLSID_SyndicationCategory]);
+DEFINE_CLSID!(SyndicationCategory: "Windows.Web.Syndication.SyndicationCategory");
 DEFINE_IID!(IID_ISyndicationCategoryFactory, 2873262127, 18912, 17701, 138, 178, 171, 69, 192, 37, 40, 255);
 RT_INTERFACE!{static interface ISyndicationCategoryFactory(ISyndicationCategoryFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationCategoryFactory] {
     fn CreateSyndicationCategory(&self, term: HSTRING, out: *mut *mut SyndicationCategory) -> HRESULT,
@@ -3473,7 +3473,7 @@ impl SyndicationClient {
         <Self as RtActivatable<ISyndicationClientFactory>>::get_activation_factory().create_syndication_client(serverCredential)
     }}
 }
-DEFINE_CLSID!(SyndicationClient(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,67,108,105,101,110,116,0]) [CLSID_SyndicationClient]);
+DEFINE_CLSID!(SyndicationClient: "Windows.Web.Syndication.SyndicationClient");
 DEFINE_IID!(IID_ISyndicationClientFactory, 784642860, 42907, 16660, 178, 154, 5, 223, 251, 175, 185, 164);
 RT_INTERFACE!{static interface ISyndicationClientFactory(ISyndicationClientFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationClientFactory] {
     #[cfg(feature="windows-security")] fn CreateSyndicationClient(&self, serverCredential: *mut super::super::security::credentials::PasswordCredential, out: *mut *mut SyndicationClient) -> HRESULT
@@ -3512,7 +3512,7 @@ impl SyndicationContent {
         <Self as RtActivatable<ISyndicationContentFactory>>::get_activation_factory().create_syndication_content_with_source_uri(sourceUri)
     }}
 }
-DEFINE_CLSID!(SyndicationContent(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,67,111,110,116,101,110,116,0]) [CLSID_SyndicationContent]);
+DEFINE_CLSID!(SyndicationContent: "Windows.Web.Syndication.SyndicationContent");
 DEFINE_IID!(IID_ISyndicationContentFactory, 1026538387, 38176, 16755, 147, 136, 126, 45, 243, 36, 168, 160);
 RT_INTERFACE!{static interface ISyndicationContentFactory(ISyndicationContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationContentFactory] {
     fn CreateSyndicationContent(&self, text: HSTRING, type_: SyndicationTextType, out: *mut *mut SyndicationContent) -> HRESULT,
@@ -3537,7 +3537,7 @@ impl SyndicationError {
         <Self as RtActivatable<ISyndicationErrorStatics>>::get_activation_factory().get_status(hresult)
     }}
 }
-DEFINE_CLSID!(SyndicationError(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,69,114,114,111,114,0]) [CLSID_SyndicationError]);
+DEFINE_CLSID!(SyndicationError: "Windows.Web.Syndication.SyndicationError");
 DEFINE_IID!(IID_ISyndicationErrorStatics, 532357985, 17863, 18483, 138, 160, 190, 95, 59, 88, 167, 244);
 RT_INTERFACE!{static interface ISyndicationErrorStatics(ISyndicationErrorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationErrorStatics] {
     fn GetStatus(&self, hresult: i32, out: *mut SyndicationErrorStatus) -> HRESULT
@@ -3723,7 +3723,7 @@ impl SyndicationFeed {
         <Self as RtActivatable<ISyndicationFeedFactory>>::get_activation_factory().create_syndication_feed(title, subtitle, uri)
     }}
 }
-DEFINE_CLSID!(SyndicationFeed(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,70,101,101,100,0]) [CLSID_SyndicationFeed]);
+DEFINE_CLSID!(SyndicationFeed: "Windows.Web.Syndication.SyndicationFeed");
 DEFINE_IID!(IID_ISyndicationFeedFactory, 591864370, 35817, 18615, 137, 52, 98, 5, 19, 29, 147, 87);
 RT_INTERFACE!{static interface ISyndicationFeedFactory(ISyndicationFeedFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationFeedFactory] {
     fn CreateSyndicationFeed(&self, title: HSTRING, subtitle: HSTRING, uri: *mut super::super::foundation::Uri, out: *mut *mut SyndicationFeed) -> HRESULT
@@ -3784,7 +3784,7 @@ impl SyndicationGenerator {
         <Self as RtActivatable<ISyndicationGeneratorFactory>>::get_activation_factory().create_syndication_generator(text)
     }}
 }
-DEFINE_CLSID!(SyndicationGenerator(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_SyndicationGenerator]);
+DEFINE_CLSID!(SyndicationGenerator: "Windows.Web.Syndication.SyndicationGenerator");
 DEFINE_IID!(IID_ISyndicationGeneratorFactory, 2738914275, 7718, 19900, 186, 157, 26, 184, 75, 239, 249, 123);
 RT_INTERFACE!{static interface ISyndicationGeneratorFactory(ISyndicationGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationGeneratorFactory] {
     fn CreateSyndicationGenerator(&self, text: HSTRING, out: *mut *mut SyndicationGenerator) -> HRESULT
@@ -3966,7 +3966,7 @@ impl SyndicationItem {
         <Self as RtActivatable<ISyndicationItemFactory>>::get_activation_factory().create_syndication_item(title, content, uri)
     }}
 }
-DEFINE_CLSID!(SyndicationItem(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,73,116,101,109,0]) [CLSID_SyndicationItem]);
+DEFINE_CLSID!(SyndicationItem: "Windows.Web.Syndication.SyndicationItem");
 DEFINE_IID!(IID_ISyndicationItemFactory, 622674767, 32184, 18554, 133, 228, 16, 209, 145, 230, 110, 187);
 RT_INTERFACE!{static interface ISyndicationItemFactory(ISyndicationItemFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationItemFactory] {
     fn CreateSyndicationItem(&self, title: HSTRING, content: *mut SyndicationContent, uri: *mut super::super::foundation::Uri, out: *mut *mut SyndicationItem) -> HRESULT
@@ -4060,7 +4060,7 @@ impl SyndicationLink {
         <Self as RtActivatable<ISyndicationLinkFactory>>::get_activation_factory().create_syndication_link_ex(uri, relationship, title, mediaType, length)
     }}
 }
-DEFINE_CLSID!(SyndicationLink(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,76,105,110,107,0]) [CLSID_SyndicationLink]);
+DEFINE_CLSID!(SyndicationLink: "Windows.Web.Syndication.SyndicationLink");
 DEFINE_IID!(IID_ISyndicationLinkFactory, 1591239636, 21813, 18604, 152, 212, 193, 144, 153, 80, 128, 179);
 RT_INTERFACE!{static interface ISyndicationLinkFactory(ISyndicationLinkFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationLinkFactory] {
     fn CreateSyndicationLink(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut SyndicationLink) -> HRESULT,
@@ -4164,7 +4164,7 @@ impl SyndicationNode {
         <Self as RtActivatable<ISyndicationNodeFactory>>::get_activation_factory().create_syndication_node(nodeName, nodeNamespace, nodeValue)
     }}
 }
-DEFINE_CLSID!(SyndicationNode(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,78,111,100,101,0]) [CLSID_SyndicationNode]);
+DEFINE_CLSID!(SyndicationNode: "Windows.Web.Syndication.SyndicationNode");
 DEFINE_IID!(IID_ISyndicationNodeFactory, 311435656, 19147, 18856, 183, 119, 165, 235, 146, 225, 138, 121);
 RT_INTERFACE!{static interface ISyndicationNodeFactory(ISyndicationNodeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationNodeFactory] {
     fn CreateSyndicationNode(&self, nodeName: HSTRING, nodeNamespace: HSTRING, nodeValue: HSTRING, out: *mut *mut SyndicationNode) -> HRESULT
@@ -4225,7 +4225,7 @@ impl SyndicationPerson {
         <Self as RtActivatable<ISyndicationPersonFactory>>::get_activation_factory().create_syndication_person_ex(name, email, uri)
     }}
 }
-DEFINE_CLSID!(SyndicationPerson(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,80,101,114,115,111,110,0]) [CLSID_SyndicationPerson]);
+DEFINE_CLSID!(SyndicationPerson: "Windows.Web.Syndication.SyndicationPerson");
 DEFINE_IID!(IID_ISyndicationPersonFactory, 3707013229, 8861, 19288, 164, 155, 243, 210, 240, 245, 201, 159);
 RT_INTERFACE!{static interface ISyndicationPersonFactory(ISyndicationPersonFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationPersonFactory] {
     fn CreateSyndicationPerson(&self, name: HSTRING, out: *mut *mut SyndicationPerson) -> HRESULT,
@@ -4292,7 +4292,7 @@ impl SyndicationText {
         <Self as RtActivatable<ISyndicationTextFactory>>::get_activation_factory().create_syndication_text_ex(text, type_)
     }}
 }
-DEFINE_CLSID!(SyndicationText(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,84,101,120,116,0]) [CLSID_SyndicationText]);
+DEFINE_CLSID!(SyndicationText: "Windows.Web.Syndication.SyndicationText");
 DEFINE_IID!(IID_ISyndicationTextFactory, 4000531191, 4550, 19237, 171, 98, 229, 150, 189, 22, 41, 70);
 RT_INTERFACE!{static interface ISyndicationTextFactory(ISyndicationTextFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationTextFactory] {
     fn CreateSyndicationText(&self, text: HSTRING, out: *mut *mut SyndicationText) -> HRESULT,
@@ -4400,7 +4400,7 @@ impl AtomPubClient {
         <Self as RtActivatable<IAtomPubClientFactory>>::get_activation_factory().create_atom_pub_client_with_credentials(serverCredential)
     }}
 }
-DEFINE_CLSID!(AtomPubClient(&[87,105,110,100,111,119,115,46,87,101,98,46,65,116,111,109,80,117,98,46,65,116,111,109,80,117,98,67,108,105,101,110,116,0]) [CLSID_AtomPubClient]);
+DEFINE_CLSID!(AtomPubClient: "Windows.Web.AtomPub.AtomPubClient");
 DEFINE_IID!(IID_IAtomPubClientFactory, 1238716434, 22475, 19422, 171, 159, 38, 16, 177, 114, 119, 123);
 RT_INTERFACE!{static interface IAtomPubClientFactory(IAtomPubClientFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAtomPubClientFactory] {
     #[cfg(feature="windows-security")] fn CreateAtomPubClientWithCredentials(&self, serverCredential: *mut super::super::security::credentials::PasswordCredential, out: *mut *mut AtomPubClient) -> HRESULT

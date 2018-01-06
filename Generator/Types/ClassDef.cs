@@ -137,7 +137,7 @@ impl { DefinitionName } {{
             if (needClassID)
             {
                 Module.Append($@"
-DEFINE_CLSID!({ classType }(&[{ NameHelpers.StringToUTF16WithZero(Type.FullName) }]) [CLSID_{ classType }]);");
+DEFINE_CLSID!({ classType }: ""{ Type.FullName }"");");
             }
         }
     }

@@ -233,7 +233,7 @@ impl Deferral {
         <Self as RtActivatable<IDeferralFactory>>::get_activation_factory().create(handler)
     }}
 }
-DEFINE_CLSID!(Deferral(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,101,102,101,114,114,97,108,0]) [CLSID_Deferral]);
+DEFINE_CLSID!(Deferral: "Windows.Foundation.Deferral");
 DEFINE_IID!(IID_DeferralCompletedHandler, 3979518834, 62408, 20394, 156, 251, 71, 1, 72, 218, 56, 136);
 RT_DELEGATE!{delegate DeferralCompletedHandler(DeferralCompletedHandlerVtbl, DeferralCompletedHandlerImpl) [IID_DeferralCompletedHandler] {
     fn Invoke(&self) -> HRESULT
@@ -300,7 +300,7 @@ impl MemoryBuffer {
         <Self as RtActivatable<IMemoryBufferFactory>>::get_activation_factory().create(capacity)
     }}
 }
-DEFINE_CLSID!(MemoryBuffer(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,77,101,109,111,114,121,66,117,102,102,101,114,0]) [CLSID_MemoryBuffer]);
+DEFINE_CLSID!(MemoryBuffer: "Windows.Foundation.MemoryBuffer");
 DEFINE_IID!(IID_IMemoryBufferFactory, 4223982891, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
 RT_INTERFACE!{static interface IMemoryBufferFactory(IMemoryBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBufferFactory] {
     fn Create(&self, capacity: u32, out: *mut *mut MemoryBuffer) -> HRESULT
@@ -700,7 +700,7 @@ impl PropertyValue {
         <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_rect_array(value)
     }}
 }
-DEFINE_CLSID!(PropertyValue(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,80,114,111,112,101,114,116,121,86,97,108,117,101,0]) [CLSID_PropertyValue]);
+DEFINE_CLSID!(PropertyValue: "Windows.Foundation.PropertyValue");
 DEFINE_IID!(IID_IPropertyValueStatics, 1654381512, 55602, 20468, 150, 185, 141, 150, 197, 193, 232, 88);
 RT_INTERFACE!{static interface IPropertyValueStatics(IPropertyValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPropertyValueStatics] {
     fn CreateEmpty(&self, out: *mut *mut IInspectable) -> HRESULT,
@@ -1009,7 +1009,7 @@ impl Uri {
         <Self as RtActivatable<IUriEscapeStatics>>::get_activation_factory().escape_component(toEscape)
     }}
 }
-DEFINE_CLSID!(Uri(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,85,114,105,0]) [CLSID_Uri]);
+DEFINE_CLSID!(Uri: "Windows.Foundation.Uri");
 DEFINE_IID!(IID_IUriEscapeStatics, 3251909306, 51236, 17490, 167, 253, 81, 43, 195, 187, 233, 161);
 RT_INTERFACE!{static interface IUriEscapeStatics(IUriEscapeStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUriEscapeStatics] {
     fn UnescapeComponent(&self, toUnescape: HSTRING, out: *mut HSTRING) -> HRESULT,
@@ -1175,7 +1175,7 @@ impl WwwFormUrlDecoder {
         <Self as RtActivatable<IWwwFormUrlDecoderRuntimeClassFactory>>::get_activation_factory().create_www_form_url_decoder(query)
     }}
 }
-DEFINE_CLSID!(WwwFormUrlDecoder(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,87,119,119,70,111,114,109,85,114,108,68,101,99,111,100,101,114,0]) [CLSID_WwwFormUrlDecoder]);
+DEFINE_CLSID!(WwwFormUrlDecoder: "Windows.Foundation.WwwFormUrlDecoder");
 DEFINE_IID!(IID_IWwwFormUrlDecoderEntry, 308180017, 63096, 20110, 182, 112, 32, 169, 176, 108, 81, 45);
 RT_INTERFACE!{interface IWwwFormUrlDecoderEntry(IWwwFormUrlDecoderEntryVtbl): IInspectable(IInspectableVtbl) [IID_IWwwFormUrlDecoderEntry] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -3352,13 +3352,13 @@ RT_INTERFACE!{interface IPropertySet(IPropertySetVtbl): IInspectable(IInspectabl
 }}
 RT_CLASS!{class PropertySet: IPropertySet}
 impl RtActivatable<IActivationFactory> for PropertySet {}
-DEFINE_CLSID!(PropertySet(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,67,111,108,108,101,99,116,105,111,110,115,46,80,114,111,112,101,114,116,121,83,101,116,0]) [CLSID_PropertySet]);
+DEFINE_CLSID!(PropertySet: "Windows.Foundation.Collections.PropertySet");
 RT_CLASS!{class StringMap: IMap<HString, HString>}
 impl RtActivatable<IActivationFactory> for StringMap {}
-DEFINE_CLSID!(StringMap(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,67,111,108,108,101,99,116,105,111,110,115,46,83,116,114,105,110,103,77,97,112,0]) [CLSID_StringMap]);
+DEFINE_CLSID!(StringMap: "Windows.Foundation.Collections.StringMap");
 RT_CLASS!{class ValueSet: IPropertySet}
 impl RtActivatable<IActivationFactory> for ValueSet {}
-DEFINE_CLSID!(ValueSet(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,67,111,108,108,101,99,116,105,111,110,115,46,86,97,108,117,101,83,101,116,0]) [CLSID_ValueSet]);
+DEFINE_CLSID!(ValueSet: "Windows.Foundation.Collections.ValueSet");
 DEFINE_IID!(IID_IVector, 2436052969, 4513, 17221, 163, 162, 78, 127, 149, 110, 34, 45);
 RT_INTERFACE!{interface IVector<T>(IVectorVtbl): IInspectable(IInspectableVtbl) [IID_IVector] {
     fn GetAt(&self, index: u32, out: *mut T::Abi) -> HRESULT,
@@ -5346,7 +5346,7 @@ impl ApiInformation {
         <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_api_contract_present_by_major_and_minor(contractName, majorVersion, minorVersion)
     }}
 }
-DEFINE_CLSID!(ApiInformation(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,77,101,116,97,100,97,116,97,46,65,112,105,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_ApiInformation]);
+DEFINE_CLSID!(ApiInformation: "Windows.Foundation.Metadata.ApiInformation");
 DEFINE_IID!(IID_IApiInformationStatics, 2574531070, 63105, 18961, 180, 22, 193, 58, 71, 232, 186, 54);
 RT_INTERFACE!{static interface IApiInformationStatics(IApiInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApiInformationStatics] {
     fn IsTypePresent(&self, typeName: HSTRING, out: *mut bool) -> HRESULT,
@@ -5464,7 +5464,7 @@ impl AsyncCausalityTracer {
         <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().remove_tracing_status_changed(cookie)
     }}
 }
-DEFINE_CLSID!(AsyncCausalityTracer(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,65,115,121,110,99,67,97,117,115,97,108,105,116,121,84,114,97,99,101,114,0]) [CLSID_AsyncCausalityTracer]);
+DEFINE_CLSID!(AsyncCausalityTracer: "Windows.Foundation.Diagnostics.AsyncCausalityTracer");
 DEFINE_IID!(IID_IAsyncCausalityTracerStatics, 1350896422, 9854, 17691, 168, 144, 171, 106, 55, 2, 69, 238);
 RT_INTERFACE!{static interface IAsyncCausalityTracerStatics(IAsyncCausalityTracerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncCausalityTracerStatics] {
     fn TraceOperationCreation(&self, traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, operationName: HSTRING, relatedContext: u64) -> HRESULT,
@@ -5548,7 +5548,7 @@ impl ErrorDetails {
         <Self as RtActivatable<IErrorDetailsStatics>>::get_activation_factory().create_from_hresult_async(errorCode)
     }}
 }
-DEFINE_CLSID!(ErrorDetails(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,69,114,114,111,114,68,101,116,97,105,108,115,0]) [CLSID_ErrorDetails]);
+DEFINE_CLSID!(ErrorDetails: "Windows.Foundation.Diagnostics.ErrorDetails");
 DEFINE_IID!(IID_IErrorDetailsStatics, 3077584720, 2845, 18120, 170, 14, 75, 129, 120, 228, 252, 233);
 RT_INTERFACE!{static interface IErrorDetailsStatics(IErrorDetailsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorDetailsStatics] {
     fn CreateFromHResultAsync(&self, errorCode: i32, out: *mut *mut super::IAsyncOperation<ErrorDetails>) -> HRESULT
@@ -5630,7 +5630,7 @@ impl FileLoggingSession {
         <Self as RtActivatable<IFileLoggingSessionFactory>>::get_activation_factory().create(name)
     }}
 }
-DEFINE_CLSID!(FileLoggingSession(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,70,105,108,101,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]) [CLSID_FileLoggingSession]);
+DEFINE_CLSID!(FileLoggingSession: "Windows.Foundation.Diagnostics.FileLoggingSession");
 DEFINE_IID!(IID_IFileLoggingSessionFactory, 4003499470, 33863, 19882, 145, 51, 18, 235, 70, 246, 151, 212);
 RT_INTERFACE!{static interface IFileLoggingSessionFactory(IFileLoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileLoggingSessionFactory] {
     fn Create(&self, name: HSTRING, out: *mut *mut FileLoggingSession) -> HRESULT
@@ -5681,7 +5681,7 @@ impl LoggingActivity {
         <Self as RtActivatable<ILoggingActivityFactory>>::get_activation_factory().create_logging_activity_with_level(activityName, loggingChannel, level)
     }}
 }
-DEFINE_CLSID!(LoggingActivity(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,65,99,116,105,118,105,116,121,0]) [CLSID_LoggingActivity]);
+DEFINE_CLSID!(LoggingActivity: "Windows.Foundation.Diagnostics.LoggingActivity");
 DEFINE_IID!(IID_ILoggingActivity2, 650287112, 25378, 17770, 175, 130, 128, 200, 100, 47, 23, 139);
 RT_INTERFACE!{interface ILoggingActivity2(ILoggingActivity2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivity2] {
     fn get_Channel(&self, out: *mut *mut LoggingChannel) -> HRESULT,
@@ -5793,7 +5793,7 @@ impl LoggingChannel {
         <Self as RtActivatable<ILoggingChannelFactory2>>::get_activation_factory().create_with_options_and_id(name, options, id)
     }}
 }
-DEFINE_CLSID!(LoggingChannel(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,0]) [CLSID_LoggingChannel]);
+DEFINE_CLSID!(LoggingChannel: "Windows.Foundation.Diagnostics.LoggingChannel");
 DEFINE_IID!(IID_ILoggingChannel2, 2672573683, 2988, 17829, 158, 51, 186, 243, 243, 162, 70, 165);
 RT_INTERFACE!{interface ILoggingChannel2(ILoggingChannel2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannel2] {
     fn get_Id(&self, out: *mut Guid) -> HRESULT
@@ -5857,7 +5857,7 @@ impl LoggingChannelOptions {
         <Self as RtActivatable<ILoggingChannelOptionsFactory>>::get_activation_factory().create(group)
     }}
 }
-DEFINE_CLSID!(LoggingChannelOptions(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,79,112,116,105,111,110,115,0]) [CLSID_LoggingChannelOptions]);
+DEFINE_CLSID!(LoggingChannelOptions: "Windows.Foundation.Diagnostics.LoggingChannelOptions");
 DEFINE_IID!(IID_ILoggingChannelOptionsFactory, 2838581722, 32687, 16785, 135, 85, 94, 134, 220, 101, 216, 150);
 RT_INTERFACE!{static interface ILoggingChannelOptionsFactory(ILoggingChannelOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelOptionsFactory] {
     fn Create(&self, group: Guid, out: *mut *mut LoggingChannelOptions) -> HRESULT
@@ -6454,7 +6454,7 @@ impl ILoggingFields {
 }
 RT_CLASS!{class LoggingFields: ILoggingFields}
 impl RtActivatable<IActivationFactory> for LoggingFields {}
-DEFINE_CLSID!(LoggingFields(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,70,105,101,108,100,115,0]) [CLSID_LoggingFields]);
+DEFINE_CLSID!(LoggingFields: "Windows.Foundation.Diagnostics.LoggingFields");
 RT_ENUM! { enum LoggingLevel: i32 {
     Verbose (LoggingLevel_Verbose) = 0, Information (LoggingLevel_Information) = 1, Warning (LoggingLevel_Warning) = 2, Error (LoggingLevel_Error) = 3, Critical (LoggingLevel_Critical) = 4,
 }}
@@ -6540,7 +6540,7 @@ impl LoggingOptions {
         <Self as RtActivatable<ILoggingOptionsFactory>>::get_activation_factory().create_with_keywords(keywords)
     }}
 }
-DEFINE_CLSID!(LoggingOptions(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,79,112,116,105,111,110,115,0]) [CLSID_LoggingOptions]);
+DEFINE_CLSID!(LoggingOptions: "Windows.Foundation.Diagnostics.LoggingOptions");
 DEFINE_IID!(IID_ILoggingOptionsFactory, 3608397515, 39083, 17995, 159, 34, 163, 38, 132, 120, 54, 138);
 RT_INTERFACE!{static interface ILoggingOptionsFactory(ILoggingOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingOptionsFactory] {
     fn CreateWithKeywords(&self, keywords: i64, out: *mut *mut LoggingOptions) -> HRESULT
@@ -6592,7 +6592,7 @@ impl LoggingSession {
         <Self as RtActivatable<ILoggingSessionFactory>>::get_activation_factory().create(name)
     }}
 }
-DEFINE_CLSID!(LoggingSession(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]) [CLSID_LoggingSession]);
+DEFINE_CLSID!(LoggingSession: "Windows.Foundation.Diagnostics.LoggingSession");
 DEFINE_IID!(IID_ILoggingSessionFactory, 1318289125, 22781, 17888, 140, 47, 161, 50, 239, 249, 92, 30);
 RT_INTERFACE!{static interface ILoggingSessionFactory(ILoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingSessionFactory] {
     fn Create(&self, name: HSTRING, out: *mut *mut LoggingSession) -> HRESULT
@@ -6673,7 +6673,7 @@ impl ILoggingTarget {
 }
 RT_CLASS!{class RuntimeBrokerErrorSettings: IErrorReportingSettings}
 impl RtActivatable<IActivationFactory> for RuntimeBrokerErrorSettings {}
-DEFINE_CLSID!(RuntimeBrokerErrorSettings(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,82,117,110,116,105,109,101,66,114,111,107,101,114,69,114,114,111,114,83,101,116,116,105,110,103,115,0]) [CLSID_RuntimeBrokerErrorSettings]);
+DEFINE_CLSID!(RuntimeBrokerErrorSettings: "Windows.Foundation.Diagnostics.RuntimeBrokerErrorSettings");
 DEFINE_IID!(IID_ITracingStatusChangedEventArgs, 1091270417, 65339, 18303, 156, 154, 210, 239, 218, 48, 45, 195);
 RT_INTERFACE!{interface ITracingStatusChangedEventArgs(ITracingStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITracingStatusChangedEventArgs] {
     fn get_Enabled(&self, out: *mut bool) -> HRESULT,

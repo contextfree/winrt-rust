@@ -46,7 +46,7 @@ impl JsonArray {
         <Self as RtActivatable<IJsonArrayStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(JsonArray(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,65,114,114,97,121,0]) [CLSID_JsonArray]);
+DEFINE_CLSID!(JsonArray: "Windows.Data.Json.JsonArray");
 DEFINE_IID!(IID_IJsonArrayStatics, 3675534505, 57700, 18847, 147, 226, 138, 143, 73, 187, 144, 186);
 RT_INTERFACE!{static interface IJsonArrayStatics(IJsonArrayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJsonArrayStatics] {
     fn Parse(&self, input: HSTRING, out: *mut *mut JsonArray) -> HRESULT,
@@ -71,7 +71,7 @@ impl JsonError {
         <Self as RtActivatable<IJsonErrorStatics2>>::get_activation_factory().get_json_status(hresult)
     }}
 }
-DEFINE_CLSID!(JsonError(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,69,114,114,111,114,0]) [CLSID_JsonError]);
+DEFINE_CLSID!(JsonError: "Windows.Data.Json.JsonError");
 DEFINE_IID!(IID_IJsonErrorStatics2, 1077948634, 34768, 17260, 131, 171, 252, 123, 18, 192, 204, 38);
 RT_INTERFACE!{static interface IJsonErrorStatics2(IJsonErrorStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IJsonErrorStatics2] {
     fn GetJsonStatus(&self, hresult: i32, out: *mut JsonErrorStatus) -> HRESULT
@@ -143,7 +143,7 @@ impl JsonObject {
         <Self as RtActivatable<IJsonObjectStatics>>::get_activation_factory().try_parse(input)
     }}
 }
-DEFINE_CLSID!(JsonObject(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,79,98,106,101,99,116,0]) [CLSID_JsonObject]);
+DEFINE_CLSID!(JsonObject: "Windows.Data.Json.JsonObject");
 DEFINE_IID!(IID_IJsonObjectStatics, 579465561, 21726, 17880, 171, 204, 34, 96, 63, 160, 102, 160);
 RT_INTERFACE!{static interface IJsonObjectStatics(IJsonObjectStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJsonObjectStatics] {
     fn Parse(&self, input: HSTRING, out: *mut *mut JsonObject) -> HRESULT,
@@ -272,7 +272,7 @@ impl JsonValue {
         <Self as RtActivatable<IJsonValueStatics2>>::get_activation_factory().create_null_value()
     }}
 }
-DEFINE_CLSID!(JsonValue(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,86,97,108,117,101,0]) [CLSID_JsonValue]);
+DEFINE_CLSID!(JsonValue: "Windows.Data.Json.JsonValue");
 DEFINE_IID!(IID_IJsonValueStatics, 1600869450, 12115, 18657, 145, 163, 247, 139, 80, 166, 52, 92);
 RT_INTERFACE!{static interface IJsonValueStatics(IJsonValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJsonValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut *mut JsonValue) -> HRESULT,
@@ -582,7 +582,7 @@ impl XmlDocument {
         <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_file_with_settings_async(file, loadSettings)
     }}
 }
-DEFINE_CLSID!(XmlDocument(&[87,105,110,100,111,119,115,46,68,97,116,97,46,88,109,108,46,68,111,109,46,88,109,108,68,111,99,117,109,101,110,116,0]) [CLSID_XmlDocument]);
+DEFINE_CLSID!(XmlDocument: "Windows.Data.Xml.Dom.XmlDocument");
 DEFINE_IID!(IID_IXmlDocumentFragment, 3807013526, 3105, 17573, 139, 201, 158, 74, 38, 39, 8, 236);
 RT_INTERFACE!{interface IXmlDocumentFragment(IXmlDocumentFragmentVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentFragment] {
     
@@ -836,7 +836,7 @@ impl IXmlLoadSettings {
 }
 RT_CLASS!{class XmlLoadSettings: IXmlLoadSettings}
 impl RtActivatable<IActivationFactory> for XmlLoadSettings {}
-DEFINE_CLSID!(XmlLoadSettings(&[87,105,110,100,111,119,115,46,68,97,116,97,46,88,109,108,46,68,111,109,46,88,109,108,76,111,97,100,83,101,116,116,105,110,103,115,0]) [CLSID_XmlLoadSettings]);
+DEFINE_CLSID!(XmlLoadSettings: "Windows.Data.Xml.Dom.XmlLoadSettings");
 DEFINE_IID!(IID_IXmlNamedNodeMap, 3014041264, 43696, 19330, 166, 250, 177, 69, 63, 124, 2, 27);
 RT_INTERFACE!{interface IXmlNamedNodeMap(IXmlNamedNodeMapVtbl): IInspectable(IInspectableVtbl) [IID_IXmlNamedNodeMap] {
     fn get_Length(&self, out: *mut u32) -> HRESULT,
@@ -1156,7 +1156,7 @@ impl XsltProcessor {
         <Self as RtActivatable<IXsltProcessorFactory>>::get_activation_factory().create_instance(document)
     }}
 }
-DEFINE_CLSID!(XsltProcessor(&[87,105,110,100,111,119,115,46,68,97,116,97,46,88,109,108,46,88,115,108,46,88,115,108,116,80,114,111,99,101,115,115,111,114,0]) [CLSID_XsltProcessor]);
+DEFINE_CLSID!(XsltProcessor: "Windows.Data.Xml.Xsl.XsltProcessor");
 DEFINE_IID!(IID_IXsltProcessor2, 2376358998, 38821, 17611, 168, 190, 39, 216, 98, 128, 199, 10);
 RT_INTERFACE!{interface IXsltProcessor2(IXsltProcessor2Vtbl): IInspectable(IInspectableVtbl) [IID_IXsltProcessor2] {
     fn TransformToDocument(&self, inputNode: *mut super::dom::IXmlNode, out: *mut *mut super::dom::XmlDocument) -> HRESULT
@@ -1201,7 +1201,7 @@ impl HtmlUtilities {
         <Self as RtActivatable<IHtmlUtilities>>::get_activation_factory().convert_to_text(html)
     }}
 }
-DEFINE_CLSID!(HtmlUtilities(&[87,105,110,100,111,119,115,46,68,97,116,97,46,72,116,109,108,46,72,116,109,108,85,116,105,108,105,116,105,101,115,0]) [CLSID_HtmlUtilities]);
+DEFINE_CLSID!(HtmlUtilities: "Windows.Data.Html.HtmlUtilities");
 } // Windows.Data.Html
 pub mod pdf { // Windows.Data.Pdf
 use ::prelude::*;
@@ -1244,7 +1244,7 @@ impl PdfDocument {
         <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_stream_with_password_async(inputStream, password)
     }}
 }
-DEFINE_CLSID!(PdfDocument(&[87,105,110,100,111,119,115,46,68,97,116,97,46,80,100,102,46,80,100,102,68,111,99,117,109,101,110,116,0]) [CLSID_PdfDocument]);
+DEFINE_CLSID!(PdfDocument: "Windows.Data.Pdf.PdfDocument");
 DEFINE_IID!(IID_IPdfDocumentStatics, 1127877471, 49159, 18312, 144, 242, 8, 20, 61, 146, 37, 153);
 RT_INTERFACE!{static interface IPdfDocumentStatics(IPdfDocumentStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfDocumentStatics] {
     #[cfg(feature="windows-storage")] fn LoadFromFileAsync(&self, file: *mut super::super::storage::IStorageFile, out: *mut *mut super::super::foundation::IAsyncOperation<PdfDocument>) -> HRESULT,
@@ -1441,7 +1441,7 @@ impl IPdfPageRenderOptions {
 }
 RT_CLASS!{class PdfPageRenderOptions: IPdfPageRenderOptions}
 impl RtActivatable<IActivationFactory> for PdfPageRenderOptions {}
-DEFINE_CLSID!(PdfPageRenderOptions(&[87,105,110,100,111,119,115,46,68,97,116,97,46,80,100,102,46,80,100,102,80,97,103,101,82,101,110,100,101,114,79,112,116,105,111,110,115,0]) [CLSID_PdfPageRenderOptions]);
+DEFINE_CLSID!(PdfPageRenderOptions: "Windows.Data.Pdf.PdfPageRenderOptions");
 RT_ENUM! { enum PdfPageRotation: i32 {
     Normal (PdfPageRotation_Normal) = 0, Rotate90 (PdfPageRotation_Rotate90) = 1, Rotate180 (PdfPageRotation_Rotate180) = 2, Rotate270 (PdfPageRotation_Rotate270) = 3,
 }}
@@ -1538,7 +1538,7 @@ impl SelectableWordsSegmenter {
         <Self as RtActivatable<ISelectableWordsSegmenterFactory>>::get_activation_factory().create_with_language(language)
     }}
 }
-DEFINE_CLSID!(SelectableWordsSegmenter(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,83,101,108,101,99,116,97,98,108,101,87,111,114,100,115,83,101,103,109,101,110,116,101,114,0]) [CLSID_SelectableWordsSegmenter]);
+DEFINE_CLSID!(SelectableWordsSegmenter: "Windows.Data.Text.SelectableWordsSegmenter");
 DEFINE_IID!(IID_ISelectableWordsSegmenterFactory, 2356835912, 24663, 17209, 188, 112, 242, 16, 1, 10, 65, 80);
 RT_INTERFACE!{static interface ISelectableWordsSegmenterFactory(ISelectableWordsSegmenterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordsSegmenterFactory] {
     fn CreateWithLanguage(&self, language: HSTRING, out: *mut *mut SelectableWordsSegmenter) -> HRESULT
@@ -1577,7 +1577,7 @@ impl SemanticTextQuery {
         <Self as RtActivatable<ISemanticTextQueryFactory>>::get_activation_factory().create_with_language(aqsFilter, filterLanguage)
     }}
 }
-DEFINE_CLSID!(SemanticTextQuery(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,83,101,109,97,110,116,105,99,84,101,120,116,81,117,101,114,121,0]) [CLSID_SemanticTextQuery]);
+DEFINE_CLSID!(SemanticTextQuery: "Windows.Data.Text.SemanticTextQuery");
 DEFINE_IID!(IID_ISemanticTextQueryFactory, 596378883, 63893, 17799, 135, 119, 162, 183, 216, 10, 207, 239);
 RT_INTERFACE!{static interface ISemanticTextQueryFactory(ISemanticTextQueryFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISemanticTextQueryFactory] {
     fn Create(&self, aqsFilter: HSTRING, out: *mut *mut SemanticTextQuery) -> HRESULT,
@@ -1631,7 +1631,7 @@ impl TextConversionGenerator {
         <Self as RtActivatable<ITextConversionGeneratorFactory>>::get_activation_factory().create(languageTag)
     }}
 }
-DEFINE_CLSID!(TextConversionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,67,111,110,118,101,114,115,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextConversionGenerator]);
+DEFINE_CLSID!(TextConversionGenerator: "Windows.Data.Text.TextConversionGenerator");
 DEFINE_IID!(IID_ITextConversionGeneratorFactory, 4239013761, 12419, 18859, 190, 21, 86, 223, 187, 183, 77, 111);
 RT_INTERFACE!{static interface ITextConversionGeneratorFactory(ITextConversionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextConversionGeneratorFactory] {
     fn Create(&self, languageTag: HSTRING, out: *mut *mut TextConversionGenerator) -> HRESULT
@@ -1697,7 +1697,7 @@ impl TextPredictionGenerator {
         <Self as RtActivatable<ITextPredictionGeneratorFactory>>::get_activation_factory().create(languageTag)
     }}
 }
-DEFINE_CLSID!(TextPredictionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,80,114,101,100,105,99,116,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextPredictionGenerator]);
+DEFINE_CLSID!(TextPredictionGenerator: "Windows.Data.Text.TextPredictionGenerator");
 DEFINE_IID!(IID_ITextPredictionGeneratorFactory, 1918350358, 35746, 18257, 157, 48, 157, 133, 67, 86, 83, 162);
 RT_INTERFACE!{static interface ITextPredictionGeneratorFactory(ITextPredictionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextPredictionGeneratorFactory] {
     fn Create(&self, languageTag: HSTRING, out: *mut *mut TextPredictionGenerator) -> HRESULT
@@ -1739,7 +1739,7 @@ impl TextReverseConversionGenerator {
         <Self as RtActivatable<ITextReverseConversionGeneratorFactory>>::get_activation_factory().create(languageTag)
     }}
 }
-DEFINE_CLSID!(TextReverseConversionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,82,101,118,101,114,115,101,67,111,110,118,101,114,115,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextReverseConversionGenerator]);
+DEFINE_CLSID!(TextReverseConversionGenerator: "Windows.Data.Text.TextReverseConversionGenerator");
 DEFINE_IID!(IID_ITextReverseConversionGenerator2, 447730412, 34262, 18173, 130, 138, 58, 72, 48, 250, 110, 24);
 RT_INTERFACE!{interface ITextReverseConversionGenerator2(ITextReverseConversionGenerator2Vtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGenerator2] {
     fn GetPhonemesAsync(&self, input: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<TextPhoneme>>) -> HRESULT
@@ -1820,7 +1820,7 @@ impl UnicodeCharacters {
         <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().get_general_category(codepoint)
     }}
 }
-DEFINE_CLSID!(UnicodeCharacters(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,85,110,105,99,111,100,101,67,104,97,114,97,99,116,101,114,115,0]) [CLSID_UnicodeCharacters]);
+DEFINE_CLSID!(UnicodeCharacters: "Windows.Data.Text.UnicodeCharacters");
 DEFINE_IID!(IID_IUnicodeCharactersStatics, 2542837383, 37521, 20369, 182, 200, 182, 227, 89, 215, 167, 251);
 RT_INTERFACE!{static interface IUnicodeCharactersStatics(IUnicodeCharactersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUnicodeCharactersStatics] {
     fn GetCodepointFromSurrogatePair(&self, highSurrogate: u32, lowSurrogate: u32, out: *mut u32) -> HRESULT,
@@ -2003,7 +2003,7 @@ impl WordsSegmenter {
         <Self as RtActivatable<IWordsSegmenterFactory>>::get_activation_factory().create_with_language(language)
     }}
 }
-DEFINE_CLSID!(WordsSegmenter(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,87,111,114,100,115,83,101,103,109,101,110,116,101,114,0]) [CLSID_WordsSegmenter]);
+DEFINE_CLSID!(WordsSegmenter: "Windows.Data.Text.WordsSegmenter");
 DEFINE_IID!(IID_IWordsSegmenterFactory, 3868684916, 64565, 17756, 139, 251, 109, 127, 70, 83, 202, 151);
 RT_INTERFACE!{static interface IWordsSegmenterFactory(IWordsSegmenterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWordsSegmenterFactory] {
     fn CreateWithLanguage(&self, language: HSTRING, out: *mut *mut WordsSegmenter) -> HRESULT

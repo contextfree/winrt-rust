@@ -15,7 +15,7 @@ impl ApplicationLanguages {
         <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().get_manifest_languages()
     }}
 }
-DEFINE_CLSID!(ApplicationLanguages(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,65,112,112,108,105,99,97,116,105,111,110,76,97,110,103,117,97,103,101,115,0]) [CLSID_ApplicationLanguages]);
+DEFINE_CLSID!(ApplicationLanguages: "Windows.Globalization.ApplicationLanguages");
 DEFINE_IID!(IID_IApplicationLanguagesStatics, 1974732871, 2636, 19090, 149, 101, 253, 99, 201, 95, 122, 237);
 RT_INTERFACE!{static interface IApplicationLanguagesStatics(IApplicationLanguagesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationLanguagesStatics] {
     fn get_PrimaryLanguageOverride(&self, out: *mut HSTRING) -> HRESULT,
@@ -625,7 +625,7 @@ impl Calendar {
         <Self as RtActivatable<ICalendarFactory2>>::get_activation_factory().create_calendar_with_time_zone(languages, calendar, clock, timeZoneId)
     }}
 }
-DEFINE_CLSID!(Calendar(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,97,108,101,110,100,97,114,0]) [CLSID_Calendar]);
+DEFINE_CLSID!(Calendar: "Windows.Globalization.Calendar");
 DEFINE_IID!(IID_ICalendarFactory, 2213905426, 58731, 19573, 166, 110, 15, 99, 213, 119, 88, 166);
 RT_INTERFACE!{static interface ICalendarFactory(ICalendarFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICalendarFactory] {
     fn CreateCalendarDefaultCalendarAndClock(&self, languages: *mut super::foundation::collections::IIterable<HString>, out: *mut *mut Calendar) -> HRESULT,
@@ -705,7 +705,7 @@ impl CalendarIdentifiers {
         <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_vietnamese_lunar()
     }}
 }
-DEFINE_CLSID!(CalendarIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,97,108,101,110,100,97,114,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_CalendarIdentifiers]);
+DEFINE_CLSID!(CalendarIdentifiers: "Windows.Globalization.CalendarIdentifiers");
 DEFINE_IID!(IID_ICalendarIdentifiersStatics, 2154119016, 11442, 19487, 181, 144, 240, 245, 43, 244, 253, 26);
 RT_INTERFACE!{static interface ICalendarIdentifiersStatics(ICalendarIdentifiersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICalendarIdentifiersStatics] {
     fn get_Gregorian(&self, out: *mut HSTRING) -> HRESULT,
@@ -821,7 +821,7 @@ impl ClockIdentifiers {
         <Self as RtActivatable<IClockIdentifiersStatics>>::get_activation_factory().get_twenty_four_hour()
     }}
 }
-DEFINE_CLSID!(ClockIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,108,111,99,107,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_ClockIdentifiers]);
+DEFINE_CLSID!(ClockIdentifiers: "Windows.Globalization.ClockIdentifiers");
 DEFINE_IID!(IID_IClockIdentifiersStatics, 1379403195, 4844, 20355, 188, 49, 177, 180, 55, 107, 8, 8);
 RT_INTERFACE!{static interface IClockIdentifiersStatics(IClockIdentifiersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IClockIdentifiersStatics] {
     fn get_TwelveHour(&self, out: *mut HSTRING) -> HRESULT,
@@ -1318,7 +1318,7 @@ impl CurrencyIdentifiers {
         <Self as RtActivatable<ICurrencyIdentifiersStatics2>>::get_activation_factory().get_byn()
     }}
 }
-DEFINE_CLSID!(CurrencyIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,117,114,114,101,110,99,121,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_CurrencyIdentifiers]);
+DEFINE_CLSID!(CurrencyIdentifiers: "Windows.Globalization.CurrencyIdentifiers");
 DEFINE_IID!(IID_ICurrencyIdentifiersStatics, 2669480219, 54662, 18707, 155, 106, 169, 189, 45, 193, 40, 116);
 RT_INTERFACE!{static interface ICurrencyIdentifiersStatics(ICurrencyIdentifiersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyIdentifiersStatics] {
     fn get_AED(&self, out: *mut HSTRING) -> HRESULT,
@@ -2339,7 +2339,7 @@ impl GeographicRegion {
         <Self as RtActivatable<IGeographicRegionStatics>>::get_activation_factory().is_supported(geographicRegionCode)
     }}
 }
-DEFINE_CLSID!(GeographicRegion(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,71,101,111,103,114,97,112,104,105,99,82,101,103,105,111,110,0]) [CLSID_GeographicRegion]);
+DEFINE_CLSID!(GeographicRegion: "Windows.Globalization.GeographicRegion");
 DEFINE_IID!(IID_IGeographicRegionFactory, 1396855408, 30644, 17003, 133, 159, 129, 225, 157, 81, 37, 70);
 RT_INTERFACE!{static interface IGeographicRegionFactory(IGeographicRegionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeographicRegionFactory] {
     fn CreateGeographicRegion(&self, geographicRegionCode: HSTRING, out: *mut *mut GeographicRegion) -> HRESULT
@@ -2396,7 +2396,7 @@ impl JapanesePhoneticAnalyzer {
         <Self as RtActivatable<IJapanesePhoneticAnalyzerStatics>>::get_activation_factory().get_words_with_mono_ruby_option(input, monoRuby)
     }}
 }
-DEFINE_CLSID!(JapanesePhoneticAnalyzer(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,74,97,112,97,110,101,115,101,80,104,111,110,101,116,105,99,65,110,97,108,121,122,101,114,0]) [CLSID_JapanesePhoneticAnalyzer]);
+DEFINE_CLSID!(JapanesePhoneticAnalyzer: "Windows.Globalization.JapanesePhoneticAnalyzer");
 DEFINE_IID!(IID_IJapanesePhoneticAnalyzerStatics, 2292948624, 37854, 16818, 180, 213, 142, 219, 34, 127, 209, 194);
 RT_INTERFACE!{static interface IJapanesePhoneticAnalyzerStatics(IJapanesePhoneticAnalyzerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJapanesePhoneticAnalyzerStatics] {
     fn GetWords(&self, input: HSTRING, out: *mut *mut super::foundation::collections::IVectorView<JapanesePhoneme>) -> HRESULT,
@@ -2461,7 +2461,7 @@ impl Language {
         <Self as RtActivatable<ILanguageStatics2>>::get_activation_factory().try_set_input_method_language_tag(languageTag)
     }}
 }
-DEFINE_CLSID!(Language(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,76,97,110,103,117,97,103,101,0]) [CLSID_Language]);
+DEFINE_CLSID!(Language: "Windows.Globalization.Language");
 DEFINE_IID!(IID_ILanguageExtensionSubtags, 2105388869, 13965, 17252, 133, 43, 222, 201, 39, 3, 123, 133);
 RT_INTERFACE!{interface ILanguageExtensionSubtags(ILanguageExtensionSubtagsVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageExtensionSubtags] {
     fn GetExtensionSubtags(&self, singleton: HSTRING, out: *mut *mut super::foundation::collections::IVectorView<HString>) -> HRESULT
@@ -2661,7 +2661,7 @@ impl NumeralSystemIdentifiers {
         <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().get_zmth_mono()
     }}
 }
-DEFINE_CLSID!(NumeralSystemIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,101,114,97,108,83,121,115,116,101,109,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_NumeralSystemIdentifiers]);
+DEFINE_CLSID!(NumeralSystemIdentifiers: "Windows.Globalization.NumeralSystemIdentifiers");
 DEFINE_IID!(IID_INumeralSystemIdentifiersStatics, 2781242051, 26825, 19773, 183, 101, 151, 32, 41, 226, 29, 236);
 RT_INTERFACE!{static interface INumeralSystemIdentifiersStatics(INumeralSystemIdentifiersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INumeralSystemIdentifiersStatics] {
     fn get_Arab(&self, out: *mut HSTRING) -> HRESULT,
@@ -3107,7 +3107,7 @@ impl LanguageFontGroup {
         <Self as RtActivatable<ILanguageFontGroupFactory>>::get_activation_factory().create_language_font_group(languageTag)
     }}
 }
-DEFINE_CLSID!(LanguageFontGroup(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,70,111,110,116,115,46,76,97,110,103,117,97,103,101,70,111,110,116,71,114,111,117,112,0]) [CLSID_LanguageFontGroup]);
+DEFINE_CLSID!(LanguageFontGroup: "Windows.Globalization.Fonts.LanguageFontGroup");
 DEFINE_IID!(IID_ILanguageFontGroupFactory, 4239305831, 20087, 18887, 184, 86, 221, 233, 52, 252, 115, 91);
 RT_INTERFACE!{static interface ILanguageFontGroupFactory(ILanguageFontGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroupFactory] {
     fn CreateLanguageFontGroup(&self, languageTag: HSTRING, out: *mut *mut LanguageFontGroup) -> HRESULT
@@ -3177,7 +3177,7 @@ impl PhoneNumberFormatter {
         <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().wrap_with_left_to_right_markers(number)
     }}
 }
-DEFINE_CLSID!(PhoneNumberFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,101,114,0]) [CLSID_PhoneNumberFormatter]);
+DEFINE_CLSID!(PhoneNumberFormatter: "Windows.Globalization.PhoneNumberFormatting.PhoneNumberFormatter");
 DEFINE_IID!(IID_IPhoneNumberFormatterStatics, 1554446641, 34009, 16715, 171, 78, 160, 85, 44, 135, 134, 2);
 RT_INTERFACE!{static interface IPhoneNumberFormatterStatics(IPhoneNumberFormatterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatterStatics] {
     fn TryCreate(&self, regionCode: HSTRING, phoneNumber: *mut *mut PhoneNumberFormatter) -> HRESULT,
@@ -3274,7 +3274,7 @@ impl PhoneNumberInfo {
         <Self as RtActivatable<IPhoneNumberInfoStatics>>::get_activation_factory().try_parse_with_region(input, regionCode)
     }}
 }
-DEFINE_CLSID!(PhoneNumberInfo(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,73,110,102,111,0]) [CLSID_PhoneNumberInfo]);
+DEFINE_CLSID!(PhoneNumberInfo: "Windows.Globalization.PhoneNumberFormatting.PhoneNumberInfo");
 DEFINE_IID!(IID_IPhoneNumberInfoFactory, 2181216612, 44458, 19711, 143, 207, 23, 231, 81, 106, 40, 255);
 RT_INTERFACE!{static interface IPhoneNumberInfoFactory(IPhoneNumberInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfoFactory] {
     fn Create(&self, number: HSTRING, out: *mut *mut PhoneNumberInfo) -> HRESULT
@@ -3465,7 +3465,7 @@ impl DateTimeFormatter {
         <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().get_short_time()
     }}
 }
-DEFINE_CLSID!(DateTimeFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,68,97,116,101,84,105,109,101,70,111,114,109,97,116,116,105,110,103,46,68,97,116,101,84,105,109,101,70,111,114,109,97,116,116,101,114,0]) [CLSID_DateTimeFormatter]);
+DEFINE_CLSID!(DateTimeFormatter: "Windows.Globalization.DateTimeFormatting.DateTimeFormatter");
 DEFINE_IID!(IID_IDateTimeFormatter2, 667490950, 48554, 20432, 158, 54, 103, 29, 90, 165, 238, 3);
 RT_INTERFACE!{interface IDateTimeFormatter2(IDateTimeFormatter2Vtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatter2] {
     fn FormatUsingTimeZone(&self, datetime: super::super::foundation::DateTime, timeZoneId: HSTRING, out: *mut HSTRING) -> HRESULT
@@ -3603,7 +3603,7 @@ impl CurrencyFormatter {
         <Self as RtActivatable<ICurrencyFormatterFactory>>::get_activation_factory().create_currency_formatter_code_context(currencyCode, languages, geographicRegion)
     }}
 }
-DEFINE_CLSID!(CurrencyFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,67,117,114,114,101,110,99,121,70,111,114,109,97,116,116,101,114,0]) [CLSID_CurrencyFormatter]);
+DEFINE_CLSID!(CurrencyFormatter: "Windows.Globalization.NumberFormatting.CurrencyFormatter");
 DEFINE_IID!(IID_ICurrencyFormatter2, 120336157, 59322, 16791, 146, 14, 36, 124, 146, 247, 222, 166);
 RT_INTERFACE!{interface ICurrencyFormatter2(ICurrencyFormatter2Vtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyFormatter2] {
     fn get_Mode(&self, out: *mut CurrencyFormatterMode) -> HRESULT,
@@ -3653,7 +3653,7 @@ impl DecimalFormatter {
         <Self as RtActivatable<IDecimalFormatterFactory>>::get_activation_factory().create_decimal_formatter(languages, geographicRegion)
     }}
 }
-DEFINE_CLSID!(DecimalFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,68,101,99,105,109,97,108,70,111,114,109,97,116,116,101,114,0]) [CLSID_DecimalFormatter]);
+DEFINE_CLSID!(DecimalFormatter: "Windows.Globalization.NumberFormatting.DecimalFormatter");
 DEFINE_IID!(IID_IDecimalFormatterFactory, 218205338, 58259, 18104, 184, 48, 122, 105, 200, 248, 159, 187);
 RT_INTERFACE!{static interface IDecimalFormatterFactory(IDecimalFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDecimalFormatterFactory] {
     fn CreateDecimalFormatter(&self, languages: *mut super::super::foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut *mut DecimalFormatter) -> HRESULT
@@ -3694,7 +3694,7 @@ impl IIncrementNumberRounder {
 }
 RT_CLASS!{class IncrementNumberRounder: INumberRounder}
 impl RtActivatable<IActivationFactory> for IncrementNumberRounder {}
-DEFINE_CLSID!(IncrementNumberRounder(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,73,110,99,114,101,109,101,110,116,78,117,109,98,101,114,82,111,117,110,100,101,114,0]) [CLSID_IncrementNumberRounder]);
+DEFINE_CLSID!(IncrementNumberRounder: "Windows.Globalization.NumberFormatting.IncrementNumberRounder");
 DEFINE_IID!(IID_INumberFormatter, 2768272457, 30326, 19895, 134, 49, 27, 111, 242, 101, 202, 169);
 RT_INTERFACE!{interface INumberFormatter(INumberFormatterVtbl): IInspectable(IInspectableVtbl) [IID_INumberFormatter] {
     fn FormatInt(&self, value: i64, out: *mut HSTRING) -> HRESULT,
@@ -3947,7 +3947,7 @@ impl NumeralSystemTranslator {
         <Self as RtActivatable<INumeralSystemTranslatorFactory>>::get_activation_factory().create(languages)
     }}
 }
-DEFINE_CLSID!(NumeralSystemTranslator(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,78,117,109,101,114,97,108,83,121,115,116,101,109,84,114,97,110,115,108,97,116,111,114,0]) [CLSID_NumeralSystemTranslator]);
+DEFINE_CLSID!(NumeralSystemTranslator: "Windows.Globalization.NumberFormatting.NumeralSystemTranslator");
 DEFINE_IID!(IID_INumeralSystemTranslatorFactory, 2519779546, 14063, 19848, 168, 92, 111, 13, 152, 214, 32, 166);
 RT_INTERFACE!{static interface INumeralSystemTranslatorFactory(INumeralSystemTranslatorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INumeralSystemTranslatorFactory] {
     fn Create(&self, languages: *mut super::super::foundation::collections::IIterable<HString>, out: *mut *mut NumeralSystemTranslator) -> HRESULT
@@ -3967,7 +3967,7 @@ impl PercentFormatter {
         <Self as RtActivatable<IPercentFormatterFactory>>::get_activation_factory().create_percent_formatter(languages, geographicRegion)
     }}
 }
-DEFINE_CLSID!(PercentFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,101,114,99,101,110,116,70,111,114,109,97,116,116,101,114,0]) [CLSID_PercentFormatter]);
+DEFINE_CLSID!(PercentFormatter: "Windows.Globalization.NumberFormatting.PercentFormatter");
 DEFINE_IID!(IID_IPercentFormatterFactory, 3078785775, 65236, 16408, 166, 226, 224, 153, 97, 224, 55, 101);
 RT_INTERFACE!{static interface IPercentFormatterFactory(IPercentFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPercentFormatterFactory] {
     fn CreatePercentFormatter(&self, languages: *mut super::super::foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut *mut PercentFormatter) -> HRESULT
@@ -3987,7 +3987,7 @@ impl PermilleFormatter {
         <Self as RtActivatable<IPermilleFormatterFactory>>::get_activation_factory().create_permille_formatter(languages, geographicRegion)
     }}
 }
-DEFINE_CLSID!(PermilleFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,101,114,109,105,108,108,101,70,111,114,109,97,116,116,101,114,0]) [CLSID_PermilleFormatter]);
+DEFINE_CLSID!(PermilleFormatter: "Windows.Globalization.NumberFormatting.PermilleFormatter");
 DEFINE_IID!(IID_IPermilleFormatterFactory, 725071020, 58936, 20181, 169, 152, 98, 246, 176, 106, 73, 174);
 RT_INTERFACE!{static interface IPermilleFormatterFactory(IPermilleFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPermilleFormatterFactory] {
     fn CreatePermilleFormatter(&self, languages: *mut super::super::foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut *mut PermilleFormatter) -> HRESULT
@@ -4047,7 +4047,7 @@ impl ISignificantDigitsNumberRounder {
 }
 RT_CLASS!{class SignificantDigitsNumberRounder: INumberRounder}
 impl RtActivatable<IActivationFactory> for SignificantDigitsNumberRounder {}
-DEFINE_CLSID!(SignificantDigitsNumberRounder(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,83,105,103,110,105,102,105,99,97,110,116,68,105,103,105,116,115,78,117,109,98,101,114,82,111,117,110,100,101,114,0]) [CLSID_SignificantDigitsNumberRounder]);
+DEFINE_CLSID!(SignificantDigitsNumberRounder: "Windows.Globalization.NumberFormatting.SignificantDigitsNumberRounder");
 DEFINE_IID!(IID_ISignificantDigitsOption, 491650269, 11587, 20200, 187, 241, 193, 178, 106, 113, 26, 88);
 RT_INTERFACE!{interface ISignificantDigitsOption(ISignificantDigitsOptionVtbl): IInspectable(IInspectableVtbl) [IID_ISignificantDigitsOption] {
     fn get_SignificantDigits(&self, out: *mut i32) -> HRESULT,
@@ -4104,7 +4104,7 @@ impl CharacterGroupings {
         <Self as RtActivatable<ICharacterGroupingsFactory>>::get_activation_factory().create(language)
     }}
 }
-DEFINE_CLSID!(CharacterGroupings(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,111,108,108,97,116,105,111,110,46,67,104,97,114,97,99,116,101,114,71,114,111,117,112,105,110,103,115,0]) [CLSID_CharacterGroupings]);
+DEFINE_CLSID!(CharacterGroupings: "Windows.Globalization.Collation.CharacterGroupings");
 DEFINE_IID!(IID_ICharacterGroupingsFactory, 2582290393, 34925, 17409, 159, 152, 105, 200, 45, 76, 47, 120);
 RT_INTERFACE!{static interface ICharacterGroupingsFactory(ICharacterGroupingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGroupingsFactory] {
     fn Create(&self, language: HSTRING, out: *mut *mut CharacterGroupings) -> HRESULT

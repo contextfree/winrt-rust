@@ -101,7 +101,7 @@ impl KeyCredentialManager {
         <Self as RtActivatable<IKeyCredentialManagerStatics>>::get_activation_factory().delete_async(name)
     }}
 }
-DEFINE_CLSID!(KeyCredentialManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,75,101,121,67,114,101,100,101,110,116,105,97,108,77,97,110,97,103,101,114,0]) [CLSID_KeyCredentialManager]);
+DEFINE_CLSID!(KeyCredentialManager: "Windows.Security.Credentials.KeyCredentialManager");
 DEFINE_IID!(IID_IKeyCredentialManagerStatics, 1789675147, 3825, 19680, 130, 144, 65, 6, 218, 106, 99, 181);
 RT_INTERFACE!{static interface IKeyCredentialManagerStatics(IKeyCredentialManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyCredentialManagerStatics] {
     fn IsSupportedAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<bool>) -> HRESULT,
@@ -234,10 +234,10 @@ impl PasswordCredential {
         <Self as RtActivatable<ICredentialFactory>>::get_activation_factory().create_password_credential(resource, userName, password)
     }}
 }
-DEFINE_CLSID!(PasswordCredential(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,80,97,115,115,119,111,114,100,67,114,101,100,101,110,116,105,97,108,0]) [CLSID_PasswordCredential]);
+DEFINE_CLSID!(PasswordCredential: "Windows.Security.Credentials.PasswordCredential");
 RT_CLASS!{class PasswordCredentialPropertyStore: super::super::foundation::collections::IPropertySet}
 impl RtActivatable<IActivationFactory> for PasswordCredentialPropertyStore {}
-DEFINE_CLSID!(PasswordCredentialPropertyStore(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,80,97,115,115,119,111,114,100,67,114,101,100,101,110,116,105,97,108,80,114,111,112,101,114,116,121,83,116,111,114,101,0]) [CLSID_PasswordCredentialPropertyStore]);
+DEFINE_CLSID!(PasswordCredentialPropertyStore: "Windows.Security.Credentials.PasswordCredentialPropertyStore");
 DEFINE_IID!(IID_IPasswordVault, 1643981835, 51412, 18625, 165, 79, 188, 90, 100, 32, 90, 242);
 RT_INTERFACE!{interface IPasswordVault(IPasswordVaultVtbl): IInspectable(IInspectableVtbl) [IID_IPasswordVault] {
     fn Add(&self, credential: *mut PasswordCredential) -> HRESULT,
@@ -279,7 +279,7 @@ impl IPasswordVault {
 }
 RT_CLASS!{class PasswordVault: IPasswordVault}
 impl RtActivatable<IActivationFactory> for PasswordVault {}
-DEFINE_CLSID!(PasswordVault(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,80,97,115,115,119,111,114,100,86,97,117,108,116,0]) [CLSID_PasswordVault]);
+DEFINE_CLSID!(PasswordVault: "Windows.Security.Credentials.PasswordVault");
 DEFINE_IID!(IID_IWebAccount, 1766276786, 32817, 18878, 128, 187, 150, 203, 70, 217, 154, 186);
 RT_INTERFACE!{interface IWebAccount(IWebAccountVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccount] {
     fn get_WebAccountProvider(&self, out: *mut *mut WebAccountProvider) -> HRESULT,
@@ -310,7 +310,7 @@ impl WebAccount {
         <Self as RtActivatable<IWebAccountFactory>>::get_activation_factory().create_web_account(webAccountProvider, userName, state)
     }}
 }
-DEFINE_CLSID!(WebAccount(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,87,101,98,65,99,99,111,117,110,116,0]) [CLSID_WebAccount]);
+DEFINE_CLSID!(WebAccount: "Windows.Security.Credentials.WebAccount");
 DEFINE_IID!(IID_IWebAccount2, 2069288696, 39179, 20149, 148, 167, 86, 33, 243, 168, 184, 36);
 RT_INTERFACE!{interface IWebAccount2(IWebAccount2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccount2] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -391,7 +391,7 @@ impl WebAccountProvider {
         <Self as RtActivatable<IWebAccountProviderFactory>>::get_activation_factory().create_web_account_provider(id, displayName, iconUri)
     }}
 }
-DEFINE_CLSID!(WebAccountProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,87,101,98,65,99,99,111,117,110,116,80,114,111,118,105,100,101,114,0]) [CLSID_WebAccountProvider]);
+DEFINE_CLSID!(WebAccountProvider: "Windows.Security.Credentials.WebAccountProvider");
 DEFINE_IID!(IID_IWebAccountProvider2, 1241639685, 20034, 16852, 181, 24, 224, 8, 165, 22, 54, 20);
 RT_INTERFACE!{interface IWebAccountProvider2(IWebAccountProvider2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProvider2] {
     fn get_DisplayPurpose(&self, out: *mut HSTRING) -> HRESULT,
@@ -452,7 +452,7 @@ impl CredentialPicker {
         <Self as RtActivatable<ICredentialPickerStatics>>::get_activation_factory().pick_with_caption_async(targetName, message, caption)
     }}
 }
-DEFINE_CLSID!(CredentialPicker(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,85,73,46,67,114,101,100,101,110,116,105,97,108,80,105,99,107,101,114,0]) [CLSID_CredentialPicker]);
+DEFINE_CLSID!(CredentialPicker: "Windows.Security.Credentials.UI.CredentialPicker");
 DEFINE_IID!(IID_ICredentialPickerOptions, 2522483532, 38394, 18047, 153, 43, 11, 34, 229, 133, 155, 246);
 RT_INTERFACE!{interface ICredentialPickerOptions(ICredentialPickerOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ICredentialPickerOptions] {
     fn put_Caption(&self, value: HSTRING) -> HRESULT,
@@ -572,7 +572,7 @@ impl ICredentialPickerOptions {
 }
 RT_CLASS!{class CredentialPickerOptions: ICredentialPickerOptions}
 impl RtActivatable<IActivationFactory> for CredentialPickerOptions {}
-DEFINE_CLSID!(CredentialPickerOptions(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,85,73,46,67,114,101,100,101,110,116,105,97,108,80,105,99,107,101,114,79,112,116,105,111,110,115,0]) [CLSID_CredentialPickerOptions]);
+DEFINE_CLSID!(CredentialPickerOptions: "Windows.Security.Credentials.UI.CredentialPickerOptions");
 DEFINE_IID!(IID_ICredentialPickerResults, 424212890, 52272, 16652, 156, 56, 204, 8, 132, 197, 179, 215);
 RT_INTERFACE!{interface ICredentialPickerResults(ICredentialPickerResultsVtbl): IInspectable(IInspectableVtbl) [IID_ICredentialPickerResults] {
     fn get_ErrorCode(&self, out: *mut u32) -> HRESULT,
@@ -661,7 +661,7 @@ impl UserConsentVerifier {
         <Self as RtActivatable<IUserConsentVerifierStatics>>::get_activation_factory().request_verification_async(message)
     }}
 }
-DEFINE_CLSID!(UserConsentVerifier(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,85,73,46,85,115,101,114,67,111,110,115,101,110,116,86,101,114,105,102,105,101,114,0]) [CLSID_UserConsentVerifier]);
+DEFINE_CLSID!(UserConsentVerifier: "Windows.Security.Credentials.UI.UserConsentVerifier");
 RT_ENUM! { enum UserConsentVerifierAvailability: i32 {
     Available (UserConsentVerifierAvailability_Available) = 0, DeviceNotPresent (UserConsentVerifierAvailability_DeviceNotPresent) = 1, NotConfiguredForUser (UserConsentVerifierAvailability_NotConfiguredForUser) = 2, DisabledByPolicy (UserConsentVerifierAvailability_DisabledByPolicy) = 3, DeviceBusy (UserConsentVerifierAvailability_DeviceBusy) = 4,
 }}
@@ -741,7 +741,7 @@ impl EnterpriseKeyCredentialRegistrationManager {
         <Self as RtActivatable<IEnterpriseKeyCredentialRegistrationManagerStatics>>::get_activation_factory().get_current()
     }}
 }
-DEFINE_CLSID!(EnterpriseKeyCredentialRegistrationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,69,110,116,101,114,112,114,105,115,101,75,101,121,67,114,101,100,101,110,116,105,97,108,82,101,103,105,115,116,114,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_EnterpriseKeyCredentialRegistrationManager]);
+DEFINE_CLSID!(EnterpriseKeyCredentialRegistrationManager: "Windows.Security.Authentication.Identity.EnterpriseKeyCredentialRegistrationManager");
 DEFINE_IID!(IID_IEnterpriseKeyCredentialRegistrationManagerStatics, 2008571550, 44276, 19392, 186, 194, 64, 187, 70, 239, 187, 63);
 RT_INTERFACE!{static interface IEnterpriseKeyCredentialRegistrationManagerStatics(IEnterpriseKeyCredentialRegistrationManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IEnterpriseKeyCredentialRegistrationManagerStatics] {
     fn get_Current(&self, out: *mut *mut EnterpriseKeyCredentialRegistrationManager) -> HRESULT
@@ -820,7 +820,7 @@ impl SecondaryAuthenticationFactorAuthentication {
         <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().get_authentication_stage_info_async()
     }}
 }
-DEFINE_CLSID!(SecondaryAuthenticationFactorAuthentication(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,80,114,111,118,105,100,101,114,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,0]) [CLSID_SecondaryAuthenticationFactorAuthentication]);
+DEFINE_CLSID!(SecondaryAuthenticationFactorAuthentication: "Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorAuthentication");
 RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationMessage: i32 {
     Invalid (SecondaryAuthenticationFactorAuthenticationMessage_Invalid) = 0, SwipeUpWelcome (SecondaryAuthenticationFactorAuthenticationMessage_SwipeUpWelcome) = 1, TapWelcome (SecondaryAuthenticationFactorAuthenticationMessage_TapWelcome) = 2, DeviceNeedsAttention (SecondaryAuthenticationFactorAuthenticationMessage_DeviceNeedsAttention) = 3, LookingForDevice (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevice) = 4, LookingForDevicePluggedin (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevicePluggedin) = 5, BluetoothIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_BluetoothIsDisabled) = 6, NfcIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_NfcIsDisabled) = 7, WiFiIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_WiFiIsDisabled) = 8, ExtraTapIsRequired (SecondaryAuthenticationFactorAuthenticationMessage_ExtraTapIsRequired) = 9, DisabledByPolicy (SecondaryAuthenticationFactorAuthenticationMessage_DisabledByPolicy) = 10, TapOnDeviceRequired (SecondaryAuthenticationFactorAuthenticationMessage_TapOnDeviceRequired) = 11, HoldFinger (SecondaryAuthenticationFactorAuthenticationMessage_HoldFinger) = 12, ScanFinger (SecondaryAuthenticationFactorAuthenticationMessage_ScanFinger) = 13, UnauthorizedUser (SecondaryAuthenticationFactorAuthenticationMessage_UnauthorizedUser) = 14, ReregisterRequired (SecondaryAuthenticationFactorAuthenticationMessage_ReregisterRequired) = 15, TryAgain (SecondaryAuthenticationFactorAuthenticationMessage_TryAgain) = 16, SayPassphrase (SecondaryAuthenticationFactorAuthenticationMessage_SayPassphrase) = 17, ReadyToSignIn (SecondaryAuthenticationFactorAuthenticationMessage_ReadyToSignIn) = 18, UseAnotherSignInOption (SecondaryAuthenticationFactorAuthenticationMessage_UseAnotherSignInOption) = 19,
 }}
@@ -1070,7 +1070,7 @@ impl SecondaryAuthenticationFactorRegistration {
         <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().update_device_configuration_data_async(deviceId, deviceConfigurationData)
     }}
 }
-DEFINE_CLSID!(SecondaryAuthenticationFactorRegistration(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,80,114,111,118,105,100,101,114,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,82,101,103,105,115,116,114,97,116,105,111,110,0]) [CLSID_SecondaryAuthenticationFactorRegistration]);
+DEFINE_CLSID!(SecondaryAuthenticationFactorRegistration: "Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorRegistration");
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorRegistrationResult, 2768123376, 44515, 18817, 175, 107, 236, 25, 89, 33, 104, 42);
 RT_INTERFACE!{interface ISecondaryAuthenticationFactorRegistrationResult(ISecondaryAuthenticationFactorRegistrationResultVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorRegistrationResult] {
     fn get_Status(&self, out: *mut SecondaryAuthenticationFactorRegistrationStatus) -> HRESULT,
@@ -1196,7 +1196,7 @@ impl MicrosoftAccountMultiFactorAuthenticationManager {
         <Self as RtActivatable<IMicrosoftAccountMultiFactorAuthenticatorStatics>>::get_activation_factory().get_current()
     }}
 }
-DEFINE_CLSID!(MicrosoftAccountMultiFactorAuthenticationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,67,111,114,101,46,77,105,99,114,111,115,111,102,116,65,99,99,111,117,110,116,77,117,108,116,105,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MicrosoftAccountMultiFactorAuthenticationManager]);
+DEFINE_CLSID!(MicrosoftAccountMultiFactorAuthenticationManager: "Windows.Security.Authentication.Identity.Core.MicrosoftAccountMultiFactorAuthenticationManager");
 RT_ENUM! { enum MicrosoftAccountMultiFactorAuthenticationType: i32 {
     User (MicrosoftAccountMultiFactorAuthenticationType_User) = 0, Device (MicrosoftAccountMultiFactorAuthenticationType_Device) = 1,
 }}
@@ -1395,7 +1395,7 @@ impl IOnlineIdAuthenticator {
 }
 RT_CLASS!{class OnlineIdAuthenticator: IOnlineIdAuthenticator}
 impl RtActivatable<IActivationFactory> for OnlineIdAuthenticator {}
-DEFINE_CLSID!(OnlineIdAuthenticator(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,65,117,116,104,101,110,116,105,99,97,116,111,114,0]) [CLSID_OnlineIdAuthenticator]);
+DEFINE_CLSID!(OnlineIdAuthenticator: "Windows.Security.Authentication.OnlineId.OnlineIdAuthenticator");
 DEFINE_IID!(IID_IOnlineIdServiceTicket, 3378271359, 55169, 19092, 172, 184, 197, 152, 116, 35, 140, 38);
 RT_INTERFACE!{interface IOnlineIdServiceTicket(IOnlineIdServiceTicketVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdServiceTicket] {
     fn get_Value(&self, out: *mut HSTRING) -> HRESULT,
@@ -1447,7 +1447,7 @@ impl OnlineIdServiceTicketRequest {
         <Self as RtActivatable<IOnlineIdServiceTicketRequestFactory>>::get_activation_factory().create_online_id_service_ticket_request_advanced(service)
     }}
 }
-DEFINE_CLSID!(OnlineIdServiceTicketRequest(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,83,101,114,118,105,99,101,84,105,99,107,101,116,82,101,113,117,101,115,116,0]) [CLSID_OnlineIdServiceTicketRequest]);
+DEFINE_CLSID!(OnlineIdServiceTicketRequest: "Windows.Security.Authentication.OnlineId.OnlineIdServiceTicketRequest");
 DEFINE_IID!(IID_IOnlineIdServiceTicketRequestFactory, 3199928840, 40563, 16503, 150, 20, 8, 97, 76, 11, 194, 69);
 RT_INTERFACE!{static interface IOnlineIdServiceTicketRequestFactory(IOnlineIdServiceTicketRequestFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdServiceTicketRequestFactory] {
     fn CreateOnlineIdServiceTicketRequest(&self, service: HSTRING, policy: HSTRING, out: *mut *mut OnlineIdServiceTicketRequest) -> HRESULT,
@@ -1475,7 +1475,7 @@ impl OnlineIdSystemAuthenticator {
         <Self as RtActivatable<IOnlineIdSystemAuthenticatorStatics>>::get_activation_factory().get_for_user(user)
     }}
 }
-DEFINE_CLSID!(OnlineIdSystemAuthenticator(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,83,121,115,116,101,109,65,117,116,104,101,110,116,105,99,97,116,111,114,0]) [CLSID_OnlineIdSystemAuthenticator]);
+DEFINE_CLSID!(OnlineIdSystemAuthenticator: "Windows.Security.Authentication.OnlineId.OnlineIdSystemAuthenticator");
 DEFINE_IID!(IID_IOnlineIdSystemAuthenticatorForUser, 1469628155, 7652, 16774, 162, 230, 181, 99, 248, 106, 175, 68);
 RT_INTERFACE!{interface IOnlineIdSystemAuthenticatorForUser(IOnlineIdSystemAuthenticatorForUserVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemAuthenticatorForUser] {
     fn GetTicketAsync(&self, request: *mut OnlineIdServiceTicketRequest, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<OnlineIdSystemTicketResult>) -> HRESULT,
@@ -1658,7 +1658,7 @@ impl WebAuthenticationBroker {
         <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_silently_with_options_async(requestUri, options)
     }}
 }
-DEFINE_CLSID!(WebAuthenticationBroker(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,66,114,111,107,101,114,0]) [CLSID_WebAuthenticationBroker]);
+DEFINE_CLSID!(WebAuthenticationBroker: "Windows.Security.Authentication.Web.WebAuthenticationBroker");
 DEFINE_IID!(IID_IWebAuthenticationBrokerStatics, 789880602, 58995, 16565, 188, 34, 32, 26, 104, 100, 163, 123);
 RT_INTERFACE!{static interface IWebAuthenticationBrokerStatics(IWebAuthenticationBrokerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationBrokerStatics] {
     fn AuthenticateWithCallbackUriAsync(&self, options: WebAuthenticationOptions, requestUri: *mut ::rt::gen::windows::foundation::Uri, callbackUri: *mut ::rt::gen::windows::foundation::Uri, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<WebAuthenticationResult>) -> HRESULT,
@@ -1779,7 +1779,7 @@ impl WebAccountClientView {
         <Self as RtActivatable<IWebAccountClientViewFactory>>::get_activation_factory().create_with_pairwise_id(viewType, applicationCallbackUri, accountPairwiseId)
     }}
 }
-DEFINE_CLSID!(WebAccountClientView(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,65,99,99,111,117,110,116,67,108,105,101,110,116,86,105,101,119,0]) [CLSID_WebAccountClientView]);
+DEFINE_CLSID!(WebAccountClientView: "Windows.Security.Authentication.Web.Provider.WebAccountClientView");
 DEFINE_IID!(IID_IWebAccountClientViewFactory, 1634539172, 56866, 18517, 163, 38, 6, 206, 191, 42, 63, 35);
 RT_INTERFACE!{static interface IWebAccountClientViewFactory(IWebAccountClientViewFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountClientViewFactory] {
     fn Create(&self, viewType: WebAccountClientViewType, applicationCallbackUri: *mut ::rt::gen::windows::foundation::Uri, out: *mut *mut WebAccountClientView) -> HRESULT,
@@ -1881,7 +1881,7 @@ impl WebAccountManager {
         <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().get_scope(webAccount)
     }}
 }
-DEFINE_CLSID!(WebAccountManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,65,99,99,111,117,110,116,77,97,110,97,103,101,114,0]) [CLSID_WebAccountManager]);
+DEFINE_CLSID!(WebAccountManager: "Windows.Security.Authentication.Web.Provider.WebAccountManager");
 DEFINE_IID!(IID_IWebAccountManagerStatics, 3001606566, 54426, 16434, 132, 191, 26, 40, 71, 116, 123, 241);
 RT_INTERFACE!{static interface IWebAccountManagerStatics(IWebAccountManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountManagerStatics] {
     fn UpdateWebAccountPropertiesAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, webAccountUserName: HSTRING, additionalProperties: *mut ::rt::gen::windows::foundation::collections::IMapView<HString, HString>, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> HRESULT,
@@ -2336,7 +2336,7 @@ impl WebProviderTokenResponse {
         <Self as RtActivatable<IWebProviderTokenResponseFactory>>::get_activation_factory().create(webTokenResponse)
     }}
 }
-DEFINE_CLSID!(WebProviderTokenResponse(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,80,114,111,118,105,100,101,114,84,111,107,101,110,82,101,115,112,111,110,115,101,0]) [CLSID_WebProviderTokenResponse]);
+DEFINE_CLSID!(WebProviderTokenResponse: "Windows.Security.Authentication.Web.Provider.WebProviderTokenResponse");
 DEFINE_IID!(IID_IWebProviderTokenResponseFactory, 4199143834, 9658, 16503, 156, 250, 157, 180, 222, 167, 183, 26);
 RT_INTERFACE!{static interface IWebProviderTokenResponseFactory(IWebProviderTokenResponseFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenResponseFactory] {
     fn Create(&self, webTokenResponse: *mut super::core::WebTokenResponse, out: *mut *mut WebProviderTokenResponse) -> HRESULT
@@ -2435,7 +2435,7 @@ impl WebAuthenticationCoreManager {
         <Self as RtActivatable<IWebAuthenticationCoreManagerStatics3>>::get_activation_factory().create_web_account_monitor(webAccounts)
     }}
 }
-DEFINE_CLSID!(WebAuthenticationCoreManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,67,111,114,101,77,97,110,97,103,101,114,0]) [CLSID_WebAuthenticationCoreManager]);
+DEFINE_CLSID!(WebAuthenticationCoreManager: "Windows.Security.Authentication.Web.Core.WebAuthenticationCoreManager");
 DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics, 1791655058, 42369, 17529, 156, 16, 117, 46, 255, 68, 253, 52);
 RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics(IWebAuthenticationCoreManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics] {
     fn GetTokenSilentlyAsync(&self, request: *mut WebTokenRequest, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<WebTokenRequestResult>) -> HRESULT,
@@ -2535,7 +2535,7 @@ impl WebProviderError {
         <Self as RtActivatable<IWebProviderErrorFactory>>::get_activation_factory().create(errorCode, errorMessage)
     }}
 }
-DEFINE_CLSID!(WebProviderError(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,80,114,111,118,105,100,101,114,69,114,114,111,114,0]) [CLSID_WebProviderError]);
+DEFINE_CLSID!(WebProviderError: "Windows.Security.Authentication.Web.Core.WebProviderError");
 DEFINE_IID!(IID_IWebProviderErrorFactory, 3821275693, 35311, 20023, 132, 127, 168, 185, 213, 163, 41, 16);
 RT_INTERFACE!{static interface IWebProviderErrorFactory(IWebProviderErrorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderErrorFactory] {
     fn Create(&self, errorCode: u32, errorMessage: HSTRING, out: *mut *mut WebProviderError) -> HRESULT
@@ -2598,7 +2598,7 @@ impl WebTokenRequest {
         <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().create_with_scope(provider, scope)
     }}
 }
-DEFINE_CLSID!(WebTokenRequest(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,84,111,107,101,110,82,101,113,117,101,115,116,0]) [CLSID_WebTokenRequest]);
+DEFINE_CLSID!(WebTokenRequest: "Windows.Security.Authentication.Web.Core.WebTokenRequest");
 DEFINE_IID!(IID_IWebTokenRequest2, 3607150713, 12488, 17303, 150, 84, 150, 28, 59, 232, 184, 85);
 RT_INTERFACE!{interface IWebTokenRequest2(IWebTokenRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequest2] {
     fn get_AppProperties(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IMap<HString, HString>) -> HRESULT
@@ -2734,7 +2734,7 @@ impl WebTokenResponse {
         <Self as RtActivatable<IWebTokenResponseFactory>>::get_activation_factory().create_with_token_account_and_error(token, webAccount, error)
     }}
 }
-DEFINE_CLSID!(WebTokenResponse(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,84,111,107,101,110,82,101,115,112,111,110,115,101,0]) [CLSID_WebTokenResponse]);
+DEFINE_CLSID!(WebTokenResponse: "Windows.Security.Authentication.Web.Core.WebTokenResponse");
 DEFINE_IID!(IID_IWebTokenResponseFactory, 2875979768, 21584, 20214, 151, 247, 5, 43, 4, 49, 192, 240);
 RT_INTERFACE!{static interface IWebTokenResponseFactory(IWebTokenResponseFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenResponseFactory] {
     fn CreateWithToken(&self, token: HSTRING, out: *mut *mut WebTokenResponse) -> HRESULT,
@@ -2803,7 +2803,7 @@ impl CryptographicBuffer {
         <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().convert_binary_to_string(encoding, buffer)
     }}
 }
-DEFINE_CLSID!(CryptographicBuffer(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,114,121,112,116,111,103,114,97,112,104,105,99,66,117,102,102,101,114,0]) [CLSID_CryptographicBuffer]);
+DEFINE_CLSID!(CryptographicBuffer: "Windows.Security.Cryptography.CryptographicBuffer");
 DEFINE_IID!(IID_ICryptographicBufferStatics, 839613986, 15536, 19679, 134, 99, 29, 40, 145, 0, 101, 235);
 RT_INTERFACE!{static interface ICryptographicBufferStatics(ICryptographicBufferStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICryptographicBufferStatics] {
     #[cfg(feature="windows-storage")] fn Compare(&self, object1: *mut super::super::storage::streams::IBuffer, object2: *mut super::super::storage::streams::IBuffer, out: *mut bool) -> HRESULT,
@@ -2979,7 +2979,7 @@ impl Certificate {
         <Self as RtActivatable<ICertificateFactory>>::get_activation_factory().create_certificate(certBlob)
     }}
 }
-DEFINE_CLSID!(Certificate(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,0]) [CLSID_Certificate]);
+DEFINE_CLSID!(Certificate: "Windows.Security.Cryptography.Certificates.Certificate");
 DEFINE_IID!(IID_ICertificate2, 397948748, 35365, 19862, 164, 146, 143, 194, 154, 196, 253, 166);
 RT_INTERFACE!{interface ICertificate2(ICertificate2Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificate2] {
     fn get_IsSecurityDeviceBound(&self, out: *mut bool) -> HRESULT,
@@ -3095,7 +3095,7 @@ impl CertificateEnrollmentManager {
         <Self as RtActivatable<ICertificateEnrollmentManagerStatics3>>::get_activation_factory().import_pfx_data_to_ksp_with_parameters_async(pfxData, password, pfxImportParameters)
     }}
 }
-DEFINE_CLSID!(CertificateEnrollmentManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,69,110,114,111,108,108,109,101,110,116,77,97,110,97,103,101,114,0]) [CLSID_CertificateEnrollmentManager]);
+DEFINE_CLSID!(CertificateEnrollmentManager: "Windows.Security.Cryptography.Certificates.CertificateEnrollmentManager");
 DEFINE_IID!(IID_ICertificateEnrollmentManagerStatics, 2286350143, 43398, 18683, 159, 215, 154, 236, 6, 147, 91, 241);
 RT_INTERFACE!{static interface ICertificateEnrollmentManagerStatics(ICertificateEnrollmentManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateEnrollmentManagerStatics] {
     fn CreateRequestAsync(&self, request: *mut CertificateRequestProperties, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<HString>) -> HRESULT,
@@ -3192,7 +3192,7 @@ impl ICertificateExtension {
 }
 RT_CLASS!{class CertificateExtension: ICertificateExtension}
 impl RtActivatable<IActivationFactory> for CertificateExtension {}
-DEFINE_CLSID!(CertificateExtension(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,69,120,116,101,110,115,105,111,110,0]) [CLSID_CertificateExtension]);
+DEFINE_CLSID!(CertificateExtension: "Windows.Security.Cryptography.Certificates.CertificateExtension");
 DEFINE_IID!(IID_ICertificateFactory, 397681180, 19375, 17570, 150, 8, 4, 251, 98, 177, 105, 66);
 RT_INTERFACE!{static interface ICertificateFactory(ICertificateFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateFactory] {
     #[cfg(feature="windows-storage")] fn CreateCertificate(&self, certBlob: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut Certificate) -> HRESULT
@@ -3299,7 +3299,7 @@ impl ICertificateKeyUsages {
 }
 RT_CLASS!{class CertificateKeyUsages: ICertificateKeyUsages}
 impl RtActivatable<IActivationFactory> for CertificateKeyUsages {}
-DEFINE_CLSID!(CertificateKeyUsages(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,75,101,121,85,115,97,103,101,115,0]) [CLSID_CertificateKeyUsages]);
+DEFINE_CLSID!(CertificateKeyUsages: "Windows.Security.Cryptography.Certificates.CertificateKeyUsages");
 DEFINE_IID!(IID_ICertificateQuery, 1527261745, 42792, 18710, 181, 238, 255, 203, 138, 207, 36, 23);
 RT_INTERFACE!{interface ICertificateQuery(ICertificateQueryVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateQuery] {
     fn get_EnhancedKeyUsages(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<HString>) -> HRESULT,
@@ -3357,7 +3357,7 @@ impl ICertificateQuery {
 }
 RT_CLASS!{class CertificateQuery: ICertificateQuery}
 impl RtActivatable<IActivationFactory> for CertificateQuery {}
-DEFINE_CLSID!(CertificateQuery(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,81,117,101,114,121,0]) [CLSID_CertificateQuery]);
+DEFINE_CLSID!(CertificateQuery: "Windows.Security.Cryptography.Certificates.CertificateQuery");
 DEFINE_IID!(IID_ICertificateQuery2, 2472151799, 3033, 20341, 184, 194, 226, 122, 127, 116, 238, 205);
 RT_INTERFACE!{interface ICertificateQuery2(ICertificateQuery2Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificateQuery2] {
     fn get_IncludeDuplicates(&self, out: *mut bool) -> HRESULT,
@@ -3502,7 +3502,7 @@ impl ICertificateRequestProperties {
 }
 RT_CLASS!{class CertificateRequestProperties: ICertificateRequestProperties}
 impl RtActivatable<IActivationFactory> for CertificateRequestProperties {}
-DEFINE_CLSID!(CertificateRequestProperties(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,82,101,113,117,101,115,116,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_CertificateRequestProperties]);
+DEFINE_CLSID!(CertificateRequestProperties: "Windows.Security.Cryptography.Certificates.CertificateRequestProperties");
 DEFINE_IID!(IID_ICertificateRequestProperties2, 1033947476, 55103, 20467, 160, 166, 6, 119, 192, 173, 160, 91);
 RT_INTERFACE!{interface ICertificateRequestProperties2(ICertificateRequestProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificateRequestProperties2] {
     fn get_SmartcardReaderName(&self, out: *mut HSTRING) -> HRESULT,
@@ -3674,7 +3674,7 @@ impl CertificateStores {
         <Self as RtActivatable<ICertificateStoresStatics2>>::get_activation_factory().get_user_store_by_name(storeName)
     }}
 }
-DEFINE_CLSID!(CertificateStores(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,83,116,111,114,101,115,0]) [CLSID_CertificateStores]);
+DEFINE_CLSID!(CertificateStores: "Windows.Security.Cryptography.Certificates.CertificateStores");
 DEFINE_IID!(IID_ICertificateStoresStatics, 4226598713, 50942, 19943, 153, 207, 116, 195, 229, 150, 224, 50);
 RT_INTERFACE!{static interface ICertificateStoresStatics(ICertificateStoresStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateStoresStatics] {
     fn FindAllAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<Certificate>>) -> HRESULT,
@@ -3795,7 +3795,7 @@ impl IChainBuildingParameters {
 }
 RT_CLASS!{class ChainBuildingParameters: IChainBuildingParameters}
 impl RtActivatable<IActivationFactory> for ChainBuildingParameters {}
-DEFINE_CLSID!(ChainBuildingParameters(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,104,97,105,110,66,117,105,108,100,105,110,103,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_ChainBuildingParameters]);
+DEFINE_CLSID!(ChainBuildingParameters: "Windows.Security.Cryptography.Certificates.ChainBuildingParameters");
 DEFINE_IID!(IID_IChainValidationParameters, 3295951690, 32432, 19286, 160, 64, 185, 200, 230, 85, 221, 243);
 RT_INTERFACE!{interface IChainValidationParameters(IChainValidationParametersVtbl): IInspectable(IInspectableVtbl) [IID_IChainValidationParameters] {
     fn get_CertificateChainPolicy(&self, out: *mut CertificateChainPolicy) -> HRESULT,
@@ -3825,7 +3825,7 @@ impl IChainValidationParameters {
 }
 RT_CLASS!{class ChainValidationParameters: IChainValidationParameters}
 impl RtActivatable<IActivationFactory> for ChainValidationParameters {}
-DEFINE_CLSID!(ChainValidationParameters(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,104,97,105,110,86,97,108,105,100,97,116,105,111,110,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_ChainValidationParameters]);
+DEFINE_CLSID!(ChainValidationParameters: "Windows.Security.Cryptography.Certificates.ChainValidationParameters");
 RT_ENUM! { enum ChainValidationResult: i32 {
     Success (ChainValidationResult_Success) = 0, Untrusted (ChainValidationResult_Untrusted) = 1, Revoked (ChainValidationResult_Revoked) = 2, Expired (ChainValidationResult_Expired) = 3, IncompleteChain (ChainValidationResult_IncompleteChain) = 4, InvalidSignature (ChainValidationResult_InvalidSignature) = 5, WrongUsage (ChainValidationResult_WrongUsage) = 6, InvalidName (ChainValidationResult_InvalidName) = 7, InvalidCertificateAuthorityPolicy (ChainValidationResult_InvalidCertificateAuthorityPolicy) = 8, BasicConstraintsError (ChainValidationResult_BasicConstraintsError) = 9, UnknownCriticalExtension (ChainValidationResult_UnknownCriticalExtension) = 10, RevocationInformationMissing (ChainValidationResult_RevocationInformationMissing) = 11, RevocationFailure (ChainValidationResult_RevocationFailure) = 12, OtherErrors (ChainValidationResult_OtherErrors) = 13,
 }}
@@ -3869,7 +3869,7 @@ impl CmsAttachedSignature {
         <Self as RtActivatable<ICmsAttachedSignatureStatics>>::get_activation_factory().generate_signature_async(data, signers, certificates)
     }}
 }
-DEFINE_CLSID!(CmsAttachedSignature(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,109,115,65,116,116,97,99,104,101,100,83,105,103,110,97,116,117,114,101,0]) [CLSID_CmsAttachedSignature]);
+DEFINE_CLSID!(CmsAttachedSignature: "Windows.Security.Cryptography.Certificates.CmsAttachedSignature");
 DEFINE_IID!(IID_ICmsAttachedSignatureFactory, 3502832661, 63319, 19556, 163, 98, 82, 204, 28, 119, 207, 251);
 RT_INTERFACE!{static interface ICmsAttachedSignatureFactory(ICmsAttachedSignatureFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICmsAttachedSignatureFactory] {
     #[cfg(feature="windows-storage")] fn CreateCmsAttachedSignature(&self, inputBlob: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut CmsAttachedSignature) -> HRESULT
@@ -3926,7 +3926,7 @@ impl CmsDetachedSignature {
         <Self as RtActivatable<ICmsDetachedSignatureStatics>>::get_activation_factory().generate_signature_async(data, signers, certificates)
     }}
 }
-DEFINE_CLSID!(CmsDetachedSignature(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,109,115,68,101,116,97,99,104,101,100,83,105,103,110,97,116,117,114,101,0]) [CLSID_CmsDetachedSignature]);
+DEFINE_CLSID!(CmsDetachedSignature: "Windows.Security.Cryptography.Certificates.CmsDetachedSignature");
 DEFINE_IID!(IID_ICmsDetachedSignatureFactory, 3299554563, 44671, 17287, 173, 25, 0, 241, 80, 228, 142, 187);
 RT_INTERFACE!{static interface ICmsDetachedSignatureFactory(ICmsDetachedSignatureFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICmsDetachedSignatureFactory] {
     #[cfg(feature="windows-storage")] fn CreateCmsDetachedSignature(&self, inputBlob: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut CmsDetachedSignature) -> HRESULT
@@ -3984,7 +3984,7 @@ impl ICmsSignerInfo {
 }
 RT_CLASS!{class CmsSignerInfo: ICmsSignerInfo}
 impl RtActivatable<IActivationFactory> for CmsSignerInfo {}
-DEFINE_CLSID!(CmsSignerInfo(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,109,115,83,105,103,110,101,114,73,110,102,111,0]) [CLSID_CmsSignerInfo]);
+DEFINE_CLSID!(CmsSignerInfo: "Windows.Security.Cryptography.Certificates.CmsSignerInfo");
 DEFINE_IID!(IID_ICmsTimestampInfo, 794755314, 11288, 20360, 132, 53, 197, 52, 8, 96, 118, 245);
 RT_INTERFACE!{interface ICmsTimestampInfo(ICmsTimestampInfoVtbl): IInspectable(IInspectableVtbl) [IID_ICmsTimestampInfo] {
     fn get_SigningCertificate(&self, out: *mut *mut Certificate) -> HRESULT,
@@ -4053,7 +4053,7 @@ impl KeyAlgorithmNames {
         <Self as RtActivatable<IKeyAlgorithmNamesStatics2>>::get_activation_factory().get_ecdh()
     }}
 }
-DEFINE_CLSID!(KeyAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,75,101,121,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_KeyAlgorithmNames]);
+DEFINE_CLSID!(KeyAlgorithmNames: "Windows.Security.Cryptography.Certificates.KeyAlgorithmNames");
 DEFINE_IID!(IID_IKeyAlgorithmNamesStatics, 1200645591, 31431, 17793, 140, 59, 208, 112, 39, 20, 4, 72);
 RT_INTERFACE!{static interface IKeyAlgorithmNamesStatics(IKeyAlgorithmNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyAlgorithmNamesStatics] {
     fn get_Rsa(&self, out: *mut HSTRING) -> HRESULT,
@@ -4138,7 +4138,7 @@ impl KeyAttestationHelper {
         <Self as RtActivatable<IKeyAttestationHelperStatics2>>::get_activation_factory().decrypt_tpm_attestation_credential_with_container_name_async(credential, containerName)
     }}
 }
-DEFINE_CLSID!(KeyAttestationHelper(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,75,101,121,65,116,116,101,115,116,97,116,105,111,110,72,101,108,112,101,114,0]) [CLSID_KeyAttestationHelper]);
+DEFINE_CLSID!(KeyAttestationHelper: "Windows.Security.Cryptography.Certificates.KeyAttestationHelper");
 DEFINE_IID!(IID_IKeyAttestationHelperStatics, 373875270, 63044, 17190, 136, 190, 58, 241, 2, 211, 14, 12);
 RT_INTERFACE!{static interface IKeyAttestationHelperStatics(IKeyAttestationHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyAttestationHelperStatics] {
     fn DecryptTpmAttestationCredentialAsync(&self, credential: HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<HString>) -> HRESULT,
@@ -4190,7 +4190,7 @@ impl KeyStorageProviderNames {
         <Self as RtActivatable<IKeyStorageProviderNamesStatics2>>::get_activation_factory().get_passport_key_storage_provider()
     }}
 }
-DEFINE_CLSID!(KeyStorageProviderNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,75,101,121,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,78,97,109,101,115,0]) [CLSID_KeyStorageProviderNames]);
+DEFINE_CLSID!(KeyStorageProviderNames: "Windows.Security.Cryptography.Certificates.KeyStorageProviderNames");
 DEFINE_IID!(IID_IKeyStorageProviderNamesStatics, 2937613024, 21801, 17922, 189, 148, 10, 171, 145, 149, 123, 92);
 RT_INTERFACE!{static interface IKeyStorageProviderNamesStatics(IKeyStorageProviderNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyStorageProviderNamesStatics] {
     fn get_SoftwareKeyStorageProvider(&self, out: *mut HSTRING) -> HRESULT,
@@ -4309,7 +4309,7 @@ impl IPfxImportParameters {
 }
 RT_CLASS!{class PfxImportParameters: IPfxImportParameters}
 impl RtActivatable<IActivationFactory> for PfxImportParameters {}
-DEFINE_CLSID!(PfxImportParameters(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,80,102,120,73,109,112,111,114,116,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_PfxImportParameters]);
+DEFINE_CLSID!(PfxImportParameters: "Windows.Security.Cryptography.Certificates.PfxImportParameters");
 RT_ENUM! { enum SignatureValidationResult: i32 {
     Success (SignatureValidationResult_Success) = 0, InvalidParameter (SignatureValidationResult_InvalidParameter) = 1, BadMessage (SignatureValidationResult_BadMessage) = 2, InvalidSignature (SignatureValidationResult_InvalidSignature) = 3, OtherErrors (SignatureValidationResult_OtherErrors) = 4,
 }}
@@ -4326,7 +4326,7 @@ impl StandardCertificateStoreNames {
         <Self as RtActivatable<IStandardCertificateStoreNamesStatics>>::get_activation_factory().get_intermediate_certification_authorities()
     }}
 }
-DEFINE_CLSID!(StandardCertificateStoreNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,83,116,97,110,100,97,114,100,67,101,114,116,105,102,105,99,97,116,101,83,116,111,114,101,78,97,109,101,115,0]) [CLSID_StandardCertificateStoreNames]);
+DEFINE_CLSID!(StandardCertificateStoreNames: "Windows.Security.Cryptography.Certificates.StandardCertificateStoreNames");
 DEFINE_IID!(IID_IStandardCertificateStoreNamesStatics, 202722011, 42134, 16888, 143, 229, 158, 150, 243, 110, 251, 248);
 RT_INTERFACE!{static interface IStandardCertificateStoreNamesStatics(IStandardCertificateStoreNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStandardCertificateStoreNamesStatics] {
     fn get_Personal(&self, out: *mut HSTRING) -> HRESULT,
@@ -4393,7 +4393,7 @@ impl ISubjectAlternativeNameInfo {
 }
 RT_CLASS!{class SubjectAlternativeNameInfo: ISubjectAlternativeNameInfo}
 impl RtActivatable<IActivationFactory> for SubjectAlternativeNameInfo {}
-DEFINE_CLSID!(SubjectAlternativeNameInfo(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,83,117,98,106,101,99,116,65,108,116,101,114,110,97,116,105,118,101,78,97,109,101,73,110,102,111,0]) [CLSID_SubjectAlternativeNameInfo]);
+DEFINE_CLSID!(SubjectAlternativeNameInfo: "Windows.Security.Cryptography.Certificates.SubjectAlternativeNameInfo");
 DEFINE_IID!(IID_ISubjectAlternativeNameInfo2, 1132099782, 7249, 16874, 179, 74, 61, 101, 67, 152, 163, 112);
 RT_INTERFACE!{interface ISubjectAlternativeNameInfo2(ISubjectAlternativeNameInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_ISubjectAlternativeNameInfo2] {
     fn get_EmailNames(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<HString>) -> HRESULT,
@@ -4577,7 +4577,7 @@ impl AsymmetricAlgorithmNames {
         <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics2>>::get_activation_factory().get_ecdsa_sha512()
     }}
 }
-DEFINE_CLSID!(AsymmetricAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,65,115,121,109,109,101,116,114,105,99,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_AsymmetricAlgorithmNames]);
+DEFINE_CLSID!(AsymmetricAlgorithmNames: "Windows.Security.Cryptography.Core.AsymmetricAlgorithmNames");
 DEFINE_IID!(IID_IAsymmetricAlgorithmNamesStatics, 3405184228, 26560, 18090, 132, 249, 117, 46, 119, 68, 159, 155);
 RT_INTERFACE!{static interface IAsymmetricAlgorithmNamesStatics(IAsymmetricAlgorithmNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAsymmetricAlgorithmNamesStatics] {
     fn get_RsaPkcs1(&self, out: *mut HSTRING) -> HRESULT,
@@ -4762,7 +4762,7 @@ impl AsymmetricKeyAlgorithmProvider {
         <Self as RtActivatable<IAsymmetricKeyAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
     }}
 }
-DEFINE_CLSID!(AsymmetricKeyAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,65,115,121,109,109,101,116,114,105,99,75,101,121,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_AsymmetricKeyAlgorithmProvider]);
+DEFINE_CLSID!(AsymmetricKeyAlgorithmProvider: "Windows.Security.Cryptography.Core.AsymmetricKeyAlgorithmProvider");
 DEFINE_IID!(IID_IAsymmetricKeyAlgorithmProvider2, 1311910526, 31821, 18839, 172, 79, 27, 132, 139, 54, 48, 110);
 RT_INTERFACE!{interface IAsymmetricKeyAlgorithmProvider2(IAsymmetricKeyAlgorithmProvider2Vtbl): IInspectable(IInspectableVtbl) [IID_IAsymmetricKeyAlgorithmProvider2] {
     fn CreateKeyPairWithCurveName(&self, curveName: HSTRING, out: *mut *mut CryptographicKey) -> HRESULT,
@@ -4835,7 +4835,7 @@ impl CryptographicEngine {
         <Self as RtActivatable<ICryptographicEngineStatics2>>::get_activation_factory().sign_hashed_data_async(key, data)
     }}
 }
-DEFINE_CLSID!(CryptographicEngine(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,67,114,121,112,116,111,103,114,97,112,104,105,99,69,110,103,105,110,101,0]) [CLSID_CryptographicEngine]);
+DEFINE_CLSID!(CryptographicEngine: "Windows.Security.Cryptography.Core.CryptographicEngine");
 DEFINE_IID!(IID_ICryptographicEngineStatics, 2682914361, 28663, 19589, 160, 149, 149, 235, 49, 113, 94, 185);
 RT_INTERFACE!{static interface ICryptographicEngineStatics(ICryptographicEngineStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICryptographicEngineStatics] {
     #[cfg(feature="windows-storage")] fn Encrypt(&self, key: *mut CryptographicKey, data: *mut ::rt::gen::windows::storage::streams::IBuffer, iv: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
@@ -5106,7 +5106,7 @@ impl EccCurveNames {
         <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_all_ecc_curve_names()
     }}
 }
-DEFINE_CLSID!(EccCurveNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,69,99,99,67,117,114,118,101,78,97,109,101,115,0]) [CLSID_EccCurveNames]);
+DEFINE_CLSID!(EccCurveNames: "Windows.Security.Cryptography.Core.EccCurveNames");
 DEFINE_IID!(IID_IEccCurveNamesStatics, 3019870988, 44779, 16542, 183, 212, 155, 149, 41, 90, 174, 207);
 RT_INTERFACE!{static interface IEccCurveNamesStatics(IEccCurveNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IEccCurveNamesStatics] {
     fn get_BrainpoolP160r1(&self, out: *mut HSTRING) -> HRESULT,
@@ -5425,7 +5425,7 @@ impl HashAlgorithmNames {
         <Self as RtActivatable<IHashAlgorithmNamesStatics>>::get_activation_factory().get_sha512()
     }}
 }
-DEFINE_CLSID!(HashAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,72,97,115,104,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_HashAlgorithmNames]);
+DEFINE_CLSID!(HashAlgorithmNames: "Windows.Security.Cryptography.Core.HashAlgorithmNames");
 DEFINE_IID!(IID_IHashAlgorithmNamesStatics, 1801323798, 56982, 20234, 141, 87, 220, 201, 218, 227, 108, 118);
 RT_INTERFACE!{static interface IHashAlgorithmNamesStatics(IHashAlgorithmNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHashAlgorithmNamesStatics] {
     fn get_Md5(&self, out: *mut HSTRING) -> HRESULT,
@@ -5498,7 +5498,7 @@ impl HashAlgorithmProvider {
         <Self as RtActivatable<IHashAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
     }}
 }
-DEFINE_CLSID!(HashAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,72,97,115,104,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_HashAlgorithmProvider]);
+DEFINE_CLSID!(HashAlgorithmProvider: "Windows.Security.Cryptography.Core.HashAlgorithmProvider");
 DEFINE_IID!(IID_IHashAlgorithmProviderStatics, 2678888257, 23748, 17206, 174, 56, 98, 18, 183, 90, 145, 90);
 RT_INTERFACE!{static interface IHashAlgorithmProviderStatics(IHashAlgorithmProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHashAlgorithmProviderStatics] {
     fn OpenAlgorithm(&self, algorithm: HSTRING, out: *mut *mut HashAlgorithmProvider) -> HRESULT
@@ -5591,7 +5591,7 @@ impl KeyDerivationAlgorithmNames {
         <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics2>>::get_activation_factory().get_capi_kdf_sha512()
     }}
 }
-DEFINE_CLSID!(KeyDerivationAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,75,101,121,68,101,114,105,118,97,116,105,111,110,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_KeyDerivationAlgorithmNames]);
+DEFINE_CLSID!(KeyDerivationAlgorithmNames: "Windows.Security.Cryptography.Core.KeyDerivationAlgorithmNames");
 DEFINE_IID!(IID_IKeyDerivationAlgorithmNamesStatics, 2070820414, 38098, 18233, 165, 123, 2, 46, 12, 58, 64, 42);
 RT_INTERFACE!{static interface IKeyDerivationAlgorithmNamesStatics(IKeyDerivationAlgorithmNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyDerivationAlgorithmNamesStatics] {
     fn get_Pbkdf2Md5(&self, out: *mut HSTRING) -> HRESULT,
@@ -5746,7 +5746,7 @@ impl KeyDerivationAlgorithmProvider {
         <Self as RtActivatable<IKeyDerivationAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
     }}
 }
-DEFINE_CLSID!(KeyDerivationAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,75,101,121,68,101,114,105,118,97,116,105,111,110,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_KeyDerivationAlgorithmProvider]);
+DEFINE_CLSID!(KeyDerivationAlgorithmProvider: "Windows.Security.Cryptography.Core.KeyDerivationAlgorithmProvider");
 DEFINE_IID!(IID_IKeyDerivationAlgorithmProviderStatics, 170002810, 2588, 17467, 148, 24, 185, 73, 138, 235, 22, 3);
 RT_INTERFACE!{static interface IKeyDerivationAlgorithmProviderStatics(IKeyDerivationAlgorithmProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyDerivationAlgorithmProviderStatics] {
     fn OpenAlgorithm(&self, algorithm: HSTRING, out: *mut *mut KeyDerivationAlgorithmProvider) -> HRESULT
@@ -5799,7 +5799,7 @@ impl KeyDerivationParameters {
         <Self as RtActivatable<IKeyDerivationParametersStatics2>>::get_activation_factory().build_for_capi1_kdf(capi1KdfTargetAlgorithm)
     }}
 }
-DEFINE_CLSID!(KeyDerivationParameters(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,75,101,121,68,101,114,105,118,97,116,105,111,110,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_KeyDerivationParameters]);
+DEFINE_CLSID!(KeyDerivationParameters: "Windows.Security.Cryptography.Core.KeyDerivationParameters");
 DEFINE_IID!(IID_IKeyDerivationParameters2, 3443615441, 16766, 20300, 182, 102, 192, 216, 121, 243, 248, 224);
 RT_INTERFACE!{interface IKeyDerivationParameters2(IKeyDerivationParameters2Vtbl): IInspectable(IInspectableVtbl) [IID_IKeyDerivationParameters2] {
     fn get_Capi1KdfTargetAlgorithm(&self, out: *mut Capi1KdfTargetAlgorithm) -> HRESULT,
@@ -5872,7 +5872,7 @@ impl MacAlgorithmNames {
         <Self as RtActivatable<IMacAlgorithmNamesStatics>>::get_activation_factory().get_aes_cmac()
     }}
 }
-DEFINE_CLSID!(MacAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,77,97,99,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_MacAlgorithmNames]);
+DEFINE_CLSID!(MacAlgorithmNames: "Windows.Security.Cryptography.Core.MacAlgorithmNames");
 DEFINE_IID!(IID_IMacAlgorithmNamesStatics, 1094788728, 64286, 17316, 137, 94, 169, 2, 110, 67, 144, 163);
 RT_INTERFACE!{static interface IMacAlgorithmNamesStatics(IMacAlgorithmNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMacAlgorithmNamesStatics] {
     fn get_HmacMd5(&self, out: *mut HSTRING) -> HRESULT,
@@ -5944,7 +5944,7 @@ impl MacAlgorithmProvider {
         <Self as RtActivatable<IMacAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
     }}
 }
-DEFINE_CLSID!(MacAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,77,97,99,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_MacAlgorithmProvider]);
+DEFINE_CLSID!(MacAlgorithmProvider: "Windows.Security.Cryptography.Core.MacAlgorithmProvider");
 DEFINE_IID!(IID_IMacAlgorithmProvider2, 1839409685, 55601, 17133, 142, 126, 195, 1, 202, 238, 17, 156);
 RT_INTERFACE!{interface IMacAlgorithmProvider2(IMacAlgorithmProvider2Vtbl): IInspectable(IInspectableVtbl) [IID_IMacAlgorithmProvider2] {
     #[cfg(feature="windows-storage")] fn CreateHash(&self, keyMaterial: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut CryptographicHash) -> HRESULT
@@ -5977,7 +5977,7 @@ impl PersistedKeyProvider {
         <Self as RtActivatable<IPersistedKeyProviderStatics>>::get_activation_factory().open_public_key_from_certificate(certificate, hashAlgorithmName, padding)
     }}
 }
-DEFINE_CLSID!(PersistedKeyProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,80,101,114,115,105,115,116,101,100,75,101,121,80,114,111,118,105,100,101,114,0]) [CLSID_PersistedKeyProvider]);
+DEFINE_CLSID!(PersistedKeyProvider: "Windows.Security.Cryptography.Core.PersistedKeyProvider");
 DEFINE_IID!(IID_IPersistedKeyProviderStatics, 1999063060, 55764, 19701, 182, 104, 224, 69, 125, 243, 8, 148);
 RT_INTERFACE!{static interface IPersistedKeyProviderStatics(IPersistedKeyProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPersistedKeyProviderStatics] {
     fn OpenKeyPairFromCertificateAsync(&self, certificate: *mut super::certificates::Certificate, hashAlgorithmName: HSTRING, padding: CryptographicPadding, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<CryptographicKey>) -> HRESULT,
@@ -6056,7 +6056,7 @@ impl SymmetricAlgorithmNames {
         <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rc4()
     }}
 }
-DEFINE_CLSID!(SymmetricAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,83,121,109,109,101,116,114,105,99,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_SymmetricAlgorithmNames]);
+DEFINE_CLSID!(SymmetricAlgorithmNames: "Windows.Security.Cryptography.Core.SymmetricAlgorithmNames");
 DEFINE_IID!(IID_ISymmetricAlgorithmNamesStatics, 1752199803, 51606, 20142, 132, 215, 121, 178, 174, 183, 59, 156);
 RT_INTERFACE!{static interface ISymmetricAlgorithmNamesStatics(ISymmetricAlgorithmNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISymmetricAlgorithmNamesStatics] {
     fn get_DesCbc(&self, out: *mut HSTRING) -> HRESULT,
@@ -6206,7 +6206,7 @@ impl SymmetricKeyAlgorithmProvider {
         <Self as RtActivatable<ISymmetricKeyAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
     }}
 }
-DEFINE_CLSID!(SymmetricKeyAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,83,121,109,109,101,116,114,105,99,75,101,121,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_SymmetricKeyAlgorithmProvider]);
+DEFINE_CLSID!(SymmetricKeyAlgorithmProvider: "Windows.Security.Cryptography.Core.SymmetricKeyAlgorithmProvider");
 DEFINE_IID!(IID_ISymmetricKeyAlgorithmProviderStatics, 2369463078, 7991, 18719, 182, 14, 245, 67, 27, 38, 180, 131);
 RT_INTERFACE!{static interface ISymmetricKeyAlgorithmProviderStatics(ISymmetricKeyAlgorithmProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISymmetricKeyAlgorithmProviderStatics] {
     fn OpenAlgorithm(&self, algorithm: HSTRING, out: *mut *mut SymmetricKeyAlgorithmProvider) -> HRESULT
@@ -6258,7 +6258,7 @@ impl DataProtectionProvider {
         <Self as RtActivatable<IDataProtectionProviderFactory>>::get_activation_factory().create_overload_explicit(protectionDescriptor)
     }}
 }
-DEFINE_CLSID!(DataProtectionProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,68,97,116,97,80,114,111,116,101,99,116,105,111,110,46,68,97,116,97,80,114,111,116,101,99,116,105,111,110,80,114,111,118,105,100,101,114,0]) [CLSID_DataProtectionProvider]);
+DEFINE_CLSID!(DataProtectionProvider: "Windows.Security.Cryptography.DataProtection.DataProtectionProvider");
 DEFINE_IID!(IID_IDataProtectionProviderFactory, 2918399404, 18738, 19679, 172, 65, 114, 20, 51, 53, 20, 202);
 RT_INTERFACE!{static interface IDataProtectionProviderFactory(IDataProtectionProviderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataProtectionProviderFactory] {
     fn CreateOverloadExplicit(&self, protectionDescriptor: HSTRING, out: *mut *mut DataProtectionProvider) -> HRESULT
@@ -6333,7 +6333,7 @@ impl DataProtectionManager {
         <Self as RtActivatable<IDataProtectionManagerStatics>>::get_activation_factory().get_stream_protection_info_async(protectedStream)
     }}
 }
-DEFINE_CLSID!(DataProtectionManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,68,97,116,97,80,114,111,116,101,99,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_DataProtectionManager]);
+DEFINE_CLSID!(DataProtectionManager: "Windows.Security.EnterpriseData.DataProtectionManager");
 DEFINE_IID!(IID_IDataProtectionManagerStatics, 3054803828, 37188, 20196, 138, 138, 48, 181, 243, 97, 67, 14);
 RT_INTERFACE!{static interface IDataProtectionManagerStatics(IDataProtectionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDataProtectionManagerStatics] {
     #[cfg(feature="windows-storage")] fn ProtectAsync(&self, data: *mut super::super::storage::streams::IBuffer, identity: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<BufferProtectUnprotectResult>) -> HRESULT,
@@ -6458,7 +6458,7 @@ impl FileProtectionManager {
         <Self as RtActivatable<IFileProtectionManagerStatics3>>::get_activation_factory().unprotect_with_options_async(target, options)
     }}
 }
-DEFINE_CLSID!(FileProtectionManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,70,105,108,101,80,114,111,116,101,99,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_FileProtectionManager]);
+DEFINE_CLSID!(FileProtectionManager: "Windows.Security.EnterpriseData.FileProtectionManager");
 DEFINE_IID!(IID_IFileProtectionManagerStatics, 1481047195, 58899, 17003, 187, 56, 136, 203, 161, 220, 154, 219);
 RT_INTERFACE!{static interface IFileProtectionManagerStatics(IFileProtectionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFileProtectionManagerStatics] {
     #[cfg(feature="windows-storage")] fn ProtectAsync(&self, target: *mut super::super::storage::IStorageItem, identity: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<FileProtectionInfo>) -> HRESULT,
@@ -6565,7 +6565,7 @@ impl FileRevocationManager {
         <Self as RtActivatable<IFileRevocationManagerStatics>>::get_activation_factory().get_status_async(storageItem)
     }}
 }
-DEFINE_CLSID!(FileRevocationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,70,105,108,101,82,101,118,111,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_FileRevocationManager]);
+DEFINE_CLSID!(FileRevocationManager: "Windows.Security.EnterpriseData.FileRevocationManager");
 DEFINE_IID!(IID_IFileRevocationManagerStatics, 627817533, 7261, 16992, 140, 117, 145, 68, 207, 183, 139, 169);
 RT_INTERFACE!{static interface IFileRevocationManagerStatics(IFileRevocationManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFileRevocationManagerStatics] {
     #[cfg(feature="windows-storage")] fn ProtectAsync(&self, storageItem: *mut super::super::storage::IStorageItem, enterpriseIdentity: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<FileProtectionStatus>) -> HRESULT,
@@ -6617,7 +6617,7 @@ impl FileUnprotectOptions {
         <Self as RtActivatable<IFileUnprotectOptionsFactory>>::get_activation_factory().create(audit)
     }}
 }
-DEFINE_CLSID!(FileUnprotectOptions(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,70,105,108,101,85,110,112,114,111,116,101,99,116,79,112,116,105,111,110,115,0]) [CLSID_FileUnprotectOptions]);
+DEFINE_CLSID!(FileUnprotectOptions: "Windows.Security.EnterpriseData.FileUnprotectOptions");
 DEFINE_IID!(IID_IFileUnprotectOptionsFactory, 1370403740, 55948, 19519, 155, 251, 203, 115, 167, 204, 224, 221);
 RT_INTERFACE!{static interface IFileUnprotectOptionsFactory(IFileUnprotectOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileUnprotectOptionsFactory] {
     fn Create(&self, audit: bool, out: *mut *mut FileUnprotectOptions) -> HRESULT
@@ -6804,7 +6804,7 @@ impl ProtectionPolicyAuditInfo {
         <Self as RtActivatable<IProtectionPolicyAuditInfoFactory>>::get_activation_factory().create_with_action_and_data_description(action, dataDescription)
     }}
 }
-DEFINE_CLSID!(ProtectionPolicyAuditInfo(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,80,114,111,116,101,99,116,105,111,110,80,111,108,105,99,121,65,117,100,105,116,73,110,102,111,0]) [CLSID_ProtectionPolicyAuditInfo]);
+DEFINE_CLSID!(ProtectionPolicyAuditInfo: "Windows.Security.EnterpriseData.ProtectionPolicyAuditInfo");
 DEFINE_IID!(IID_IProtectionPolicyAuditInfoFactory, 2127829003, 37608, 17109, 131, 212, 37, 68, 11, 66, 53, 73);
 RT_INTERFACE!{static interface IProtectionPolicyAuditInfoFactory(IProtectionPolicyAuditInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IProtectionPolicyAuditInfoFactory] {
     fn Create(&self, action: ProtectionPolicyAuditAction, dataDescription: HSTRING, sourceDescription: HSTRING, targetDescription: HSTRING, out: *mut *mut ProtectionPolicyAuditInfo) -> HRESULT,
@@ -6968,7 +6968,7 @@ impl ProtectionPolicyManager {
         <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().get_primary_managed_identity_for_identity(identity)
     }}
 }
-DEFINE_CLSID!(ProtectionPolicyManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,80,114,111,116,101,99,116,105,111,110,80,111,108,105,99,121,77,97,110,97,103,101,114,0]) [CLSID_ProtectionPolicyManager]);
+DEFINE_CLSID!(ProtectionPolicyManager: "Windows.Security.EnterpriseData.ProtectionPolicyManager");
 DEFINE_IID!(IID_IProtectionPolicyManager2, 2885112442, 33845, 16767, 153, 182, 81, 190, 175, 54, 88, 136);
 RT_INTERFACE!{interface IProtectionPolicyManager2(IProtectionPolicyManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IProtectionPolicyManager2] {
     fn put_ShowEnterpriseIndicator(&self, value: bool) -> HRESULT,
@@ -7299,7 +7299,7 @@ impl IEasClientDeviceInformation {
 }
 RT_CLASS!{class EasClientDeviceInformation: IEasClientDeviceInformation}
 impl RtActivatable<IActivationFactory> for EasClientDeviceInformation {}
-DEFINE_CLSID!(EasClientDeviceInformation(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,120,99,104,97,110,103,101,65,99,116,105,118,101,83,121,110,99,80,114,111,118,105,115,105,111,110,105,110,103,46,69,97,115,67,108,105,101,110,116,68,101,118,105,99,101,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_EasClientDeviceInformation]);
+DEFINE_CLSID!(EasClientDeviceInformation: "Windows.Security.ExchangeActiveSyncProvisioning.EasClientDeviceInformation");
 DEFINE_IID!(IID_IEasClientDeviceInformation2, 4289943843, 47910, 19818, 129, 188, 22, 90, 238, 10, 215, 84);
 RT_INTERFACE!{interface IEasClientDeviceInformation2(IEasClientDeviceInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IEasClientDeviceInformation2] {
     fn get_SystemHardwareVersion(&self, out: *mut HSTRING) -> HRESULT,
@@ -7424,7 +7424,7 @@ impl IEasClientSecurityPolicy {
 }
 RT_CLASS!{class EasClientSecurityPolicy: IEasClientSecurityPolicy}
 impl RtActivatable<IActivationFactory> for EasClientSecurityPolicy {}
-DEFINE_CLSID!(EasClientSecurityPolicy(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,120,99,104,97,110,103,101,65,99,116,105,118,101,83,121,110,99,80,114,111,118,105,115,105,111,110,105,110,103,46,69,97,115,67,108,105,101,110,116,83,101,99,117,114,105,116,121,80,111,108,105,99,121,0]) [CLSID_EasClientSecurityPolicy]);
+DEFINE_CLSID!(EasClientSecurityPolicy: "Windows.Security.ExchangeActiveSyncProvisioning.EasClientSecurityPolicy");
 DEFINE_IID!(IID_IEasComplianceResults, 1178347932, 32537, 19558, 180, 3, 203, 69, 221, 87, 162, 179);
 RT_INTERFACE!{interface IEasComplianceResults(IEasComplianceResultsVtbl): IInspectable(IInspectableVtbl) [IID_IEasComplianceResults] {
     fn get_Compliant(&self, out: *mut bool) -> HRESULT,

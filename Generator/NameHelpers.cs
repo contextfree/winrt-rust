@@ -46,12 +46,6 @@ namespace Generator
             return newName.ToString();
         }
 
-        // Returns the string as an UTF16 encoded, null-terminated sequence of u16 values
-        public static string StringToUTF16WithZero(string str)
-        {
-            return String.Join(",", str.Select(c => ((ushort)c).ToString()).Concat(new string[] { "0" }));
-        }
-
         public static Tuple<string, int> GetSortKeyIgnoringInterfacePrefix(string str)
         {
             if (str[0] == 'I' && char.IsUpper(str[1]))

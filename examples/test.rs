@@ -16,8 +16,8 @@ fn main() {
 }
 
 fn run() {
-    let base = FastHString::new("https://github.com");
-    let relative = FastHString::new("contextfree/winrt-rust");
+    let base = hstr!("https://github.com");
+    let relative = hstr!("contextfree/winrt-rust");
     let uri = Uri::create_with_relative_uri(&base, &relative).unwrap();
     let to_string = unsafe { uri.query_interface::<IStringable>().unwrap().to_string().unwrap() };
     println!("{} -> {}", uri.get_runtime_class_name(), to_string);
@@ -127,9 +127,9 @@ fn run() {
     println!("{:?} = {:?}", array, &returned_array[..]);
     assert_eq!(array, &returned_array[..]);
 
-    let str1 = FastHString::new("foo");
-    let str2 = FastHString::new("bar");
-    let array = &mut [&*str1, &*str2, &*str1, &*str2];
+    let str1 = hstr!("foo");
+    let str2 = hstr!("bar");
+    let array = &mut [&*str1, &*str2, &*str1, &*str2]; // convert to array of `&HStringArg`
     let boxed_array = PropertyValue::create_string_array(array);
     let boxed_array = boxed_array.unwrap().query_interface::<IPropertyValue>().unwrap();
     assert_eq!(unsafe { boxed_array.get_type().unwrap() }, PropertyType::StringArray);
@@ -137,7 +137,7 @@ fn run() {
     let returned_array = unsafe { boxed_array.get_value().unwrap() };
     assert_eq!(array.len(), returned_array.len());
     for i in 0..array.len() {
-        assert!(returned_array[i] == (if i % 2 == 0 { &str1 } else { &str2 }));
+        assert!(returned_array[i] == (if i % 2 == 0 { str1 } else { str2 }));
     }
     // TODO: test array interface objects (also see if ComArray drops contents correctly)
     

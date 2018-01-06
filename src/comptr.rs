@@ -83,7 +83,7 @@ impl<T> ComPtr<T> {
     /// use winrt::windows::foundation::Uri;
     ///
     /// # let rt = winrt::RuntimeContext::init();
-    /// let uri = FastHString::new("https://www.rust-lang.org");
+    /// let uri = hstr!("https://www.rust-lang.org");
     /// let uri = Uri::create_uri(&uri).unwrap();
     /// assert_eq!("Windows.Foundation.Uri", uri.get_runtime_class_name().to_string());
     /// ```

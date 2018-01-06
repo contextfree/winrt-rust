@@ -36,7 +36,7 @@ impl Print3DManager {
         <Self as RtActivatable<IPrint3DManagerStatics>>::get_activation_factory().show_print_uiasync()
     }}
 }
-DEFINE_CLSID!(Print3DManager(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,51,68,77,97,110,97,103,101,114,0]) [CLSID_Print3DManager]);
+DEFINE_CLSID!(Print3DManager: "Windows.Graphics.Printing3D.Print3DManager");
 DEFINE_IID!(IID_IPrint3DManagerStatics, 250727166, 43437, 19464, 169, 23, 29, 31, 134, 62, 171, 203);
 RT_INTERFACE!{static interface IPrint3DManagerStatics(IPrint3DManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DManagerStatics] {
     fn GetForCurrentView(&self, out: *mut *mut Print3DManager) -> HRESULT,
@@ -256,7 +256,7 @@ impl Printing3D3MFPackage {
         <Self as RtActivatable<IPrinting3D3MFPackageStatics>>::get_activation_factory().load_async(value)
     }}
 }
-DEFINE_CLSID!(Printing3D3MFPackage(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,51,77,70,80,97,99,107,97,103,101,0]) [CLSID_Printing3D3MFPackage]);
+DEFINE_CLSID!(Printing3D3MFPackage: "Windows.Graphics.Printing3D.Printing3D3MFPackage");
 DEFINE_IID!(IID_IPrinting3D3MFPackage2, 2522643140, 37835, 17456, 146, 184, 120, 156, 212, 84, 248, 131);
 RT_INTERFACE!{interface IPrinting3D3MFPackage2(IPrinting3D3MFPackage2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3D3MFPackage2] {
     fn get_Compression(&self, out: *mut Printing3DPackageCompression) -> HRESULT,
@@ -322,7 +322,7 @@ impl Printing3DBaseMaterial {
         <Self as RtActivatable<IPrinting3DBaseMaterialStatics>>::get_activation_factory().get_pla()
     }}
 }
-DEFINE_CLSID!(Printing3DBaseMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,66,97,115,101,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DBaseMaterial]);
+DEFINE_CLSID!(Printing3DBaseMaterial: "Windows.Graphics.Printing3D.Printing3DBaseMaterial");
 DEFINE_IID!(IID_IPrinting3DBaseMaterialGroup, 2498785464, 9493, 19085, 161, 240, 208, 252, 19, 208, 96, 33);
 RT_INTERFACE!{interface IPrinting3DBaseMaterialGroup(IPrinting3DBaseMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterialGroup] {
     fn get_Bases(&self, out: *mut *mut super::super::foundation::collections::IVector<Printing3DBaseMaterial>) -> HRESULT,
@@ -347,7 +347,7 @@ impl Printing3DBaseMaterialGroup {
         <Self as RtActivatable<IPrinting3DBaseMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
     }}
 }
-DEFINE_CLSID!(Printing3DBaseMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,66,97,115,101,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DBaseMaterialGroup]);
+DEFINE_CLSID!(Printing3DBaseMaterialGroup: "Windows.Graphics.Printing3D.Printing3DBaseMaterialGroup");
 DEFINE_IID!(IID_IPrinting3DBaseMaterialGroupFactory, 1544898268, 34455, 16787, 151, 107, 132, 187, 65, 22, 229, 191);
 RT_INTERFACE!{static interface IPrinting3DBaseMaterialGroupFactory(IPrinting3DBaseMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterialGroupFactory] {
     fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DBaseMaterialGroup) -> HRESULT
@@ -400,7 +400,7 @@ impl IPrinting3DColorMaterial {
 }
 RT_CLASS!{class Printing3DColorMaterial: IPrinting3DColorMaterial}
 impl RtActivatable<IActivationFactory> for Printing3DColorMaterial {}
-DEFINE_CLSID!(Printing3DColorMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,108,111,114,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DColorMaterial]);
+DEFINE_CLSID!(Printing3DColorMaterial: "Windows.Graphics.Printing3D.Printing3DColorMaterial");
 DEFINE_IID!(IID_IPrinting3DColorMaterial2, 4205897810, 2799, 17641, 157, 221, 54, 238, 234, 90, 205, 68);
 RT_INTERFACE!{interface IPrinting3DColorMaterial2(IPrinting3DColorMaterial2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterial2] {
     #[cfg(feature="windows-ui")] fn get_Color(&self, out: *mut super::super::ui::Color) -> HRESULT,
@@ -441,7 +441,7 @@ impl Printing3DColorMaterialGroup {
         <Self as RtActivatable<IPrinting3DColorMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
     }}
 }
-DEFINE_CLSID!(Printing3DColorMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,108,111,114,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DColorMaterialGroup]);
+DEFINE_CLSID!(Printing3DColorMaterialGroup: "Windows.Graphics.Printing3D.Printing3DColorMaterialGroup");
 DEFINE_IID!(IID_IPrinting3DColorMaterialGroupFactory, 1909689709, 45546, 19035, 188, 84, 25, 198, 95, 61, 240, 68);
 RT_INTERFACE!{static interface IPrinting3DColorMaterialGroupFactory(IPrinting3DColorMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterialGroupFactory] {
     fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DColorMaterialGroup) -> HRESULT
@@ -521,7 +521,7 @@ impl IPrinting3DComponent {
 }
 RT_CLASS!{class Printing3DComponent: IPrinting3DComponent}
 impl RtActivatable<IActivationFactory> for Printing3DComponent {}
-DEFINE_CLSID!(Printing3DComponent(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,110,101,110,116,0]) [CLSID_Printing3DComponent]);
+DEFINE_CLSID!(Printing3DComponent: "Windows.Graphics.Printing3D.Printing3DComponent");
 DEFINE_IID!(IID_IPrinting3DComponentWithMatrix, 846852917, 3824, 17771, 154, 33, 73, 190, 190, 139, 81, 194);
 RT_INTERFACE!{interface IPrinting3DComponentWithMatrix(IPrinting3DComponentWithMatrixVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DComponentWithMatrix] {
     fn get_Component(&self, out: *mut *mut Printing3DComponent) -> HRESULT,
@@ -551,7 +551,7 @@ impl IPrinting3DComponentWithMatrix {
 }
 RT_CLASS!{class Printing3DComponentWithMatrix: IPrinting3DComponentWithMatrix}
 impl RtActivatable<IActivationFactory> for Printing3DComponentWithMatrix {}
-DEFINE_CLSID!(Printing3DComponentWithMatrix(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,110,101,110,116,87,105,116,104,77,97,116,114,105,120,0]) [CLSID_Printing3DComponentWithMatrix]);
+DEFINE_CLSID!(Printing3DComponentWithMatrix: "Windows.Graphics.Printing3D.Printing3DComponentWithMatrix");
 DEFINE_IID!(IID_IPrinting3DCompositeMaterial, 1176647901, 22062, 20332, 136, 45, 244, 216, 65, 253, 99, 199);
 RT_INTERFACE!{interface IPrinting3DCompositeMaterial(IPrinting3DCompositeMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterial] {
     fn get_Values(&self, out: *mut *mut super::super::foundation::collections::IVector<f64>) -> HRESULT
@@ -565,7 +565,7 @@ impl IPrinting3DCompositeMaterial {
 }
 RT_CLASS!{class Printing3DCompositeMaterial: IPrinting3DCompositeMaterial}
 impl RtActivatable<IActivationFactory> for Printing3DCompositeMaterial {}
-DEFINE_CLSID!(Printing3DCompositeMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,115,105,116,101,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DCompositeMaterial]);
+DEFINE_CLSID!(Printing3DCompositeMaterial: "Windows.Graphics.Printing3D.Printing3DCompositeMaterial");
 DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroup, 2375314011, 16625, 18797, 165, 251, 52, 10, 90, 103, 142, 48);
 RT_INTERFACE!{interface IPrinting3DCompositeMaterialGroup(IPrinting3DCompositeMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterialGroup] {
     fn get_Composites(&self, out: *mut *mut super::super::foundation::collections::IVector<Printing3DCompositeMaterial>) -> HRESULT,
@@ -596,7 +596,7 @@ impl Printing3DCompositeMaterialGroup {
         <Self as RtActivatable<IPrinting3DCompositeMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
     }}
 }
-DEFINE_CLSID!(Printing3DCompositeMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,115,105,116,101,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DCompositeMaterialGroup]);
+DEFINE_CLSID!(Printing3DCompositeMaterialGroup: "Windows.Graphics.Printing3D.Printing3DCompositeMaterialGroup");
 DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroup2, 115895650, 32059, 16865, 148, 76, 186, 253, 228, 85, 84, 131);
 RT_INTERFACE!{interface IPrinting3DCompositeMaterialGroup2(IPrinting3DCompositeMaterialGroup2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterialGroup2] {
     fn get_BaseMaterialGroup(&self, out: *mut *mut Printing3DBaseMaterialGroup) -> HRESULT,
@@ -664,7 +664,7 @@ impl IPrinting3DFaceReductionOptions {
 }
 RT_CLASS!{class Printing3DFaceReductionOptions: IPrinting3DFaceReductionOptions}
 impl RtActivatable<IActivationFactory> for Printing3DFaceReductionOptions {}
-DEFINE_CLSID!(Printing3DFaceReductionOptions(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,70,97,99,101,82,101,100,117,99,116,105,111,110,79,112,116,105,111,110,115,0]) [CLSID_Printing3DFaceReductionOptions]);
+DEFINE_CLSID!(Printing3DFaceReductionOptions: "Windows.Graphics.Printing3D.Printing3DFaceReductionOptions");
 DEFINE_IID!(IID_IPrinting3DMaterial, 932033110, 60770, 18770, 184, 91, 3, 86, 125, 124, 70, 94);
 RT_INTERFACE!{interface IPrinting3DMaterial(IPrinting3DMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMaterial] {
     fn get_BaseGroups(&self, out: *mut *mut super::super::foundation::collections::IVector<Printing3DBaseMaterialGroup>) -> HRESULT,
@@ -702,7 +702,7 @@ impl IPrinting3DMaterial {
 }
 RT_CLASS!{class Printing3DMaterial: IPrinting3DMaterial}
 impl RtActivatable<IActivationFactory> for Printing3DMaterial {}
-DEFINE_CLSID!(Printing3DMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DMaterial]);
+DEFINE_CLSID!(Printing3DMaterial: "Windows.Graphics.Printing3D.Printing3DMaterial");
 DEFINE_IID!(IID_IPrinting3DMesh, 422482140, 552, 11777, 188, 32, 197, 41, 12, 191, 50, 196);
 RT_INTERFACE!{interface IPrinting3DMesh(IPrinting3DMeshVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMesh] {
     fn get_VertexCount(&self, out: *mut u32) -> HRESULT,
@@ -842,7 +842,7 @@ impl IPrinting3DMesh {
 }
 RT_CLASS!{class Printing3DMesh: IPrinting3DMesh}
 impl RtActivatable<IActivationFactory> for Printing3DMesh {}
-DEFINE_CLSID!(Printing3DMesh(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,101,115,104,0]) [CLSID_Printing3DMesh]);
+DEFINE_CLSID!(Printing3DMesh: "Windows.Graphics.Printing3D.Printing3DMesh");
 RT_ENUM! { enum Printing3DMeshVerificationMode: i32 {
     FindFirstError (Printing3DMeshVerificationMode_FindFirstError) = 0, FindAllErrors (Printing3DMeshVerificationMode_FindAllErrors) = 1,
 }}
@@ -963,7 +963,7 @@ impl IPrinting3DModel {
 }
 RT_CLASS!{class Printing3DModel: IPrinting3DModel}
 impl RtActivatable<IActivationFactory> for Printing3DModel {}
-DEFINE_CLSID!(Printing3DModel(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,111,100,101,108,0]) [CLSID_Printing3DModel]);
+DEFINE_CLSID!(Printing3DModel: "Windows.Graphics.Printing3D.Printing3DModel");
 DEFINE_IID!(IID_IPrinting3DModel2, 3374344647, 51265, 18419, 168, 78, 161, 73, 253, 8, 182, 87);
 RT_INTERFACE!{interface IPrinting3DModel2(IPrinting3DModel2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DModel2] {
     fn TryPartialRepairAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<bool>) -> HRESULT,
@@ -1045,7 +1045,7 @@ impl IPrinting3DModelTexture {
 }
 RT_CLASS!{class Printing3DModelTexture: IPrinting3DModelTexture}
 impl RtActivatable<IActivationFactory> for Printing3DModelTexture {}
-DEFINE_CLSID!(Printing3DModelTexture(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,111,100,101,108,84,101,120,116,117,114,101,0]) [CLSID_Printing3DModelTexture]);
+DEFINE_CLSID!(Printing3DModelTexture: "Windows.Graphics.Printing3D.Printing3DModelTexture");
 RT_ENUM! { enum Printing3DModelUnit: i32 {
     Meter (Printing3DModelUnit_Meter) = 0, Micron (Printing3DModelUnit_Micron) = 1, Millimeter (Printing3DModelUnit_Millimeter) = 2, Centimeter (Printing3DModelUnit_Centimeter) = 3, Inch (Printing3DModelUnit_Inch) = 4, Foot (Printing3DModelUnit_Foot) = 5,
 }}
@@ -1062,7 +1062,7 @@ impl IPrinting3DMultiplePropertyMaterial {
 }
 RT_CLASS!{class Printing3DMultiplePropertyMaterial: IPrinting3DMultiplePropertyMaterial}
 impl RtActivatable<IActivationFactory> for Printing3DMultiplePropertyMaterial {}
-DEFINE_CLSID!(Printing3DMultiplePropertyMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,117,108,116,105,112,108,101,80,114,111,112,101,114,116,121,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DMultiplePropertyMaterial]);
+DEFINE_CLSID!(Printing3DMultiplePropertyMaterial: "Windows.Graphics.Printing3D.Printing3DMultiplePropertyMaterial");
 DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterialGroup, 4036298009, 44729, 17685, 163, 155, 160, 136, 251, 187, 39, 124);
 RT_INTERFACE!{interface IPrinting3DMultiplePropertyMaterialGroup(IPrinting3DMultiplePropertyMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMultiplePropertyMaterialGroup] {
     fn get_MultipleProperties(&self, out: *mut *mut super::super::foundation::collections::IVector<Printing3DMultiplePropertyMaterial>) -> HRESULT,
@@ -1093,7 +1093,7 @@ impl Printing3DMultiplePropertyMaterialGroup {
         <Self as RtActivatable<IPrinting3DMultiplePropertyMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
     }}
 }
-DEFINE_CLSID!(Printing3DMultiplePropertyMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,117,108,116,105,112,108,101,80,114,111,112,101,114,116,121,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DMultiplePropertyMaterialGroup]);
+DEFINE_CLSID!(Printing3DMultiplePropertyMaterialGroup: "Windows.Graphics.Printing3D.Printing3DMultiplePropertyMaterialGroup");
 DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterialGroupFactory, 842930542, 54470, 17694, 168, 20, 77, 120, 162, 16, 254, 83);
 RT_INTERFACE!{static interface IPrinting3DMultiplePropertyMaterialGroupFactory(IPrinting3DMultiplePropertyMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMultiplePropertyMaterialGroupFactory] {
     fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DMultiplePropertyMaterialGroup) -> HRESULT
@@ -1151,7 +1151,7 @@ impl IPrinting3DTexture2CoordMaterial {
 }
 RT_CLASS!{class Printing3DTexture2CoordMaterial: IPrinting3DTexture2CoordMaterial}
 impl RtActivatable<IActivationFactory> for Printing3DTexture2CoordMaterial {}
-DEFINE_CLSID!(Printing3DTexture2CoordMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,50,67,111,111,114,100,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DTexture2CoordMaterial]);
+DEFINE_CLSID!(Printing3DTexture2CoordMaterial: "Windows.Graphics.Printing3D.Printing3DTexture2CoordMaterial");
 DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroup, 1652391079, 28048, 20409, 159, 196, 159, 239, 243, 223, 168, 146);
 RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterialGroup(IPrinting3DTexture2CoordMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterialGroup] {
     fn get_Texture2Coords(&self, out: *mut *mut super::super::foundation::collections::IVector<Printing3DTexture2CoordMaterial>) -> HRESULT,
@@ -1176,7 +1176,7 @@ impl Printing3DTexture2CoordMaterialGroup {
         <Self as RtActivatable<IPrinting3DTexture2CoordMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
     }}
 }
-DEFINE_CLSID!(Printing3DTexture2CoordMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,50,67,111,111,114,100,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DTexture2CoordMaterialGroup]);
+DEFINE_CLSID!(Printing3DTexture2CoordMaterialGroup: "Windows.Graphics.Printing3D.Printing3DTexture2CoordMaterialGroup");
 DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroup2, 1778113466, 45358, 17051, 131, 134, 223, 82, 132, 246, 232, 15);
 RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterialGroup2(IPrinting3DTexture2CoordMaterialGroup2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterialGroup2] {
     fn get_Texture(&self, out: *mut *mut Printing3DModelTexture) -> HRESULT,
@@ -1238,7 +1238,7 @@ impl IPrinting3DTextureResource {
 }
 RT_CLASS!{class Printing3DTextureResource: IPrinting3DTextureResource}
 impl RtActivatable<IActivationFactory> for Printing3DTextureResource {}
-DEFINE_CLSID!(Printing3DTextureResource(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,82,101,115,111,117,114,99,101,0]) [CLSID_Printing3DTextureResource]);
+DEFINE_CLSID!(Printing3DTextureResource: "Windows.Graphics.Printing3D.Printing3DTextureResource");
 } // Windows.Graphics.Printing3D
 pub mod display { // Windows.Graphics.Display
 use ::prelude::*;
@@ -1337,7 +1337,7 @@ impl BrightnessOverride {
         <Self as RtActivatable<IBrightnessOverrideStatics>>::get_activation_factory().save_for_system_async(value)
     }}
 }
-DEFINE_CLSID!(BrightnessOverride(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,66,114,105,103,104,116,110,101,115,115,79,118,101,114,114,105,100,101,0]) [CLSID_BrightnessOverride]);
+DEFINE_CLSID!(BrightnessOverride: "Windows.Graphics.Display.BrightnessOverride");
 DEFINE_IID!(IID_IBrightnessOverrideStatics, 61323757, 57841, 19048, 161, 31, 148, 106, 216, 206, 83, 147);
 RT_INTERFACE!{static interface IBrightnessOverrideStatics(IBrightnessOverrideStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBrightnessOverrideStatics] {
     fn GetDefaultForSystem(&self, out: *mut *mut BrightnessOverride) -> HRESULT,
@@ -1484,7 +1484,7 @@ impl DisplayInformation {
         <Self as RtActivatable<IDisplayInformationStatics>>::get_activation_factory().remove_display_contents_invalidated(token)
     }}
 }
-DEFINE_CLSID!(DisplayInformation(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,68,105,115,112,108,97,121,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_DisplayInformation]);
+DEFINE_CLSID!(DisplayInformation: "Windows.Graphics.Display.DisplayInformation");
 DEFINE_IID!(IID_IDisplayInformation2, 1305280545, 64209, 19342, 142, 223, 119, 88, 135, 184, 191, 25);
 RT_INTERFACE!{interface IDisplayInformation2(IDisplayInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IDisplayInformation2] {
     fn get_RawPixelsPerViewPixel(&self, out: *mut f64) -> HRESULT
@@ -1618,7 +1618,7 @@ impl DisplayProperties {
         <Self as RtActivatable<IDisplayPropertiesStatics>>::get_activation_factory().remove_display_contents_invalidated(token)
     }}
 }
-DEFINE_CLSID!(DisplayProperties(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,68,105,115,112,108,97,121,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_DisplayProperties]);
+DEFINE_CLSID!(DisplayProperties: "Windows.Graphics.Display.DisplayProperties");
 DEFINE_IID!(IID_DisplayPropertiesEventHandler, 3688729345, 61857, 18129, 158, 227, 84, 59, 204, 153, 89, 128);
 RT_DELEGATE!{delegate DisplayPropertiesEventHandler(DisplayPropertiesEventHandlerVtbl, DisplayPropertiesEventHandlerImpl) [IID_DisplayPropertiesEventHandler] {
     fn Invoke(&self, sender: *mut IInspectable) -> HRESULT
@@ -1810,7 +1810,7 @@ impl HdmiDisplayInformation {
         <Self as RtActivatable<IHdmiDisplayInformationStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
-DEFINE_CLSID!(HdmiDisplayInformation(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,67,111,114,101,46,72,100,109,105,68,105,115,112,108,97,121,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_HdmiDisplayInformation]);
+DEFINE_CLSID!(HdmiDisplayInformation: "Windows.Graphics.Display.Core.HdmiDisplayInformation");
 DEFINE_IID!(IID_IHdmiDisplayInformationStatics, 1827058272, 62506, 18965, 145, 76, 123, 142, 42, 90, 101, 223);
 RT_INTERFACE!{static interface IHdmiDisplayInformationStatics(IHdmiDisplayInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHdmiDisplayInformationStatics] {
     fn GetForCurrentView(&self, out: *mut *mut HdmiDisplayInformation) -> HRESULT
@@ -2027,7 +2027,7 @@ impl BitmapDecoder {
         <Self as RtActivatable<IBitmapDecoderStatics>>::get_activation_factory().create_with_id_async(decoderId, stream)
     }}
 }
-DEFINE_CLSID!(BitmapDecoder(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,68,101,99,111,100,101,114,0]) [CLSID_BitmapDecoder]);
+DEFINE_CLSID!(BitmapDecoder: "Windows.Graphics.Imaging.BitmapDecoder");
 DEFINE_IID!(IID_IBitmapDecoderStatics, 1133300518, 48367, 20117, 186, 214, 35, 168, 34, 229, 141, 1);
 RT_INTERFACE!{static interface IBitmapDecoderStatics(IBitmapDecoderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapDecoderStatics] {
     fn get_BmpDecoderId(&self, out: *mut Guid) -> HRESULT,
@@ -2215,7 +2215,7 @@ impl BitmapEncoder {
         <Self as RtActivatable<IBitmapEncoderStatics>>::get_activation_factory().create_for_in_place_property_encoding_async(bitmapDecoder)
     }}
 }
-DEFINE_CLSID!(BitmapEncoder(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,69,110,99,111,100,101,114,0]) [CLSID_BitmapEncoder]);
+DEFINE_CLSID!(BitmapEncoder: "Windows.Graphics.Imaging.BitmapEncoder");
 DEFINE_IID!(IID_IBitmapEncoderStatics, 2806208167, 42212, 20153, 142, 64, 86, 77, 231, 225, 204, 178);
 RT_INTERFACE!{static interface IBitmapEncoderStatics(IBitmapEncoderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapEncoderStatics] {
     fn get_BmpEncoderId(&self, out: *mut Guid) -> HRESULT,
@@ -2439,7 +2439,7 @@ impl IBitmapPropertiesView {
 RT_CLASS!{class BitmapPropertiesView: IBitmapPropertiesView}
 RT_CLASS!{class BitmapPropertySet: super::super::foundation::collections::IMap<HString, BitmapTypedValue>}
 impl RtActivatable<IActivationFactory> for BitmapPropertySet {}
-DEFINE_CLSID!(BitmapPropertySet(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,80,114,111,112,101,114,116,121,83,101,116,0]) [CLSID_BitmapPropertySet]);
+DEFINE_CLSID!(BitmapPropertySet: "Windows.Graphics.Imaging.BitmapPropertySet");
 RT_ENUM! { enum BitmapRotation: i32 {
     None (BitmapRotation_None) = 0, Clockwise90Degrees (BitmapRotation_Clockwise90Degrees) = 1, Clockwise180Degrees (BitmapRotation_Clockwise180Degrees) = 2, Clockwise270Degrees (BitmapRotation_Clockwise270Degrees) = 3,
 }}
@@ -2519,7 +2519,7 @@ impl IBitmapTransform {
 }
 RT_CLASS!{class BitmapTransform: IBitmapTransform}
 impl RtActivatable<IActivationFactory> for BitmapTransform {}
-DEFINE_CLSID!(BitmapTransform(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,84,114,97,110,115,102,111,114,109,0]) [CLSID_BitmapTransform]);
+DEFINE_CLSID!(BitmapTransform: "Windows.Graphics.Imaging.BitmapTransform");
 DEFINE_IID!(IID_IBitmapTypedValue, 3447735465, 9283, 16384, 176, 205, 121, 49, 108, 86, 245, 137);
 RT_INTERFACE!{interface IBitmapTypedValue(IBitmapTypedValueVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapTypedValue] {
     fn get_Value(&self, out: *mut *mut IInspectable) -> HRESULT,
@@ -2544,7 +2544,7 @@ impl BitmapTypedValue {
         <Self as RtActivatable<IBitmapTypedValueFactory>>::get_activation_factory().create(value, type_)
     }}
 }
-DEFINE_CLSID!(BitmapTypedValue(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,84,121,112,101,100,86,97,108,117,101,0]) [CLSID_BitmapTypedValue]);
+DEFINE_CLSID!(BitmapTypedValue: "Windows.Graphics.Imaging.BitmapTypedValue");
 DEFINE_IID!(IID_IBitmapTypedValueFactory, 2463872409, 52755, 18107, 149, 69, 203, 58, 63, 99, 235, 139);
 RT_INTERFACE!{static interface IBitmapTypedValueFactory(IBitmapTypedValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapTypedValueFactory] {
     fn Create(&self, value: *mut IInspectable, type_: super::super::foundation::PropertyType, out: *mut *mut BitmapTypedValue) -> HRESULT
@@ -2700,7 +2700,7 @@ impl SoftwareBitmap {
         <Self as RtActivatable<ISoftwareBitmapStatics>>::get_activation_factory().create_copy_with_alpha_from_surface_async(surface, alpha)
     }}
 }
-DEFINE_CLSID!(SoftwareBitmap(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,83,111,102,116,119,97,114,101,66,105,116,109,97,112,0]) [CLSID_SoftwareBitmap]);
+DEFINE_CLSID!(SoftwareBitmap: "Windows.Graphics.Imaging.SoftwareBitmap");
 DEFINE_IID!(IID_ISoftwareBitmapFactory, 3382700905, 11618, 19783, 166, 179, 79, 219, 106, 7, 253, 248);
 RT_INTERFACE!{static interface ISoftwareBitmapFactory(ISoftwareBitmapFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISoftwareBitmapFactory] {
     fn Create(&self, format: BitmapPixelFormat, width: i32, height: i32, out: *mut *mut SoftwareBitmap) -> HRESULT,
@@ -2848,7 +2848,7 @@ impl PrintManager {
         <Self as RtActivatable<IPrintManagerStatic2>>::get_activation_factory().is_supported()
     }}
 }
-DEFINE_CLSID!(PrintManager(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,80,114,105,110,116,77,97,110,97,103,101,114,0]) [CLSID_PrintManager]);
+DEFINE_CLSID!(PrintManager: "Windows.Graphics.Printing.PrintManager");
 DEFINE_IID!(IID_IPrintManagerStatic, 1477991885, 58932, 18004, 132, 240, 224, 21, 42, 130, 23, 172);
 RT_INTERFACE!{static interface IPrintManagerStatic(IPrintManagerStaticVtbl): IInspectable(IInspectableVtbl) [IID_IPrintManagerStatic] {
     fn GetForCurrentView(&self, out: *mut *mut PrintManager) -> HRESULT,
@@ -2951,7 +2951,7 @@ impl IPrintPageInfo {
 }
 RT_CLASS!{class PrintPageInfo: IPrintPageInfo}
 impl RtActivatable<IActivationFactory> for PrintPageInfo {}
-DEFINE_CLSID!(PrintPageInfo(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,80,114,105,110,116,80,97,103,101,73,110,102,111,0]) [CLSID_PrintPageInfo]);
+DEFINE_CLSID!(PrintPageInfo: "Windows.Graphics.Printing.PrintPageInfo");
 RT_ENUM! { enum PrintQuality: i32 {
     Default (PrintQuality_Default) = 0, NotAvailable (PrintQuality_NotAvailable) = 1, PrinterCustom (PrintQuality_PrinterCustom) = 2, Automatic (PrintQuality_Automatic) = 3, Draft (PrintQuality_Draft) = 4, Fax (PrintQuality_Fax) = 5, High (PrintQuality_High) = 6, Normal (PrintQuality_Normal) = 7, Photographic (PrintQuality_Photographic) = 8, Text (PrintQuality_Text) = 9,
 }}
@@ -3418,7 +3418,7 @@ impl StandardPrintTaskOptions {
         <Self as RtActivatable<IStandardPrintTaskOptionsStatic2>>::get_activation_factory().get_bordering()
     }}
 }
-DEFINE_CLSID!(StandardPrintTaskOptions(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,83,116,97,110,100,97,114,100,80,114,105,110,116,84,97,115,107,79,112,116,105,111,110,115,0]) [CLSID_StandardPrintTaskOptions]);
+DEFINE_CLSID!(StandardPrintTaskOptions: "Windows.Graphics.Printing.StandardPrintTaskOptions");
 DEFINE_IID!(IID_IStandardPrintTaskOptionsStatic, 3024633126, 3536, 19668, 186, 255, 147, 15, 199, 214, 165, 116);
 RT_INTERFACE!{static interface IStandardPrintTaskOptionsStatic(IStandardPrintTaskOptionsStaticVtbl): IInspectable(IInspectableVtbl) [IID_IStandardPrintTaskOptionsStatic] {
     fn get_MediaSize(&self, out: *mut HSTRING) -> HRESULT,
@@ -3743,7 +3743,7 @@ impl PrintTaskOptionDetails {
         <Self as RtActivatable<IPrintTaskOptionDetailsStatic>>::get_activation_factory().get_from_print_task_options(printTaskOptions)
     }}
 }
-DEFINE_CLSID!(PrintTaskOptionDetails(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,79,112,116,105,111,110,68,101,116,97,105,108,115,46,80,114,105,110,116,84,97,115,107,79,112,116,105,111,110,68,101,116,97,105,108,115,0]) [CLSID_PrintTaskOptionDetails]);
+DEFINE_CLSID!(PrintTaskOptionDetails: "Windows.Graphics.Printing.OptionDetails.PrintTaskOptionDetails");
 DEFINE_IID!(IID_IPrintTaskOptionDetailsStatic, 324903315, 2401, 19310, 135, 102, 241, 59, 127, 188, 205, 88);
 RT_INTERFACE!{static interface IPrintTaskOptionDetailsStatic(IPrintTaskOptionDetailsStaticVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionDetailsStatic] {
     fn GetFromPrintTaskOptions(&self, printTaskOptions: *mut super::PrintTaskOptions, out: *mut *mut PrintTaskOptionDetails) -> HRESULT
@@ -4940,7 +4940,7 @@ impl HolographicDisplay {
         <Self as RtActivatable<IHolographicDisplayStatics>>::get_activation_factory().get_default()
     }}
 }
-DEFINE_CLSID!(HolographicDisplay(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,68,105,115,112,108,97,121,0]) [CLSID_HolographicDisplay]);
+DEFINE_CLSID!(HolographicDisplay: "Windows.Graphics.Holographic.HolographicDisplay");
 DEFINE_IID!(IID_IHolographicDisplay2, 1974222722, 59221, 17260, 141, 150, 77, 50, 209, 49, 71, 62);
 RT_INTERFACE!{interface IHolographicDisplay2(IHolographicDisplay2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicDisplay2] {
     fn get_RefreshRate(&self, out: *mut f64) -> HRESULT
@@ -5083,7 +5083,7 @@ impl HolographicQuadLayer {
         <Self as RtActivatable<IHolographicQuadLayerFactory>>::get_activation_factory().create_with_pixel_format(size, pixelFormat)
     }}
 }
-DEFINE_CLSID!(HolographicQuadLayer(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,81,117,97,100,76,97,121,101,114,0]) [CLSID_HolographicQuadLayer]);
+DEFINE_CLSID!(HolographicQuadLayer: "Windows.Graphics.Holographic.HolographicQuadLayer");
 DEFINE_IID!(IID_IHolographicQuadLayerFactory, 2792700147, 23060, 23056, 72, 154, 69, 80, 101, 179, 123, 118);
 RT_INTERFACE!{static interface IHolographicQuadLayerFactory(IHolographicQuadLayerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayerFactory] {
     fn Create(&self, size: super::super::foundation::Size, out: *mut *mut HolographicQuadLayer) -> HRESULT,
@@ -5210,7 +5210,7 @@ impl HolographicSpace {
         <Self as RtActivatable<IHolographicSpaceStatics3>>::get_activation_factory().get_is_configured()
     }}
 }
-DEFINE_CLSID!(HolographicSpace(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,83,112,97,99,101,0]) [CLSID_HolographicSpace]);
+DEFINE_CLSID!(HolographicSpace: "Windows.Graphics.Holographic.HolographicSpace");
 DEFINE_IID!(IID_IHolographicSpaceCameraAddedEventArgs, 1492245045, 48051, 15503, 153, 61, 108, 128, 231, 254, 185, 159);
 RT_INTERFACE!{interface IHolographicSpaceCameraAddedEventArgs(IHolographicSpaceCameraAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceCameraAddedEventArgs] {
     fn get_Camera(&self, out: *mut *mut HolographicCamera) -> HRESULT,
