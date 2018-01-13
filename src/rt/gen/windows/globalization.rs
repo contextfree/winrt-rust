@@ -8,10 +8,10 @@ impl ApplicationLanguages {
     #[inline] pub fn set_primary_language_override(value: &HStringArg) -> Result<()> { unsafe {
         <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().set_primary_language_override(value)
     }}
-    #[inline] pub fn get_languages() -> Result<ComPtr<super::foundation::collections::IVectorView<HString>>> { unsafe {
+    #[inline] pub fn get_languages() -> Result<Option<ComPtr<super::foundation::collections::IVectorView<HString>>>> { unsafe {
         <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().get_languages()
     }}
-    #[inline] pub fn get_manifest_languages() -> Result<ComPtr<super::foundation::collections::IVectorView<HString>>> { unsafe {
+    #[inline] pub fn get_manifest_languages() -> Result<Option<ComPtr<super::foundation::collections::IVectorView<HString>>>> { unsafe {
         <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().get_manifest_languages()
     }}
 }
@@ -33,15 +33,15 @@ impl IApplicationLanguagesStatics {
         let hr = ((*self.lpVtbl).put_PrimaryLanguageOverride)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_languages(&self) -> Result<ComPtr<super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_languages(&self) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Languages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_manifest_languages(&self) -> Result<ComPtr<super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_manifest_languages(&self) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ManifestLanguages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICalendar, 3392152093, 34521, 16635, 162, 107, 212, 78, 183, 207, 8, 234);
@@ -146,10 +146,10 @@ RT_INTERFACE!{interface ICalendar(ICalendarVtbl): IInspectable(IInspectableVtbl)
     fn get_IsDaylightSavingTime(&self, out: *mut bool) -> HRESULT
 }}
 impl ICalendar {
-    #[inline] pub unsafe fn clone(&self) -> Result<ComPtr<Calendar>> {
+    #[inline] pub unsafe fn clone(&self) -> Result<Option<ComPtr<Calendar>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Clone)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_to_min(&self) -> Result<()> {
         let hr = ((*self.lpVtbl).SetToMin)(self as *const _ as *mut _);
@@ -159,10 +159,10 @@ impl ICalendar {
         let hr = ((*self.lpVtbl).SetToMax)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_languages(&self) -> Result<ComPtr<super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_languages(&self) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Languages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_numeral_system(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -2321,10 +2321,10 @@ impl IGeographicRegion {
         let hr = ((*self.lpVtbl).get_NativeName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_currencies_in_use(&self) -> Result<ComPtr<super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_currencies_in_use(&self) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CurrenciesInUse)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class GeographicRegion: IGeographicRegion}
@@ -2389,10 +2389,10 @@ RT_CLASS!{class JapanesePhoneme: IJapanesePhoneme}
 RT_CLASS!{static class JapanesePhoneticAnalyzer}
 impl RtActivatable<IJapanesePhoneticAnalyzerStatics> for JapanesePhoneticAnalyzer {}
 impl JapanesePhoneticAnalyzer {
-    #[inline] pub fn get_words(input: &HStringArg) -> Result<ComPtr<super::foundation::collections::IVectorView<JapanesePhoneme>>> { unsafe {
+    #[inline] pub fn get_words(input: &HStringArg) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<JapanesePhoneme>>>> { unsafe {
         <Self as RtActivatable<IJapanesePhoneticAnalyzerStatics>>::get_activation_factory().get_words(input)
     }}
-    #[inline] pub fn get_words_with_mono_ruby_option(input: &HStringArg, monoRuby: bool) -> Result<ComPtr<super::foundation::collections::IVectorView<JapanesePhoneme>>> { unsafe {
+    #[inline] pub fn get_words_with_mono_ruby_option(input: &HStringArg, monoRuby: bool) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<JapanesePhoneme>>>> { unsafe {
         <Self as RtActivatable<IJapanesePhoneticAnalyzerStatics>>::get_activation_factory().get_words_with_mono_ruby_option(input, monoRuby)
     }}
 }
@@ -2403,15 +2403,15 @@ RT_INTERFACE!{static interface IJapanesePhoneticAnalyzerStatics(IJapanesePhoneti
     fn GetWordsWithMonoRubyOption(&self, input: HSTRING, monoRuby: bool, out: *mut *mut super::foundation::collections::IVectorView<JapanesePhoneme>) -> HRESULT
 }}
 impl IJapanesePhoneticAnalyzerStatics {
-    #[inline] pub unsafe fn get_words(&self, input: &HStringArg) -> Result<ComPtr<super::foundation::collections::IVectorView<JapanesePhoneme>>> {
+    #[inline] pub unsafe fn get_words(&self, input: &HStringArg) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<JapanesePhoneme>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetWords)(self as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_words_with_mono_ruby_option(&self, input: &HStringArg, monoRuby: bool) -> Result<ComPtr<super::foundation::collections::IVectorView<JapanesePhoneme>>> {
+    #[inline] pub unsafe fn get_words_with_mono_ruby_option(&self, input: &HStringArg, monoRuby: bool) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<JapanesePhoneme>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetWordsWithMonoRubyOption)(self as *const _ as *mut _, input.get(), monoRuby, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ILanguage, 3933841234, 63426, 16997, 177, 189, 196, 222, 196, 228, 240, 128);
@@ -2467,10 +2467,10 @@ RT_INTERFACE!{interface ILanguageExtensionSubtags(ILanguageExtensionSubtagsVtbl)
     fn GetExtensionSubtags(&self, singleton: HSTRING, out: *mut *mut super::foundation::collections::IVectorView<HString>) -> HRESULT
 }}
 impl ILanguageExtensionSubtags {
-    #[inline] pub unsafe fn get_extension_subtags(&self, singleton: &HStringArg) -> Result<ComPtr<super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_extension_subtags(&self, singleton: &HStringArg) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetExtensionSubtags)(self as *const _ as *mut _, singleton.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ILanguageFactory, 2600620716, 3111, 17656, 183, 146, 151, 147, 251, 102, 198, 62);
@@ -3044,60 +3044,60 @@ RT_INTERFACE!{interface ILanguageFontGroup(ILanguageFontGroupVtbl): IInspectable
     fn get_DocumentAlternate2Font(&self, out: *mut *mut LanguageFont) -> HRESULT
 }}
 impl ILanguageFontGroup {
-    #[inline] pub unsafe fn get_uitext_font(&self) -> Result<ComPtr<LanguageFont>> {
+    #[inline] pub unsafe fn get_uitext_font(&self) -> Result<Option<ComPtr<LanguageFont>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UITextFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uiheading_font(&self) -> Result<ComPtr<LanguageFont>> {
+    #[inline] pub unsafe fn get_uiheading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UIHeadingFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uititle_font(&self) -> Result<ComPtr<LanguageFont>> {
+    #[inline] pub unsafe fn get_uititle_font(&self) -> Result<Option<ComPtr<LanguageFont>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UITitleFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uicaption_font(&self) -> Result<ComPtr<LanguageFont>> {
+    #[inline] pub unsafe fn get_uicaption_font(&self) -> Result<Option<ComPtr<LanguageFont>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UICaptionFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uinotification_heading_font(&self) -> Result<ComPtr<LanguageFont>> {
+    #[inline] pub unsafe fn get_uinotification_heading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UINotificationHeadingFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_traditional_document_font(&self) -> Result<ComPtr<LanguageFont>> {
+    #[inline] pub unsafe fn get_traditional_document_font(&self) -> Result<Option<ComPtr<LanguageFont>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TraditionalDocumentFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_modern_document_font(&self) -> Result<ComPtr<LanguageFont>> {
+    #[inline] pub unsafe fn get_modern_document_font(&self) -> Result<Option<ComPtr<LanguageFont>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ModernDocumentFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_document_heading_font(&self) -> Result<ComPtr<LanguageFont>> {
+    #[inline] pub unsafe fn get_document_heading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DocumentHeadingFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_fixed_width_text_font(&self) -> Result<ComPtr<LanguageFont>> {
+    #[inline] pub unsafe fn get_fixed_width_text_font(&self) -> Result<Option<ComPtr<LanguageFont>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FixedWidthTextFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_document_alternate1_font(&self) -> Result<ComPtr<LanguageFont>> {
+    #[inline] pub unsafe fn get_document_alternate1_font(&self) -> Result<Option<ComPtr<LanguageFont>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DocumentAlternate1Font)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_document_alternate2_font(&self) -> Result<ComPtr<LanguageFont>> {
+    #[inline] pub unsafe fn get_document_alternate2_font(&self) -> Result<Option<ComPtr<LanguageFont>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DocumentAlternate2Font)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class LanguageFontGroup: ILanguageFontGroup}
@@ -3164,7 +3164,7 @@ RT_CLASS!{class PhoneNumberFormatter: IPhoneNumberFormatter}
 impl RtActivatable<IPhoneNumberFormatterStatics> for PhoneNumberFormatter {}
 impl RtActivatable<IActivationFactory> for PhoneNumberFormatter {}
 impl PhoneNumberFormatter {
-    #[inline] pub fn try_create(regionCode: &HStringArg) -> Result<ComPtr<PhoneNumberFormatter>> { unsafe {
+    #[inline] pub fn try_create(regionCode: &HStringArg) -> Result<Option<ComPtr<PhoneNumberFormatter>>> { unsafe {
         <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().try_create(regionCode)
     }}
     #[inline] pub fn get_country_code_for_region(regionCode: &HStringArg) -> Result<i32> { unsafe {
@@ -3186,10 +3186,10 @@ RT_INTERFACE!{static interface IPhoneNumberFormatterStatics(IPhoneNumberFormatte
     fn WrapWithLeftToRightMarkers(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
 impl IPhoneNumberFormatterStatics {
-    #[inline] pub unsafe fn try_create(&self, regionCode: &HStringArg) -> Result<ComPtr<PhoneNumberFormatter>> {
+    #[inline] pub unsafe fn try_create(&self, regionCode: &HStringArg) -> Result<Option<ComPtr<PhoneNumberFormatter>>> {
         let mut phoneNumber = null_mut();
         let hr = ((*self.lpVtbl).TryCreate)(self as *const _ as *mut _, regionCode.get(), &mut phoneNumber);
-        if hr == S_OK { Ok(ComPtr::wrap(phoneNumber)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(phoneNumber)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_country_code_for_region(&self, regionCode: &HStringArg) -> Result<i32> {
         let mut out = zeroed();
@@ -3267,10 +3267,10 @@ impl PhoneNumberInfo {
     #[inline] pub fn create(number: &HStringArg) -> Result<ComPtr<PhoneNumberInfo>> { unsafe {
         <Self as RtActivatable<IPhoneNumberInfoFactory>>::get_activation_factory().create(number)
     }}
-    #[inline] pub fn try_parse(input: &HStringArg) -> Result<(ComPtr<PhoneNumberInfo>, PhoneNumberParseResult)> { unsafe {
+    #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> { unsafe {
         <Self as RtActivatable<IPhoneNumberInfoStatics>>::get_activation_factory().try_parse(input)
     }}
-    #[inline] pub fn try_parse_with_region(input: &HStringArg, regionCode: &HStringArg) -> Result<(ComPtr<PhoneNumberInfo>, PhoneNumberParseResult)> { unsafe {
+    #[inline] pub fn try_parse_with_region(input: &HStringArg, regionCode: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> { unsafe {
         <Self as RtActivatable<IPhoneNumberInfoStatics>>::get_activation_factory().try_parse_with_region(input, regionCode)
     }}
 }
@@ -3292,15 +3292,15 @@ RT_INTERFACE!{static interface IPhoneNumberInfoStatics(IPhoneNumberInfoStaticsVt
     fn TryParseWithRegion(&self, input: HSTRING, regionCode: HSTRING, phoneNumber: *mut *mut PhoneNumberInfo, out: *mut PhoneNumberParseResult) -> HRESULT
 }}
 impl IPhoneNumberInfoStatics {
-    #[inline] pub unsafe fn try_parse(&self, input: &HStringArg) -> Result<(ComPtr<PhoneNumberInfo>, PhoneNumberParseResult)> {
+    #[inline] pub unsafe fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> {
         let mut phoneNumber = null_mut(); let mut out = zeroed();
         let hr = ((*self.lpVtbl).TryParse)(self as *const _ as *mut _, input.get(), &mut phoneNumber, &mut out);
-        if hr == S_OK { Ok((ComPtr::wrap(phoneNumber), out)) } else { err(hr) }
+        if hr == S_OK { Ok((ComPtr::wrap_optional(phoneNumber), out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_parse_with_region(&self, input: &HStringArg, regionCode: &HStringArg) -> Result<(ComPtr<PhoneNumberInfo>, PhoneNumberParseResult)> {
+    #[inline] pub unsafe fn try_parse_with_region(&self, input: &HStringArg, regionCode: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> {
         let mut phoneNumber = null_mut(); let mut out = zeroed();
         let hr = ((*self.lpVtbl).TryParseWithRegion)(self as *const _ as *mut _, input.get(), regionCode.get(), &mut phoneNumber, &mut out);
-        if hr == S_OK { Ok((ComPtr::wrap(phoneNumber), out)) } else { err(hr) }
+        if hr == S_OK { Ok((ComPtr::wrap_optional(phoneNumber), out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum PhoneNumberMatchResult: i32 {
@@ -3337,10 +3337,10 @@ RT_INTERFACE!{interface IDateTimeFormatter(IDateTimeFormatterVtbl): IInspectable
     fn get_ResolvedGeographicRegion(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IDateTimeFormatter {
-    #[inline] pub unsafe fn get_languages(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_languages(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Languages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_geographic_region(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -3366,10 +3366,10 @@ impl IDateTimeFormatter {
         let hr = ((*self.lpVtbl).put_NumeralSystem)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_patterns(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_patterns(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Patterns)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_template(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -3452,16 +3452,16 @@ impl DateTimeFormatter {
     #[inline] pub fn create_date_time_formatter_date_time_context(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &super::super::foundation::collections::IIterable<HString>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> { unsafe {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_date_time_context(yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages, geographicRegion, calendar, clock)
     }}
-    #[inline] pub fn get_long_date() -> Result<ComPtr<DateTimeFormatter>> { unsafe {
+    #[inline] pub fn get_long_date() -> Result<Option<ComPtr<DateTimeFormatter>>> { unsafe {
         <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().get_long_date()
     }}
-    #[inline] pub fn get_long_time() -> Result<ComPtr<DateTimeFormatter>> { unsafe {
+    #[inline] pub fn get_long_time() -> Result<Option<ComPtr<DateTimeFormatter>>> { unsafe {
         <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().get_long_time()
     }}
-    #[inline] pub fn get_short_date() -> Result<ComPtr<DateTimeFormatter>> { unsafe {
+    #[inline] pub fn get_short_date() -> Result<Option<ComPtr<DateTimeFormatter>>> { unsafe {
         <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().get_short_date()
     }}
-    #[inline] pub fn get_short_time() -> Result<ComPtr<DateTimeFormatter>> { unsafe {
+    #[inline] pub fn get_short_time() -> Result<Option<ComPtr<DateTimeFormatter>>> { unsafe {
         <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().get_short_time()
     }}
 }
@@ -3532,25 +3532,25 @@ RT_INTERFACE!{static interface IDateTimeFormatterStatics(IDateTimeFormatterStati
     fn get_ShortTime(&self, out: *mut *mut DateTimeFormatter) -> HRESULT
 }}
 impl IDateTimeFormatterStatics {
-    #[inline] pub unsafe fn get_long_date(&self) -> Result<ComPtr<DateTimeFormatter>> {
+    #[inline] pub unsafe fn get_long_date(&self) -> Result<Option<ComPtr<DateTimeFormatter>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LongDate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_long_time(&self) -> Result<ComPtr<DateTimeFormatter>> {
+    #[inline] pub unsafe fn get_long_time(&self) -> Result<Option<ComPtr<DateTimeFormatter>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LongTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_short_date(&self) -> Result<ComPtr<DateTimeFormatter>> {
+    #[inline] pub unsafe fn get_short_date(&self) -> Result<Option<ComPtr<DateTimeFormatter>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ShortDate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_short_time(&self) -> Result<ComPtr<DateTimeFormatter>> {
+    #[inline] pub unsafe fn get_short_time(&self) -> Result<Option<ComPtr<DateTimeFormatter>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ShortTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum DayFormat: i32 {
@@ -3759,10 +3759,10 @@ RT_INTERFACE!{interface INumberFormatterOptions(INumberFormatterOptionsVtbl): II
     fn get_ResolvedGeographicRegion(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl INumberFormatterOptions {
-    #[inline] pub unsafe fn get_languages(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_languages(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Languages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_geographic_region(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -3832,20 +3832,20 @@ RT_INTERFACE!{interface INumberParser(INumberParserVtbl): IInspectable(IInspecta
     fn ParseDouble(&self, text: HSTRING, out: *mut *mut super::super::foundation::IReference<f64>) -> HRESULT
 }}
 impl INumberParser {
-    #[inline] pub unsafe fn parse_int(&self, text: &HStringArg) -> Result<ComPtr<super::super::foundation::IReference<i64>>> {
+    #[inline] pub unsafe fn parse_int(&self, text: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::IReference<i64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ParseInt)(self as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn parse_uint(&self, text: &HStringArg) -> Result<ComPtr<super::super::foundation::IReference<u64>>> {
+    #[inline] pub unsafe fn parse_uint(&self, text: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ParseUInt)(self as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn parse_double(&self, text: &HStringArg) -> Result<ComPtr<super::super::foundation::IReference<f64>>> {
+    #[inline] pub unsafe fn parse_double(&self, text: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::IReference<f64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ParseDouble)(self as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_INumberRounder, 1416872821, 14573, 17969, 184, 12, 239, 52, 252, 72, 183, 245);
@@ -3895,10 +3895,10 @@ RT_INTERFACE!{interface INumberRounderOption(INumberRounderOptionVtbl): IInspect
     fn put_NumberRounder(&self, value: *mut INumberRounder) -> HRESULT
 }}
 impl INumberRounderOption {
-    #[inline] pub unsafe fn get_number_rounder(&self) -> Result<ComPtr<INumberRounder>> {
+    #[inline] pub unsafe fn get_number_rounder(&self) -> Result<Option<ComPtr<INumberRounder>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NumberRounder)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_number_rounder(&self, value: &INumberRounder) -> Result<()> {
         let hr = ((*self.lpVtbl).put_NumberRounder)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -3914,10 +3914,10 @@ RT_INTERFACE!{interface INumeralSystemTranslator(INumeralSystemTranslatorVtbl): 
     fn TranslateNumerals(&self, value: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
 impl INumeralSystemTranslator {
-    #[inline] pub unsafe fn get_languages(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_languages(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Languages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_resolved_language(&self) -> Result<HString> {
         let mut out = null_mut();

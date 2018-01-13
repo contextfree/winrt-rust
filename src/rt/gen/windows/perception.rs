@@ -20,7 +20,7 @@ RT_CLASS!{class PerceptionTimestamp: IPerceptionTimestamp}
 RT_CLASS!{static class PerceptionTimestampHelper}
 impl RtActivatable<IPerceptionTimestampHelperStatics> for PerceptionTimestampHelper {}
 impl PerceptionTimestampHelper {
-    #[inline] pub fn from_historical_target_time(targetTime: super::foundation::DateTime) -> Result<ComPtr<PerceptionTimestamp>> { unsafe {
+    #[inline] pub fn from_historical_target_time(targetTime: super::foundation::DateTime) -> Result<Option<ComPtr<PerceptionTimestamp>>> { unsafe {
         <Self as RtActivatable<IPerceptionTimestampHelperStatics>>::get_activation_factory().from_historical_target_time(targetTime)
     }}
 }
@@ -30,10 +30,10 @@ RT_INTERFACE!{static interface IPerceptionTimestampHelperStatics(IPerceptionTime
     fn FromHistoricalTargetTime(&self, targetTime: super::foundation::DateTime, out: *mut *mut PerceptionTimestamp) -> HRESULT
 }}
 impl IPerceptionTimestampHelperStatics {
-    #[inline] pub unsafe fn from_historical_target_time(&self, targetTime: super::foundation::DateTime) -> Result<ComPtr<PerceptionTimestamp>> {
+    #[inline] pub unsafe fn from_historical_target_time(&self, targetTime: super::foundation::DateTime) -> Result<Option<ComPtr<PerceptionTimestamp>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FromHistoricalTargetTime)(self as *const _ as *mut _, targetTime, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 pub mod spatial { // Windows.Perception.Spatial
@@ -46,15 +46,15 @@ RT_INTERFACE!{interface ISpatialAnchor(ISpatialAnchorVtbl): IInspectable(IInspec
     fn remove_RawCoordinateSystemAdjusted(&self, cookie: super::super::foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ISpatialAnchor {
-    #[inline] pub unsafe fn get_coordinate_system(&self) -> Result<ComPtr<SpatialCoordinateSystem>> {
+    #[inline] pub unsafe fn get_coordinate_system(&self) -> Result<Option<ComPtr<SpatialCoordinateSystem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CoordinateSystem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_raw_coordinate_system(&self) -> Result<ComPtr<SpatialCoordinateSystem>> {
+    #[inline] pub unsafe fn get_raw_coordinate_system(&self) -> Result<Option<ComPtr<SpatialCoordinateSystem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RawCoordinateSystem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_raw_coordinate_system_adjusted(&self, handler: &super::super::foundation::TypedEventHandler<SpatialAnchor, SpatialAnchorRawCoordinateSystemAdjustedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -69,13 +69,13 @@ impl ISpatialAnchor {
 RT_CLASS!{class SpatialAnchor: ISpatialAnchor}
 impl RtActivatable<ISpatialAnchorStatics> for SpatialAnchor {}
 impl SpatialAnchor {
-    #[inline] pub fn try_create_relative_to(coordinateSystem: &SpatialCoordinateSystem) -> Result<ComPtr<SpatialAnchor>> { unsafe {
+    #[inline] pub fn try_create_relative_to(coordinateSystem: &SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialAnchor>>> { unsafe {
         <Self as RtActivatable<ISpatialAnchorStatics>>::get_activation_factory().try_create_relative_to(coordinateSystem)
     }}
-    #[inline] pub fn try_create_with_position_relative_to(coordinateSystem: &SpatialCoordinateSystem, position: super::super::foundation::numerics::Vector3) -> Result<ComPtr<SpatialAnchor>> { unsafe {
+    #[inline] pub fn try_create_with_position_relative_to(coordinateSystem: &SpatialCoordinateSystem, position: super::super::foundation::numerics::Vector3) -> Result<Option<ComPtr<SpatialAnchor>>> { unsafe {
         <Self as RtActivatable<ISpatialAnchorStatics>>::get_activation_factory().try_create_with_position_relative_to(coordinateSystem, position)
     }}
-    #[inline] pub fn try_create_with_position_and_orientation_relative_to(coordinateSystem: &SpatialCoordinateSystem, position: super::super::foundation::numerics::Vector3, orientation: super::super::foundation::numerics::Quaternion) -> Result<ComPtr<SpatialAnchor>> { unsafe {
+    #[inline] pub fn try_create_with_position_and_orientation_relative_to(coordinateSystem: &SpatialCoordinateSystem, position: super::super::foundation::numerics::Vector3, orientation: super::super::foundation::numerics::Quaternion) -> Result<Option<ComPtr<SpatialAnchor>>> { unsafe {
         <Self as RtActivatable<ISpatialAnchorStatics>>::get_activation_factory().try_create_with_position_and_orientation_relative_to(coordinateSystem, position, orientation)
     }}
 }
@@ -129,20 +129,20 @@ RT_INTERFACE!{static interface ISpatialAnchorStatics(ISpatialAnchorStaticsVtbl):
     fn TryCreateWithPositionAndOrientationRelativeTo(&self, coordinateSystem: *mut SpatialCoordinateSystem, position: super::super::foundation::numerics::Vector3, orientation: super::super::foundation::numerics::Quaternion, out: *mut *mut SpatialAnchor) -> HRESULT
 }}
 impl ISpatialAnchorStatics {
-    #[inline] pub unsafe fn try_create_relative_to(&self, coordinateSystem: &SpatialCoordinateSystem) -> Result<ComPtr<SpatialAnchor>> {
+    #[inline] pub unsafe fn try_create_relative_to(&self, coordinateSystem: &SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialAnchor>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryCreateRelativeTo)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_create_with_position_relative_to(&self, coordinateSystem: &SpatialCoordinateSystem, position: super::super::foundation::numerics::Vector3) -> Result<ComPtr<SpatialAnchor>> {
+    #[inline] pub unsafe fn try_create_with_position_relative_to(&self, coordinateSystem: &SpatialCoordinateSystem, position: super::super::foundation::numerics::Vector3) -> Result<Option<ComPtr<SpatialAnchor>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryCreateWithPositionRelativeTo)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, position, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_create_with_position_and_orientation_relative_to(&self, coordinateSystem: &SpatialCoordinateSystem, position: super::super::foundation::numerics::Vector3, orientation: super::super::foundation::numerics::Quaternion) -> Result<ComPtr<SpatialAnchor>> {
+    #[inline] pub unsafe fn try_create_with_position_and_orientation_relative_to(&self, coordinateSystem: &SpatialCoordinateSystem, position: super::super::foundation::numerics::Vector3, orientation: super::super::foundation::numerics::Quaternion) -> Result<Option<ComPtr<SpatialAnchor>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryCreateWithPositionAndOrientationRelativeTo)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, position, orientation, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISpatialAnchorStore, 2965124662, 18538, 15536, 158, 111, 18, 69, 22, 92, 77, 182);
@@ -153,10 +153,10 @@ RT_INTERFACE!{interface ISpatialAnchorStore(ISpatialAnchorStoreVtbl): IInspectab
     fn Clear(&self) -> HRESULT
 }}
 impl ISpatialAnchorStore {
-    #[inline] pub unsafe fn get_all_saved_anchors(&self) -> Result<ComPtr<super::super::foundation::collections::IMapView<HString, SpatialAnchor>>> {
+    #[inline] pub unsafe fn get_all_saved_anchors(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IMapView<HString, SpatialAnchor>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetAllSavedAnchors)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn try_save(&self, id: &HStringArg, anchor: &SpatialAnchor) -> Result<bool> {
         let mut out = zeroed();
@@ -231,16 +231,16 @@ RT_INTERFACE!{interface ISpatialBoundingVolume(ISpatialBoundingVolumeVtbl): IIns
 RT_CLASS!{class SpatialBoundingVolume: ISpatialBoundingVolume}
 impl RtActivatable<ISpatialBoundingVolumeStatics> for SpatialBoundingVolume {}
 impl SpatialBoundingVolume {
-    #[inline] pub fn from_box(coordinateSystem: &SpatialCoordinateSystem, box_: SpatialBoundingBox) -> Result<ComPtr<SpatialBoundingVolume>> { unsafe {
+    #[inline] pub fn from_box(coordinateSystem: &SpatialCoordinateSystem, box_: SpatialBoundingBox) -> Result<Option<ComPtr<SpatialBoundingVolume>>> { unsafe {
         <Self as RtActivatable<ISpatialBoundingVolumeStatics>>::get_activation_factory().from_box(coordinateSystem, box_)
     }}
-    #[inline] pub fn from_oriented_box(coordinateSystem: &SpatialCoordinateSystem, box_: SpatialBoundingOrientedBox) -> Result<ComPtr<SpatialBoundingVolume>> { unsafe {
+    #[inline] pub fn from_oriented_box(coordinateSystem: &SpatialCoordinateSystem, box_: SpatialBoundingOrientedBox) -> Result<Option<ComPtr<SpatialBoundingVolume>>> { unsafe {
         <Self as RtActivatable<ISpatialBoundingVolumeStatics>>::get_activation_factory().from_oriented_box(coordinateSystem, box_)
     }}
-    #[inline] pub fn from_sphere(coordinateSystem: &SpatialCoordinateSystem, sphere: SpatialBoundingSphere) -> Result<ComPtr<SpatialBoundingVolume>> { unsafe {
+    #[inline] pub fn from_sphere(coordinateSystem: &SpatialCoordinateSystem, sphere: SpatialBoundingSphere) -> Result<Option<ComPtr<SpatialBoundingVolume>>> { unsafe {
         <Self as RtActivatable<ISpatialBoundingVolumeStatics>>::get_activation_factory().from_sphere(coordinateSystem, sphere)
     }}
-    #[inline] pub fn from_frustum(coordinateSystem: &SpatialCoordinateSystem, frustum: SpatialBoundingFrustum) -> Result<ComPtr<SpatialBoundingVolume>> { unsafe {
+    #[inline] pub fn from_frustum(coordinateSystem: &SpatialCoordinateSystem, frustum: SpatialBoundingFrustum) -> Result<Option<ComPtr<SpatialBoundingVolume>>> { unsafe {
         <Self as RtActivatable<ISpatialBoundingVolumeStatics>>::get_activation_factory().from_frustum(coordinateSystem, frustum)
     }}
 }
@@ -253,25 +253,25 @@ RT_INTERFACE!{static interface ISpatialBoundingVolumeStatics(ISpatialBoundingVol
     fn FromFrustum(&self, coordinateSystem: *mut SpatialCoordinateSystem, frustum: SpatialBoundingFrustum, out: *mut *mut SpatialBoundingVolume) -> HRESULT
 }}
 impl ISpatialBoundingVolumeStatics {
-    #[inline] pub unsafe fn from_box(&self, coordinateSystem: &SpatialCoordinateSystem, box_: SpatialBoundingBox) -> Result<ComPtr<SpatialBoundingVolume>> {
+    #[inline] pub unsafe fn from_box(&self, coordinateSystem: &SpatialCoordinateSystem, box_: SpatialBoundingBox) -> Result<Option<ComPtr<SpatialBoundingVolume>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FromBox)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, box_, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn from_oriented_box(&self, coordinateSystem: &SpatialCoordinateSystem, box_: SpatialBoundingOrientedBox) -> Result<ComPtr<SpatialBoundingVolume>> {
+    #[inline] pub unsafe fn from_oriented_box(&self, coordinateSystem: &SpatialCoordinateSystem, box_: SpatialBoundingOrientedBox) -> Result<Option<ComPtr<SpatialBoundingVolume>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FromOrientedBox)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, box_, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn from_sphere(&self, coordinateSystem: &SpatialCoordinateSystem, sphere: SpatialBoundingSphere) -> Result<ComPtr<SpatialBoundingVolume>> {
+    #[inline] pub unsafe fn from_sphere(&self, coordinateSystem: &SpatialCoordinateSystem, sphere: SpatialBoundingSphere) -> Result<Option<ComPtr<SpatialBoundingVolume>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FromSphere)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, sphere, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn from_frustum(&self, coordinateSystem: &SpatialCoordinateSystem, frustum: SpatialBoundingFrustum) -> Result<ComPtr<SpatialBoundingVolume>> {
+    #[inline] pub unsafe fn from_frustum(&self, coordinateSystem: &SpatialCoordinateSystem, frustum: SpatialBoundingFrustum) -> Result<Option<ComPtr<SpatialBoundingVolume>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FromFrustum)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, frustum, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISpatialCoordinateSystem, 1777060427, 24739, 13702, 166, 83, 89, 167, 189, 103, 109, 7);
@@ -279,10 +279,10 @@ RT_INTERFACE!{interface ISpatialCoordinateSystem(ISpatialCoordinateSystemVtbl): 
     fn TryGetTransformTo(&self, target: *mut SpatialCoordinateSystem, out: *mut *mut super::super::foundation::IReference<super::super::foundation::numerics::Matrix4x4>) -> HRESULT
 }}
 impl ISpatialCoordinateSystem {
-    #[inline] pub unsafe fn try_get_transform_to(&self, target: &SpatialCoordinateSystem) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::numerics::Matrix4x4>>> {
+    #[inline] pub unsafe fn try_get_transform_to(&self, target: &SpatialCoordinateSystem) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::numerics::Matrix4x4>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetTransformTo)(self as *const _ as *mut _, target as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialCoordinateSystem: ISpatialCoordinateSystem}
@@ -298,15 +298,15 @@ impl ISpatialEntity {
         let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_anchor(&self) -> Result<ComPtr<SpatialAnchor>> {
+    #[inline] pub unsafe fn get_anchor(&self) -> Result<Option<ComPtr<SpatialAnchor>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Anchor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<super::super::foundation::collections::ValueSet>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::ValueSet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialEntity: ISpatialEntity}
@@ -325,10 +325,10 @@ RT_INTERFACE!{interface ISpatialEntityAddedEventArgs(ISpatialEntityAddedEventArg
     fn get_Entity(&self, out: *mut *mut SpatialEntity) -> HRESULT
 }}
 impl ISpatialEntityAddedEventArgs {
-    #[inline] pub unsafe fn get_entity(&self) -> Result<ComPtr<SpatialEntity>> {
+    #[inline] pub unsafe fn get_entity(&self) -> Result<Option<ComPtr<SpatialEntity>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Entity)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialEntityAddedEventArgs: ISpatialEntityAddedEventArgs}
@@ -354,10 +354,10 @@ RT_INTERFACE!{interface ISpatialEntityRemovedEventArgs(ISpatialEntityRemovedEven
     fn get_Entity(&self, out: *mut *mut SpatialEntity) -> HRESULT
 }}
 impl ISpatialEntityRemovedEventArgs {
-    #[inline] pub unsafe fn get_entity(&self) -> Result<ComPtr<SpatialEntity>> {
+    #[inline] pub unsafe fn get_entity(&self) -> Result<Option<ComPtr<SpatialEntity>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Entity)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialEntityRemovedEventArgs: ISpatialEntityRemovedEventArgs}
@@ -378,10 +378,10 @@ impl ISpatialEntityStore {
         let hr = ((*self.lpVtbl).RemoveAsync)(self as *const _ as *mut _, entity as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_entity_watcher(&self) -> Result<ComPtr<SpatialEntityWatcher>> {
+    #[inline] pub unsafe fn create_entity_watcher(&self) -> Result<Option<ComPtr<SpatialEntityWatcher>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateEntityWatcher)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialEntityStore: ISpatialEntityStore}
@@ -390,7 +390,7 @@ impl SpatialEntityStore {
     #[inline] pub fn get_is_supported() -> Result<bool> { unsafe {
         <Self as RtActivatable<ISpatialEntityStoreStatics>>::get_activation_factory().get_is_supported()
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn try_get_for_remote_system_session(session: &super::super::system::remotesystems::RemoteSystemSession) -> Result<ComPtr<SpatialEntityStore>> { unsafe {
+    #[cfg(feature="windows-system")] #[inline] pub fn try_get_for_remote_system_session(session: &super::super::system::remotesystems::RemoteSystemSession) -> Result<Option<ComPtr<SpatialEntityStore>>> { unsafe {
         <Self as RtActivatable<ISpatialEntityStoreStatics>>::get_activation_factory().try_get_for_remote_system_session(session)
     }}
 }
@@ -406,10 +406,10 @@ impl ISpatialEntityStoreStatics {
         let hr = ((*self.lpVtbl).get_IsSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn try_get_for_remote_system_session(&self, session: &super::super::system::remotesystems::RemoteSystemSession) -> Result<ComPtr<SpatialEntityStore>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn try_get_for_remote_system_session(&self, session: &super::super::system::remotesystems::RemoteSystemSession) -> Result<Option<ComPtr<SpatialEntityStore>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetForRemoteSystemSession)(self as *const _ as *mut _, session as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISpatialEntityUpdatedEventArgs, 3848738662, 25211, 17355, 164, 159, 179, 190, 109, 71, 222, 237);
@@ -417,10 +417,10 @@ RT_INTERFACE!{interface ISpatialEntityUpdatedEventArgs(ISpatialEntityUpdatedEven
     fn get_Entity(&self, out: *mut *mut SpatialEntity) -> HRESULT
 }}
 impl ISpatialEntityUpdatedEventArgs {
-    #[inline] pub unsafe fn get_entity(&self) -> Result<ComPtr<SpatialEntity>> {
+    #[inline] pub unsafe fn get_entity(&self) -> Result<Option<ComPtr<SpatialEntity>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Entity)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialEntityUpdatedEventArgs: ISpatialEntityUpdatedEventArgs}
@@ -579,56 +579,56 @@ impl ISpatialLocator {
         let hr = ((*self.lpVtbl).remove_PositionalTrackingDeactivating)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_locate_at_timestamp(&self, timestamp: &super::PerceptionTimestamp, coordinateSystem: &SpatialCoordinateSystem) -> Result<ComPtr<SpatialLocation>> {
+    #[inline] pub unsafe fn try_locate_at_timestamp(&self, timestamp: &super::PerceptionTimestamp, coordinateSystem: &SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialLocation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryLocateAtTimestamp)(self as *const _ as *mut _, timestamp as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_attached_frame_of_reference_at_current_heading(&self) -> Result<ComPtr<SpatialLocatorAttachedFrameOfReference>> {
+    #[inline] pub unsafe fn create_attached_frame_of_reference_at_current_heading(&self) -> Result<Option<ComPtr<SpatialLocatorAttachedFrameOfReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAttachedFrameOfReferenceAtCurrentHeading)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_attached_frame_of_reference_at_current_heading_with_position(&self, relativePosition: super::super::foundation::numerics::Vector3) -> Result<ComPtr<SpatialLocatorAttachedFrameOfReference>> {
+    #[inline] pub unsafe fn create_attached_frame_of_reference_at_current_heading_with_position(&self, relativePosition: super::super::foundation::numerics::Vector3) -> Result<Option<ComPtr<SpatialLocatorAttachedFrameOfReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAttachedFrameOfReferenceAtCurrentHeadingWithPosition)(self as *const _ as *mut _, relativePosition, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_attached_frame_of_reference_at_current_heading_with_position_and_orientation(&self, relativePosition: super::super::foundation::numerics::Vector3, relativeOrientation: super::super::foundation::numerics::Quaternion) -> Result<ComPtr<SpatialLocatorAttachedFrameOfReference>> {
+    #[inline] pub unsafe fn create_attached_frame_of_reference_at_current_heading_with_position_and_orientation(&self, relativePosition: super::super::foundation::numerics::Vector3, relativeOrientation: super::super::foundation::numerics::Quaternion) -> Result<Option<ComPtr<SpatialLocatorAttachedFrameOfReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAttachedFrameOfReferenceAtCurrentHeadingWithPositionAndOrientation)(self as *const _ as *mut _, relativePosition, relativeOrientation, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_attached_frame_of_reference_at_current_heading_with_position_and_orientation_and_relative_heading(&self, relativePosition: super::super::foundation::numerics::Vector3, relativeOrientation: super::super::foundation::numerics::Quaternion, relativeHeadingInRadians: f64) -> Result<ComPtr<SpatialLocatorAttachedFrameOfReference>> {
+    #[inline] pub unsafe fn create_attached_frame_of_reference_at_current_heading_with_position_and_orientation_and_relative_heading(&self, relativePosition: super::super::foundation::numerics::Vector3, relativeOrientation: super::super::foundation::numerics::Quaternion, relativeHeadingInRadians: f64) -> Result<Option<ComPtr<SpatialLocatorAttachedFrameOfReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAttachedFrameOfReferenceAtCurrentHeadingWithPositionAndOrientationAndRelativeHeading)(self as *const _ as *mut _, relativePosition, relativeOrientation, relativeHeadingInRadians, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_stationary_frame_of_reference_at_current_location(&self) -> Result<ComPtr<SpatialStationaryFrameOfReference>> {
+    #[inline] pub unsafe fn create_stationary_frame_of_reference_at_current_location(&self) -> Result<Option<ComPtr<SpatialStationaryFrameOfReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateStationaryFrameOfReferenceAtCurrentLocation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_stationary_frame_of_reference_at_current_location_with_position(&self, relativePosition: super::super::foundation::numerics::Vector3) -> Result<ComPtr<SpatialStationaryFrameOfReference>> {
+    #[inline] pub unsafe fn create_stationary_frame_of_reference_at_current_location_with_position(&self, relativePosition: super::super::foundation::numerics::Vector3) -> Result<Option<ComPtr<SpatialStationaryFrameOfReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateStationaryFrameOfReferenceAtCurrentLocationWithPosition)(self as *const _ as *mut _, relativePosition, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_stationary_frame_of_reference_at_current_location_with_position_and_orientation(&self, relativePosition: super::super::foundation::numerics::Vector3, relativeOrientation: super::super::foundation::numerics::Quaternion) -> Result<ComPtr<SpatialStationaryFrameOfReference>> {
+    #[inline] pub unsafe fn create_stationary_frame_of_reference_at_current_location_with_position_and_orientation(&self, relativePosition: super::super::foundation::numerics::Vector3, relativeOrientation: super::super::foundation::numerics::Quaternion) -> Result<Option<ComPtr<SpatialStationaryFrameOfReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateStationaryFrameOfReferenceAtCurrentLocationWithPositionAndOrientation)(self as *const _ as *mut _, relativePosition, relativeOrientation, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_stationary_frame_of_reference_at_current_location_with_position_and_orientation_and_relative_heading(&self, relativePosition: super::super::foundation::numerics::Vector3, relativeOrientation: super::super::foundation::numerics::Quaternion, relativeHeadingInRadians: f64) -> Result<ComPtr<SpatialStationaryFrameOfReference>> {
+    #[inline] pub unsafe fn create_stationary_frame_of_reference_at_current_location_with_position_and_orientation_and_relative_heading(&self, relativePosition: super::super::foundation::numerics::Vector3, relativeOrientation: super::super::foundation::numerics::Quaternion, relativeHeadingInRadians: f64) -> Result<Option<ComPtr<SpatialStationaryFrameOfReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateStationaryFrameOfReferenceAtCurrentLocationWithPositionAndOrientationAndRelativeHeading)(self as *const _ as *mut _, relativePosition, relativeOrientation, relativeHeadingInRadians, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialLocator: ISpatialLocator}
 impl RtActivatable<ISpatialLocatorStatics> for SpatialLocator {}
 impl SpatialLocator {
-    #[inline] pub fn get_default() -> Result<ComPtr<SpatialLocator>> { unsafe {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<SpatialLocator>>> { unsafe {
         <Self as RtActivatable<ISpatialLocatorStatics>>::get_activation_factory().get_default()
     }}
 }
@@ -666,15 +666,15 @@ impl ISpatialLocatorAttachedFrameOfReference {
         let hr = ((*self.lpVtbl).AdjustHeading)(self as *const _ as *mut _, headingOffsetInRadians);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_stationary_coordinate_system_at_timestamp(&self, timestamp: &super::PerceptionTimestamp) -> Result<ComPtr<SpatialCoordinateSystem>> {
+    #[inline] pub unsafe fn get_stationary_coordinate_system_at_timestamp(&self, timestamp: &super::PerceptionTimestamp) -> Result<Option<ComPtr<SpatialCoordinateSystem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetStationaryCoordinateSystemAtTimestamp)(self as *const _ as *mut _, timestamp as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_get_relative_heading_at_timestamp(&self, timestamp: &super::PerceptionTimestamp) -> Result<ComPtr<super::super::foundation::IReference<f64>>> {
+    #[inline] pub unsafe fn try_get_relative_heading_at_timestamp(&self, timestamp: &super::PerceptionTimestamp) -> Result<Option<ComPtr<super::super::foundation::IReference<f64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetRelativeHeadingAtTimestamp)(self as *const _ as *mut _, timestamp as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialLocatorAttachedFrameOfReference: ISpatialLocatorAttachedFrameOfReference}
@@ -700,10 +700,10 @@ RT_INTERFACE!{static interface ISpatialLocatorStatics(ISpatialLocatorStaticsVtbl
     fn GetDefault(&self, out: *mut *mut SpatialLocator) -> HRESULT
 }}
 impl ISpatialLocatorStatics {
-    #[inline] pub unsafe fn get_default(&self) -> Result<ComPtr<SpatialLocator>> {
+    #[inline] pub unsafe fn get_default(&self) -> Result<Option<ComPtr<SpatialLocator>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum SpatialLookDirectionRange: i32 {
@@ -724,10 +724,10 @@ RT_INTERFACE!{interface ISpatialStageFrameOfReference(ISpatialStageFrameOfRefere
     fn TryGetMovementBounds(&self, coordinateSystem: *mut SpatialCoordinateSystem, outSize: *mut u32, out: *mut *mut super::super::foundation::numerics::Vector3) -> HRESULT
 }}
 impl ISpatialStageFrameOfReference {
-    #[inline] pub unsafe fn get_coordinate_system(&self) -> Result<ComPtr<SpatialCoordinateSystem>> {
+    #[inline] pub unsafe fn get_coordinate_system(&self) -> Result<Option<ComPtr<SpatialCoordinateSystem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CoordinateSystem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_movement_range(&self) -> Result<SpatialMovementRange> {
         let mut out = zeroed();
@@ -739,10 +739,10 @@ impl ISpatialStageFrameOfReference {
         let hr = ((*self.lpVtbl).get_LookDirectionRange)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_coordinate_system_at_current_location(&self, locator: &SpatialLocator) -> Result<ComPtr<SpatialCoordinateSystem>> {
+    #[inline] pub unsafe fn get_coordinate_system_at_current_location(&self, locator: &SpatialLocator) -> Result<Option<ComPtr<SpatialCoordinateSystem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCoordinateSystemAtCurrentLocation)(self as *const _ as *mut _, locator as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn try_get_movement_bounds(&self, coordinateSystem: &SpatialCoordinateSystem) -> Result<ComArray<super::super::foundation::numerics::Vector3>> {
         let mut outSize = 0; let mut out = null_mut();
@@ -753,7 +753,7 @@ impl ISpatialStageFrameOfReference {
 RT_CLASS!{class SpatialStageFrameOfReference: ISpatialStageFrameOfReference}
 impl RtActivatable<ISpatialStageFrameOfReferenceStatics> for SpatialStageFrameOfReference {}
 impl SpatialStageFrameOfReference {
-    #[inline] pub fn get_current() -> Result<ComPtr<SpatialStageFrameOfReference>> { unsafe {
+    #[inline] pub fn get_current() -> Result<Option<ComPtr<SpatialStageFrameOfReference>>> { unsafe {
         <Self as RtActivatable<ISpatialStageFrameOfReferenceStatics>>::get_activation_factory().get_current()
     }}
     #[inline] pub fn add_current_changed(handler: &super::super::foundation::EventHandler<IInspectable>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
@@ -775,10 +775,10 @@ RT_INTERFACE!{static interface ISpatialStageFrameOfReferenceStatics(ISpatialStag
     fn RequestNewStageAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<SpatialStageFrameOfReference>) -> HRESULT
 }}
 impl ISpatialStageFrameOfReferenceStatics {
-    #[inline] pub unsafe fn get_current(&self) -> Result<ComPtr<SpatialStageFrameOfReference>> {
+    #[inline] pub unsafe fn get_current(&self) -> Result<Option<ComPtr<SpatialStageFrameOfReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_current_changed(&self, handler: &super::super::foundation::EventHandler<IInspectable>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -800,10 +800,10 @@ RT_INTERFACE!{interface ISpatialStationaryFrameOfReference(ISpatialStationaryFra
     fn get_CoordinateSystem(&self, out: *mut *mut SpatialCoordinateSystem) -> HRESULT
 }}
 impl ISpatialStationaryFrameOfReference {
-    #[inline] pub unsafe fn get_coordinate_system(&self) -> Result<ComPtr<SpatialCoordinateSystem>> {
+    #[inline] pub unsafe fn get_coordinate_system(&self) -> Result<Option<ComPtr<SpatialCoordinateSystem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CoordinateSystem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialStationaryFrameOfReference: ISpatialStationaryFrameOfReference}
@@ -828,10 +828,10 @@ impl ISpatialSurfaceInfo {
         let hr = ((*self.lpVtbl).get_UpdateTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_get_bounds(&self, coordinateSystem: &super::SpatialCoordinateSystem) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<super::SpatialBoundingOrientedBox>>> {
+    #[inline] pub unsafe fn try_get_bounds(&self, coordinateSystem: &super::SpatialCoordinateSystem) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<super::SpatialBoundingOrientedBox>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetBounds)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn try_compute_latest_mesh_async(&self, maxTrianglesPerCubicMeter: f64) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<SpatialSurfaceMesh>>> {
         let mut out = null_mut();
@@ -855,35 +855,35 @@ RT_INTERFACE!{interface ISpatialSurfaceMesh(ISpatialSurfaceMeshVtbl): IInspectab
     fn get_VertexNormals(&self, out: *mut *mut SpatialSurfaceMeshBuffer) -> HRESULT
 }}
 impl ISpatialSurfaceMesh {
-    #[inline] pub unsafe fn get_surface_info(&self) -> Result<ComPtr<SpatialSurfaceInfo>> {
+    #[inline] pub unsafe fn get_surface_info(&self) -> Result<Option<ComPtr<SpatialSurfaceInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SurfaceInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_coordinate_system(&self) -> Result<ComPtr<super::SpatialCoordinateSystem>> {
+    #[inline] pub unsafe fn get_coordinate_system(&self) -> Result<Option<ComPtr<super::SpatialCoordinateSystem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CoordinateSystem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_triangle_indices(&self) -> Result<ComPtr<SpatialSurfaceMeshBuffer>> {
+    #[inline] pub unsafe fn get_triangle_indices(&self) -> Result<Option<ComPtr<SpatialSurfaceMeshBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TriangleIndices)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_vertex_positions(&self) -> Result<ComPtr<SpatialSurfaceMeshBuffer>> {
+    #[inline] pub unsafe fn get_vertex_positions(&self) -> Result<Option<ComPtr<SpatialSurfaceMeshBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VertexPositions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_vertex_position_scale(&self) -> Result<::rt::gen::windows::foundation::numerics::Vector3> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_VertexPositionScale)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_vertex_normals(&self) -> Result<ComPtr<SpatialSurfaceMeshBuffer>> {
+    #[inline] pub unsafe fn get_vertex_normals(&self) -> Result<Option<ComPtr<SpatialSurfaceMeshBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VertexNormals)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialSurfaceMesh: ISpatialSurfaceMesh}
@@ -911,10 +911,10 @@ impl ISpatialSurfaceMeshBuffer {
         let hr = ((*self.lpVtbl).get_ElementCount)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_data(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Data)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialSurfaceMeshBuffer: ISpatialSurfaceMeshBuffer}
@@ -977,13 +977,13 @@ RT_CLASS!{class SpatialSurfaceMeshOptions: ISpatialSurfaceMeshOptions}
 impl RtActivatable<ISpatialSurfaceMeshOptionsStatics> for SpatialSurfaceMeshOptions {}
 impl RtActivatable<IActivationFactory> for SpatialSurfaceMeshOptions {}
 impl SpatialSurfaceMeshOptions {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_position_formats() -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>> { unsafe {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_position_formats() -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>>> { unsafe {
         <Self as RtActivatable<ISpatialSurfaceMeshOptionsStatics>>::get_activation_factory().get_supported_vertex_position_formats()
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_triangle_index_formats() -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>> { unsafe {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_triangle_index_formats() -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>>> { unsafe {
         <Self as RtActivatable<ISpatialSurfaceMeshOptionsStatics>>::get_activation_factory().get_supported_triangle_index_formats()
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_normal_formats() -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>> { unsafe {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_normal_formats() -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>>> { unsafe {
         <Self as RtActivatable<ISpatialSurfaceMeshOptionsStatics>>::get_activation_factory().get_supported_vertex_normal_formats()
     }}
 }
@@ -995,20 +995,20 @@ RT_INTERFACE!{static interface ISpatialSurfaceMeshOptionsStatics(ISpatialSurface
     #[cfg(feature="windows-graphics")] fn get_SupportedVertexNormalFormats(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>) -> HRESULT
 }}
 impl ISpatialSurfaceMeshOptionsStatics {
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_supported_vertex_position_formats(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_supported_vertex_position_formats(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedVertexPositionFormats)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_supported_triangle_index_formats(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_supported_triangle_index_formats(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedTriangleIndexFormats)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_supported_vertex_normal_formats(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_supported_vertex_normal_formats(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedVertexNormalFormats)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISpatialSurfaceObserver, 280401945, 56778, 13443, 172, 58, 116, 143, 232, 200, 109, 245);
@@ -1020,10 +1020,10 @@ RT_INTERFACE!{interface ISpatialSurfaceObserver(ISpatialSurfaceObserverVtbl): II
     fn remove_ObservedSurfacesChanged(&self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ISpatialSurfaceObserver {
-    #[inline] pub unsafe fn get_observed_surfaces(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IMapView<Guid, SpatialSurfaceInfo>>> {
+    #[inline] pub unsafe fn get_observed_surfaces(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IMapView<Guid, SpatialSurfaceInfo>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetObservedSurfaces)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_bounding_volume(&self, bounds: &super::SpatialBoundingVolume) -> Result<()> {
         let hr = ((*self.lpVtbl).SetBoundingVolume)(self as *const _ as *mut _, bounds as *const _ as *mut _);

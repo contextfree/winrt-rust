@@ -30,10 +30,10 @@ RT_INTERFACE!{interface IAudioFrame(IAudioFrameVtbl): IInspectable(IInspectableV
     fn LockBuffer(&self, mode: AudioBufferAccessMode, out: *mut *mut AudioBuffer) -> HRESULT
 }}
 impl IAudioFrame {
-    #[inline] pub unsafe fn lock_buffer(&self, mode: AudioBufferAccessMode) -> Result<ComPtr<AudioBuffer>> {
+    #[inline] pub unsafe fn lock_buffer(&self, mode: AudioBufferAccessMode) -> Result<Option<ComPtr<AudioBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LockBuffer)(self as *const _ as *mut _, mode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioFrame: IAudioFrame}
@@ -279,10 +279,10 @@ impl IMediaControl {
         let hr = ((*self.lpVtbl).put_AlbumArt)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_album_art(&self) -> Result<ComPtr<super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_album_art(&self) -> Result<Option<ComPtr<super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AlbumArt)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{static class MediaControl}
@@ -384,7 +384,7 @@ impl MediaControl {
     #[inline] pub fn set_album_art(value: &super::foundation::Uri) -> Result<()> { unsafe {
         <Self as RtActivatable<IMediaControl>>::get_activation_factory().set_album_art(value)
     }}
-    #[inline] pub fn get_album_art() -> Result<ComPtr<super::foundation::Uri>> { unsafe {
+    #[inline] pub fn get_album_art() -> Result<Option<ComPtr<super::foundation::Uri>>> { unsafe {
         <Self as RtActivatable<IMediaControl>>::get_activation_factory().get_album_art()
     }}
 }
@@ -506,28 +506,28 @@ impl IMediaFrame {
         let hr = ((*self.lpVtbl).put_RelativeTime)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_relative_time(&self) -> Result<ComPtr<super::foundation::IReference<super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_relative_time(&self) -> Result<Option<ComPtr<super::foundation::IReference<super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RelativeTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_system_relative_time(&self, value: &super::foundation::IReference<super::foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_SystemRelativeTime)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_system_relative_time(&self) -> Result<ComPtr<super::foundation::IReference<super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_system_relative_time(&self) -> Result<Option<ComPtr<super::foundation::IReference<super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SystemRelativeTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_duration(&self, value: &super::foundation::IReference<super::foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Duration)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_duration(&self) -> Result<ComPtr<super::foundation::IReference<super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_duration(&self) -> Result<Option<ComPtr<super::foundation::IReference<super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_is_discontinuous(&self, value: bool) -> Result<()> {
         let hr = ((*self.lpVtbl).put_IsDiscontinuous)(self as *const _ as *mut _, value);
@@ -538,10 +538,10 @@ impl IMediaFrame {
         let hr = ((*self.lpVtbl).get_IsDiscontinuous)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_extended_properties(&self) -> Result<ComPtr<super::foundation::collections::IPropertySet>> {
+    #[inline] pub unsafe fn get_extended_properties(&self) -> Result<Option<ComPtr<super::foundation::collections::IPropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExtendedProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaMarker, 402906872, 56485, 19311, 156, 32, 227, 211, 192, 100, 54, 37);
@@ -572,10 +572,10 @@ RT_INTERFACE!{interface IMediaMarkers(IMediaMarkersVtbl): IInspectable(IInspecta
     fn get_Markers(&self, out: *mut *mut super::foundation::collections::IVectorView<IMediaMarker>) -> HRESULT
 }}
 impl IMediaMarkers {
-    #[inline] pub unsafe fn get_markers(&self) -> Result<ComPtr<super::foundation::collections::IVectorView<IMediaMarker>>> {
+    #[inline] pub unsafe fn get_markers(&self) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<IMediaMarker>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Markers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{static class MediaMarkerTypes}
@@ -611,10 +611,10 @@ RT_INTERFACE!{interface IMediaProcessingTriggerDetails(IMediaProcessingTriggerDe
     fn get_Arguments(&self, out: *mut *mut super::foundation::collections::ValueSet) -> HRESULT
 }}
 impl IMediaProcessingTriggerDetails {
-    #[inline] pub unsafe fn get_arguments(&self) -> Result<ComPtr<super::foundation::collections::ValueSet>> {
+    #[inline] pub unsafe fn get_arguments(&self) -> Result<Option<ComPtr<super::foundation::collections::ValueSet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Arguments)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaProcessingTriggerDetails: IMediaProcessingTriggerDetails}
@@ -703,10 +703,10 @@ RT_INTERFACE!{interface IMediaTimelineController2(IMediaTimelineController2Vtbl)
     fn remove_Ended(&self, token: super::foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IMediaTimelineController2 {
-    #[inline] pub unsafe fn get_duration(&self) -> Result<ComPtr<super::foundation::IReference<super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_duration(&self) -> Result<Option<ComPtr<super::foundation::IReference<super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_duration(&self, value: &super::foundation::IReference<super::foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Duration)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -824,10 +824,10 @@ impl IMusicDisplayProperties2 {
         let hr = ((*self.lpVtbl).put_TrackNumber)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_genres(&self) -> Result<ComPtr<super::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_genres(&self) -> Result<Option<ComPtr<super::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Genres)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMusicDisplayProperties3, 1303714497, 1665, 20108, 148, 1, 184, 21, 157, 158, 239, 199);
@@ -928,10 +928,10 @@ impl ISystemMediaTransportControls {
         let hr = ((*self.lpVtbl).put_PlaybackStatus)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_display_updater(&self) -> Result<ComPtr<SystemMediaTransportControlsDisplayUpdater>> {
+    #[inline] pub unsafe fn get_display_updater(&self) -> Result<Option<ComPtr<SystemMediaTransportControlsDisplayUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DisplayUpdater)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_sound_level(&self) -> Result<SoundLevel> {
         let mut out = zeroed();
@@ -1059,7 +1059,7 @@ impl ISystemMediaTransportControls {
 RT_CLASS!{class SystemMediaTransportControls: ISystemMediaTransportControls}
 impl RtActivatable<ISystemMediaTransportControlsStatics> for SystemMediaTransportControls {}
 impl SystemMediaTransportControls {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<SystemMediaTransportControls>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<SystemMediaTransportControls>>> { unsafe {
         <Self as RtActivatable<ISystemMediaTransportControlsStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
@@ -1203,29 +1203,29 @@ impl ISystemMediaTransportControlsDisplayUpdater {
         let hr = ((*self.lpVtbl).put_AppMediaId)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<ComPtr<super::storage::streams::RandomAccessStreamReference>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<Option<ComPtr<super::storage::streams::RandomAccessStreamReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn set_thumbnail(&self, value: &super::storage::streams::RandomAccessStreamReference) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_music_properties(&self) -> Result<ComPtr<MusicDisplayProperties>> {
+    #[inline] pub unsafe fn get_music_properties(&self) -> Result<Option<ComPtr<MusicDisplayProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MusicProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_properties(&self) -> Result<ComPtr<VideoDisplayProperties>> {
+    #[inline] pub unsafe fn get_video_properties(&self) -> Result<Option<ComPtr<VideoDisplayProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_image_properties(&self) -> Result<ComPtr<ImageDisplayProperties>> {
+    #[inline] pub unsafe fn get_image_properties(&self) -> Result<Option<ComPtr<ImageDisplayProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ImageProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn copy_from_file_async(&self, type_: MediaPlaybackType, source: &super::storage::StorageFile) -> Result<ComPtr<super::foundation::IAsyncOperation<bool>>> {
         let mut out = null_mut();
@@ -1262,10 +1262,10 @@ RT_INTERFACE!{static interface ISystemMediaTransportControlsStatics(ISystemMedia
     fn GetForCurrentView(&self, out: *mut *mut SystemMediaTransportControls) -> HRESULT
 }}
 impl ISystemMediaTransportControlsStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<SystemMediaTransportControls>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<SystemMediaTransportControls>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISystemMediaTransportControlsTimelineProperties, 1361391978, 50082, 18267, 133, 7, 147, 83, 77, 200, 143, 21);
@@ -1364,10 +1364,10 @@ RT_INTERFACE!{interface IVideoDisplayProperties2(IVideoDisplayProperties2Vtbl): 
     fn get_Genres(&self, out: *mut *mut super::foundation::collections::IVector<HString>) -> HRESULT
 }}
 impl IVideoDisplayProperties2 {
-    #[inline] pub unsafe fn get_genres(&self) -> Result<ComPtr<super::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_genres(&self) -> Result<Option<ComPtr<super::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Genres)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{static class VideoEffects}
@@ -1396,20 +1396,20 @@ RT_INTERFACE!{interface IVideoFrame(IVideoFrameVtbl): IInspectable(IInspectableV
     #[cfg(feature="windows-graphics")] fn get_Direct3DSurface(&self, out: *mut *mut super::graphics::directx::direct3d11::IDirect3DSurface) -> HRESULT
 }}
 impl IVideoFrame {
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_software_bitmap(&self) -> Result<ComPtr<super::graphics::imaging::SoftwareBitmap>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_software_bitmap(&self) -> Result<Option<ComPtr<super::graphics::imaging::SoftwareBitmap>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SoftwareBitmap)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn copy_to_async(&self, frame: &VideoFrame) -> Result<ComPtr<super::foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CopyToAsync)(self as *const _ as *mut _, frame as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_direct3_dsurface(&self) -> Result<ComPtr<super::graphics::directx::direct3d11::IDirect3DSurface>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_direct3_dsurface(&self) -> Result<Option<ComPtr<super::graphics::directx::direct3d11::IDirect3DSurface>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Direct3DSurface)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VideoFrame: IVideoFrame}
@@ -1449,20 +1449,20 @@ RT_INTERFACE!{interface IAdvancedCapturedPhoto(IAdvancedCapturedPhotoVtbl): IIns
     fn get_Context(&self, out: *mut *mut IInspectable) -> HRESULT
 }}
 impl IAdvancedCapturedPhoto {
-    #[inline] pub unsafe fn get_frame(&self) -> Result<ComPtr<CapturedFrame>> {
+    #[inline] pub unsafe fn get_frame(&self) -> Result<Option<ComPtr<CapturedFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Frame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_mode(&self) -> Result<super::devices::AdvancedPhotoMode> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Mode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_context(&self) -> Result<ComPtr<IInspectable>> {
+    #[inline] pub unsafe fn get_context(&self) -> Result<Option<ComPtr<IInspectable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Context)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AdvancedCapturedPhoto: IAdvancedCapturedPhoto}
@@ -1471,10 +1471,10 @@ RT_INTERFACE!{interface IAdvancedCapturedPhoto2(IAdvancedCapturedPhoto2Vtbl): II
     fn get_FrameBoundsRelativeToReferencePhoto(&self, out: *mut *mut super::super::foundation::IReference<super::super::foundation::Rect>) -> HRESULT
 }}
 impl IAdvancedCapturedPhoto2 {
-    #[inline] pub unsafe fn get_frame_bounds_relative_to_reference_photo(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::Rect>>> {
+    #[inline] pub unsafe fn get_frame_bounds_relative_to_reference_photo(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::Rect>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FrameBoundsRelativeToReferencePhoto)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAdvancedPhotoCapture, 2214570746, 26215, 17628, 151, 60, 166, 188, 229, 150, 170, 15);
@@ -1554,19 +1554,19 @@ impl IAppBroadcastBackgroundService {
         let hr = ((*self.lpVtbl).put_SignInInfo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_sign_in_info(&self) -> Result<ComPtr<AppBroadcastBackgroundServiceSignInInfo>> {
+    #[inline] pub unsafe fn get_sign_in_info(&self) -> Result<Option<ComPtr<AppBroadcastBackgroundServiceSignInInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SignInInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_stream_info(&self, value: &AppBroadcastBackgroundServiceStreamInfo) -> Result<()> {
         let hr = ((*self.lpVtbl).put_StreamInfo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_stream_info(&self) -> Result<ComPtr<AppBroadcastBackgroundServiceStreamInfo>> {
+    #[inline] pub unsafe fn get_stream_info(&self) -> Result<Option<ComPtr<AppBroadcastBackgroundServiceStreamInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StreamInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_app_id(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -1696,24 +1696,24 @@ impl IAppBroadcastBackgroundServiceSignInInfo {
         let hr = ((*self.lpVtbl).put_OAuthRequestUri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_oauth_request_uri(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_oauth_request_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OAuthRequestUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_oauth_callback_uri(&self, value: &super::super::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_OAuthCallbackUri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_oauth_callback_uri(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_oauth_callback_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OAuthCallbackUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_authentication_result(&self) -> Result<ComPtr<super::super::security::authentication::web::WebAuthenticationResult>> {
+    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_authentication_result(&self) -> Result<Option<ComPtr<super::super::security::authentication::web::WebAuthenticationResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AuthenticationResult)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_user_name(&self, value: &HStringArg) -> Result<()> {
         let hr = ((*self.lpVtbl).put_UserName)(self as *const _ as *mut _, value.get());
@@ -1801,10 +1801,10 @@ impl IAppBroadcastBackgroundServiceStreamInfo {
         let hr = ((*self.lpVtbl).get_AudioCodec)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_broadcast_stream_reader(&self) -> Result<ComPtr<AppBroadcastStreamReader>> {
+    #[inline] pub unsafe fn get_broadcast_stream_reader(&self) -> Result<Option<ComPtr<AppBroadcastStreamReader>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BroadcastStreamReader)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_stream_state_changed(&self, handler: &super::super::foundation::TypedEventHandler<AppBroadcastBackgroundServiceStreamInfo, AppBroadcastStreamStateChangedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -2038,13 +2038,13 @@ RT_CLASS!{class AppBroadcastHeartbeatRequestedEventArgs: IAppBroadcastHeartbeatR
 RT_CLASS!{static class AppBroadcastManager}
 impl RtActivatable<IAppBroadcastManagerStatics> for AppBroadcastManager {}
 impl AppBroadcastManager {
-    #[inline] pub fn get_global_settings() -> Result<ComPtr<AppBroadcastGlobalSettings>> { unsafe {
+    #[inline] pub fn get_global_settings() -> Result<Option<ComPtr<AppBroadcastGlobalSettings>>> { unsafe {
         <Self as RtActivatable<IAppBroadcastManagerStatics>>::get_activation_factory().get_global_settings()
     }}
     #[inline] pub fn apply_global_settings(value: &AppBroadcastGlobalSettings) -> Result<()> { unsafe {
         <Self as RtActivatable<IAppBroadcastManagerStatics>>::get_activation_factory().apply_global_settings(value)
     }}
-    #[inline] pub fn get_provider_settings() -> Result<ComPtr<AppBroadcastProviderSettings>> { unsafe {
+    #[inline] pub fn get_provider_settings() -> Result<Option<ComPtr<AppBroadcastProviderSettings>>> { unsafe {
         <Self as RtActivatable<IAppBroadcastManagerStatics>>::get_activation_factory().get_provider_settings()
     }}
     #[inline] pub fn apply_provider_settings(value: &AppBroadcastProviderSettings) -> Result<()> { unsafe {
@@ -2060,19 +2060,19 @@ RT_INTERFACE!{static interface IAppBroadcastManagerStatics(IAppBroadcastManagerS
     fn ApplyProviderSettings(&self, value: *mut AppBroadcastProviderSettings) -> HRESULT
 }}
 impl IAppBroadcastManagerStatics {
-    #[inline] pub unsafe fn get_global_settings(&self) -> Result<ComPtr<AppBroadcastGlobalSettings>> {
+    #[inline] pub unsafe fn get_global_settings(&self) -> Result<Option<ComPtr<AppBroadcastGlobalSettings>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetGlobalSettings)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn apply_global_settings(&self, value: &AppBroadcastGlobalSettings) -> Result<()> {
         let hr = ((*self.lpVtbl).ApplyGlobalSettings)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_provider_settings(&self) -> Result<ComPtr<AppBroadcastProviderSettings>> {
+    #[inline] pub unsafe fn get_provider_settings(&self) -> Result<Option<ComPtr<AppBroadcastProviderSettings>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetProviderSettings)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn apply_provider_settings(&self, value: &AppBroadcastProviderSettings) -> Result<()> {
         let hr = ((*self.lpVtbl).ApplyProviderSettings)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -2114,15 +2114,15 @@ impl IAppBroadcastPlugIn {
         let hr = ((*self.lpVtbl).get_AppId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_provider_settings(&self) -> Result<ComPtr<AppBroadcastProviderSettings>> {
+    #[inline] pub unsafe fn get_provider_settings(&self) -> Result<Option<ComPtr<AppBroadcastProviderSettings>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ProviderSettings)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_logo(&self) -> Result<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_logo(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Logo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_display_name(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -2144,15 +2144,15 @@ impl IAppBroadcastPlugInManager {
         let hr = ((*self.lpVtbl).get_IsBroadcastProviderAvailable)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_plug_in_list(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<AppBroadcastPlugIn>>> {
+    #[inline] pub unsafe fn get_plug_in_list(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<AppBroadcastPlugIn>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PlugInList)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_default_plug_in(&self) -> Result<ComPtr<AppBroadcastPlugIn>> {
+    #[inline] pub unsafe fn get_default_plug_in(&self) -> Result<Option<ComPtr<AppBroadcastPlugIn>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DefaultPlugIn)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_default_plug_in(&self, value: &AppBroadcastPlugIn) -> Result<()> {
         let hr = ((*self.lpVtbl).put_DefaultPlugIn)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -2162,10 +2162,10 @@ impl IAppBroadcastPlugInManager {
 RT_CLASS!{class AppBroadcastPlugInManager: IAppBroadcastPlugInManager}
 impl RtActivatable<IAppBroadcastPlugInManagerStatics> for AppBroadcastPlugInManager {}
 impl AppBroadcastPlugInManager {
-    #[inline] pub fn get_default() -> Result<ComPtr<AppBroadcastPlugInManager>> { unsafe {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<AppBroadcastPlugInManager>>> { unsafe {
         <Self as RtActivatable<IAppBroadcastPlugInManagerStatics>>::get_activation_factory().get_default()
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<AppBroadcastPlugInManager>> { unsafe {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<Option<ComPtr<AppBroadcastPlugInManager>>> { unsafe {
         <Self as RtActivatable<IAppBroadcastPlugInManagerStatics>>::get_activation_factory().get_for_user(user)
     }}
 }
@@ -2176,15 +2176,15 @@ RT_INTERFACE!{static interface IAppBroadcastPlugInManagerStatics(IAppBroadcastPl
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut super::super::system::User, out: *mut *mut AppBroadcastPlugInManager) -> HRESULT
 }}
 impl IAppBroadcastPlugInManagerStatics {
-    #[inline] pub unsafe fn get_default(&self) -> Result<ComPtr<AppBroadcastPlugInManager>> {
+    #[inline] pub unsafe fn get_default(&self) -> Result<Option<ComPtr<AppBroadcastPlugInManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &super::super::system::User) -> Result<ComPtr<AppBroadcastPlugInManager>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &super::super::system::User) -> Result<Option<ComPtr<AppBroadcastPlugInManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum AppBroadcastPlugInState: i32 {
@@ -2221,10 +2221,10 @@ impl IAppBroadcastPreview {
         let hr = ((*self.lpVtbl).get_PreviewState)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_error_code(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_error_code(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ErrorCode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_preview_state_changed(&self, value: &super::super::foundation::TypedEventHandler<AppBroadcastPreview, AppBroadcastPreviewStateChangedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -2235,10 +2235,10 @@ impl IAppBroadcastPreview {
         let hr = ((*self.lpVtbl).remove_PreviewStateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_preview_stream_reader(&self) -> Result<ComPtr<AppBroadcastPreviewStreamReader>> {
+    #[inline] pub unsafe fn get_preview_stream_reader(&self) -> Result<Option<ComPtr<AppBroadcastPreviewStreamReader>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PreviewStreamReader)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AppBroadcastPreview: IAppBroadcastPreview}
@@ -2302,10 +2302,10 @@ impl IAppBroadcastPreviewStreamReader {
         let hr = ((*self.lpVtbl).get_VideoBitmapAlphaMode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_get_next_video_frame(&self) -> Result<ComPtr<AppBroadcastPreviewStreamVideoFrame>> {
+    #[inline] pub unsafe fn try_get_next_video_frame(&self) -> Result<Option<ComPtr<AppBroadcastPreviewStreamVideoFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetNextVideoFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_video_frame_arrived(&self, value: &super::super::foundation::TypedEventHandler<AppBroadcastPreviewStreamReader, IInspectable>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -2324,15 +2324,15 @@ RT_INTERFACE!{interface IAppBroadcastPreviewStreamVideoFrame(IAppBroadcastPrevie
     #[cfg(feature="windows-storage")] fn get_VideoBuffer(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
 }}
 impl IAppBroadcastPreviewStreamVideoFrame {
-    #[inline] pub unsafe fn get_video_header(&self) -> Result<ComPtr<AppBroadcastPreviewStreamVideoHeader>> {
+    #[inline] pub unsafe fn get_video_header(&self) -> Result<Option<ComPtr<AppBroadcastPreviewStreamVideoHeader>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoHeader)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_video_buffer(&self) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_video_buffer(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoBuffer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AppBroadcastPreviewStreamVideoFrame: IAppBroadcastPreviewStreamVideoFrame}
@@ -2526,15 +2526,15 @@ impl IAppBroadcastServices {
         let hr = ((*self.lpVtbl).ResumeBroadcast)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn start_preview(&self, desiredSize: super::super::foundation::Size) -> Result<ComPtr<AppBroadcastPreview>> {
+    #[inline] pub unsafe fn start_preview(&self, desiredSize: super::super::foundation::Size) -> Result<Option<ComPtr<AppBroadcastPreview>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).StartPreview)(self as *const _ as *mut _, desiredSize, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_state(&self) -> Result<ComPtr<AppBroadcastState>> {
+    #[inline] pub unsafe fn get_state(&self) -> Result<Option<ComPtr<AppBroadcastState>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AppBroadcastServices: IAppBroadcastServices}
@@ -2674,20 +2674,20 @@ impl IAppBroadcastState {
         let hr = ((*self.lpVtbl).get_PlugInState)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_oauth_request_uri(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_oauth_request_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OAuthRequestUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_oauth_callback_uri(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_oauth_callback_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OAuthCallbackUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_authentication_result(&self) -> Result<ComPtr<super::super::security::authentication::web::WebAuthenticationResult>> {
+    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_authentication_result(&self) -> Result<Option<ComPtr<super::super::security::authentication::web::WebAuthenticationResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AuthenticationResult)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-security")] #[inline] pub unsafe fn set_authentication_result(&self, value: &super::super::security::authentication::web::WebAuthenticationResult) -> Result<()> {
         let hr = ((*self.lpVtbl).put_AuthenticationResult)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -2774,15 +2774,15 @@ RT_INTERFACE!{interface IAppBroadcastStreamAudioFrame(IAppBroadcastStreamAudioFr
     #[cfg(feature="windows-storage")] fn get_AudioBuffer(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
 }}
 impl IAppBroadcastStreamAudioFrame {
-    #[inline] pub unsafe fn get_audio_header(&self) -> Result<ComPtr<AppBroadcastStreamAudioHeader>> {
+    #[inline] pub unsafe fn get_audio_header(&self) -> Result<Option<ComPtr<AppBroadcastStreamAudioHeader>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AudioHeader)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_audio_buffer(&self) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_audio_buffer(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AudioBuffer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AppBroadcastStreamAudioFrame: IAppBroadcastStreamAudioFrame}
@@ -2850,20 +2850,20 @@ impl IAppBroadcastStreamReader {
         let hr = ((*self.lpVtbl).get_AudioSampleRate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_audio_aac_sequence(&self) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_audio_aac_sequence(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AudioAacSequence)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_audio_bitrate(&self) -> Result<u32> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_AudioBitrate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_get_next_audio_frame(&self) -> Result<ComPtr<AppBroadcastStreamAudioFrame>> {
+    #[inline] pub unsafe fn try_get_next_audio_frame(&self) -> Result<Option<ComPtr<AppBroadcastStreamAudioFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetNextAudioFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_video_width(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -2880,10 +2880,10 @@ impl IAppBroadcastStreamReader {
         let hr = ((*self.lpVtbl).get_VideoBitrate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_get_next_video_frame(&self) -> Result<ComPtr<AppBroadcastStreamVideoFrame>> {
+    #[inline] pub unsafe fn try_get_next_video_frame(&self) -> Result<Option<ComPtr<AppBroadcastStreamVideoFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetNextVideoFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_audio_frame_arrived(&self, value: &super::super::foundation::TypedEventHandler<AppBroadcastStreamReader, IInspectable>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -2926,15 +2926,15 @@ RT_INTERFACE!{interface IAppBroadcastStreamVideoFrame(IAppBroadcastStreamVideoFr
     #[cfg(feature="windows-storage")] fn get_VideoBuffer(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
 }}
 impl IAppBroadcastStreamVideoFrame {
-    #[inline] pub unsafe fn get_video_header(&self) -> Result<ComPtr<AppBroadcastStreamVideoHeader>> {
+    #[inline] pub unsafe fn get_video_header(&self) -> Result<Option<ComPtr<AppBroadcastStreamVideoHeader>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoHeader)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_video_buffer(&self) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_video_buffer(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoBuffer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AppBroadcastStreamVideoFrame: IAppBroadcastStreamVideoFrame}
@@ -2988,10 +2988,10 @@ RT_INTERFACE!{interface IAppBroadcastTriggerDetails(IAppBroadcastTriggerDetailsV
     fn get_BackgroundService(&self, out: *mut *mut AppBroadcastBackgroundService) -> HRESULT
 }}
 impl IAppBroadcastTriggerDetails {
-    #[inline] pub unsafe fn get_background_service(&self) -> Result<ComPtr<AppBroadcastBackgroundService>> {
+    #[inline] pub unsafe fn get_background_service(&self) -> Result<Option<ComPtr<AppBroadcastBackgroundService>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BackgroundService)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AppBroadcastTriggerDetails: IAppBroadcastTriggerDetails}
@@ -3045,7 +3045,7 @@ RT_CLASS!{class AppCapture: IAppCapture}
 impl RtActivatable<IAppCaptureStatics> for AppCapture {}
 impl RtActivatable<IAppCaptureStatics2> for AppCapture {}
 impl AppCapture {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<AppCapture>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<AppCapture>>> { unsafe {
         <Self as RtActivatable<IAppCaptureStatics>>::get_activation_factory().get_for_current_view()
     }}
     #[inline] pub fn set_allowed_async(allowed: bool) -> Result<ComPtr<super::super::foundation::IAsyncAction>> { unsafe {
@@ -3262,10 +3262,10 @@ RT_INTERFACE!{interface IAppCaptureFileGeneratedEventArgs(IAppCaptureFileGenerat
     #[cfg(feature="windows-storage")] fn get_File(&self, out: *mut *mut super::super::storage::StorageFile) -> HRESULT
 }}
 impl IAppCaptureFileGeneratedEventArgs {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<ComPtr<super::super::storage::StorageFile>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<Option<ComPtr<super::super::storage::StorageFile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_File)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AppCaptureFileGeneratedEventArgs: IAppCaptureFileGeneratedEventArgs}
@@ -3275,7 +3275,7 @@ RT_ENUM! { enum AppCaptureHistoricalBufferLengthUnit: i32 {
 RT_CLASS!{static class AppCaptureManager}
 impl RtActivatable<IAppCaptureManagerStatics> for AppCaptureManager {}
 impl AppCaptureManager {
-    #[inline] pub fn get_current_settings() -> Result<ComPtr<AppCaptureSettings>> { unsafe {
+    #[inline] pub fn get_current_settings() -> Result<Option<ComPtr<AppCaptureSettings>>> { unsafe {
         <Self as RtActivatable<IAppCaptureManagerStatics>>::get_activation_factory().get_current_settings()
     }}
     #[inline] pub fn apply_settings(appCaptureSettings: &AppCaptureSettings) -> Result<()> { unsafe {
@@ -3289,10 +3289,10 @@ RT_INTERFACE!{static interface IAppCaptureManagerStatics(IAppCaptureManagerStati
     fn ApplySettings(&self, appCaptureSettings: *mut AppCaptureSettings) -> HRESULT
 }}
 impl IAppCaptureManagerStatics {
-    #[inline] pub unsafe fn get_current_settings(&self) -> Result<ComPtr<AppCaptureSettings>> {
+    #[inline] pub unsafe fn get_current_settings(&self) -> Result<Option<ComPtr<AppCaptureSettings>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCurrentSettings)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn apply_settings(&self, appCaptureSettings: &AppCaptureSettings) -> Result<()> {
         let hr = ((*self.lpVtbl).ApplySettings)(self as *const _ as *mut _, appCaptureSettings as *const _ as *mut _);
@@ -3435,25 +3435,25 @@ impl IAppCaptureRecordOperation {
         let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_error_code(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_error_code(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ErrorCode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_duration(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_duration(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<ComPtr<super::super::storage::StorageFile>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<Option<ComPtr<super::super::storage::StorageFile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_File)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_is_file_truncated(&self) -> Result<ComPtr<super::super::foundation::IReference<bool>>> {
+    #[inline] pub unsafe fn get_is_file_truncated(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<bool>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IsFileTruncated)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_state_changed(&self, value: &super::super::foundation::TypedEventHandler<AppCaptureRecordOperation, AppCaptureRecordingStateChangedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -3492,25 +3492,25 @@ RT_INTERFACE!{interface IAppCaptureServices(IAppCaptureServicesVtbl): IInspectab
     fn get_State(&self, out: *mut *mut AppCaptureState) -> HRESULT
 }}
 impl IAppCaptureServices {
-    #[inline] pub unsafe fn record(&self) -> Result<ComPtr<AppCaptureRecordOperation>> {
+    #[inline] pub unsafe fn record(&self) -> Result<Option<ComPtr<AppCaptureRecordOperation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Record)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn record_time_span(&self, startTime: super::super::foundation::DateTime, duration: super::super::foundation::TimeSpan) -> Result<ComPtr<AppCaptureRecordOperation>> {
+    #[inline] pub unsafe fn record_time_span(&self, startTime: super::super::foundation::DateTime, duration: super::super::foundation::TimeSpan) -> Result<Option<ComPtr<AppCaptureRecordOperation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RecordTimeSpan)(self as *const _ as *mut _, startTime, duration, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_can_capture(&self) -> Result<bool> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_CanCapture)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_state(&self) -> Result<ComPtr<AppCaptureState>> {
+    #[inline] pub unsafe fn get_state(&self) -> Result<Option<ComPtr<AppCaptureState>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AppCaptureServices: IAppCaptureServices}
@@ -3562,10 +3562,10 @@ impl IAppCaptureSettings {
         let hr = ((*self.lpVtbl).put_AppCaptureDestinationFolder)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_app_capture_destination_folder(&self) -> Result<ComPtr<super::super::storage::StorageFolder>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_app_capture_destination_folder(&self) -> Result<Option<ComPtr<super::super::storage::StorageFolder>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AppCaptureDestinationFolder)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_audio_encoding_bitrate(&self, value: u32) -> Result<()> {
         let hr = ((*self.lpVtbl).put_AudioEncodingBitrate)(self as *const _ as *mut _, value);
@@ -3670,10 +3670,10 @@ impl IAppCaptureSettings {
         let hr = ((*self.lpVtbl).put_ScreenshotDestinationFolder)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_screenshot_destination_folder(&self) -> Result<ComPtr<super::super::storage::StorageFolder>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_screenshot_destination_folder(&self) -> Result<Option<ComPtr<super::super::storage::StorageFolder>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ScreenshotDestinationFolder)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_video_encoding_bitrate_mode(&self, value: AppCaptureVideoEncodingBitrateMode) -> Result<()> {
         let hr = ((*self.lpVtbl).put_VideoEncodingBitrateMode)(self as *const _ as *mut _, value);
@@ -3735,10 +3735,10 @@ impl IAppCaptureSettings2 {
         let hr = ((*self.lpVtbl).get_IsGpuConstrained)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_alternate_shortcut_keys(&self) -> Result<ComPtr<AppCaptureAlternateShortcutKeys>> {
+    #[inline] pub unsafe fn get_alternate_shortcut_keys(&self) -> Result<Option<ComPtr<AppCaptureAlternateShortcutKeys>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AlternateShortcutKeys)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAppCaptureSettings3, 2838823678, 35010, 17110, 170, 170, 64, 254, 255, 215, 90, 236);
@@ -3906,10 +3906,10 @@ RT_INTERFACE!{static interface IAppCaptureStatics(IAppCaptureStaticsVtbl): IInsp
     fn GetForCurrentView(&self, out: *mut *mut AppCapture) -> HRESULT
 }}
 impl IAppCaptureStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<AppCapture>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<AppCapture>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAppCaptureStatics2, 3000533460, 33644, 19876, 175, 215, 250, 204, 4, 30, 28, 243);
@@ -3939,15 +3939,15 @@ RT_INTERFACE!{interface ICameraCaptureUI(ICameraCaptureUIVtbl): IInspectable(IIn
     #[cfg(feature="windows-storage")] fn CaptureFileAsync(&self, mode: CameraCaptureUIMode, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::storage::StorageFile>) -> HRESULT
 }}
 impl ICameraCaptureUI {
-    #[inline] pub unsafe fn get_photo_settings(&self) -> Result<ComPtr<CameraCaptureUIPhotoCaptureSettings>> {
+    #[inline] pub unsafe fn get_photo_settings(&self) -> Result<Option<ComPtr<CameraCaptureUIPhotoCaptureSettings>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PhotoSettings)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_settings(&self) -> Result<ComPtr<CameraCaptureUIVideoCaptureSettings>> {
+    #[inline] pub unsafe fn get_video_settings(&self) -> Result<Option<ComPtr<CameraCaptureUIVideoCaptureSettings>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoSettings)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn capture_file_async(&self, mode: CameraCaptureUIMode) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::storage::StorageFile>>> {
         let mut out = null_mut();
@@ -4133,50 +4133,50 @@ RT_INTERFACE!{interface ICapturedFrameControlValues(ICapturedFrameControlValuesV
     fn get_ZoomFactor(&self, out: *mut *mut super::super::foundation::IReference<f32>) -> HRESULT
 }}
 impl ICapturedFrameControlValues {
-    #[inline] pub unsafe fn get_exposure(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_exposure(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Exposure)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_exposure_compensation(&self) -> Result<ComPtr<super::super::foundation::IReference<f32>>> {
+    #[inline] pub unsafe fn get_exposure_compensation(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<f32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExposureCompensation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_iso_speed(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_iso_speed(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IsoSpeed)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_focus(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_focus(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Focus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_scene_mode(&self) -> Result<ComPtr<super::super::foundation::IReference<super::devices::CaptureSceneMode>>> {
+    #[inline] pub unsafe fn get_scene_mode(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::devices::CaptureSceneMode>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SceneMode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_flashed(&self) -> Result<ComPtr<super::super::foundation::IReference<bool>>> {
+    #[inline] pub unsafe fn get_flashed(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<bool>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Flashed)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_flash_power_percent(&self) -> Result<ComPtr<super::super::foundation::IReference<f32>>> {
+    #[inline] pub unsafe fn get_flash_power_percent(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<f32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FlashPowerPercent)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_white_balance(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_white_balance(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WhiteBalance)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_zoom_factor(&self) -> Result<ComPtr<super::super::foundation::IReference<f32>>> {
+    #[inline] pub unsafe fn get_zoom_factor(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<f32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ZoomFactor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CapturedFrameControlValues: ICapturedFrameControlValues}
@@ -4189,30 +4189,30 @@ RT_INTERFACE!{interface ICapturedFrameControlValues2(ICapturedFrameControlValues
     fn get_WhiteBalanceGain(&self, out: *mut *mut super::super::foundation::IReference<WhiteBalanceGain>) -> HRESULT
 }}
 impl ICapturedFrameControlValues2 {
-    #[inline] pub unsafe fn get_focus_state(&self) -> Result<ComPtr<super::super::foundation::IReference<super::devices::MediaCaptureFocusState>>> {
+    #[inline] pub unsafe fn get_focus_state(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::devices::MediaCaptureFocusState>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FocusState)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_iso_digital_gain(&self) -> Result<ComPtr<super::super::foundation::IReference<f64>>> {
+    #[inline] pub unsafe fn get_iso_digital_gain(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<f64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IsoDigitalGain)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_iso_analog_gain(&self) -> Result<ComPtr<super::super::foundation::IReference<f64>>> {
+    #[inline] pub unsafe fn get_iso_analog_gain(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<f64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IsoAnalogGain)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_sensor_frame_rate(&self) -> Result<ComPtr<super::mediaproperties::MediaRatio>> {
+    #[inline] pub unsafe fn get_sensor_frame_rate(&self) -> Result<Option<ComPtr<super::mediaproperties::MediaRatio>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SensorFrameRate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_white_balance_gain(&self) -> Result<ComPtr<super::super::foundation::IReference<WhiteBalanceGain>>> {
+    #[inline] pub unsafe fn get_white_balance_gain(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<WhiteBalanceGain>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WhiteBalanceGain)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICapturedFrameWithSoftwareBitmap, 3046017902, 34051, 18869, 158, 134, 137, 125, 38, 163, 255, 61);
@@ -4220,10 +4220,10 @@ RT_INTERFACE!{interface ICapturedFrameWithSoftwareBitmap(ICapturedFrameWithSoftw
     #[cfg(feature="windows-graphics")] fn get_SoftwareBitmap(&self, out: *mut *mut super::super::graphics::imaging::SoftwareBitmap) -> HRESULT
 }}
 impl ICapturedFrameWithSoftwareBitmap {
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_software_bitmap(&self) -> Result<ComPtr<super::super::graphics::imaging::SoftwareBitmap>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_software_bitmap(&self) -> Result<Option<ComPtr<super::super::graphics::imaging::SoftwareBitmap>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SoftwareBitmap)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICapturedPhoto, 2966322778, 53196, 19820, 138, 209, 8, 105, 32, 138, 202, 22);
@@ -4232,15 +4232,15 @@ RT_INTERFACE!{interface ICapturedPhoto(ICapturedPhotoVtbl): IInspectable(IInspec
     fn get_Thumbnail(&self, out: *mut *mut CapturedFrame) -> HRESULT
 }}
 impl ICapturedPhoto {
-    #[inline] pub unsafe fn get_frame(&self) -> Result<ComPtr<CapturedFrame>> {
+    #[inline] pub unsafe fn get_frame(&self) -> Result<Option<ComPtr<CapturedFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Frame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_thumbnail(&self) -> Result<ComPtr<CapturedFrame>> {
+    #[inline] pub unsafe fn get_thumbnail(&self) -> Result<Option<ComPtr<CapturedFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CapturedPhoto: ICapturedPhoto}
@@ -4279,25 +4279,25 @@ impl IGameBarServices {
         let hr = ((*self.lpVtbl).DisableCapture)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_target_info(&self) -> Result<ComPtr<GameBarServicesTargetInfo>> {
+    #[inline] pub unsafe fn get_target_info(&self) -> Result<Option<ComPtr<GameBarServicesTargetInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TargetInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_session_id(&self) -> Result<HString> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SessionId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_app_broadcast_services(&self) -> Result<ComPtr<AppBroadcastServices>> {
+    #[inline] pub unsafe fn get_app_broadcast_services(&self) -> Result<Option<ComPtr<AppBroadcastServices>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AppBroadcastServices)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_app_capture_services(&self) -> Result<ComPtr<AppCaptureServices>> {
+    #[inline] pub unsafe fn get_app_capture_services(&self) -> Result<Option<ComPtr<AppCaptureServices>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AppCaptureServices)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_command_received(&self, value: &super::super::foundation::TypedEventHandler<GameBarServices, GameBarServicesCommandEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -4350,7 +4350,7 @@ impl IGameBarServicesManager {
 RT_CLASS!{class GameBarServicesManager: IGameBarServicesManager}
 impl RtActivatable<IGameBarServicesManagerStatics> for GameBarServicesManager {}
 impl GameBarServicesManager {
-    #[inline] pub fn get_default() -> Result<ComPtr<GameBarServicesManager>> { unsafe {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<GameBarServicesManager>>> { unsafe {
         <Self as RtActivatable<IGameBarServicesManagerStatics>>::get_activation_factory().get_default()
     }}
 }
@@ -4360,10 +4360,10 @@ RT_INTERFACE!{interface IGameBarServicesManagerGameBarServicesCreatedEventArgs(I
     fn get_GameBarServices(&self, out: *mut *mut GameBarServices) -> HRESULT
 }}
 impl IGameBarServicesManagerGameBarServicesCreatedEventArgs {
-    #[inline] pub unsafe fn get_game_bar_services(&self) -> Result<ComPtr<GameBarServices>> {
+    #[inline] pub unsafe fn get_game_bar_services(&self) -> Result<Option<ComPtr<GameBarServices>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_GameBarServices)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class GameBarServicesManagerGameBarServicesCreatedEventArgs: IGameBarServicesManagerGameBarServicesCreatedEventArgs}
@@ -4372,10 +4372,10 @@ RT_INTERFACE!{static interface IGameBarServicesManagerStatics(IGameBarServicesMa
     fn GetDefault(&self, out: *mut *mut GameBarServicesManager) -> HRESULT
 }}
 impl IGameBarServicesManagerStatics {
-    #[inline] pub unsafe fn get_default(&self) -> Result<ComPtr<GameBarServicesManager>> {
+    #[inline] pub unsafe fn get_default(&self) -> Result<Option<ComPtr<GameBarServicesManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IGameBarServicesTargetInfo, 3022008210, 5649, 19973, 182, 239, 223, 215, 55, 174, 51, 176);
@@ -4618,10 +4618,10 @@ impl IMediaCapture {
         let hr = ((*self.lpVtbl).SetEncoderProperty)(self as *const _ as *mut _, mediaStreamType, propertyId, propertyValue as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_encoder_property(&self, mediaStreamType: MediaStreamType, propertyId: Guid) -> Result<ComPtr<IInspectable>> {
+    #[inline] pub unsafe fn get_encoder_property(&self, mediaStreamType: MediaStreamType, propertyId: Guid) -> Result<Option<ComPtr<IInspectable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetEncoderProperty)(self as *const _ as *mut _, mediaStreamType, propertyId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_failed(&self, errorEventHandler: &MediaCaptureFailedEventHandler) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -4641,20 +4641,20 @@ impl IMediaCapture {
         let hr = ((*self.lpVtbl).remove_RecordLimitationExceeded)(self as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_media_capture_settings(&self) -> Result<ComPtr<MediaCaptureSettings>> {
+    #[inline] pub unsafe fn get_media_capture_settings(&self) -> Result<Option<ComPtr<MediaCaptureSettings>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaCaptureSettings)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_audio_device_controller(&self) -> Result<ComPtr<super::devices::AudioDeviceController>> {
+    #[inline] pub unsafe fn get_audio_device_controller(&self) -> Result<Option<ComPtr<super::devices::AudioDeviceController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AudioDeviceController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_device_controller(&self) -> Result<ComPtr<super::devices::VideoDeviceController>> {
+    #[inline] pub unsafe fn get_video_device_controller(&self) -> Result<Option<ComPtr<super::devices::VideoDeviceController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoDeviceController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_preview_mirroring(&self, value: bool) -> Result<()> {
         let hr = ((*self.lpVtbl).SetPreviewMirroring)(self as *const _ as *mut _, value);
@@ -4691,13 +4691,13 @@ impl MediaCapture {
     #[inline] pub fn is_video_profile_supported(videoDeviceId: &HStringArg) -> Result<bool> { unsafe {
         <Self as RtActivatable<IMediaCaptureStatics>>::get_activation_factory().is_video_profile_supported(videoDeviceId)
     }}
-    #[inline] pub fn find_all_video_profiles(videoDeviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>> { unsafe {
+    #[inline] pub fn find_all_video_profiles(videoDeviceId: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>>> { unsafe {
         <Self as RtActivatable<IMediaCaptureStatics>>::get_activation_factory().find_all_video_profiles(videoDeviceId)
     }}
-    #[inline] pub fn find_concurrent_profiles(videoDeviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>> { unsafe {
+    #[inline] pub fn find_concurrent_profiles(videoDeviceId: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>>> { unsafe {
         <Self as RtActivatable<IMediaCaptureStatics>>::get_activation_factory().find_concurrent_profiles(videoDeviceId)
     }}
-    #[inline] pub fn find_known_video_profiles(videoDeviceId: &HStringArg, name: KnownVideoProfile) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>> { unsafe {
+    #[inline] pub fn find_known_video_profiles(videoDeviceId: &HStringArg, name: KnownVideoProfile) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>>> { unsafe {
         <Self as RtActivatable<IMediaCaptureStatics>>::get_activation_factory().find_known_video_profiles(videoDeviceId, name)
     }}
 }
@@ -4891,10 +4891,10 @@ impl IMediaCapture5 {
         let hr = ((*self.lpVtbl).StopRecordWithResultAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_frame_sources(&self) -> Result<ComPtr<super::super::foundation::collections::IMapView<HString, frames::MediaFrameSource>>> {
+    #[inline] pub unsafe fn get_frame_sources(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IMapView<HString, frames::MediaFrameSource>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FrameSources)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn create_frame_reader_async(&self, inputSource: &frames::MediaFrameSource) -> Result<ComPtr<super::super::foundation::IAsyncOperation<frames::MediaFrameReader>>> {
         let mut out = null_mut();
@@ -5086,19 +5086,19 @@ impl IMediaCaptureInitializationSettings3 {
         let hr = ((*self.lpVtbl).put_AudioSource)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_audio_source(&self) -> Result<ComPtr<super::core::IMediaSource>> {
+    #[inline] pub unsafe fn get_audio_source(&self) -> Result<Option<ComPtr<super::core::IMediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AudioSource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_video_source(&self, value: &super::core::IMediaSource) -> Result<()> {
         let hr = ((*self.lpVtbl).put_VideoSource)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_source(&self) -> Result<ComPtr<super::core::IMediaSource>> {
+    #[inline] pub unsafe fn get_video_source(&self) -> Result<Option<ComPtr<super::core::IMediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoSource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaCaptureInitializationSettings4, 4110591287, 19639, 19752, 149, 237, 79, 159, 1, 46, 5, 24);
@@ -5113,37 +5113,37 @@ RT_INTERFACE!{interface IMediaCaptureInitializationSettings4(IMediaCaptureInitia
     fn put_PhotoMediaDescription(&self, value: *mut MediaCaptureVideoProfileMediaDescription) -> HRESULT
 }}
 impl IMediaCaptureInitializationSettings4 {
-    #[inline] pub unsafe fn get_video_profile(&self) -> Result<ComPtr<MediaCaptureVideoProfile>> {
+    #[inline] pub unsafe fn get_video_profile(&self) -> Result<Option<ComPtr<MediaCaptureVideoProfile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoProfile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_video_profile(&self, value: &MediaCaptureVideoProfile) -> Result<()> {
         let hr = ((*self.lpVtbl).put_VideoProfile)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_preview_media_description(&self) -> Result<ComPtr<MediaCaptureVideoProfileMediaDescription>> {
+    #[inline] pub unsafe fn get_preview_media_description(&self) -> Result<Option<ComPtr<MediaCaptureVideoProfileMediaDescription>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PreviewMediaDescription)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_preview_media_description(&self, value: &MediaCaptureVideoProfileMediaDescription) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PreviewMediaDescription)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_record_media_description(&self) -> Result<ComPtr<MediaCaptureVideoProfileMediaDescription>> {
+    #[inline] pub unsafe fn get_record_media_description(&self) -> Result<Option<ComPtr<MediaCaptureVideoProfileMediaDescription>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RecordMediaDescription)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_record_media_description(&self, value: &MediaCaptureVideoProfileMediaDescription) -> Result<()> {
         let hr = ((*self.lpVtbl).put_RecordMediaDescription)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_photo_media_description(&self) -> Result<ComPtr<MediaCaptureVideoProfileMediaDescription>> {
+    #[inline] pub unsafe fn get_photo_media_description(&self) -> Result<Option<ComPtr<MediaCaptureVideoProfileMediaDescription>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PhotoMediaDescription)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_photo_media_description(&self, value: &MediaCaptureVideoProfileMediaDescription) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PhotoMediaDescription)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -5160,10 +5160,10 @@ RT_INTERFACE!{interface IMediaCaptureInitializationSettings5(IMediaCaptureInitia
     fn put_MemoryPreference(&self, value: MediaCaptureMemoryPreference) -> HRESULT
 }}
 impl IMediaCaptureInitializationSettings5 {
-    #[inline] pub unsafe fn get_source_group(&self) -> Result<ComPtr<frames::MediaFrameSourceGroup>> {
+    #[inline] pub unsafe fn get_source_group(&self) -> Result<Option<ComPtr<frames::MediaFrameSourceGroup>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SourceGroup)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_source_group(&self, value: &frames::MediaFrameSourceGroup) -> Result<()> {
         let hr = ((*self.lpVtbl).put_SourceGroup)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -5213,10 +5213,10 @@ RT_INTERFACE!{interface IMediaCapturePauseResult(IMediaCapturePauseResultVtbl): 
     fn get_RecordDuration(&self, out: *mut super::super::foundation::TimeSpan) -> HRESULT
 }}
 impl IMediaCapturePauseResult {
-    #[inline] pub unsafe fn get_last_frame(&self) -> Result<ComPtr<super::VideoFrame>> {
+    #[inline] pub unsafe fn get_last_frame(&self) -> Result<Option<ComPtr<super::VideoFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LastFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_record_duration(&self) -> Result<super::super::foundation::TimeSpan> {
         let mut out = zeroed();
@@ -5288,20 +5288,20 @@ impl IMediaCaptureSettings2 {
         let hr = ((*self.lpVtbl).get_CameraSoundRequiredForRegion)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_horizontal35mm_equivalent_focal_length(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_horizontal35mm_equivalent_focal_length(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Horizontal35mmEquivalentFocalLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_pitch_offset_degrees(&self) -> Result<ComPtr<super::super::foundation::IReference<i32>>> {
+    #[inline] pub unsafe fn get_pitch_offset_degrees(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<i32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PitchOffsetDegrees)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_vertical35mm_equivalent_focal_length(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_vertical35mm_equivalent_focal_length(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Vertical35mmEquivalentFocalLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_media_category(&self) -> Result<MediaCategory> {
         let mut out = zeroed();
@@ -5330,20 +5330,20 @@ impl IMediaCaptureStatics {
         let hr = ((*self.lpVtbl).IsVideoProfileSupported)(self as *const _ as *mut _, videoDeviceId.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_all_video_profiles(&self, videoDeviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>> {
+    #[inline] pub unsafe fn find_all_video_profiles(&self, videoDeviceId: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindAllVideoProfiles)(self as *const _ as *mut _, videoDeviceId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_concurrent_profiles(&self, videoDeviceId: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>> {
+    #[inline] pub unsafe fn find_concurrent_profiles(&self, videoDeviceId: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindConcurrentProfiles)(self as *const _ as *mut _, videoDeviceId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_known_video_profiles(&self, videoDeviceId: &HStringArg, name: KnownVideoProfile) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>> {
+    #[inline] pub unsafe fn find_known_video_profiles(&self, videoDeviceId: &HStringArg, name: KnownVideoProfile) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindKnownVideoProfiles)(self as *const _ as *mut _, videoDeviceId.get(), name, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaCaptureStopResult, 4191906346, 41106, 19153, 151, 212, 242, 1, 249, 208, 130, 219);
@@ -5352,10 +5352,10 @@ RT_INTERFACE!{interface IMediaCaptureStopResult(IMediaCaptureStopResultVtbl): II
     fn get_RecordDuration(&self, out: *mut super::super::foundation::TimeSpan) -> HRESULT
 }}
 impl IMediaCaptureStopResult {
-    #[inline] pub unsafe fn get_last_frame(&self) -> Result<ComPtr<super::VideoFrame>> {
+    #[inline] pub unsafe fn get_last_frame(&self) -> Result<Option<ComPtr<super::VideoFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LastFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_record_duration(&self) -> Result<super::super::foundation::TimeSpan> {
         let mut out = zeroed();
@@ -5416,25 +5416,25 @@ impl IMediaCaptureVideoProfile {
         let hr = ((*self.lpVtbl).get_VideoDeviceId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_preview_media_description(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfileMediaDescription>>> {
+    #[inline] pub unsafe fn get_supported_preview_media_description(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfileMediaDescription>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedPreviewMediaDescription)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_record_media_description(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfileMediaDescription>>> {
+    #[inline] pub unsafe fn get_supported_record_media_description(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfileMediaDescription>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedRecordMediaDescription)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_photo_media_description(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfileMediaDescription>>> {
+    #[inline] pub unsafe fn get_supported_photo_media_description(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfileMediaDescription>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedPhotoMediaDescription)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_concurrency(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>> {
+    #[inline] pub unsafe fn get_concurrency(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MediaCaptureVideoProfile>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetConcurrency)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaCaptureVideoProfile: IMediaCaptureVideoProfile}
@@ -5486,15 +5486,15 @@ RT_INTERFACE!{interface IOptionalReferencePhotoCapturedEventArgs(IOptionalRefere
     fn get_Context(&self, out: *mut *mut IInspectable) -> HRESULT
 }}
 impl IOptionalReferencePhotoCapturedEventArgs {
-    #[inline] pub unsafe fn get_frame(&self) -> Result<ComPtr<CapturedFrame>> {
+    #[inline] pub unsafe fn get_frame(&self) -> Result<Option<ComPtr<CapturedFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Frame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_context(&self) -> Result<ComPtr<IInspectable>> {
+    #[inline] pub unsafe fn get_context(&self) -> Result<Option<ComPtr<IInspectable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Context)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class OptionalReferencePhotoCapturedEventArgs: IOptionalReferencePhotoCapturedEventArgs}
@@ -5505,15 +5505,15 @@ RT_INTERFACE!{interface IPhotoCapturedEventArgs(IPhotoCapturedEventArgsVtbl): II
     fn get_CaptureTimeOffset(&self, out: *mut super::super::foundation::TimeSpan) -> HRESULT
 }}
 impl IPhotoCapturedEventArgs {
-    #[inline] pub unsafe fn get_frame(&self) -> Result<ComPtr<CapturedFrame>> {
+    #[inline] pub unsafe fn get_frame(&self) -> Result<Option<ComPtr<CapturedFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Frame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_thumbnail(&self) -> Result<ComPtr<CapturedFrame>> {
+    #[inline] pub unsafe fn get_thumbnail(&self) -> Result<Option<ComPtr<CapturedFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_capture_time_offset(&self) -> Result<super::super::foundation::TimeSpan> {
         let mut out = zeroed();
@@ -5531,10 +5531,10 @@ RT_INTERFACE!{interface IPhotoConfirmationCapturedEventArgs(IPhotoConfirmationCa
     fn get_CaptureTimeOffset(&self, out: *mut super::super::foundation::TimeSpan) -> HRESULT
 }}
 impl IPhotoConfirmationCapturedEventArgs {
-    #[inline] pub unsafe fn get_frame(&self) -> Result<ComPtr<CapturedFrame>> {
+    #[inline] pub unsafe fn get_frame(&self) -> Result<Option<ComPtr<CapturedFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Frame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_capture_time_offset(&self) -> Result<super::super::foundation::TimeSpan> {
         let mut out = zeroed();
@@ -5571,15 +5571,15 @@ RT_INTERFACE!{interface IVideoStreamConfiguration(IVideoStreamConfigurationVtbl)
     fn get_OutputProperties(&self, out: *mut *mut super::mediaproperties::VideoEncodingProperties) -> HRESULT
 }}
 impl IVideoStreamConfiguration {
-    #[inline] pub unsafe fn get_input_properties(&self) -> Result<ComPtr<super::mediaproperties::VideoEncodingProperties>> {
+    #[inline] pub unsafe fn get_input_properties(&self) -> Result<Option<ComPtr<super::mediaproperties::VideoEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InputProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_output_properties(&self) -> Result<ComPtr<super::mediaproperties::VideoEncodingProperties>> {
+    #[inline] pub unsafe fn get_output_properties(&self) -> Result<Option<ComPtr<super::mediaproperties::VideoEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OutputProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VideoStreamConfiguration: IVideoStreamConfiguration}
@@ -5594,15 +5594,15 @@ RT_INTERFACE!{interface IBufferMediaFrame(IBufferMediaFrameVtbl): IInspectable(I
     #[cfg(feature="windows-storage")] fn get_Buffer(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IBufferMediaFrame {
-    #[inline] pub unsafe fn get_frame_reference(&self) -> Result<ComPtr<MediaFrameReference>> {
+    #[inline] pub unsafe fn get_frame_reference(&self) -> Result<Option<ComPtr<MediaFrameReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FrameReference)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_buffer(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_buffer(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Buffer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class BufferMediaFrame: IBufferMediaFrame}
@@ -5614,25 +5614,25 @@ RT_INTERFACE!{interface IDepthMediaFrame(IDepthMediaFrameVtbl): IInspectable(IIn
     #[cfg(feature="windows-perception")] fn TryCreateCoordinateMapper(&self, cameraIntrinsics: *mut super::super::devices::core::CameraIntrinsics, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut super::super::devices::core::DepthCorrelatedCoordinateMapper) -> HRESULT
 }}
 impl IDepthMediaFrame {
-    #[inline] pub unsafe fn get_frame_reference(&self) -> Result<ComPtr<MediaFrameReference>> {
+    #[inline] pub unsafe fn get_frame_reference(&self) -> Result<Option<ComPtr<MediaFrameReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FrameReference)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_media_frame(&self) -> Result<ComPtr<VideoMediaFrame>> {
+    #[inline] pub unsafe fn get_video_media_frame(&self) -> Result<Option<ComPtr<VideoMediaFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoMediaFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_depth_format(&self) -> Result<ComPtr<DepthMediaFrameFormat>> {
+    #[inline] pub unsafe fn get_depth_format(&self) -> Result<Option<ComPtr<DepthMediaFrameFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DepthFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_create_coordinate_mapper(&self, cameraIntrinsics: &super::super::devices::core::CameraIntrinsics, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<ComPtr<super::super::devices::core::DepthCorrelatedCoordinateMapper>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_create_coordinate_mapper(&self, cameraIntrinsics: &super::super::devices::core::CameraIntrinsics, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<super::super::devices::core::DepthCorrelatedCoordinateMapper>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryCreateCoordinateMapper)(self as *const _ as *mut _, cameraIntrinsics as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class DepthMediaFrame: IDepthMediaFrame}
@@ -5659,10 +5659,10 @@ RT_INTERFACE!{interface IDepthMediaFrameFormat(IDepthMediaFrameFormatVtbl): IIns
     fn get_DepthScaleInMeters(&self, out: *mut f64) -> HRESULT
 }}
 impl IDepthMediaFrameFormat {
-    #[inline] pub unsafe fn get_video_format(&self) -> Result<ComPtr<VideoMediaFrameFormat>> {
+    #[inline] pub unsafe fn get_video_format(&self) -> Result<Option<ComPtr<VideoMediaFrameFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_depth_scale_in_meters(&self) -> Result<f64> {
         let mut out = zeroed();
@@ -5678,15 +5678,15 @@ RT_INTERFACE!{interface IInfraredMediaFrame(IInfraredMediaFrameVtbl): IInspectab
     fn get_IsIlluminated(&self, out: *mut bool) -> HRESULT
 }}
 impl IInfraredMediaFrame {
-    #[inline] pub unsafe fn get_frame_reference(&self) -> Result<ComPtr<MediaFrameReference>> {
+    #[inline] pub unsafe fn get_frame_reference(&self) -> Result<Option<ComPtr<MediaFrameReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FrameReference)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_media_frame(&self) -> Result<ComPtr<VideoMediaFrame>> {
+    #[inline] pub unsafe fn get_video_media_frame(&self) -> Result<Option<ComPtr<VideoMediaFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoMediaFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_is_illuminated(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -5719,20 +5719,20 @@ impl IMediaFrameFormat {
         let hr = ((*self.lpVtbl).get_Subtype)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_frame_rate(&self) -> Result<ComPtr<super::super::mediaproperties::MediaRatio>> {
+    #[inline] pub unsafe fn get_frame_rate(&self) -> Result<Option<ComPtr<super::super::mediaproperties::MediaRatio>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FrameRate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IMapView<Guid, IInspectable>>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IMapView<Guid, IInspectable>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_format(&self) -> Result<ComPtr<VideoMediaFrameFormat>> {
+    #[inline] pub unsafe fn get_video_format(&self) -> Result<Option<ComPtr<VideoMediaFrameFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaFrameFormat: IMediaFrameFormat}
@@ -5754,10 +5754,10 @@ impl IMediaFrameReader {
         let hr = ((*self.lpVtbl).remove_FrameArrived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_acquire_latest_frame(&self) -> Result<ComPtr<MediaFrameReference>> {
+    #[inline] pub unsafe fn try_acquire_latest_frame(&self) -> Result<Option<ComPtr<MediaFrameReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryAcquireLatestFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn start_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<MediaFrameReaderStartStatus>>> {
         let mut out = null_mut();
@@ -5810,40 +5810,40 @@ impl IMediaFrameReference {
         let hr = ((*self.lpVtbl).get_SourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_format(&self) -> Result<ComPtr<MediaFrameFormat>> {
+    #[inline] pub unsafe fn get_format(&self) -> Result<Option<ComPtr<MediaFrameFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Format)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_system_relative_time(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_system_relative_time(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SystemRelativeTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_duration(&self) -> Result<::rt::gen::windows::foundation::TimeSpan> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IMapView<Guid, IInspectable>>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IMapView<Guid, IInspectable>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_buffer_media_frame(&self) -> Result<ComPtr<BufferMediaFrame>> {
+    #[inline] pub unsafe fn get_buffer_media_frame(&self) -> Result<Option<ComPtr<BufferMediaFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BufferMediaFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_media_frame(&self) -> Result<ComPtr<VideoMediaFrame>> {
+    #[inline] pub unsafe fn get_video_media_frame(&self) -> Result<Option<ComPtr<VideoMediaFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoMediaFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_coordinate_system(&self) -> Result<ComPtr<::rt::gen::windows::perception::spatial::SpatialCoordinateSystem>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_coordinate_system(&self) -> Result<Option<ComPtr<::rt::gen::windows::perception::spatial::SpatialCoordinateSystem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CoordinateSystem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaFrameReference: IMediaFrameReference}
@@ -5859,25 +5859,25 @@ RT_INTERFACE!{interface IMediaFrameSource(IMediaFrameSourceVtbl): IInspectable(I
     fn TryGetCameraIntrinsics(&self, format: *mut MediaFrameFormat, out: *mut *mut super::super::devices::core::CameraIntrinsics) -> HRESULT
 }}
 impl IMediaFrameSource {
-    #[inline] pub unsafe fn get_info(&self) -> Result<ComPtr<MediaFrameSourceInfo>> {
+    #[inline] pub unsafe fn get_info(&self) -> Result<Option<ComPtr<MediaFrameSourceInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Info)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_controller(&self) -> Result<ComPtr<MediaFrameSourceController>> {
+    #[inline] pub unsafe fn get_controller(&self) -> Result<Option<ComPtr<MediaFrameSourceController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Controller)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_formats(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<MediaFrameFormat>>> {
+    #[inline] pub unsafe fn get_supported_formats(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<MediaFrameFormat>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedFormats)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_current_format(&self) -> Result<ComPtr<MediaFrameFormat>> {
+    #[inline] pub unsafe fn get_current_format(&self) -> Result<Option<ComPtr<MediaFrameFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CurrentFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_format_async(&self, format: &MediaFrameFormat) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> {
         let mut out = null_mut();
@@ -5893,10 +5893,10 @@ impl IMediaFrameSource {
         let hr = ((*self.lpVtbl).remove_FormatChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_get_camera_intrinsics(&self, format: &MediaFrameFormat) -> Result<ComPtr<super::super::devices::core::CameraIntrinsics>> {
+    #[inline] pub unsafe fn try_get_camera_intrinsics(&self, format: &MediaFrameFormat) -> Result<Option<ComPtr<super::super::devices::core::CameraIntrinsics>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetCameraIntrinsics)(self as *const _ as *mut _, format as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaFrameSource: IMediaFrameSource}
@@ -5917,10 +5917,10 @@ impl IMediaFrameSourceController {
         let hr = ((*self.lpVtbl).SetPropertyAsync)(self as *const _ as *mut _, propertyId.get(), propertyValue as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_device_controller(&self) -> Result<ComPtr<super::super::devices::VideoDeviceController>> {
+    #[inline] pub unsafe fn get_video_device_controller(&self) -> Result<Option<ComPtr<super::super::devices::VideoDeviceController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoDeviceController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaFrameSourceController: IMediaFrameSourceController}
@@ -5952,10 +5952,10 @@ impl IMediaFrameSourceGetPropertyResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_value(&self) -> Result<ComPtr<IInspectable>> {
+    #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<IInspectable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaFrameSourceGetPropertyResult: IMediaFrameSourceGetPropertyResult}
@@ -5979,10 +5979,10 @@ impl IMediaFrameSourceGroup {
         let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_source_infos(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<MediaFrameSourceInfo>>> {
+    #[inline] pub unsafe fn get_source_infos(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<MediaFrameSourceInfo>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SourceInfos)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaFrameSourceGroup: IMediaFrameSourceGroup}
@@ -6049,25 +6049,25 @@ impl IMediaFrameSourceInfo {
         let hr = ((*self.lpVtbl).get_SourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_source_group(&self) -> Result<ComPtr<MediaFrameSourceGroup>> {
+    #[inline] pub unsafe fn get_source_group(&self) -> Result<Option<ComPtr<MediaFrameSourceGroup>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SourceGroup)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_device_information(&self) -> Result<ComPtr<::rt::gen::windows::devices::enumeration::DeviceInformation>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_device_information(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::enumeration::DeviceInformation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DeviceInformation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IMapView<Guid, IInspectable>>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IMapView<Guid, IInspectable>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_coordinate_system(&self) -> Result<ComPtr<::rt::gen::windows::perception::spatial::SpatialCoordinateSystem>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_coordinate_system(&self) -> Result<Option<ComPtr<::rt::gen::windows::perception::spatial::SpatialCoordinateSystem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CoordinateSystem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaFrameSourceInfo: IMediaFrameSourceInfo}
@@ -6100,10 +6100,10 @@ impl IMultiSourceMediaFrameReader {
         let hr = ((*self.lpVtbl).remove_FrameArrived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_acquire_latest_frame(&self) -> Result<ComPtr<MultiSourceMediaFrameReference>> {
+    #[inline] pub unsafe fn try_acquire_latest_frame(&self) -> Result<Option<ComPtr<MultiSourceMediaFrameReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryAcquireLatestFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn start_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<MultiSourceMediaFrameReaderStartStatus>>> {
         let mut out = null_mut();
@@ -6141,10 +6141,10 @@ RT_INTERFACE!{interface IMultiSourceMediaFrameReference(IMultiSourceMediaFrameRe
     fn TryGetFrameReferenceBySourceId(&self, sourceId: HSTRING, out: *mut *mut MediaFrameReference) -> HRESULT
 }}
 impl IMultiSourceMediaFrameReference {
-    #[inline] pub unsafe fn try_get_frame_reference_by_source_id(&self, sourceId: &HStringArg) -> Result<ComPtr<MediaFrameReference>> {
+    #[inline] pub unsafe fn try_get_frame_reference_by_source_id(&self, sourceId: &HStringArg) -> Result<Option<ComPtr<MediaFrameReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetFrameReferenceBySourceId)(self as *const _ as *mut _, sourceId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MultiSourceMediaFrameReference: IMultiSourceMediaFrameReference}
@@ -6162,45 +6162,45 @@ RT_INTERFACE!{interface IVideoMediaFrame(IVideoMediaFrameVtbl): IInspectable(IIn
     fn GetVideoFrame(&self, out: *mut *mut super::super::VideoFrame) -> HRESULT
 }}
 impl IVideoMediaFrame {
-    #[inline] pub unsafe fn get_frame_reference(&self) -> Result<ComPtr<MediaFrameReference>> {
+    #[inline] pub unsafe fn get_frame_reference(&self) -> Result<Option<ComPtr<MediaFrameReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FrameReference)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_format(&self) -> Result<ComPtr<VideoMediaFrameFormat>> {
+    #[inline] pub unsafe fn get_video_format(&self) -> Result<Option<ComPtr<VideoMediaFrameFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_software_bitmap(&self) -> Result<ComPtr<::rt::gen::windows::graphics::imaging::SoftwareBitmap>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_software_bitmap(&self) -> Result<Option<ComPtr<::rt::gen::windows::graphics::imaging::SoftwareBitmap>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SoftwareBitmap)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_direct3_dsurface(&self) -> Result<ComPtr<::rt::gen::windows::graphics::directx::direct3d11::IDirect3DSurface>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_direct3_dsurface(&self) -> Result<Option<ComPtr<::rt::gen::windows::graphics::directx::direct3d11::IDirect3DSurface>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Direct3DSurface)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_camera_intrinsics(&self) -> Result<ComPtr<super::super::devices::core::CameraIntrinsics>> {
+    #[inline] pub unsafe fn get_camera_intrinsics(&self) -> Result<Option<ComPtr<super::super::devices::core::CameraIntrinsics>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CameraIntrinsics)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_infrared_media_frame(&self) -> Result<ComPtr<InfraredMediaFrame>> {
+    #[inline] pub unsafe fn get_infrared_media_frame(&self) -> Result<Option<ComPtr<InfraredMediaFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InfraredMediaFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_depth_media_frame(&self) -> Result<ComPtr<DepthMediaFrame>> {
+    #[inline] pub unsafe fn get_depth_media_frame(&self) -> Result<Option<ComPtr<DepthMediaFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DepthMediaFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_frame(&self) -> Result<ComPtr<super::super::VideoFrame>> {
+    #[inline] pub unsafe fn get_video_frame(&self) -> Result<Option<ComPtr<super::super::VideoFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetVideoFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VideoMediaFrame: IVideoMediaFrame}
@@ -6212,15 +6212,15 @@ RT_INTERFACE!{interface IVideoMediaFrameFormat(IVideoMediaFrameFormatVtbl): IIns
     fn get_Height(&self, out: *mut u32) -> HRESULT
 }}
 impl IVideoMediaFrameFormat {
-    #[inline] pub unsafe fn get_media_frame_format(&self) -> Result<ComPtr<MediaFrameFormat>> {
+    #[inline] pub unsafe fn get_media_frame_format(&self) -> Result<Option<ComPtr<MediaFrameFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaFrameFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_depth_format(&self) -> Result<ComPtr<DepthMediaFrameFormat>> {
+    #[inline] pub unsafe fn get_depth_format(&self) -> Result<Option<ComPtr<DepthMediaFrameFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DepthFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_width(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -6245,25 +6245,25 @@ RT_INTERFACE!{interface IVariablePhotoCapturedEventArgs(IVariablePhotoCapturedEv
     fn get_CapturedFrameControlValues(&self, out: *mut *mut super::CapturedFrameControlValues) -> HRESULT
 }}
 impl IVariablePhotoCapturedEventArgs {
-    #[inline] pub unsafe fn get_frame(&self) -> Result<ComPtr<super::CapturedFrame>> {
+    #[inline] pub unsafe fn get_frame(&self) -> Result<Option<ComPtr<super::CapturedFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Frame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_capture_time_offset(&self) -> Result<::rt::gen::windows::foundation::TimeSpan> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_CaptureTimeOffset)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_used_frame_controller_index(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_used_frame_controller_index(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UsedFrameControllerIndex)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_captured_frame_control_values(&self) -> Result<ComPtr<super::CapturedFrameControlValues>> {
+    #[inline] pub unsafe fn get_captured_frame_control_values(&self) -> Result<Option<ComPtr<super::CapturedFrameControlValues>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CapturedFrameControlValues)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VariablePhotoCapturedEventArgs: IVariablePhotoCapturedEventArgs}
@@ -6337,10 +6337,10 @@ RT_INTERFACE!{interface IAppRecordingManager(IAppRecordingManagerVtbl): IInspect
     #[cfg(feature="windows-storage")] fn SaveScreenshotToFilesAsync(&self, folder: *mut super::super::storage::StorageFolder, filenamePrefix: HSTRING, option: AppRecordingSaveScreenshotOption, requestedFormats: *mut super::super::foundation::collections::IIterable<HString>, out: *mut *mut super::super::foundation::IAsyncOperation<AppRecordingSaveScreenshotResult>) -> HRESULT
 }}
 impl IAppRecordingManager {
-    #[inline] pub unsafe fn get_status(&self) -> Result<ComPtr<AppRecordingStatus>> {
+    #[inline] pub unsafe fn get_status(&self) -> Result<Option<ComPtr<AppRecordingStatus>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn start_recording_to_file_async(&self, file: &super::super::storage::StorageFile) -> Result<ComPtr<super::super::foundation::IAsyncOperation<AppRecordingResult>>> {
         let mut out = null_mut();
@@ -6352,10 +6352,10 @@ impl IAppRecordingManager {
         let hr = ((*self.lpVtbl).RecordTimeSpanToFileAsync)(self as *const _ as *mut _, startTime, duration, file as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_screenshot_media_encoding_subtypes(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_supported_screenshot_media_encoding_subtypes(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedScreenshotMediaEncodingSubtypes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn save_screenshot_to_files_async(&self, folder: &super::super::storage::StorageFolder, filenamePrefix: &HStringArg, option: AppRecordingSaveScreenshotOption, requestedFormats: &super::super::foundation::collections::IIterable<HString>) -> Result<ComPtr<super::super::foundation::IAsyncOperation<AppRecordingSaveScreenshotResult>>> {
         let mut out = null_mut();
@@ -6366,7 +6366,7 @@ impl IAppRecordingManager {
 RT_CLASS!{class AppRecordingManager: IAppRecordingManager}
 impl RtActivatable<IAppRecordingManagerStatics> for AppRecordingManager {}
 impl AppRecordingManager {
-    #[inline] pub fn get_default() -> Result<ComPtr<AppRecordingManager>> { unsafe {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<AppRecordingManager>>> { unsafe {
         <Self as RtActivatable<IAppRecordingManagerStatics>>::get_activation_factory().get_default()
     }}
 }
@@ -6376,10 +6376,10 @@ RT_INTERFACE!{static interface IAppRecordingManagerStatics(IAppRecordingManagerS
     fn GetDefault(&self, out: *mut *mut AppRecordingManager) -> HRESULT
 }}
 impl IAppRecordingManagerStatics {
-    #[inline] pub unsafe fn get_default(&self) -> Result<ComPtr<AppRecordingManager>> {
+    #[inline] pub unsafe fn get_default(&self) -> Result<Option<ComPtr<AppRecordingManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAppRecordingResult, 982517860, 50797, 18169, 178, 217, 91, 194, 218, 208, 112, 215);
@@ -6419,10 +6419,10 @@ RT_INTERFACE!{interface IAppRecordingSavedScreenshotInfo(IAppRecordingSavedScree
     fn get_MediaEncodingSubtype(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IAppRecordingSavedScreenshotInfo {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<ComPtr<super::super::storage::StorageFile>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<Option<ComPtr<super::super::storage::StorageFile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_File)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_media_encoding_subtype(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -6451,10 +6451,10 @@ impl IAppRecordingSaveScreenshotResult {
         let hr = ((*self.lpVtbl).get_ExtendedError)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_saved_screenshot_infos(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<AppRecordingSavedScreenshotInfo>>> {
+    #[inline] pub unsafe fn get_saved_screenshot_infos(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<AppRecordingSavedScreenshotInfo>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SavedScreenshotInfos)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AppRecordingSaveScreenshotResult: IAppRecordingSaveScreenshotResult}
@@ -6481,10 +6481,10 @@ impl IAppRecordingStatus {
         let hr = ((*self.lpVtbl).get_HistoricalBufferDuration)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_details(&self) -> Result<ComPtr<AppRecordingStatusDetails>> {
+    #[inline] pub unsafe fn get_details(&self) -> Result<Option<ComPtr<AppRecordingStatusDetails>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Details)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AppRecordingStatus: IAppRecordingStatus}
@@ -6587,10 +6587,10 @@ impl IAppBroadcastingStatus {
         let hr = ((*self.lpVtbl).get_CanStartBroadcast)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_details(&self) -> Result<ComPtr<AppBroadcastingStatusDetails>> {
+    #[inline] pub unsafe fn get_details(&self) -> Result<Option<ComPtr<AppBroadcastingStatusDetails>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Details)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AppBroadcastingStatus: IAppBroadcastingStatus}
@@ -6654,10 +6654,10 @@ RT_INTERFACE!{interface IAppBroadcastingUI(IAppBroadcastingUIVtbl): IInspectable
     fn ShowBroadcastUI(&self) -> HRESULT
 }}
 impl IAppBroadcastingUI {
-    #[inline] pub unsafe fn get_status(&self) -> Result<ComPtr<AppBroadcastingStatus>> {
+    #[inline] pub unsafe fn get_status(&self) -> Result<Option<ComPtr<AppBroadcastingStatus>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn show_broadcast_ui(&self) -> Result<()> {
         let hr = ((*self.lpVtbl).ShowBroadcastUI)(self as *const _ as *mut _);
@@ -6667,10 +6667,10 @@ impl IAppBroadcastingUI {
 RT_CLASS!{class AppBroadcastingUI: IAppBroadcastingUI}
 impl RtActivatable<IAppBroadcastingUIStatics> for AppBroadcastingUI {}
 impl AppBroadcastingUI {
-    #[inline] pub fn get_default() -> Result<ComPtr<AppBroadcastingUI>> { unsafe {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<AppBroadcastingUI>>> { unsafe {
         <Self as RtActivatable<IAppBroadcastingUIStatics>>::get_activation_factory().get_default()
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<AppBroadcastingUI>> { unsafe {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<Option<ComPtr<AppBroadcastingUI>>> { unsafe {
         <Self as RtActivatable<IAppBroadcastingUIStatics>>::get_activation_factory().get_for_user(user)
     }}
 }
@@ -6681,15 +6681,15 @@ RT_INTERFACE!{static interface IAppBroadcastingUIStatics(IAppBroadcastingUIStati
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut super::super::system::User, out: *mut *mut AppBroadcastingUI) -> HRESULT
 }}
 impl IAppBroadcastingUIStatics {
-    #[inline] pub unsafe fn get_default(&self) -> Result<ComPtr<AppBroadcastingUI>> {
+    #[inline] pub unsafe fn get_default(&self) -> Result<Option<ComPtr<AppBroadcastingUI>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &super::super::system::User) -> Result<ComPtr<AppBroadcastingUI>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &super::super::system::User) -> Result<Option<ComPtr<AppBroadcastingUI>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.Media.AppBroadcasting
@@ -6700,10 +6700,10 @@ RT_INTERFACE!{interface IAudioDeviceInputNode(IAudioDeviceInputNodeVtbl): IInspe
     #[cfg(feature="windows-devices")] fn get_Device(&self, out: *mut *mut super::super::devices::enumeration::DeviceInformation) -> HRESULT
 }}
 impl IAudioDeviceInputNode {
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_device(&self) -> Result<ComPtr<super::super::devices::enumeration::DeviceInformation>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_device(&self) -> Result<Option<ComPtr<super::super::devices::enumeration::DeviceInformation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Device)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioDeviceInputNode: IAudioDeviceInputNode}
@@ -6715,10 +6715,10 @@ RT_INTERFACE!{interface IAudioDeviceOutputNode(IAudioDeviceOutputNodeVtbl): IIns
     #[cfg(feature="windows-devices")] fn get_Device(&self, out: *mut *mut super::super::devices::enumeration::DeviceInformation) -> HRESULT
 }}
 impl IAudioDeviceOutputNode {
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_device(&self) -> Result<ComPtr<super::super::devices::enumeration::DeviceInformation>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_device(&self) -> Result<Option<ComPtr<super::super::devices::enumeration::DeviceInformation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Device)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioDeviceOutputNode: IAudioDeviceOutputNode}
@@ -6759,28 +6759,28 @@ impl IAudioFileInputNode {
         let hr = ((*self.lpVtbl).Seek)(self as *const _ as *mut _, position);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_start_time(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_start_time(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StartTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_start_time(&self, value: &super::super::foundation::IReference<super::super::foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_StartTime)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_end_time(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_end_time(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EndTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_end_time(&self, value: &super::super::foundation::IReference<super::super::foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_EndTime)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_loop_count(&self) -> Result<ComPtr<super::super::foundation::IReference<i32>>> {
+    #[inline] pub unsafe fn get_loop_count(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<i32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LoopCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_loop_count(&self, value: &super::super::foundation::IReference<i32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_LoopCount)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -6791,10 +6791,10 @@ impl IAudioFileInputNode {
         let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_source_file(&self) -> Result<ComPtr<super::super::storage::StorageFile>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_source_file(&self) -> Result<Option<ComPtr<super::super::storage::StorageFile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SourceFile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_file_completed(&self, handler: &super::super::foundation::TypedEventHandler<AudioFileInputNode, IInspectable>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -6818,15 +6818,15 @@ RT_INTERFACE!{interface IAudioFileOutputNode(IAudioFileOutputNodeVtbl): IInspect
     fn FinalizeAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<super::transcoding::TranscodeFailureReason>) -> HRESULT
 }}
 impl IAudioFileOutputNode {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<ComPtr<super::super::storage::IStorageFile>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<Option<ComPtr<super::super::storage::IStorageFile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_File)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_file_encoding_profile(&self) -> Result<ComPtr<super::mediaproperties::MediaEncodingProfile>> {
+    #[inline] pub unsafe fn get_file_encoding_profile(&self) -> Result<Option<ComPtr<super::mediaproperties::MediaEncodingProfile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FileEncodingProfile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn finalize_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::transcoding::TranscodeFailureReason>>> {
         let mut out = null_mut();
@@ -6840,10 +6840,10 @@ RT_INTERFACE!{interface IAudioFrameCompletedEventArgs(IAudioFrameCompletedEventA
     fn get_Frame(&self, out: *mut *mut super::AudioFrame) -> HRESULT
 }}
 impl IAudioFrameCompletedEventArgs {
-    #[inline] pub unsafe fn get_frame(&self) -> Result<ComPtr<super::AudioFrame>> {
+    #[inline] pub unsafe fn get_frame(&self) -> Result<Option<ComPtr<super::AudioFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Frame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioFrameCompletedEventArgs: IAudioFrameCompletedEventArgs}
@@ -6907,10 +6907,10 @@ RT_INTERFACE!{interface IAudioFrameOutputNode(IAudioFrameOutputNodeVtbl): IInspe
     fn GetFrame(&self, out: *mut *mut super::AudioFrame) -> HRESULT
 }}
 impl IAudioFrameOutputNode {
-    #[inline] pub unsafe fn get_frame(&self) -> Result<ComPtr<super::AudioFrame>> {
+    #[inline] pub unsafe fn get_frame(&self) -> Result<Option<ComPtr<super::AudioFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioFrameOutputNode: IAudioFrameOutputNode}
@@ -6951,15 +6951,15 @@ RT_INTERFACE!{interface IAudioGraph(IAudioGraphVtbl): IInspectable(IInspectableV
     fn get_SamplesPerQuantum(&self, out: *mut i32) -> HRESULT
 }}
 impl IAudioGraph {
-    #[inline] pub unsafe fn create_frame_input_node(&self) -> Result<ComPtr<AudioFrameInputNode>> {
+    #[inline] pub unsafe fn create_frame_input_node(&self) -> Result<Option<ComPtr<AudioFrameInputNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFrameInputNode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_frame_input_node_with_format(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<ComPtr<AudioFrameInputNode>> {
+    #[inline] pub unsafe fn create_frame_input_node_with_format(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<Option<ComPtr<AudioFrameInputNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFrameInputNodeWithFormat)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn create_device_input_node_async(&self, category: super::capture::MediaCategory) -> Result<ComPtr<super::super::foundation::IAsyncOperation<CreateAudioDeviceInputNodeResult>>> {
         let mut out = null_mut();
@@ -6976,15 +6976,15 @@ impl IAudioGraph {
         let hr = ((*self.lpVtbl).CreateDeviceInputNodeWithFormatOnDeviceAsync)(self as *const _ as *mut _, category, encodingProperties as *const _ as *mut _, device as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_frame_output_node(&self) -> Result<ComPtr<AudioFrameOutputNode>> {
+    #[inline] pub unsafe fn create_frame_output_node(&self) -> Result<Option<ComPtr<AudioFrameOutputNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFrameOutputNode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_frame_output_node_with_format(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<ComPtr<AudioFrameOutputNode>> {
+    #[inline] pub unsafe fn create_frame_output_node_with_format(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<Option<ComPtr<AudioFrameOutputNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFrameOutputNodeWithFormat)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn create_device_output_node_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncOperation<CreateAudioDeviceOutputNodeResult>>> {
         let mut out = null_mut();
@@ -7006,15 +7006,15 @@ impl IAudioGraph {
         let hr = ((*self.lpVtbl).CreateFileOutputNodeWithFileProfileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, fileEncodingProfile as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_submix_node(&self) -> Result<ComPtr<AudioSubmixNode>> {
+    #[inline] pub unsafe fn create_submix_node(&self) -> Result<Option<ComPtr<AudioSubmixNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSubmixNode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_submix_node_with_format(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<ComPtr<AudioSubmixNode>> {
+    #[inline] pub unsafe fn create_submix_node_with_format(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<Option<ComPtr<AudioSubmixNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSubmixNodeWithFormat)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn start(&self) -> Result<()> {
         let hr = ((*self.lpVtbl).Start)(self as *const _ as *mut _);
@@ -7060,20 +7060,20 @@ impl IAudioGraph {
         let hr = ((*self.lpVtbl).get_CompletedQuantumCount)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<ComPtr<super::mediaproperties::AudioEncodingProperties>> {
+    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<Option<ComPtr<super::mediaproperties::AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EncodingProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_latency_in_samples(&self) -> Result<i32> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_LatencyInSamples)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_primary_render_device(&self) -> Result<ComPtr<super::super::devices::enumeration::DeviceInformation>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_primary_render_device(&self) -> Result<Option<ComPtr<super::super::devices::enumeration::DeviceInformation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PrimaryRenderDevice)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_render_device_audio_processing(&self) -> Result<super::AudioProcessing> {
         let mut out = zeroed();
@@ -7105,10 +7105,10 @@ RT_INTERFACE!{interface IAudioGraph2(IAudioGraph2Vtbl): IInspectable(IInspectabl
     fn CreateBatchUpdater(&self, out: *mut *mut AudioGraphBatchUpdater) -> HRESULT
 }}
 impl IAudioGraph2 {
-    #[inline] pub unsafe fn create_frame_input_node_with_format_and_emitter(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties, emitter: &AudioNodeEmitter) -> Result<ComPtr<AudioFrameInputNode>> {
+    #[inline] pub unsafe fn create_frame_input_node_with_format_and_emitter(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties, emitter: &AudioNodeEmitter) -> Result<Option<ComPtr<AudioFrameInputNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFrameInputNodeWithFormatAndEmitter)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, emitter as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-devices")] #[inline] pub unsafe fn create_device_input_node_with_format_and_emitter_on_device_async(&self, category: super::capture::MediaCategory, encodingProperties: &super::mediaproperties::AudioEncodingProperties, device: &super::super::devices::enumeration::DeviceInformation, emitter: &AudioNodeEmitter) -> Result<ComPtr<super::super::foundation::IAsyncOperation<CreateAudioDeviceInputNodeResult>>> {
         let mut out = null_mut();
@@ -7120,15 +7120,15 @@ impl IAudioGraph2 {
         let hr = ((*self.lpVtbl).CreateFileInputNodeWithEmitterAsync)(self as *const _ as *mut _, file as *const _ as *mut _, emitter as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_submix_node_with_format_and_emitter(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties, emitter: &AudioNodeEmitter) -> Result<ComPtr<AudioSubmixNode>> {
+    #[inline] pub unsafe fn create_submix_node_with_format_and_emitter(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties, emitter: &AudioNodeEmitter) -> Result<Option<ComPtr<AudioSubmixNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSubmixNodeWithFormatAndEmitter)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, emitter as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_batch_updater(&self) -> Result<ComPtr<AudioGraphBatchUpdater>> {
+    #[inline] pub unsafe fn create_batch_updater(&self) -> Result<Option<ComPtr<AudioGraphBatchUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateBatchUpdater)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioGraphBatchUpdater: super::super::foundation::IClosable}
@@ -7139,10 +7139,10 @@ RT_INTERFACE!{interface IAudioGraphConnection(IAudioGraphConnectionVtbl): IInspe
     fn get_Gain(&self, out: *mut f64) -> HRESULT
 }}
 impl IAudioGraphConnection {
-    #[inline] pub unsafe fn get_destination(&self) -> Result<ComPtr<IAudioNode>> {
+    #[inline] pub unsafe fn get_destination(&self) -> Result<Option<ComPtr<IAudioNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Destination)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_gain(&self, value: f64) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Gain)(self as *const _ as *mut _, value);
@@ -7176,19 +7176,19 @@ RT_INTERFACE!{interface IAudioGraphSettings(IAudioGraphSettingsVtbl): IInspectab
     fn put_DesiredRenderDeviceAudioProcessing(&self, value: super::AudioProcessing) -> HRESULT
 }}
 impl IAudioGraphSettings {
-    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<ComPtr<super::mediaproperties::AudioEncodingProperties>> {
+    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<Option<ComPtr<super::mediaproperties::AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EncodingProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_encoding_properties(&self, value: &super::mediaproperties::AudioEncodingProperties) -> Result<()> {
         let hr = ((*self.lpVtbl).put_EncodingProperties)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_primary_render_device(&self) -> Result<ComPtr<super::super::devices::enumeration::DeviceInformation>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_primary_render_device(&self) -> Result<Option<ComPtr<super::super::devices::enumeration::DeviceInformation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PrimaryRenderDevice)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-devices")] #[inline] pub unsafe fn set_primary_render_device(&self, value: &super::super::devices::enumeration::DeviceInformation) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PrimaryRenderDevice)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -7284,10 +7284,10 @@ RT_INTERFACE!{interface IAudioInputNode(IAudioInputNodeVtbl): IInspectable(IInsp
     fn RemoveOutgoingConnection(&self, destination: *mut IAudioNode) -> HRESULT
 }}
 impl IAudioInputNode {
-    #[inline] pub unsafe fn get_outgoing_connections(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<AudioGraphConnection>>> {
+    #[inline] pub unsafe fn get_outgoing_connections(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<AudioGraphConnection>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OutgoingConnections)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_outgoing_connection(&self, destination: &IAudioNode) -> Result<()> {
         let hr = ((*self.lpVtbl).AddOutgoingConnection)(self as *const _ as *mut _, destination as *const _ as *mut _);
@@ -7307,10 +7307,10 @@ RT_INTERFACE!{interface IAudioInputNode2(IAudioInputNode2Vtbl): IInspectable(IIn
     fn get_Emitter(&self, out: *mut *mut AudioNodeEmitter) -> HRESULT
 }}
 impl IAudioInputNode2 {
-    #[inline] pub unsafe fn get_emitter(&self) -> Result<ComPtr<AudioNodeEmitter>> {
+    #[inline] pub unsafe fn get_emitter(&self) -> Result<Option<ComPtr<AudioNodeEmitter>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Emitter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAudioNode, 356031871, 56280, 18457, 191, 3, 102, 142, 147, 87, 205, 109);
@@ -7328,10 +7328,10 @@ RT_INTERFACE!{interface IAudioNode(IAudioNodeVtbl): IInspectable(IInspectableVtb
     fn EnableEffectsByDefinition(&self, definition: *mut super::effects::IAudioEffectDefinition) -> HRESULT
 }}
 impl IAudioNode {
-    #[inline] pub unsafe fn get_effect_definitions(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<super::effects::IAudioEffectDefinition>>> {
+    #[inline] pub unsafe fn get_effect_definitions(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::effects::IAudioEffectDefinition>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EffectDefinitions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_outgoing_gain(&self, value: f64) -> Result<()> {
         let hr = ((*self.lpVtbl).put_OutgoingGain)(self as *const _ as *mut _, value);
@@ -7342,10 +7342,10 @@ impl IAudioNode {
         let hr = ((*self.lpVtbl).get_OutgoingGain)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<ComPtr<super::mediaproperties::AudioEncodingProperties>> {
+    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<Option<ComPtr<super::mediaproperties::AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EncodingProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_consume_input(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -7414,15 +7414,15 @@ impl IAudioNodeEmitter {
         let hr = ((*self.lpVtbl).put_Direction)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_shape(&self) -> Result<ComPtr<AudioNodeEmitterShape>> {
+    #[inline] pub unsafe fn get_shape(&self) -> Result<Option<ComPtr<AudioNodeEmitterShape>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Shape)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_decay_model(&self) -> Result<ComPtr<AudioNodeEmitterDecayModel>> {
+    #[inline] pub unsafe fn get_decay_model(&self) -> Result<Option<ComPtr<AudioNodeEmitterDecayModel>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DecayModel)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_gain(&self) -> Result<f64> {
         let mut out = zeroed();
@@ -7541,19 +7541,19 @@ impl IAudioNodeEmitterDecayModel {
         let hr = ((*self.lpVtbl).get_MaxGain)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_natural_properties(&self) -> Result<ComPtr<AudioNodeEmitterNaturalDecayModelProperties>> {
+    #[inline] pub unsafe fn get_natural_properties(&self) -> Result<Option<ComPtr<AudioNodeEmitterNaturalDecayModelProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NaturalProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioNodeEmitterDecayModel: IAudioNodeEmitterDecayModel}
 impl RtActivatable<IAudioNodeEmitterDecayModelStatics> for AudioNodeEmitterDecayModel {}
 impl AudioNodeEmitterDecayModel {
-    #[inline] pub fn create_natural(minGain: f64, maxGain: f64, unityGainDistance: f64, cutoffDistance: f64) -> Result<ComPtr<AudioNodeEmitterDecayModel>> { unsafe {
+    #[inline] pub fn create_natural(minGain: f64, maxGain: f64, unityGainDistance: f64, cutoffDistance: f64) -> Result<Option<ComPtr<AudioNodeEmitterDecayModel>>> { unsafe {
         <Self as RtActivatable<IAudioNodeEmitterDecayModelStatics>>::get_activation_factory().create_natural(minGain, maxGain, unityGainDistance, cutoffDistance)
     }}
-    #[inline] pub fn create_custom(minGain: f64, maxGain: f64) -> Result<ComPtr<AudioNodeEmitterDecayModel>> { unsafe {
+    #[inline] pub fn create_custom(minGain: f64, maxGain: f64) -> Result<Option<ComPtr<AudioNodeEmitterDecayModel>>> { unsafe {
         <Self as RtActivatable<IAudioNodeEmitterDecayModelStatics>>::get_activation_factory().create_custom(minGain, maxGain)
     }}
 }
@@ -7564,15 +7564,15 @@ RT_INTERFACE!{static interface IAudioNodeEmitterDecayModelStatics(IAudioNodeEmit
     fn CreateCustom(&self, minGain: f64, maxGain: f64, out: *mut *mut AudioNodeEmitterDecayModel) -> HRESULT
 }}
 impl IAudioNodeEmitterDecayModelStatics {
-    #[inline] pub unsafe fn create_natural(&self, minGain: f64, maxGain: f64, unityGainDistance: f64, cutoffDistance: f64) -> Result<ComPtr<AudioNodeEmitterDecayModel>> {
+    #[inline] pub unsafe fn create_natural(&self, minGain: f64, maxGain: f64, unityGainDistance: f64, cutoffDistance: f64) -> Result<Option<ComPtr<AudioNodeEmitterDecayModel>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateNatural)(self as *const _ as *mut _, minGain, maxGain, unityGainDistance, cutoffDistance, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_custom(&self, minGain: f64, maxGain: f64) -> Result<ComPtr<AudioNodeEmitterDecayModel>> {
+    #[inline] pub unsafe fn create_custom(&self, minGain: f64, maxGain: f64) -> Result<Option<ComPtr<AudioNodeEmitterDecayModel>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateCustom)(self as *const _ as *mut _, minGain, maxGain, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAudioNodeEmitterFactory, 4257761434, 27350, 19684, 183, 247, 169, 147, 112, 223, 126, 233);
@@ -7618,19 +7618,19 @@ impl IAudioNodeEmitterShape {
         let hr = ((*self.lpVtbl).get_Kind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_cone_properties(&self) -> Result<ComPtr<AudioNodeEmitterConeProperties>> {
+    #[inline] pub unsafe fn get_cone_properties(&self) -> Result<Option<ComPtr<AudioNodeEmitterConeProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ConeProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioNodeEmitterShape: IAudioNodeEmitterShape}
 impl RtActivatable<IAudioNodeEmitterShapeStatics> for AudioNodeEmitterShape {}
 impl AudioNodeEmitterShape {
-    #[inline] pub fn create_cone(innerAngle: f64, outerAngle: f64, outerAngleGain: f64) -> Result<ComPtr<AudioNodeEmitterShape>> { unsafe {
+    #[inline] pub fn create_cone(innerAngle: f64, outerAngle: f64, outerAngleGain: f64) -> Result<Option<ComPtr<AudioNodeEmitterShape>>> { unsafe {
         <Self as RtActivatable<IAudioNodeEmitterShapeStatics>>::get_activation_factory().create_cone(innerAngle, outerAngle, outerAngleGain)
     }}
-    #[inline] pub fn create_omnidirectional() -> Result<ComPtr<AudioNodeEmitterShape>> { unsafe {
+    #[inline] pub fn create_omnidirectional() -> Result<Option<ComPtr<AudioNodeEmitterShape>>> { unsafe {
         <Self as RtActivatable<IAudioNodeEmitterShapeStatics>>::get_activation_factory().create_omnidirectional()
     }}
 }
@@ -7644,15 +7644,15 @@ RT_INTERFACE!{static interface IAudioNodeEmitterShapeStatics(IAudioNodeEmitterSh
     fn CreateOmnidirectional(&self, out: *mut *mut AudioNodeEmitterShape) -> HRESULT
 }}
 impl IAudioNodeEmitterShapeStatics {
-    #[inline] pub unsafe fn create_cone(&self, innerAngle: f64, outerAngle: f64, outerAngleGain: f64) -> Result<ComPtr<AudioNodeEmitterShape>> {
+    #[inline] pub unsafe fn create_cone(&self, innerAngle: f64, outerAngle: f64, outerAngleGain: f64) -> Result<Option<ComPtr<AudioNodeEmitterShape>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateCone)(self as *const _ as *mut _, innerAngle, outerAngle, outerAngleGain, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_omnidirectional(&self) -> Result<ComPtr<AudioNodeEmitterShape>> {
+    #[inline] pub unsafe fn create_omnidirectional(&self) -> Result<Option<ComPtr<AudioNodeEmitterShape>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateOmnidirectional)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAudioNodeListener, 3648138774, 3082, 16858, 183, 85, 108, 119, 131, 95, 177, 235);
@@ -7717,10 +7717,10 @@ impl IAudioNodeWithListener {
         let hr = ((*self.lpVtbl).put_Listener)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_listener(&self) -> Result<ComPtr<AudioNodeListener>> {
+    #[inline] pub unsafe fn get_listener(&self) -> Result<Option<ComPtr<AudioNodeListener>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Listener)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioSubmixNode: IAudioInputNode}
@@ -7735,10 +7735,10 @@ impl ICreateAudioDeviceInputNodeResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_device_input_node(&self) -> Result<ComPtr<AudioDeviceInputNode>> {
+    #[inline] pub unsafe fn get_device_input_node(&self) -> Result<Option<ComPtr<AudioDeviceInputNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DeviceInputNode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CreateAudioDeviceInputNodeResult: ICreateAudioDeviceInputNodeResult}
@@ -7753,10 +7753,10 @@ impl ICreateAudioDeviceOutputNodeResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_device_output_node(&self) -> Result<ComPtr<AudioDeviceOutputNode>> {
+    #[inline] pub unsafe fn get_device_output_node(&self) -> Result<Option<ComPtr<AudioDeviceOutputNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DeviceOutputNode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CreateAudioDeviceOutputNodeResult: ICreateAudioDeviceOutputNodeResult}
@@ -7771,10 +7771,10 @@ impl ICreateAudioFileInputNodeResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_file_input_node(&self) -> Result<ComPtr<AudioFileInputNode>> {
+    #[inline] pub unsafe fn get_file_input_node(&self) -> Result<Option<ComPtr<AudioFileInputNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FileInputNode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CreateAudioFileInputNodeResult: ICreateAudioFileInputNodeResult}
@@ -7789,10 +7789,10 @@ impl ICreateAudioFileOutputNodeResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_file_output_node(&self) -> Result<ComPtr<AudioFileOutputNode>> {
+    #[inline] pub unsafe fn get_file_output_node(&self) -> Result<Option<ComPtr<AudioFileOutputNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FileOutputNode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CreateAudioFileOutputNodeResult: ICreateAudioFileOutputNodeResult}
@@ -7807,10 +7807,10 @@ impl ICreateAudioGraphResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_graph(&self) -> Result<ComPtr<AudioGraph>> {
+    #[inline] pub unsafe fn get_graph(&self) -> Result<Option<ComPtr<AudioGraph>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Graph)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CreateAudioGraphResult: ICreateAudioGraphResult}
@@ -7915,10 +7915,10 @@ RT_INTERFACE!{interface IEqualizerEffectDefinition(IEqualizerEffectDefinitionVtb
     fn get_Bands(&self, out: *mut *mut super::super::foundation::collections::IVectorView<EqualizerBand>) -> HRESULT
 }}
 impl IEqualizerEffectDefinition {
-    #[inline] pub unsafe fn get_bands(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<EqualizerBand>>> {
+    #[inline] pub unsafe fn get_bands(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<EqualizerBand>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Bands)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class EqualizerEffectDefinition: IEqualizerEffectDefinition}
@@ -8303,15 +8303,15 @@ impl ICastingConnection {
         let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_device(&self) -> Result<ComPtr<CastingDevice>> {
+    #[inline] pub unsafe fn get_device(&self) -> Result<Option<ComPtr<CastingDevice>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Device)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_source(&self) -> Result<ComPtr<CastingSource>> {
+    #[inline] pub unsafe fn get_source(&self) -> Result<Option<ComPtr<CastingSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_source(&self, value: &CastingSource) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Source)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -8391,20 +8391,20 @@ impl ICastingDevice {
         let hr = ((*self.lpVtbl).get_FriendlyName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_icon(&self) -> Result<ComPtr<super::super::storage::streams::IRandomAccessStreamWithContentType>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_icon(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamWithContentType>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Icon)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_supported_casting_playback_types_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncOperation<CastingPlaybackTypes>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetSupportedCastingPlaybackTypesAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_casting_connection(&self) -> Result<ComPtr<CastingConnection>> {
+    #[inline] pub unsafe fn create_casting_connection(&self) -> Result<Option<ComPtr<CastingConnection>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateCastingConnection)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CastingDevice: ICastingDevice}
@@ -8439,15 +8439,15 @@ RT_INTERFACE!{interface ICastingDevicePicker(ICastingDevicePickerVtbl): IInspect
     fn Hide(&self) -> HRESULT
 }}
 impl ICastingDevicePicker {
-    #[inline] pub unsafe fn get_filter(&self) -> Result<ComPtr<CastingDevicePickerFilter>> {
+    #[inline] pub unsafe fn get_filter(&self) -> Result<Option<ComPtr<CastingDevicePickerFilter>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Filter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_appearance(&self) -> Result<ComPtr<super::super::devices::enumeration::DevicePickerAppearance>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_appearance(&self) -> Result<Option<ComPtr<super::super::devices::enumeration::DevicePickerAppearance>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Appearance)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_casting_device_selected(&self, handler: &super::super::foundation::TypedEventHandler<CastingDevicePicker, CastingDeviceSelectedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -8521,10 +8521,10 @@ impl ICastingDevicePickerFilter {
         let hr = ((*self.lpVtbl).put_SupportsPictures)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_casting_sources(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<CastingSource>>> {
+    #[inline] pub unsafe fn get_supported_casting_sources(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<CastingSource>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedCastingSources)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CastingDevicePickerFilter: ICastingDevicePickerFilter}
@@ -8533,10 +8533,10 @@ RT_INTERFACE!{interface ICastingDeviceSelectedEventArgs(ICastingDeviceSelectedEv
     fn get_SelectedCastingDevice(&self, out: *mut *mut CastingDevice) -> HRESULT
 }}
 impl ICastingDeviceSelectedEventArgs {
-    #[inline] pub unsafe fn get_selected_casting_device(&self) -> Result<ComPtr<CastingDevice>> {
+    #[inline] pub unsafe fn get_selected_casting_device(&self) -> Result<Option<ComPtr<CastingDevice>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SelectedCastingDevice)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CastingDeviceSelectedEventArgs: ICastingDeviceSelectedEventArgs}
@@ -8578,10 +8578,10 @@ RT_INTERFACE!{interface ICastingSource(ICastingSourceVtbl): IInspectable(IInspec
     fn put_PreferredSourceUri(&self, value: *mut super::super::foundation::Uri) -> HRESULT
 }}
 impl ICastingSource {
-    #[inline] pub unsafe fn get_preferred_source_uri(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_preferred_source_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PreferredSourceUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_preferred_source_uri(&self, value: &super::super::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PreferredSourceUri)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -8603,10 +8603,10 @@ RT_INTERFACE!{interface IAudioStreamDescriptor(IAudioStreamDescriptorVtbl): IIns
     fn get_EncodingProperties(&self, out: *mut *mut super::mediaproperties::AudioEncodingProperties) -> HRESULT
 }}
 impl IAudioStreamDescriptor {
-    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<ComPtr<super::mediaproperties::AudioEncodingProperties>> {
+    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<Option<ComPtr<super::mediaproperties::AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EncodingProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioStreamDescriptor: IAudioStreamDescriptor}
@@ -8629,19 +8629,19 @@ impl IAudioStreamDescriptor2 {
         let hr = ((*self.lpVtbl).put_LeadingEncoderPadding)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_leading_encoder_padding(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_leading_encoder_padding(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LeadingEncoderPadding)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_trailing_encoder_padding(&self, value: &super::super::foundation::IReference<u32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_TrailingEncoderPadding)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_trailing_encoder_padding(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_trailing_encoder_padding(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TrailingEncoderPadding)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAudioStreamDescriptorFactory, 1250348702, 19633, 17280, 142, 12, 131, 80, 75, 127, 91, 243);
@@ -8674,25 +8674,25 @@ impl IAudioTrack {
         let hr = ((*self.lpVtbl).remove_OpenFailed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<ComPtr<super::mediaproperties::AudioEncodingProperties>> {
+    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<Option<ComPtr<super::mediaproperties::AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetEncodingProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_playback_item(&self) -> Result<ComPtr<super::playback::MediaPlaybackItem>> {
+    #[inline] pub unsafe fn get_playback_item(&self) -> Result<Option<ComPtr<super::playback::MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PlaybackItem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_name(&self) -> Result<HString> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_support_info(&self) -> Result<ComPtr<AudioTrackSupportInfo>> {
+    #[inline] pub unsafe fn get_support_info(&self) -> Result<Option<ComPtr<AudioTrackSupportInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioTrack: IMediaTrack}
@@ -8779,10 +8779,10 @@ impl ICodecInfo {
         let hr = ((*self.lpVtbl).get_Category)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_subtypes(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_subtypes(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Subtypes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_display_name(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -9292,10 +9292,10 @@ impl IDataCue {
         let hr = ((*self.lpVtbl).put_Data)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_data(&self) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Data)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class DataCue: IDataCue}
@@ -9306,10 +9306,10 @@ RT_INTERFACE!{interface IDataCue2(IDataCue2Vtbl): IInspectable(IInspectableVtbl)
     fn get_Properties(&self, out: *mut *mut super::super::foundation::collections::PropertySet) -> HRESULT
 }}
 impl IDataCue2 {
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<super::super::foundation::collections::PropertySet>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::PropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IFaceDetectedEventArgs, 428966950, 50779, 18106, 133, 248, 19, 136, 5, 118, 201, 10);
@@ -9317,10 +9317,10 @@ RT_INTERFACE!{interface IFaceDetectedEventArgs(IFaceDetectedEventArgsVtbl): IIns
     fn get_ResultFrame(&self, out: *mut *mut FaceDetectionEffectFrame) -> HRESULT
 }}
 impl IFaceDetectedEventArgs {
-    #[inline] pub unsafe fn get_result_frame(&self) -> Result<ComPtr<FaceDetectionEffectFrame>> {
+    #[inline] pub unsafe fn get_result_frame(&self) -> Result<Option<ComPtr<FaceDetectionEffectFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResultFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class FaceDetectedEventArgs: IFaceDetectedEventArgs}
@@ -9398,10 +9398,10 @@ RT_INTERFACE!{interface IFaceDetectionEffectFrame(IFaceDetectionEffectFrameVtbl)
     fn get_DetectedFaces(&self, out: *mut *mut super::super::foundation::collections::IVectorView<super::faceanalysis::DetectedFace>) -> HRESULT
 }}
 impl IFaceDetectionEffectFrame {
-    #[inline] pub unsafe fn get_detected_faces(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::faceanalysis::DetectedFace>>> {
+    #[inline] pub unsafe fn get_detected_faces(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::faceanalysis::DetectedFace>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DetectedFaces)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class FaceDetectionEffectFrame: IFaceDetectionEffectFrame}
@@ -9436,10 +9436,10 @@ impl IHighDynamicRangeOutput {
         let hr = ((*self.lpVtbl).get_Certainty)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_frame_controllers(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::devices::core::FrameController>>> {
+    #[inline] pub unsafe fn get_frame_controllers(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::devices::core::FrameController>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FrameControllers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class HighDynamicRangeOutput: IHighDynamicRangeOutput}
@@ -9475,10 +9475,10 @@ impl IImageCue {
         let hr = ((*self.lpVtbl).put_SoftwareBitmap)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_software_bitmap(&self) -> Result<ComPtr<super::super::graphics::imaging::SoftwareBitmap>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_software_bitmap(&self) -> Result<Option<ComPtr<super::super::graphics::imaging::SoftwareBitmap>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SoftwareBitmap)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ImageCue: IImageCue}
@@ -9492,27 +9492,27 @@ RT_INTERFACE!{interface IInitializeMediaStreamSourceRequestedEventArgs(IInitiali
     fn GetDeferral(&self, out: *mut *mut super::super::foundation::Deferral) -> HRESULT
 }}
 impl IInitializeMediaStreamSourceRequestedEventArgs {
-    #[inline] pub unsafe fn get_source(&self) -> Result<ComPtr<MediaStreamSource>> {
+    #[inline] pub unsafe fn get_source(&self) -> Result<Option<ComPtr<MediaStreamSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_random_access_stream(&self) -> Result<ComPtr<super::super::storage::streams::IRandomAccessStream>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_random_access_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStream>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RandomAccessStream)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<super::super::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<super::super::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class InitializeMediaStreamSourceRequestedEventArgs: IInitializeMediaStreamSourceRequestedEventArgs}
 RT_CLASS!{static class LowLightFusion}
 impl RtActivatable<ILowLightFusionStatics> for LowLightFusion {}
 impl LowLightFusion {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_bitmap_pixel_formats() -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>> { unsafe {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_bitmap_pixel_formats() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>>> { unsafe {
         <Self as RtActivatable<ILowLightFusionStatics>>::get_activation_factory().get_supported_bitmap_pixel_formats()
     }}
     #[inline] pub fn get_max_supported_frame_count() -> Result<i32> { unsafe {
@@ -9528,10 +9528,10 @@ RT_INTERFACE!{interface ILowLightFusionResult(ILowLightFusionResultVtbl): IInspe
     #[cfg(feature="windows-graphics")] fn get_Frame(&self, out: *mut *mut super::super::graphics::imaging::SoftwareBitmap) -> HRESULT
 }}
 impl ILowLightFusionResult {
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_frame(&self) -> Result<ComPtr<super::super::graphics::imaging::SoftwareBitmap>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_frame(&self) -> Result<Option<ComPtr<super::super::graphics::imaging::SoftwareBitmap>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Frame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class LowLightFusionResult: ILowLightFusionResult}
@@ -9542,10 +9542,10 @@ RT_INTERFACE!{static interface ILowLightFusionStatics(ILowLightFusionStaticsVtbl
     #[cfg(feature="windows-graphics")] fn FuseAsync(&self, frameSet: *mut super::super::foundation::collections::IIterable<super::super::graphics::imaging::SoftwareBitmap>, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<LowLightFusionResult, f64>) -> HRESULT
 }}
 impl ILowLightFusionStatics {
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_supported_bitmap_pixel_formats(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_supported_bitmap_pixel_formats(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedBitmapPixelFormats)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_max_supported_frame_count(&self) -> Result<i32> {
         let mut out = zeroed();
@@ -9585,10 +9585,10 @@ impl IMediaBinder {
         let hr = ((*self.lpVtbl).put_Token)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_source(&self) -> Result<ComPtr<MediaSource>> {
+    #[inline] pub unsafe fn get_source(&self) -> Result<Option<ComPtr<MediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaBinder: IMediaBinder}
@@ -9614,15 +9614,15 @@ impl IMediaBindingEventArgs {
         let hr = ((*self.lpVtbl).remove_Canceled)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_media_binder(&self) -> Result<ComPtr<MediaBinder>> {
+    #[inline] pub unsafe fn get_media_binder(&self) -> Result<Option<ComPtr<MediaBinder>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaBinder)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<super::super::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<super::super::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_uri(&self, uri: &super::super::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).SetUri)(self as *const _ as *mut _, uri as *const _ as *mut _);
@@ -9696,10 +9696,10 @@ RT_INTERFACE!{interface IMediaCueEventArgs(IMediaCueEventArgsVtbl): IInspectable
     fn get_Cue(&self, out: *mut *mut IMediaCue) -> HRESULT
 }}
 impl IMediaCueEventArgs {
-    #[inline] pub unsafe fn get_cue(&self) -> Result<ComPtr<IMediaCue>> {
+    #[inline] pub unsafe fn get_cue(&self) -> Result<Option<ComPtr<IMediaCue>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Cue)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaCueEventArgs: IMediaCueEventArgs}
@@ -9715,34 +9715,34 @@ impl RtActivatable<IMediaSourceStatics> for MediaSource {}
 impl RtActivatable<IMediaSourceStatics2> for MediaSource {}
 impl RtActivatable<IMediaSourceStatics3> for MediaSource {}
 impl MediaSource {
-    #[inline] pub fn create_from_adaptive_media_source(mediaSource: &super::streaming::adaptive::AdaptiveMediaSource) -> Result<ComPtr<MediaSource>> { unsafe {
+    #[inline] pub fn create_from_adaptive_media_source(mediaSource: &super::streaming::adaptive::AdaptiveMediaSource) -> Result<Option<ComPtr<MediaSource>>> { unsafe {
         <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_adaptive_media_source(mediaSource)
     }}
-    #[inline] pub fn create_from_media_stream_source(mediaSource: &MediaStreamSource) -> Result<ComPtr<MediaSource>> { unsafe {
+    #[inline] pub fn create_from_media_stream_source(mediaSource: &MediaStreamSource) -> Result<Option<ComPtr<MediaSource>>> { unsafe {
         <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_media_stream_source(mediaSource)
     }}
-    #[inline] pub fn create_from_mse_stream_source(mediaSource: &MseStreamSource) -> Result<ComPtr<MediaSource>> { unsafe {
+    #[inline] pub fn create_from_mse_stream_source(mediaSource: &MseStreamSource) -> Result<Option<ComPtr<MediaSource>>> { unsafe {
         <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_mse_stream_source(mediaSource)
     }}
-    #[inline] pub fn create_from_imedia_source(mediaSource: &IMediaSource) -> Result<ComPtr<MediaSource>> { unsafe {
+    #[inline] pub fn create_from_imedia_source(mediaSource: &IMediaSource) -> Result<Option<ComPtr<MediaSource>>> { unsafe {
         <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_imedia_source(mediaSource)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_storage_file(file: &super::super::storage::IStorageFile) -> Result<ComPtr<MediaSource>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_storage_file(file: &super::super::storage::IStorageFile) -> Result<Option<ComPtr<MediaSource>>> { unsafe {
         <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_storage_file(file)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream(stream: &super::super::storage::streams::IRandomAccessStream, contentType: &HStringArg) -> Result<ComPtr<MediaSource>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream(stream: &super::super::storage::streams::IRandomAccessStream, contentType: &HStringArg) -> Result<Option<ComPtr<MediaSource>>> { unsafe {
         <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_stream(stream, contentType)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_reference(stream: &super::super::storage::streams::IRandomAccessStreamReference, contentType: &HStringArg) -> Result<ComPtr<MediaSource>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_reference(stream: &super::super::storage::streams::IRandomAccessStreamReference, contentType: &HStringArg) -> Result<Option<ComPtr<MediaSource>>> { unsafe {
         <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_stream_reference(stream, contentType)
     }}
-    #[inline] pub fn create_from_uri(uri: &super::super::foundation::Uri) -> Result<ComPtr<MediaSource>> { unsafe {
+    #[inline] pub fn create_from_uri(uri: &super::super::foundation::Uri) -> Result<Option<ComPtr<MediaSource>>> { unsafe {
         <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_uri(uri)
     }}
-    #[inline] pub fn create_from_media_binder(binder: &MediaBinder) -> Result<ComPtr<MediaSource>> { unsafe {
+    #[inline] pub fn create_from_media_binder(binder: &MediaBinder) -> Result<Option<ComPtr<MediaSource>>> { unsafe {
         <Self as RtActivatable<IMediaSourceStatics2>>::get_activation_factory().create_from_media_binder(binder)
     }}
-    #[inline] pub fn create_from_media_frame_source(frameSource: &super::capture::frames::MediaFrameSource) -> Result<ComPtr<MediaSource>> { unsafe {
+    #[inline] pub fn create_from_media_frame_source(frameSource: &super::capture::frames::MediaFrameSource) -> Result<Option<ComPtr<MediaSource>>> { unsafe {
         <Self as RtActivatable<IMediaSourceStatics3>>::get_activation_factory().create_from_media_frame_source(frameSource)
     }}
 }
@@ -9767,30 +9767,30 @@ impl IMediaSource2 {
         let hr = ((*self.lpVtbl).remove_OpenOperationCompleted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_custom_properties(&self) -> Result<ComPtr<super::super::foundation::collections::ValueSet>> {
+    #[inline] pub unsafe fn get_custom_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::ValueSet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CustomProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_duration(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_duration(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_is_open(&self) -> Result<bool> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsOpen)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_external_timed_text_sources(&self) -> Result<ComPtr<super::super::foundation::collections::IObservableVector<TimedTextSource>>> {
+    #[inline] pub unsafe fn get_external_timed_text_sources(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IObservableVector<TimedTextSource>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExternalTimedTextSources)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_external_timed_metadata_tracks(&self) -> Result<ComPtr<super::super::foundation::collections::IObservableVector<TimedMetadataTrack>>> {
+    #[inline] pub unsafe fn get_external_timed_metadata_tracks(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IObservableVector<TimedMetadataTrack>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExternalTimedMetadataTracks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaSource3, 3047099803, 19310, 16877, 187, 180, 124, 117, 9, 169, 148, 173);
@@ -9829,25 +9829,25 @@ RT_INTERFACE!{interface IMediaSource4(IMediaSource4Vtbl): IInspectable(IInspecta
     fn OpenAsync(&self, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT
 }}
 impl IMediaSource4 {
-    #[inline] pub unsafe fn get_adaptive_media_source(&self) -> Result<ComPtr<super::streaming::adaptive::AdaptiveMediaSource>> {
+    #[inline] pub unsafe fn get_adaptive_media_source(&self) -> Result<Option<ComPtr<super::streaming::adaptive::AdaptiveMediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AdaptiveMediaSource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_media_stream_source(&self) -> Result<ComPtr<MediaStreamSource>> {
+    #[inline] pub unsafe fn get_media_stream_source(&self) -> Result<Option<ComPtr<MediaStreamSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaStreamSource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_mse_stream_source(&self) -> Result<ComPtr<MseStreamSource>> {
+    #[inline] pub unsafe fn get_mse_stream_source(&self) -> Result<Option<ComPtr<MseStreamSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MseStreamSource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uri(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn open_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
         let mut out = null_mut();
@@ -9912,10 +9912,10 @@ RT_INTERFACE!{interface IMediaSourceOpenOperationCompletedEventArgs(IMediaSource
     fn get_Error(&self, out: *mut *mut MediaSourceError) -> HRESULT
 }}
 impl IMediaSourceOpenOperationCompletedEventArgs {
-    #[inline] pub unsafe fn get_error(&self) -> Result<ComPtr<MediaSourceError>> {
+    #[inline] pub unsafe fn get_error(&self) -> Result<Option<ComPtr<MediaSourceError>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Error)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaSourceOpenOperationCompletedEventArgs: IMediaSourceOpenOperationCompletedEventArgs}
@@ -9955,45 +9955,45 @@ RT_INTERFACE!{static interface IMediaSourceStatics(IMediaSourceStaticsVtbl): IIn
     fn CreateFromUri(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut MediaSource) -> HRESULT
 }}
 impl IMediaSourceStatics {
-    #[inline] pub unsafe fn create_from_adaptive_media_source(&self, mediaSource: &super::streaming::adaptive::AdaptiveMediaSource) -> Result<ComPtr<MediaSource>> {
+    #[inline] pub unsafe fn create_from_adaptive_media_source(&self, mediaSource: &super::streaming::adaptive::AdaptiveMediaSource) -> Result<Option<ComPtr<MediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromAdaptiveMediaSource)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_from_media_stream_source(&self, mediaSource: &MediaStreamSource) -> Result<ComPtr<MediaSource>> {
+    #[inline] pub unsafe fn create_from_media_stream_source(&self, mediaSource: &MediaStreamSource) -> Result<Option<ComPtr<MediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromMediaStreamSource)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_from_mse_stream_source(&self, mediaSource: &MseStreamSource) -> Result<ComPtr<MediaSource>> {
+    #[inline] pub unsafe fn create_from_mse_stream_source(&self, mediaSource: &MseStreamSource) -> Result<Option<ComPtr<MediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromMseStreamSource)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_from_imedia_source(&self, mediaSource: &IMediaSource) -> Result<ComPtr<MediaSource>> {
+    #[inline] pub unsafe fn create_from_imedia_source(&self, mediaSource: &IMediaSource) -> Result<Option<ComPtr<MediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromIMediaSource)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_storage_file(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<MediaSource>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_storage_file(&self, file: &super::super::storage::IStorageFile) -> Result<Option<ComPtr<MediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromStorageFile)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_stream(&self, stream: &super::super::storage::streams::IRandomAccessStream, contentType: &HStringArg) -> Result<ComPtr<MediaSource>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_stream(&self, stream: &super::super::storage::streams::IRandomAccessStream, contentType: &HStringArg) -> Result<Option<ComPtr<MediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromStream)(self as *const _ as *mut _, stream as *const _ as *mut _, contentType.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_stream_reference(&self, stream: &super::super::storage::streams::IRandomAccessStreamReference, contentType: &HStringArg) -> Result<ComPtr<MediaSource>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_stream_reference(&self, stream: &super::super::storage::streams::IRandomAccessStreamReference, contentType: &HStringArg) -> Result<Option<ComPtr<MediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromStreamReference)(self as *const _ as *mut _, stream as *const _ as *mut _, contentType.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_from_uri(&self, uri: &super::super::foundation::Uri) -> Result<ComPtr<MediaSource>> {
+    #[inline] pub unsafe fn create_from_uri(&self, uri: &super::super::foundation::Uri) -> Result<Option<ComPtr<MediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromUri)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaSourceStatics2, 4007748004, 32531, 18582, 184, 203, 223, 13, 229, 188, 185, 241);
@@ -10001,10 +10001,10 @@ RT_INTERFACE!{static interface IMediaSourceStatics2(IMediaSourceStatics2Vtbl): I
     fn CreateFromMediaBinder(&self, binder: *mut MediaBinder, out: *mut *mut MediaSource) -> HRESULT
 }}
 impl IMediaSourceStatics2 {
-    #[inline] pub unsafe fn create_from_media_binder(&self, binder: &MediaBinder) -> Result<ComPtr<MediaSource>> {
+    #[inline] pub unsafe fn create_from_media_binder(&self, binder: &MediaBinder) -> Result<Option<ComPtr<MediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromMediaBinder)(self as *const _ as *mut _, binder as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaSourceStatics3, 1161441494, 11242, 16674, 159, 115, 234, 206, 4, 82, 110, 53);
@@ -10012,10 +10012,10 @@ RT_INTERFACE!{static interface IMediaSourceStatics3(IMediaSourceStatics3Vtbl): I
     fn CreateFromMediaFrameSource(&self, frameSource: *mut super::capture::frames::MediaFrameSource, out: *mut *mut MediaSource) -> HRESULT
 }}
 impl IMediaSourceStatics3 {
-    #[inline] pub unsafe fn create_from_media_frame_source(&self, frameSource: &super::capture::frames::MediaFrameSource) -> Result<ComPtr<MediaSource>> {
+    #[inline] pub unsafe fn create_from_media_frame_source(&self, frameSource: &super::capture::frames::MediaFrameSource) -> Result<Option<ComPtr<MediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromMediaFrameSource)(self as *const _ as *mut _, frameSource as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum MediaSourceStatus: i32 {
@@ -10098,25 +10098,25 @@ impl IMediaStreamSample {
         let hr = ((*self.lpVtbl).remove_Processed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_buffer(&self) -> Result<ComPtr<super::super::storage::streams::Buffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_buffer(&self) -> Result<Option<ComPtr<super::super::storage::streams::Buffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Buffer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_timestamp(&self) -> Result<super::super::foundation::TimeSpan> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Timestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_extended_properties(&self) -> Result<ComPtr<MediaStreamSamplePropertySet>> {
+    #[inline] pub unsafe fn get_extended_properties(&self) -> Result<Option<ComPtr<MediaStreamSamplePropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExtendedProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_protection(&self) -> Result<ComPtr<MediaStreamSampleProtectionProperties>> {
+    #[inline] pub unsafe fn get_protection(&self) -> Result<Option<ComPtr<MediaStreamSampleProtectionProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Protection)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_decode_timestamp(&self, value: super::super::foundation::TimeSpan) -> Result<()> {
         let hr = ((*self.lpVtbl).put_DecodeTimestamp)(self as *const _ as *mut _, value);
@@ -10158,7 +10158,7 @@ impl IMediaStreamSample {
 RT_CLASS!{class MediaStreamSample: IMediaStreamSample}
 impl RtActivatable<IMediaStreamSampleStatics> for MediaStreamSample {}
 impl MediaStreamSample {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_buffer(buffer: &super::super::storage::streams::IBuffer, timestamp: super::super::foundation::TimeSpan) -> Result<ComPtr<MediaStreamSample>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_buffer(buffer: &super::super::storage::streams::IBuffer, timestamp: super::super::foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> { unsafe {
         <Self as RtActivatable<IMediaStreamSampleStatics>>::get_activation_factory().create_from_buffer(buffer, timestamp)
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(stream: &super::super::storage::streams::IInputStream, count: u32, timestamp: super::super::foundation::TimeSpan) -> Result<ComPtr<super::super::foundation::IAsyncOperation<MediaStreamSample>>> { unsafe {
@@ -10212,10 +10212,10 @@ RT_INTERFACE!{static interface IMediaStreamSampleStatics(IMediaStreamSampleStati
     #[cfg(feature="windows-storage")] fn CreateFromStreamAsync(&self, stream: *mut super::super::storage::streams::IInputStream, count: u32, timestamp: super::super::foundation::TimeSpan, out: *mut *mut super::super::foundation::IAsyncOperation<MediaStreamSample>) -> HRESULT
 }}
 impl IMediaStreamSampleStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_buffer(&self, buffer: &super::super::storage::streams::IBuffer, timestamp: super::super::foundation::TimeSpan) -> Result<ComPtr<MediaStreamSample>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_buffer(&self, buffer: &super::super::storage::streams::IBuffer, timestamp: super::super::foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromBuffer)(self as *const _ as *mut _, buffer as *const _ as *mut _, timestamp, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_stream_async(&self, stream: &super::super::storage::streams::IInputStream, count: u32, timestamp: super::super::foundation::TimeSpan) -> Result<ComPtr<super::super::foundation::IAsyncOperation<MediaStreamSample>>> {
         let mut out = null_mut();
@@ -10314,10 +10314,10 @@ impl IMediaStreamSource {
         let hr = ((*self.lpVtbl).put_MediaProtectionManager)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_media_protection_manager(&self) -> Result<ComPtr<super::protection::MediaProtectionManager>> {
+    #[inline] pub unsafe fn get_media_protection_manager(&self) -> Result<Option<ComPtr<super::protection::MediaProtectionManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaProtectionManager)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_duration(&self, value: super::super::foundation::TimeSpan) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Duration)(self as *const _ as *mut _, value);
@@ -10350,24 +10350,24 @@ impl IMediaStreamSource {
         let hr = ((*self.lpVtbl).SetBufferedRange)(self as *const _ as *mut _, startOffset, endOffset);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_music_properties(&self) -> Result<ComPtr<super::super::storage::fileproperties::MusicProperties>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_music_properties(&self) -> Result<Option<ComPtr<super::super::storage::fileproperties::MusicProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MusicProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_video_properties(&self) -> Result<ComPtr<super::super::storage::fileproperties::VideoProperties>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_video_properties(&self) -> Result<Option<ComPtr<super::super::storage::fileproperties::VideoProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn set_thumbnail(&self, value: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_protection_key(&self, streamDescriptor: &IMediaStreamDescriptor, keyIdentifier: &[u8], licenseData: &[u8]) -> Result<()> {
         let hr = ((*self.lpVtbl).AddProtectionKey)(self as *const _ as *mut _, streamDescriptor as *const _ as *mut _, keyIdentifier.len() as u32, keyIdentifier.as_ptr() as *mut _, licenseData.len() as u32, licenseData.as_ptr() as *mut _);
@@ -10411,10 +10411,10 @@ impl IMediaStreamSource3 {
         let hr = ((*self.lpVtbl).put_MaxSupportedPlaybackRate)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_max_supported_playback_rate(&self) -> Result<ComPtr<super::super::foundation::IReference<f64>>> {
+    #[inline] pub unsafe fn get_max_supported_playback_rate(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<f64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MaxSupportedPlaybackRate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaStreamSource4, 487390379, 33549, 16764, 163, 169, 36, 84, 253, 100, 21, 199);
@@ -10438,10 +10438,10 @@ RT_INTERFACE!{interface IMediaStreamSourceClosedEventArgs(IMediaStreamSourceClos
     fn get_Request(&self, out: *mut *mut MediaStreamSourceClosedRequest) -> HRESULT
 }}
 impl IMediaStreamSourceClosedEventArgs {
-    #[inline] pub unsafe fn get_request(&self) -> Result<ComPtr<MediaStreamSourceClosedRequest>> {
+    #[inline] pub unsafe fn get_request(&self) -> Result<Option<ComPtr<MediaStreamSourceClosedRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaStreamSourceClosedEventArgs: IMediaStreamSourceClosedEventArgs}
@@ -10501,24 +10501,24 @@ RT_INTERFACE!{interface IMediaStreamSourceSampleRequest(IMediaStreamSourceSample
     fn ReportSampleProgress(&self, progress: u32) -> HRESULT
 }}
 impl IMediaStreamSourceSampleRequest {
-    #[inline] pub unsafe fn get_stream_descriptor(&self) -> Result<ComPtr<IMediaStreamDescriptor>> {
+    #[inline] pub unsafe fn get_stream_descriptor(&self) -> Result<Option<ComPtr<IMediaStreamDescriptor>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StreamDescriptor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<MediaStreamSourceSampleRequestDeferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<MediaStreamSourceSampleRequestDeferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_sample(&self, value: &MediaStreamSample) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Sample)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_sample(&self) -> Result<ComPtr<MediaStreamSample>> {
+    #[inline] pub unsafe fn get_sample(&self) -> Result<Option<ComPtr<MediaStreamSample>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Sample)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn report_sample_progress(&self, progress: u32) -> Result<()> {
         let hr = ((*self.lpVtbl).ReportSampleProgress)(self as *const _ as *mut _, progress);
@@ -10542,10 +10542,10 @@ RT_INTERFACE!{interface IMediaStreamSourceSampleRequestedEventArgs(IMediaStreamS
     fn get_Request(&self, out: *mut *mut MediaStreamSourceSampleRequest) -> HRESULT
 }}
 impl IMediaStreamSourceSampleRequestedEventArgs {
-    #[inline] pub unsafe fn get_request(&self) -> Result<ComPtr<MediaStreamSourceSampleRequest>> {
+    #[inline] pub unsafe fn get_request(&self) -> Result<Option<ComPtr<MediaStreamSourceSampleRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaStreamSourceSampleRequestedEventArgs: IMediaStreamSourceSampleRequestedEventArgs}
@@ -10554,10 +10554,10 @@ RT_INTERFACE!{interface IMediaStreamSourceStartingEventArgs(IMediaStreamSourceSt
     fn get_Request(&self, out: *mut *mut MediaStreamSourceStartingRequest) -> HRESULT
 }}
 impl IMediaStreamSourceStartingEventArgs {
-    #[inline] pub unsafe fn get_request(&self) -> Result<ComPtr<MediaStreamSourceStartingRequest>> {
+    #[inline] pub unsafe fn get_request(&self) -> Result<Option<ComPtr<MediaStreamSourceStartingRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaStreamSourceStartingEventArgs: IMediaStreamSourceStartingEventArgs}
@@ -10568,15 +10568,15 @@ RT_INTERFACE!{interface IMediaStreamSourceStartingRequest(IMediaStreamSourceStar
     fn SetActualStartPosition(&self, position: super::super::foundation::TimeSpan) -> HRESULT
 }}
 impl IMediaStreamSourceStartingRequest {
-    #[inline] pub unsafe fn get_start_position(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_start_position(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StartPosition)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<MediaStreamSourceStartingRequestDeferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<MediaStreamSourceStartingRequestDeferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_actual_start_position(&self, position: super::super::foundation::TimeSpan) -> Result<()> {
         let hr = ((*self.lpVtbl).SetActualStartPosition)(self as *const _ as *mut _, position);
@@ -10602,20 +10602,20 @@ RT_INTERFACE!{interface IMediaStreamSourceSwitchStreamsRequest(IMediaStreamSourc
     fn GetDeferral(&self, out: *mut *mut MediaStreamSourceSwitchStreamsRequestDeferral) -> HRESULT
 }}
 impl IMediaStreamSourceSwitchStreamsRequest {
-    #[inline] pub unsafe fn get_old_stream_descriptor(&self) -> Result<ComPtr<IMediaStreamDescriptor>> {
+    #[inline] pub unsafe fn get_old_stream_descriptor(&self) -> Result<Option<ComPtr<IMediaStreamDescriptor>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OldStreamDescriptor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_new_stream_descriptor(&self) -> Result<ComPtr<IMediaStreamDescriptor>> {
+    #[inline] pub unsafe fn get_new_stream_descriptor(&self) -> Result<Option<ComPtr<IMediaStreamDescriptor>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NewStreamDescriptor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<MediaStreamSourceSwitchStreamsRequestDeferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<MediaStreamSourceSwitchStreamsRequestDeferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaStreamSourceSwitchStreamsRequest: IMediaStreamSourceSwitchStreamsRequest}
@@ -10635,10 +10635,10 @@ RT_INTERFACE!{interface IMediaStreamSourceSwitchStreamsRequestedEventArgs(IMedia
     fn get_Request(&self, out: *mut *mut MediaStreamSourceSwitchStreamsRequest) -> HRESULT
 }}
 impl IMediaStreamSourceSwitchStreamsRequestedEventArgs {
-    #[inline] pub unsafe fn get_request(&self) -> Result<ComPtr<MediaStreamSourceSwitchStreamsRequest>> {
+    #[inline] pub unsafe fn get_request(&self) -> Result<Option<ComPtr<MediaStreamSourceSwitchStreamsRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaStreamSourceSwitchStreamsRequestedEventArgs: IMediaStreamSourceSwitchStreamsRequestedEventArgs}
@@ -10779,10 +10779,10 @@ impl IMseSourceBuffer {
         let hr = ((*self.lpVtbl).get_IsUpdating)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_buffered(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MseTimeRange>>> {
+    #[inline] pub unsafe fn get_buffered(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MseTimeRange>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Buffered)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_timestamp_offset(&self) -> Result<super::super::foundation::TimeSpan> {
         let mut out = zeroed();
@@ -10802,10 +10802,10 @@ impl IMseSourceBuffer {
         let hr = ((*self.lpVtbl).put_AppendWindowStart)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_append_window_end(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_append_window_end(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AppendWindowEnd)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_append_window_end(&self, value: &super::super::foundation::IReference<super::super::foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_AppendWindowEnd)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -10860,10 +10860,10 @@ impl IMseSourceBufferList {
         let hr = ((*self.lpVtbl).remove_SourceBufferRemoved)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_buffers(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MseSourceBuffer>>> {
+    #[inline] pub unsafe fn get_buffers(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MseSourceBuffer>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Buffers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MseSourceBufferList: IMseSourceBufferList}
@@ -10912,34 +10912,34 @@ impl IMseStreamSource {
         let hr = ((*self.lpVtbl).remove_Closed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_source_buffers(&self) -> Result<ComPtr<MseSourceBufferList>> {
+    #[inline] pub unsafe fn get_source_buffers(&self) -> Result<Option<ComPtr<MseSourceBufferList>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SourceBuffers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_active_source_buffers(&self) -> Result<ComPtr<MseSourceBufferList>> {
+    #[inline] pub unsafe fn get_active_source_buffers(&self) -> Result<Option<ComPtr<MseSourceBufferList>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ActiveSourceBuffers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_ready_state(&self) -> Result<MseReadyState> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ReadyState)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_duration(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_duration(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_duration(&self, value: &super::super::foundation::IReference<super::super::foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Duration)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_source_buffer(&self, mimeType: &HStringArg) -> Result<ComPtr<MseSourceBuffer>> {
+    #[inline] pub unsafe fn add_source_buffer(&self, mimeType: &HStringArg) -> Result<Option<ComPtr<MseSourceBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).AddSourceBuffer)(self as *const _ as *mut _, mimeType.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn remove_source_buffer(&self, buffer: &MseSourceBuffer) -> Result<()> {
         let hr = ((*self.lpVtbl).RemoveSourceBuffer)(self as *const _ as *mut _, buffer as *const _ as *mut _);
@@ -10965,10 +10965,10 @@ RT_INTERFACE!{interface IMseStreamSource2(IMseStreamSource2Vtbl): IInspectable(I
     fn put_LiveSeekableRange(&self, value: *mut super::super::foundation::IReference<MseTimeRange>) -> HRESULT
 }}
 impl IMseStreamSource2 {
-    #[inline] pub unsafe fn get_live_seekable_range(&self) -> Result<ComPtr<super::super::foundation::IReference<MseTimeRange>>> {
+    #[inline] pub unsafe fn get_live_seekable_range(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<MseTimeRange>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LiveSeekableRange)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_live_seekable_range(&self, value: &super::super::foundation::IReference<MseTimeRange>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_LiveSeekableRange)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -10998,10 +10998,10 @@ RT_INTERFACE!{interface ISceneAnalysisEffect(ISceneAnalysisEffectVtbl): IInspect
     fn remove_SceneAnalyzed(&self, cookie: super::super::foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ISceneAnalysisEffect {
-    #[inline] pub unsafe fn get_high_dynamic_range_analyzer(&self) -> Result<ComPtr<HighDynamicRangeControl>> {
+    #[inline] pub unsafe fn get_high_dynamic_range_analyzer(&self) -> Result<Option<ComPtr<HighDynamicRangeControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_HighDynamicRangeAnalyzer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_desired_analysis_interval(&self, value: super::super::foundation::TimeSpan) -> Result<()> {
         let hr = ((*self.lpVtbl).put_DesiredAnalysisInterval)(self as *const _ as *mut _, value);
@@ -11032,15 +11032,15 @@ RT_INTERFACE!{interface ISceneAnalysisEffectFrame(ISceneAnalysisEffectFrameVtbl)
     fn get_HighDynamicRange(&self, out: *mut *mut HighDynamicRangeOutput) -> HRESULT
 }}
 impl ISceneAnalysisEffectFrame {
-    #[inline] pub unsafe fn get_frame_control_values(&self) -> Result<ComPtr<super::capture::CapturedFrameControlValues>> {
+    #[inline] pub unsafe fn get_frame_control_values(&self) -> Result<Option<ComPtr<super::capture::CapturedFrameControlValues>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FrameControlValues)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_high_dynamic_range(&self) -> Result<ComPtr<HighDynamicRangeOutput>> {
+    #[inline] pub unsafe fn get_high_dynamic_range(&self) -> Result<Option<ComPtr<HighDynamicRangeOutput>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_HighDynamicRange)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SceneAnalysisEffectFrame: ISceneAnalysisEffectFrame}
@@ -11063,10 +11063,10 @@ RT_INTERFACE!{interface ISceneAnalyzedEventArgs(ISceneAnalyzedEventArgsVtbl): II
     fn get_ResultFrame(&self, out: *mut *mut SceneAnalysisEffectFrame) -> HRESULT
 }}
 impl ISceneAnalyzedEventArgs {
-    #[inline] pub unsafe fn get_result_frame(&self) -> Result<ComPtr<SceneAnalysisEffectFrame>> {
+    #[inline] pub unsafe fn get_result_frame(&self) -> Result<Option<ComPtr<SceneAnalysisEffectFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResultFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SceneAnalyzedEventArgs: ISceneAnalyzedEventArgs}
@@ -11116,19 +11116,19 @@ impl ISpeechCue {
         let hr = ((*self.lpVtbl).put_Text)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_start_position_in_input(&self) -> Result<ComPtr<super::super::foundation::IReference<i32>>> {
+    #[inline] pub unsafe fn get_start_position_in_input(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<i32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StartPositionInInput)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_start_position_in_input(&self, value: &super::super::foundation::IReference<i32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_StartPositionInInput)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_end_position_in_input(&self) -> Result<ComPtr<super::super::foundation::IReference<i32>>> {
+    #[inline] pub unsafe fn get_end_position_in_input(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<i32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EndPositionInInput)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_end_position_in_input(&self, value: &super::super::foundation::IReference<i32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_EndPositionInInput)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -11184,15 +11184,15 @@ impl ITimedMetadataTrack {
         let hr = ((*self.lpVtbl).remove_TrackFailed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_cues(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<IMediaCue>>> {
+    #[inline] pub unsafe fn get_cues(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<IMediaCue>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Cues)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_active_cues(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<IMediaCue>>> {
+    #[inline] pub unsafe fn get_active_cues(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<IMediaCue>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ActiveCues)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_timed_metadata_kind(&self) -> Result<TimedMetadataKind> {
         let mut out = zeroed();
@@ -11227,10 +11227,10 @@ RT_INTERFACE!{interface ITimedMetadataTrack2(ITimedMetadataTrack2Vtbl): IInspect
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ITimedMetadataTrack2 {
-    #[inline] pub unsafe fn get_playback_item(&self) -> Result<ComPtr<super::playback::MediaPlaybackItem>> {
+    #[inline] pub unsafe fn get_playback_item(&self) -> Result<Option<ComPtr<super::playback::MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PlaybackItem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_name(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -11275,10 +11275,10 @@ RT_INTERFACE!{interface ITimedMetadataTrackFailedEventArgs(ITimedMetadataTrackFa
     fn get_Error(&self, out: *mut *mut TimedMetadataTrackError) -> HRESULT
 }}
 impl ITimedMetadataTrackFailedEventArgs {
-    #[inline] pub unsafe fn get_error(&self) -> Result<ComPtr<TimedMetadataTrackError>> {
+    #[inline] pub unsafe fn get_error(&self) -> Result<Option<ComPtr<TimedMetadataTrackError>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Error)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class TimedMetadataTrackFailedEventArgs: ITimedMetadataTrackFailedEventArgs}
@@ -11287,10 +11287,10 @@ RT_INTERFACE!{interface ITimedMetadataTrackProvider(ITimedMetadataTrackProviderV
     fn get_TimedMetadataTracks(&self, out: *mut *mut super::super::foundation::collections::IVectorView<TimedMetadataTrack>) -> HRESULT
 }}
 impl ITimedMetadataTrackProvider {
-    #[inline] pub unsafe fn get_timed_metadata_tracks(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<TimedMetadataTrack>>> {
+    #[inline] pub unsafe fn get_timed_metadata_tracks(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<TimedMetadataTrack>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TimedMetadataTracks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ITimedTextCue, 1372036689, 15238, 18765, 179, 89, 187, 46, 167, 172, 169, 169);
@@ -11302,28 +11302,28 @@ RT_INTERFACE!{interface ITimedTextCue(ITimedTextCueVtbl): IInspectable(IInspecta
     fn get_Lines(&self, out: *mut *mut super::super::foundation::collections::IVector<TimedTextLine>) -> HRESULT
 }}
 impl ITimedTextCue {
-    #[inline] pub unsafe fn get_cue_region(&self) -> Result<ComPtr<TimedTextRegion>> {
+    #[inline] pub unsafe fn get_cue_region(&self) -> Result<Option<ComPtr<TimedTextRegion>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CueRegion)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_cue_region(&self, value: &TimedTextRegion) -> Result<()> {
         let hr = ((*self.lpVtbl).put_CueRegion)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_cue_style(&self) -> Result<ComPtr<TimedTextStyle>> {
+    #[inline] pub unsafe fn get_cue_style(&self) -> Result<Option<ComPtr<TimedTextStyle>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CueStyle)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_cue_style(&self, value: &TimedTextStyle) -> Result<()> {
         let hr = ((*self.lpVtbl).put_CueStyle)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_lines(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<TimedTextLine>>> {
+    #[inline] pub unsafe fn get_lines(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<TimedTextLine>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Lines)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class TimedTextCue: ITimedTextCue}
@@ -11357,10 +11357,10 @@ impl ITimedTextLine {
         let hr = ((*self.lpVtbl).put_Text)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_subformats(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<TimedTextSubformat>>> {
+    #[inline] pub unsafe fn get_subformats(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<TimedTextSubformat>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Subformats)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class TimedTextLine: ITimedTextLine}
@@ -11543,28 +11543,28 @@ RT_CLASS!{class TimedTextSource: ITimedTextSource}
 impl RtActivatable<ITimedTextSourceStatics> for TimedTextSource {}
 impl RtActivatable<ITimedTextSourceStatics2> for TimedTextSource {}
 impl TimedTextSource {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream(stream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<TimedTextSource>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream(stream: &super::super::storage::streams::IRandomAccessStream) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe {
         <Self as RtActivatable<ITimedTextSourceStatics>>::get_activation_factory().create_from_stream(stream)
     }}
-    #[inline] pub fn create_from_uri(uri: &super::super::foundation::Uri) -> Result<ComPtr<TimedTextSource>> { unsafe {
+    #[inline] pub fn create_from_uri(uri: &super::super::foundation::Uri) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe {
         <Self as RtActivatable<ITimedTextSourceStatics>>::get_activation_factory().create_from_uri(uri)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_language(stream: &super::super::storage::streams::IRandomAccessStream, defaultLanguage: &HStringArg) -> Result<ComPtr<TimedTextSource>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_language(stream: &super::super::storage::streams::IRandomAccessStream, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe {
         <Self as RtActivatable<ITimedTextSourceStatics>>::get_activation_factory().create_from_stream_with_language(stream, defaultLanguage)
     }}
-    #[inline] pub fn create_from_uri_with_language(uri: &super::super::foundation::Uri, defaultLanguage: &HStringArg) -> Result<ComPtr<TimedTextSource>> { unsafe {
+    #[inline] pub fn create_from_uri_with_language(uri: &super::super::foundation::Uri, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe {
         <Self as RtActivatable<ITimedTextSourceStatics>>::get_activation_factory().create_from_uri_with_language(uri, defaultLanguage)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_index(stream: &super::super::storage::streams::IRandomAccessStream, indexStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<TimedTextSource>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_index(stream: &super::super::storage::streams::IRandomAccessStream, indexStream: &super::super::storage::streams::IRandomAccessStream) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe {
         <Self as RtActivatable<ITimedTextSourceStatics2>>::get_activation_factory().create_from_stream_with_index(stream, indexStream)
     }}
-    #[inline] pub fn create_from_uri_with_index(uri: &super::super::foundation::Uri, indexUri: &super::super::foundation::Uri) -> Result<ComPtr<TimedTextSource>> { unsafe {
+    #[inline] pub fn create_from_uri_with_index(uri: &super::super::foundation::Uri, indexUri: &super::super::foundation::Uri) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe {
         <Self as RtActivatable<ITimedTextSourceStatics2>>::get_activation_factory().create_from_uri_with_index(uri, indexUri)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_index_and_language(stream: &super::super::storage::streams::IRandomAccessStream, indexStream: &super::super::storage::streams::IRandomAccessStream, defaultLanguage: &HStringArg) -> Result<ComPtr<TimedTextSource>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_index_and_language(stream: &super::super::storage::streams::IRandomAccessStream, indexStream: &super::super::storage::streams::IRandomAccessStream, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe {
         <Self as RtActivatable<ITimedTextSourceStatics2>>::get_activation_factory().create_from_stream_with_index_and_language(stream, indexStream, defaultLanguage)
     }}
-    #[inline] pub fn create_from_uri_with_index_and_language(uri: &super::super::foundation::Uri, indexUri: &super::super::foundation::Uri, defaultLanguage: &HStringArg) -> Result<ComPtr<TimedTextSource>> { unsafe {
+    #[inline] pub fn create_from_uri_with_index_and_language(uri: &super::super::foundation::Uri, indexUri: &super::super::foundation::Uri, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe {
         <Self as RtActivatable<ITimedTextSourceStatics2>>::get_activation_factory().create_from_uri_with_index_and_language(uri, indexUri, defaultLanguage)
     }}
 }
@@ -11575,15 +11575,15 @@ RT_INTERFACE!{interface ITimedTextSourceResolveResultEventArgs(ITimedTextSourceR
     fn get_Tracks(&self, out: *mut *mut super::super::foundation::collections::IVectorView<TimedMetadataTrack>) -> HRESULT
 }}
 impl ITimedTextSourceResolveResultEventArgs {
-    #[inline] pub unsafe fn get_error(&self) -> Result<ComPtr<TimedMetadataTrackError>> {
+    #[inline] pub unsafe fn get_error(&self) -> Result<Option<ComPtr<TimedMetadataTrackError>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Error)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_tracks(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<TimedMetadataTrack>>> {
+    #[inline] pub unsafe fn get_tracks(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<TimedMetadataTrack>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Tracks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class TimedTextSourceResolveResultEventArgs: ITimedTextSourceResolveResultEventArgs}
@@ -11597,25 +11597,25 @@ RT_INTERFACE!{static interface ITimedTextSourceStatics(ITimedTextSourceStaticsVt
     fn CreateFromUriWithLanguage(&self, uri: *mut super::super::foundation::Uri, defaultLanguage: HSTRING, out: *mut *mut TimedTextSource) -> HRESULT
 }}
 impl ITimedTextSourceStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_stream(&self, stream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<TimedTextSource>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_stream(&self, stream: &super::super::storage::streams::IRandomAccessStream) -> Result<Option<ComPtr<TimedTextSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromStream)(self as *const _ as *mut _, stream as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_from_uri(&self, uri: &super::super::foundation::Uri) -> Result<ComPtr<TimedTextSource>> {
+    #[inline] pub unsafe fn create_from_uri(&self, uri: &super::super::foundation::Uri) -> Result<Option<ComPtr<TimedTextSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromUri)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_stream_with_language(&self, stream: &super::super::storage::streams::IRandomAccessStream, defaultLanguage: &HStringArg) -> Result<ComPtr<TimedTextSource>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_stream_with_language(&self, stream: &super::super::storage::streams::IRandomAccessStream, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromStreamWithLanguage)(self as *const _ as *mut _, stream as *const _ as *mut _, defaultLanguage.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_from_uri_with_language(&self, uri: &super::super::foundation::Uri, defaultLanguage: &HStringArg) -> Result<ComPtr<TimedTextSource>> {
+    #[inline] pub unsafe fn create_from_uri_with_language(&self, uri: &super::super::foundation::Uri, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromUriWithLanguage)(self as *const _ as *mut _, uri as *const _ as *mut _, defaultLanguage.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ITimedTextSourceStatics2, 3060495874, 37438, 17402, 150, 51, 88, 112, 117, 129, 45, 181);
@@ -11628,25 +11628,25 @@ RT_INTERFACE!{static interface ITimedTextSourceStatics2(ITimedTextSourceStatics2
     fn CreateFromUriWithIndexAndLanguage(&self, uri: *mut super::super::foundation::Uri, indexUri: *mut super::super::foundation::Uri, defaultLanguage: HSTRING, out: *mut *mut TimedTextSource) -> HRESULT
 }}
 impl ITimedTextSourceStatics2 {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_stream_with_index(&self, stream: &super::super::storage::streams::IRandomAccessStream, indexStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<TimedTextSource>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_stream_with_index(&self, stream: &super::super::storage::streams::IRandomAccessStream, indexStream: &super::super::storage::streams::IRandomAccessStream) -> Result<Option<ComPtr<TimedTextSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromStreamWithIndex)(self as *const _ as *mut _, stream as *const _ as *mut _, indexStream as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_from_uri_with_index(&self, uri: &super::super::foundation::Uri, indexUri: &super::super::foundation::Uri) -> Result<ComPtr<TimedTextSource>> {
+    #[inline] pub unsafe fn create_from_uri_with_index(&self, uri: &super::super::foundation::Uri, indexUri: &super::super::foundation::Uri) -> Result<Option<ComPtr<TimedTextSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromUriWithIndex)(self as *const _ as *mut _, uri as *const _ as *mut _, indexUri as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_stream_with_index_and_language(&self, stream: &super::super::storage::streams::IRandomAccessStream, indexStream: &super::super::storage::streams::IRandomAccessStream, defaultLanguage: &HStringArg) -> Result<ComPtr<TimedTextSource>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_stream_with_index_and_language(&self, stream: &super::super::storage::streams::IRandomAccessStream, indexStream: &super::super::storage::streams::IRandomAccessStream, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromStreamWithIndexAndLanguage)(self as *const _ as *mut _, stream as *const _ as *mut _, indexStream as *const _ as *mut _, defaultLanguage.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_from_uri_with_index_and_language(&self, uri: &super::super::foundation::Uri, indexUri: &super::super::foundation::Uri, defaultLanguage: &HStringArg) -> Result<ComPtr<TimedTextSource>> {
+    #[inline] pub unsafe fn create_from_uri_with_index_and_language(&self, uri: &super::super::foundation::Uri, indexUri: &super::super::foundation::Uri, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromUriWithIndexAndLanguage)(self as *const _ as *mut _, uri as *const _ as *mut _, indexUri as *const _ as *mut _, defaultLanguage.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ITimedTextStyle, 464664653, 43045, 16578, 167, 245, 40, 30, 174, 223, 59, 85);
@@ -11872,10 +11872,10 @@ impl ITimedTextSubformat {
         let hr = ((*self.lpVtbl).put_Length)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_subformat_style(&self) -> Result<ComPtr<TimedTextStyle>> {
+    #[inline] pub unsafe fn get_subformat_style(&self) -> Result<Option<ComPtr<TimedTextStyle>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SubformatStyle)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_subformat_style(&self, value: &TimedTextStyle) -> Result<()> {
         let hr = ((*self.lpVtbl).put_SubformatStyle)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -11924,10 +11924,10 @@ impl IVideoStabilizationEffect {
         let hr = ((*self.lpVtbl).remove_EnabledChanged)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_recommended_stream_configuration(&self, controller: &super::devices::VideoDeviceController, desiredProperties: &super::mediaproperties::VideoEncodingProperties) -> Result<ComPtr<super::capture::VideoStreamConfiguration>> {
+    #[inline] pub unsafe fn get_recommended_stream_configuration(&self, controller: &super::devices::VideoDeviceController, desiredProperties: &super::mediaproperties::VideoEncodingProperties) -> Result<Option<ComPtr<super::capture::VideoStreamConfiguration>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetRecommendedStreamConfiguration)(self as *const _ as *mut _, controller as *const _ as *mut _, desiredProperties as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VideoStabilizationEffect: IVideoStabilizationEffect}
@@ -11954,10 +11954,10 @@ RT_INTERFACE!{interface IVideoStreamDescriptor(IVideoStreamDescriptorVtbl): IIns
     fn get_EncodingProperties(&self, out: *mut *mut super::mediaproperties::VideoEncodingProperties) -> HRESULT
 }}
 impl IVideoStreamDescriptor {
-    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<ComPtr<super::mediaproperties::VideoEncodingProperties>> {
+    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<Option<ComPtr<super::mediaproperties::VideoEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EncodingProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VideoStreamDescriptor: IVideoStreamDescriptor}
@@ -11998,25 +11998,25 @@ impl IVideoTrack {
         let hr = ((*self.lpVtbl).remove_OpenFailed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<ComPtr<super::mediaproperties::VideoEncodingProperties>> {
+    #[inline] pub unsafe fn get_encoding_properties(&self) -> Result<Option<ComPtr<super::mediaproperties::VideoEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetEncodingProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_playback_item(&self) -> Result<ComPtr<super::playback::MediaPlaybackItem>> {
+    #[inline] pub unsafe fn get_playback_item(&self) -> Result<Option<ComPtr<super::playback::MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PlaybackItem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_name(&self) -> Result<HString> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_support_info(&self) -> Result<ComPtr<VideoTrackSupportInfo>> {
+    #[inline] pub unsafe fn get_support_info(&self) -> Result<Option<ComPtr<VideoTrackSupportInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VideoTrack: IMediaTrack}
@@ -12124,10 +12124,10 @@ impl IAdvancedPhotoControl {
         let hr = ((*self.lpVtbl).get_Supported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_modes(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<AdvancedPhotoMode>>> {
+    #[inline] pub unsafe fn get_supported_modes(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<AdvancedPhotoMode>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedModes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_mode(&self) -> Result<AdvancedPhotoMode> {
         let mut out = zeroed();
@@ -12153,10 +12153,10 @@ impl IAdvancedVideoCaptureDeviceController {
         let hr = ((*self.lpVtbl).SetDeviceProperty)(self as *const _ as *mut _, propertyId.get(), propertyValue as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_device_property(&self, propertyId: &HStringArg) -> Result<ComPtr<IInspectable>> {
+    #[inline] pub unsafe fn get_device_property(&self, propertyId: &HStringArg) -> Result<Option<ComPtr<IInspectable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeviceProperty)(self as *const _ as *mut _, propertyId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAdvancedVideoCaptureDeviceController2, 2344177551, 61722, 17371, 180, 2, 17, 147, 11, 128, 174, 86);
@@ -12176,60 +12176,60 @@ RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController2(IAdvancedVideoCap
     fn put_PrimaryUse(&self, value: CaptureUse) -> HRESULT
 }}
 impl IAdvancedVideoCaptureDeviceController2 {
-    #[inline] pub unsafe fn get_low_lag_photo_sequence(&self) -> Result<ComPtr<LowLagPhotoSequenceControl>> {
+    #[inline] pub unsafe fn get_low_lag_photo_sequence(&self) -> Result<Option<ComPtr<LowLagPhotoSequenceControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LowLagPhotoSequence)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_low_lag_photo(&self) -> Result<ComPtr<LowLagPhotoControl>> {
+    #[inline] pub unsafe fn get_low_lag_photo(&self) -> Result<Option<ComPtr<LowLagPhotoControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LowLagPhoto)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_scene_mode_control(&self) -> Result<ComPtr<SceneModeControl>> {
+    #[inline] pub unsafe fn get_scene_mode_control(&self) -> Result<Option<ComPtr<SceneModeControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SceneModeControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_torch_control(&self) -> Result<ComPtr<TorchControl>> {
+    #[inline] pub unsafe fn get_torch_control(&self) -> Result<Option<ComPtr<TorchControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TorchControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_flash_control(&self) -> Result<ComPtr<FlashControl>> {
+    #[inline] pub unsafe fn get_flash_control(&self) -> Result<Option<ComPtr<FlashControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FlashControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_white_balance_control(&self) -> Result<ComPtr<WhiteBalanceControl>> {
+    #[inline] pub unsafe fn get_white_balance_control(&self) -> Result<Option<ComPtr<WhiteBalanceControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WhiteBalanceControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_exposure_control(&self) -> Result<ComPtr<ExposureControl>> {
+    #[inline] pub unsafe fn get_exposure_control(&self) -> Result<Option<ComPtr<ExposureControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExposureControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_focus_control(&self) -> Result<ComPtr<FocusControl>> {
+    #[inline] pub unsafe fn get_focus_control(&self) -> Result<Option<ComPtr<FocusControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FocusControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_exposure_compensation_control(&self) -> Result<ComPtr<ExposureCompensationControl>> {
+    #[inline] pub unsafe fn get_exposure_compensation_control(&self) -> Result<Option<ComPtr<ExposureCompensationControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExposureCompensationControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_iso_speed_control(&self) -> Result<ComPtr<IsoSpeedControl>> {
+    #[inline] pub unsafe fn get_iso_speed_control(&self) -> Result<Option<ComPtr<IsoSpeedControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IsoSpeedControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_regions_of_interest_control(&self) -> Result<ComPtr<RegionsOfInterestControl>> {
+    #[inline] pub unsafe fn get_regions_of_interest_control(&self) -> Result<Option<ComPtr<RegionsOfInterestControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RegionsOfInterestControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_primary_use(&self) -> Result<CaptureUse> {
         let mut out = zeroed();
@@ -12248,20 +12248,20 @@ RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController3(IAdvancedVideoCap
     fn get_ZoomControl(&self, out: *mut *mut ZoomControl) -> HRESULT
 }}
 impl IAdvancedVideoCaptureDeviceController3 {
-    #[inline] pub unsafe fn get_variable_photo_sequence_controller(&self) -> Result<ComPtr<core::VariablePhotoSequenceController>> {
+    #[inline] pub unsafe fn get_variable_photo_sequence_controller(&self) -> Result<Option<ComPtr<core::VariablePhotoSequenceController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VariablePhotoSequenceController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_photo_confirmation_control(&self) -> Result<ComPtr<PhotoConfirmationControl>> {
+    #[inline] pub unsafe fn get_photo_confirmation_control(&self) -> Result<Option<ComPtr<PhotoConfirmationControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PhotoConfirmationControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_zoom_control(&self) -> Result<ComPtr<ZoomControl>> {
+    #[inline] pub unsafe fn get_zoom_control(&self) -> Result<Option<ComPtr<ZoomControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ZoomControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAdvancedVideoCaptureDeviceController4, 3936337839, 54129, 16835, 154, 23, 130, 74, 135, 235, 223, 210);
@@ -12274,10 +12274,10 @@ RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController4(IAdvancedVideoCap
     fn get_AdvancedPhotoControl(&self, out: *mut *mut AdvancedPhotoControl) -> HRESULT
 }}
 impl IAdvancedVideoCaptureDeviceController4 {
-    #[inline] pub unsafe fn get_exposure_priority_video_control(&self) -> Result<ComPtr<ExposurePriorityVideoControl>> {
+    #[inline] pub unsafe fn get_exposure_priority_video_control(&self) -> Result<Option<ComPtr<ExposurePriorityVideoControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExposurePriorityVideoControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_desired_optimization(&self) -> Result<MediaCaptureOptimization> {
         let mut out = zeroed();
@@ -12288,20 +12288,20 @@ impl IAdvancedVideoCaptureDeviceController4 {
         let hr = ((*self.lpVtbl).put_DesiredOptimization)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_hdr_video_control(&self) -> Result<ComPtr<HdrVideoControl>> {
+    #[inline] pub unsafe fn get_hdr_video_control(&self) -> Result<Option<ComPtr<HdrVideoControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_HdrVideoControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_optical_image_stabilization_control(&self) -> Result<ComPtr<OpticalImageStabilizationControl>> {
+    #[inline] pub unsafe fn get_optical_image_stabilization_control(&self) -> Result<Option<ComPtr<OpticalImageStabilizationControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OpticalImageStabilizationControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_advanced_photo_control(&self) -> Result<ComPtr<AdvancedPhotoControl>> {
+    #[inline] pub unsafe fn get_advanced_photo_control(&self) -> Result<Option<ComPtr<AdvancedPhotoControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AdvancedPhotoControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAdvancedVideoCaptureDeviceController5, 860957463, 47563, 18979, 184, 117, 249, 234, 171, 83, 84, 146);
@@ -12318,20 +12318,20 @@ impl IAdvancedVideoCaptureDeviceController5 {
         let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_device_property_by_id(&self, propertyId: &HStringArg, maxPropertyValueSize: &super::super::foundation::IReference<u32>) -> Result<ComPtr<VideoDeviceControllerGetDevicePropertyResult>> {
+    #[inline] pub unsafe fn get_device_property_by_id(&self, propertyId: &HStringArg, maxPropertyValueSize: &super::super::foundation::IReference<u32>) -> Result<Option<ComPtr<VideoDeviceControllerGetDevicePropertyResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDevicePropertyById)(self as *const _ as *mut _, propertyId.get(), maxPropertyValueSize as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_device_property_by_id(&self, propertyId: &HStringArg, propertyValue: &IInspectable) -> Result<VideoDeviceControllerSetDevicePropertyStatus> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).SetDevicePropertyById)(self as *const _ as *mut _, propertyId.get(), propertyValue as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_device_property_by_extended_id(&self, extendedPropertyId: &[u8], maxPropertyValueSize: &super::super::foundation::IReference<u32>) -> Result<ComPtr<VideoDeviceControllerGetDevicePropertyResult>> {
+    #[inline] pub unsafe fn get_device_property_by_extended_id(&self, extendedPropertyId: &[u8], maxPropertyValueSize: &super::super::foundation::IReference<u32>) -> Result<Option<ComPtr<VideoDeviceControllerGetDevicePropertyResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDevicePropertyByExtendedId)(self as *const _ as *mut _, extendedPropertyId.len() as u32, extendedPropertyId.as_ptr() as *mut _, maxPropertyValueSize as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_device_property_by_extended_id(&self, extendedPropertyId: &[u8], propertyValue: &[u8]) -> Result<VideoDeviceControllerSetDevicePropertyStatus> {
         let mut out = zeroed();
@@ -12415,15 +12415,15 @@ RT_INTERFACE!{interface IAudioDeviceModuleNotificationEventArgs(IAudioDeviceModu
     #[cfg(feature="windows-storage")] fn get_NotificationData(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
 }}
 impl IAudioDeviceModuleNotificationEventArgs {
-    #[inline] pub unsafe fn get_module(&self) -> Result<ComPtr<AudioDeviceModule>> {
+    #[inline] pub unsafe fn get_module(&self) -> Result<Option<ComPtr<AudioDeviceModule>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Module)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_notification_data(&self) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_notification_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NotificationData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioDeviceModuleNotificationEventArgs: IAudioDeviceModuleNotificationEventArgs}
@@ -12444,15 +12444,15 @@ impl IAudioDeviceModulesManager {
         let hr = ((*self.lpVtbl).remove_ModuleNotificationReceived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_all_by_id(&self, moduleId: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVectorView<AudioDeviceModule>>> {
+    #[inline] pub unsafe fn find_all_by_id(&self, moduleId: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<AudioDeviceModule>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindAllById)(self as *const _ as *mut _, moduleId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_all(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<AudioDeviceModule>>> {
+    #[inline] pub unsafe fn find_all(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<AudioDeviceModule>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindAll)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioDeviceModulesManager: IAudioDeviceModulesManager}
@@ -12582,10 +12582,10 @@ impl ICallControl {
 RT_CLASS!{class CallControl: ICallControl}
 impl RtActivatable<ICallControlStatics> for CallControl {}
 impl CallControl {
-    #[inline] pub fn get_default() -> Result<ComPtr<CallControl>> { unsafe {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<CallControl>>> { unsafe {
         <Self as RtActivatable<ICallControlStatics>>::get_activation_factory().get_default()
     }}
-    #[inline] pub fn from_id(deviceId: &HStringArg) -> Result<ComPtr<CallControl>> { unsafe {
+    #[inline] pub fn from_id(deviceId: &HStringArg) -> Result<Option<ComPtr<CallControl>>> { unsafe {
         <Self as RtActivatable<ICallControlStatics>>::get_activation_factory().from_id(deviceId)
     }}
 }
@@ -12606,15 +12606,15 @@ RT_INTERFACE!{static interface ICallControlStatics(ICallControlStaticsVtbl): IIn
     fn FromId(&self, deviceId: HSTRING, out: *mut *mut CallControl) -> HRESULT
 }}
 impl ICallControlStatics {
-    #[inline] pub unsafe fn get_default(&self) -> Result<ComPtr<CallControl>> {
+    #[inline] pub unsafe fn get_default(&self) -> Result<Option<ComPtr<CallControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn from_id(&self, deviceId: &HStringArg) -> Result<ComPtr<CallControl>> {
+    #[inline] pub unsafe fn from_id(&self, deviceId: &HStringArg) -> Result<Option<ComPtr<CallControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FromId)(self as *const _ as *mut _, deviceId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum CameraStreamState: i32 {
@@ -12658,10 +12658,10 @@ impl IDialRequestedEventArgs {
         let hr = ((*self.lpVtbl).Handled)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_contact(&self) -> Result<ComPtr<IInspectable>> {
+    #[inline] pub unsafe fn get_contact(&self) -> Result<Option<ComPtr<IInspectable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Contact)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class DialRequestedEventArgs: IDialRequestedEventArgs}
@@ -12904,10 +12904,10 @@ impl IFocusControl {
         let hr = ((*self.lpVtbl).get_Supported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_presets(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<FocusPreset>>> {
+    #[inline] pub unsafe fn get_supported_presets(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<FocusPreset>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedPresets)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_preset(&self) -> Result<FocusPreset> {
         let mut out = zeroed();
@@ -12980,20 +12980,20 @@ impl IFocusControl2 {
         let hr = ((*self.lpVtbl).get_WaitForFocusSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_focus_modes(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<FocusMode>>> {
+    #[inline] pub unsafe fn get_supported_focus_modes(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<FocusMode>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedFocusModes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_focus_distances(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<ManualFocusDistance>>> {
+    #[inline] pub unsafe fn get_supported_focus_distances(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<ManualFocusDistance>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedFocusDistances)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_focus_ranges(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<AutoFocusRange>>> {
+    #[inline] pub unsafe fn get_supported_focus_ranges(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<AutoFocusRange>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedFocusRanges)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_mode(&self) -> Result<FocusMode> {
         let mut out = zeroed();
@@ -13060,19 +13060,19 @@ impl IFocusSettings {
         let hr = ((*self.lpVtbl).put_AutoFocusRange)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_value(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_value(&self, value: &super::super::foundation::IReference<u32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_distance(&self) -> Result<ComPtr<super::super::foundation::IReference<ManualFocusDistance>>> {
+    #[inline] pub unsafe fn get_distance(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<ManualFocusDistance>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Distance)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_distance(&self, value: &super::super::foundation::IReference<ManualFocusDistance>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Distance)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -13113,10 +13113,10 @@ impl IHdrVideoControl {
         let hr = ((*self.lpVtbl).get_Supported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_modes(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<HdrVideoMode>>> {
+    #[inline] pub unsafe fn get_supported_modes(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HdrVideoMode>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedModes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_mode(&self) -> Result<HdrVideoMode> {
         let mut out = zeroed();
@@ -13145,10 +13145,10 @@ impl IIsoSpeedControl {
         let hr = ((*self.lpVtbl).get_Supported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_presets(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<IsoSpeedPreset>>> {
+    #[inline] pub unsafe fn get_supported_presets(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<IsoSpeedPreset>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedPresets)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_preset(&self) -> Result<IsoSpeedPreset> {
         let mut out = zeroed();
@@ -13247,15 +13247,15 @@ RT_INTERFACE!{interface ILowLagPhotoControl(ILowLagPhotoControlVtbl): IInspectab
     fn get_HardwareAcceleratedThumbnailSupported(&self, out: *mut u32) -> HRESULT
 }}
 impl ILowLagPhotoControl {
-    #[inline] pub unsafe fn get_highest_concurrent_frame_rate(&self, captureProperties: &super::mediaproperties::IMediaEncodingProperties) -> Result<ComPtr<super::mediaproperties::MediaRatio>> {
+    #[inline] pub unsafe fn get_highest_concurrent_frame_rate(&self, captureProperties: &super::mediaproperties::IMediaEncodingProperties) -> Result<Option<ComPtr<super::mediaproperties::MediaRatio>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetHighestConcurrentFrameRate)(self as *const _ as *mut _, captureProperties as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_current_frame_rate(&self) -> Result<ComPtr<super::mediaproperties::MediaRatio>> {
+    #[inline] pub unsafe fn get_current_frame_rate(&self) -> Result<Option<ComPtr<super::mediaproperties::MediaRatio>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCurrentFrameRate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_thumbnail_enabled(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -13344,15 +13344,15 @@ impl ILowLagPhotoSequenceControl {
         let hr = ((*self.lpVtbl).put_PhotosPerSecondLimit)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_highest_concurrent_frame_rate(&self, captureProperties: &super::mediaproperties::IMediaEncodingProperties) -> Result<ComPtr<super::mediaproperties::MediaRatio>> {
+    #[inline] pub unsafe fn get_highest_concurrent_frame_rate(&self, captureProperties: &super::mediaproperties::IMediaEncodingProperties) -> Result<Option<ComPtr<super::mediaproperties::MediaRatio>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetHighestConcurrentFrameRate)(self as *const _ as *mut _, captureProperties as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_current_frame_rate(&self) -> Result<ComPtr<super::mediaproperties::MediaRatio>> {
+    #[inline] pub unsafe fn get_current_frame_rate(&self) -> Result<Option<ComPtr<super::mediaproperties::MediaRatio>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCurrentFrameRate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_thumbnail_enabled(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -13441,10 +13441,10 @@ RT_INTERFACE!{interface IMediaDeviceControl(IMediaDeviceControlVtbl): IInspectab
     fn TrySetAuto(&self, value: bool, out: *mut bool) -> HRESULT
 }}
 impl IMediaDeviceControl {
-    #[inline] pub unsafe fn get_capabilities(&self) -> Result<ComPtr<MediaDeviceControlCapabilities>> {
+    #[inline] pub unsafe fn get_capabilities(&self) -> Result<Option<ComPtr<MediaDeviceControlCapabilities>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Capabilities)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn try_get_value(&self) -> Result<(f64, bool)> {
         let mut value = zeroed(); let mut out = zeroed();
@@ -13517,15 +13517,15 @@ RT_INTERFACE!{interface IMediaDeviceController(IMediaDeviceControllerVtbl): IIns
     fn SetMediaStreamPropertiesAsync(&self, mediaStreamType: super::capture::MediaStreamType, mediaEncodingProperties: *mut super::mediaproperties::IMediaEncodingProperties, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT
 }}
 impl IMediaDeviceController {
-    #[inline] pub unsafe fn get_available_media_stream_properties(&self, mediaStreamType: super::capture::MediaStreamType) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::mediaproperties::IMediaEncodingProperties>>> {
+    #[inline] pub unsafe fn get_available_media_stream_properties(&self, mediaStreamType: super::capture::MediaStreamType) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::mediaproperties::IMediaEncodingProperties>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetAvailableMediaStreamProperties)(self as *const _ as *mut _, mediaStreamType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_media_stream_properties(&self, mediaStreamType: super::capture::MediaStreamType) -> Result<ComPtr<super::mediaproperties::IMediaEncodingProperties>> {
+    #[inline] pub unsafe fn get_media_stream_properties(&self, mediaStreamType: super::capture::MediaStreamType) -> Result<Option<ComPtr<super::mediaproperties::IMediaEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetMediaStreamProperties)(self as *const _ as *mut _, mediaStreamType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_media_stream_properties_async(&self, mediaStreamType: super::capture::MediaStreamType, mediaEncodingProperties: &super::mediaproperties::IMediaEncodingProperties) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
         let mut out = null_mut();
@@ -13601,10 +13601,10 @@ impl IModuleCommandResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_result(&self) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_result(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Result)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ModuleCommandResult: IModuleCommandResult}
@@ -13621,10 +13621,10 @@ impl IOpticalImageStabilizationControl {
         let hr = ((*self.lpVtbl).get_Supported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_modes(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<OpticalImageStabilizationMode>>> {
+    #[inline] pub unsafe fn get_supported_modes(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<OpticalImageStabilizationMode>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedModes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_mode(&self) -> Result<OpticalImageStabilizationMode> {
         let mut out = zeroed();
@@ -13843,10 +13843,10 @@ RT_INTERFACE!{interface ISceneModeControl(ISceneModeControlVtbl): IInspectable(I
     fn SetValueAsync(&self, sceneMode: CaptureSceneMode, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT
 }}
 impl ISceneModeControl {
-    #[inline] pub unsafe fn get_supported_modes(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<CaptureSceneMode>>> {
+    #[inline] pub unsafe fn get_supported_modes(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<CaptureSceneMode>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedModes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_value(&self) -> Result<CaptureSceneMode> {
         let mut out = zeroed();
@@ -13923,60 +13923,60 @@ RT_INTERFACE!{interface IVideoDeviceController(IVideoDeviceControllerVtbl): IIns
     fn TryGetPowerlineFrequency(&self, value: *mut super::capture::PowerlineFrequency, out: *mut bool) -> HRESULT
 }}
 impl IVideoDeviceController {
-    #[inline] pub unsafe fn get_brightness(&self) -> Result<ComPtr<MediaDeviceControl>> {
+    #[inline] pub unsafe fn get_brightness(&self) -> Result<Option<ComPtr<MediaDeviceControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Brightness)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_contrast(&self) -> Result<ComPtr<MediaDeviceControl>> {
+    #[inline] pub unsafe fn get_contrast(&self) -> Result<Option<ComPtr<MediaDeviceControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Contrast)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_hue(&self) -> Result<ComPtr<MediaDeviceControl>> {
+    #[inline] pub unsafe fn get_hue(&self) -> Result<Option<ComPtr<MediaDeviceControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Hue)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_white_balance(&self) -> Result<ComPtr<MediaDeviceControl>> {
+    #[inline] pub unsafe fn get_white_balance(&self) -> Result<Option<ComPtr<MediaDeviceControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WhiteBalance)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_backlight_compensation(&self) -> Result<ComPtr<MediaDeviceControl>> {
+    #[inline] pub unsafe fn get_backlight_compensation(&self) -> Result<Option<ComPtr<MediaDeviceControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BacklightCompensation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_pan(&self) -> Result<ComPtr<MediaDeviceControl>> {
+    #[inline] pub unsafe fn get_pan(&self) -> Result<Option<ComPtr<MediaDeviceControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Pan)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_tilt(&self) -> Result<ComPtr<MediaDeviceControl>> {
+    #[inline] pub unsafe fn get_tilt(&self) -> Result<Option<ComPtr<MediaDeviceControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Tilt)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_zoom(&self) -> Result<ComPtr<MediaDeviceControl>> {
+    #[inline] pub unsafe fn get_zoom(&self) -> Result<Option<ComPtr<MediaDeviceControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Zoom)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_roll(&self) -> Result<ComPtr<MediaDeviceControl>> {
+    #[inline] pub unsafe fn get_roll(&self) -> Result<Option<ComPtr<MediaDeviceControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Roll)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_exposure(&self) -> Result<ComPtr<MediaDeviceControl>> {
+    #[inline] pub unsafe fn get_exposure(&self) -> Result<Option<ComPtr<MediaDeviceControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Exposure)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_focus(&self) -> Result<ComPtr<MediaDeviceControl>> {
+    #[inline] pub unsafe fn get_focus(&self) -> Result<Option<ComPtr<MediaDeviceControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Focus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn try_set_powerline_frequency(&self, value: super::capture::PowerlineFrequency) -> Result<bool> {
         let mut out = zeroed();
@@ -14001,10 +14001,10 @@ impl IVideoDeviceControllerGetDevicePropertyResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_value(&self) -> Result<ComPtr<IInspectable>> {
+    #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<IInspectable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VideoDeviceControllerGetDevicePropertyResult: IVideoDeviceControllerGetDevicePropertyResult}
@@ -14116,10 +14116,10 @@ RT_INTERFACE!{interface IZoomControl2(IZoomControl2Vtbl): IInspectable(IInspecta
     fn Configure(&self, settings: *mut ZoomSettings) -> HRESULT
 }}
 impl IZoomControl2 {
-    #[inline] pub unsafe fn get_supported_modes(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<ZoomTransitionMode>>> {
+    #[inline] pub unsafe fn get_supported_modes(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<ZoomTransitionMode>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedModes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_mode(&self) -> Result<ZoomTransitionMode> {
         let mut out = zeroed();
@@ -14268,10 +14268,10 @@ RT_INTERFACE!{interface ICameraIntrinsicsFactory(ICameraIntrinsicsFactoryVtbl): 
     fn Create(&self, focalLength: ::rt::gen::windows::foundation::numerics::Vector2, principalPoint: ::rt::gen::windows::foundation::numerics::Vector2, radialDistortion: ::rt::gen::windows::foundation::numerics::Vector3, tangentialDistortion: ::rt::gen::windows::foundation::numerics::Vector2, imageWidth: u32, imageHeight: u32, out: *mut *mut CameraIntrinsics) -> HRESULT
 }}
 impl ICameraIntrinsicsFactory {
-    #[inline] pub unsafe fn create(&self, focalLength: ::rt::gen::windows::foundation::numerics::Vector2, principalPoint: ::rt::gen::windows::foundation::numerics::Vector2, radialDistortion: ::rt::gen::windows::foundation::numerics::Vector3, tangentialDistortion: ::rt::gen::windows::foundation::numerics::Vector2, imageWidth: u32, imageHeight: u32) -> Result<ComPtr<CameraIntrinsics>> {
+    #[inline] pub unsafe fn create(&self, focalLength: ::rt::gen::windows::foundation::numerics::Vector2, principalPoint: ::rt::gen::windows::foundation::numerics::Vector2, radialDistortion: ::rt::gen::windows::foundation::numerics::Vector3, tangentialDistortion: ::rt::gen::windows::foundation::numerics::Vector2, imageWidth: u32, imageHeight: u32) -> Result<Option<ComPtr<CameraIntrinsics>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, focalLength, principalPoint, radialDistortion, tangentialDistortion, imageWidth, imageHeight, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IDepthCorrelatedCoordinateMapper, 4183656955, 35568, 19632, 146, 109, 105, 104, 102, 229, 4, 106);
@@ -14311,25 +14311,25 @@ RT_INTERFACE!{interface IFrameControlCapabilities(IFrameControlCapabilitiesVtbl)
     fn get_PhotoConfirmationSupported(&self, out: *mut bool) -> HRESULT
 }}
 impl IFrameControlCapabilities {
-    #[inline] pub unsafe fn get_exposure(&self) -> Result<ComPtr<FrameExposureCapabilities>> {
+    #[inline] pub unsafe fn get_exposure(&self) -> Result<Option<ComPtr<FrameExposureCapabilities>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Exposure)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_exposure_compensation(&self) -> Result<ComPtr<FrameExposureCompensationCapabilities>> {
+    #[inline] pub unsafe fn get_exposure_compensation(&self) -> Result<Option<ComPtr<FrameExposureCompensationCapabilities>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExposureCompensation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_iso_speed(&self) -> Result<ComPtr<FrameIsoSpeedCapabilities>> {
+    #[inline] pub unsafe fn get_iso_speed(&self) -> Result<Option<ComPtr<FrameIsoSpeedCapabilities>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IsoSpeed)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_focus(&self) -> Result<ComPtr<FrameFocusCapabilities>> {
+    #[inline] pub unsafe fn get_focus(&self) -> Result<Option<ComPtr<FrameFocusCapabilities>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Focus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_photo_confirmation_supported(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -14343,10 +14343,10 @@ RT_INTERFACE!{interface IFrameControlCapabilities2(IFrameControlCapabilities2Vtb
     fn get_Flash(&self, out: *mut *mut FrameFlashCapabilities) -> HRESULT
 }}
 impl IFrameControlCapabilities2 {
-    #[inline] pub unsafe fn get_flash(&self) -> Result<ComPtr<FrameFlashCapabilities>> {
+    #[inline] pub unsafe fn get_flash(&self) -> Result<Option<ComPtr<FrameFlashCapabilities>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Flash)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IFrameController, 3244579289, 47855, 16466, 145, 119, 72, 175, 242, 175, 117, 34);
@@ -14359,30 +14359,30 @@ RT_INTERFACE!{interface IFrameController(IFrameControllerVtbl): IInspectable(IIn
     fn put_PhotoConfirmationEnabled(&self, value: *mut ::rt::gen::windows::foundation::IReference<bool>) -> HRESULT
 }}
 impl IFrameController {
-    #[inline] pub unsafe fn get_exposure_control(&self) -> Result<ComPtr<FrameExposureControl>> {
+    #[inline] pub unsafe fn get_exposure_control(&self) -> Result<Option<ComPtr<FrameExposureControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExposureControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_exposure_compensation_control(&self) -> Result<ComPtr<FrameExposureCompensationControl>> {
+    #[inline] pub unsafe fn get_exposure_compensation_control(&self) -> Result<Option<ComPtr<FrameExposureCompensationControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExposureCompensationControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_iso_speed_control(&self) -> Result<ComPtr<FrameIsoSpeedControl>> {
+    #[inline] pub unsafe fn get_iso_speed_control(&self) -> Result<Option<ComPtr<FrameIsoSpeedControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IsoSpeedControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_focus_control(&self) -> Result<ComPtr<FrameFocusControl>> {
+    #[inline] pub unsafe fn get_focus_control(&self) -> Result<Option<ComPtr<FrameFocusControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FocusControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_photo_confirmation_enabled(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<bool>>> {
+    #[inline] pub unsafe fn get_photo_confirmation_enabled(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<bool>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PhotoConfirmationEnabled)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_photo_confirmation_enabled(&self, value: &::rt::gen::windows::foundation::IReference<bool>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PhotoConfirmationEnabled)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -14397,10 +14397,10 @@ RT_INTERFACE!{interface IFrameController2(IFrameController2Vtbl): IInspectable(I
     fn get_FlashControl(&self, out: *mut *mut FrameFlashControl) -> HRESULT
 }}
 impl IFrameController2 {
-    #[inline] pub unsafe fn get_flash_control(&self) -> Result<ComPtr<FrameFlashControl>> {
+    #[inline] pub unsafe fn get_flash_control(&self) -> Result<Option<ComPtr<FrameFlashControl>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FlashControl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IFrameExposureCapabilities, 3183385827, 14725, 20082, 151, 194, 5, 144, 214, 19, 7, 161);
@@ -14469,10 +14469,10 @@ RT_INTERFACE!{interface IFrameExposureCompensationControl(IFrameExposureCompensa
     fn put_Value(&self, value: *mut ::rt::gen::windows::foundation::IReference<f32>) -> HRESULT
 }}
 impl IFrameExposureCompensationControl {
-    #[inline] pub unsafe fn get_value(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<f32>>> {
+    #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<f32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_value(&self, value: &::rt::gen::windows::foundation::IReference<f32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -14497,10 +14497,10 @@ impl IFrameExposureControl {
         let hr = ((*self.lpVtbl).put_Auto)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_value(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_value(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -14621,10 +14621,10 @@ RT_INTERFACE!{interface IFrameFocusControl(IFrameFocusControlVtbl): IInspectable
     fn put_Value(&self, value: *mut ::rt::gen::windows::foundation::IReference<u32>) -> HRESULT
 }}
 impl IFrameFocusControl {
-    #[inline] pub unsafe fn get_value(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_value(&self, value: &::rt::gen::windows::foundation::IReference<u32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -14679,10 +14679,10 @@ impl IFrameIsoSpeedControl {
         let hr = ((*self.lpVtbl).put_Auto)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_value(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_value(&self, value: &::rt::gen::windows::foundation::IReference<u32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -14721,25 +14721,25 @@ impl IVariablePhotoSequenceController {
         let hr = ((*self.lpVtbl).put_PhotosPerSecondLimit)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_highest_concurrent_frame_rate(&self, captureProperties: &super::super::mediaproperties::IMediaEncodingProperties) -> Result<ComPtr<super::super::mediaproperties::MediaRatio>> {
+    #[inline] pub unsafe fn get_highest_concurrent_frame_rate(&self, captureProperties: &super::super::mediaproperties::IMediaEncodingProperties) -> Result<Option<ComPtr<super::super::mediaproperties::MediaRatio>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetHighestConcurrentFrameRate)(self as *const _ as *mut _, captureProperties as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_current_frame_rate(&self) -> Result<ComPtr<super::super::mediaproperties::MediaRatio>> {
+    #[inline] pub unsafe fn get_current_frame_rate(&self) -> Result<Option<ComPtr<super::super::mediaproperties::MediaRatio>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCurrentFrameRate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_frame_capabilities(&self) -> Result<ComPtr<FrameControlCapabilities>> {
+    #[inline] pub unsafe fn get_frame_capabilities(&self) -> Result<Option<ComPtr<FrameControlCapabilities>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FrameCapabilities)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_desired_frame_controllers(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<FrameController>>> {
+    #[inline] pub unsafe fn get_desired_frame_controllers(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<FrameController>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DesiredFrameControllers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VariablePhotoSequenceController: IVariablePhotoSequenceController}
@@ -14815,10 +14815,10 @@ impl IDialDevice {
         let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_dial_app(&self, appName: &HStringArg) -> Result<ComPtr<DialApp>> {
+    #[inline] pub unsafe fn get_dial_app(&self, appName: &HStringArg) -> Result<Option<ComPtr<DialApp>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDialApp)(self as *const _ as *mut _, appName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class DialDevice: IDialDevice}
@@ -14846,10 +14846,10 @@ impl IDialDevice2 {
         let hr = ((*self.lpVtbl).get_FriendlyName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum DialDeviceDisplayStatus: i32 {
@@ -14876,15 +14876,15 @@ RT_INTERFACE!{interface IDialDevicePicker(IDialDevicePickerVtbl): IInspectable(I
     fn SetDisplayStatus(&self, device: *mut DialDevice, status: DialDeviceDisplayStatus) -> HRESULT
 }}
 impl IDialDevicePicker {
-    #[inline] pub unsafe fn get_filter(&self) -> Result<ComPtr<DialDevicePickerFilter>> {
+    #[inline] pub unsafe fn get_filter(&self) -> Result<Option<ComPtr<DialDevicePickerFilter>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Filter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_appearance(&self) -> Result<ComPtr<super::super::devices::enumeration::DevicePickerAppearance>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_appearance(&self) -> Result<Option<ComPtr<super::super::devices::enumeration::DevicePickerAppearance>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Appearance)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_dial_device_selected(&self, handler: &super::super::foundation::TypedEventHandler<DialDevicePicker, DialDeviceSelectedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -14948,10 +14948,10 @@ RT_INTERFACE!{interface IDialDevicePickerFilter(IDialDevicePickerFilterVtbl): II
     fn get_SupportedAppNames(&self, out: *mut *mut super::super::foundation::collections::IVector<HString>) -> HRESULT
 }}
 impl IDialDevicePickerFilter {
-    #[inline] pub unsafe fn get_supported_app_names(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_supported_app_names(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedAppNames)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class DialDevicePickerFilter: IDialDevicePickerFilter}
@@ -14960,10 +14960,10 @@ RT_INTERFACE!{interface IDialDeviceSelectedEventArgs(IDialDeviceSelectedEventArg
     fn get_SelectedDialDevice(&self, out: *mut *mut DialDevice) -> HRESULT
 }}
 impl IDialDeviceSelectedEventArgs {
-    #[inline] pub unsafe fn get_selected_dial_device(&self) -> Result<ComPtr<DialDevice>> {
+    #[inline] pub unsafe fn get_selected_dial_device(&self) -> Result<Option<ComPtr<DialDevice>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SelectedDialDevice)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class DialDeviceSelectedEventArgs: IDialDeviceSelectedEventArgs}
@@ -14995,10 +14995,10 @@ RT_INTERFACE!{interface IDialDisconnectButtonClickedEventArgs(IDialDisconnectBut
     fn get_Device(&self, out: *mut *mut DialDevice) -> HRESULT
 }}
 impl IDialDisconnectButtonClickedEventArgs {
-    #[inline] pub unsafe fn get_device(&self) -> Result<ComPtr<DialDevice>> {
+    #[inline] pub unsafe fn get_device(&self) -> Result<Option<ComPtr<DialDevice>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Device)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class DialDisconnectButtonClickedEventArgs: IDialDisconnectButtonClickedEventArgs}
@@ -15022,7 +15022,7 @@ impl IDialReceiverApp {
 RT_CLASS!{class DialReceiverApp: IDialReceiverApp}
 impl RtActivatable<IDialReceiverAppStatics> for DialReceiverApp {}
 impl DialReceiverApp {
-    #[inline] pub fn get_current() -> Result<ComPtr<DialReceiverApp>> { unsafe {
+    #[inline] pub fn get_current() -> Result<Option<ComPtr<DialReceiverApp>>> { unsafe {
         <Self as RtActivatable<IDialReceiverAppStatics>>::get_activation_factory().get_current()
     }}
 }
@@ -15032,10 +15032,10 @@ RT_INTERFACE!{static interface IDialReceiverAppStatics(IDialReceiverAppStaticsVt
     fn get_Current(&self, out: *mut *mut DialReceiverApp) -> HRESULT
 }}
 impl IDialReceiverAppStatics {
-    #[inline] pub unsafe fn get_current(&self) -> Result<ComPtr<DialReceiverApp>> {
+    #[inline] pub unsafe fn get_current(&self) -> Result<Option<ComPtr<DialReceiverApp>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.Media.DialProtocol
@@ -15057,10 +15057,10 @@ impl IAudioCaptureEffectsManager {
         let hr = ((*self.lpVtbl).remove_AudioCaptureEffectsChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_audio_capture_effects(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<AudioEffect>>> {
+    #[inline] pub unsafe fn get_audio_capture_effects(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<AudioEffect>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetAudioCaptureEffects)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioCaptureEffectsManager: IAudioCaptureEffectsManager}
@@ -15087,10 +15087,10 @@ impl IAudioEffectDefinition {
         let hr = ((*self.lpVtbl).get_ActivatableClassId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<super::super::foundation::collections::IPropertySet>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IPropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioEffectDefinition: IAudioEffectDefinition}
@@ -15124,16 +15124,16 @@ impl IAudioEffectDefinitionFactory {
 RT_CLASS!{static class AudioEffectsManager}
 impl RtActivatable<IAudioEffectsManagerStatics> for AudioEffectsManager {}
 impl AudioEffectsManager {
-    #[inline] pub fn create_audio_render_effects_manager(deviceId: &HStringArg, category: super::render::AudioRenderCategory) -> Result<ComPtr<AudioRenderEffectsManager>> { unsafe {
+    #[inline] pub fn create_audio_render_effects_manager(deviceId: &HStringArg, category: super::render::AudioRenderCategory) -> Result<Option<ComPtr<AudioRenderEffectsManager>>> { unsafe {
         <Self as RtActivatable<IAudioEffectsManagerStatics>>::get_activation_factory().create_audio_render_effects_manager(deviceId, category)
     }}
-    #[inline] pub fn create_audio_render_effects_manager_with_mode(deviceId: &HStringArg, category: super::render::AudioRenderCategory, mode: super::AudioProcessing) -> Result<ComPtr<AudioRenderEffectsManager>> { unsafe {
+    #[inline] pub fn create_audio_render_effects_manager_with_mode(deviceId: &HStringArg, category: super::render::AudioRenderCategory, mode: super::AudioProcessing) -> Result<Option<ComPtr<AudioRenderEffectsManager>>> { unsafe {
         <Self as RtActivatable<IAudioEffectsManagerStatics>>::get_activation_factory().create_audio_render_effects_manager_with_mode(deviceId, category, mode)
     }}
-    #[inline] pub fn create_audio_capture_effects_manager(deviceId: &HStringArg, category: super::capture::MediaCategory) -> Result<ComPtr<AudioCaptureEffectsManager>> { unsafe {
+    #[inline] pub fn create_audio_capture_effects_manager(deviceId: &HStringArg, category: super::capture::MediaCategory) -> Result<Option<ComPtr<AudioCaptureEffectsManager>>> { unsafe {
         <Self as RtActivatable<IAudioEffectsManagerStatics>>::get_activation_factory().create_audio_capture_effects_manager(deviceId, category)
     }}
-    #[inline] pub fn create_audio_capture_effects_manager_with_mode(deviceId: &HStringArg, category: super::capture::MediaCategory, mode: super::AudioProcessing) -> Result<ComPtr<AudioCaptureEffectsManager>> { unsafe {
+    #[inline] pub fn create_audio_capture_effects_manager_with_mode(deviceId: &HStringArg, category: super::capture::MediaCategory, mode: super::AudioProcessing) -> Result<Option<ComPtr<AudioCaptureEffectsManager>>> { unsafe {
         <Self as RtActivatable<IAudioEffectsManagerStatics>>::get_activation_factory().create_audio_capture_effects_manager_with_mode(deviceId, category, mode)
     }}
 }
@@ -15146,25 +15146,25 @@ RT_INTERFACE!{static interface IAudioEffectsManagerStatics(IAudioEffectsManagerS
     fn CreateAudioCaptureEffectsManagerWithMode(&self, deviceId: HSTRING, category: super::capture::MediaCategory, mode: super::AudioProcessing, out: *mut *mut AudioCaptureEffectsManager) -> HRESULT
 }}
 impl IAudioEffectsManagerStatics {
-    #[inline] pub unsafe fn create_audio_render_effects_manager(&self, deviceId: &HStringArg, category: super::render::AudioRenderCategory) -> Result<ComPtr<AudioRenderEffectsManager>> {
+    #[inline] pub unsafe fn create_audio_render_effects_manager(&self, deviceId: &HStringArg, category: super::render::AudioRenderCategory) -> Result<Option<ComPtr<AudioRenderEffectsManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAudioRenderEffectsManager)(self as *const _ as *mut _, deviceId.get(), category, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_audio_render_effects_manager_with_mode(&self, deviceId: &HStringArg, category: super::render::AudioRenderCategory, mode: super::AudioProcessing) -> Result<ComPtr<AudioRenderEffectsManager>> {
+    #[inline] pub unsafe fn create_audio_render_effects_manager_with_mode(&self, deviceId: &HStringArg, category: super::render::AudioRenderCategory, mode: super::AudioProcessing) -> Result<Option<ComPtr<AudioRenderEffectsManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAudioRenderEffectsManagerWithMode)(self as *const _ as *mut _, deviceId.get(), category, mode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_audio_capture_effects_manager(&self, deviceId: &HStringArg, category: super::capture::MediaCategory) -> Result<ComPtr<AudioCaptureEffectsManager>> {
+    #[inline] pub unsafe fn create_audio_capture_effects_manager(&self, deviceId: &HStringArg, category: super::capture::MediaCategory) -> Result<Option<ComPtr<AudioCaptureEffectsManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAudioCaptureEffectsManager)(self as *const _ as *mut _, deviceId.get(), category, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_audio_capture_effects_manager_with_mode(&self, deviceId: &HStringArg, category: super::capture::MediaCategory, mode: super::AudioProcessing) -> Result<ComPtr<AudioCaptureEffectsManager>> {
+    #[inline] pub unsafe fn create_audio_capture_effects_manager_with_mode(&self, deviceId: &HStringArg, category: super::capture::MediaCategory, mode: super::AudioProcessing) -> Result<Option<ComPtr<AudioCaptureEffectsManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAudioCaptureEffectsManagerWithMode)(self as *const _ as *mut _, deviceId.get(), category, mode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum AudioEffectType: i32 {
@@ -15186,10 +15186,10 @@ impl IAudioRenderEffectsManager {
         let hr = ((*self.lpVtbl).remove_AudioRenderEffectsChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_audio_render_effects(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<AudioEffect>>> {
+    #[inline] pub unsafe fn get_audio_render_effects(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<AudioEffect>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetAudioRenderEffects)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AudioRenderEffectsManager: IAudioRenderEffectsManager}
@@ -15201,10 +15201,10 @@ RT_INTERFACE!{interface IAudioRenderEffectsManager2(IAudioRenderEffectsManager2V
     fn ShowSettingsUI(&self) -> HRESULT
 }}
 impl IAudioRenderEffectsManager2 {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_effects_provider_thumbnail(&self) -> Result<ComPtr<super::super::storage::streams::IRandomAccessStreamWithContentType>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_effects_provider_thumbnail(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamWithContentType>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EffectsProviderThumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_effects_provider_settings_label(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -15231,10 +15231,10 @@ impl IBasicAudioEffect {
         let hr = ((*self.lpVtbl).get_UseInputFrameForOutput)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_encoding_properties(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::mediaproperties::AudioEncodingProperties>>> {
+    #[inline] pub unsafe fn get_supported_encoding_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::mediaproperties::AudioEncodingProperties>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedEncodingProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_encoding_properties(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<()> {
         let hr = ((*self.lpVtbl).SetEncodingProperties)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _);
@@ -15281,10 +15281,10 @@ impl IBasicVideoEffect {
         let hr = ((*self.lpVtbl).get_TimeIndependent)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_supported_encoding_properties(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::mediaproperties::VideoEncodingProperties>>> {
+    #[inline] pub unsafe fn get_supported_encoding_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::mediaproperties::VideoEncodingProperties>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedEncodingProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn set_encoding_properties(&self, encodingProperties: &super::mediaproperties::VideoEncodingProperties, device: &super::super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<()> {
         let hr = ((*self.lpVtbl).SetEncodingProperties)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, device as *const _ as *mut _);
@@ -15311,25 +15311,25 @@ RT_INTERFACE!{interface ICompositeVideoFrameContext(ICompositeVideoFrameContextV
     #[cfg(feature="windows-graphics")] fn GetOverlayForSurface(&self, surfaceToOverlay: *mut super::super::graphics::directx::direct3d11::IDirect3DSurface, out: *mut *mut super::editing::MediaOverlay) -> HRESULT
 }}
 impl ICompositeVideoFrameContext {
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_surfaces_to_overlay(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::directx::direct3d11::IDirect3DSurface>>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_surfaces_to_overlay(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::directx::direct3d11::IDirect3DSurface>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SurfacesToOverlay)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_background_frame(&self) -> Result<ComPtr<super::VideoFrame>> {
+    #[inline] pub unsafe fn get_background_frame(&self) -> Result<Option<ComPtr<super::VideoFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BackgroundFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_output_frame(&self) -> Result<ComPtr<super::VideoFrame>> {
+    #[inline] pub unsafe fn get_output_frame(&self) -> Result<Option<ComPtr<super::VideoFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OutputFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_overlay_for_surface(&self, surfaceToOverlay: &super::super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<ComPtr<super::editing::MediaOverlay>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_overlay_for_surface(&self, surfaceToOverlay: &super::super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<super::editing::MediaOverlay>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetOverlayForSurface)(self as *const _ as *mut _, surfaceToOverlay as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CompositeVideoFrameContext: ICompositeVideoFrameContext}
@@ -15345,15 +15345,15 @@ RT_INTERFACE!{interface IProcessAudioFrameContext(IProcessAudioFrameContextVtbl)
     fn get_OutputFrame(&self, out: *mut *mut super::AudioFrame) -> HRESULT
 }}
 impl IProcessAudioFrameContext {
-    #[inline] pub unsafe fn get_input_frame(&self) -> Result<ComPtr<super::AudioFrame>> {
+    #[inline] pub unsafe fn get_input_frame(&self) -> Result<Option<ComPtr<super::AudioFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InputFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_output_frame(&self) -> Result<ComPtr<super::AudioFrame>> {
+    #[inline] pub unsafe fn get_output_frame(&self) -> Result<Option<ComPtr<super::AudioFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OutputFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ProcessAudioFrameContext: IProcessAudioFrameContext}
@@ -15363,15 +15363,15 @@ RT_INTERFACE!{interface IProcessVideoFrameContext(IProcessVideoFrameContextVtbl)
     fn get_OutputFrame(&self, out: *mut *mut super::VideoFrame) -> HRESULT
 }}
 impl IProcessVideoFrameContext {
-    #[inline] pub unsafe fn get_input_frame(&self) -> Result<ComPtr<super::VideoFrame>> {
+    #[inline] pub unsafe fn get_input_frame(&self) -> Result<Option<ComPtr<super::VideoFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InputFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_output_frame(&self) -> Result<ComPtr<super::VideoFrame>> {
+    #[inline] pub unsafe fn get_output_frame(&self) -> Result<Option<ComPtr<super::VideoFrame>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OutputFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ProcessVideoFrameContext: IProcessVideoFrameContext}
@@ -15418,10 +15418,10 @@ impl IVideoCompositorDefinition {
         let hr = ((*self.lpVtbl).get_ActivatableClassId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<super::super::foundation::collections::IPropertySet>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IPropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VideoCompositorDefinition: IVideoCompositorDefinition}
@@ -15463,10 +15463,10 @@ impl IVideoEffectDefinition {
         let hr = ((*self.lpVtbl).get_ActivatableClassId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<super::super::foundation::collections::IPropertySet>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IPropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VideoEffectDefinition: IVideoEffectDefinition}
@@ -15622,10 +15622,10 @@ impl IBackgroundAudioTrack {
         let hr = ((*self.lpVtbl).get_TrimmedDuration)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_user_data(&self) -> Result<ComPtr<super::super::foundation::collections::IMap<HString, HString>>> {
+    #[inline] pub unsafe fn get_user_data(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IMap<HString, HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UserData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_delay(&self, value: super::super::foundation::TimeSpan) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Delay)(self as *const _ as *mut _, value);
@@ -15645,26 +15645,26 @@ impl IBackgroundAudioTrack {
         let hr = ((*self.lpVtbl).get_Volume)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn clone(&self) -> Result<ComPtr<BackgroundAudioTrack>> {
+    #[inline] pub unsafe fn clone(&self) -> Result<Option<ComPtr<BackgroundAudioTrack>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Clone)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_audio_encoding_properties(&self) -> Result<ComPtr<super::mediaproperties::AudioEncodingProperties>> {
+    #[inline] pub unsafe fn get_audio_encoding_properties(&self) -> Result<Option<ComPtr<super::mediaproperties::AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetAudioEncodingProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_audio_effect_definitions(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<super::effects::IAudioEffectDefinition>>> {
+    #[inline] pub unsafe fn get_audio_effect_definitions(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::effects::IAudioEffectDefinition>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AudioEffectDefinitions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class BackgroundAudioTrack: IBackgroundAudioTrack}
 impl RtActivatable<IBackgroundAudioTrackStatics> for BackgroundAudioTrack {}
 impl BackgroundAudioTrack {
-    #[inline] pub fn create_from_embedded_audio_track(embeddedAudioTrack: &EmbeddedAudioTrack) -> Result<ComPtr<BackgroundAudioTrack>> { unsafe {
+    #[inline] pub fn create_from_embedded_audio_track(embeddedAudioTrack: &EmbeddedAudioTrack) -> Result<Option<ComPtr<BackgroundAudioTrack>>> { unsafe {
         <Self as RtActivatable<IBackgroundAudioTrackStatics>>::get_activation_factory().create_from_embedded_audio_track(embeddedAudioTrack)
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<super::super::foundation::IAsyncOperation<BackgroundAudioTrack>>> { unsafe {
@@ -15678,10 +15678,10 @@ RT_INTERFACE!{static interface IBackgroundAudioTrackStatics(IBackgroundAudioTrac
     #[cfg(feature="windows-storage")] fn CreateFromFileAsync(&self, file: *mut super::super::storage::IStorageFile, out: *mut *mut super::super::foundation::IAsyncOperation<BackgroundAudioTrack>) -> HRESULT
 }}
 impl IBackgroundAudioTrackStatics {
-    #[inline] pub unsafe fn create_from_embedded_audio_track(&self, embeddedAudioTrack: &EmbeddedAudioTrack) -> Result<ComPtr<BackgroundAudioTrack>> {
+    #[inline] pub unsafe fn create_from_embedded_audio_track(&self, embeddedAudioTrack: &EmbeddedAudioTrack) -> Result<Option<ComPtr<BackgroundAudioTrack>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromEmbeddedAudioTrack)(self as *const _ as *mut _, embeddedAudioTrack as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_file_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<super::super::foundation::IAsyncOperation<BackgroundAudioTrack>>> {
         let mut out = null_mut();
@@ -15694,10 +15694,10 @@ RT_INTERFACE!{interface IEmbeddedAudioTrack(IEmbeddedAudioTrackVtbl): IInspectab
     fn GetAudioEncodingProperties(&self, out: *mut *mut super::mediaproperties::AudioEncodingProperties) -> HRESULT
 }}
 impl IEmbeddedAudioTrack {
-    #[inline] pub unsafe fn get_audio_encoding_properties(&self) -> Result<ComPtr<super::mediaproperties::AudioEncodingProperties>> {
+    #[inline] pub unsafe fn get_audio_encoding_properties(&self) -> Result<Option<ComPtr<super::mediaproperties::AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetAudioEncodingProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class EmbeddedAudioTrack: IEmbeddedAudioTrack}
@@ -15751,15 +15751,15 @@ impl IMediaClip {
         let hr = ((*self.lpVtbl).get_TrimmedDuration)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_user_data(&self) -> Result<ComPtr<super::super::foundation::collections::IMap<HString, HString>>> {
+    #[inline] pub unsafe fn get_user_data(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IMap<HString, HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UserData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn clone(&self) -> Result<ComPtr<MediaClip>> {
+    #[inline] pub unsafe fn clone(&self) -> Result<Option<ComPtr<MediaClip>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Clone)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_start_time_in_composition(&self) -> Result<super::super::foundation::TimeSpan> {
         let mut out = zeroed();
@@ -15771,10 +15771,10 @@ impl IMediaClip {
         let hr = ((*self.lpVtbl).get_EndTimeInComposition)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_embedded_audio_tracks(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<EmbeddedAudioTrack>>> {
+    #[inline] pub unsafe fn get_embedded_audio_tracks(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<EmbeddedAudioTrack>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EmbeddedAudioTracks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_selected_embedded_audio_track_index(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -15794,27 +15794,27 @@ impl IMediaClip {
         let hr = ((*self.lpVtbl).get_Volume)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_encoding_properties(&self) -> Result<ComPtr<super::mediaproperties::VideoEncodingProperties>> {
+    #[inline] pub unsafe fn get_video_encoding_properties(&self) -> Result<Option<ComPtr<super::mediaproperties::VideoEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetVideoEncodingProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_audio_effect_definitions(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<super::effects::IAudioEffectDefinition>>> {
+    #[inline] pub unsafe fn get_audio_effect_definitions(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::effects::IAudioEffectDefinition>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AudioEffectDefinitions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_effect_definitions(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<super::effects::IVideoEffectDefinition>>> {
+    #[inline] pub unsafe fn get_video_effect_definitions(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::effects::IVideoEffectDefinition>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoEffectDefinitions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaClip: IMediaClip}
 impl RtActivatable<IMediaClipStatics> for MediaClip {}
 impl RtActivatable<IMediaClipStatics2> for MediaClip {}
 impl MediaClip {
-    #[cfg(feature="windows-ui")] #[inline] pub fn create_from_color(color: super::super::ui::Color, originalDuration: super::super::foundation::TimeSpan) -> Result<ComPtr<MediaClip>> { unsafe {
+    #[cfg(feature="windows-ui")] #[inline] pub fn create_from_color(color: super::super::ui::Color, originalDuration: super::super::foundation::TimeSpan) -> Result<Option<ComPtr<MediaClip>>> { unsafe {
         <Self as RtActivatable<IMediaClipStatics>>::get_activation_factory().create_from_color(color, originalDuration)
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<super::super::foundation::IAsyncOperation<MediaClip>>> { unsafe {
@@ -15823,7 +15823,7 @@ impl MediaClip {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_image_file_async(file: &super::super::storage::IStorageFile, originalDuration: super::super::foundation::TimeSpan) -> Result<ComPtr<super::super::foundation::IAsyncOperation<MediaClip>>> { unsafe {
         <Self as RtActivatable<IMediaClipStatics>>::get_activation_factory().create_from_image_file_async(file, originalDuration)
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_surface(surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, originalDuration: super::super::foundation::TimeSpan) -> Result<ComPtr<MediaClip>> { unsafe {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_surface(surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, originalDuration: super::super::foundation::TimeSpan) -> Result<Option<ComPtr<MediaClip>>> { unsafe {
         <Self as RtActivatable<IMediaClipStatics2>>::get_activation_factory().create_from_surface(surface, originalDuration)
     }}
 }
@@ -15836,10 +15836,10 @@ RT_INTERFACE!{static interface IMediaClipStatics(IMediaClipStaticsVtbl): IInspec
     #[cfg(feature="windows-storage")] fn CreateFromImageFileAsync(&self, file: *mut super::super::storage::IStorageFile, originalDuration: super::super::foundation::TimeSpan, out: *mut *mut super::super::foundation::IAsyncOperation<MediaClip>) -> HRESULT
 }}
 impl IMediaClipStatics {
-    #[cfg(feature="windows-ui")] #[inline] pub unsafe fn create_from_color(&self, color: super::super::ui::Color, originalDuration: super::super::foundation::TimeSpan) -> Result<ComPtr<MediaClip>> {
+    #[cfg(feature="windows-ui")] #[inline] pub unsafe fn create_from_color(&self, color: super::super::ui::Color, originalDuration: super::super::foundation::TimeSpan) -> Result<Option<ComPtr<MediaClip>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromColor)(self as *const _ as *mut _, color, originalDuration, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_file_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<super::super::foundation::IAsyncOperation<MediaClip>>> {
         let mut out = null_mut();
@@ -15857,10 +15857,10 @@ RT_INTERFACE!{static interface IMediaClipStatics2(IMediaClipStatics2Vtbl): IInsp
     #[cfg(feature="windows-graphics")] fn CreateFromSurface(&self, surface: *mut super::super::graphics::directx::direct3d11::IDirect3DSurface, originalDuration: super::super::foundation::TimeSpan, out: *mut *mut MediaClip) -> HRESULT
 }}
 impl IMediaClipStatics2 {
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn create_from_surface(&self, surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, originalDuration: super::super::foundation::TimeSpan) -> Result<ComPtr<MediaClip>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn create_from_surface(&self, surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, originalDuration: super::super::foundation::TimeSpan) -> Result<Option<ComPtr<MediaClip>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromSurface)(self as *const _ as *mut _, surface as *const _ as *mut _, originalDuration, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaComposition, 772204037, 56433, 16854, 184, 55, 45, 43, 193, 74, 41, 71);
@@ -15893,25 +15893,25 @@ impl IMediaComposition {
         let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_clips(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<MediaClip>>> {
+    #[inline] pub unsafe fn get_clips(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<MediaClip>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Clips)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_background_audio_tracks(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<BackgroundAudioTrack>>> {
+    #[inline] pub unsafe fn get_background_audio_tracks(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<BackgroundAudioTrack>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BackgroundAudioTracks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_user_data(&self) -> Result<ComPtr<super::super::foundation::collections::IMap<HString, HString>>> {
+    #[inline] pub unsafe fn get_user_data(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IMap<HString, HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UserData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn clone(&self) -> Result<ComPtr<MediaComposition>> {
+    #[inline] pub unsafe fn clone(&self) -> Result<Option<ComPtr<MediaComposition>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Clone)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn save_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
         let mut out = null_mut();
@@ -15943,25 +15943,25 @@ impl IMediaComposition {
         let hr = ((*self.lpVtbl).RenderToFileWithProfileAsync)(self as *const _ as *mut _, destination as *const _ as *mut _, trimmingPreference, encodingProfile as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_default_encoding_profile(&self) -> Result<ComPtr<super::mediaproperties::MediaEncodingProfile>> {
+    #[inline] pub unsafe fn create_default_encoding_profile(&self) -> Result<Option<ComPtr<super::mediaproperties::MediaEncodingProfile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateDefaultEncodingProfile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn generate_media_stream_source(&self) -> Result<ComPtr<super::core::MediaStreamSource>> {
+    #[inline] pub unsafe fn generate_media_stream_source(&self) -> Result<Option<ComPtr<super::core::MediaStreamSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GenerateMediaStreamSource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn generate_media_stream_source_with_profile(&self, encodingProfile: &super::mediaproperties::MediaEncodingProfile) -> Result<ComPtr<super::core::MediaStreamSource>> {
+    #[inline] pub unsafe fn generate_media_stream_source_with_profile(&self, encodingProfile: &super::mediaproperties::MediaEncodingProfile) -> Result<Option<ComPtr<super::core::MediaStreamSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GenerateMediaStreamSourceWithProfile)(self as *const _ as *mut _, encodingProfile as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn generate_preview_media_stream_source(&self, scaledWidth: i32, scaledHeight: i32) -> Result<ComPtr<super::core::MediaStreamSource>> {
+    #[inline] pub unsafe fn generate_preview_media_stream_source(&self, scaledWidth: i32, scaledHeight: i32) -> Result<Option<ComPtr<super::core::MediaStreamSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GeneratePreviewMediaStreamSource)(self as *const _ as *mut _, scaledWidth, scaledHeight, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaComposition: IMediaComposition}
@@ -15978,10 +15978,10 @@ RT_INTERFACE!{interface IMediaComposition2(IMediaComposition2Vtbl): IInspectable
     fn get_OverlayLayers(&self, out: *mut *mut super::super::foundation::collections::IVector<MediaOverlayLayer>) -> HRESULT
 }}
 impl IMediaComposition2 {
-    #[inline] pub unsafe fn get_overlay_layers(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<MediaOverlayLayer>>> {
+    #[inline] pub unsafe fn get_overlay_layers(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<MediaOverlayLayer>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OverlayLayers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaCompositionStatics, 2275446532, 58154, 17870, 143, 102, 163, 13, 240, 118, 98, 36);
@@ -16036,15 +16036,15 @@ impl IMediaOverlay {
         let hr = ((*self.lpVtbl).put_Opacity)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn clone(&self) -> Result<ComPtr<MediaOverlay>> {
+    #[inline] pub unsafe fn clone(&self) -> Result<Option<ComPtr<MediaOverlay>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Clone)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_clip(&self) -> Result<ComPtr<MediaClip>> {
+    #[inline] pub unsafe fn get_clip(&self) -> Result<Option<ComPtr<MediaClip>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Clip)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_audio_enabled(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -16091,20 +16091,20 @@ RT_INTERFACE!{interface IMediaOverlayLayer(IMediaOverlayLayerVtbl): IInspectable
     fn get_CustomCompositorDefinition(&self, out: *mut *mut super::effects::IVideoCompositorDefinition) -> HRESULT
 }}
 impl IMediaOverlayLayer {
-    #[inline] pub unsafe fn clone(&self) -> Result<ComPtr<MediaOverlayLayer>> {
+    #[inline] pub unsafe fn clone(&self) -> Result<Option<ComPtr<MediaOverlayLayer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Clone)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_overlays(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<MediaOverlay>>> {
+    #[inline] pub unsafe fn get_overlays(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<MediaOverlay>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Overlays)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_custom_compositor_definition(&self) -> Result<ComPtr<super::effects::IVideoCompositorDefinition>> {
+    #[inline] pub unsafe fn get_custom_compositor_definition(&self) -> Result<Option<ComPtr<super::effects::IVideoCompositorDefinition>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CustomCompositorDefinition)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaOverlayLayer: IMediaOverlayLayer}
@@ -16199,7 +16199,7 @@ impl FaceDetector {
     #[inline] pub fn create_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<FaceDetector>>> { unsafe {
         <Self as RtActivatable<IFaceDetectorStatics>>::get_activation_factory().create_async()
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_bitmap_pixel_formats() -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>> { unsafe {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_bitmap_pixel_formats() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>>> { unsafe {
         <Self as RtActivatable<IFaceDetectorStatics>>::get_activation_factory().get_supported_bitmap_pixel_formats()
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn is_bitmap_pixel_format_supported(bitmapPixelFormat: super::super::graphics::imaging::BitmapPixelFormat) -> Result<bool> { unsafe {
@@ -16225,10 +16225,10 @@ impl IFaceDetectorStatics {
         let hr = ((*self.lpVtbl).CreateAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_supported_bitmap_pixel_formats(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_supported_bitmap_pixel_formats(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetSupportedBitmapPixelFormats)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn is_bitmap_pixel_format_supported(&self, bitmapPixelFormat: super::super::graphics::imaging::BitmapPixelFormat) -> Result<bool> {
         let mut out = zeroed();
@@ -16280,7 +16280,7 @@ impl FaceTracker {
     #[inline] pub fn create_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<FaceTracker>>> { unsafe {
         <Self as RtActivatable<IFaceTrackerStatics>>::get_activation_factory().create_async()
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_bitmap_pixel_formats() -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>> { unsafe {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_bitmap_pixel_formats() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>>> { unsafe {
         <Self as RtActivatable<IFaceTrackerStatics>>::get_activation_factory().get_supported_bitmap_pixel_formats()
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn is_bitmap_pixel_format_supported(bitmapPixelFormat: super::super::graphics::imaging::BitmapPixelFormat) -> Result<bool> { unsafe {
@@ -16306,10 +16306,10 @@ impl IFaceTrackerStatics {
         let hr = ((*self.lpVtbl).CreateAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_supported_bitmap_pixel_formats(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_supported_bitmap_pixel_formats(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetSupportedBitmapPixelFormats)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn is_bitmap_pixel_format_supported(&self, bitmapPixelFormat: super::super::graphics::imaging::BitmapPixelFormat) -> Result<bool> {
         let mut out = zeroed();
@@ -16354,20 +16354,20 @@ RT_INTERFACE!{interface IPhotoImportDeleteImportedItemsFromSourceResult(IPhotoIm
     fn get_TotalSizeInBytes(&self, out: *mut u64) -> HRESULT
 }}
 impl IPhotoImportDeleteImportedItemsFromSourceResult {
-    #[inline] pub unsafe fn get_session(&self) -> Result<ComPtr<PhotoImportSession>> {
+    #[inline] pub unsafe fn get_session(&self) -> Result<Option<ComPtr<PhotoImportSession>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Session)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_has_succeeded(&self) -> Result<bool> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_HasSucceeded)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deleted_items(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportItem>>> {
+    #[inline] pub unsafe fn get_deleted_items(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportItem>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DeletedItems)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_photos_count(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -16458,20 +16458,20 @@ RT_INTERFACE!{interface IPhotoImportFindItemsResult(IPhotoImportFindItemsResultV
     fn remove_ItemImported(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IPhotoImportFindItemsResult {
-    #[inline] pub unsafe fn get_session(&self) -> Result<ComPtr<PhotoImportSession>> {
+    #[inline] pub unsafe fn get_session(&self) -> Result<Option<ComPtr<PhotoImportSession>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Session)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_has_succeeded(&self) -> Result<bool> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_HasSucceeded)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_found_items(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportItem>>> {
+    #[inline] pub unsafe fn get_found_items(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportItem>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FoundItems)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_photos_count(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -16648,20 +16648,20 @@ RT_INTERFACE!{interface IPhotoImportImportItemsResult(IPhotoImportImportItemsRes
     fn DeleteImportedItemsFromSourceAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<PhotoImportDeleteImportedItemsFromSourceResult, f64>) -> HRESULT
 }}
 impl IPhotoImportImportItemsResult {
-    #[inline] pub unsafe fn get_session(&self) -> Result<ComPtr<PhotoImportSession>> {
+    #[inline] pub unsafe fn get_session(&self) -> Result<Option<ComPtr<PhotoImportSession>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Session)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_has_succeeded(&self) -> Result<bool> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_HasSucceeded)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_imported_items(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportItem>>> {
+    #[inline] pub unsafe fn get_imported_items(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportItem>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ImportedItems)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_photos_count(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -16766,20 +16766,20 @@ impl IPhotoImportItem {
         let hr = ((*self.lpVtbl).get_Date)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_sibling(&self) -> Result<ComPtr<PhotoImportSidecar>> {
+    #[inline] pub unsafe fn get_sibling(&self) -> Result<Option<ComPtr<PhotoImportSidecar>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Sibling)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_sidecars(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportSidecar>>> {
+    #[inline] pub unsafe fn get_sidecars(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportSidecar>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Sidecars)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_segments(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportVideoSegment>>> {
+    #[inline] pub unsafe fn get_video_segments(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportVideoSegment>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoSegments)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_is_selected(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -16790,20 +16790,20 @@ impl IPhotoImportItem {
         let hr = ((*self.lpVtbl).put_IsSelected)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_imported_file_names(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_imported_file_names(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ImportedFileNames)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deleted_file_names(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_deleted_file_names(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DeletedFileNames)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PhotoImportItem: IPhotoImportItem}
@@ -16812,10 +16812,10 @@ RT_INTERFACE!{interface IPhotoImportItemImportedEventArgs(IPhotoImportItemImport
     fn get_ImportedItem(&self, out: *mut *mut PhotoImportItem) -> HRESULT
 }}
 impl IPhotoImportItemImportedEventArgs {
-    #[inline] pub unsafe fn get_imported_item(&self) -> Result<ComPtr<PhotoImportItem>> {
+    #[inline] pub unsafe fn get_imported_item(&self) -> Result<Option<ComPtr<PhotoImportItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ImportedItem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PhotoImportItemImportedEventArgs: IPhotoImportItemImportedEventArgs}
@@ -16831,7 +16831,7 @@ impl PhotoImportManager {
     #[inline] pub fn find_all_sources_async() -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<PhotoImportSource>>>> { unsafe {
         <Self as RtActivatable<IPhotoImportManagerStatics>>::get_activation_factory().find_all_sources_async()
     }}
-    #[inline] pub fn get_pending_operations() -> Result<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportOperation>>> { unsafe {
+    #[inline] pub fn get_pending_operations() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportOperation>>>> { unsafe {
         <Self as RtActivatable<IPhotoImportManagerStatics>>::get_activation_factory().get_pending_operations()
     }}
 }
@@ -16853,10 +16853,10 @@ impl IPhotoImportManagerStatics {
         let hr = ((*self.lpVtbl).FindAllSourcesAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_pending_operations(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportOperation>>> {
+    #[inline] pub unsafe fn get_pending_operations(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportOperation>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetPendingOperations)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IPhotoImportOperation, 3656882148, 41114, 20196, 164, 177, 32, 148, 2, 119, 165, 190);
@@ -16873,10 +16873,10 @@ impl IPhotoImportOperation {
         let hr = ((*self.lpVtbl).get_Stage)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_session(&self) -> Result<ComPtr<PhotoImportSession>> {
+    #[inline] pub unsafe fn get_session(&self) -> Result<Option<ComPtr<PhotoImportSession>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Session)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_continue_finding_items_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<PhotoImportFindItemsResult, u32>>> {
         let mut out = null_mut();
@@ -16930,10 +16930,10 @@ RT_INTERFACE!{interface IPhotoImportSession(IPhotoImportSessionVtbl): IInspectab
     fn FindItemsAsync(&self, contentTypeFilter: PhotoImportContentTypeFilter, itemSelectionMode: PhotoImportItemSelectionMode, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<PhotoImportFindItemsResult, u32>) -> HRESULT
 }}
 impl IPhotoImportSession {
-    #[inline] pub unsafe fn get_source(&self) -> Result<ComPtr<PhotoImportSource>> {
+    #[inline] pub unsafe fn get_source(&self) -> Result<Option<ComPtr<PhotoImportSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_session_id(&self) -> Result<Guid> {
         let mut out = zeroed();
@@ -16944,10 +16944,10 @@ impl IPhotoImportSession {
         let hr = ((*self.lpVtbl).put_DestinationFolder)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_destination_folder(&self) -> Result<ComPtr<super::super::storage::IStorageFolder>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_destination_folder(&self) -> Result<Option<ComPtr<super::super::storage::IStorageFolder>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DestinationFolder)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_append_session_date_to_destination_folder(&self, value: bool) -> Result<()> {
         let hr = ((*self.lpVtbl).put_AppendSessionDateToDestinationFolder)(self as *const _ as *mut _, value);
@@ -17106,40 +17106,40 @@ impl IPhotoImportSource {
         let hr = ((*self.lpVtbl).get_PowerSource)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_battery_level_percent(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_battery_level_percent(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BatteryLevelPercent)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_date_time(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>> {
+    #[inline] pub unsafe fn get_date_time(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DateTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_storage_media(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportStorageMedium>>> {
+    #[inline] pub unsafe fn get_storage_media(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportStorageMedium>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StorageMedia)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_is_locked(&self) -> Result<ComPtr<super::super::foundation::IReference<bool>>> {
+    #[inline] pub unsafe fn get_is_locked(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<bool>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IsLocked)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_is_mass_storage(&self) -> Result<bool> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsMassStorage)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_import_session(&self) -> Result<ComPtr<PhotoImportSession>> {
+    #[inline] pub unsafe fn create_import_session(&self) -> Result<Option<ComPtr<PhotoImportSession>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateImportSession)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PhotoImportSource: IPhotoImportSource}
@@ -17262,15 +17262,15 @@ impl IPhotoImportVideoSegment {
         let hr = ((*self.lpVtbl).get_Date)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_sibling(&self) -> Result<ComPtr<PhotoImportSidecar>> {
+    #[inline] pub unsafe fn get_sibling(&self) -> Result<Option<ComPtr<PhotoImportSidecar>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Sibling)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_sidecars(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportSidecar>>> {
+    #[inline] pub unsafe fn get_sidecars(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<PhotoImportSidecar>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Sidecars)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PhotoImportVideoSegment: IPhotoImportVideoSegment}
@@ -17289,10 +17289,10 @@ impl IOcrEngine {
         let hr = ((*self.lpVtbl).RecognizeAsync)(self as *const _ as *mut _, bitmap as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_recognizer_language(&self) -> Result<ComPtr<super::super::globalization::Language>> {
+    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_recognizer_language(&self) -> Result<Option<ComPtr<super::super::globalization::Language>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RecognizerLanguage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class OcrEngine: IOcrEngine}
@@ -17301,16 +17301,16 @@ impl OcrEngine {
     #[inline] pub fn get_max_image_dimension() -> Result<u32> { unsafe {
         <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().get_max_image_dimension()
     }}
-    #[cfg(feature="windows-globalization")] #[inline] pub fn get_available_recognizer_languages() -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::super::globalization::Language>>> { unsafe {
+    #[cfg(feature="windows-globalization")] #[inline] pub fn get_available_recognizer_languages() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::globalization::Language>>>> { unsafe {
         <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().get_available_recognizer_languages()
     }}
     #[cfg(feature="windows-globalization")] #[inline] pub fn is_language_supported(language: &super::super::globalization::Language) -> Result<bool> { unsafe {
         <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().is_language_supported(language)
     }}
-    #[cfg(feature="windows-globalization")] #[inline] pub fn try_create_from_language(language: &super::super::globalization::Language) -> Result<ComPtr<OcrEngine>> { unsafe {
+    #[cfg(feature="windows-globalization")] #[inline] pub fn try_create_from_language(language: &super::super::globalization::Language) -> Result<Option<ComPtr<OcrEngine>>> { unsafe {
         <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().try_create_from_language(language)
     }}
-    #[inline] pub fn try_create_from_user_profile_languages() -> Result<ComPtr<OcrEngine>> { unsafe {
+    #[inline] pub fn try_create_from_user_profile_languages() -> Result<Option<ComPtr<OcrEngine>>> { unsafe {
         <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().try_create_from_user_profile_languages()
     }}
 }
@@ -17332,25 +17332,25 @@ impl IOcrEngineStatics {
         let hr = ((*self.lpVtbl).get_MaxImageDimension)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_available_recognizer_languages(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::super::globalization::Language>>> {
+    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_available_recognizer_languages(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::globalization::Language>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AvailableRecognizerLanguages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn is_language_supported(&self, language: &super::super::globalization::Language) -> Result<bool> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).IsLanguageSupported)(self as *const _ as *mut _, language as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn try_create_from_language(&self, language: &super::super::globalization::Language) -> Result<ComPtr<OcrEngine>> {
+    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn try_create_from_language(&self, language: &super::super::globalization::Language) -> Result<Option<ComPtr<OcrEngine>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryCreateFromLanguage)(self as *const _ as *mut _, language as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_create_from_user_profile_languages(&self) -> Result<ComPtr<OcrEngine>> {
+    #[inline] pub unsafe fn try_create_from_user_profile_languages(&self) -> Result<Option<ComPtr<OcrEngine>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryCreateFromUserProfileLanguages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IOcrLine, 4432239, 58143, 14884, 137, 156, 212, 68, 189, 8, 129, 36);
@@ -17359,10 +17359,10 @@ RT_INTERFACE!{interface IOcrLine(IOcrLineVtbl): IInspectable(IInspectableVtbl) [
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IOcrLine {
-    #[inline] pub unsafe fn get_words(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<OcrWord>>> {
+    #[inline] pub unsafe fn get_words(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<OcrWord>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Words)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_text(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -17378,15 +17378,15 @@ RT_INTERFACE!{interface IOcrResult(IOcrResultVtbl): IInspectable(IInspectableVtb
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IOcrResult {
-    #[inline] pub unsafe fn get_lines(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<OcrLine>>> {
+    #[inline] pub unsafe fn get_lines(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<OcrLine>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Lines)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_text_angle(&self) -> Result<ComPtr<super::super::foundation::IReference<f64>>> {
+    #[inline] pub unsafe fn get_text_angle(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<f64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TextAngle)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_text(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -17422,7 +17422,7 @@ RT_ENUM! { enum AutoLoadedDisplayPropertyKind: i32 {
 RT_CLASS!{static class BackgroundMediaPlayer}
 impl RtActivatable<IBackgroundMediaPlayerStatics> for BackgroundMediaPlayer {}
 impl BackgroundMediaPlayer {
-    #[inline] pub fn get_current() -> Result<ComPtr<MediaPlayer>> { unsafe {
+    #[inline] pub fn get_current() -> Result<Option<ComPtr<MediaPlayer>>> { unsafe {
         <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().get_current()
     }}
     #[inline] pub fn add_message_received_from_background(value: &super::super::foundation::EventHandler<MediaPlayerDataReceivedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
@@ -17464,10 +17464,10 @@ RT_INTERFACE!{static interface IBackgroundMediaPlayerStatics(IBackgroundMediaPla
     fn Shutdown(&self) -> HRESULT
 }}
 impl IBackgroundMediaPlayerStatics {
-    #[inline] pub unsafe fn get_current(&self) -> Result<ComPtr<MediaPlayer>> {
+    #[inline] pub unsafe fn get_current(&self) -> Result<Option<ComPtr<MediaPlayer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_message_received_from_background(&self, value: &super::super::foundation::EventHandler<MediaPlayerDataReceivedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -17511,15 +17511,15 @@ RT_INTERFACE!{interface ICurrentMediaPlaybackItemChangedEventArgs(ICurrentMediaP
     fn get_OldItem(&self, out: *mut *mut MediaPlaybackItem) -> HRESULT
 }}
 impl ICurrentMediaPlaybackItemChangedEventArgs {
-    #[inline] pub unsafe fn get_new_item(&self) -> Result<ComPtr<MediaPlaybackItem>> {
+    #[inline] pub unsafe fn get_new_item(&self) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NewItem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_old_item(&self) -> Result<ComPtr<MediaPlaybackItem>> {
+    #[inline] pub unsafe fn get_old_item(&self) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OldItem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CurrentMediaPlaybackItemChangedEventArgs: ICurrentMediaPlaybackItemChangedEventArgs}
@@ -17547,25 +17547,25 @@ RT_INTERFACE!{interface IMediaBreak(IMediaBreakVtbl): IInspectable(IInspectableV
     fn put_CanStart(&self, value: bool) -> HRESULT
 }}
 impl IMediaBreak {
-    #[inline] pub unsafe fn get_playback_list(&self) -> Result<ComPtr<MediaPlaybackList>> {
+    #[inline] pub unsafe fn get_playback_list(&self) -> Result<Option<ComPtr<MediaPlaybackList>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PlaybackList)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_presentation_position(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_presentation_position(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PresentationPosition)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_insertion_method(&self) -> Result<MediaBreakInsertionMethod> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_InsertionMethod)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_custom_properties(&self) -> Result<ComPtr<super::super::foundation::collections::ValueSet>> {
+    #[inline] pub unsafe fn get_custom_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::ValueSet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CustomProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_can_start(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -17593,10 +17593,10 @@ RT_INTERFACE!{interface IMediaBreakEndedEventArgs(IMediaBreakEndedEventArgsVtbl)
     fn get_MediaBreak(&self, out: *mut *mut MediaBreak) -> HRESULT
 }}
 impl IMediaBreakEndedEventArgs {
-    #[inline] pub unsafe fn get_media_break(&self) -> Result<ComPtr<MediaBreak>> {
+    #[inline] pub unsafe fn get_media_break(&self) -> Result<Option<ComPtr<MediaBreak>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaBreak)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaBreakEndedEventArgs: IMediaBreakEndedEventArgs}
@@ -17672,15 +17672,15 @@ impl IMediaBreakManager {
         let hr = ((*self.lpVtbl).remove_BreakSkipped)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_current_break(&self) -> Result<ComPtr<MediaBreak>> {
+    #[inline] pub unsafe fn get_current_break(&self) -> Result<Option<ComPtr<MediaBreak>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CurrentBreak)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_playback_session(&self) -> Result<ComPtr<MediaPlaybackSession>> {
+    #[inline] pub unsafe fn get_playback_session(&self) -> Result<Option<ComPtr<MediaPlaybackSession>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PlaybackSession)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn play_break(&self, value: &MediaBreak) -> Result<()> {
         let hr = ((*self.lpVtbl).PlayBreak)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -17723,33 +17723,33 @@ impl IMediaBreakSchedule {
         let hr = ((*self.lpVtbl).RemoveMidrollBreak)(self as *const _ as *mut _, mediaBreak as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_midroll_breaks(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MediaBreak>>> {
+    #[inline] pub unsafe fn get_midroll_breaks(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MediaBreak>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MidrollBreaks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_preroll_break(&self, value: &MediaBreak) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PrerollBreak)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_preroll_break(&self) -> Result<ComPtr<MediaBreak>> {
+    #[inline] pub unsafe fn get_preroll_break(&self) -> Result<Option<ComPtr<MediaBreak>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PrerollBreak)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_postroll_break(&self, value: &MediaBreak) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PostrollBreak)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_postroll_break(&self) -> Result<ComPtr<MediaBreak>> {
+    #[inline] pub unsafe fn get_postroll_break(&self) -> Result<Option<ComPtr<MediaBreak>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PostrollBreak)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_playback_item(&self) -> Result<ComPtr<MediaPlaybackItem>> {
+    #[inline] pub unsafe fn get_playback_item(&self) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PlaybackItem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaBreakSchedule: IMediaBreakSchedule}
@@ -17760,10 +17760,10 @@ RT_INTERFACE!{interface IMediaBreakSeekedOverEventArgs(IMediaBreakSeekedOverEven
     fn get_NewPosition(&self, out: *mut super::super::foundation::TimeSpan) -> HRESULT
 }}
 impl IMediaBreakSeekedOverEventArgs {
-    #[inline] pub unsafe fn get_seeked_over_breaks(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MediaBreak>>> {
+    #[inline] pub unsafe fn get_seeked_over_breaks(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MediaBreak>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SeekedOverBreaks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_old_position(&self) -> Result<super::super::foundation::TimeSpan> {
         let mut out = zeroed();
@@ -17782,10 +17782,10 @@ RT_INTERFACE!{interface IMediaBreakSkippedEventArgs(IMediaBreakSkippedEventArgsV
     fn get_MediaBreak(&self, out: *mut *mut MediaBreak) -> HRESULT
 }}
 impl IMediaBreakSkippedEventArgs {
-    #[inline] pub unsafe fn get_media_break(&self) -> Result<ComPtr<MediaBreak>> {
+    #[inline] pub unsafe fn get_media_break(&self) -> Result<Option<ComPtr<MediaBreak>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaBreak)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaBreakSkippedEventArgs: IMediaBreakSkippedEventArgs}
@@ -17794,10 +17794,10 @@ RT_INTERFACE!{interface IMediaBreakStartedEventArgs(IMediaBreakStartedEventArgsV
     fn get_MediaBreak(&self, out: *mut *mut MediaBreak) -> HRESULT
 }}
 impl IMediaBreakStartedEventArgs {
-    #[inline] pub unsafe fn get_media_break(&self) -> Result<ComPtr<MediaBreak>> {
+    #[inline] pub unsafe fn get_media_break(&self) -> Result<Option<ComPtr<MediaBreak>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaBreak)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaBreakStartedEventArgs: IMediaBreakStartedEventArgs}
@@ -17810,10 +17810,10 @@ RT_INTERFACE!{interface IMediaEnginePlaybackSource(IMediaEnginePlaybackSourceVtb
     fn SetPlaybackSource(&self, source: *mut IMediaPlaybackSource) -> HRESULT
 }}
 impl IMediaEnginePlaybackSource {
-    #[inline] pub unsafe fn get_current_item(&self) -> Result<ComPtr<MediaPlaybackItem>> {
+    #[inline] pub unsafe fn get_current_item(&self) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CurrentItem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_playback_source(&self, source: &IMediaPlaybackSource) -> Result<()> {
         let hr = ((*self.lpVtbl).SetPlaybackSource)(self as *const _ as *mut _, source as *const _ as *mut _);
@@ -17842,20 +17842,20 @@ impl IMediaItemDisplayProperties {
         let hr = ((*self.lpVtbl).put_Type)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_music_properties(&self) -> Result<ComPtr<super::MusicDisplayProperties>> {
+    #[inline] pub unsafe fn get_music_properties(&self) -> Result<Option<ComPtr<super::MusicDisplayProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MusicProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_properties(&self) -> Result<ComPtr<super::VideoDisplayProperties>> {
+    #[inline] pub unsafe fn get_video_properties(&self) -> Result<Option<ComPtr<super::VideoDisplayProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<ComPtr<super::super::storage::streams::RandomAccessStreamReference>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<Option<ComPtr<super::super::storage::streams::RandomAccessStreamReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn set_thumbnail(&self, value: &super::super::storage::streams::RandomAccessStreamReference) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -17914,60 +17914,60 @@ impl IMediaPlaybackCommandManager {
         let hr = ((*self.lpVtbl).put_IsEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_media_player(&self) -> Result<ComPtr<MediaPlayer>> {
+    #[inline] pub unsafe fn get_media_player(&self) -> Result<Option<ComPtr<MediaPlayer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaPlayer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_play_behavior(&self) -> Result<ComPtr<MediaPlaybackCommandManagerCommandBehavior>> {
+    #[inline] pub unsafe fn get_play_behavior(&self) -> Result<Option<ComPtr<MediaPlaybackCommandManagerCommandBehavior>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PlayBehavior)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_pause_behavior(&self) -> Result<ComPtr<MediaPlaybackCommandManagerCommandBehavior>> {
+    #[inline] pub unsafe fn get_pause_behavior(&self) -> Result<Option<ComPtr<MediaPlaybackCommandManagerCommandBehavior>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PauseBehavior)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_next_behavior(&self) -> Result<ComPtr<MediaPlaybackCommandManagerCommandBehavior>> {
+    #[inline] pub unsafe fn get_next_behavior(&self) -> Result<Option<ComPtr<MediaPlaybackCommandManagerCommandBehavior>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NextBehavior)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_previous_behavior(&self) -> Result<ComPtr<MediaPlaybackCommandManagerCommandBehavior>> {
+    #[inline] pub unsafe fn get_previous_behavior(&self) -> Result<Option<ComPtr<MediaPlaybackCommandManagerCommandBehavior>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PreviousBehavior)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_fast_forward_behavior(&self) -> Result<ComPtr<MediaPlaybackCommandManagerCommandBehavior>> {
+    #[inline] pub unsafe fn get_fast_forward_behavior(&self) -> Result<Option<ComPtr<MediaPlaybackCommandManagerCommandBehavior>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FastForwardBehavior)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_rewind_behavior(&self) -> Result<ComPtr<MediaPlaybackCommandManagerCommandBehavior>> {
+    #[inline] pub unsafe fn get_rewind_behavior(&self) -> Result<Option<ComPtr<MediaPlaybackCommandManagerCommandBehavior>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RewindBehavior)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_shuffle_behavior(&self) -> Result<ComPtr<MediaPlaybackCommandManagerCommandBehavior>> {
+    #[inline] pub unsafe fn get_shuffle_behavior(&self) -> Result<Option<ComPtr<MediaPlaybackCommandManagerCommandBehavior>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ShuffleBehavior)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_auto_repeat_mode_behavior(&self) -> Result<ComPtr<MediaPlaybackCommandManagerCommandBehavior>> {
+    #[inline] pub unsafe fn get_auto_repeat_mode_behavior(&self) -> Result<Option<ComPtr<MediaPlaybackCommandManagerCommandBehavior>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AutoRepeatModeBehavior)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_position_behavior(&self) -> Result<ComPtr<MediaPlaybackCommandManagerCommandBehavior>> {
+    #[inline] pub unsafe fn get_position_behavior(&self) -> Result<Option<ComPtr<MediaPlaybackCommandManagerCommandBehavior>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PositionBehavior)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_rate_behavior(&self) -> Result<ComPtr<MediaPlaybackCommandManagerCommandBehavior>> {
+    #[inline] pub unsafe fn get_rate_behavior(&self) -> Result<Option<ComPtr<MediaPlaybackCommandManagerCommandBehavior>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RateBehavior)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_play_received(&self, handler: &super::super::foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerPlayReceivedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -18083,10 +18083,10 @@ impl IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs {
         let hr = ((*self.lpVtbl).get_AutoRepeatMode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<super::super::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<super::super::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs: IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs}
@@ -18100,10 +18100,10 @@ RT_INTERFACE!{interface IMediaPlaybackCommandManagerCommandBehavior(IMediaPlayba
     fn remove_IsEnabledChanged(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IMediaPlaybackCommandManagerCommandBehavior {
-    #[inline] pub unsafe fn get_command_manager(&self) -> Result<ComPtr<MediaPlaybackCommandManager>> {
+    #[inline] pub unsafe fn get_command_manager(&self) -> Result<Option<ComPtr<MediaPlaybackCommandManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CommandManager)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_is_enabled(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -18146,10 +18146,10 @@ impl IMediaPlaybackCommandManagerFastForwardReceivedEventArgs {
         let hr = ((*self.lpVtbl).put_Handled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<super::super::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<super::super::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackCommandManagerFastForwardReceivedEventArgs: IMediaPlaybackCommandManagerFastForwardReceivedEventArgs}
@@ -18169,10 +18169,10 @@ impl IMediaPlaybackCommandManagerNextReceivedEventArgs {
         let hr = ((*self.lpVtbl).put_Handled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<super::super::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<super::super::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackCommandManagerNextReceivedEventArgs: IMediaPlaybackCommandManagerNextReceivedEventArgs}
@@ -18192,10 +18192,10 @@ impl IMediaPlaybackCommandManagerPauseReceivedEventArgs {
         let hr = ((*self.lpVtbl).put_Handled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<super::super::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<super::super::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackCommandManagerPauseReceivedEventArgs: IMediaPlaybackCommandManagerPauseReceivedEventArgs}
@@ -18215,10 +18215,10 @@ impl IMediaPlaybackCommandManagerPlayReceivedEventArgs {
         let hr = ((*self.lpVtbl).put_Handled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<super::super::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<super::super::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackCommandManagerPlayReceivedEventArgs: IMediaPlaybackCommandManagerPlayReceivedEventArgs}
@@ -18244,10 +18244,10 @@ impl IMediaPlaybackCommandManagerPositionReceivedEventArgs {
         let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<super::super::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<super::super::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackCommandManagerPositionReceivedEventArgs: IMediaPlaybackCommandManagerPositionReceivedEventArgs}
@@ -18267,10 +18267,10 @@ impl IMediaPlaybackCommandManagerPreviousReceivedEventArgs {
         let hr = ((*self.lpVtbl).put_Handled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<super::super::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<super::super::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackCommandManagerPreviousReceivedEventArgs: IMediaPlaybackCommandManagerPreviousReceivedEventArgs}
@@ -18296,10 +18296,10 @@ impl IMediaPlaybackCommandManagerRateReceivedEventArgs {
         let hr = ((*self.lpVtbl).get_PlaybackRate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<super::super::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<super::super::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackCommandManagerRateReceivedEventArgs: IMediaPlaybackCommandManagerRateReceivedEventArgs}
@@ -18319,10 +18319,10 @@ impl IMediaPlaybackCommandManagerRewindReceivedEventArgs {
         let hr = ((*self.lpVtbl).put_Handled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<super::super::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<super::super::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackCommandManagerRewindReceivedEventArgs: IMediaPlaybackCommandManagerRewindReceivedEventArgs}
@@ -18348,10 +18348,10 @@ impl IMediaPlaybackCommandManagerShuffleReceivedEventArgs {
         let hr = ((*self.lpVtbl).get_IsShuffleRequested)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<super::super::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<super::super::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackCommandManagerShuffleReceivedEventArgs: IMediaPlaybackCommandManagerShuffleReceivedEventArgs}
@@ -18396,25 +18396,25 @@ impl IMediaPlaybackItem {
         let hr = ((*self.lpVtbl).remove_TimedMetadataTracksChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_source(&self) -> Result<ComPtr<super::core::MediaSource>> {
+    #[inline] pub unsafe fn get_source(&self) -> Result<Option<ComPtr<super::core::MediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_audio_tracks(&self) -> Result<ComPtr<MediaPlaybackAudioTrackList>> {
+    #[inline] pub unsafe fn get_audio_tracks(&self) -> Result<Option<ComPtr<MediaPlaybackAudioTrackList>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AudioTracks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_tracks(&self) -> Result<ComPtr<MediaPlaybackVideoTrackList>> {
+    #[inline] pub unsafe fn get_video_tracks(&self) -> Result<Option<ComPtr<MediaPlaybackVideoTrackList>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoTracks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_timed_metadata_tracks(&self) -> Result<ComPtr<MediaPlaybackTimedMetadataTrackList>> {
+    #[inline] pub unsafe fn get_timed_metadata_tracks(&self) -> Result<Option<ComPtr<MediaPlaybackTimedMetadataTrackList>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TimedMetadataTracks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackItem: IMediaPlaybackItem}
@@ -18431,7 +18431,7 @@ impl MediaPlaybackItem {
     #[inline] pub fn create_with_start_time_and_duration_limit(source: &super::core::MediaSource, startTime: super::super::foundation::TimeSpan, durationLimit: super::super::foundation::TimeSpan) -> Result<ComPtr<MediaPlaybackItem>> { unsafe {
         <Self as RtActivatable<IMediaPlaybackItemFactory2>>::get_activation_factory().create_with_start_time_and_duration_limit(source, startTime, durationLimit)
     }}
-    #[inline] pub fn find_from_media_source(source: &super::core::MediaSource) -> Result<ComPtr<MediaPlaybackItem>> { unsafe {
+    #[inline] pub fn find_from_media_source(source: &super::core::MediaSource) -> Result<Option<ComPtr<MediaPlaybackItem>>> { unsafe {
         <Self as RtActivatable<IMediaPlaybackItemStatics>>::get_activation_factory().find_from_media_source(source)
     }}
 }
@@ -18447,20 +18447,20 @@ RT_INTERFACE!{interface IMediaPlaybackItem2(IMediaPlaybackItem2Vtbl): IInspectab
     fn ApplyDisplayProperties(&self, value: *mut MediaItemDisplayProperties) -> HRESULT
 }}
 impl IMediaPlaybackItem2 {
-    #[inline] pub unsafe fn get_break_schedule(&self) -> Result<ComPtr<MediaBreakSchedule>> {
+    #[inline] pub unsafe fn get_break_schedule(&self) -> Result<Option<ComPtr<MediaBreakSchedule>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BreakSchedule)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_start_time(&self) -> Result<super::super::foundation::TimeSpan> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_StartTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_duration_limit(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_duration_limit(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DurationLimit)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_can_skip(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -18471,10 +18471,10 @@ impl IMediaPlaybackItem2 {
         let hr = ((*self.lpVtbl).put_CanSkip)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_display_properties(&self) -> Result<ComPtr<MediaItemDisplayProperties>> {
+    #[inline] pub unsafe fn get_display_properties(&self) -> Result<Option<ComPtr<MediaItemDisplayProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDisplayProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn apply_display_properties(&self, value: &MediaItemDisplayProperties) -> Result<()> {
         let hr = ((*self.lpVtbl).ApplyDisplayProperties)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -18572,15 +18572,15 @@ RT_INTERFACE!{interface IMediaPlaybackItemFailedEventArgs(IMediaPlaybackItemFail
     fn get_Error(&self, out: *mut *mut MediaPlaybackItemError) -> HRESULT
 }}
 impl IMediaPlaybackItemFailedEventArgs {
-    #[inline] pub unsafe fn get_item(&self) -> Result<ComPtr<MediaPlaybackItem>> {
+    #[inline] pub unsafe fn get_item(&self) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Item)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_error(&self) -> Result<ComPtr<MediaPlaybackItemError>> {
+    #[inline] pub unsafe fn get_error(&self) -> Result<Option<ComPtr<MediaPlaybackItemError>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Error)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackItemFailedEventArgs: IMediaPlaybackItemFailedEventArgs}
@@ -18589,10 +18589,10 @@ RT_INTERFACE!{interface IMediaPlaybackItemOpenedEventArgs(IMediaPlaybackItemOpen
     fn get_Item(&self, out: *mut *mut MediaPlaybackItem) -> HRESULT
 }}
 impl IMediaPlaybackItemOpenedEventArgs {
-    #[inline] pub unsafe fn get_item(&self) -> Result<ComPtr<MediaPlaybackItem>> {
+    #[inline] pub unsafe fn get_item(&self) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Item)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackItemOpenedEventArgs: IMediaPlaybackItemOpenedEventArgs}
@@ -18601,10 +18601,10 @@ RT_INTERFACE!{static interface IMediaPlaybackItemStatics(IMediaPlaybackItemStati
     fn FindFromMediaSource(&self, source: *mut super::core::MediaSource, out: *mut *mut MediaPlaybackItem) -> HRESULT
 }}
 impl IMediaPlaybackItemStatics {
-    #[inline] pub unsafe fn find_from_media_source(&self, source: &super::core::MediaSource) -> Result<ComPtr<MediaPlaybackItem>> {
+    #[inline] pub unsafe fn find_from_media_source(&self, source: &super::core::MediaSource) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindFromMediaSource)(self as *const _ as *mut _, source as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaPlaybackList, 2138566300, 56386, 20006, 169, 141, 120, 80, 223, 142, 201, 37);
@@ -18654,10 +18654,10 @@ impl IMediaPlaybackList {
         let hr = ((*self.lpVtbl).remove_ItemOpened)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_items(&self) -> Result<ComPtr<super::super::foundation::collections::IObservableVector<MediaPlaybackItem>>> {
+    #[inline] pub unsafe fn get_items(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IObservableVector<MediaPlaybackItem>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Items)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_auto_repeat_enabled(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -18677,30 +18677,30 @@ impl IMediaPlaybackList {
         let hr = ((*self.lpVtbl).put_ShuffleEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_current_item(&self) -> Result<ComPtr<MediaPlaybackItem>> {
+    #[inline] pub unsafe fn get_current_item(&self) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CurrentItem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_current_item_index(&self) -> Result<u32> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_CurrentItemIndex)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn move_next(&self) -> Result<ComPtr<MediaPlaybackItem>> {
+    #[inline] pub unsafe fn move_next(&self) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).MoveNext)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn move_previous(&self) -> Result<ComPtr<MediaPlaybackItem>> {
+    #[inline] pub unsafe fn move_previous(&self) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).MovePrevious)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn move_to(&self, itemIndex: u32) -> Result<ComPtr<MediaPlaybackItem>> {
+    #[inline] pub unsafe fn move_to(&self, itemIndex: u32) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).MoveTo)(self as *const _ as *mut _, itemIndex, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlaybackList: IMediaPlaybackList}
@@ -18716,28 +18716,28 @@ RT_INTERFACE!{interface IMediaPlaybackList2(IMediaPlaybackList2Vtbl): IInspectab
     fn SetShuffledItems(&self, value: *mut super::super::foundation::collections::IIterable<MediaPlaybackItem>) -> HRESULT
 }}
 impl IMediaPlaybackList2 {
-    #[inline] pub unsafe fn get_max_prefetch_time(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_max_prefetch_time(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MaxPrefetchTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_max_prefetch_time(&self, value: &super::super::foundation::IReference<super::super::foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_MaxPrefetchTime)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_starting_item(&self) -> Result<ComPtr<MediaPlaybackItem>> {
+    #[inline] pub unsafe fn get_starting_item(&self) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StartingItem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_starting_item(&self, value: &MediaPlaybackItem) -> Result<()> {
         let hr = ((*self.lpVtbl).put_StartingItem)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_shuffled_items(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<MediaPlaybackItem>>> {
+    #[inline] pub unsafe fn get_shuffled_items(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<MediaPlaybackItem>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ShuffledItems)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_shuffled_items(&self, value: &super::super::foundation::collections::IIterable<MediaPlaybackItem>) -> Result<()> {
         let hr = ((*self.lpVtbl).SetShuffledItems)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -18750,10 +18750,10 @@ RT_INTERFACE!{interface IMediaPlaybackList3(IMediaPlaybackList3Vtbl): IInspectab
     fn put_MaxPlayedItemsToKeepOpen(&self, value: *mut super::super::foundation::IReference<u32>) -> HRESULT
 }}
 impl IMediaPlaybackList3 {
-    #[inline] pub unsafe fn get_max_played_items_to_keep_open(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_max_played_items_to_keep_open(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MaxPlayedItemsToKeepOpen)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_max_played_items_to_keep_open(&self, value: &super::super::foundation::IReference<u32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_MaxPlayedItemsToKeepOpen)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -18892,10 +18892,10 @@ impl IMediaPlaybackSession {
         let hr = ((*self.lpVtbl).remove_NaturalVideoSizeChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_media_player(&self) -> Result<ComPtr<MediaPlayer>> {
+    #[inline] pub unsafe fn get_media_player(&self) -> Result<Option<ComPtr<MediaPlayer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaPlayer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_natural_duration(&self) -> Result<super::super::foundation::TimeSpan> {
         let mut out = zeroed();
@@ -19035,10 +19035,10 @@ impl IMediaPlaybackSession2 {
         let hr = ((*self.lpVtbl).remove_SupportedPlaybackRatesChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_spherical_video_projection(&self) -> Result<ComPtr<MediaPlaybackSphericalVideoProjection>> {
+    #[inline] pub unsafe fn get_spherical_video_projection(&self) -> Result<Option<ComPtr<MediaPlaybackSphericalVideoProjection>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SphericalVideoProjection)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_is_mirroring(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -19049,20 +19049,20 @@ impl IMediaPlaybackSession2 {
         let hr = ((*self.lpVtbl).put_IsMirroring)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_buffered_ranges(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::MediaTimeRange>>> {
+    #[inline] pub unsafe fn get_buffered_ranges(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::MediaTimeRange>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetBufferedRanges)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_played_ranges(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::MediaTimeRange>>> {
+    #[inline] pub unsafe fn get_played_ranges(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::MediaTimeRange>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetPlayedRanges)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_seekable_ranges(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::MediaTimeRange>>> {
+    #[inline] pub unsafe fn get_seekable_ranges(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::MediaTimeRange>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetSeekableRanges)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn is_supported_playback_rate_range(&self, rate1: f64, rate2: f64) -> Result<bool> {
         let mut out = zeroed();
@@ -19309,10 +19309,10 @@ impl IMediaPlayer {
         let hr = ((*self.lpVtbl).put_Volume)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_playback_media_markers(&self) -> Result<ComPtr<PlaybackMediaMarkerSequence>> {
+    #[inline] pub unsafe fn get_playback_media_markers(&self) -> Result<Option<ComPtr<PlaybackMediaMarkerSequence>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PlaybackMediaMarkers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_media_opened(&self, value: &super::super::foundation::TypedEventHandler<MediaPlayer, IInspectable>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -19429,10 +19429,10 @@ RT_INTERFACE!{interface IMediaPlayer2(IMediaPlayer2Vtbl): IInspectable(IInspecta
     fn put_AudioDeviceType(&self, value: MediaPlayerAudioDeviceType) -> HRESULT
 }}
 impl IMediaPlayer2 {
-    #[inline] pub unsafe fn get_system_media_transport_controls(&self) -> Result<ComPtr<super::SystemMediaTransportControls>> {
+    #[inline] pub unsafe fn get_system_media_transport_controls(&self) -> Result<Option<ComPtr<super::SystemMediaTransportControls>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SystemMediaTransportControls)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_audio_category(&self) -> Result<MediaPlayerAudioCategory> {
         let mut out = zeroed();
@@ -19526,29 +19526,29 @@ impl IMediaPlayer3 {
         let hr = ((*self.lpVtbl).put_StereoscopicVideoRenderMode)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_break_manager(&self) -> Result<ComPtr<MediaBreakManager>> {
+    #[inline] pub unsafe fn get_break_manager(&self) -> Result<Option<ComPtr<MediaBreakManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BreakManager)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_command_manager(&self) -> Result<ComPtr<MediaPlaybackCommandManager>> {
+    #[inline] pub unsafe fn get_command_manager(&self) -> Result<Option<ComPtr<MediaPlaybackCommandManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CommandManager)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_audio_device(&self) -> Result<ComPtr<super::super::devices::enumeration::DeviceInformation>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_audio_device(&self) -> Result<Option<ComPtr<super::super::devices::enumeration::DeviceInformation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AudioDevice)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-devices")] #[inline] pub unsafe fn set_audio_device(&self, value: &super::super::devices::enumeration::DeviceInformation) -> Result<()> {
         let hr = ((*self.lpVtbl).put_AudioDevice)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_timeline_controller(&self) -> Result<ComPtr<super::MediaTimelineController>> {
+    #[inline] pub unsafe fn get_timeline_controller(&self) -> Result<Option<ComPtr<super::MediaTimelineController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TimelineController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_timeline_controller(&self, value: &super::MediaTimelineController) -> Result<()> {
         let hr = ((*self.lpVtbl).put_TimelineController)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -19563,10 +19563,10 @@ impl IMediaPlayer3 {
         let hr = ((*self.lpVtbl).put_TimelineControllerPositionOffset)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_playback_session(&self) -> Result<ComPtr<MediaPlaybackSession>> {
+    #[inline] pub unsafe fn get_playback_session(&self) -> Result<Option<ComPtr<MediaPlaybackSession>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PlaybackSession)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn step_forward_one_frame(&self) -> Result<()> {
         let hr = ((*self.lpVtbl).StepForwardOneFrame)(self as *const _ as *mut _);
@@ -19576,10 +19576,10 @@ impl IMediaPlayer3 {
         let hr = ((*self.lpVtbl).StepBackwardOneFrame)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_as_casting_source(&self) -> Result<ComPtr<super::casting::CastingSource>> {
+    #[inline] pub unsafe fn get_as_casting_source(&self) -> Result<Option<ComPtr<super::casting::CastingSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetAsCastingSource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaPlayer4, 2147704240, 29768, 18288, 175, 207, 42, 87, 69, 9, 20, 197);
@@ -19592,10 +19592,10 @@ impl IMediaPlayer4 {
         let hr = ((*self.lpVtbl).SetSurfaceSize)(self as *const _ as *mut _, size);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-ui")] #[inline] pub unsafe fn get_surface(&self, compositor: &super::super::ui::composition::Compositor) -> Result<ComPtr<MediaPlayerSurface>> {
+    #[cfg(feature="windows-ui")] #[inline] pub unsafe fn get_surface(&self, compositor: &super::super::ui::composition::Compositor) -> Result<Option<ComPtr<MediaPlayerSurface>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetSurface)(self as *const _ as *mut _, compositor as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaPlayer5, 3487905789, 63594, 17478, 191, 77, 200, 231, 146, 183, 180, 179);
@@ -19679,10 +19679,10 @@ RT_INTERFACE!{interface IMediaPlayerDataReceivedEventArgs(IMediaPlayerDataReceiv
     fn get_Data(&self, out: *mut *mut super::super::foundation::collections::ValueSet) -> HRESULT
 }}
 impl IMediaPlayerDataReceivedEventArgs {
-    #[inline] pub unsafe fn get_data(&self) -> Result<ComPtr<super::super::foundation::collections::ValueSet>> {
+    #[inline] pub unsafe fn get_data(&self) -> Result<Option<ComPtr<super::super::foundation::collections::ValueSet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Data)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlayerDataReceivedEventArgs: IMediaPlayerDataReceivedEventArgs}
@@ -19761,10 +19761,10 @@ RT_INTERFACE!{interface IMediaPlayerSource(IMediaPlayerSourceVtbl): IInspectable
     fn SetMediaSource(&self, source: *mut super::core::IMediaSource) -> HRESULT
 }}
 impl IMediaPlayerSource {
-    #[inline] pub unsafe fn get_protection_manager(&self) -> Result<ComPtr<super::protection::MediaProtectionManager>> {
+    #[inline] pub unsafe fn get_protection_manager(&self) -> Result<Option<ComPtr<super::protection::MediaProtectionManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ProtectionManager)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_protection_manager(&self, value: &super::protection::MediaProtectionManager) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ProtectionManager)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -19789,10 +19789,10 @@ RT_INTERFACE!{interface IMediaPlayerSource2(IMediaPlayerSource2Vtbl): IInspectab
     fn put_Source(&self, value: *mut IMediaPlaybackSource) -> HRESULT
 }}
 impl IMediaPlayerSource2 {
-    #[inline] pub unsafe fn get_source(&self) -> Result<ComPtr<IMediaPlaybackSource>> {
+    #[inline] pub unsafe fn get_source(&self) -> Result<Option<ComPtr<IMediaPlaybackSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_source(&self, value: &IMediaPlaybackSource) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Source)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -19811,20 +19811,20 @@ RT_INTERFACE!{interface IMediaPlayerSurface(IMediaPlayerSurfaceVtbl): IInspectab
     fn get_MediaPlayer(&self, out: *mut *mut MediaPlayer) -> HRESULT
 }}
 impl IMediaPlayerSurface {
-    #[cfg(feature="windows-ui")] #[inline] pub unsafe fn get_composition_surface(&self) -> Result<ComPtr<super::super::ui::composition::ICompositionSurface>> {
+    #[cfg(feature="windows-ui")] #[inline] pub unsafe fn get_composition_surface(&self) -> Result<Option<ComPtr<super::super::ui::composition::ICompositionSurface>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CompositionSurface)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-ui")] #[inline] pub unsafe fn get_compositor(&self) -> Result<ComPtr<super::super::ui::composition::Compositor>> {
+    #[cfg(feature="windows-ui")] #[inline] pub unsafe fn get_compositor(&self) -> Result<Option<ComPtr<super::super::ui::composition::Compositor>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Compositor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_media_player(&self) -> Result<ComPtr<MediaPlayer>> {
+    #[inline] pub unsafe fn get_media_player(&self) -> Result<Option<ComPtr<MediaPlayer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaPlayer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaPlayerSurface: IMediaPlayerSurface}
@@ -19884,10 +19884,10 @@ RT_INTERFACE!{interface IPlaybackMediaMarkerReachedEventArgs(IPlaybackMediaMarke
     fn get_PlaybackMediaMarker(&self, out: *mut *mut PlaybackMediaMarker) -> HRESULT
 }}
 impl IPlaybackMediaMarkerReachedEventArgs {
-    #[inline] pub unsafe fn get_playback_media_marker(&self) -> Result<ComPtr<PlaybackMediaMarker>> {
+    #[inline] pub unsafe fn get_playback_media_marker(&self) -> Result<Option<ComPtr<PlaybackMediaMarker>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PlaybackMediaMarker)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PlaybackMediaMarkerReachedEventArgs: IPlaybackMediaMarkerReachedEventArgs}
@@ -19926,10 +19926,10 @@ RT_INTERFACE!{interface ITimedMetadataPresentationModeChangedEventArgs(ITimedMet
     fn get_NewPresentationMode(&self, out: *mut TimedMetadataTrackPresentationMode) -> HRESULT
 }}
 impl ITimedMetadataPresentationModeChangedEventArgs {
-    #[inline] pub unsafe fn get_track(&self) -> Result<ComPtr<super::core::TimedMetadataTrack>> {
+    #[inline] pub unsafe fn get_track(&self) -> Result<Option<ComPtr<super::core::TimedMetadataTrack>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Track)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_old_presentation_mode(&self) -> Result<TimedMetadataTrackPresentationMode> {
         let mut out = zeroed();
@@ -20078,15 +20078,15 @@ RT_INTERFACE!{interface IPlayToConnectionTransferredEventArgs(IPlayToConnectionT
     fn get_CurrentSource(&self, out: *mut *mut PlayToSource) -> HRESULT
 }}
 impl IPlayToConnectionTransferredEventArgs {
-    #[inline] pub unsafe fn get_previous_source(&self) -> Result<ComPtr<PlayToSource>> {
+    #[inline] pub unsafe fn get_previous_source(&self) -> Result<Option<ComPtr<PlayToSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PreviousSource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_current_source(&self) -> Result<ComPtr<PlayToSource>> {
+    #[inline] pub unsafe fn get_current_source(&self) -> Result<Option<ComPtr<PlayToSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CurrentSource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PlayToConnectionTransferredEventArgs: IPlayToConnectionTransferredEventArgs}
@@ -20131,7 +20131,7 @@ impl IPlayToManager {
 RT_CLASS!{class PlayToManager: IPlayToManager}
 impl RtActivatable<IPlayToManagerStatics> for PlayToManager {}
 impl PlayToManager {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<PlayToManager>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<PlayToManager>>> { unsafe {
         <Self as RtActivatable<IPlayToManagerStatics>>::get_activation_factory().get_for_current_view()
     }}
     #[inline] pub fn show_play_to_ui() -> Result<()> { unsafe {
@@ -20145,10 +20145,10 @@ RT_INTERFACE!{static interface IPlayToManagerStatics(IPlayToManagerStaticsVtbl):
     fn ShowPlayToUI(&self) -> HRESULT
 }}
 impl IPlayToManagerStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<PlayToManager>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<PlayToManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn show_play_to_ui(&self) -> Result<()> {
         let hr = ((*self.lpVtbl).ShowPlayToUI)(self as *const _ as *mut _);
@@ -20365,10 +20365,10 @@ impl IPlayToReceiver {
         let hr = ((*self.lpVtbl).get_SupportsVideo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<super::super::foundation::collections::IPropertySet>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IPropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn start_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
         let mut out = null_mut();
@@ -20392,15 +20392,15 @@ RT_INTERFACE!{interface IPlayToSource(IPlayToSourceVtbl): IInspectable(IInspecta
     fn PlayNext(&self) -> HRESULT
 }}
 impl IPlayToSource {
-    #[inline] pub unsafe fn get_connection(&self) -> Result<ComPtr<PlayToConnection>> {
+    #[inline] pub unsafe fn get_connection(&self) -> Result<Option<ComPtr<PlayToConnection>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Connection)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_next(&self) -> Result<ComPtr<PlayToSource>> {
+    #[inline] pub unsafe fn get_next(&self) -> Result<Option<ComPtr<PlayToSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Next)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_next(&self, value: &PlayToSource) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Next)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -20440,10 +20440,10 @@ impl IPlayToSourceRequest {
         let hr = ((*self.lpVtbl).DisplayErrorString)(self as *const _ as *mut _, errorString.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<PlayToSourceDeferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<PlayToSourceDeferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_source(&self, value: &PlayToSource) -> Result<()> {
         let hr = ((*self.lpVtbl).SetSource)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -20456,10 +20456,10 @@ RT_INTERFACE!{interface IPlayToSourceRequestedEventArgs(IPlayToSourceRequestedEv
     fn get_SourceRequest(&self, out: *mut *mut PlayToSourceRequest) -> HRESULT
 }}
 impl IPlayToSourceRequestedEventArgs {
-    #[inline] pub unsafe fn get_source_request(&self) -> Result<ComPtr<PlayToSourceRequest>> {
+    #[inline] pub unsafe fn get_source_request(&self) -> Result<Option<ComPtr<PlayToSourceRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SourceRequest)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PlayToSourceRequestedEventArgs: IPlayToSourceRequestedEventArgs}
@@ -20478,10 +20478,10 @@ impl IPlayToSourceSelectedEventArgs {
         let hr = ((*self.lpVtbl).get_FriendlyName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_icon(&self) -> Result<ComPtr<super::super::storage::streams::IRandomAccessStreamWithContentType>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_icon(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamWithContentType>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Icon)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_supports_image(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -20506,10 +20506,10 @@ RT_INTERFACE!{interface IPlayToSourceWithPreferredSourceUri(IPlayToSourceWithPre
     fn put_PreferredSourceUri(&self, value: *mut super::super::foundation::Uri) -> HRESULT
 }}
 impl IPlayToSourceWithPreferredSourceUri {
-    #[inline] pub unsafe fn get_preferred_source_uri(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_preferred_source_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PreferredSourceUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_preferred_source_uri(&self, value: &super::super::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PreferredSourceUri)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -20532,10 +20532,10 @@ RT_INTERFACE!{interface ISourceChangeRequestedEventArgs(ISourceChangeRequestedEv
     fn get_Properties(&self, out: *mut *mut super::super::foundation::collections::IMapView<HString, IInspectable>) -> HRESULT
 }}
 impl ISourceChangeRequestedEventArgs {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_stream(&self) -> Result<ComPtr<super::super::storage::streams::IRandomAccessStreamWithContentType>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamWithContentType>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Stream)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_title(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -20562,25 +20562,25 @@ impl ISourceChangeRequestedEventArgs {
         let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_date(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>> {
+    #[inline] pub unsafe fn get_date(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Date)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_thumbnail(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_rating(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_rating(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Rating)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<super::super::foundation::collections::IMapView<HString, IInspectable>>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IMapView<HString, IInspectable>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SourceChangeRequestedEventArgs: ISourceChangeRequestedEventArgs}
@@ -20605,15 +20605,15 @@ RT_INTERFACE!{interface IComponentLoadFailedEventArgs(IComponentLoadFailedEventA
     fn get_Completion(&self, out: *mut *mut MediaProtectionServiceCompletion) -> HRESULT
 }}
 impl IComponentLoadFailedEventArgs {
-    #[inline] pub unsafe fn get_information(&self) -> Result<ComPtr<RevocationAndRenewalInformation>> {
+    #[inline] pub unsafe fn get_information(&self) -> Result<Option<ComPtr<RevocationAndRenewalInformation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Information)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_completion(&self) -> Result<ComPtr<MediaProtectionServiceCompletion>> {
+    #[inline] pub unsafe fn get_completion(&self) -> Result<Option<ComPtr<MediaProtectionServiceCompletion>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Completion)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ComponentLoadFailedEventArgs: IComponentLoadFailedEventArgs}
@@ -20666,10 +20666,10 @@ impl IHdcpSession {
         let hr = ((*self.lpVtbl).IsEffectiveProtectionAtLeast)(self as *const _ as *mut _, protection, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_effective_protection(&self) -> Result<ComPtr<super::super::foundation::IReference<HdcpProtection>>> {
+    #[inline] pub unsafe fn get_effective_protection(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<HdcpProtection>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetEffectiveProtection)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_desired_min_protection_async(&self, protection: HdcpProtection) -> Result<ComPtr<super::super::foundation::IAsyncOperation<HdcpSetProtectionResult>>> {
         let mut out = null_mut();
@@ -20730,10 +20730,10 @@ impl IMediaProtectionManager {
         let hr = ((*self.lpVtbl).remove_ComponentLoadFailed)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<super::super::foundation::collections::IPropertySet>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IPropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaProtectionManager: IMediaProtectionManager}
@@ -20744,10 +20744,10 @@ RT_INTERFACE!{interface IMediaProtectionPMPServer(IMediaProtectionPMPServerVtbl)
     fn get_Properties(&self, out: *mut *mut super::super::foundation::collections::IPropertySet) -> HRESULT
 }}
 impl IMediaProtectionPMPServer {
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<super::super::foundation::collections::IPropertySet>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IPropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaProtectionPMPServer: IMediaProtectionPMPServer}
@@ -20832,10 +20832,10 @@ RT_INTERFACE!{interface IRevocationAndRenewalInformation(IRevocationAndRenewalIn
     fn get_Items(&self, out: *mut *mut super::super::foundation::collections::IVector<RevocationAndRenewalItem>) -> HRESULT
 }}
 impl IRevocationAndRenewalInformation {
-    #[inline] pub unsafe fn get_items(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<RevocationAndRenewalItem>>> {
+    #[inline] pub unsafe fn get_items(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<RevocationAndRenewalItem>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Items)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class RevocationAndRenewalInformation: IRevocationAndRenewalInformation}
@@ -20884,15 +20884,15 @@ RT_INTERFACE!{interface IServiceRequestedEventArgs(IServiceRequestedEventArgsVtb
     fn get_Completion(&self, out: *mut *mut MediaProtectionServiceCompletion) -> HRESULT
 }}
 impl IServiceRequestedEventArgs {
-    #[inline] pub unsafe fn get_request(&self) -> Result<ComPtr<IMediaProtectionServiceRequest>> {
+    #[inline] pub unsafe fn get_request(&self) -> Result<Option<ComPtr<IMediaProtectionServiceRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_completion(&self) -> Result<ComPtr<MediaProtectionServiceCompletion>> {
+    #[inline] pub unsafe fn get_completion(&self) -> Result<Option<ComPtr<MediaProtectionServiceCompletion>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Completion)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ServiceRequestedEventArgs: IServiceRequestedEventArgs}
@@ -20901,10 +20901,10 @@ RT_INTERFACE!{interface IServiceRequestedEventArgs2(IServiceRequestedEventArgs2V
     fn get_MediaPlaybackItem(&self, out: *mut *mut super::playback::MediaPlaybackItem) -> HRESULT
 }}
 impl IServiceRequestedEventArgs2 {
-    #[inline] pub unsafe fn get_media_playback_item(&self) -> Result<ComPtr<super::playback::MediaPlaybackItem>> {
+    #[inline] pub unsafe fn get_media_playback_item(&self) -> Result<Option<ComPtr<super::playback::MediaPlaybackItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaPlaybackItem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ServiceRequestedEventHandler, 3537277114, 51913, 18657, 149, 192, 211, 132, 149, 168, 64, 85);
@@ -21143,10 +21143,10 @@ impl INDDownloadEngine {
         let hr = ((*self.lpVtbl).get_BufferFullMaxThresholdInSamples)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_notifier(&self) -> Result<ComPtr<NDDownloadEngineNotifier>> {
+    #[inline] pub unsafe fn get_notifier(&self) -> Result<Option<ComPtr<NDDownloadEngineNotifier>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Notifier)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_INDDownloadEngineNotifier, 3609244884, 62648, 17712, 168, 9, 145, 147, 165, 113, 231, 252);
@@ -21192,10 +21192,10 @@ RT_INTERFACE!{interface INDLicenseFetchCompletedEventArgs(INDLicenseFetchComplet
     fn get_ResponseCustomData(&self, out: *mut *mut INDCustomData) -> HRESULT
 }}
 impl INDLicenseFetchCompletedEventArgs {
-    #[inline] pub unsafe fn get_response_custom_data(&self) -> Result<ComPtr<INDCustomData>> {
+    #[inline] pub unsafe fn get_response_custom_data(&self) -> Result<Option<ComPtr<INDCustomData>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResponseCustomData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_INDLicenseFetchDescriptor, 1419301690, 59014, 18741, 165, 103, 124, 167, 122, 210, 15, 164);
@@ -21216,10 +21216,10 @@ impl INDLicenseFetchDescriptor {
         let hr = ((*self.lpVtbl).get_ContentID)(self as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_license_fetch_challenge_custom_data(&self) -> Result<ComPtr<INDCustomData>> {
+    #[inline] pub unsafe fn get_license_fetch_challenge_custom_data(&self) -> Result<Option<ComPtr<INDCustomData>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LicenseFetchChallengeCustomData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_license_fetch_challenge_custom_data(&self, licenseFetchChallengeCustomData: &INDCustomData) -> Result<()> {
         let hr = ((*self.lpVtbl).put_LicenseFetchChallengeCustomData)(self as *const _ as *mut _, licenseFetchChallengeCustomData as *const _ as *mut _);
@@ -21250,10 +21250,10 @@ RT_INTERFACE!{interface INDLicenseFetchResult(INDLicenseFetchResultVtbl): IInspe
     fn get_ResponseCustomData(&self, out: *mut *mut INDCustomData) -> HRESULT
 }}
 impl INDLicenseFetchResult {
-    #[inline] pub unsafe fn get_response_custom_data(&self) -> Result<ComPtr<INDCustomData>> {
+    #[inline] pub unsafe fn get_response_custom_data(&self) -> Result<Option<ComPtr<INDCustomData>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResponseCustomData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum NDMediaStreamType: i32 {
@@ -21310,15 +21310,15 @@ RT_INTERFACE!{interface INDRegistrationCompletedEventArgs(INDRegistrationComplet
     fn put_TransmitterCertificateAccepted(&self, accept: bool) -> HRESULT
 }}
 impl INDRegistrationCompletedEventArgs {
-    #[inline] pub unsafe fn get_response_custom_data(&self) -> Result<ComPtr<INDCustomData>> {
+    #[inline] pub unsafe fn get_response_custom_data(&self) -> Result<Option<ComPtr<INDCustomData>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResponseCustomData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_transmitter_properties(&self) -> Result<ComPtr<INDTransmitterProperties>> {
+    #[inline] pub unsafe fn get_transmitter_properties(&self) -> Result<Option<ComPtr<INDTransmitterProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TransmitterProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_transmitter_certificate_accepted(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -21349,10 +21349,10 @@ RT_INTERFACE!{interface INDStartResult(INDStartResultVtbl): IInspectable(IInspec
     fn get_MediaStreamSource(&self, out: *mut *mut super::super::core::MediaStreamSource) -> HRESULT
 }}
 impl INDStartResult {
-    #[inline] pub unsafe fn get_media_stream_source(&self) -> Result<ComPtr<super::super::core::MediaStreamSource>> {
+    #[inline] pub unsafe fn get_media_stream_source(&self) -> Result<Option<ComPtr<super::super::core::MediaStreamSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaStreamSource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_INDStorageFileHelper, 3639656184, 37330, 19783, 163, 249, 234, 255, 78, 219, 114, 159);
@@ -21360,10 +21360,10 @@ RT_INTERFACE!{interface INDStorageFileHelper(INDStorageFileHelperVtbl): IInspect
     #[cfg(feature="windows-storage")] fn GetFileURLs(&self, file: *mut ::rt::gen::windows::storage::IStorageFile, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<HString>) -> HRESULT
 }}
 impl INDStorageFileHelper {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file_urls(&self, file: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file_urls(&self, file: &::rt::gen::windows::storage::IStorageFile) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetFileURLs)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class NDStorageFileHelper: INDStorageFileHelper}
@@ -21395,10 +21395,10 @@ impl INDStreamParser {
         let hr = ((*self.lpVtbl).EndOfStream)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_notifier(&self) -> Result<ComPtr<NDStreamParserNotifier>> {
+    #[inline] pub unsafe fn get_notifier(&self) -> Result<Option<ComPtr<NDStreamParserNotifier>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Notifier)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_INDStreamParserNotifier, 3244797136, 11494, 17004, 172, 229, 94, 146, 117, 254, 167, 21);
@@ -21543,15 +21543,15 @@ impl IPlayReadyContentHeader {
         let hr = ((*self.lpVtbl).get_KeyIdString)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_license_acquisition_url(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_license_acquisition_url(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LicenseAcquisitionUrl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_license_acquisition_user_interface_url(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_license_acquisition_user_interface_url(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LicenseAcquisitionUserInterfaceUrl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_domain_service_id(&self) -> Result<Guid> {
         let mut out = zeroed();
@@ -21578,10 +21578,10 @@ impl IPlayReadyContentHeader {
         let hr = ((*self.lpVtbl).GetSerializedHeader)(self as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_header_with_embedded_updates(&self) -> Result<ComPtr<PlayReadyContentHeader>> {
+    #[inline] pub unsafe fn get_header_with_embedded_updates(&self) -> Result<Option<ComPtr<PlayReadyContentHeader>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_HeaderWithEmbeddedUpdates)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PlayReadyContentHeader: IPlayReadyContentHeader}
@@ -21658,16 +21658,16 @@ RT_INTERFACE!{static interface IPlayReadyContentResolver(IPlayReadyContentResolv
     fn ServiceRequest(&self, contentHeader: *mut PlayReadyContentHeader, out: *mut *mut IPlayReadyServiceRequest) -> HRESULT
 }}
 impl IPlayReadyContentResolver {
-    #[inline] pub unsafe fn service_request(&self, contentHeader: &PlayReadyContentHeader) -> Result<ComPtr<IPlayReadyServiceRequest>> {
+    #[inline] pub unsafe fn service_request(&self, contentHeader: &PlayReadyContentHeader) -> Result<Option<ComPtr<IPlayReadyServiceRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ServiceRequest)(self as *const _ as *mut _, contentHeader as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{static class PlayReadyContentResolver}
 impl RtActivatable<IPlayReadyContentResolver> for PlayReadyContentResolver {}
 impl PlayReadyContentResolver {
-    #[inline] pub fn service_request(contentHeader: &PlayReadyContentHeader) -> Result<ComPtr<IPlayReadyServiceRequest>> { unsafe {
+    #[inline] pub fn service_request(contentHeader: &PlayReadyContentHeader) -> Result<Option<ComPtr<IPlayReadyServiceRequest>>> { unsafe {
         <Self as RtActivatable<IPlayReadyContentResolver>>::get_activation_factory().service_request(contentHeader)
     }}
 }
@@ -21704,10 +21704,10 @@ impl IPlayReadyDomain {
         let hr = ((*self.lpVtbl).get_FriendlyName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_domain_join_url(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_domain_join_url(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DomainJoinUrl)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PlayReadyDomain: IPlayReadyDomain}
@@ -21853,10 +21853,10 @@ impl IPlayReadyLicense {
         let hr = ((*self.lpVtbl).get_UsableForPlay)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_expiration_date(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>> {
+    #[inline] pub unsafe fn get_expiration_date(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExpirationDate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_expire_after_first_play(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -21917,10 +21917,10 @@ RT_INTERFACE!{interface IPlayReadyLicenseAcquisitionServiceRequest(IPlayReadyLic
     fn put_DomainServiceId(&self, value: Guid) -> HRESULT
 }}
 impl IPlayReadyLicenseAcquisitionServiceRequest {
-    #[inline] pub unsafe fn get_content_header(&self) -> Result<ComPtr<PlayReadyContentHeader>> {
+    #[inline] pub unsafe fn get_content_header(&self) -> Result<Option<ComPtr<PlayReadyContentHeader>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ContentHeader)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_content_header(&self, value: &PlayReadyContentHeader) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ContentHeader)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -21955,10 +21955,10 @@ RT_INTERFACE!{interface IPlayReadyLicenseAcquisitionServiceRequest3(IPlayReadyLi
     fn CreateLicenseIterable(&self, contentHeader: *mut PlayReadyContentHeader, fullyEvaluated: bool, out: *mut *mut PlayReadyLicenseIterable) -> HRESULT
 }}
 impl IPlayReadyLicenseAcquisitionServiceRequest3 {
-    #[inline] pub unsafe fn create_license_iterable(&self, contentHeader: &PlayReadyContentHeader, fullyEvaluated: bool) -> Result<ComPtr<PlayReadyLicenseIterable>> {
+    #[inline] pub unsafe fn create_license_iterable(&self, contentHeader: &PlayReadyContentHeader, fullyEvaluated: bool) -> Result<Option<ComPtr<PlayReadyLicenseIterable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateLicenseIterable)(self as *const _ as *mut _, contentHeader as *const _ as *mut _, fullyEvaluated, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PlayReadyLicenseIterable: ::rt::gen::windows::foundation::collections::IIterable<IPlayReadyLicense>}
@@ -22007,10 +22007,10 @@ RT_INTERFACE!{interface IPlayReadyLicenseSession(IPlayReadyLicenseSessionVtbl): 
     fn ConfigureMediaProtectionManager(&self, mpm: *mut super::MediaProtectionManager) -> HRESULT
 }}
 impl IPlayReadyLicenseSession {
-    #[inline] pub unsafe fn create_laservice_request(&self) -> Result<ComPtr<IPlayReadyLicenseAcquisitionServiceRequest>> {
+    #[inline] pub unsafe fn create_laservice_request(&self) -> Result<Option<ComPtr<IPlayReadyLicenseAcquisitionServiceRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateLAServiceRequest)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn configure_media_protection_manager(&self, mpm: &super::MediaProtectionManager) -> Result<()> {
         let hr = ((*self.lpVtbl).ConfigureMediaProtectionManager)(self as *const _ as *mut _, mpm as *const _ as *mut _);
@@ -22030,10 +22030,10 @@ RT_INTERFACE!{interface IPlayReadyLicenseSession2(IPlayReadyLicenseSession2Vtbl)
     fn CreateLicenseIterable(&self, contentHeader: *mut PlayReadyContentHeader, fullyEvaluated: bool, out: *mut *mut PlayReadyLicenseIterable) -> HRESULT
 }}
 impl IPlayReadyLicenseSession2 {
-    #[inline] pub unsafe fn create_license_iterable(&self, contentHeader: &PlayReadyContentHeader, fullyEvaluated: bool) -> Result<ComPtr<PlayReadyLicenseIterable>> {
+    #[inline] pub unsafe fn create_license_iterable(&self, contentHeader: &PlayReadyContentHeader, fullyEvaluated: bool) -> Result<Option<ComPtr<PlayReadyLicenseIterable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateLicenseIterable)(self as *const _ as *mut _, contentHeader as *const _ as *mut _, fullyEvaluated, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IPlayReadyLicenseSessionFactory, 1648961177, 25895, 17054, 152, 190, 72, 215, 152, 172, 39, 57);
@@ -22169,10 +22169,10 @@ RT_INTERFACE!{interface IPlayReadyServiceRequest(IPlayReadyServiceRequestVtbl): 
     fn ProcessManualEnablingResponse(&self, responseBytesSize: u32, responseBytes: *mut u8, out: *mut ::rt::gen::windows::foundation::HResult) -> HRESULT
 }}
 impl IPlayReadyServiceRequest {
-    #[inline] pub unsafe fn get_uri(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_uri(&self, value: &::rt::gen::windows::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Uri)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -22197,15 +22197,15 @@ impl IPlayReadyServiceRequest {
         let hr = ((*self.lpVtbl).BeginServiceRequest)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn next_service_request(&self) -> Result<ComPtr<IPlayReadyServiceRequest>> {
+    #[inline] pub unsafe fn next_service_request(&self) -> Result<Option<ComPtr<IPlayReadyServiceRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).NextServiceRequest)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn generate_manual_enabling_challenge(&self) -> Result<ComPtr<PlayReadySoapMessage>> {
+    #[inline] pub unsafe fn generate_manual_enabling_challenge(&self) -> Result<Option<ComPtr<PlayReadySoapMessage>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GenerateManualEnablingChallenge)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn process_manual_enabling_response(&self, responseBytes: &[u8]) -> Result<::rt::gen::windows::foundation::HResult> {
         let mut out = zeroed();
@@ -22225,15 +22225,15 @@ impl IPlayReadySoapMessage {
         let hr = ((*self.lpVtbl).GetMessageBody)(self as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_message_headers(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IPropertySet>> {
+    #[inline] pub unsafe fn get_message_headers(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IPropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MessageHeaders)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uri(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PlayReadySoapMessage: IPlayReadySoapMessage}
@@ -22406,10 +22406,10 @@ RT_INTERFACE!{interface ISpeechContinuousRecognitionResultGeneratedEventArgs(ISp
     fn get_Result(&self, out: *mut *mut SpeechRecognitionResult) -> HRESULT
 }}
 impl ISpeechContinuousRecognitionResultGeneratedEventArgs {
-    #[inline] pub unsafe fn get_result(&self) -> Result<ComPtr<SpeechRecognitionResult>> {
+    #[inline] pub unsafe fn get_result(&self) -> Result<Option<ComPtr<SpeechRecognitionResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Result)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpeechContinuousRecognitionResultGeneratedEventArgs: ISpeechContinuousRecognitionResultGeneratedEventArgs}
@@ -22560,10 +22560,10 @@ RT_INTERFACE!{interface ISpeechRecognitionGrammarFileConstraint(ISpeechRecogniti
     #[cfg(feature="windows-storage")] fn get_GrammarFile(&self, out: *mut *mut super::super::storage::StorageFile) -> HRESULT
 }}
 impl ISpeechRecognitionGrammarFileConstraint {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_grammar_file(&self) -> Result<ComPtr<super::super::storage::StorageFile>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_grammar_file(&self) -> Result<Option<ComPtr<super::super::storage::StorageFile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_GrammarFile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpeechRecognitionGrammarFileConstraint: ISpeechRecognitionGrammarFileConstraint}
@@ -22611,10 +22611,10 @@ RT_INTERFACE!{interface ISpeechRecognitionHypothesisGeneratedEventArgs(ISpeechRe
     fn get_Hypothesis(&self, out: *mut *mut SpeechRecognitionHypothesis) -> HRESULT
 }}
 impl ISpeechRecognitionHypothesisGeneratedEventArgs {
-    #[inline] pub unsafe fn get_hypothesis(&self) -> Result<ComPtr<SpeechRecognitionHypothesis>> {
+    #[inline] pub unsafe fn get_hypothesis(&self) -> Result<Option<ComPtr<SpeechRecognitionHypothesis>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Hypothesis)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpeechRecognitionHypothesisGeneratedEventArgs: ISpeechRecognitionHypothesisGeneratedEventArgs}
@@ -22623,10 +22623,10 @@ RT_INTERFACE!{interface ISpeechRecognitionListConstraint(ISpeechRecognitionListC
     fn get_Commands(&self, out: *mut *mut super::super::foundation::collections::IVector<HString>) -> HRESULT
 }}
 impl ISpeechRecognitionListConstraint {
-    #[inline] pub unsafe fn get_commands(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_commands(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Commands)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpeechRecognitionListConstraint: ISpeechRecognitionListConstraint}
@@ -22696,25 +22696,25 @@ impl ISpeechRecognitionResult {
         let hr = ((*self.lpVtbl).get_Confidence)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_semantic_interpretation(&self) -> Result<ComPtr<SpeechRecognitionSemanticInterpretation>> {
+    #[inline] pub unsafe fn get_semantic_interpretation(&self) -> Result<Option<ComPtr<SpeechRecognitionSemanticInterpretation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SemanticInterpretation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_alternates(&self, maxAlternates: u32) -> Result<ComPtr<super::super::foundation::collections::IVectorView<SpeechRecognitionResult>>> {
+    #[inline] pub unsafe fn get_alternates(&self, maxAlternates: u32) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<SpeechRecognitionResult>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetAlternates)(self as *const _ as *mut _, maxAlternates, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_constraint(&self) -> Result<ComPtr<ISpeechRecognitionConstraint>> {
+    #[inline] pub unsafe fn get_constraint(&self) -> Result<Option<ComPtr<ISpeechRecognitionConstraint>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Constraint)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_rule_path(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_rule_path(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RulePath)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_raw_confidence(&self) -> Result<f64> {
         let mut out = zeroed();
@@ -22751,10 +22751,10 @@ RT_INTERFACE!{interface ISpeechRecognitionSemanticInterpretation(ISpeechRecognit
     fn get_Properties(&self, out: *mut *mut super::super::foundation::collections::IMapView<HString, super::super::foundation::collections::IVectorView<HString>>) -> HRESULT
 }}
 impl ISpeechRecognitionSemanticInterpretation {
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<super::super::foundation::collections::IMapView<HString, super::super::foundation::collections::IVectorView<HString>>>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IMapView<HString, super::super::foundation::collections::IVectorView<HString>>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpeechRecognitionSemanticInterpretation: ISpeechRecognitionSemanticInterpretation}
@@ -22824,25 +22824,25 @@ RT_INTERFACE!{interface ISpeechRecognizer(ISpeechRecognizerVtbl): IInspectable(I
     fn remove_StateChanged(&self, cookie: super::super::foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ISpeechRecognizer {
-    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_current_language(&self) -> Result<ComPtr<super::super::globalization::Language>> {
+    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_current_language(&self) -> Result<Option<ComPtr<super::super::globalization::Language>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CurrentLanguage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_constraints(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<ISpeechRecognitionConstraint>>> {
+    #[inline] pub unsafe fn get_constraints(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<ISpeechRecognitionConstraint>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Constraints)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_timeouts(&self) -> Result<ComPtr<SpeechRecognizerTimeouts>> {
+    #[inline] pub unsafe fn get_timeouts(&self) -> Result<Option<ComPtr<SpeechRecognizerTimeouts>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Timeouts)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uioptions(&self) -> Result<ComPtr<SpeechRecognizerUIOptions>> {
+    #[inline] pub unsafe fn get_uioptions(&self) -> Result<Option<ComPtr<SpeechRecognizerUIOptions>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UIOptions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn compile_constraints_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncOperation<SpeechRecognitionCompilationResult>>> {
         let mut out = null_mut();
@@ -22887,13 +22887,13 @@ impl SpeechRecognizer {
     #[cfg(feature="windows-globalization")] #[inline] pub fn create(language: &super::super::globalization::Language) -> Result<ComPtr<SpeechRecognizer>> { unsafe {
         <Self as RtActivatable<ISpeechRecognizerFactory>>::get_activation_factory().create(language)
     }}
-    #[cfg(feature="windows-globalization")] #[inline] pub fn get_system_speech_language() -> Result<ComPtr<super::super::globalization::Language>> { unsafe {
+    #[cfg(feature="windows-globalization")] #[inline] pub fn get_system_speech_language() -> Result<Option<ComPtr<super::super::globalization::Language>>> { unsafe {
         <Self as RtActivatable<ISpeechRecognizerStatics>>::get_activation_factory().get_system_speech_language()
     }}
-    #[cfg(feature="windows-globalization")] #[inline] pub fn get_supported_topic_languages() -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::super::globalization::Language>>> { unsafe {
+    #[cfg(feature="windows-globalization")] #[inline] pub fn get_supported_topic_languages() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::globalization::Language>>>> { unsafe {
         <Self as RtActivatable<ISpeechRecognizerStatics>>::get_activation_factory().get_supported_topic_languages()
     }}
-    #[cfg(feature="windows-globalization")] #[inline] pub fn get_supported_grammar_languages() -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::super::globalization::Language>>> { unsafe {
+    #[cfg(feature="windows-globalization")] #[inline] pub fn get_supported_grammar_languages() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::globalization::Language>>>> { unsafe {
         <Self as RtActivatable<ISpeechRecognizerStatics>>::get_activation_factory().get_supported_grammar_languages()
     }}
     #[cfg(feature="windows-globalization")] #[inline] pub fn try_set_system_speech_language_async(speechLanguage: &super::super::globalization::Language) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
@@ -22910,10 +22910,10 @@ RT_INTERFACE!{interface ISpeechRecognizer2(ISpeechRecognizer2Vtbl): IInspectable
     fn remove_HypothesisGenerated(&self, value: super::super::foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ISpeechRecognizer2 {
-    #[inline] pub unsafe fn get_continuous_recognition_session(&self) -> Result<ComPtr<SpeechContinuousRecognitionSession>> {
+    #[inline] pub unsafe fn get_continuous_recognition_session(&self) -> Result<Option<ComPtr<SpeechContinuousRecognitionSession>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ContinuousRecognitionSession)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_state(&self) -> Result<SpeechRecognizerState> {
         let mut out = zeroed();
@@ -22968,20 +22968,20 @@ RT_INTERFACE!{static interface ISpeechRecognizerStatics(ISpeechRecognizerStatics
     #[cfg(feature="windows-globalization")] fn get_SupportedGrammarLanguages(&self, out: *mut *mut super::super::foundation::collections::IVectorView<super::super::globalization::Language>) -> HRESULT
 }}
 impl ISpeechRecognizerStatics {
-    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_system_speech_language(&self) -> Result<ComPtr<super::super::globalization::Language>> {
+    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_system_speech_language(&self) -> Result<Option<ComPtr<super::super::globalization::Language>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SystemSpeechLanguage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_supported_topic_languages(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::super::globalization::Language>>> {
+    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_supported_topic_languages(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::globalization::Language>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedTopicLanguages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_supported_grammar_languages(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::super::globalization::Language>>> {
+    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_supported_grammar_languages(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::globalization::Language>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedGrammarLanguages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISpeechRecognizerStatics2, 488312213, 30053, 20217, 162, 243, 186, 21, 22, 42, 150, 207);
@@ -23093,15 +23093,15 @@ RT_INTERFACE!{static interface IInstalledVoicesStatic(IInstalledVoicesStaticVtbl
     fn get_DefaultVoice(&self, out: *mut *mut VoiceInformation) -> HRESULT
 }}
 impl IInstalledVoicesStatic {
-    #[inline] pub unsafe fn get_all_voices(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<VoiceInformation>>> {
+    #[inline] pub unsafe fn get_all_voices(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<VoiceInformation>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AllVoices)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_default_voice(&self) -> Result<ComPtr<VoiceInformation>> {
+    #[inline] pub unsafe fn get_default_voice(&self) -> Result<Option<ComPtr<VoiceInformation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DefaultVoice)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IInstalledVoicesStatic2, 1680170798, 13709, 16472, 190, 154, 253, 63, 203, 66, 53, 48);
@@ -23120,10 +23120,10 @@ RT_INTERFACE!{interface ISpeechSynthesisStream(ISpeechSynthesisStreamVtbl): IIns
     fn get_Markers(&self, out: *mut *mut super::super::foundation::collections::IVectorView<super::IMediaMarker>) -> HRESULT
 }}
 impl ISpeechSynthesisStream {
-    #[inline] pub unsafe fn get_markers(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<super::IMediaMarker>>> {
+    #[inline] pub unsafe fn get_markers(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::IMediaMarker>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Markers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpeechSynthesisStream: ISpeechSynthesisStream}
@@ -23149,10 +23149,10 @@ impl ISpeechSynthesizer {
         let hr = ((*self.lpVtbl).put_Voice)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_voice(&self) -> Result<ComPtr<VoiceInformation>> {
+    #[inline] pub unsafe fn get_voice(&self) -> Result<Option<ComPtr<VoiceInformation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Voice)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpeechSynthesizer: ISpeechSynthesizer}
@@ -23160,10 +23160,10 @@ impl RtActivatable<IInstalledVoicesStatic> for SpeechSynthesizer {}
 impl RtActivatable<IInstalledVoicesStatic2> for SpeechSynthesizer {}
 impl RtActivatable<IActivationFactory> for SpeechSynthesizer {}
 impl SpeechSynthesizer {
-    #[inline] pub fn get_all_voices() -> Result<ComPtr<super::super::foundation::collections::IVectorView<VoiceInformation>>> { unsafe {
+    #[inline] pub fn get_all_voices() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<VoiceInformation>>>> { unsafe {
         <Self as RtActivatable<IInstalledVoicesStatic>>::get_activation_factory().get_all_voices()
     }}
-    #[inline] pub fn get_default_voice() -> Result<ComPtr<VoiceInformation>> { unsafe {
+    #[inline] pub fn get_default_voice() -> Result<Option<ComPtr<VoiceInformation>>> { unsafe {
         <Self as RtActivatable<IInstalledVoicesStatic>>::get_activation_factory().get_default_voice()
     }}
     #[inline] pub fn try_set_default_voice_async(voice: &VoiceInformation) -> Result<ComPtr<super::super::foundation::IAsyncOperation<bool>>> { unsafe {
@@ -23176,10 +23176,10 @@ RT_INTERFACE!{interface ISpeechSynthesizer2(ISpeechSynthesizer2Vtbl): IInspectab
     fn get_Options(&self, out: *mut *mut SpeechSynthesizerOptions) -> HRESULT
 }}
 impl ISpeechSynthesizer2 {
-    #[inline] pub unsafe fn get_options(&self) -> Result<ComPtr<SpeechSynthesizerOptions>> {
+    #[inline] pub unsafe fn get_options(&self) -> Result<Option<ComPtr<SpeechSynthesizerOptions>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Options)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISpeechSynthesizerOptions, 2699180145, 52285, 17353, 145, 177, 238, 24, 83, 36, 216, 61);
@@ -23489,25 +23489,25 @@ impl RtActivatable<IAudioEncodingPropertiesStatics> for AudioEncodingProperties 
 impl RtActivatable<IAudioEncodingPropertiesStatics2> for AudioEncodingProperties {}
 impl RtActivatable<IActivationFactory> for AudioEncodingProperties {}
 impl AudioEncodingProperties {
-    #[inline] pub fn create_aac(sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<ComPtr<AudioEncodingProperties>> { unsafe {
+    #[inline] pub fn create_aac(sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().create_aac(sampleRate, channelCount, bitrate)
     }}
-    #[inline] pub fn create_aac_adts(sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<ComPtr<AudioEncodingProperties>> { unsafe {
+    #[inline] pub fn create_aac_adts(sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().create_aac_adts(sampleRate, channelCount, bitrate)
     }}
-    #[inline] pub fn create_mp3(sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<ComPtr<AudioEncodingProperties>> { unsafe {
+    #[inline] pub fn create_mp3(sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().create_mp3(sampleRate, channelCount, bitrate)
     }}
-    #[inline] pub fn create_pcm(sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<ComPtr<AudioEncodingProperties>> { unsafe {
+    #[inline] pub fn create_pcm(sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().create_pcm(sampleRate, channelCount, bitsPerSample)
     }}
-    #[inline] pub fn create_wma(sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<ComPtr<AudioEncodingProperties>> { unsafe {
+    #[inline] pub fn create_wma(sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().create_wma(sampleRate, channelCount, bitrate)
     }}
-    #[inline] pub fn create_alac(sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<ComPtr<AudioEncodingProperties>> { unsafe {
+    #[inline] pub fn create_alac(sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IAudioEncodingPropertiesStatics2>>::get_activation_factory().create_alac(sampleRate, channelCount, bitsPerSample)
     }}
-    #[inline] pub fn create_flac(sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<ComPtr<AudioEncodingProperties>> { unsafe {
+    #[inline] pub fn create_flac(sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IAudioEncodingPropertiesStatics2>>::get_activation_factory().create_flac(sampleRate, channelCount, bitsPerSample)
     }}
 }
@@ -23532,30 +23532,30 @@ RT_INTERFACE!{static interface IAudioEncodingPropertiesStatics(IAudioEncodingPro
     fn CreateWma(&self, sampleRate: u32, channelCount: u32, bitrate: u32, out: *mut *mut AudioEncodingProperties) -> HRESULT
 }}
 impl IAudioEncodingPropertiesStatics {
-    #[inline] pub unsafe fn create_aac(&self, sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<ComPtr<AudioEncodingProperties>> {
+    #[inline] pub unsafe fn create_aac(&self, sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAac)(self as *const _ as *mut _, sampleRate, channelCount, bitrate, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_aac_adts(&self, sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<ComPtr<AudioEncodingProperties>> {
+    #[inline] pub unsafe fn create_aac_adts(&self, sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAacAdts)(self as *const _ as *mut _, sampleRate, channelCount, bitrate, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_mp3(&self, sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<ComPtr<AudioEncodingProperties>> {
+    #[inline] pub unsafe fn create_mp3(&self, sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateMp3)(self as *const _ as *mut _, sampleRate, channelCount, bitrate, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_pcm(&self, sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<ComPtr<AudioEncodingProperties>> {
+    #[inline] pub unsafe fn create_pcm(&self, sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreatePcm)(self as *const _ as *mut _, sampleRate, channelCount, bitsPerSample, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_wma(&self, sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<ComPtr<AudioEncodingProperties>> {
+    #[inline] pub unsafe fn create_wma(&self, sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateWma)(self as *const _ as *mut _, sampleRate, channelCount, bitrate, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAudioEncodingPropertiesStatics2, 1955148143, 30624, 17213, 142, 213, 64, 64, 40, 14, 134, 101);
@@ -23564,15 +23564,15 @@ RT_INTERFACE!{static interface IAudioEncodingPropertiesStatics2(IAudioEncodingPr
     fn CreateFlac(&self, sampleRate: u32, channelCount: u32, bitsPerSample: u32, out: *mut *mut AudioEncodingProperties) -> HRESULT
 }}
 impl IAudioEncodingPropertiesStatics2 {
-    #[inline] pub unsafe fn create_alac(&self, sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<ComPtr<AudioEncodingProperties>> {
+    #[inline] pub unsafe fn create_alac(&self, sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAlac)(self as *const _ as *mut _, sampleRate, channelCount, bitsPerSample, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_flac(&self, sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<ComPtr<AudioEncodingProperties>> {
+    #[inline] pub unsafe fn create_flac(&self, sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFlac)(self as *const _ as *mut _, sampleRate, channelCount, bitsPerSample, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAudioEncodingPropertiesWithFormatUserData, 2565934457, 5098, 18943, 190, 112, 38, 115, 219, 105, 112, 44);
@@ -23733,19 +23733,19 @@ impl RtActivatable<IImageEncodingPropertiesStatics> for ImageEncodingProperties 
 impl RtActivatable<IImageEncodingPropertiesStatics2> for ImageEncodingProperties {}
 impl RtActivatable<IActivationFactory> for ImageEncodingProperties {}
 impl ImageEncodingProperties {
-    #[inline] pub fn create_jpeg() -> Result<ComPtr<ImageEncodingProperties>> { unsafe {
+    #[inline] pub fn create_jpeg() -> Result<Option<ComPtr<ImageEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IImageEncodingPropertiesStatics>>::get_activation_factory().create_jpeg()
     }}
-    #[inline] pub fn create_png() -> Result<ComPtr<ImageEncodingProperties>> { unsafe {
+    #[inline] pub fn create_png() -> Result<Option<ComPtr<ImageEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IImageEncodingPropertiesStatics>>::get_activation_factory().create_png()
     }}
-    #[inline] pub fn create_jpeg_xr() -> Result<ComPtr<ImageEncodingProperties>> { unsafe {
+    #[inline] pub fn create_jpeg_xr() -> Result<Option<ComPtr<ImageEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IImageEncodingPropertiesStatics>>::get_activation_factory().create_jpeg_xr()
     }}
-    #[inline] pub fn create_uncompressed(format: MediaPixelFormat) -> Result<ComPtr<ImageEncodingProperties>> { unsafe {
+    #[inline] pub fn create_uncompressed(format: MediaPixelFormat) -> Result<Option<ComPtr<ImageEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IImageEncodingPropertiesStatics2>>::get_activation_factory().create_uncompressed(format)
     }}
-    #[inline] pub fn create_bmp() -> Result<ComPtr<ImageEncodingProperties>> { unsafe {
+    #[inline] pub fn create_bmp() -> Result<Option<ComPtr<ImageEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IImageEncodingPropertiesStatics2>>::get_activation_factory().create_bmp()
     }}
 }
@@ -23757,20 +23757,20 @@ RT_INTERFACE!{static interface IImageEncodingPropertiesStatics(IImageEncodingPro
     fn CreateJpegXR(&self, out: *mut *mut ImageEncodingProperties) -> HRESULT
 }}
 impl IImageEncodingPropertiesStatics {
-    #[inline] pub unsafe fn create_jpeg(&self) -> Result<ComPtr<ImageEncodingProperties>> {
+    #[inline] pub unsafe fn create_jpeg(&self) -> Result<Option<ComPtr<ImageEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateJpeg)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_png(&self) -> Result<ComPtr<ImageEncodingProperties>> {
+    #[inline] pub unsafe fn create_png(&self) -> Result<Option<ComPtr<ImageEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreatePng)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_jpeg_xr(&self) -> Result<ComPtr<ImageEncodingProperties>> {
+    #[inline] pub unsafe fn create_jpeg_xr(&self) -> Result<Option<ComPtr<ImageEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateJpegXR)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IImageEncodingPropertiesStatics2, 4139932457, 14372, 18096, 149, 110, 80, 19, 41, 225, 190, 60);
@@ -23779,15 +23779,15 @@ RT_INTERFACE!{static interface IImageEncodingPropertiesStatics2(IImageEncodingPr
     fn CreateBmp(&self, out: *mut *mut ImageEncodingProperties) -> HRESULT
 }}
 impl IImageEncodingPropertiesStatics2 {
-    #[inline] pub unsafe fn create_uncompressed(&self, format: MediaPixelFormat) -> Result<ComPtr<ImageEncodingProperties>> {
+    #[inline] pub unsafe fn create_uncompressed(&self, format: MediaPixelFormat) -> Result<Option<ComPtr<ImageEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateUncompressed)(self as *const _ as *mut _, format, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_bmp(&self) -> Result<ComPtr<ImageEncodingProperties>> {
+    #[inline] pub unsafe fn create_bmp(&self) -> Result<Option<ComPtr<ImageEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateBmp)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaEncodingProfile, 3889952168, 7609, 18307, 135, 107, 61, 254, 18, 172, 253, 179);
@@ -23804,28 +23804,28 @@ impl IMediaEncodingProfile {
         let hr = ((*self.lpVtbl).put_Audio)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_audio(&self) -> Result<ComPtr<AudioEncodingProperties>> {
+    #[inline] pub unsafe fn get_audio(&self) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Audio)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_video(&self, value: &VideoEncodingProperties) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Video)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video(&self) -> Result<ComPtr<VideoEncodingProperties>> {
+    #[inline] pub unsafe fn get_video(&self) -> Result<Option<ComPtr<VideoEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Video)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_container(&self, value: &ContainerEncodingProperties) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Container)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_container(&self) -> Result<ComPtr<ContainerEncodingProperties>> {
+    #[inline] pub unsafe fn get_container(&self) -> Result<Option<ComPtr<ContainerEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Container)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MediaEncodingProfile: IMediaEncodingProfile}
@@ -23834,19 +23834,19 @@ impl RtActivatable<IMediaEncodingProfileStatics2> for MediaEncodingProfile {}
 impl RtActivatable<IMediaEncodingProfileStatics3> for MediaEncodingProfile {}
 impl RtActivatable<IActivationFactory> for MediaEncodingProfile {}
 impl MediaEncodingProfile {
-    #[inline] pub fn create_m4a(quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
+    #[inline] pub fn create_m4a(quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> { unsafe {
         <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_m4a(quality)
     }}
-    #[inline] pub fn create_mp3(quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
+    #[inline] pub fn create_mp3(quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> { unsafe {
         <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_mp3(quality)
     }}
-    #[inline] pub fn create_wma(quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
+    #[inline] pub fn create_wma(quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> { unsafe {
         <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_wma(quality)
     }}
-    #[inline] pub fn create_mp4(quality: VideoEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
+    #[inline] pub fn create_mp4(quality: VideoEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> { unsafe {
         <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_mp4(quality)
     }}
-    #[inline] pub fn create_wmv(quality: VideoEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
+    #[inline] pub fn create_wmv(quality: VideoEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> { unsafe {
         <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_wmv(quality)
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<super::super::foundation::IAsyncOperation<MediaEncodingProfile>>> { unsafe {
@@ -23855,19 +23855,19 @@ impl MediaEncodingProfile {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(stream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<super::super::foundation::IAsyncOperation<MediaEncodingProfile>>> { unsafe {
         <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_from_stream_async(stream)
     }}
-    #[inline] pub fn create_wav(quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
+    #[inline] pub fn create_wav(quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> { unsafe {
         <Self as RtActivatable<IMediaEncodingProfileStatics2>>::get_activation_factory().create_wav(quality)
     }}
-    #[inline] pub fn create_avi(quality: VideoEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
+    #[inline] pub fn create_avi(quality: VideoEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> { unsafe {
         <Self as RtActivatable<IMediaEncodingProfileStatics2>>::get_activation_factory().create_avi(quality)
     }}
-    #[inline] pub fn create_alac(quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
+    #[inline] pub fn create_alac(quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> { unsafe {
         <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().create_alac(quality)
     }}
-    #[inline] pub fn create_flac(quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
+    #[inline] pub fn create_flac(quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> { unsafe {
         <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().create_flac(quality)
     }}
-    #[inline] pub fn create_hevc(quality: VideoEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> { unsafe {
+    #[inline] pub fn create_hevc(quality: VideoEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> { unsafe {
         <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().create_hevc(quality)
     }}
 }
@@ -23884,19 +23884,19 @@ impl IMediaEncodingProfile2 {
         let hr = ((*self.lpVtbl).SetAudioTracks)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_audio_tracks(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<super::core::AudioStreamDescriptor>>> {
+    #[inline] pub unsafe fn get_audio_tracks(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::core::AudioStreamDescriptor>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetAudioTracks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_video_tracks(&self, value: &super::super::foundation::collections::IIterable<super::core::VideoStreamDescriptor>) -> Result<()> {
         let hr = ((*self.lpVtbl).SetVideoTracks)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_video_tracks(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<super::core::VideoStreamDescriptor>>> {
+    #[inline] pub unsafe fn get_video_tracks(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::core::VideoStreamDescriptor>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetVideoTracks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaEncodingProfileStatics, 427767084, 11998, 19013, 168, 150, 129, 122, 72, 84, 248, 254);
@@ -23910,30 +23910,30 @@ RT_INTERFACE!{static interface IMediaEncodingProfileStatics(IMediaEncodingProfil
     #[cfg(feature="windows-storage")] fn CreateFromStreamAsync(&self, stream: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut super::super::foundation::IAsyncOperation<MediaEncodingProfile>) -> HRESULT
 }}
 impl IMediaEncodingProfileStatics {
-    #[inline] pub unsafe fn create_m4a(&self, quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> {
+    #[inline] pub unsafe fn create_m4a(&self, quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateM4a)(self as *const _ as *mut _, quality, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_mp3(&self, quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> {
+    #[inline] pub unsafe fn create_mp3(&self, quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateMp3)(self as *const _ as *mut _, quality, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_wma(&self, quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> {
+    #[inline] pub unsafe fn create_wma(&self, quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateWma)(self as *const _ as *mut _, quality, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_mp4(&self, quality: VideoEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> {
+    #[inline] pub unsafe fn create_mp4(&self, quality: VideoEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateMp4)(self as *const _ as *mut _, quality, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_wmv(&self, quality: VideoEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> {
+    #[inline] pub unsafe fn create_wmv(&self, quality: VideoEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateWmv)(self as *const _ as *mut _, quality, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_file_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<super::super::foundation::IAsyncOperation<MediaEncodingProfile>>> {
         let mut out = null_mut();
@@ -23952,15 +23952,15 @@ RT_INTERFACE!{static interface IMediaEncodingProfileStatics2(IMediaEncodingProfi
     fn CreateAvi(&self, quality: VideoEncodingQuality, out: *mut *mut MediaEncodingProfile) -> HRESULT
 }}
 impl IMediaEncodingProfileStatics2 {
-    #[inline] pub unsafe fn create_wav(&self, quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> {
+    #[inline] pub unsafe fn create_wav(&self, quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateWav)(self as *const _ as *mut _, quality, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_avi(&self, quality: VideoEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> {
+    #[inline] pub unsafe fn create_avi(&self, quality: VideoEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAvi)(self as *const _ as *mut _, quality, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaEncodingProfileStatics3, 2430256554, 53110, 17044, 169, 237, 26, 20, 32, 245, 31, 107);
@@ -23970,20 +23970,20 @@ RT_INTERFACE!{static interface IMediaEncodingProfileStatics3(IMediaEncodingProfi
     fn CreateHevc(&self, quality: VideoEncodingQuality, out: *mut *mut MediaEncodingProfile) -> HRESULT
 }}
 impl IMediaEncodingProfileStatics3 {
-    #[inline] pub unsafe fn create_alac(&self, quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> {
+    #[inline] pub unsafe fn create_alac(&self, quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAlac)(self as *const _ as *mut _, quality, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_flac(&self, quality: AudioEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> {
+    #[inline] pub unsafe fn create_flac(&self, quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFlac)(self as *const _ as *mut _, quality, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_hevc(&self, quality: VideoEncodingQuality) -> Result<ComPtr<MediaEncodingProfile>> {
+    #[inline] pub unsafe fn create_hevc(&self, quality: VideoEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateHevc)(self as *const _ as *mut _, quality, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMediaEncodingProperties, 3019909878, 44244, 20058, 162, 75, 93, 116, 152, 168, 184, 196);
@@ -23994,10 +23994,10 @@ RT_INTERFACE!{interface IMediaEncodingProperties(IMediaEncodingPropertiesVtbl): 
     fn get_Subtype(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IMediaEncodingProperties {
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<MediaPropertySet>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<MediaPropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_type(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -24593,15 +24593,15 @@ impl IVideoEncodingProperties {
         let hr = ((*self.lpVtbl).get_Height)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_frame_rate(&self) -> Result<ComPtr<MediaRatio>> {
+    #[inline] pub unsafe fn get_frame_rate(&self) -> Result<Option<ComPtr<MediaRatio>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FrameRate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_pixel_aspect_ratio(&self) -> Result<ComPtr<MediaRatio>> {
+    #[inline] pub unsafe fn get_pixel_aspect_ratio(&self) -> Result<Option<ComPtr<MediaRatio>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PixelAspectRatio)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VideoEncodingProperties: IVideoEncodingProperties}
@@ -24609,16 +24609,16 @@ impl RtActivatable<IVideoEncodingPropertiesStatics> for VideoEncodingProperties 
 impl RtActivatable<IVideoEncodingPropertiesStatics2> for VideoEncodingProperties {}
 impl RtActivatable<IActivationFactory> for VideoEncodingProperties {}
 impl VideoEncodingProperties {
-    #[inline] pub fn create_h264() -> Result<ComPtr<VideoEncodingProperties>> { unsafe {
+    #[inline] pub fn create_h264() -> Result<Option<ComPtr<VideoEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IVideoEncodingPropertiesStatics>>::get_activation_factory().create_h264()
     }}
-    #[inline] pub fn create_mpeg2() -> Result<ComPtr<VideoEncodingProperties>> { unsafe {
+    #[inline] pub fn create_mpeg2() -> Result<Option<ComPtr<VideoEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IVideoEncodingPropertiesStatics>>::get_activation_factory().create_mpeg2()
     }}
-    #[inline] pub fn create_uncompressed(subtype: &HStringArg, width: u32, height: u32) -> Result<ComPtr<VideoEncodingProperties>> { unsafe {
+    #[inline] pub fn create_uncompressed(subtype: &HStringArg, width: u32, height: u32) -> Result<Option<ComPtr<VideoEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IVideoEncodingPropertiesStatics>>::get_activation_factory().create_uncompressed(subtype, width, height)
     }}
-    #[inline] pub fn create_hevc() -> Result<ComPtr<VideoEncodingProperties>> { unsafe {
+    #[inline] pub fn create_hevc() -> Result<Option<ComPtr<VideoEncodingProperties>>> { unsafe {
         <Self as RtActivatable<IVideoEncodingPropertiesStatics2>>::get_activation_factory().create_hevc()
     }}
 }
@@ -24679,20 +24679,20 @@ RT_INTERFACE!{static interface IVideoEncodingPropertiesStatics(IVideoEncodingPro
     fn CreateUncompressed(&self, subtype: HSTRING, width: u32, height: u32, out: *mut *mut VideoEncodingProperties) -> HRESULT
 }}
 impl IVideoEncodingPropertiesStatics {
-    #[inline] pub unsafe fn create_h264(&self) -> Result<ComPtr<VideoEncodingProperties>> {
+    #[inline] pub unsafe fn create_h264(&self) -> Result<Option<ComPtr<VideoEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateH264)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_mpeg2(&self) -> Result<ComPtr<VideoEncodingProperties>> {
+    #[inline] pub unsafe fn create_mpeg2(&self) -> Result<Option<ComPtr<VideoEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateMpeg2)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_uncompressed(&self, subtype: &HStringArg, width: u32, height: u32) -> Result<ComPtr<VideoEncodingProperties>> {
+    #[inline] pub unsafe fn create_uncompressed(&self, subtype: &HStringArg, width: u32, height: u32) -> Result<Option<ComPtr<VideoEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateUncompressed)(self as *const _ as *mut _, subtype.get(), width, height, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IVideoEncodingPropertiesStatics2, 3474898269, 18942, 19712, 181, 154, 207, 164, 223, 197, 25, 68);
@@ -24700,10 +24700,10 @@ RT_INTERFACE!{static interface IVideoEncodingPropertiesStatics2(IVideoEncodingPr
     fn CreateHevc(&self, out: *mut *mut VideoEncodingProperties) -> HRESULT
 }}
 impl IVideoEncodingPropertiesStatics2 {
-    #[inline] pub unsafe fn create_hevc(&self) -> Result<ComPtr<VideoEncodingProperties>> {
+    #[inline] pub unsafe fn create_hevc(&self) -> Result<Option<ComPtr<VideoEncodingProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateHevc)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum VideoEncodingQuality: i32 {
@@ -24915,24 +24915,24 @@ impl IAdaptiveMediaSource {
         let hr = ((*self.lpVtbl).get_CurrentPlaybackBitrate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_available_bitrates(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<u32>>> {
+    #[inline] pub unsafe fn get_available_bitrates(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AvailableBitrates)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_desired_min_bitrate(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_desired_min_bitrate(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DesiredMinBitrate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_desired_min_bitrate(&self, value: &::rt::gen::windows::foundation::IReference<u32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_DesiredMinBitrate)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_desired_max_bitrate(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_desired_max_bitrate(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DesiredMaxBitrate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_desired_max_bitrate(&self, value: &::rt::gen::windows::foundation::IReference<u32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_DesiredMaxBitrate)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -25028,10 +25028,10 @@ RT_INTERFACE!{interface IAdaptiveMediaSource2(IAdaptiveMediaSource2Vtbl): IInspe
     fn get_AdvancedSettings(&self, out: *mut *mut AdaptiveMediaSourceAdvancedSettings) -> HRESULT
 }}
 impl IAdaptiveMediaSource2 {
-    #[inline] pub unsafe fn get_advanced_settings(&self) -> Result<ComPtr<AdaptiveMediaSourceAdvancedSettings>> {
+    #[inline] pub unsafe fn get_advanced_settings(&self) -> Result<Option<ComPtr<AdaptiveMediaSourceAdvancedSettings>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AdvancedSettings)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAdaptiveMediaSource3, 3127911421, 49972, 17947, 163, 110, 201, 159, 84, 247, 23, 74);
@@ -25044,34 +25044,34 @@ RT_INTERFACE!{interface IAdaptiveMediaSource3(IAdaptiveMediaSource3Vtbl): IInspe
     fn GetCorrelatedTimes(&self, out: *mut *mut AdaptiveMediaSourceCorrelatedTimes) -> HRESULT
 }}
 impl IAdaptiveMediaSource3 {
-    #[inline] pub unsafe fn get_min_live_offset(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_min_live_offset(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MinLiveOffset)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_max_seekable_window_size(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_max_seekable_window_size(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MaxSeekableWindowSize)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_desired_seekable_window_size(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_desired_seekable_window_size(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DesiredSeekableWindowSize)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_desired_seekable_window_size(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_DesiredSeekableWindowSize)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_diagnostics(&self) -> Result<ComPtr<AdaptiveMediaSourceDiagnostics>> {
+    #[inline] pub unsafe fn get_diagnostics(&self) -> Result<Option<ComPtr<AdaptiveMediaSourceDiagnostics>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Diagnostics)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_correlated_times(&self) -> Result<ComPtr<AdaptiveMediaSourceCorrelatedTimes>> {
+    #[inline] pub unsafe fn get_correlated_times(&self) -> Result<Option<ComPtr<AdaptiveMediaSourceCorrelatedTimes>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCorrelatedTimes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceAdvancedSettings, 1440421504, 6891, 18396, 170, 8, 154, 17, 97, 11, 164, 90);
@@ -25093,19 +25093,19 @@ impl IAdaptiveMediaSourceAdvancedSettings {
         let hr = ((*self.lpVtbl).put_AllSegmentsIndependent)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_desired_bitrate_headroom_ratio(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<f64>>> {
+    #[inline] pub unsafe fn get_desired_bitrate_headroom_ratio(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<f64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DesiredBitrateHeadroomRatio)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_desired_bitrate_headroom_ratio(&self, value: &::rt::gen::windows::foundation::IReference<f64>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_DesiredBitrateHeadroomRatio)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_bitrate_downgrade_trigger_ratio(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<f64>>> {
+    #[inline] pub unsafe fn get_bitrate_downgrade_trigger_ratio(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<f64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BitrateDowngradeTriggerRatio)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_bitrate_downgrade_trigger_ratio(&self, value: &::rt::gen::windows::foundation::IReference<f64>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_BitrateDowngradeTriggerRatio)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -25120,20 +25120,20 @@ RT_INTERFACE!{interface IAdaptiveMediaSourceCorrelatedTimes(IAdaptiveMediaSource
     fn get_ProgramDateTime(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT
 }}
 impl IAdaptiveMediaSourceCorrelatedTimes {
-    #[inline] pub unsafe fn get_position(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_position(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_presentation_time_stamp(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_presentation_time_stamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PresentationTimeStamp)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_program_date_time(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>> {
+    #[inline] pub unsafe fn get_program_date_time(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ProgramDateTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AdaptiveMediaSourceCorrelatedTimes: IAdaptiveMediaSourceCorrelatedTimes}
@@ -25149,15 +25149,15 @@ impl IAdaptiveMediaSourceCreationResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_media_source(&self) -> Result<ComPtr<AdaptiveMediaSource>> {
+    #[inline] pub unsafe fn get_media_source(&self) -> Result<Option<ComPtr<AdaptiveMediaSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MediaSource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-web")] #[inline] pub unsafe fn get_http_response_message(&self) -> Result<ComPtr<::rt::gen::windows::web::http::HttpResponseMessage>> {
+    #[cfg(feature="windows-web")] #[inline] pub unsafe fn get_http_response_message(&self) -> Result<Option<ComPtr<::rt::gen::windows::web::http::HttpResponseMessage>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_HttpResponseMessage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AdaptiveMediaSourceCreationResult: IAdaptiveMediaSourceCreationResult}
@@ -25193,45 +25193,45 @@ impl IAdaptiveMediaSourceDiagnosticAvailableEventArgs {
         let hr = ((*self.lpVtbl).get_DiagnosticType)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_request_id(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<i32>>> {
+    #[inline] pub unsafe fn get_request_id(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<i32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RequestId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_position(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_position(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_segment_id(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u64>>> {
+    #[inline] pub unsafe fn get_segment_id(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SegmentId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_type(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<AdaptiveMediaSourceResourceType>>> {
+    #[inline] pub unsafe fn get_resource_type(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<AdaptiveMediaSourceResourceType>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_uri(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_resource_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_byte_range_offset(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u64>>> {
+    #[inline] pub unsafe fn get_resource_byte_range_offset(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceByteRangeOffset)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_byte_range_length(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u64>>> {
+    #[inline] pub unsafe fn get_resource_byte_range_length(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceByteRangeLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_bitrate(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_bitrate(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Bitrate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AdaptiveMediaSourceDiagnosticAvailableEventArgs: IAdaptiveMediaSourceDiagnosticAvailableEventArgs}
@@ -25312,25 +25312,25 @@ impl IAdaptiveMediaSourceDownloadCompletedEventArgs {
         let hr = ((*self.lpVtbl).get_ResourceType)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_uri(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_resource_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_byte_range_offset(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u64>>> {
+    #[inline] pub unsafe fn get_resource_byte_range_offset(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceByteRangeOffset)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_byte_range_length(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u64>>> {
+    #[inline] pub unsafe fn get_resource_byte_range_length(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceByteRangeLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-web")] #[inline] pub unsafe fn get_http_response_message(&self) -> Result<ComPtr<::rt::gen::windows::web::http::HttpResponseMessage>> {
+    #[cfg(feature="windows-web")] #[inline] pub unsafe fn get_http_response_message(&self) -> Result<Option<ComPtr<::rt::gen::windows::web::http::HttpResponseMessage>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_HttpResponseMessage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AdaptiveMediaSourceDownloadCompletedEventArgs: IAdaptiveMediaSourceDownloadCompletedEventArgs}
@@ -25346,15 +25346,15 @@ impl IAdaptiveMediaSourceDownloadCompletedEventArgs2 {
         let hr = ((*self.lpVtbl).get_RequestId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_statistics(&self) -> Result<ComPtr<AdaptiveMediaSourceDownloadStatistics>> {
+    #[inline] pub unsafe fn get_statistics(&self) -> Result<Option<ComPtr<AdaptiveMediaSourceDownloadStatistics>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Statistics)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_position(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_position(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadFailedEventArgs, 930320456, 62635, 16548, 177, 53, 198, 223, 216, 189, 127, 241);
@@ -25371,25 +25371,25 @@ impl IAdaptiveMediaSourceDownloadFailedEventArgs {
         let hr = ((*self.lpVtbl).get_ResourceType)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_uri(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_resource_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_byte_range_offset(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u64>>> {
+    #[inline] pub unsafe fn get_resource_byte_range_offset(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceByteRangeOffset)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_byte_range_length(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u64>>> {
+    #[inline] pub unsafe fn get_resource_byte_range_length(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceByteRangeLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-web")] #[inline] pub unsafe fn get_http_response_message(&self) -> Result<ComPtr<::rt::gen::windows::web::http::HttpResponseMessage>> {
+    #[cfg(feature="windows-web")] #[inline] pub unsafe fn get_http_response_message(&self) -> Result<Option<ComPtr<::rt::gen::windows::web::http::HttpResponseMessage>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_HttpResponseMessage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AdaptiveMediaSourceDownloadFailedEventArgs: IAdaptiveMediaSourceDownloadFailedEventArgs}
@@ -25411,15 +25411,15 @@ impl IAdaptiveMediaSourceDownloadFailedEventArgs2 {
         let hr = ((*self.lpVtbl).get_ExtendedError)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_statistics(&self) -> Result<ComPtr<AdaptiveMediaSourceDownloadStatistics>> {
+    #[inline] pub unsafe fn get_statistics(&self) -> Result<Option<ComPtr<AdaptiveMediaSourceDownloadStatistics>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Statistics)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_position(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_position(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadRequestedDeferral, 96898916, 64032, 19901, 152, 33, 75, 244, 201, 191, 119, 171);
@@ -25448,30 +25448,30 @@ impl IAdaptiveMediaSourceDownloadRequestedEventArgs {
         let hr = ((*self.lpVtbl).get_ResourceType)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_uri(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_resource_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_byte_range_offset(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u64>>> {
+    #[inline] pub unsafe fn get_resource_byte_range_offset(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceByteRangeOffset)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_byte_range_length(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u64>>> {
+    #[inline] pub unsafe fn get_resource_byte_range_length(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceByteRangeLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_result(&self) -> Result<ComPtr<AdaptiveMediaSourceDownloadResult>> {
+    #[inline] pub unsafe fn get_result(&self) -> Result<Option<ComPtr<AdaptiveMediaSourceDownloadResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Result)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<AdaptiveMediaSourceDownloadRequestedDeferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<AdaptiveMediaSourceDownloadRequestedDeferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AdaptiveMediaSourceDownloadRequestedEventArgs: IAdaptiveMediaSourceDownloadRequestedEventArgs}
@@ -25486,10 +25486,10 @@ impl IAdaptiveMediaSourceDownloadRequestedEventArgs2 {
         let hr = ((*self.lpVtbl).get_RequestId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_position(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_position(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadResult, 4105165939, 48366, 19050, 159, 10, 254, 196, 30, 35, 57, 176);
@@ -25510,28 +25510,28 @@ RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadResult(IAdaptiveMediaSourceD
     fn put_ExtendedStatus(&self, value: u32) -> HRESULT
 }}
 impl IAdaptiveMediaSourceDownloadResult {
-    #[inline] pub unsafe fn get_resource_uri(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_resource_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_resource_uri(&self, value: &::rt::gen::windows::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ResourceUri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_input_stream(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IInputStream>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_input_stream(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IInputStream>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InputStream)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn set_input_stream(&self, value: &::rt::gen::windows::storage::streams::IInputStream) -> Result<()> {
         let hr = ((*self.lpVtbl).put_InputStream)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_buffer(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_buffer(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Buffer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn set_buffer(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Buffer)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -25565,19 +25565,19 @@ RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadResult2(IAdaptiveMediaSource
     fn put_ResourceByteRangeLength(&self, value: *mut ::rt::gen::windows::foundation::IReference<u64>) -> HRESULT
 }}
 impl IAdaptiveMediaSourceDownloadResult2 {
-    #[inline] pub unsafe fn get_resource_byte_range_offset(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u64>>> {
+    #[inline] pub unsafe fn get_resource_byte_range_offset(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceByteRangeOffset)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_resource_byte_range_offset(&self, value: &::rt::gen::windows::foundation::IReference<u64>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ResourceByteRangeOffset)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resource_byte_range_length(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<u64>>> {
+    #[inline] pub unsafe fn get_resource_byte_range_length(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResourceByteRangeLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_resource_byte_range_length(&self, value: &::rt::gen::windows::foundation::IReference<u64>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ResourceByteRangeLength)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -25597,20 +25597,20 @@ impl IAdaptiveMediaSourceDownloadStatistics {
         let hr = ((*self.lpVtbl).get_ContentBytesReceivedCount)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_time_to_headers_received(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_time_to_headers_received(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TimeToHeadersReceived)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_time_to_first_byte_received(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_time_to_first_byte_received(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TimeToFirstByteReceived)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_time_to_last_byte_received(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_time_to_last_byte_received(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TimeToLastByteReceived)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AdaptiveMediaSourceDownloadStatistics: IAdaptiveMediaSourceDownloadStatistics}
@@ -25697,15 +25697,15 @@ impl IContentRestrictionsBrowsePolicy {
         let hr = ((*self.lpVtbl).get_GeographicRegion)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_max_browsable_age_rating(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_max_browsable_age_rating(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MaxBrowsableAgeRating)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_preferred_age_rating(&self) -> Result<ComPtr<super::super::foundation::IReference<u32>>> {
+    #[inline] pub unsafe fn get_preferred_age_rating(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PreferredAgeRating)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ContentRestrictionsBrowsePolicy: IContentRestrictionsBrowsePolicy}
@@ -25746,10 +25746,10 @@ impl IRatedContentDescription {
         let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_image(&self) -> Result<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_image(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Image)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn set_image(&self, value: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Image)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -25764,10 +25764,10 @@ impl IRatedContentDescription {
         let hr = ((*self.lpVtbl).put_Category)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_ratings(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_ratings(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Ratings)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_ratings(&self, value: &super::super::foundation::collections::IVector<HString>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Ratings)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -25858,10 +25858,10 @@ RT_INTERFACE!{interface IPlaylist(IPlaylistVtbl): IInspectable(IInspectableVtbl)
     #[cfg(feature="windows-storage")] fn SaveAsWithFormatAsync(&self, saveLocation: *mut super::super::storage::IStorageFolder, desiredName: HSTRING, option: super::super::storage::NameCollisionOption, playlistFormat: PlaylistFormat, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::storage::StorageFile>) -> HRESULT
 }}
 impl IPlaylist {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_files(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::storage::StorageFile>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_files(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::storage::StorageFile>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Files)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn save_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
         let mut out = null_mut();

@@ -28,15 +28,15 @@ impl IKeyCredential {
         let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn retrieve_public_key_with_default_blob_type(&self) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn retrieve_public_key_with_default_blob_type(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RetrievePublicKeyWithDefaultBlobType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn retrieve_public_key_with_blob_type(&self, blobType: super::cryptography::core::CryptographicPublicKeyBlobType) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn retrieve_public_key_with_blob_type(&self, blobType: super::cryptography::core::CryptographicPublicKeyBlobType) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RetrievePublicKeyWithBlobType)(self as *const _ as *mut _, blobType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn request_sign_async(&self, data: &super::super::storage::streams::IBuffer) -> Result<ComPtr<super::super::foundation::IAsyncOperation<KeyCredentialOperationResult>>> {
         let mut out = null_mut();
@@ -59,15 +59,15 @@ RT_INTERFACE!{interface IKeyCredentialAttestationResult(IKeyCredentialAttestatio
     fn get_Status(&self, out: *mut KeyCredentialAttestationStatus) -> HRESULT
 }}
 impl IKeyCredentialAttestationResult {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_certificate_chain_buffer(&self) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_certificate_chain_buffer(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CertificateChainBuffer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_attestation_buffer(&self) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_attestation_buffer(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AttestationBuffer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_status(&self) -> Result<KeyCredentialAttestationStatus> {
         let mut out = zeroed();
@@ -144,10 +144,10 @@ RT_INTERFACE!{interface IKeyCredentialOperationResult(IKeyCredentialOperationRes
     fn get_Status(&self, out: *mut KeyCredentialStatus) -> HRESULT
 }}
 impl IKeyCredentialOperationResult {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_result(&self) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_result(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Result)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_status(&self) -> Result<KeyCredentialStatus> {
         let mut out = zeroed();
@@ -162,10 +162,10 @@ RT_INTERFACE!{interface IKeyCredentialRetrievalResult(IKeyCredentialRetrievalRes
     fn get_Status(&self, out: *mut KeyCredentialStatus) -> HRESULT
 }}
 impl IKeyCredentialRetrievalResult {
-    #[inline] pub unsafe fn get_credential(&self) -> Result<ComPtr<KeyCredential>> {
+    #[inline] pub unsafe fn get_credential(&self) -> Result<Option<ComPtr<KeyCredential>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Credential)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_status(&self) -> Result<KeyCredentialStatus> {
         let mut out = zeroed();
@@ -220,10 +220,10 @@ impl IPasswordCredential {
         let hr = ((*self.lpVtbl).RetrievePassword)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<super::super::foundation::collections::IPropertySet>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IPropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PasswordCredential: IPasswordCredential}
@@ -256,25 +256,25 @@ impl IPasswordVault {
         let hr = ((*self.lpVtbl).Remove)(self as *const _ as *mut _, credential as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn retrieve(&self, resource: &HStringArg, userName: &HStringArg) -> Result<ComPtr<PasswordCredential>> {
+    #[inline] pub unsafe fn retrieve(&self, resource: &HStringArg, userName: &HStringArg) -> Result<Option<ComPtr<PasswordCredential>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Retrieve)(self as *const _ as *mut _, resource.get(), userName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_all_by_resource(&self, resource: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVectorView<PasswordCredential>>> {
+    #[inline] pub unsafe fn find_all_by_resource(&self, resource: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<PasswordCredential>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindAllByResource)(self as *const _ as *mut _, resource.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_all_by_user_name(&self, userName: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVectorView<PasswordCredential>>> {
+    #[inline] pub unsafe fn find_all_by_user_name(&self, userName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<PasswordCredential>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindAllByUserName)(self as *const _ as *mut _, userName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn retrieve_all(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<PasswordCredential>>> {
+    #[inline] pub unsafe fn retrieve_all(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<PasswordCredential>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RetrieveAll)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PasswordVault: IPasswordVault}
@@ -287,10 +287,10 @@ RT_INTERFACE!{interface IWebAccount(IWebAccountVtbl): IInspectable(IInspectableV
     fn get_State(&self, out: *mut WebAccountState) -> HRESULT
 }}
 impl IWebAccount {
-    #[inline] pub unsafe fn get_web_account_provider(&self) -> Result<ComPtr<WebAccountProvider>> {
+    #[inline] pub unsafe fn get_web_account_provider(&self) -> Result<Option<ComPtr<WebAccountProvider>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WebAccountProvider)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_user_name(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -326,10 +326,10 @@ impl IWebAccount2 {
         let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<super::super::foundation::collections::IMapView<HString, HString>>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IMapView<HString, HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_picture_async(&self, desizedSize: WebAccountPictureSize) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::storage::streams::IRandomAccessStream>>> {
         let mut out = null_mut();
@@ -378,10 +378,10 @@ impl IWebAccountProvider {
         let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_icon_uri(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_icon_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IconUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class WebAccountProvider: IWebAccountProvider}
@@ -414,10 +414,10 @@ RT_INTERFACE!{interface IWebAccountProvider3(IWebAccountProvider3Vtbl): IInspect
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
 }}
 impl IWebAccountProvider3 {
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<ComPtr<super::super::system::User>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IWebAccountProviderFactory, 494304753, 57825, 19354, 167, 116, 92, 124, 126, 59, 243, 113);
@@ -537,10 +537,10 @@ impl ICredentialPickerOptions {
         let hr = ((*self.lpVtbl).put_PreviousCredential)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_previous_credential(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_previous_credential(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PreviousCredential)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_always_display_dialog(&self, value: bool) -> Result<()> {
         let hr = ((*self.lpVtbl).put_AlwaysDisplayDialog)(self as *const _ as *mut _, value);
@@ -600,10 +600,10 @@ impl ICredentialPickerResults {
         let hr = ((*self.lpVtbl).get_CredentialSaved)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_credential(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_credential(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Credential)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_credential_domain_name(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -737,7 +737,7 @@ impl IEnterpriseKeyCredentialRegistrationManager {
 RT_CLASS!{class EnterpriseKeyCredentialRegistrationManager: IEnterpriseKeyCredentialRegistrationManager}
 impl RtActivatable<IEnterpriseKeyCredentialRegistrationManagerStatics> for EnterpriseKeyCredentialRegistrationManager {}
 impl EnterpriseKeyCredentialRegistrationManager {
-    #[inline] pub fn get_current() -> Result<ComPtr<EnterpriseKeyCredentialRegistrationManager>> { unsafe {
+    #[inline] pub fn get_current() -> Result<Option<ComPtr<EnterpriseKeyCredentialRegistrationManager>>> { unsafe {
         <Self as RtActivatable<IEnterpriseKeyCredentialRegistrationManagerStatics>>::get_activation_factory().get_current()
     }}
 }
@@ -747,10 +747,10 @@ RT_INTERFACE!{static interface IEnterpriseKeyCredentialRegistrationManagerStatic
     fn get_Current(&self, out: *mut *mut EnterpriseKeyCredentialRegistrationManager) -> HRESULT
 }}
 impl IEnterpriseKeyCredentialRegistrationManagerStatics {
-    #[inline] pub unsafe fn get_current(&self) -> Result<ComPtr<EnterpriseKeyCredentialRegistrationManager>> {
+    #[inline] pub unsafe fn get_current(&self) -> Result<Option<ComPtr<EnterpriseKeyCredentialRegistrationManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 pub mod provider { // Windows.Security.Authentication.Identity.Provider
@@ -770,25 +770,25 @@ RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthentication(ISecondaryA
     fn AbortAuthenticationAsync(&self, errorLogMessage: HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> HRESULT
 }}
 impl ISecondaryAuthenticationFactorAuthentication {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_service_authentication_hmac(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_service_authentication_hmac(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ServiceAuthenticationHmac)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_session_nonce(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_session_nonce(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SessionNonce)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_device_nonce(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_device_nonce(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DeviceNonce)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_device_configuration_data(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_device_configuration_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DeviceConfigurationData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn finish_authentication_async(&self, deviceHmac: &::rt::gen::windows::storage::streams::IBuffer, sessionHmac: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<SecondaryAuthenticationFactorFinishAuthenticationStatus>>> {
         let mut out = null_mut();
@@ -835,10 +835,10 @@ impl ISecondaryAuthenticationFactorAuthenticationResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_authentication(&self) -> Result<ComPtr<SecondaryAuthenticationFactorAuthentication>> {
+    #[inline] pub unsafe fn get_authentication(&self) -> Result<Option<ComPtr<SecondaryAuthenticationFactorAuthentication>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Authentication)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationResult: ISecondaryAuthenticationFactorAuthenticationResult}
@@ -853,10 +853,10 @@ RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationStageChanged
     fn get_StageInfo(&self, out: *mut *mut SecondaryAuthenticationFactorAuthenticationStageInfo) -> HRESULT
 }}
 impl ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs {
-    #[inline] pub unsafe fn get_stage_info(&self) -> Result<ComPtr<SecondaryAuthenticationFactorAuthenticationStageInfo>> {
+    #[inline] pub unsafe fn get_stage_info(&self) -> Result<Option<ComPtr<SecondaryAuthenticationFactorAuthenticationStageInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StageInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs: ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs}
@@ -993,10 +993,10 @@ impl ISecondaryAuthenticationFactorInfo {
         let hr = ((*self.lpVtbl).get_DeviceModelNumber)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_device_configuration_data(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_device_configuration_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DeviceConfigurationData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SecondaryAuthenticationFactorInfo: ISecondaryAuthenticationFactorInfo}
@@ -1082,10 +1082,10 @@ impl ISecondaryAuthenticationFactorRegistrationResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_registration(&self) -> Result<ComPtr<SecondaryAuthenticationFactorRegistration>> {
+    #[inline] pub unsafe fn get_registration(&self) -> Result<Option<ComPtr<SecondaryAuthenticationFactorRegistration>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Registration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SecondaryAuthenticationFactorRegistrationResult: ISecondaryAuthenticationFactorRegistrationResult}
@@ -1192,7 +1192,7 @@ impl IMicrosoftAccountMultiFactorAuthenticationManager {
 RT_CLASS!{class MicrosoftAccountMultiFactorAuthenticationManager: IMicrosoftAccountMultiFactorAuthenticationManager}
 impl RtActivatable<IMicrosoftAccountMultiFactorAuthenticatorStatics> for MicrosoftAccountMultiFactorAuthenticationManager {}
 impl MicrosoftAccountMultiFactorAuthenticationManager {
-    #[inline] pub fn get_current() -> Result<ComPtr<MicrosoftAccountMultiFactorAuthenticationManager>> { unsafe {
+    #[inline] pub fn get_current() -> Result<Option<ComPtr<MicrosoftAccountMultiFactorAuthenticationManager>>> { unsafe {
         <Self as RtActivatable<IMicrosoftAccountMultiFactorAuthenticatorStatics>>::get_activation_factory().get_current()
     }}
 }
@@ -1205,10 +1205,10 @@ RT_INTERFACE!{static interface IMicrosoftAccountMultiFactorAuthenticatorStatics(
     fn get_Current(&self, out: *mut *mut MicrosoftAccountMultiFactorAuthenticationManager) -> HRESULT
 }}
 impl IMicrosoftAccountMultiFactorAuthenticatorStatics {
-    #[inline] pub unsafe fn get_current(&self) -> Result<ComPtr<MicrosoftAccountMultiFactorAuthenticationManager>> {
+    #[inline] pub unsafe fn get_current(&self) -> Result<Option<ComPtr<MicrosoftAccountMultiFactorAuthenticationManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMicrosoftAccountMultiFactorGetSessionsResult, 1310960032, 59898, 18810, 149, 222, 109, 87, 71, 191, 151, 76);
@@ -1217,10 +1217,10 @@ RT_INTERFACE!{interface IMicrosoftAccountMultiFactorGetSessionsResult(IMicrosoft
     fn get_ServiceResponse(&self, out: *mut MicrosoftAccountMultiFactorServiceResponse) -> HRESULT
 }}
 impl IMicrosoftAccountMultiFactorGetSessionsResult {
-    #[inline] pub unsafe fn get_sessions(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>>> {
+    #[inline] pub unsafe fn get_sessions(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Sessions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_service_response(&self) -> Result<MicrosoftAccountMultiFactorServiceResponse> {
         let mut out = zeroed();
@@ -1323,15 +1323,15 @@ RT_INTERFACE!{interface IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessi
     fn get_ServiceResponse(&self, out: *mut MicrosoftAccountMultiFactorServiceResponse) -> HRESULT
 }}
 impl IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo {
-    #[inline] pub unsafe fn get_sessions(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>>> {
+    #[inline] pub unsafe fn get_sessions(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Sessions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_unregistered_accounts(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_unregistered_accounts(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UnregisteredAccounts)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_service_response(&self) -> Result<MicrosoftAccountMultiFactorServiceResponse> {
         let mut out = zeroed();
@@ -1408,10 +1408,10 @@ impl IOnlineIdServiceTicket {
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_request(&self) -> Result<ComPtr<OnlineIdServiceTicketRequest>> {
+    #[inline] pub unsafe fn get_request(&self) -> Result<Option<ComPtr<OnlineIdServiceTicketRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_error_code(&self) -> Result<i32> {
         let mut out = zeroed();
@@ -1468,10 +1468,10 @@ impl IOnlineIdServiceTicketRequestFactory {
 RT_CLASS!{static class OnlineIdSystemAuthenticator}
 impl RtActivatable<IOnlineIdSystemAuthenticatorStatics> for OnlineIdSystemAuthenticator {}
 impl OnlineIdSystemAuthenticator {
-    #[inline] pub fn get_default() -> Result<ComPtr<OnlineIdSystemAuthenticatorForUser>> { unsafe {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> { unsafe {
         <Self as RtActivatable<IOnlineIdSystemAuthenticatorStatics>>::get_activation_factory().get_default()
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &::rt::gen::windows::system::User) -> Result<ComPtr<OnlineIdSystemAuthenticatorForUser>> { unsafe {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &::rt::gen::windows::system::User) -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> { unsafe {
         <Self as RtActivatable<IOnlineIdSystemAuthenticatorStatics>>::get_activation_factory().get_for_user(user)
     }}
 }
@@ -1498,10 +1498,10 @@ impl IOnlineIdSystemAuthenticatorForUser {
         let hr = ((*self.lpVtbl).get_ApplicationId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<ComPtr<::rt::gen::windows::system::User>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<Option<ComPtr<::rt::gen::windows::system::User>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class OnlineIdSystemAuthenticatorForUser: IOnlineIdSystemAuthenticatorForUser}
@@ -1511,15 +1511,15 @@ RT_INTERFACE!{static interface IOnlineIdSystemAuthenticatorStatics(IOnlineIdSyst
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut ::rt::gen::windows::system::User, out: *mut *mut OnlineIdSystemAuthenticatorForUser) -> HRESULT
 }}
 impl IOnlineIdSystemAuthenticatorStatics {
-    #[inline] pub unsafe fn get_default(&self) -> Result<ComPtr<OnlineIdSystemAuthenticatorForUser>> {
+    #[inline] pub unsafe fn get_default(&self) -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Default)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &::rt::gen::windows::system::User) -> Result<ComPtr<OnlineIdSystemAuthenticatorForUser>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &::rt::gen::windows::system::User) -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IOnlineIdSystemIdentity, 1950142989, 46794, 17229, 129, 36, 83, 234, 18, 104, 83, 7);
@@ -1528,10 +1528,10 @@ RT_INTERFACE!{interface IOnlineIdSystemIdentity(IOnlineIdSystemIdentityVtbl): II
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IOnlineIdSystemIdentity {
-    #[inline] pub unsafe fn get_ticket(&self) -> Result<ComPtr<OnlineIdServiceTicket>> {
+    #[inline] pub unsafe fn get_ticket(&self) -> Result<Option<ComPtr<OnlineIdServiceTicket>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Ticket)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_id(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -1547,10 +1547,10 @@ RT_INTERFACE!{interface IOnlineIdSystemTicketResult(IOnlineIdSystemTicketResultV
     fn get_ExtendedError(&self, out: *mut ::rt::gen::windows::foundation::HResult) -> HRESULT
 }}
 impl IOnlineIdSystemTicketResult {
-    #[inline] pub unsafe fn get_identity(&self) -> Result<ComPtr<OnlineIdSystemIdentity>> {
+    #[inline] pub unsafe fn get_identity(&self) -> Result<Option<ComPtr<OnlineIdSystemIdentity>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Identity)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_status(&self) -> Result<OnlineIdSystemTicketStatus> {
         let mut out = zeroed();
@@ -1581,10 +1581,10 @@ RT_INTERFACE!{interface IUserIdentity(IUserIdentityVtbl): IInspectable(IInspecta
     fn get_IsConfirmedPC(&self, out: *mut bool) -> HRESULT
 }}
 impl IUserIdentity {
-    #[inline] pub unsafe fn get_tickets(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<OnlineIdServiceTicket>>> {
+    #[inline] pub unsafe fn get_tickets(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<OnlineIdServiceTicket>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Tickets)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_id(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -1639,7 +1639,7 @@ impl WebAuthenticationBroker {
     #[inline] pub fn authenticate_without_callback_uri_async(options: WebAuthenticationOptions, requestUri: &::rt::gen::windows::foundation::Uri) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe {
         <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().authenticate_without_callback_uri_async(options, requestUri)
     }}
-    #[inline] pub fn get_current_application_callback_uri() -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> { unsafe {
+    #[inline] pub fn get_current_application_callback_uri() -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> { unsafe {
         <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().get_current_application_callback_uri()
     }}
     #[inline] pub fn authenticate_and_continue(requestUri: &::rt::gen::windows::foundation::Uri) -> Result<()> { unsafe {
@@ -1676,10 +1676,10 @@ impl IWebAuthenticationBrokerStatics {
         let hr = ((*self.lpVtbl).AuthenticateWithoutCallbackUriAsync)(self as *const _ as *mut _, options, requestUri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_current_application_callback_uri(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_current_application_callback_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCurrentApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IWebAuthenticationBrokerStatics2, 1942879134, 5351, 16858, 169, 113, 170, 244, 65, 11, 98, 30);
@@ -1753,10 +1753,10 @@ RT_INTERFACE!{interface IWebAccountClientView(IWebAccountClientViewVtbl): IInspe
     fn get_AccountPairwiseId(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IWebAccountClientView {
-    #[inline] pub unsafe fn get_application_callback_uri(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_application_callback_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_type(&self) -> Result<WebAccountClientViewType> {
         let mut out = zeroed();
@@ -2066,10 +2066,10 @@ RT_INTERFACE!{interface IWebAccountProviderDeleteAccountOperation(IWebAccountPro
     fn get_WebAccount(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT
 }}
 impl IWebAccountProviderDeleteAccountOperation {
-    #[inline] pub unsafe fn get_web_account(&self) -> Result<ComPtr<super::super::super::credentials::WebAccount>> {
+    #[inline] pub unsafe fn get_web_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WebAccount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class WebAccountProviderDeleteAccountOperation: IWebAccountProviderDeleteAccountOperation}
@@ -2080,10 +2080,10 @@ RT_INTERFACE!{interface IWebAccountProviderManageAccountOperation(IWebAccountPro
     fn ReportCompleted(&self) -> HRESULT
 }}
 impl IWebAccountProviderManageAccountOperation {
-    #[inline] pub unsafe fn get_web_account(&self) -> Result<ComPtr<super::super::super::credentials::WebAccount>> {
+    #[inline] pub unsafe fn get_web_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WebAccount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn report_completed(&self) -> Result<()> {
         let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _);
@@ -2116,29 +2116,29 @@ RT_INTERFACE!{interface IWebAccountProviderRetrieveCookiesOperation(IWebAccountP
     fn get_ApplicationCallbackUri(&self, out: *mut *mut ::rt::gen::windows::foundation::Uri) -> HRESULT
 }}
 impl IWebAccountProviderRetrieveCookiesOperation {
-    #[inline] pub unsafe fn get_context(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_context(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Context)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-web")] #[inline] pub unsafe fn get_cookies(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<::rt::gen::windows::web::http::HttpCookie>>> {
+    #[cfg(feature="windows-web")] #[inline] pub unsafe fn get_cookies(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<::rt::gen::windows::web::http::HttpCookie>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Cookies)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_uri(&self, uri: &::rt::gen::windows::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Uri)(self as *const _ as *mut _, uri as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uri(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_application_callback_uri(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_application_callback_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class WebAccountProviderRetrieveCookiesOperation: IWebAccountProviderRetrieveCookiesOperation}
@@ -2149,15 +2149,15 @@ RT_INTERFACE!{interface IWebAccountProviderSignOutAccountOperation(IWebAccountPr
     fn get_ClientId(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IWebAccountProviderSignOutAccountOperation {
-    #[inline] pub unsafe fn get_web_account(&self) -> Result<ComPtr<super::super::super::credentials::WebAccount>> {
+    #[inline] pub unsafe fn get_web_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WebAccount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_application_callback_uri(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_application_callback_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_client_id(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -2186,10 +2186,10 @@ RT_INTERFACE!{interface IWebAccountProviderTokenObjects(IWebAccountProviderToken
     fn get_Operation(&self, out: *mut *mut IWebAccountProviderOperation) -> HRESULT
 }}
 impl IWebAccountProviderTokenObjects {
-    #[inline] pub unsafe fn get_operation(&self) -> Result<ComPtr<IWebAccountProviderOperation>> {
+    #[inline] pub unsafe fn get_operation(&self) -> Result<Option<ComPtr<IWebAccountProviderOperation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Operation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IWebAccountProviderTokenObjects2, 270579859, 23717, 20479, 149, 251, 184, 32, 39, 63, 195, 149);
@@ -2197,10 +2197,10 @@ RT_INTERFACE!{interface IWebAccountProviderTokenObjects2(IWebAccountProviderToke
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut ::rt::gen::windows::system::User) -> HRESULT
 }}
 impl IWebAccountProviderTokenObjects2 {
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<ComPtr<::rt::gen::windows::system::User>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<Option<ComPtr<::rt::gen::windows::system::User>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IWebAccountProviderTokenOperation, 2512786366, 8244, 19512, 148, 52, 210, 108, 20, 178, 180, 178);
@@ -2211,15 +2211,15 @@ RT_INTERFACE!{interface IWebAccountProviderTokenOperation(IWebAccountProviderTok
     fn get_CacheExpirationTime(&self, out: *mut ::rt::gen::windows::foundation::DateTime) -> HRESULT
 }}
 impl IWebAccountProviderTokenOperation {
-    #[inline] pub unsafe fn get_provider_request(&self) -> Result<ComPtr<WebProviderTokenRequest>> {
+    #[inline] pub unsafe fn get_provider_request(&self) -> Result<Option<ComPtr<WebProviderTokenRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ProviderRequest)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_provider_responses(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<WebProviderTokenResponse>>> {
+    #[inline] pub unsafe fn get_provider_responses(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<WebProviderTokenResponse>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ProviderResponses)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_cache_expiration_time(&self, value: ::rt::gen::windows::foundation::DateTime) -> Result<()> {
         let hr = ((*self.lpVtbl).put_CacheExpirationTime)(self as *const _ as *mut _, value);
@@ -2280,25 +2280,25 @@ RT_INTERFACE!{interface IWebProviderTokenRequest(IWebProviderTokenRequestVtbl): 
     fn GetApplicationTokenBindingKeyAsync(&self, keyType: super::TokenBindingKeyType, target: *mut ::rt::gen::windows::foundation::Uri, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<super::super::super::cryptography::core::CryptographicKey>) -> HRESULT
 }}
 impl IWebProviderTokenRequest {
-    #[inline] pub unsafe fn get_client_request(&self) -> Result<ComPtr<super::core::WebTokenRequest>> {
+    #[inline] pub unsafe fn get_client_request(&self) -> Result<Option<ComPtr<super::core::WebTokenRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ClientRequest)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_web_accounts(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>> {
+    #[inline] pub unsafe fn get_web_accounts(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WebAccounts)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_web_account_selection_options(&self) -> Result<WebAccountSelectionOptions> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_WebAccountSelectionOptions)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_application_callback_uri(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Uri>> {
+    #[inline] pub unsafe fn get_application_callback_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_application_token_binding_key_async(&self, keyType: super::TokenBindingKeyType, target: &::rt::gen::windows::foundation::Uri) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::cryptography::core::CryptographicKey>>> {
         let mut out = null_mut();
@@ -2323,10 +2323,10 @@ RT_INTERFACE!{interface IWebProviderTokenResponse(IWebProviderTokenResponseVtbl)
     fn get_ClientResponse(&self, out: *mut *mut super::core::WebTokenResponse) -> HRESULT
 }}
 impl IWebProviderTokenResponse {
-    #[inline] pub unsafe fn get_client_response(&self) -> Result<ComPtr<super::core::WebTokenResponse>> {
+    #[inline] pub unsafe fn get_client_response(&self) -> Result<Option<ComPtr<super::core::WebTokenResponse>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ClientResponse)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class WebProviderTokenResponse: IWebProviderTokenResponse}
@@ -2356,10 +2356,10 @@ RT_INTERFACE!{interface IWebAccountEventArgs(IWebAccountEventArgsVtbl): IInspect
     fn get_Account(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT
 }}
 impl IWebAccountEventArgs {
-    #[inline] pub unsafe fn get_account(&self) -> Result<ComPtr<super::super::super::credentials::WebAccount>> {
+    #[inline] pub unsafe fn get_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Account)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class WebAccountEventArgs: IWebAccountEventArgs}
@@ -2431,7 +2431,7 @@ impl WebAuthenticationCoreManager {
     #[cfg(feature="windows-system")] #[inline] pub fn find_account_provider_with_authority_for_user_async(webAccountProviderId: &HStringArg, authority: &HStringArg, user: &::rt::gen::windows::system::User) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe {
         <Self as RtActivatable<IWebAuthenticationCoreManagerStatics2>>::get_activation_factory().find_account_provider_with_authority_for_user_async(webAccountProviderId, authority, user)
     }}
-    #[inline] pub fn create_web_account_monitor(webAccounts: &::rt::gen::windows::foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<ComPtr<WebAccountMonitor>> { unsafe {
+    #[inline] pub fn create_web_account_monitor(webAccounts: &::rt::gen::windows::foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<Option<ComPtr<WebAccountMonitor>>> { unsafe {
         <Self as RtActivatable<IWebAuthenticationCoreManagerStatics3>>::get_activation_factory().create_web_account_monitor(webAccounts)
     }}
 }
@@ -2499,10 +2499,10 @@ RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics3(IWebAuthent
     fn CreateWebAccountMonitor(&self, webAccounts: *mut ::rt::gen::windows::foundation::collections::IIterable<super::super::super::credentials::WebAccount>, out: *mut *mut WebAccountMonitor) -> HRESULT
 }}
 impl IWebAuthenticationCoreManagerStatics3 {
-    #[inline] pub unsafe fn create_web_account_monitor(&self, webAccounts: &::rt::gen::windows::foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<ComPtr<WebAccountMonitor>> {
+    #[inline] pub unsafe fn create_web_account_monitor(&self, webAccounts: &::rt::gen::windows::foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<Option<ComPtr<WebAccountMonitor>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateWebAccountMonitor)(self as *const _ as *mut _, webAccounts as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IWebProviderError, 3675855793, 20677, 18441, 141, 202, 9, 201, 148, 16, 36, 92);
@@ -2522,10 +2522,10 @@ impl IWebProviderError {
         let hr = ((*self.lpVtbl).get_ErrorMessage)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IMap<HString, HString>>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IMap<HString, HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class WebProviderError: IWebProviderError}
@@ -2556,10 +2556,10 @@ RT_INTERFACE!{interface IWebTokenRequest(IWebTokenRequestVtbl): IInspectable(IIn
     fn get_Properties(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IMap<HString, HString>) -> HRESULT
 }}
 impl IWebTokenRequest {
-    #[inline] pub unsafe fn get_web_account_provider(&self) -> Result<ComPtr<super::super::super::credentials::WebAccountProvider>> {
+    #[inline] pub unsafe fn get_web_account_provider(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccountProvider>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WebAccountProvider)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_scope(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -2576,10 +2576,10 @@ impl IWebTokenRequest {
         let hr = ((*self.lpVtbl).get_PromptType)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IMap<HString, HString>>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IMap<HString, HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class WebTokenRequest: IWebTokenRequest}
@@ -2604,10 +2604,10 @@ RT_INTERFACE!{interface IWebTokenRequest2(IWebTokenRequest2Vtbl): IInspectable(I
     fn get_AppProperties(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IMap<HString, HString>) -> HRESULT
 }}
 impl IWebTokenRequest2 {
-    #[inline] pub unsafe fn get_app_properties(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IMap<HString, HString>>> {
+    #[inline] pub unsafe fn get_app_properties(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IMap<HString, HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AppProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IWebTokenRequest3, 1517640529, 15281, 16805, 166, 61, 144, 188, 50, 199, 219, 154);
@@ -2666,20 +2666,20 @@ RT_INTERFACE!{interface IWebTokenRequestResult(IWebTokenRequestResultVtbl): IIns
     fn InvalidateCacheAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> HRESULT
 }}
 impl IWebTokenRequestResult {
-    #[inline] pub unsafe fn get_response_data(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<WebTokenResponse>>> {
+    #[inline] pub unsafe fn get_response_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<WebTokenResponse>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResponseData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_response_status(&self) -> Result<WebTokenRequestStatus> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ResponseStatus)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_response_error(&self) -> Result<ComPtr<WebProviderError>> {
+    #[inline] pub unsafe fn get_response_error(&self) -> Result<Option<ComPtr<WebProviderError>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResponseError)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn invalidate_cache_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> {
         let mut out = null_mut();
@@ -2704,20 +2704,20 @@ impl IWebTokenResponse {
         let hr = ((*self.lpVtbl).get_Token)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_provider_error(&self) -> Result<ComPtr<WebProviderError>> {
+    #[inline] pub unsafe fn get_provider_error(&self) -> Result<Option<ComPtr<WebProviderError>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ProviderError)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_web_account(&self) -> Result<ComPtr<super::super::super::credentials::WebAccount>> {
+    #[inline] pub unsafe fn get_web_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WebAccount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IMap<HString, HString>>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IMap<HString, HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class WebTokenResponse: IWebTokenResponse}
@@ -2772,31 +2772,31 @@ impl CryptographicBuffer {
     #[cfg(feature="windows-storage")] #[inline] pub fn compare(object1: &super::super::storage::streams::IBuffer, object2: &super::super::storage::streams::IBuffer) -> Result<bool> { unsafe {
         <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().compare(object1, object2)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn generate_random(length: u32) -> Result<ComPtr<super::super::storage::streams::IBuffer>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn generate_random(length: u32) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe {
         <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().generate_random(length)
     }}
     #[inline] pub fn generate_random_number() -> Result<u32> { unsafe {
         <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().generate_random_number()
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_byte_array(value: &[u8]) -> Result<ComPtr<super::super::storage::streams::IBuffer>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_byte_array(value: &[u8]) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe {
         <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().create_from_byte_array(value)
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn copy_to_byte_array(buffer: &super::super::storage::streams::IBuffer) -> Result<ComArray<u8>> { unsafe {
         <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().copy_to_byte_array(buffer)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn decode_from_hex_string(value: &HStringArg) -> Result<ComPtr<super::super::storage::streams::IBuffer>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn decode_from_hex_string(value: &HStringArg) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe {
         <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().decode_from_hex_string(value)
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn encode_to_hex_string(buffer: &super::super::storage::streams::IBuffer) -> Result<HString> { unsafe {
         <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().encode_to_hex_string(buffer)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn decode_from_base64_string(value: &HStringArg) -> Result<ComPtr<super::super::storage::streams::IBuffer>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn decode_from_base64_string(value: &HStringArg) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe {
         <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().decode_from_base64_string(value)
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn encode_to_base64_string(buffer: &super::super::storage::streams::IBuffer) -> Result<HString> { unsafe {
         <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().encode_to_base64_string(buffer)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn convert_string_to_binary(value: &HStringArg, encoding: BinaryStringEncoding) -> Result<ComPtr<super::super::storage::streams::IBuffer>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn convert_string_to_binary(value: &HStringArg, encoding: BinaryStringEncoding) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe {
         <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().convert_string_to_binary(value, encoding)
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn convert_binary_to_string(encoding: BinaryStringEncoding, buffer: &super::super::storage::streams::IBuffer) -> Result<HString> { unsafe {
@@ -2824,50 +2824,50 @@ impl ICryptographicBufferStatics {
         let hr = ((*self.lpVtbl).Compare)(self as *const _ as *mut _, object1 as *const _ as *mut _, object2 as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn generate_random(&self, length: u32) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn generate_random(&self, length: u32) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GenerateRandom)(self as *const _ as *mut _, length, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn generate_random_number(&self) -> Result<u32> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).GenerateRandomNumber)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_byte_array(&self, value: &[u8]) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_byte_array(&self, value: &[u8]) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromByteArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn copy_to_byte_array(&self, buffer: &super::super::storage::streams::IBuffer) -> Result<ComArray<u8>> {
         let mut valueSize = 0; let mut value = null_mut();
         let hr = ((*self.lpVtbl).CopyToByteArray)(self as *const _ as *mut _, buffer as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn decode_from_hex_string(&self, value: &HStringArg) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn decode_from_hex_string(&self, value: &HStringArg) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).DecodeFromHexString)(self as *const _ as *mut _, value.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn encode_to_hex_string(&self, buffer: &super::super::storage::streams::IBuffer) -> Result<HString> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).EncodeToHexString)(self as *const _ as *mut _, buffer as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn decode_from_base64_string(&self, value: &HStringArg) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn decode_from_base64_string(&self, value: &HStringArg) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).DecodeFromBase64String)(self as *const _ as *mut _, value.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn encode_to_base64_string(&self, buffer: &super::super::storage::streams::IBuffer) -> Result<HString> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).EncodeToBase64String)(self as *const _ as *mut _, buffer as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn convert_string_to_binary(&self, value: &HStringArg, encoding: BinaryStringEncoding) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn convert_string_to_binary(&self, value: &HStringArg, encoding: BinaryStringEncoding) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ConvertStringToBinary)(self as *const _ as *mut _, value.get(), encoding, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn convert_binary_to_string(&self, encoding: BinaryStringEncoding, buffer: &super::super::storage::streams::IBuffer) -> Result<HString> {
         let mut out = null_mut();
@@ -2922,10 +2922,10 @@ impl ICertificate {
         let hr = ((*self.lpVtbl).GetHashValueWithAlgorithm)(self as *const _ as *mut _, hashAlgorithmName.get(), &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_certificate_blob(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_certificate_blob(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCertificateBlob)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_subject(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -2957,10 +2957,10 @@ impl ICertificate {
         let hr = ((*self.lpVtbl).get_ValidTo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_enhanced_key_usages(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_enhanced_key_usages(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EnhancedKeyUsages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_friendly_name(&self, value: &HStringArg) -> Result<()> {
         let hr = ((*self.lpVtbl).put_FriendlyName)(self as *const _ as *mut _, value.get());
@@ -2995,10 +2995,10 @@ impl ICertificate2 {
         let hr = ((*self.lpVtbl).get_IsSecurityDeviceBound)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_key_usages(&self) -> Result<ComPtr<CertificateKeyUsages>> {
+    #[inline] pub unsafe fn get_key_usages(&self) -> Result<Option<ComPtr<CertificateKeyUsages>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_KeyUsages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_key_algorithm_name(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -3015,10 +3015,10 @@ impl ICertificate2 {
         let hr = ((*self.lpVtbl).get_SignatureHashAlgorithmName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_subject_alternative_name(&self) -> Result<ComPtr<SubjectAlternativeNameInfo>> {
+    #[inline] pub unsafe fn get_subject_alternative_name(&self) -> Result<Option<ComPtr<SubjectAlternativeNameInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SubjectAlternativeName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICertificate3, 3193022822, 44639, 18002, 172, 231, 198, 215, 231, 114, 76, 243);
@@ -3061,10 +3061,10 @@ impl ICertificateChain {
         let hr = ((*self.lpVtbl).ValidateWithParameters)(self as *const _ as *mut _, parameter as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_certificates(&self, includeRoot: bool) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<Certificate>>> {
+    #[inline] pub unsafe fn get_certificates(&self, includeRoot: bool) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<Certificate>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCertificates)(self as *const _ as *mut _, includeRoot, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CertificateChain: ICertificateChain}
@@ -3085,7 +3085,7 @@ impl CertificateEnrollmentManager {
     #[inline] pub fn import_pfx_data_async(pfxData: &HStringArg, password: &HStringArg, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
         <Self as RtActivatable<ICertificateEnrollmentManagerStatics>>::get_activation_factory().import_pfx_data_async(pfxData, password, exportable, keyProtectionLevel, installOption, friendlyName)
     }}
-    #[inline] pub fn get_user_certificate_enrollment_manager() -> Result<ComPtr<UserCertificateEnrollmentManager>> { unsafe {
+    #[inline] pub fn get_user_certificate_enrollment_manager() -> Result<Option<ComPtr<UserCertificateEnrollmentManager>>> { unsafe {
         <Self as RtActivatable<ICertificateEnrollmentManagerStatics2>>::get_activation_factory().get_user_certificate_enrollment_manager()
     }}
     #[inline] pub fn import_pfx_data_to_ksp_async(pfxData: &HStringArg, password: &HStringArg, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: &HStringArg, keyStorageProvider: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> { unsafe {
@@ -3125,10 +3125,10 @@ RT_INTERFACE!{static interface ICertificateEnrollmentManagerStatics2(ICertificat
     fn ImportPfxDataToKspAsync(&self, pfxData: HSTRING, password: HSTRING, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: HSTRING, keyStorageProvider: HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> HRESULT
 }}
 impl ICertificateEnrollmentManagerStatics2 {
-    #[inline] pub unsafe fn get_user_certificate_enrollment_manager(&self) -> Result<ComPtr<UserCertificateEnrollmentManager>> {
+    #[inline] pub unsafe fn get_user_certificate_enrollment_manager(&self) -> Result<Option<ComPtr<UserCertificateEnrollmentManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UserCertificateEnrollmentManager)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn import_pfx_data_to_ksp_async(&self, pfxData: &HStringArg, password: &HStringArg, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: &HStringArg, keyStorageProvider: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> {
         let mut out = null_mut();
@@ -3313,10 +3313,10 @@ RT_INTERFACE!{interface ICertificateQuery(ICertificateQueryVtbl): IInspectable(I
     fn put_HardwareOnly(&self, value: bool) -> HRESULT
 }}
 impl ICertificateQuery {
-    #[inline] pub unsafe fn get_enhanced_key_usages(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_enhanced_key_usages(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EnhancedKeyUsages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_issuer_name(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -3522,19 +3522,19 @@ impl ICertificateRequestProperties2 {
         let hr = ((*self.lpVtbl).put_SmartcardReaderName)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_signing_certificate(&self) -> Result<ComPtr<Certificate>> {
+    #[inline] pub unsafe fn get_signing_certificate(&self) -> Result<Option<ComPtr<Certificate>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SigningCertificate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_signing_certificate(&self, value: &Certificate) -> Result<()> {
         let hr = ((*self.lpVtbl).put_SigningCertificate)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_attestation_credential_certificate(&self) -> Result<ComPtr<Certificate>> {
+    #[inline] pub unsafe fn get_attestation_credential_certificate(&self) -> Result<Option<ComPtr<Certificate>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AttestationCredentialCertificate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_attestation_credential_certificate(&self, value: &Certificate) -> Result<()> {
         let hr = ((*self.lpVtbl).put_AttestationCredentialCertificate)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -3608,20 +3608,20 @@ RT_INTERFACE!{interface ICertificateRequestProperties4(ICertificateRequestProper
     fn get_Extensions(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<CertificateExtension>) -> HRESULT
 }}
 impl ICertificateRequestProperties4 {
-    #[inline] pub unsafe fn get_suppressed_defaults(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_suppressed_defaults(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SuppressedDefaults)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_subject_alternative_name(&self) -> Result<ComPtr<SubjectAlternativeNameInfo>> {
+    #[inline] pub unsafe fn get_subject_alternative_name(&self) -> Result<Option<ComPtr<SubjectAlternativeNameInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SubjectAlternativeName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_extensions(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<CertificateExtension>>> {
+    #[inline] pub unsafe fn get_extensions(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<CertificateExtension>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Extensions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICertificateStore, 2965370656, 13390, 17201, 175, 20, 167, 247, 167, 235, 201, 58);
@@ -3661,16 +3661,16 @@ impl CertificateStores {
     #[inline] pub fn find_all_with_query_async(query: &CertificateQuery) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<Certificate>>>> { unsafe {
         <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().find_all_with_query_async(query)
     }}
-    #[inline] pub fn get_trusted_root_certification_authorities() -> Result<ComPtr<CertificateStore>> { unsafe {
+    #[inline] pub fn get_trusted_root_certification_authorities() -> Result<Option<ComPtr<CertificateStore>>> { unsafe {
         <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().get_trusted_root_certification_authorities()
     }}
-    #[inline] pub fn get_intermediate_certification_authorities() -> Result<ComPtr<CertificateStore>> { unsafe {
+    #[inline] pub fn get_intermediate_certification_authorities() -> Result<Option<ComPtr<CertificateStore>>> { unsafe {
         <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().get_intermediate_certification_authorities()
     }}
-    #[inline] pub fn get_store_by_name(storeName: &HStringArg) -> Result<ComPtr<CertificateStore>> { unsafe {
+    #[inline] pub fn get_store_by_name(storeName: &HStringArg) -> Result<Option<ComPtr<CertificateStore>>> { unsafe {
         <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().get_store_by_name(storeName)
     }}
-    #[inline] pub fn get_user_store_by_name(storeName: &HStringArg) -> Result<ComPtr<UserCertificateStore>> { unsafe {
+    #[inline] pub fn get_user_store_by_name(storeName: &HStringArg) -> Result<Option<ComPtr<UserCertificateStore>>> { unsafe {
         <Self as RtActivatable<ICertificateStoresStatics2>>::get_activation_factory().get_user_store_by_name(storeName)
     }}
 }
@@ -3694,20 +3694,20 @@ impl ICertificateStoresStatics {
         let hr = ((*self.lpVtbl).FindAllWithQueryAsync)(self as *const _ as *mut _, query as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_trusted_root_certification_authorities(&self) -> Result<ComPtr<CertificateStore>> {
+    #[inline] pub unsafe fn get_trusted_root_certification_authorities(&self) -> Result<Option<ComPtr<CertificateStore>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TrustedRootCertificationAuthorities)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_intermediate_certification_authorities(&self) -> Result<ComPtr<CertificateStore>> {
+    #[inline] pub unsafe fn get_intermediate_certification_authorities(&self) -> Result<Option<ComPtr<CertificateStore>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IntermediateCertificationAuthorities)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_store_by_name(&self, storeName: &HStringArg) -> Result<ComPtr<CertificateStore>> {
+    #[inline] pub unsafe fn get_store_by_name(&self, storeName: &HStringArg) -> Result<Option<ComPtr<CertificateStore>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetStoreByName)(self as *const _ as *mut _, storeName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICertificateStoresStatics2, 4203744121, 41172, 19340, 188, 85, 192, 163, 126, 177, 65, 237);
@@ -3715,10 +3715,10 @@ RT_INTERFACE!{static interface ICertificateStoresStatics2(ICertificateStoresStat
     fn GetUserStoreByName(&self, storeName: HSTRING, out: *mut *mut UserCertificateStore) -> HRESULT
 }}
 impl ICertificateStoresStatics2 {
-    #[inline] pub unsafe fn get_user_store_by_name(&self, storeName: &HStringArg) -> Result<ComPtr<UserCertificateStore>> {
+    #[inline] pub unsafe fn get_user_store_by_name(&self, storeName: &HStringArg) -> Result<Option<ComPtr<UserCertificateStore>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetUserStoreByName)(self as *const _ as *mut _, storeName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IChainBuildingParameters, 1110157602, 31885, 18359, 181, 155, 177, 39, 3, 115, 58, 195);
@@ -3737,10 +3737,10 @@ RT_INTERFACE!{interface IChainBuildingParameters(IChainBuildingParametersVtbl): 
     fn get_ExclusiveTrustRoots(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<Certificate>) -> HRESULT
 }}
 impl IChainBuildingParameters {
-    #[inline] pub unsafe fn get_enhanced_key_usages(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_enhanced_key_usages(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EnhancedKeyUsages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_validation_timestamp(&self) -> Result<::rt::gen::windows::foundation::DateTime> {
         let mut out = zeroed();
@@ -3787,10 +3787,10 @@ impl IChainBuildingParameters {
         let hr = ((*self.lpVtbl).put_CurrentTimeValidationEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_exclusive_trust_roots(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<Certificate>>> {
+    #[inline] pub unsafe fn get_exclusive_trust_roots(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<Certificate>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExclusiveTrustRoots)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ChainBuildingParameters: IChainBuildingParameters}
@@ -3813,10 +3813,10 @@ impl IChainValidationParameters {
         let hr = ((*self.lpVtbl).put_CertificateChainPolicy)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-networking")] #[inline] pub unsafe fn get_server_dns_name(&self) -> Result<ComPtr<::rt::gen::windows::networking::HostName>> {
+    #[cfg(feature="windows-networking")] #[inline] pub unsafe fn get_server_dns_name(&self) -> Result<Option<ComPtr<::rt::gen::windows::networking::HostName>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ServerDnsName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-networking")] #[inline] pub unsafe fn set_server_dns_name(&self, value: &::rt::gen::windows::networking::HostName) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ServerDnsName)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -3837,20 +3837,20 @@ RT_INTERFACE!{interface ICmsAttachedSignature(ICmsAttachedSignatureVtbl): IInspe
     fn VerifySignature(&self, out: *mut SignatureValidationResult) -> HRESULT
 }}
 impl ICmsAttachedSignature {
-    #[inline] pub unsafe fn get_certificates(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<Certificate>>> {
+    #[inline] pub unsafe fn get_certificates(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<Certificate>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Certificates)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_content(&self) -> Result<ComArray<u8>> {
         let mut outSize = 0; let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Content)(self as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_signers(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<CmsSignerInfo>>> {
+    #[inline] pub unsafe fn get_signers(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<CmsSignerInfo>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Signers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn verify_signature(&self) -> Result<SignatureValidationResult> {
         let mut out = zeroed();
@@ -3899,15 +3899,15 @@ RT_INTERFACE!{interface ICmsDetachedSignature(ICmsDetachedSignatureVtbl): IInspe
     #[cfg(feature="windows-storage")] fn VerifySignatureAsync(&self, data: *mut ::rt::gen::windows::storage::streams::IInputStream, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<SignatureValidationResult>) -> HRESULT
 }}
 impl ICmsDetachedSignature {
-    #[inline] pub unsafe fn get_certificates(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<Certificate>>> {
+    #[inline] pub unsafe fn get_certificates(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<Certificate>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Certificates)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_signers(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<CmsSignerInfo>>> {
+    #[inline] pub unsafe fn get_signers(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<CmsSignerInfo>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Signers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn verify_signature_async(&self, data: &::rt::gen::windows::storage::streams::IInputStream) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<SignatureValidationResult>>> {
         let mut out = null_mut();
@@ -3958,10 +3958,10 @@ RT_INTERFACE!{interface ICmsSignerInfo(ICmsSignerInfoVtbl): IInspectable(IInspec
     fn get_TimestampInfo(&self, out: *mut *mut CmsTimestampInfo) -> HRESULT
 }}
 impl ICmsSignerInfo {
-    #[inline] pub unsafe fn get_certificate(&self) -> Result<ComPtr<Certificate>> {
+    #[inline] pub unsafe fn get_certificate(&self) -> Result<Option<ComPtr<Certificate>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Certificate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_certificate(&self, value: &Certificate) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Certificate)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -3976,10 +3976,10 @@ impl ICmsSignerInfo {
         let hr = ((*self.lpVtbl).put_HashAlgorithmName)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_timestamp_info(&self) -> Result<ComPtr<CmsTimestampInfo>> {
+    #[inline] pub unsafe fn get_timestamp_info(&self) -> Result<Option<ComPtr<CmsTimestampInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TimestampInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CmsSignerInfo: ICmsSignerInfo}
@@ -3992,15 +3992,15 @@ RT_INTERFACE!{interface ICmsTimestampInfo(ICmsTimestampInfoVtbl): IInspectable(I
     fn get_Timestamp(&self, out: *mut ::rt::gen::windows::foundation::DateTime) -> HRESULT
 }}
 impl ICmsTimestampInfo {
-    #[inline] pub unsafe fn get_signing_certificate(&self) -> Result<ComPtr<Certificate>> {
+    #[inline] pub unsafe fn get_signing_certificate(&self) -> Result<Option<ComPtr<Certificate>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SigningCertificate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_certificates(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<Certificate>>> {
+    #[inline] pub unsafe fn get_certificates(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<Certificate>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Certificates)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_timestamp(&self) -> Result<::rt::gen::windows::foundation::DateTime> {
         let mut out = zeroed();
@@ -4360,35 +4360,35 @@ RT_INTERFACE!{interface ISubjectAlternativeNameInfo(ISubjectAlternativeNameInfoV
     fn get_PrincipalName(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<HString>) -> HRESULT
 }}
 impl ISubjectAlternativeNameInfo {
-    #[inline] pub unsafe fn get_email_name(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_email_name(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EmailName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_ipaddress(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_ipaddress(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IPAddress)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_url(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_url(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Url)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_dns_name(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_dns_name(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DnsName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_distinguished_name(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_distinguished_name(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DistinguishedName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_principal_name(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_principal_name(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PrincipalName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SubjectAlternativeNameInfo: ISubjectAlternativeNameInfo}
@@ -4405,40 +4405,40 @@ RT_INTERFACE!{interface ISubjectAlternativeNameInfo2(ISubjectAlternativeNameInfo
     fn get_Extension(&self, out: *mut *mut CertificateExtension) -> HRESULT
 }}
 impl ISubjectAlternativeNameInfo2 {
-    #[inline] pub unsafe fn get_email_names(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_email_names(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EmailNames)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_ipaddresses(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_ipaddresses(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IPAddresses)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_urls(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_urls(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Urls)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_dns_names(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_dns_names(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DnsNames)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_distinguished_names(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_distinguished_names(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DistinguishedNames)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_principal_names(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>> {
+    #[inline] pub unsafe fn get_principal_names(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PrincipalNames)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_extension(&self) -> Result<ComPtr<CertificateExtension>> {
+    #[inline] pub unsafe fn get_extension(&self) -> Result<Option<ComPtr<CertificateExtension>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Extension)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IUserCertificateEnrollmentManager, 2519807768, 8929, 18457, 178, 11, 171, 70, 166, 236, 160, 110);
@@ -4729,36 +4729,36 @@ impl IAsymmetricKeyAlgorithmProvider {
         let hr = ((*self.lpVtbl).get_AlgorithmName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_key_pair(&self, keySize: u32) -> Result<ComPtr<CryptographicKey>> {
+    #[inline] pub unsafe fn create_key_pair(&self, keySize: u32) -> Result<Option<ComPtr<CryptographicKey>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateKeyPair)(self as *const _ as *mut _, keySize, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn import_default_private_key_blob(&self, keyBlob: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<CryptographicKey>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn import_default_private_key_blob(&self, keyBlob: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<CryptographicKey>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ImportDefaultPrivateKeyBlob)(self as *const _ as *mut _, keyBlob as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn import_key_pair_with_blob_type(&self, keyBlob: &::rt::gen::windows::storage::streams::IBuffer, blobType: CryptographicPrivateKeyBlobType) -> Result<ComPtr<CryptographicKey>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn import_key_pair_with_blob_type(&self, keyBlob: &::rt::gen::windows::storage::streams::IBuffer, blobType: CryptographicPrivateKeyBlobType) -> Result<Option<ComPtr<CryptographicKey>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ImportKeyPairWithBlobType)(self as *const _ as *mut _, keyBlob as *const _ as *mut _, blobType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn import_default_public_key_blob(&self, keyBlob: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<CryptographicKey>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn import_default_public_key_blob(&self, keyBlob: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<CryptographicKey>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ImportDefaultPublicKeyBlob)(self as *const _ as *mut _, keyBlob as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn import_public_key_with_blob_type(&self, keyBlob: &::rt::gen::windows::storage::streams::IBuffer, blobType: CryptographicPublicKeyBlobType) -> Result<ComPtr<CryptographicKey>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn import_public_key_with_blob_type(&self, keyBlob: &::rt::gen::windows::storage::streams::IBuffer, blobType: CryptographicPublicKeyBlobType) -> Result<Option<ComPtr<CryptographicKey>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ImportPublicKeyWithBlobType)(self as *const _ as *mut _, keyBlob as *const _ as *mut _, blobType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AsymmetricKeyAlgorithmProvider: IAsymmetricKeyAlgorithmProvider}
 impl RtActivatable<IAsymmetricKeyAlgorithmProviderStatics> for AsymmetricKeyAlgorithmProvider {}
 impl AsymmetricKeyAlgorithmProvider {
-    #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<ComPtr<AsymmetricKeyAlgorithmProvider>> { unsafe {
+    #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<AsymmetricKeyAlgorithmProvider>>> { unsafe {
         <Self as RtActivatable<IAsymmetricKeyAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
     }}
 }
@@ -4769,15 +4769,15 @@ RT_INTERFACE!{interface IAsymmetricKeyAlgorithmProvider2(IAsymmetricKeyAlgorithm
     fn CreateKeyPairWithCurveParameters(&self, parametersSize: u32, parameters: *mut u8, out: *mut *mut CryptographicKey) -> HRESULT
 }}
 impl IAsymmetricKeyAlgorithmProvider2 {
-    #[inline] pub unsafe fn create_key_pair_with_curve_name(&self, curveName: &HStringArg) -> Result<ComPtr<CryptographicKey>> {
+    #[inline] pub unsafe fn create_key_pair_with_curve_name(&self, curveName: &HStringArg) -> Result<Option<ComPtr<CryptographicKey>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateKeyPairWithCurveName)(self as *const _ as *mut _, curveName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_key_pair_with_curve_parameters(&self, parameters: &[u8]) -> Result<ComPtr<CryptographicKey>> {
+    #[inline] pub unsafe fn create_key_pair_with_curve_parameters(&self, parameters: &[u8]) -> Result<Option<ComPtr<CryptographicKey>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateKeyPairWithCurveParameters)(self as *const _ as *mut _, parameters.len() as u32, parameters.as_ptr() as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IAsymmetricKeyAlgorithmProviderStatics, 1113316888, 42995, 18342, 168, 210, 196, 141, 96, 51, 166, 92);
@@ -4785,10 +4785,10 @@ RT_INTERFACE!{static interface IAsymmetricKeyAlgorithmProviderStatics(IAsymmetri
     fn OpenAlgorithm(&self, algorithm: HSTRING, out: *mut *mut AsymmetricKeyAlgorithmProvider) -> HRESULT
 }}
 impl IAsymmetricKeyAlgorithmProviderStatics {
-    #[inline] pub unsafe fn open_algorithm(&self, algorithm: &HStringArg) -> Result<ComPtr<AsymmetricKeyAlgorithmProvider>> {
+    #[inline] pub unsafe fn open_algorithm(&self, algorithm: &HStringArg) -> Result<Option<ComPtr<AsymmetricKeyAlgorithmProvider>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).OpenAlgorithm)(self as *const _ as *mut _, algorithm.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum Capi1KdfTargetAlgorithm: i32 {
@@ -4798,28 +4798,28 @@ RT_CLASS!{static class CryptographicEngine}
 impl RtActivatable<ICryptographicEngineStatics> for CryptographicEngine {}
 impl RtActivatable<ICryptographicEngineStatics2> for CryptographicEngine {}
 impl CryptographicEngine {
-    #[cfg(feature="windows-storage")] #[inline] pub fn encrypt(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, iv: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn encrypt(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, iv: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe {
         <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().encrypt(key, data, iv)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, iv: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, iv: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe {
         <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().decrypt(key, data, iv)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn encrypt_and_authenticate(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, nonce: &::rt::gen::windows::storage::streams::IBuffer, authenticatedData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<EncryptedAndAuthenticatedData>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn encrypt_and_authenticate(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, nonce: &::rt::gen::windows::storage::streams::IBuffer, authenticatedData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<EncryptedAndAuthenticatedData>>> { unsafe {
         <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().encrypt_and_authenticate(key, data, nonce, authenticatedData)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt_and_authenticate(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, nonce: &::rt::gen::windows::storage::streams::IBuffer, authenticationTag: &::rt::gen::windows::storage::streams::IBuffer, authenticatedData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt_and_authenticate(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, nonce: &::rt::gen::windows::storage::streams::IBuffer, authenticationTag: &::rt::gen::windows::storage::streams::IBuffer, authenticatedData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe {
         <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().decrypt_and_authenticate(key, data, nonce, authenticationTag, authenticatedData)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn sign(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn sign(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe {
         <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().sign(key, data)
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, signature: &::rt::gen::windows::storage::streams::IBuffer) -> Result<bool> { unsafe {
         <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().verify_signature(key, data, signature)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn derive_key_material(key: &CryptographicKey, parameters: &KeyDerivationParameters, desiredKeySize: u32) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn derive_key_material(key: &CryptographicKey, parameters: &KeyDerivationParameters, desiredKeySize: u32) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe {
         <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().derive_key_material(key, parameters, desiredKeySize)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn sign_hashed_data(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn sign_hashed_data(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe {
         <Self as RtActivatable<ICryptographicEngineStatics2>>::get_activation_factory().sign_hashed_data(key, data)
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature_with_hash_input(key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, signature: &::rt::gen::windows::storage::streams::IBuffer) -> Result<bool> { unsafe {
@@ -4847,40 +4847,40 @@ RT_INTERFACE!{static interface ICryptographicEngineStatics(ICryptographicEngineS
     #[cfg(feature="windows-storage")] fn DeriveKeyMaterial(&self, key: *mut CryptographicKey, parameters: *mut KeyDerivationParameters, desiredKeySize: u32, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl ICryptographicEngineStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn encrypt(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, iv: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn encrypt(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, iv: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Encrypt)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, iv as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn decrypt(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, iv: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn decrypt(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, iv: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Decrypt)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, iv as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn encrypt_and_authenticate(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, nonce: &::rt::gen::windows::storage::streams::IBuffer, authenticatedData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<EncryptedAndAuthenticatedData>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn encrypt_and_authenticate(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, nonce: &::rt::gen::windows::storage::streams::IBuffer, authenticatedData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<EncryptedAndAuthenticatedData>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).EncryptAndAuthenticate)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, nonce as *const _ as *mut _, authenticatedData as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn decrypt_and_authenticate(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, nonce: &::rt::gen::windows::storage::streams::IBuffer, authenticationTag: &::rt::gen::windows::storage::streams::IBuffer, authenticatedData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn decrypt_and_authenticate(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, nonce: &::rt::gen::windows::storage::streams::IBuffer, authenticationTag: &::rt::gen::windows::storage::streams::IBuffer, authenticatedData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).DecryptAndAuthenticate)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, nonce as *const _ as *mut _, authenticationTag as *const _ as *mut _, authenticatedData as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn sign(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn sign(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Sign)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn verify_signature(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, signature: &::rt::gen::windows::storage::streams::IBuffer) -> Result<bool> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).VerifySignature)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, signature as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn derive_key_material(&self, key: &CryptographicKey, parameters: &KeyDerivationParameters, desiredKeySize: u32) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn derive_key_material(&self, key: &CryptographicKey, parameters: &KeyDerivationParameters, desiredKeySize: u32) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).DeriveKeyMaterial)(self as *const _ as *mut _, key as *const _ as *mut _, parameters as *const _ as *mut _, desiredKeySize, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICryptographicEngineStatics2, 1733904638, 57247, 16785, 146, 199, 108, 230, 245, 132, 32, 224);
@@ -4892,10 +4892,10 @@ RT_INTERFACE!{static interface ICryptographicEngineStatics2(ICryptographicEngine
     #[cfg(feature="windows-storage")] fn SignHashedDataAsync(&self, key: *mut CryptographicKey, data: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IBuffer>) -> HRESULT
 }}
 impl ICryptographicEngineStatics2 {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn sign_hashed_data(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn sign_hashed_data(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SignHashedData)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn verify_signature_with_hash_input(&self, key: &CryptographicKey, data: &::rt::gen::windows::storage::streams::IBuffer, signature: &::rt::gen::windows::storage::streams::IBuffer) -> Result<bool> {
         let mut out = zeroed();
@@ -4933,25 +4933,25 @@ impl ICryptographicKey {
         let hr = ((*self.lpVtbl).get_KeySize)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn export_default_private_key_blob_type(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn export_default_private_key_blob_type(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ExportDefaultPrivateKeyBlobType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn export_private_key_with_blob_type(&self, blobType: CryptographicPrivateKeyBlobType) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn export_private_key_with_blob_type(&self, blobType: CryptographicPrivateKeyBlobType) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ExportPrivateKeyWithBlobType)(self as *const _ as *mut _, blobType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn export_default_public_key_blob_type(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn export_default_public_key_blob_type(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ExportDefaultPublicKeyBlobType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn export_public_key_with_blob_type(&self, blobType: CryptographicPublicKeyBlobType) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn export_public_key_with_blob_type(&self, blobType: CryptographicPublicKeyBlobType) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ExportPublicKeyWithBlobType)(self as *const _ as *mut _, blobType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CryptographicKey: ICryptographicKey}
@@ -5102,7 +5102,7 @@ impl EccCurveNames {
     #[inline] pub fn get_x962_p256v1() -> Result<HString> { unsafe {
         <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962_p256v1()
     }}
-    #[inline] pub fn get_all_ecc_curve_names() -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>> { unsafe {
+    #[inline] pub fn get_all_ecc_curve_names() -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> { unsafe {
         <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_all_ecc_curve_names()
     }}
 }
@@ -5382,10 +5382,10 @@ impl IEccCurveNamesStatics {
         let hr = ((*self.lpVtbl).get_X962P256v1)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_all_ecc_curve_names(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_all_ecc_curve_names(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AllEccCurveNames)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IEncryptedAndAuthenticatedData, 1873031143, 7883, 19200, 190, 165, 96, 184, 63, 134, 47, 23);
@@ -5394,15 +5394,15 @@ RT_INTERFACE!{interface IEncryptedAndAuthenticatedData(IEncryptedAndAuthenticate
     #[cfg(feature="windows-storage")] fn get_AuthenticationTag(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IEncryptedAndAuthenticatedData {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_encrypted_data(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_encrypted_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EncryptedData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_authentication_tag(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_authentication_tag(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AuthenticationTag)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class EncryptedAndAuthenticatedData: IEncryptedAndAuthenticatedData}
@@ -5480,21 +5480,21 @@ impl IHashAlgorithmProvider {
         let hr = ((*self.lpVtbl).get_HashLength)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn hash_data(&self, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn hash_data(&self, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).HashData)(self as *const _ as *mut _, data as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_hash(&self) -> Result<ComPtr<CryptographicHash>> {
+    #[inline] pub unsafe fn create_hash(&self) -> Result<Option<ComPtr<CryptographicHash>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateHash)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class HashAlgorithmProvider: IHashAlgorithmProvider}
 impl RtActivatable<IHashAlgorithmProviderStatics> for HashAlgorithmProvider {}
 impl HashAlgorithmProvider {
-    #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<ComPtr<HashAlgorithmProvider>> { unsafe {
+    #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<HashAlgorithmProvider>>> { unsafe {
         <Self as RtActivatable<IHashAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
     }}
 }
@@ -5504,10 +5504,10 @@ RT_INTERFACE!{static interface IHashAlgorithmProviderStatics(IHashAlgorithmProvi
     fn OpenAlgorithm(&self, algorithm: HSTRING, out: *mut *mut HashAlgorithmProvider) -> HRESULT
 }}
 impl IHashAlgorithmProviderStatics {
-    #[inline] pub unsafe fn open_algorithm(&self, algorithm: &HStringArg) -> Result<ComPtr<HashAlgorithmProvider>> {
+    #[inline] pub unsafe fn open_algorithm(&self, algorithm: &HStringArg) -> Result<Option<ComPtr<HashAlgorithmProvider>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).OpenAlgorithm)(self as *const _ as *mut _, algorithm.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IHashComputation, 1493488054, 44337, 17923, 163, 164, 177, 189, 169, 142, 37, 98);
@@ -5520,10 +5520,10 @@ impl IHashComputation {
         let hr = ((*self.lpVtbl).Append)(self as *const _ as *mut _, data as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_value_and_reset(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_value_and_reset(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetValueAndReset)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{static class KeyDerivationAlgorithmNames}
@@ -5733,16 +5733,16 @@ impl IKeyDerivationAlgorithmProvider {
         let hr = ((*self.lpVtbl).get_AlgorithmName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_key(&self, keyMaterial: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<CryptographicKey>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_key(&self, keyMaterial: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<CryptographicKey>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateKey)(self as *const _ as *mut _, keyMaterial as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class KeyDerivationAlgorithmProvider: IKeyDerivationAlgorithmProvider}
 impl RtActivatable<IKeyDerivationAlgorithmProviderStatics> for KeyDerivationAlgorithmProvider {}
 impl KeyDerivationAlgorithmProvider {
-    #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<ComPtr<KeyDerivationAlgorithmProvider>> { unsafe {
+    #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<KeyDerivationAlgorithmProvider>>> { unsafe {
         <Self as RtActivatable<IKeyDerivationAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
     }}
 }
@@ -5752,10 +5752,10 @@ RT_INTERFACE!{static interface IKeyDerivationAlgorithmProviderStatics(IKeyDeriva
     fn OpenAlgorithm(&self, algorithm: HSTRING, out: *mut *mut KeyDerivationAlgorithmProvider) -> HRESULT
 }}
 impl IKeyDerivationAlgorithmProviderStatics {
-    #[inline] pub unsafe fn open_algorithm(&self, algorithm: &HStringArg) -> Result<ComPtr<KeyDerivationAlgorithmProvider>> {
+    #[inline] pub unsafe fn open_algorithm(&self, algorithm: &HStringArg) -> Result<Option<ComPtr<KeyDerivationAlgorithmProvider>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).OpenAlgorithm)(self as *const _ as *mut _, algorithm.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IKeyDerivationParameters, 2079349095, 1147, 19084, 150, 74, 70, 159, 253, 85, 34, 226);
@@ -5767,10 +5767,10 @@ RT_INTERFACE!{interface IKeyDerivationParameters(IKeyDerivationParametersVtbl): 
     fn get_IterationCount(&self, out: *mut u32) -> HRESULT
 }}
 impl IKeyDerivationParameters {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_kdf_generic_binary(&self) -> Result<ComPtr<::rt::gen::windows::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_kdf_generic_binary(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_KdfGenericBinary)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-storage")] #[inline] pub unsafe fn set_kdf_generic_binary(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> {
         let hr = ((*self.lpVtbl).put_KdfGenericBinary)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -5786,16 +5786,16 @@ RT_CLASS!{class KeyDerivationParameters: IKeyDerivationParameters}
 impl RtActivatable<IKeyDerivationParametersStatics> for KeyDerivationParameters {}
 impl RtActivatable<IKeyDerivationParametersStatics2> for KeyDerivationParameters {}
 impl KeyDerivationParameters {
-    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_pbkdf2(pbkdf2Salt: &::rt::gen::windows::storage::streams::IBuffer, iterationCount: u32) -> Result<ComPtr<KeyDerivationParameters>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_pbkdf2(pbkdf2Salt: &::rt::gen::windows::storage::streams::IBuffer, iterationCount: u32) -> Result<Option<ComPtr<KeyDerivationParameters>>> { unsafe {
         <Self as RtActivatable<IKeyDerivationParametersStatics>>::get_activation_factory().build_for_pbkdf2(pbkdf2Salt, iterationCount)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp800108(label: &::rt::gen::windows::storage::streams::IBuffer, context: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<KeyDerivationParameters>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp800108(label: &::rt::gen::windows::storage::streams::IBuffer, context: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<KeyDerivationParameters>>> { unsafe {
         <Self as RtActivatable<IKeyDerivationParametersStatics>>::get_activation_factory().build_for_sp800108(label, context)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp80056a(algorithmId: &::rt::gen::windows::storage::streams::IBuffer, partyUInfo: &::rt::gen::windows::storage::streams::IBuffer, partyVInfo: &::rt::gen::windows::storage::streams::IBuffer, suppPubInfo: &::rt::gen::windows::storage::streams::IBuffer, suppPrivInfo: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<KeyDerivationParameters>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp80056a(algorithmId: &::rt::gen::windows::storage::streams::IBuffer, partyUInfo: &::rt::gen::windows::storage::streams::IBuffer, partyVInfo: &::rt::gen::windows::storage::streams::IBuffer, suppPubInfo: &::rt::gen::windows::storage::streams::IBuffer, suppPrivInfo: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<KeyDerivationParameters>>> { unsafe {
         <Self as RtActivatable<IKeyDerivationParametersStatics>>::get_activation_factory().build_for_sp80056a(algorithmId, partyUInfo, partyVInfo, suppPubInfo, suppPrivInfo)
     }}
-    #[inline] pub fn build_for_capi1_kdf(capi1KdfTargetAlgorithm: Capi1KdfTargetAlgorithm) -> Result<ComPtr<KeyDerivationParameters>> { unsafe {
+    #[inline] pub fn build_for_capi1_kdf(capi1KdfTargetAlgorithm: Capi1KdfTargetAlgorithm) -> Result<Option<ComPtr<KeyDerivationParameters>>> { unsafe {
         <Self as RtActivatable<IKeyDerivationParametersStatics2>>::get_activation_factory().build_for_capi1_kdf(capi1KdfTargetAlgorithm)
     }}
 }
@@ -5823,20 +5823,20 @@ RT_INTERFACE!{static interface IKeyDerivationParametersStatics(IKeyDerivationPar
     #[cfg(feature="windows-storage")] fn BuildForSP80056a(&self, algorithmId: *mut ::rt::gen::windows::storage::streams::IBuffer, partyUInfo: *mut ::rt::gen::windows::storage::streams::IBuffer, partyVInfo: *mut ::rt::gen::windows::storage::streams::IBuffer, suppPubInfo: *mut ::rt::gen::windows::storage::streams::IBuffer, suppPrivInfo: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut KeyDerivationParameters) -> HRESULT
 }}
 impl IKeyDerivationParametersStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn build_for_pbkdf2(&self, pbkdf2Salt: &::rt::gen::windows::storage::streams::IBuffer, iterationCount: u32) -> Result<ComPtr<KeyDerivationParameters>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn build_for_pbkdf2(&self, pbkdf2Salt: &::rt::gen::windows::storage::streams::IBuffer, iterationCount: u32) -> Result<Option<ComPtr<KeyDerivationParameters>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).BuildForPbkdf2)(self as *const _ as *mut _, pbkdf2Salt as *const _ as *mut _, iterationCount, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn build_for_sp800108(&self, label: &::rt::gen::windows::storage::streams::IBuffer, context: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<KeyDerivationParameters>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn build_for_sp800108(&self, label: &::rt::gen::windows::storage::streams::IBuffer, context: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<KeyDerivationParameters>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).BuildForSP800108)(self as *const _ as *mut _, label as *const _ as *mut _, context as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn build_for_sp80056a(&self, algorithmId: &::rt::gen::windows::storage::streams::IBuffer, partyUInfo: &::rt::gen::windows::storage::streams::IBuffer, partyVInfo: &::rt::gen::windows::storage::streams::IBuffer, suppPubInfo: &::rt::gen::windows::storage::streams::IBuffer, suppPrivInfo: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<KeyDerivationParameters>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn build_for_sp80056a(&self, algorithmId: &::rt::gen::windows::storage::streams::IBuffer, partyUInfo: &::rt::gen::windows::storage::streams::IBuffer, partyVInfo: &::rt::gen::windows::storage::streams::IBuffer, suppPubInfo: &::rt::gen::windows::storage::streams::IBuffer, suppPrivInfo: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<KeyDerivationParameters>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).BuildForSP80056a)(self as *const _ as *mut _, algorithmId as *const _ as *mut _, partyUInfo as *const _ as *mut _, partyVInfo as *const _ as *mut _, suppPubInfo as *const _ as *mut _, suppPrivInfo as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IKeyDerivationParametersStatics2, 2776120789, 22755, 20219, 178, 131, 161, 101, 49, 38, 225, 190);
@@ -5844,10 +5844,10 @@ RT_INTERFACE!{static interface IKeyDerivationParametersStatics2(IKeyDerivationPa
     fn BuildForCapi1Kdf(&self, capi1KdfTargetAlgorithm: Capi1KdfTargetAlgorithm, out: *mut *mut KeyDerivationParameters) -> HRESULT
 }}
 impl IKeyDerivationParametersStatics2 {
-    #[inline] pub unsafe fn build_for_capi1_kdf(&self, capi1KdfTargetAlgorithm: Capi1KdfTargetAlgorithm) -> Result<ComPtr<KeyDerivationParameters>> {
+    #[inline] pub unsafe fn build_for_capi1_kdf(&self, capi1KdfTargetAlgorithm: Capi1KdfTargetAlgorithm) -> Result<Option<ComPtr<KeyDerivationParameters>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).BuildForCapi1Kdf)(self as *const _ as *mut _, capi1KdfTargetAlgorithm, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{static class MacAlgorithmNames}
@@ -5931,16 +5931,16 @@ impl IMacAlgorithmProvider {
         let hr = ((*self.lpVtbl).get_MacLength)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_key(&self, keyMaterial: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<CryptographicKey>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_key(&self, keyMaterial: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<CryptographicKey>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateKey)(self as *const _ as *mut _, keyMaterial as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class MacAlgorithmProvider: IMacAlgorithmProvider}
 impl RtActivatable<IMacAlgorithmProviderStatics> for MacAlgorithmProvider {}
 impl MacAlgorithmProvider {
-    #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<ComPtr<MacAlgorithmProvider>> { unsafe {
+    #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<MacAlgorithmProvider>>> { unsafe {
         <Self as RtActivatable<IMacAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
     }}
 }
@@ -5950,10 +5950,10 @@ RT_INTERFACE!{interface IMacAlgorithmProvider2(IMacAlgorithmProvider2Vtbl): IIns
     #[cfg(feature="windows-storage")] fn CreateHash(&self, keyMaterial: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut CryptographicHash) -> HRESULT
 }}
 impl IMacAlgorithmProvider2 {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_hash(&self, keyMaterial: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<CryptographicHash>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_hash(&self, keyMaterial: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<CryptographicHash>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateHash)(self as *const _ as *mut _, keyMaterial as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IMacAlgorithmProviderStatics, 3384656199, 52343, 19952, 158, 78, 185, 33, 224, 128, 100, 76);
@@ -5961,10 +5961,10 @@ RT_INTERFACE!{static interface IMacAlgorithmProviderStatics(IMacAlgorithmProvide
     fn OpenAlgorithm(&self, algorithm: HSTRING, out: *mut *mut MacAlgorithmProvider) -> HRESULT
 }}
 impl IMacAlgorithmProviderStatics {
-    #[inline] pub unsafe fn open_algorithm(&self, algorithm: &HStringArg) -> Result<ComPtr<MacAlgorithmProvider>> {
+    #[inline] pub unsafe fn open_algorithm(&self, algorithm: &HStringArg) -> Result<Option<ComPtr<MacAlgorithmProvider>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).OpenAlgorithm)(self as *const _ as *mut _, algorithm.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{static class PersistedKeyProvider}
@@ -5973,7 +5973,7 @@ impl PersistedKeyProvider {
     #[inline] pub fn open_key_pair_from_certificate_async(certificate: &super::certificates::Certificate, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<CryptographicKey>>> { unsafe {
         <Self as RtActivatable<IPersistedKeyProviderStatics>>::get_activation_factory().open_key_pair_from_certificate_async(certificate, hashAlgorithmName, padding)
     }}
-    #[inline] pub fn open_public_key_from_certificate(certificate: &super::certificates::Certificate, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<ComPtr<CryptographicKey>> { unsafe {
+    #[inline] pub fn open_public_key_from_certificate(certificate: &super::certificates::Certificate, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe {
         <Self as RtActivatable<IPersistedKeyProviderStatics>>::get_activation_factory().open_public_key_from_certificate(certificate, hashAlgorithmName, padding)
     }}
 }
@@ -5989,10 +5989,10 @@ impl IPersistedKeyProviderStatics {
         let hr = ((*self.lpVtbl).OpenKeyPairFromCertificateAsync)(self as *const _ as *mut _, certificate as *const _ as *mut _, hashAlgorithmName.get(), padding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn open_public_key_from_certificate(&self, certificate: &super::certificates::Certificate, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<ComPtr<CryptographicKey>> {
+    #[inline] pub unsafe fn open_public_key_from_certificate(&self, certificate: &super::certificates::Certificate, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<Option<ComPtr<CryptographicKey>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).OpenPublicKeyFromCertificate)(self as *const _ as *mut _, certificate as *const _ as *mut _, hashAlgorithmName.get(), padding, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{static class SymmetricAlgorithmNames}
@@ -6193,16 +6193,16 @@ impl ISymmetricKeyAlgorithmProvider {
         let hr = ((*self.lpVtbl).get_BlockLength)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_symmetric_key(&self, keyMaterial: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<CryptographicKey>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_symmetric_key(&self, keyMaterial: &::rt::gen::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<CryptographicKey>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSymmetricKey)(self as *const _ as *mut _, keyMaterial as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SymmetricKeyAlgorithmProvider: ISymmetricKeyAlgorithmProvider}
 impl RtActivatable<ISymmetricKeyAlgorithmProviderStatics> for SymmetricKeyAlgorithmProvider {}
 impl SymmetricKeyAlgorithmProvider {
-    #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<ComPtr<SymmetricKeyAlgorithmProvider>> { unsafe {
+    #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<SymmetricKeyAlgorithmProvider>>> { unsafe {
         <Self as RtActivatable<ISymmetricKeyAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
     }}
 }
@@ -6212,10 +6212,10 @@ RT_INTERFACE!{static interface ISymmetricKeyAlgorithmProviderStatics(ISymmetricK
     fn OpenAlgorithm(&self, algorithm: HSTRING, out: *mut *mut SymmetricKeyAlgorithmProvider) -> HRESULT
 }}
 impl ISymmetricKeyAlgorithmProviderStatics {
-    #[inline] pub unsafe fn open_algorithm(&self, algorithm: &HStringArg) -> Result<ComPtr<SymmetricKeyAlgorithmProvider>> {
+    #[inline] pub unsafe fn open_algorithm(&self, algorithm: &HStringArg) -> Result<Option<ComPtr<SymmetricKeyAlgorithmProvider>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).OpenAlgorithm)(self as *const _ as *mut _, algorithm.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.Security.Cryptography.Core
@@ -6281,15 +6281,15 @@ RT_INTERFACE!{interface IBufferProtectUnprotectResult(IBufferProtectUnprotectRes
     fn get_ProtectionInfo(&self, out: *mut *mut DataProtectionInfo) -> HRESULT
 }}
 impl IBufferProtectUnprotectResult {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_buffer(&self) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_buffer(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Buffer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_protection_info(&self) -> Result<ComPtr<DataProtectionInfo>> {
+    #[inline] pub unsafe fn get_protection_info(&self) -> Result<Option<ComPtr<DataProtectionInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ProtectionInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class BufferProtectUnprotectResult: IBufferProtectUnprotectResult}
@@ -6634,10 +6634,10 @@ RT_INTERFACE!{interface IProtectedAccessResumedEventArgs(IProtectedAccessResumed
     fn get_Identities(&self, out: *mut *mut super::super::foundation::collections::IVectorView<HString>) -> HRESULT
 }}
 impl IProtectedAccessResumedEventArgs {
-    #[inline] pub unsafe fn get_identities(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_identities(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Identities)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ProtectedAccessResumedEventArgs: IProtectedAccessResumedEventArgs}
@@ -6648,20 +6648,20 @@ RT_INTERFACE!{interface IProtectedAccessSuspendingEventArgs(IProtectedAccessSusp
     fn GetDeferral(&self, out: *mut *mut super::super::foundation::Deferral) -> HRESULT
 }}
 impl IProtectedAccessSuspendingEventArgs {
-    #[inline] pub unsafe fn get_identities(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_identities(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Identities)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_deadline(&self) -> Result<super::super::foundation::DateTime> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Deadline)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<super::super::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<super::super::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ProtectedAccessSuspendingEventArgs: IProtectedAccessSuspendingEventArgs}
@@ -6676,10 +6676,10 @@ impl IProtectedContainerExportResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<ComPtr<super::super::storage::StorageFile>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<Option<ComPtr<super::super::storage::StorageFile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_File)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ProtectedContainerExportResult: IProtectedContainerExportResult}
@@ -6694,10 +6694,10 @@ impl IProtectedContainerImportResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<ComPtr<super::super::storage::StorageFile>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<Option<ComPtr<super::super::storage::StorageFile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_File)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ProtectedContainerImportResult: IProtectedContainerImportResult}
@@ -6706,10 +6706,10 @@ RT_INTERFACE!{interface IProtectedContentRevokedEventArgs(IProtectedContentRevok
     fn get_Identities(&self, out: *mut *mut super::super::foundation::collections::IVectorView<HString>) -> HRESULT
 }}
 impl IProtectedContentRevokedEventArgs {
-    #[inline] pub unsafe fn get_identities(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_identities(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Identities)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ProtectedContentRevokedEventArgs: IProtectedContentRevokedEventArgs}
@@ -6722,20 +6722,20 @@ RT_INTERFACE!{interface IProtectedFileCreateResult(IProtectedFileCreateResultVtb
     fn get_ProtectionInfo(&self, out: *mut *mut FileProtectionInfo) -> HRESULT
 }}
 impl IProtectedFileCreateResult {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<ComPtr<super::super::storage::StorageFile>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_file(&self) -> Result<Option<ComPtr<super::super::storage::StorageFile>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_File)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_stream(&self) -> Result<ComPtr<super::super::storage::streams::IRandomAccessStream>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStream>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Stream)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_protection_info(&self) -> Result<ComPtr<FileProtectionInfo>> {
+    #[inline] pub unsafe fn get_protection_info(&self) -> Result<Option<ComPtr<FileProtectionInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ProtectionInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ProtectedFileCreateResult: IProtectedFileCreateResult}
@@ -6856,7 +6856,7 @@ impl ProtectionPolicyManager {
     #[inline] pub fn clear_process_uipolicy() -> Result<()> { unsafe {
         <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().clear_process_uipolicy()
     }}
-    #[inline] pub fn create_current_thread_network_context(identity: &HStringArg) -> Result<ComPtr<ThreadNetworkContext>> { unsafe {
+    #[inline] pub fn create_current_thread_network_context(identity: &HStringArg) -> Result<Option<ComPtr<ThreadNetworkContext>>> { unsafe {
         <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().create_current_thread_network_context(identity)
     }}
     #[cfg(feature="windows-networking")] #[inline] pub fn get_primary_managed_identity_for_network_endpoint_async(endpointHost: &super::super::networking::HostName) -> Result<ComPtr<super::super::foundation::IAsyncOperation<HString>>> { unsafe {
@@ -6865,7 +6865,7 @@ impl ProtectionPolicyManager {
     #[inline] pub fn revoke_content(identity: &HStringArg) -> Result<()> { unsafe {
         <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().revoke_content(identity)
     }}
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<ProtectionPolicyManager>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<ProtectionPolicyManager>>> { unsafe {
         <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().get_for_current_view()
     }}
     #[inline] pub fn add_protected_access_suspending(handler: &super::super::foundation::EventHandler<ProtectedAccessSuspendingEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
@@ -7019,10 +7019,10 @@ impl IProtectionPolicyManagerStatics {
         let hr = ((*self.lpVtbl).ClearProcessUIPolicy)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_current_thread_network_context(&self, identity: &HStringArg) -> Result<ComPtr<ThreadNetworkContext>> {
+    #[inline] pub unsafe fn create_current_thread_network_context(&self, identity: &HStringArg) -> Result<Option<ComPtr<ThreadNetworkContext>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateCurrentThreadNetworkContext)(self as *const _ as *mut _, identity.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-networking")] #[inline] pub unsafe fn get_primary_managed_identity_for_network_endpoint_async(&self, endpointHost: &super::super::networking::HostName) -> Result<ComPtr<super::super::foundation::IAsyncOperation<HString>>> {
         let mut out = null_mut();
@@ -7033,10 +7033,10 @@ impl IProtectionPolicyManagerStatics {
         let hr = ((*self.lpVtbl).RevokeContent)(self as *const _ as *mut _, identity.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<ProtectionPolicyManager>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<ProtectionPolicyManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_protected_access_suspending(&self, handler: &super::super::foundation::EventHandler<ProtectedAccessSuspendingEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -7411,10 +7411,10 @@ impl IEasClientSecurityPolicy {
         let hr = ((*self.lpVtbl).put_MaxInactivityTimeLock)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn check_compliance(&self) -> Result<ComPtr<EasComplianceResults>> {
+    #[inline] pub unsafe fn check_compliance(&self) -> Result<Option<ComPtr<EasComplianceResults>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CheckCompliance)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn apply_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncOperation<EasComplianceResults>>> {
         let mut out = null_mut();

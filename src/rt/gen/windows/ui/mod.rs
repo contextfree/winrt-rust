@@ -1370,10 +1370,10 @@ RT_INTERFACE!{interface IAutomationProviderRequestedEventArgs(IAutomationProvide
     fn put_AutomationProvider(&self, value: *mut IInspectable) -> HRESULT
 }}
 impl IAutomationProviderRequestedEventArgs {
-    #[inline] pub unsafe fn get_automation_provider(&self) -> Result<ComPtr<IInspectable>> {
+    #[inline] pub unsafe fn get_automation_provider(&self) -> Result<Option<ComPtr<IInspectable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AutomationProvider)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_automation_provider(&self, value: &IInspectable) -> Result<()> {
         let hr = ((*self.lpVtbl).put_AutomationProvider)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -1649,10 +1649,10 @@ RT_INTERFACE!{interface ICoreInputSourceBase(ICoreInputSourceBaseVtbl): IInspect
     fn remove_InputEnabled(&self, cookie: super::super::foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ICoreInputSourceBase {
-    #[inline] pub unsafe fn get_dispatcher(&self) -> Result<ComPtr<CoreDispatcher>> {
+    #[inline] pub unsafe fn get_dispatcher(&self) -> Result<Option<ComPtr<CoreDispatcher>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Dispatcher)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_is_input_enabled(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -1774,10 +1774,10 @@ impl ICorePointerInputSource {
         let hr = ((*self.lpVtbl).get_PointerPosition)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_pointer_cursor(&self) -> Result<ComPtr<CoreCursor>> {
+    #[inline] pub unsafe fn get_pointer_cursor(&self) -> Result<Option<ComPtr<CoreCursor>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PointerCursor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_pointer_cursor(&self, value: &CoreCursor) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PointerCursor)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -1971,25 +1971,25 @@ RT_INTERFACE!{interface ICoreWindow(ICoreWindowVtbl): IInspectable(IInspectableV
     fn remove_VisibilityChanged(&self, cookie: super::super::foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ICoreWindow {
-    #[inline] pub unsafe fn get_automation_host_provider(&self) -> Result<ComPtr<IInspectable>> {
+    #[inline] pub unsafe fn get_automation_host_provider(&self) -> Result<Option<ComPtr<IInspectable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AutomationHostProvider)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_bounds(&self) -> Result<super::super::foundation::Rect> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Bounds)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_custom_properties(&self) -> Result<ComPtr<super::super::foundation::collections::IPropertySet>> {
+    #[inline] pub unsafe fn get_custom_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IPropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CustomProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_dispatcher(&self) -> Result<ComPtr<CoreDispatcher>> {
+    #[inline] pub unsafe fn get_dispatcher(&self) -> Result<Option<ComPtr<CoreDispatcher>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Dispatcher)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_flow_direction(&self) -> Result<CoreWindowFlowDirection> {
         let mut out = zeroed();
@@ -2009,10 +2009,10 @@ impl ICoreWindow {
         let hr = ((*self.lpVtbl).put_IsInputEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_pointer_cursor(&self) -> Result<ComPtr<CoreCursor>> {
+    #[inline] pub unsafe fn get_pointer_cursor(&self) -> Result<Option<ComPtr<CoreCursor>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PointerCursor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_pointer_cursor(&self, value: &CoreCursor) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PointerCursor)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -2211,7 +2211,7 @@ impl ICoreWindow {
 RT_CLASS!{class CoreWindow: ICoreWindow}
 impl RtActivatable<ICoreWindowStatic> for CoreWindow {}
 impl CoreWindow {
-    #[inline] pub fn get_for_current_thread() -> Result<ComPtr<CoreWindow>> { unsafe {
+    #[inline] pub fn get_for_current_thread() -> Result<Option<ComPtr<CoreWindow>>> { unsafe {
         <Self as RtActivatable<ICoreWindowStatic>>::get_activation_factory().get_for_current_thread()
     }}
 }
@@ -2282,10 +2282,10 @@ RT_INTERFACE!{interface ICoreWindow5(ICoreWindow5Vtbl): IInspectable(IInspectabl
     fn get_ActivationMode(&self, out: *mut CoreWindowActivationMode) -> HRESULT
 }}
 impl ICoreWindow5 {
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_dispatcher_queue(&self) -> Result<ComPtr<super::super::system::DispatcherQueue>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_dispatcher_queue(&self) -> Result<Option<ComPtr<super::super::system::DispatcherQueue>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DispatcherQueue)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_activation_mode(&self) -> Result<CoreWindowActivationMode> {
         let mut out = zeroed();
@@ -2356,10 +2356,10 @@ impl ICoreWindowDialog {
         let hr = ((*self.lpVtbl).put_IsInteractionDelayed)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_commands(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<super::popups::IUICommand>>> {
+    #[inline] pub unsafe fn get_commands(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::popups::IUICommand>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Commands)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_default_command_index(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -2379,10 +2379,10 @@ impl ICoreWindowDialog {
         let hr = ((*self.lpVtbl).put_CancelCommandIndex)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_back_button_command(&self) -> Result<ComPtr<super::popups::UICommandInvokedHandler>> {
+    #[inline] pub unsafe fn get_back_button_command(&self) -> Result<Option<ComPtr<super::popups::UICommandInvokedHandler>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BackButtonCommand)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_back_button_command(&self, value: &super::popups::UICommandInvokedHandler) -> Result<()> {
         let hr = ((*self.lpVtbl).put_BackButtonCommand)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -2489,10 +2489,10 @@ impl ICoreWindowFlyout {
         let hr = ((*self.lpVtbl).put_IsInteractionDelayed)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_commands(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<super::popups::IUICommand>>> {
+    #[inline] pub unsafe fn get_commands(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::popups::IUICommand>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Commands)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_default_command_index(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -2503,10 +2503,10 @@ impl ICoreWindowFlyout {
         let hr = ((*self.lpVtbl).put_DefaultCommandIndex)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_back_button_command(&self) -> Result<ComPtr<super::popups::UICommandInvokedHandler>> {
+    #[inline] pub unsafe fn get_back_button_command(&self) -> Result<Option<ComPtr<super::popups::UICommandInvokedHandler>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BackButtonCommand)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_back_button_command(&self, value: &super::popups::UICommandInvokedHandler) -> Result<()> {
         let hr = ((*self.lpVtbl).put_BackButtonCommand)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -2570,7 +2570,7 @@ impl ICoreWindowResizeManager {
 RT_CLASS!{class CoreWindowResizeManager: ICoreWindowResizeManager}
 impl RtActivatable<ICoreWindowResizeManagerStatics> for CoreWindowResizeManager {}
 impl CoreWindowResizeManager {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<CoreWindowResizeManager>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<CoreWindowResizeManager>>> { unsafe {
         <Self as RtActivatable<ICoreWindowResizeManagerStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
@@ -2596,10 +2596,10 @@ RT_INTERFACE!{static interface ICoreWindowResizeManagerStatics(ICoreWindowResize
     fn GetForCurrentView(&self, out: *mut *mut CoreWindowResizeManager) -> HRESULT
 }}
 impl ICoreWindowResizeManagerStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<CoreWindowResizeManager>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<CoreWindowResizeManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICoreWindowStatic, 1294176261, 15402, 16817, 144, 34, 83, 107, 185, 207, 147, 177);
@@ -2607,10 +2607,10 @@ RT_INTERFACE!{static interface ICoreWindowStatic(ICoreWindowStaticVtbl): IInspec
     fn GetForCurrentThread(&self, out: *mut *mut CoreWindow) -> HRESULT
 }}
 impl ICoreWindowStatic {
-    #[inline] pub unsafe fn get_for_current_thread(&self) -> Result<ComPtr<CoreWindow>> {
+    #[inline] pub unsafe fn get_for_current_thread(&self) -> Result<Option<ComPtr<CoreWindow>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentThread)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_DispatchedHandler, 3522328260, 39128, 17974, 191, 73, 235, 121, 80, 117, 72, 233);
@@ -2705,20 +2705,20 @@ RT_INTERFACE!{interface IPointerEventArgs(IPointerEventArgsVtbl): IInspectable(I
     fn GetIntermediatePoints(&self, out: *mut *mut super::super::foundation::collections::IVector<super::input::PointerPoint>) -> HRESULT
 }}
 impl IPointerEventArgs {
-    #[inline] pub unsafe fn get_current_point(&self) -> Result<ComPtr<super::input::PointerPoint>> {
+    #[inline] pub unsafe fn get_current_point(&self) -> Result<Option<ComPtr<super::input::PointerPoint>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CurrentPoint)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_key_modifiers(&self) -> Result<super::super::system::VirtualKeyModifiers> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_KeyModifiers)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_intermediate_points(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<super::input::PointerPoint>>> {
+    #[inline] pub unsafe fn get_intermediate_points(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::input::PointerPoint>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetIntermediatePoints)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PointerEventArgs: IPointerEventArgs}
@@ -2741,7 +2741,7 @@ impl ISystemNavigationManager {
 RT_CLASS!{class SystemNavigationManager: ISystemNavigationManager}
 impl RtActivatable<ISystemNavigationManagerStatics> for SystemNavigationManager {}
 impl SystemNavigationManager {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<SystemNavigationManager>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<SystemNavigationManager>>> { unsafe {
         <Self as RtActivatable<ISystemNavigationManagerStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
@@ -2767,10 +2767,10 @@ RT_INTERFACE!{static interface ISystemNavigationManagerStatics(ISystemNavigation
     fn GetForCurrentView(&self, out: *mut *mut SystemNavigationManager) -> HRESULT
 }}
 impl ISystemNavigationManagerStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<SystemNavigationManager>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<SystemNavigationManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ITouchHitTestingEventArgs, 586397731, 2940, 16974, 157, 247, 51, 212, 249, 98, 147, 27);
@@ -2868,10 +2868,10 @@ impl ISystemNavigationCloseRequestedPreviewEventArgs {
         let hr = ((*self.lpVtbl).put_Handled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SystemNavigationCloseRequestedPreviewEventArgs: ISystemNavigationCloseRequestedPreviewEventArgs}
@@ -2894,7 +2894,7 @@ impl ISystemNavigationManagerPreview {
 RT_CLASS!{class SystemNavigationManagerPreview: ISystemNavigationManagerPreview}
 impl RtActivatable<ISystemNavigationManagerPreviewStatics> for SystemNavigationManagerPreview {}
 impl SystemNavigationManagerPreview {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<SystemNavigationManagerPreview>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<SystemNavigationManagerPreview>>> { unsafe {
         <Self as RtActivatable<ISystemNavigationManagerPreviewStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
@@ -2904,10 +2904,10 @@ RT_INTERFACE!{static interface ISystemNavigationManagerPreviewStatics(ISystemNav
     fn GetForCurrentView(&self, out: *mut *mut SystemNavigationManagerPreview) -> HRESULT
 }}
 impl ISystemNavigationManagerPreviewStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<SystemNavigationManagerPreview>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<SystemNavigationManagerPreview>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.UI.Core.Preview
@@ -2922,10 +2922,10 @@ RT_INTERFACE!{interface IAnimationDescription(IAnimationDescriptionVtbl): IInspe
     fn get_ZOrder(&self, out: *mut i32) -> HRESULT
 }}
 impl IAnimationDescription {
-    #[inline] pub unsafe fn get_animations(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<IPropertyAnimation>>> {
+    #[inline] pub unsafe fn get_animations(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<IPropertyAnimation>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Animations)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_stagger_delay(&self) -> Result<::rt::gen::windows::foundation::TimeSpan> {
         let mut out = zeroed();
@@ -2979,10 +2979,10 @@ RT_INTERFACE!{interface IOpacityAnimation(IOpacityAnimationVtbl): IInspectable(I
     fn get_FinalOpacity(&self, out: *mut f32) -> HRESULT
 }}
 impl IOpacityAnimation {
-    #[inline] pub unsafe fn get_initial_opacity(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<f32>>> {
+    #[inline] pub unsafe fn get_initial_opacity(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<f32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InitialOpacity)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_final_opacity(&self) -> Result<f32> {
         let mut out = zeroed();
@@ -3039,15 +3039,15 @@ RT_INTERFACE!{interface IScaleAnimation(IScaleAnimationVtbl): IInspectable(IInsp
     fn get_NormalizedOrigin(&self, out: *mut ::rt::gen::windows::foundation::Point) -> HRESULT
 }}
 impl IScaleAnimation {
-    #[inline] pub unsafe fn get_initial_scale_x(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<f32>>> {
+    #[inline] pub unsafe fn get_initial_scale_x(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<f32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InitialScaleX)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_initial_scale_y(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<f32>>> {
+    #[inline] pub unsafe fn get_initial_scale_y(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<f32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InitialScaleY)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_final_scale_x(&self) -> Result<f32> {
         let mut out = zeroed();
@@ -3171,7 +3171,7 @@ impl IEdgeGesture {
 RT_CLASS!{class EdgeGesture: IEdgeGesture}
 impl RtActivatable<IEdgeGestureStatics> for EdgeGesture {}
 impl EdgeGesture {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<EdgeGesture>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<EdgeGesture>>> { unsafe {
         <Self as RtActivatable<IEdgeGestureStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
@@ -3196,10 +3196,10 @@ RT_INTERFACE!{static interface IEdgeGestureStatics(IEdgeGestureStaticsVtbl): IIn
     fn GetForCurrentView(&self, out: *mut *mut EdgeGesture) -> HRESULT
 }}
 impl IEdgeGestureStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<EdgeGesture>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<EdgeGesture>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IGestureRecognizer, 3027908543, 15723, 20360, 131, 232, 109, 203, 64, 18, 255, 176);
@@ -3409,10 +3409,10 @@ impl IGestureRecognizer {
         let hr = ((*self.lpVtbl).put_AutoProcessInertia)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_mouse_wheel_parameters(&self) -> Result<ComPtr<MouseWheelParameters>> {
+    #[inline] pub unsafe fn get_mouse_wheel_parameters(&self) -> Result<Option<ComPtr<MouseWheelParameters>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MouseWheelParameters)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn can_be_double_tap(&self, value: &PointerPoint) -> Result<bool> {
         let mut out = zeroed();
@@ -3600,7 +3600,7 @@ impl IKeyboardDeliveryInterceptor {
 RT_CLASS!{class KeyboardDeliveryInterceptor: IKeyboardDeliveryInterceptor}
 impl RtActivatable<IKeyboardDeliveryInterceptorStatics> for KeyboardDeliveryInterceptor {}
 impl KeyboardDeliveryInterceptor {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<KeyboardDeliveryInterceptor>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<KeyboardDeliveryInterceptor>>> { unsafe {
         <Self as RtActivatable<IKeyboardDeliveryInterceptorStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
@@ -3610,10 +3610,10 @@ RT_INTERFACE!{static interface IKeyboardDeliveryInterceptorStatics(IKeyboardDeli
     fn GetForCurrentView(&self, out: *mut *mut KeyboardDeliveryInterceptor) -> HRESULT
 }}
 impl IKeyboardDeliveryInterceptorStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<KeyboardDeliveryInterceptor>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<KeyboardDeliveryInterceptor>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IManipulationCompletedEventArgs, 3008016939, 53659, 18175, 159, 56, 222, 199, 117, 75, 185, 231);
@@ -3815,10 +3815,10 @@ RT_INTERFACE!{interface IPointerPoint(IPointerPointVtbl): IInspectable(IInspecta
     fn get_Properties(&self, out: *mut *mut PointerPointProperties) -> HRESULT
 }}
 impl IPointerPoint {
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_pointer_device(&self) -> Result<ComPtr<super::super::devices::input::PointerDevice>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_pointer_device(&self) -> Result<Option<ComPtr<super::super::devices::input::PointerDevice>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PointerDevice)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_position(&self) -> Result<super::super::foundation::Point> {
         let mut out = zeroed();
@@ -3850,25 +3850,25 @@ impl IPointerPoint {
         let hr = ((*self.lpVtbl).get_IsInContact)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<PointerPointProperties>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<PointerPointProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PointerPoint: IPointerPoint}
 impl RtActivatable<IPointerPointStatics> for PointerPoint {}
 impl PointerPoint {
-    #[inline] pub fn get_current_point(pointerId: u32) -> Result<ComPtr<PointerPoint>> { unsafe {
+    #[inline] pub fn get_current_point(pointerId: u32) -> Result<Option<ComPtr<PointerPoint>>> { unsafe {
         <Self as RtActivatable<IPointerPointStatics>>::get_activation_factory().get_current_point(pointerId)
     }}
-    #[inline] pub fn get_intermediate_points(pointerId: u32) -> Result<ComPtr<super::super::foundation::collections::IVector<PointerPoint>>> { unsafe {
+    #[inline] pub fn get_intermediate_points(pointerId: u32) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<PointerPoint>>>> { unsafe {
         <Self as RtActivatable<IPointerPointStatics>>::get_activation_factory().get_intermediate_points(pointerId)
     }}
-    #[inline] pub fn get_current_point_transformed(pointerId: u32, transform: &IPointerPointTransform) -> Result<ComPtr<PointerPoint>> { unsafe {
+    #[inline] pub fn get_current_point_transformed(pointerId: u32, transform: &IPointerPointTransform) -> Result<Option<ComPtr<PointerPoint>>> { unsafe {
         <Self as RtActivatable<IPointerPointStatics>>::get_activation_factory().get_current_point_transformed(pointerId, transform)
     }}
-    #[inline] pub fn get_intermediate_points_transformed(pointerId: u32, transform: &IPointerPointTransform) -> Result<ComPtr<super::super::foundation::collections::IVector<PointerPoint>>> { unsafe {
+    #[inline] pub fn get_intermediate_points_transformed(pointerId: u32, transform: &IPointerPointTransform) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<PointerPoint>>>> { unsafe {
         <Self as RtActivatable<IPointerPointStatics>>::get_activation_factory().get_intermediate_points_transformed(pointerId, transform)
     }}
 }
@@ -4028,10 +4028,10 @@ RT_INTERFACE!{interface IPointerPointProperties2(IPointerPointProperties2Vtbl): 
     fn get_ZDistance(&self, out: *mut *mut super::super::foundation::IReference<f32>) -> HRESULT
 }}
 impl IPointerPointProperties2 {
-    #[inline] pub unsafe fn get_zdistance(&self) -> Result<ComPtr<super::super::foundation::IReference<f32>>> {
+    #[inline] pub unsafe fn get_zdistance(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<f32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ZDistance)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IPointerPointStatics, 2768659341, 10778, 16702, 188, 117, 159, 56, 56, 28, 192, 105);
@@ -4042,25 +4042,25 @@ RT_INTERFACE!{static interface IPointerPointStatics(IPointerPointStaticsVtbl): I
     fn GetIntermediatePointsTransformed(&self, pointerId: u32, transform: *mut IPointerPointTransform, out: *mut *mut super::super::foundation::collections::IVector<PointerPoint>) -> HRESULT
 }}
 impl IPointerPointStatics {
-    #[inline] pub unsafe fn get_current_point(&self, pointerId: u32) -> Result<ComPtr<PointerPoint>> {
+    #[inline] pub unsafe fn get_current_point(&self, pointerId: u32) -> Result<Option<ComPtr<PointerPoint>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCurrentPoint)(self as *const _ as *mut _, pointerId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_intermediate_points(&self, pointerId: u32) -> Result<ComPtr<super::super::foundation::collections::IVector<PointerPoint>>> {
+    #[inline] pub unsafe fn get_intermediate_points(&self, pointerId: u32) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<PointerPoint>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetIntermediatePoints)(self as *const _ as *mut _, pointerId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_current_point_transformed(&self, pointerId: u32, transform: &IPointerPointTransform) -> Result<ComPtr<PointerPoint>> {
+    #[inline] pub unsafe fn get_current_point_transformed(&self, pointerId: u32, transform: &IPointerPointTransform) -> Result<Option<ComPtr<PointerPoint>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCurrentPointTransformed)(self as *const _ as *mut _, pointerId, transform as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_intermediate_points_transformed(&self, pointerId: u32, transform: &IPointerPointTransform) -> Result<ComPtr<super::super::foundation::collections::IVector<PointerPoint>>> {
+    #[inline] pub unsafe fn get_intermediate_points_transformed(&self, pointerId: u32, transform: &IPointerPointTransform) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<PointerPoint>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetIntermediatePointsTransformed)(self as *const _ as *mut _, pointerId, transform as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IPointerPointTransform, 1298129231, 47228, 16424, 188, 156, 89, 233, 148, 127, 176, 86);
@@ -4070,10 +4070,10 @@ RT_INTERFACE!{interface IPointerPointTransform(IPointerPointTransformVtbl): IIns
     fn TransformBounds(&self, rect: super::super::foundation::Rect, out: *mut super::super::foundation::Rect) -> HRESULT
 }}
 impl IPointerPointTransform {
-    #[inline] pub unsafe fn get_inverse(&self) -> Result<ComPtr<IPointerPointTransform>> {
+    #[inline] pub unsafe fn get_inverse(&self) -> Result<Option<ComPtr<IPointerPointTransform>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Inverse)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn try_transform(&self, inPoint: super::super::foundation::Point) -> Result<(super::super::foundation::Point, bool)> {
         let mut outPoint = zeroed(); let mut out = zeroed();
@@ -4119,7 +4119,7 @@ impl IPointerVisualizationSettings {
 RT_CLASS!{class PointerVisualizationSettings: IPointerVisualizationSettings}
 impl RtActivatable<IPointerVisualizationSettingsStatics> for PointerVisualizationSettings {}
 impl PointerVisualizationSettings {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<PointerVisualizationSettings>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<PointerVisualizationSettings>>> { unsafe {
         <Self as RtActivatable<IPointerVisualizationSettingsStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
@@ -4129,10 +4129,10 @@ RT_INTERFACE!{static interface IPointerVisualizationSettingsStatics(IPointerVisu
     fn GetForCurrentView(&self, out: *mut *mut PointerVisualizationSettings) -> HRESULT
 }}
 impl IPointerVisualizationSettingsStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<PointerVisualizationSettings>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<PointerVisualizationSettings>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IRadialController, 810930632, 57169, 17364, 178, 59, 14, 16, 55, 70, 122, 9);
@@ -4158,10 +4158,10 @@ RT_INTERFACE!{interface IRadialController(IRadialControllerVtbl): IInspectable(I
     fn remove_ControlAcquired(&self, cookie: super::super::foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IRadialController {
-    #[inline] pub unsafe fn get_menu(&self) -> Result<ComPtr<RadialControllerMenu>> {
+    #[inline] pub unsafe fn get_menu(&self) -> Result<Option<ComPtr<RadialControllerMenu>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Menu)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_rotation_resolution_in_degrees(&self) -> Result<f64> {
         let mut out = zeroed();
@@ -4251,7 +4251,7 @@ impl RadialController {
     #[inline] pub fn is_supported() -> Result<bool> { unsafe {
         <Self as RtActivatable<IRadialControllerStatics>>::get_activation_factory().is_supported()
     }}
-    #[inline] pub fn create_for_current_view() -> Result<ComPtr<RadialController>> { unsafe {
+    #[inline] pub fn create_for_current_view() -> Result<Option<ComPtr<RadialController>>> { unsafe {
         <Self as RtActivatable<IRadialControllerStatics>>::get_activation_factory().create_for_current_view()
     }}
 }
@@ -4299,10 +4299,10 @@ RT_INTERFACE!{interface IRadialControllerButtonClickedEventArgs(IRadialControlle
     fn get_Contact(&self, out: *mut *mut RadialControllerScreenContact) -> HRESULT
 }}
 impl IRadialControllerButtonClickedEventArgs {
-    #[inline] pub unsafe fn get_contact(&self) -> Result<ComPtr<RadialControllerScreenContact>> {
+    #[inline] pub unsafe fn get_contact(&self) -> Result<Option<ComPtr<RadialControllerScreenContact>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Contact)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class RadialControllerButtonClickedEventArgs: IRadialControllerButtonClickedEventArgs}
@@ -4311,10 +4311,10 @@ RT_INTERFACE!{interface IRadialControllerButtonClickedEventArgs2(IRadialControll
     #[cfg(feature="windows-devices")] fn get_SimpleHapticsController(&self, out: *mut *mut super::super::devices::haptics::SimpleHapticsController) -> HRESULT
 }}
 impl IRadialControllerButtonClickedEventArgs2 {
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<ComPtr<super::super::devices::haptics::SimpleHapticsController>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<Option<ComPtr<super::super::devices::haptics::SimpleHapticsController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SimpleHapticsController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IRadialControllerButtonHoldingEventArgs, 1029144302, 15598, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
@@ -4323,15 +4323,15 @@ RT_INTERFACE!{interface IRadialControllerButtonHoldingEventArgs(IRadialControlle
     #[cfg(feature="windows-devices")] fn get_SimpleHapticsController(&self, out: *mut *mut super::super::devices::haptics::SimpleHapticsController) -> HRESULT
 }}
 impl IRadialControllerButtonHoldingEventArgs {
-    #[inline] pub unsafe fn get_contact(&self) -> Result<ComPtr<RadialControllerScreenContact>> {
+    #[inline] pub unsafe fn get_contact(&self) -> Result<Option<ComPtr<RadialControllerScreenContact>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Contact)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<ComPtr<super::super::devices::haptics::SimpleHapticsController>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<Option<ComPtr<super::super::devices::haptics::SimpleHapticsController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SimpleHapticsController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class RadialControllerButtonHoldingEventArgs: IRadialControllerButtonHoldingEventArgs}
@@ -4341,15 +4341,15 @@ RT_INTERFACE!{interface IRadialControllerButtonPressedEventArgs(IRadialControlle
     #[cfg(feature="windows-devices")] fn get_SimpleHapticsController(&self, out: *mut *mut super::super::devices::haptics::SimpleHapticsController) -> HRESULT
 }}
 impl IRadialControllerButtonPressedEventArgs {
-    #[inline] pub unsafe fn get_contact(&self) -> Result<ComPtr<RadialControllerScreenContact>> {
+    #[inline] pub unsafe fn get_contact(&self) -> Result<Option<ComPtr<RadialControllerScreenContact>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Contact)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<ComPtr<super::super::devices::haptics::SimpleHapticsController>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<Option<ComPtr<super::super::devices::haptics::SimpleHapticsController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SimpleHapticsController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class RadialControllerButtonPressedEventArgs: IRadialControllerButtonPressedEventArgs}
@@ -4359,15 +4359,15 @@ RT_INTERFACE!{interface IRadialControllerButtonReleasedEventArgs(IRadialControll
     #[cfg(feature="windows-devices")] fn get_SimpleHapticsController(&self, out: *mut *mut super::super::devices::haptics::SimpleHapticsController) -> HRESULT
 }}
 impl IRadialControllerButtonReleasedEventArgs {
-    #[inline] pub unsafe fn get_contact(&self) -> Result<ComPtr<RadialControllerScreenContact>> {
+    #[inline] pub unsafe fn get_contact(&self) -> Result<Option<ComPtr<RadialControllerScreenContact>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Contact)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<ComPtr<super::super::devices::haptics::SimpleHapticsController>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<Option<ComPtr<super::super::devices::haptics::SimpleHapticsController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SimpleHapticsController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class RadialControllerButtonReleasedEventArgs: IRadialControllerButtonReleasedEventArgs}
@@ -4396,13 +4396,13 @@ RT_CLASS!{class RadialControllerConfiguration: IRadialControllerConfiguration}
 impl RtActivatable<IRadialControllerConfigurationStatics> for RadialControllerConfiguration {}
 impl RtActivatable<IRadialControllerConfigurationStatics2> for RadialControllerConfiguration {}
 impl RadialControllerConfiguration {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<RadialControllerConfiguration>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<RadialControllerConfiguration>>> { unsafe {
         <Self as RtActivatable<IRadialControllerConfigurationStatics>>::get_activation_factory().get_for_current_view()
     }}
     #[inline] pub fn set_app_controller(value: &RadialController) -> Result<()> { unsafe {
         <Self as RtActivatable<IRadialControllerConfigurationStatics2>>::get_activation_factory().set_app_controller(value)
     }}
-    #[inline] pub fn get_app_controller() -> Result<ComPtr<RadialController>> { unsafe {
+    #[inline] pub fn get_app_controller() -> Result<Option<ComPtr<RadialController>>> { unsafe {
         <Self as RtActivatable<IRadialControllerConfigurationStatics2>>::get_activation_factory().get_app_controller()
     }}
     #[inline] pub fn set_is_app_controller_enabled(value: bool) -> Result<()> { unsafe {
@@ -4425,10 +4425,10 @@ impl IRadialControllerConfiguration2 {
         let hr = ((*self.lpVtbl).put_ActiveControllerWhenMenuIsSuppressed)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_active_controller_when_menu_is_suppressed(&self) -> Result<ComPtr<RadialController>> {
+    #[inline] pub unsafe fn get_active_controller_when_menu_is_suppressed(&self) -> Result<Option<ComPtr<RadialController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ActiveControllerWhenMenuIsSuppressed)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_is_menu_suppressed(&self, value: bool) -> Result<()> {
         let hr = ((*self.lpVtbl).put_IsMenuSuppressed)(self as *const _ as *mut _, value);
@@ -4445,10 +4445,10 @@ RT_INTERFACE!{static interface IRadialControllerConfigurationStatics(IRadialCont
     fn GetForCurrentView(&self, out: *mut *mut RadialControllerConfiguration) -> HRESULT
 }}
 impl IRadialControllerConfigurationStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<RadialControllerConfiguration>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<RadialControllerConfiguration>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IRadialControllerConfigurationStatics2, 1407224599, 57861, 18643, 156, 175, 128, 255, 71, 196, 215, 199);
@@ -4463,10 +4463,10 @@ impl IRadialControllerConfigurationStatics2 {
         let hr = ((*self.lpVtbl).put_AppController)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_app_controller(&self) -> Result<ComPtr<RadialController>> {
+    #[inline] pub unsafe fn get_app_controller(&self) -> Result<Option<ComPtr<RadialController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AppController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_is_app_controller_enabled(&self, value: bool) -> Result<()> {
         let hr = ((*self.lpVtbl).put_IsAppControllerEnabled)(self as *const _ as *mut _, value);
@@ -4483,10 +4483,10 @@ RT_INTERFACE!{interface IRadialControllerControlAcquiredEventArgs(IRadialControl
     fn get_Contact(&self, out: *mut *mut RadialControllerScreenContact) -> HRESULT
 }}
 impl IRadialControllerControlAcquiredEventArgs {
-    #[inline] pub unsafe fn get_contact(&self) -> Result<ComPtr<RadialControllerScreenContact>> {
+    #[inline] pub unsafe fn get_contact(&self) -> Result<Option<ComPtr<RadialControllerScreenContact>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Contact)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class RadialControllerControlAcquiredEventArgs: IRadialControllerControlAcquiredEventArgs}
@@ -4501,10 +4501,10 @@ impl IRadialControllerControlAcquiredEventArgs2 {
         let hr = ((*self.lpVtbl).get_IsButtonPressed)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<ComPtr<super::super::devices::haptics::SimpleHapticsController>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<Option<ComPtr<super::super::devices::haptics::SimpleHapticsController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SimpleHapticsController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IRadialControllerMenu, 2231808861, 63040, 17426, 171, 160, 186, 208, 119, 229, 234, 138);
@@ -4517,10 +4517,10 @@ RT_INTERFACE!{interface IRadialControllerMenu(IRadialControllerMenuVtbl): IInspe
     fn TrySelectPreviouslySelectedMenuItem(&self, out: *mut bool) -> HRESULT
 }}
 impl IRadialControllerMenu {
-    #[inline] pub unsafe fn get_items(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<RadialControllerMenuItem>>> {
+    #[inline] pub unsafe fn get_items(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<RadialControllerMenuItem>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Items)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_is_enabled(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -4531,10 +4531,10 @@ impl IRadialControllerMenu {
         let hr = ((*self.lpVtbl).put_IsEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_selected_menu_item(&self) -> Result<ComPtr<RadialControllerMenuItem>> {
+    #[inline] pub unsafe fn get_selected_menu_item(&self) -> Result<Option<ComPtr<RadialControllerMenuItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetSelectedMenuItem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn select_menu_item(&self, menuItem: &RadialControllerMenuItem) -> Result<()> {
         let hr = ((*self.lpVtbl).SelectMenuItem)(self as *const _ as *mut _, menuItem as *const _ as *mut _);
@@ -4561,10 +4561,10 @@ impl IRadialControllerMenuItem {
         let hr = ((*self.lpVtbl).get_DisplayText)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_tag(&self) -> Result<ComPtr<IInspectable>> {
+    #[inline] pub unsafe fn get_tag(&self) -> Result<Option<ComPtr<IInspectable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Tag)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_tag(&self, value: &IInspectable) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Tag)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -4584,16 +4584,16 @@ RT_CLASS!{class RadialControllerMenuItem: IRadialControllerMenuItem}
 impl RtActivatable<IRadialControllerMenuItemStatics> for RadialControllerMenuItem {}
 impl RtActivatable<IRadialControllerMenuItemStatics2> for RadialControllerMenuItem {}
 impl RadialControllerMenuItem {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_icon(displayText: &HStringArg, icon: &super::super::storage::streams::RandomAccessStreamReference) -> Result<ComPtr<RadialControllerMenuItem>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_icon(displayText: &HStringArg, icon: &super::super::storage::streams::RandomAccessStreamReference) -> Result<Option<ComPtr<RadialControllerMenuItem>>> { unsafe {
         <Self as RtActivatable<IRadialControllerMenuItemStatics>>::get_activation_factory().create_from_icon(displayText, icon)
     }}
-    #[inline] pub fn create_from_known_icon(displayText: &HStringArg, value: RadialControllerMenuKnownIcon) -> Result<ComPtr<RadialControllerMenuItem>> { unsafe {
+    #[inline] pub fn create_from_known_icon(displayText: &HStringArg, value: RadialControllerMenuKnownIcon) -> Result<Option<ComPtr<RadialControllerMenuItem>>> { unsafe {
         <Self as RtActivatable<IRadialControllerMenuItemStatics>>::get_activation_factory().create_from_known_icon(displayText, value)
     }}
-    #[inline] pub fn create_from_font_glyph(displayText: &HStringArg, glyph: &HStringArg, fontFamily: &HStringArg) -> Result<ComPtr<RadialControllerMenuItem>> { unsafe {
+    #[inline] pub fn create_from_font_glyph(displayText: &HStringArg, glyph: &HStringArg, fontFamily: &HStringArg) -> Result<Option<ComPtr<RadialControllerMenuItem>>> { unsafe {
         <Self as RtActivatable<IRadialControllerMenuItemStatics2>>::get_activation_factory().create_from_font_glyph(displayText, glyph, fontFamily)
     }}
-    #[inline] pub fn create_from_font_glyph_with_uri(displayText: &HStringArg, glyph: &HStringArg, fontFamily: &HStringArg, fontUri: &super::super::foundation::Uri) -> Result<ComPtr<RadialControllerMenuItem>> { unsafe {
+    #[inline] pub fn create_from_font_glyph_with_uri(displayText: &HStringArg, glyph: &HStringArg, fontFamily: &HStringArg, fontUri: &super::super::foundation::Uri) -> Result<Option<ComPtr<RadialControllerMenuItem>>> { unsafe {
         <Self as RtActivatable<IRadialControllerMenuItemStatics2>>::get_activation_factory().create_from_font_glyph_with_uri(displayText, glyph, fontFamily, fontUri)
     }}
 }
@@ -4605,15 +4605,15 @@ RT_INTERFACE!{static interface IRadialControllerMenuItemStatics(IRadialControlle
     fn CreateFromKnownIcon(&self, displayText: HSTRING, value: RadialControllerMenuKnownIcon, out: *mut *mut RadialControllerMenuItem) -> HRESULT
 }}
 impl IRadialControllerMenuItemStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_icon(&self, displayText: &HStringArg, icon: &super::super::storage::streams::RandomAccessStreamReference) -> Result<ComPtr<RadialControllerMenuItem>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_from_icon(&self, displayText: &HStringArg, icon: &super::super::storage::streams::RandomAccessStreamReference) -> Result<Option<ComPtr<RadialControllerMenuItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromIcon)(self as *const _ as *mut _, displayText.get(), icon as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_from_known_icon(&self, displayText: &HStringArg, value: RadialControllerMenuKnownIcon) -> Result<ComPtr<RadialControllerMenuItem>> {
+    #[inline] pub unsafe fn create_from_known_icon(&self, displayText: &HStringArg, value: RadialControllerMenuKnownIcon) -> Result<Option<ComPtr<RadialControllerMenuItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromKnownIcon)(self as *const _ as *mut _, displayText.get(), value, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IRadialControllerMenuItemStatics2, 213610686, 32318, 18621, 190, 4, 44, 127, 202, 169, 193, 255);
@@ -4622,15 +4622,15 @@ RT_INTERFACE!{static interface IRadialControllerMenuItemStatics2(IRadialControll
     fn CreateFromFontGlyphWithUri(&self, displayText: HSTRING, glyph: HSTRING, fontFamily: HSTRING, fontUri: *mut super::super::foundation::Uri, out: *mut *mut RadialControllerMenuItem) -> HRESULT
 }}
 impl IRadialControllerMenuItemStatics2 {
-    #[inline] pub unsafe fn create_from_font_glyph(&self, displayText: &HStringArg, glyph: &HStringArg, fontFamily: &HStringArg) -> Result<ComPtr<RadialControllerMenuItem>> {
+    #[inline] pub unsafe fn create_from_font_glyph(&self, displayText: &HStringArg, glyph: &HStringArg, fontFamily: &HStringArg) -> Result<Option<ComPtr<RadialControllerMenuItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromFontGlyph)(self as *const _ as *mut _, displayText.get(), glyph.get(), fontFamily.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_from_font_glyph_with_uri(&self, displayText: &HStringArg, glyph: &HStringArg, fontFamily: &HStringArg, fontUri: &super::super::foundation::Uri) -> Result<ComPtr<RadialControllerMenuItem>> {
+    #[inline] pub unsafe fn create_from_font_glyph_with_uri(&self, displayText: &HStringArg, glyph: &HStringArg, fontFamily: &HStringArg, fontUri: &super::super::foundation::Uri) -> Result<Option<ComPtr<RadialControllerMenuItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromFontGlyphWithUri)(self as *const _ as *mut _, displayText.get(), glyph.get(), fontFamily.get(), fontUri as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum RadialControllerMenuKnownIcon: i32 {
@@ -4647,10 +4647,10 @@ impl IRadialControllerRotationChangedEventArgs {
         let hr = ((*self.lpVtbl).get_RotationDeltaInDegrees)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_contact(&self) -> Result<ComPtr<RadialControllerScreenContact>> {
+    #[inline] pub unsafe fn get_contact(&self) -> Result<Option<ComPtr<RadialControllerScreenContact>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Contact)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class RadialControllerRotationChangedEventArgs: IRadialControllerRotationChangedEventArgs}
@@ -4665,10 +4665,10 @@ impl IRadialControllerRotationChangedEventArgs2 {
         let hr = ((*self.lpVtbl).get_IsButtonPressed)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<ComPtr<super::super::devices::haptics::SimpleHapticsController>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<Option<ComPtr<super::super::devices::haptics::SimpleHapticsController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SimpleHapticsController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IRadialControllerScreenContact, 543859764, 58961, 4581, 191, 98, 44, 39, 215, 64, 78, 133);
@@ -4694,10 +4694,10 @@ RT_INTERFACE!{interface IRadialControllerScreenContactContinuedEventArgs(IRadial
     fn get_Contact(&self, out: *mut *mut RadialControllerScreenContact) -> HRESULT
 }}
 impl IRadialControllerScreenContactContinuedEventArgs {
-    #[inline] pub unsafe fn get_contact(&self) -> Result<ComPtr<RadialControllerScreenContact>> {
+    #[inline] pub unsafe fn get_contact(&self) -> Result<Option<ComPtr<RadialControllerScreenContact>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Contact)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class RadialControllerScreenContactContinuedEventArgs: IRadialControllerScreenContactContinuedEventArgs}
@@ -4712,10 +4712,10 @@ impl IRadialControllerScreenContactContinuedEventArgs2 {
         let hr = ((*self.lpVtbl).get_IsButtonPressed)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<ComPtr<super::super::devices::haptics::SimpleHapticsController>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<Option<ComPtr<super::super::devices::haptics::SimpleHapticsController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SimpleHapticsController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IRadialControllerScreenContactEndedEventArgs, 1029144306, 15598, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
@@ -4729,10 +4729,10 @@ impl IRadialControllerScreenContactEndedEventArgs {
         let hr = ((*self.lpVtbl).get_IsButtonPressed)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<ComPtr<super::super::devices::haptics::SimpleHapticsController>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<Option<ComPtr<super::super::devices::haptics::SimpleHapticsController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SimpleHapticsController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class RadialControllerScreenContactEndedEventArgs: IRadialControllerScreenContactEndedEventArgs}
@@ -4741,10 +4741,10 @@ RT_INTERFACE!{interface IRadialControllerScreenContactStartedEventArgs(IRadialCo
     fn get_Contact(&self, out: *mut *mut RadialControllerScreenContact) -> HRESULT
 }}
 impl IRadialControllerScreenContactStartedEventArgs {
-    #[inline] pub unsafe fn get_contact(&self) -> Result<ComPtr<RadialControllerScreenContact>> {
+    #[inline] pub unsafe fn get_contact(&self) -> Result<Option<ComPtr<RadialControllerScreenContact>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Contact)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class RadialControllerScreenContactStartedEventArgs: IRadialControllerScreenContactStartedEventArgs}
@@ -4759,10 +4759,10 @@ impl IRadialControllerScreenContactStartedEventArgs2 {
         let hr = ((*self.lpVtbl).get_IsButtonPressed)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<ComPtr<super::super::devices::haptics::SimpleHapticsController>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<Option<ComPtr<super::super::devices::haptics::SimpleHapticsController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SimpleHapticsController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IRadialControllerStatics, 4208906423, 47180, 18580, 135, 170, 143, 37, 170, 95, 40, 139);
@@ -4776,10 +4776,10 @@ impl IRadialControllerStatics {
         let hr = ((*self.lpVtbl).IsSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_for_current_view(&self) -> Result<ComPtr<RadialController>> {
+    #[inline] pub unsafe fn create_for_current_view(&self) -> Result<Option<ComPtr<RadialController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum RadialControllerSystemMenuItemKind: i32 {
@@ -5278,10 +5278,10 @@ RT_CLASS!{class InputInjector: IInputInjector}
 impl RtActivatable<IInputInjectorStatics> for InputInjector {}
 impl RtActivatable<IInputInjectorStatics2> for InputInjector {}
 impl InputInjector {
-    #[inline] pub fn try_create() -> Result<ComPtr<InputInjector>> { unsafe {
+    #[inline] pub fn try_create() -> Result<Option<ComPtr<InputInjector>>> { unsafe {
         <Self as RtActivatable<IInputInjectorStatics>>::get_activation_factory().try_create()
     }}
-    #[inline] pub fn try_create_for_app_broadcast_only() -> Result<ComPtr<InputInjector>> { unsafe {
+    #[inline] pub fn try_create_for_app_broadcast_only() -> Result<Option<ComPtr<InputInjector>>> { unsafe {
         <Self as RtActivatable<IInputInjectorStatics2>>::get_activation_factory().try_create_for_app_broadcast_only()
     }}
 }
@@ -5311,10 +5311,10 @@ RT_INTERFACE!{static interface IInputInjectorStatics(IInputInjectorStaticsVtbl):
     fn TryCreate(&self, out: *mut *mut InputInjector) -> HRESULT
 }}
 impl IInputInjectorStatics {
-    #[inline] pub unsafe fn try_create(&self) -> Result<ComPtr<InputInjector>> {
+    #[inline] pub unsafe fn try_create(&self) -> Result<Option<ComPtr<InputInjector>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryCreate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IInputInjectorStatics2, 2765830395, 56716, 16719, 149, 234, 248, 126, 244, 192, 174, 108);
@@ -5322,10 +5322,10 @@ RT_INTERFACE!{static interface IInputInjectorStatics2(IInputInjectorStatics2Vtbl
     fn TryCreateForAppBroadcastOnly(&self, out: *mut *mut InputInjector) -> HRESULT
 }}
 impl IInputInjectorStatics2 {
-    #[inline] pub unsafe fn try_create_for_app_broadcast_only(&self) -> Result<ComPtr<InputInjector>> {
+    #[inline] pub unsafe fn try_create_for_app_broadcast_only(&self) -> Result<Option<ComPtr<InputInjector>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryCreateForAppBroadcastOnly)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.UI.Input.Preview.Injection
@@ -5570,10 +5570,10 @@ impl ISpatialHoldStartedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<ComPtr<SpatialPointerPose>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialHoldStartedEventArgs: ISpatialHoldStartedEventArgs}
@@ -5582,10 +5582,10 @@ RT_INTERFACE!{interface ISpatialInteraction(ISpatialInteractionVtbl): IInspectab
     fn get_SourceState(&self, out: *mut *mut SpatialInteractionSourceState) -> HRESULT
 }}
 impl ISpatialInteraction {
-    #[inline] pub unsafe fn get_source_state(&self) -> Result<ComPtr<SpatialInteractionSourceState>> {
+    #[inline] pub unsafe fn get_source_state(&self) -> Result<Option<ComPtr<SpatialInteractionSourceState>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SourceState)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialInteraction: ISpatialInteraction}
@@ -5610,10 +5610,10 @@ impl ISpatialInteractionController {
         let hr = ((*self.lpVtbl).get_HasThumbstick)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<ComPtr<::rt::gen::windows::devices::haptics::SimpleHapticsController>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controller(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::haptics::SimpleHapticsController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SimpleHapticsController)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_vendor_id(&self) -> Result<u16> {
         let mut out = zeroed();
@@ -5704,15 +5704,15 @@ impl ISpatialInteractionDetectedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<ComPtr<SpatialPointerPose>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_interaction(&self) -> Result<ComPtr<SpatialInteraction>> {
+    #[inline] pub unsafe fn get_interaction(&self) -> Result<Option<ComPtr<SpatialInteraction>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Interaction)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialInteractionDetectedEventArgs: ISpatialInteractionDetectedEventArgs}
@@ -5721,10 +5721,10 @@ RT_INTERFACE!{interface ISpatialInteractionDetectedEventArgs2(ISpatialInteractio
     fn get_InteractionSource(&self, out: *mut *mut SpatialInteractionSource) -> HRESULT
 }}
 impl ISpatialInteractionDetectedEventArgs2 {
-    #[inline] pub unsafe fn get_interaction_source(&self) -> Result<ComPtr<SpatialInteractionSource>> {
+    #[inline] pub unsafe fn get_interaction_source(&self) -> Result<Option<ComPtr<SpatialInteractionSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InteractionSource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISpatialInteractionManager, 849759912, 41306, 14741, 184, 189, 128, 81, 60, 181, 173, 239);
@@ -5798,16 +5798,16 @@ impl ISpatialInteractionManager {
         let hr = ((*self.lpVtbl).remove_InteractionDetected)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_detected_sources_at_timestamp(&self, timeStamp: &::rt::gen::windows::perception::PerceptionTimestamp) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<SpatialInteractionSourceState>>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_detected_sources_at_timestamp(&self, timeStamp: &::rt::gen::windows::perception::PerceptionTimestamp) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<SpatialInteractionSourceState>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDetectedSourcesAtTimestamp)(self as *const _ as *mut _, timeStamp as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialInteractionManager: ISpatialInteractionManager}
 impl RtActivatable<ISpatialInteractionManagerStatics> for SpatialInteractionManager {}
 impl SpatialInteractionManager {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<SpatialInteractionManager>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<SpatialInteractionManager>>> { unsafe {
         <Self as RtActivatable<ISpatialInteractionManagerStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
@@ -5817,10 +5817,10 @@ RT_INTERFACE!{static interface ISpatialInteractionManagerStatics(ISpatialInterac
     fn GetForCurrentView(&self, out: *mut *mut SpatialInteractionManager) -> HRESULT
 }}
 impl ISpatialInteractionManagerStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<SpatialInteractionManager>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<SpatialInteractionManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum SpatialInteractionPressKind: i32 {
@@ -5868,15 +5868,15 @@ impl ISpatialInteractionSource2 {
         let hr = ((*self.lpVtbl).get_IsGraspSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_controller(&self) -> Result<ComPtr<SpatialInteractionController>> {
+    #[inline] pub unsafe fn get_controller(&self) -> Result<Option<ComPtr<SpatialInteractionController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Controller)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_state_at_timestamp(&self, timestamp: &::rt::gen::windows::perception::PerceptionTimestamp) -> Result<ComPtr<SpatialInteractionSourceState>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_state_at_timestamp(&self, timestamp: &::rt::gen::windows::perception::PerceptionTimestamp) -> Result<Option<ComPtr<SpatialInteractionSourceState>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetStateAtTimestamp)(self as *const _ as *mut _, timestamp as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISpatialInteractionSource3, 67557881, 39677, 17657, 133, 220, 112, 0, 35, 169, 98, 227);
@@ -5895,10 +5895,10 @@ RT_INTERFACE!{interface ISpatialInteractionSourceEventArgs(ISpatialInteractionSo
     fn get_State(&self, out: *mut *mut SpatialInteractionSourceState) -> HRESULT
 }}
 impl ISpatialInteractionSourceEventArgs {
-    #[inline] pub unsafe fn get_state(&self) -> Result<ComPtr<SpatialInteractionSourceState>> {
+    #[inline] pub unsafe fn get_state(&self) -> Result<Option<ComPtr<SpatialInteractionSourceState>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialInteractionSourceEventArgs: ISpatialInteractionSourceEventArgs}
@@ -5925,15 +5925,15 @@ RT_INTERFACE!{interface ISpatialInteractionSourceLocation(ISpatialInteractionSou
     fn get_Velocity(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>) -> HRESULT
 }}
 impl ISpatialInteractionSourceLocation {
-    #[inline] pub unsafe fn get_position(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>>> {
+    #[inline] pub unsafe fn get_position(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_velocity(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>>> {
+    #[inline] pub unsafe fn get_velocity(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Velocity)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialInteractionSourceLocation: ISpatialInteractionSourceLocation}
@@ -5942,10 +5942,10 @@ RT_INTERFACE!{interface ISpatialInteractionSourceLocation2(ISpatialInteractionSo
     fn get_Orientation(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Quaternion>) -> HRESULT
 }}
 impl ISpatialInteractionSourceLocation2 {
-    #[inline] pub unsafe fn get_orientation(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Quaternion>>> {
+    #[inline] pub unsafe fn get_orientation(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Quaternion>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Orientation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISpatialInteractionSourceLocation3, 1728243294, 59669, 19707, 156, 27, 5, 56, 239, 200, 102, 135);
@@ -5960,15 +5960,15 @@ impl ISpatialInteractionSourceLocation3 {
         let hr = ((*self.lpVtbl).get_PositionAccuracy)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_angular_velocity(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>>> {
+    #[inline] pub unsafe fn get_angular_velocity(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AngularVelocity)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_source_pointer_pose(&self) -> Result<ComPtr<SpatialPointerInteractionSourcePose>> {
+    #[inline] pub unsafe fn get_source_pointer_pose(&self) -> Result<Option<ComPtr<SpatialPointerInteractionSourcePose>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SourcePointerPose)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum SpatialInteractionSourcePositionAccuracy: i32 {
@@ -5981,20 +5981,20 @@ RT_INTERFACE!{interface ISpatialInteractionSourceProperties(ISpatialInteractionS
     #[cfg(feature="windows-perception")] fn TryGetLocation(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialInteractionSourceLocation) -> HRESULT
 }}
 impl ISpatialInteractionSourceProperties {
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_source_loss_mitigation_direction(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_source_loss_mitigation_direction(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetSourceLossMitigationDirection)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_source_loss_risk(&self) -> Result<f64> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_SourceLossRisk)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_location(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<ComPtr<SpatialInteractionSourceLocation>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_location(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialInteractionSourceLocation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetLocation)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialInteractionSourceProperties: ISpatialInteractionSourceProperties}
@@ -6007,30 +6007,30 @@ RT_INTERFACE!{interface ISpatialInteractionSourceState(ISpatialInteractionSource
     #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT
 }}
 impl ISpatialInteractionSourceState {
-    #[inline] pub unsafe fn get_source(&self) -> Result<ComPtr<SpatialInteractionSource>> {
+    #[inline] pub unsafe fn get_source(&self) -> Result<Option<ComPtr<SpatialInteractionSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<SpatialInteractionSourceProperties>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<SpatialInteractionSourceProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_is_pressed(&self) -> Result<bool> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsPressed)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_timestamp(&self) -> Result<ComPtr<::rt::gen::windows::perception::PerceptionTimestamp>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_timestamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::perception::PerceptionTimestamp>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Timestamp)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<ComPtr<SpatialPointerPose>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialInteractionSourceState: ISpatialInteractionSourceState}
@@ -6063,10 +6063,10 @@ impl ISpatialInteractionSourceState2 {
         let hr = ((*self.lpVtbl).get_SelectPressedValue)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_controller_properties(&self) -> Result<ComPtr<SpatialInteractionControllerProperties>> {
+    #[inline] pub unsafe fn get_controller_properties(&self) -> Result<Option<ComPtr<SpatialInteractionControllerProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ControllerProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISpatialManipulationCanceledEventArgs, 759222731, 59354, 16928, 176, 191, 129, 147, 1, 103, 71, 128);
@@ -6092,10 +6092,10 @@ impl ISpatialManipulationCompletedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_cumulative_delta(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<ComPtr<SpatialManipulationDelta>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_cumulative_delta(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialManipulationDelta>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetCumulativeDelta)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialManipulationCompletedEventArgs: ISpatialManipulationCompletedEventArgs}
@@ -6122,10 +6122,10 @@ impl ISpatialManipulationStartedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<ComPtr<SpatialPointerPose>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialManipulationStartedEventArgs: ISpatialManipulationStartedEventArgs}
@@ -6140,10 +6140,10 @@ impl ISpatialManipulationUpdatedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_cumulative_delta(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<ComPtr<SpatialManipulationDelta>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_cumulative_delta(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialManipulationDelta>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetCumulativeDelta)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialManipulationUpdatedEventArgs: ISpatialManipulationUpdatedEventArgs}
@@ -6192,10 +6192,10 @@ impl ISpatialNavigationStartedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<ComPtr<SpatialPointerPose>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_is_navigating_x(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -6279,21 +6279,21 @@ RT_INTERFACE!{interface ISpatialPointerPose(ISpatialPointerPoseVtbl): IInspectab
     #[cfg(feature="windows-perception")] fn get_Head(&self, out: *mut *mut ::rt::gen::windows::perception::people::HeadPose) -> HRESULT
 }}
 impl ISpatialPointerPose {
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_timestamp(&self) -> Result<ComPtr<::rt::gen::windows::perception::PerceptionTimestamp>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_timestamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::perception::PerceptionTimestamp>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Timestamp)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_head(&self) -> Result<ComPtr<::rt::gen::windows::perception::people::HeadPose>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_head(&self) -> Result<Option<ComPtr<::rt::gen::windows::perception::people::HeadPose>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Head)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SpatialPointerPose: ISpatialPointerPose}
 impl RtActivatable<ISpatialPointerPoseStatics> for SpatialPointerPose {}
 impl SpatialPointerPose {
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_at_timestamp(coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, timestamp: &::rt::gen::windows::perception::PerceptionTimestamp) -> Result<ComPtr<SpatialPointerPose>> { unsafe {
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_at_timestamp(coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, timestamp: &::rt::gen::windows::perception::PerceptionTimestamp) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe {
         <Self as RtActivatable<ISpatialPointerPoseStatics>>::get_activation_factory().try_get_at_timestamp(coordinateSystem, timestamp)
     }}
 }
@@ -6303,10 +6303,10 @@ RT_INTERFACE!{interface ISpatialPointerPose2(ISpatialPointerPose2Vtbl): IInspect
     fn TryGetInteractionSourcePose(&self, source: *mut SpatialInteractionSource, out: *mut *mut SpatialPointerInteractionSourcePose) -> HRESULT
 }}
 impl ISpatialPointerPose2 {
-    #[inline] pub unsafe fn try_get_interaction_source_pose(&self, source: &SpatialInteractionSource) -> Result<ComPtr<SpatialPointerInteractionSourcePose>> {
+    #[inline] pub unsafe fn try_get_interaction_source_pose(&self, source: &SpatialInteractionSource) -> Result<Option<ComPtr<SpatialPointerInteractionSourcePose>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetInteractionSourcePose)(self as *const _ as *mut _, source as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISpatialPointerPoseStatics, 2723516841, 44193, 16096, 152, 22, 120, 92, 251, 46, 63, 184);
@@ -6314,10 +6314,10 @@ RT_INTERFACE!{static interface ISpatialPointerPoseStatics(ISpatialPointerPoseSta
     #[cfg(feature="windows-perception")] fn TryGetAtTimestamp(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, timestamp: *mut ::rt::gen::windows::perception::PerceptionTimestamp, out: *mut *mut SpatialPointerPose) -> HRESULT
 }}
 impl ISpatialPointerPoseStatics {
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_at_timestamp(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, timestamp: &::rt::gen::windows::perception::PerceptionTimestamp) -> Result<ComPtr<SpatialPointerPose>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_at_timestamp(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, timestamp: &::rt::gen::windows::perception::PerceptionTimestamp) -> Result<Option<ComPtr<SpatialPointerPose>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetAtTimestamp)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, timestamp as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISpatialRecognitionEndedEventArgs, 238417355, 16245, 17395, 172, 129, 209, 220, 45, 249, 177, 251);
@@ -6345,10 +6345,10 @@ impl ISpatialRecognitionStartedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<ComPtr<SpatialPointerPose>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn is_gesture_possible(&self, gesture: SpatialGestureSettings) -> Result<bool> {
         let mut out = zeroed();
@@ -6370,10 +6370,10 @@ impl ISpatialTappedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<ComPtr<SpatialPointerPose>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_tap_count(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -6391,21 +6391,21 @@ RT_INTERFACE!{interface IRadialControllerIndependentInputSource(IRadialControlle
     fn get_Dispatcher(&self, out: *mut *mut super::super::core::CoreDispatcher) -> HRESULT
 }}
 impl IRadialControllerIndependentInputSource {
-    #[inline] pub unsafe fn get_controller(&self) -> Result<ComPtr<super::RadialController>> {
+    #[inline] pub unsafe fn get_controller(&self) -> Result<Option<ComPtr<super::RadialController>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Controller)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_dispatcher(&self) -> Result<ComPtr<super::super::core::CoreDispatcher>> {
+    #[inline] pub unsafe fn get_dispatcher(&self) -> Result<Option<ComPtr<super::super::core::CoreDispatcher>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Dispatcher)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class RadialControllerIndependentInputSource: IRadialControllerIndependentInputSource}
 impl RtActivatable<IRadialControllerIndependentInputSourceStatics> for RadialControllerIndependentInputSource {}
 impl RadialControllerIndependentInputSource {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn create_for_view(view: &::rt::gen::windows::applicationmodel::core::CoreApplicationView) -> Result<ComPtr<RadialControllerIndependentInputSource>> { unsafe {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn create_for_view(view: &::rt::gen::windows::applicationmodel::core::CoreApplicationView) -> Result<Option<ComPtr<RadialControllerIndependentInputSource>>> { unsafe {
         <Self as RtActivatable<IRadialControllerIndependentInputSourceStatics>>::get_activation_factory().create_for_view(view)
     }}
 }
@@ -6415,10 +6415,10 @@ RT_INTERFACE!{static interface IRadialControllerIndependentInputSourceStatics(IR
     #[cfg(feature="windows-applicationmodel")] fn CreateForView(&self, view: *mut ::rt::gen::windows::applicationmodel::core::CoreApplicationView, out: *mut *mut RadialControllerIndependentInputSource) -> HRESULT
 }}
 impl IRadialControllerIndependentInputSourceStatics {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn create_for_view(&self, view: &::rt::gen::windows::applicationmodel::core::CoreApplicationView) -> Result<ComPtr<RadialControllerIndependentInputSource>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn create_for_view(&self, view: &::rt::gen::windows::applicationmodel::core::CoreApplicationView) -> Result<Option<ComPtr<RadialControllerIndependentInputSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateForView)(self as *const _ as *mut _, view as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.UI.Input.Core
@@ -6488,7 +6488,7 @@ RT_CLASS!{class InkDrawingAttributes: IInkDrawingAttributes}
 impl RtActivatable<IInkDrawingAttributesStatics> for InkDrawingAttributes {}
 impl RtActivatable<IActivationFactory> for InkDrawingAttributes {}
 impl InkDrawingAttributes {
-    #[inline] pub fn create_for_pencil() -> Result<ComPtr<InkDrawingAttributes>> { unsafe {
+    #[inline] pub fn create_for_pencil() -> Result<Option<ComPtr<InkDrawingAttributes>>> { unsafe {
         <Self as RtActivatable<IInkDrawingAttributesStatics>>::get_activation_factory().create_for_pencil()
     }}
 }
@@ -6531,10 +6531,10 @@ impl IInkDrawingAttributes3 {
         let hr = ((*self.lpVtbl).get_Kind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_pencil_properties(&self) -> Result<ComPtr<InkDrawingAttributesPencilProperties>> {
+    #[inline] pub unsafe fn get_pencil_properties(&self) -> Result<Option<ComPtr<InkDrawingAttributesPencilProperties>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PencilProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IInkDrawingAttributes4, 4016430117, 40729, 17773, 145, 163, 188, 58, 61, 145, 197, 251);
@@ -6578,10 +6578,10 @@ RT_INTERFACE!{static interface IInkDrawingAttributesStatics(IInkDrawingAttribute
     fn CreateForPencil(&self, out: *mut *mut InkDrawingAttributes) -> HRESULT
 }}
 impl IInkDrawingAttributesStatics {
-    #[inline] pub unsafe fn create_for_pencil(&self) -> Result<ComPtr<InkDrawingAttributes>> {
+    #[inline] pub unsafe fn create_for_pencil(&self) -> Result<Option<ComPtr<InkDrawingAttributes>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateForPencil)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum InkHighContrastAdjustment: i32 {
@@ -6645,10 +6645,10 @@ impl IInkManager {
         let hr = ((*self.lpVtbl).ProcessPointerDown)(self as *const _ as *mut _, pointerPoint as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn process_pointer_update(&self, pointerPoint: &super::PointerPoint) -> Result<ComPtr<IInspectable>> {
+    #[inline] pub unsafe fn process_pointer_update(&self, pointerPoint: &super::PointerPoint) -> Result<Option<ComPtr<IInspectable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ProcessPointerUpdate)(self as *const _ as *mut _, pointerPoint as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn process_pointer_up(&self, pointerPoint: &super::PointerPoint) -> Result<::rt::gen::windows::foundation::Rect> {
         let mut out = zeroed();
@@ -6787,43 +6787,43 @@ impl IInkPresenter {
         let hr = ((*self.lpVtbl).put_InputDeviceTypes)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_unprocessed_input(&self) -> Result<ComPtr<InkUnprocessedInput>> {
+    #[inline] pub unsafe fn get_unprocessed_input(&self) -> Result<Option<ComPtr<InkUnprocessedInput>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UnprocessedInput)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_stroke_input(&self) -> Result<ComPtr<InkStrokeInput>> {
+    #[inline] pub unsafe fn get_stroke_input(&self) -> Result<Option<ComPtr<InkStrokeInput>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StrokeInput)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_input_processing_configuration(&self) -> Result<ComPtr<InkInputProcessingConfiguration>> {
+    #[inline] pub unsafe fn get_input_processing_configuration(&self) -> Result<Option<ComPtr<InkInputProcessingConfiguration>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InputProcessingConfiguration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_stroke_container(&self) -> Result<ComPtr<InkStrokeContainer>> {
+    #[inline] pub unsafe fn get_stroke_container(&self) -> Result<Option<ComPtr<InkStrokeContainer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StrokeContainer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_stroke_container(&self, value: &InkStrokeContainer) -> Result<()> {
         let hr = ((*self.lpVtbl).put_StrokeContainer)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn copy_default_drawing_attributes(&self) -> Result<ComPtr<InkDrawingAttributes>> {
+    #[inline] pub unsafe fn copy_default_drawing_attributes(&self) -> Result<Option<ComPtr<InkDrawingAttributes>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CopyDefaultDrawingAttributes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn update_default_drawing_attributes(&self, value: &InkDrawingAttributes) -> Result<()> {
         let hr = ((*self.lpVtbl).UpdateDefaultDrawingAttributes)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn activate_custom_drying(&self) -> Result<ComPtr<InkSynchronizer>> {
+    #[inline] pub unsafe fn activate_custom_drying(&self) -> Result<Option<ComPtr<InkSynchronizer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ActivateCustomDrying)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_predefined_configuration(&self, value: InkPresenterPredefinedConfiguration) -> Result<()> {
         let hr = ((*self.lpVtbl).SetPredefinedConfiguration)(self as *const _ as *mut _, value);
@@ -7112,15 +7112,15 @@ impl IInkRecognitionResult {
         let hr = ((*self.lpVtbl).get_BoundingRect)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_text_candidates(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_text_candidates(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetTextCandidates)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_strokes(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkStroke>>> {
+    #[inline] pub unsafe fn get_strokes(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkStroke>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetStrokes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class InkRecognitionResult: IInkRecognitionResult}
@@ -7155,10 +7155,10 @@ impl IInkRecognizerContainer {
         let hr = ((*self.lpVtbl).RecognizeAsync)(self as *const _ as *mut _, strokeCollection as *const _ as *mut _, recognitionTarget, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_recognizers(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkRecognizer>>> {
+    #[inline] pub unsafe fn get_recognizers(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkRecognizer>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetRecognizers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class InkRecognizerContainer: IInkRecognizerContainer}
@@ -7176,10 +7176,10 @@ RT_INTERFACE!{interface IInkStroke(IInkStrokeVtbl): IInspectable(IInspectableVtb
     fn Clone(&self, out: *mut *mut InkStroke) -> HRESULT
 }}
 impl IInkStroke {
-    #[inline] pub unsafe fn get_drawing_attributes(&self) -> Result<ComPtr<InkDrawingAttributes>> {
+    #[inline] pub unsafe fn get_drawing_attributes(&self) -> Result<Option<ComPtr<InkDrawingAttributes>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DrawingAttributes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_drawing_attributes(&self, value: &InkDrawingAttributes) -> Result<()> {
         let hr = ((*self.lpVtbl).put_DrawingAttributes)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -7204,15 +7204,15 @@ impl IInkStroke {
         let hr = ((*self.lpVtbl).get_Recognized)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_rendering_segments(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkStrokeRenderingSegment>>> {
+    #[inline] pub unsafe fn get_rendering_segments(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkStrokeRenderingSegment>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetRenderingSegments)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn clone(&self) -> Result<ComPtr<InkStroke>> {
+    #[inline] pub unsafe fn clone(&self) -> Result<Option<ComPtr<InkStroke>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Clone)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class InkStroke: IInkStroke}
@@ -7232,10 +7232,10 @@ impl IInkStroke2 {
         let hr = ((*self.lpVtbl).put_PointTransform)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_ink_points(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkPoint>>> {
+    #[inline] pub unsafe fn get_ink_points(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkPoint>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetInkPoints)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IInkStroke3, 1249932148, 38041, 16669, 161, 196, 104, 133, 93, 3, 214, 95);
@@ -7252,19 +7252,19 @@ impl IInkStroke3 {
         let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_stroke_started_time(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>> {
+    #[inline] pub unsafe fn get_stroke_started_time(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StrokeStartedTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_stroke_started_time(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_StrokeStartedTime)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_stroke_duration(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_stroke_duration(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StrokeDuration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_stroke_duration(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_StrokeDuration)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -7284,20 +7284,20 @@ impl IInkStrokeBuilder {
         let hr = ((*self.lpVtbl).BeginStroke)(self as *const _ as *mut _, pointerPoint as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn append_to_stroke(&self, pointerPoint: &super::PointerPoint) -> Result<ComPtr<super::PointerPoint>> {
+    #[inline] pub unsafe fn append_to_stroke(&self, pointerPoint: &super::PointerPoint) -> Result<Option<ComPtr<super::PointerPoint>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).AppendToStroke)(self as *const _ as *mut _, pointerPoint as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn end_stroke(&self, pointerPoint: &super::PointerPoint) -> Result<ComPtr<InkStroke>> {
+    #[inline] pub unsafe fn end_stroke(&self, pointerPoint: &super::PointerPoint) -> Result<Option<ComPtr<InkStroke>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).EndStroke)(self as *const _ as *mut _, pointerPoint as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_stroke(&self, points: &::rt::gen::windows::foundation::collections::IIterable<::rt::gen::windows::foundation::Point>) -> Result<ComPtr<InkStroke>> {
+    #[inline] pub unsafe fn create_stroke(&self, points: &::rt::gen::windows::foundation::collections::IIterable<::rt::gen::windows::foundation::Point>) -> Result<Option<ComPtr<InkStroke>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateStroke)(self as *const _ as *mut _, points as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_default_drawing_attributes(&self, drawingAttributes: &InkDrawingAttributes) -> Result<()> {
         let hr = ((*self.lpVtbl).SetDefaultDrawingAttributes)(self as *const _ as *mut _, drawingAttributes as *const _ as *mut _);
@@ -7312,10 +7312,10 @@ RT_INTERFACE!{interface IInkStrokeBuilder2(IInkStrokeBuilder2Vtbl): IInspectable
     fn CreateStrokeFromInkPoints(&self, inkPoints: *mut ::rt::gen::windows::foundation::collections::IIterable<InkPoint>, transform: ::rt::gen::windows::foundation::numerics::Matrix3x2, out: *mut *mut InkStroke) -> HRESULT
 }}
 impl IInkStrokeBuilder2 {
-    #[inline] pub unsafe fn create_stroke_from_ink_points(&self, inkPoints: &::rt::gen::windows::foundation::collections::IIterable<InkPoint>, transform: ::rt::gen::windows::foundation::numerics::Matrix3x2) -> Result<ComPtr<InkStroke>> {
+    #[inline] pub unsafe fn create_stroke_from_ink_points(&self, inkPoints: &::rt::gen::windows::foundation::collections::IIterable<InkPoint>, transform: ::rt::gen::windows::foundation::numerics::Matrix3x2) -> Result<Option<ComPtr<InkStroke>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateStrokeFromInkPoints)(self as *const _ as *mut _, inkPoints as *const _ as *mut _, transform, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IInkStrokeBuilder3, 2999394253, 21618, 18097, 168, 29, 195, 122, 61, 22, 148, 65);
@@ -7323,10 +7323,10 @@ RT_INTERFACE!{interface IInkStrokeBuilder3(IInkStrokeBuilder3Vtbl): IInspectable
     fn CreateStrokeFromInkPoints(&self, inkPoints: *mut ::rt::gen::windows::foundation::collections::IIterable<InkPoint>, transform: ::rt::gen::windows::foundation::numerics::Matrix3x2, strokeStartedTime: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>, strokeDuration: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>, out: *mut *mut InkStroke) -> HRESULT
 }}
 impl IInkStrokeBuilder3 {
-    #[inline] pub unsafe fn create_stroke_from_ink_points(&self, inkPoints: &::rt::gen::windows::foundation::collections::IIterable<InkPoint>, transform: ::rt::gen::windows::foundation::numerics::Matrix3x2, strokeStartedTime: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>, strokeDuration: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> Result<ComPtr<InkStroke>> {
+    #[inline] pub unsafe fn create_stroke_from_ink_points(&self, inkPoints: &::rt::gen::windows::foundation::collections::IIterable<InkPoint>, transform: ::rt::gen::windows::foundation::numerics::Matrix3x2, strokeStartedTime: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>, strokeDuration: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> Result<Option<ComPtr<InkStroke>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateStrokeFromInkPoints)(self as *const _ as *mut _, inkPoints as *const _ as *mut _, transform, strokeStartedTime as *const _ as *mut _, strokeDuration as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IInkStrokeContainer, 581749702, 64169, 20244, 182, 140, 246, 206, 230, 112, 174, 22);
@@ -7406,15 +7406,15 @@ impl IInkStrokeContainer {
         let hr = ((*self.lpVtbl).UpdateRecognitionResults)(self as *const _ as *mut _, recognitionResults as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_strokes(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkStroke>>> {
+    #[inline] pub unsafe fn get_strokes(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkStroke>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetStrokes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_recognition_results(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkRecognitionResult>>> {
+    #[inline] pub unsafe fn get_recognition_results(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkRecognitionResult>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetRecognitionResults)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class InkStrokeContainer: IInkStrokeContainer}
@@ -7447,10 +7447,10 @@ impl IInkStrokeContainer3 {
         let hr = ((*self.lpVtbl).SaveWithFormatAsync)(self as *const _ as *mut _, outputStream as *const _ as *mut _, inkPersistenceFormat, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_stroke_by_id(&self, id: u32) -> Result<ComPtr<InkStroke>> {
+    #[inline] pub unsafe fn get_stroke_by_id(&self, id: u32) -> Result<Option<ComPtr<InkStroke>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetStrokeById)(self as *const _ as *mut _, id, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IInkStrokeInput, 3476029051, 24080, 17350, 160, 128, 136, 242, 110, 29, 198, 125);
@@ -7502,10 +7502,10 @@ impl IInkStrokeInput {
         let hr = ((*self.lpVtbl).remove_StrokeCanceled)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_ink_presenter(&self) -> Result<ComPtr<InkPresenter>> {
+    #[inline] pub unsafe fn get_ink_presenter(&self) -> Result<Option<ComPtr<InkPresenter>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InkPresenter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class InkStrokeInput: IInkStrokeInput}
@@ -7562,10 +7562,10 @@ RT_INTERFACE!{interface IInkStrokesCollectedEventArgs(IInkStrokesCollectedEventA
     fn get_Strokes(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<InkStroke>) -> HRESULT
 }}
 impl IInkStrokesCollectedEventArgs {
-    #[inline] pub unsafe fn get_strokes(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkStroke>>> {
+    #[inline] pub unsafe fn get_strokes(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkStroke>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Strokes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class InkStrokesCollectedEventArgs: IInkStrokesCollectedEventArgs}
@@ -7574,10 +7574,10 @@ RT_INTERFACE!{interface IInkStrokesErasedEventArgs(IInkStrokesErasedEventArgsVtb
     fn get_Strokes(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<InkStroke>) -> HRESULT
 }}
 impl IInkStrokesErasedEventArgs {
-    #[inline] pub unsafe fn get_strokes(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkStroke>>> {
+    #[inline] pub unsafe fn get_strokes(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkStroke>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Strokes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class InkStrokesErasedEventArgs: IInkStrokesErasedEventArgs}
@@ -7587,10 +7587,10 @@ RT_INTERFACE!{interface IInkSynchronizer(IInkSynchronizerVtbl): IInspectable(IIn
     fn EndDry(&self) -> HRESULT
 }}
 impl IInkSynchronizer {
-    #[inline] pub unsafe fn begin_dry(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkStroke>>> {
+    #[inline] pub unsafe fn begin_dry(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<InkStroke>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).BeginDry)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn end_dry(&self) -> Result<()> {
         let hr = ((*self.lpVtbl).EndDry)(self as *const _ as *mut _);
@@ -7680,10 +7680,10 @@ impl IInkUnprocessedInput {
         let hr = ((*self.lpVtbl).remove_PointerLost)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_ink_presenter(&self) -> Result<ComPtr<InkPresenter>> {
+    #[inline] pub unsafe fn get_ink_presenter(&self) -> Result<Option<ComPtr<InkPresenter>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InkPresenter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class InkUnprocessedInput: IInkUnprocessedInput}
@@ -7724,10 +7724,10 @@ impl IInkAnalysisInkDrawing {
         let hr = ((*self.lpVtbl).get_Center)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_points(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::foundation::Point>>> {
+    #[inline] pub unsafe fn get_points(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::foundation::Point>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Points)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class InkAnalysisInkDrawing: IInkAnalysisInkDrawing}
@@ -7742,10 +7742,10 @@ impl IInkAnalysisInkWord {
         let hr = ((*self.lpVtbl).get_RecognizedText)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_text_alternates(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_text_alternates(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TextAlternates)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class InkAnalysisInkWord: IInkAnalysisInkWord}
@@ -7805,25 +7805,25 @@ impl IInkAnalysisNode {
         let hr = ((*self.lpVtbl).get_BoundingRect)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_rotated_bounding_rect(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::foundation::Point>>> {
+    #[inline] pub unsafe fn get_rotated_bounding_rect(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::foundation::Point>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RotatedBoundingRect)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_children(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<IInkAnalysisNode>>> {
+    #[inline] pub unsafe fn get_children(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<IInkAnalysisNode>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Children)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_parent(&self) -> Result<ComPtr<IInkAnalysisNode>> {
+    #[inline] pub unsafe fn get_parent(&self) -> Result<Option<ComPtr<IInkAnalysisNode>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Parent)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_stroke_ids(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<u32>>> {
+    #[inline] pub unsafe fn get_stroke_ids(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetStrokeIds)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class InkAnalysisNode: IInkAnalysisNode}
@@ -7865,10 +7865,10 @@ impl IInkAnalysisRoot {
         let hr = ((*self.lpVtbl).get_RecognizedText)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_nodes(&self, nodeKind: InkAnalysisNodeKind) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<IInkAnalysisNode>>> {
+    #[inline] pub unsafe fn find_nodes(&self, nodeKind: InkAnalysisNodeKind) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<IInkAnalysisNode>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindNodes)(self as *const _ as *mut _, nodeKind, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class InkAnalysisRoot: IInkAnalysisRoot}
@@ -7904,10 +7904,10 @@ RT_INTERFACE!{interface IInkAnalyzer(IInkAnalyzerVtbl): IInspectable(IInspectabl
     fn AnalyzeAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<InkAnalysisResult>) -> HRESULT
 }}
 impl IInkAnalyzer {
-    #[inline] pub unsafe fn get_analysis_root(&self) -> Result<ComPtr<InkAnalysisRoot>> {
+    #[inline] pub unsafe fn get_analysis_root(&self) -> Result<Option<ComPtr<InkAnalysisRoot>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AnalysisRoot)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_is_analyzing(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -7956,10 +7956,10 @@ RT_INTERFACE!{interface IInkAnalyzerFactory(IInkAnalyzerFactoryVtbl): IInspectab
     fn CreateAnalyzer(&self, out: *mut *mut InkAnalyzer) -> HRESULT
 }}
 impl IInkAnalyzerFactory {
-    #[inline] pub unsafe fn create_analyzer(&self) -> Result<ComPtr<InkAnalyzer>> {
+    #[inline] pub unsafe fn create_analyzer(&self) -> Result<Option<ComPtr<InkAnalyzer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAnalyzer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.UI.Input.Inking.Analysis
@@ -7979,15 +7979,15 @@ impl ICoreIncrementalInkStroke {
         let hr = ((*self.lpVtbl).AppendInkPoints)(self as *const _ as *mut _, inkPoints as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_ink_stroke(&self) -> Result<ComPtr<super::InkStroke>> {
+    #[inline] pub unsafe fn create_ink_stroke(&self) -> Result<Option<ComPtr<super::InkStroke>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateInkStroke)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_drawing_attributes(&self) -> Result<ComPtr<super::InkDrawingAttributes>> {
+    #[inline] pub unsafe fn get_drawing_attributes(&self) -> Result<Option<ComPtr<super::InkDrawingAttributes>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DrawingAttributes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_point_transform(&self) -> Result<::rt::gen::windows::foundation::numerics::Matrix3x2> {
         let mut out = zeroed();
@@ -8101,16 +8101,16 @@ impl ICoreInkIndependentInputSource {
         let hr = ((*self.lpVtbl).remove_PointerLost)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_ink_presenter(&self) -> Result<ComPtr<super::InkPresenter>> {
+    #[inline] pub unsafe fn get_ink_presenter(&self) -> Result<Option<ComPtr<super::InkPresenter>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InkPresenter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreInkIndependentInputSource: ICoreInkIndependentInputSource}
 impl RtActivatable<ICoreInkIndependentInputSourceStatics> for CoreInkIndependentInputSource {}
 impl CoreInkIndependentInputSource {
-    #[inline] pub fn create(inkPresenter: &super::InkPresenter) -> Result<ComPtr<CoreInkIndependentInputSource>> { unsafe {
+    #[inline] pub fn create(inkPresenter: &super::InkPresenter) -> Result<Option<ComPtr<CoreInkIndependentInputSource>>> { unsafe {
         <Self as RtActivatable<ICoreInkIndependentInputSourceStatics>>::get_activation_factory().create(inkPresenter)
     }}
 }
@@ -8120,10 +8120,10 @@ RT_INTERFACE!{static interface ICoreInkIndependentInputSourceStatics(ICoreInkInd
     fn Create(&self, inkPresenter: *mut super::InkPresenter, out: *mut *mut CoreInkIndependentInputSource) -> HRESULT
 }}
 impl ICoreInkIndependentInputSourceStatics {
-    #[inline] pub unsafe fn create(&self, inkPresenter: &super::InkPresenter) -> Result<ComPtr<CoreInkIndependentInputSource>> {
+    #[inline] pub unsafe fn create(&self, inkPresenter: &super::InkPresenter) -> Result<Option<ComPtr<CoreInkIndependentInputSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, inkPresenter as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICoreInkPresenterHost, 963545574, 32085, 17943, 158, 88, 104, 199, 12, 145, 105, 185);
@@ -8133,15 +8133,15 @@ RT_INTERFACE!{interface ICoreInkPresenterHost(ICoreInkPresenterHostVtbl): IInspe
     fn put_RootVisual(&self, value: *mut super::super::super::composition::ContainerVisual) -> HRESULT
 }}
 impl ICoreInkPresenterHost {
-    #[inline] pub unsafe fn get_ink_presenter(&self) -> Result<ComPtr<super::InkPresenter>> {
+    #[inline] pub unsafe fn get_ink_presenter(&self) -> Result<Option<ComPtr<super::InkPresenter>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InkPresenter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_root_visual(&self) -> Result<ComPtr<super::super::super::composition::ContainerVisual>> {
+    #[inline] pub unsafe fn get_root_visual(&self) -> Result<Option<ComPtr<super::super::super::composition::ContainerVisual>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RootVisual)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_root_visual(&self, value: &super::super::super::composition::ContainerVisual) -> Result<()> {
         let hr = ((*self.lpVtbl).put_RootVisual)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -8162,10 +8162,10 @@ RT_INTERFACE!{interface ICoreWetStrokeUpdateEventArgs(ICoreWetStrokeUpdateEventA
     fn put_Disposition(&self, value: CoreWetStrokeDisposition) -> HRESULT
 }}
 impl ICoreWetStrokeUpdateEventArgs {
-    #[inline] pub unsafe fn get_new_ink_points(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVector<super::InkPoint>>> {
+    #[inline] pub unsafe fn get_new_ink_points(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<super::InkPoint>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NewInkPoints)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_pointer_id(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -8243,16 +8243,16 @@ impl ICoreWetStrokeUpdateSource {
         let hr = ((*self.lpVtbl).remove_WetStrokeCanceled)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_ink_presenter(&self) -> Result<ComPtr<super::InkPresenter>> {
+    #[inline] pub unsafe fn get_ink_presenter(&self) -> Result<Option<ComPtr<super::InkPresenter>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InkPresenter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreWetStrokeUpdateSource: ICoreWetStrokeUpdateSource}
 impl RtActivatable<ICoreWetStrokeUpdateSourceStatics> for CoreWetStrokeUpdateSource {}
 impl CoreWetStrokeUpdateSource {
-    #[inline] pub fn create(inkPresenter: &super::InkPresenter) -> Result<ComPtr<CoreWetStrokeUpdateSource>> { unsafe {
+    #[inline] pub fn create(inkPresenter: &super::InkPresenter) -> Result<Option<ComPtr<CoreWetStrokeUpdateSource>>> { unsafe {
         <Self as RtActivatable<ICoreWetStrokeUpdateSourceStatics>>::get_activation_factory().create(inkPresenter)
     }}
 }
@@ -8262,10 +8262,10 @@ RT_INTERFACE!{static interface ICoreWetStrokeUpdateSourceStatics(ICoreWetStrokeU
     fn Create(&self, inkPresenter: *mut super::InkPresenter, out: *mut *mut CoreWetStrokeUpdateSource) -> HRESULT
 }}
 impl ICoreWetStrokeUpdateSourceStatics {
-    #[inline] pub unsafe fn create(&self, inkPresenter: &super::InkPresenter) -> Result<ComPtr<CoreWetStrokeUpdateSource>> {
+    #[inline] pub unsafe fn create(&self, inkPresenter: &super::InkPresenter) -> Result<Option<ComPtr<CoreWetStrokeUpdateSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, inkPresenter as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.UI.Input.Inking.Core
@@ -8720,10 +8720,10 @@ impl ITextCharacterFormat {
         let hr = ((*self.lpVtbl).SetClone)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_clone(&self) -> Result<ComPtr<ITextCharacterFormat>> {
+    #[inline] pub unsafe fn get_clone(&self) -> Result<Option<ComPtr<ITextCharacterFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetClone)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn is_equal(&self, format: &ITextCharacterFormat) -> Result<bool> {
         let mut out = zeroed();
@@ -8867,10 +8867,10 @@ impl ITextDocument {
         let hr = ((*self.lpVtbl).put_DefaultTabStop)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_selection(&self) -> Result<ComPtr<ITextSelection>> {
+    #[inline] pub unsafe fn get_selection(&self) -> Result<Option<ComPtr<ITextSelection>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Selection)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_undo_limit(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -8919,25 +8919,25 @@ impl ITextDocument {
         let hr = ((*self.lpVtbl).EndUndoGroup)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_default_character_format(&self) -> Result<ComPtr<ITextCharacterFormat>> {
+    #[inline] pub unsafe fn get_default_character_format(&self) -> Result<Option<ComPtr<ITextCharacterFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDefaultCharacterFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_default_paragraph_format(&self) -> Result<ComPtr<ITextParagraphFormat>> {
+    #[inline] pub unsafe fn get_default_paragraph_format(&self) -> Result<Option<ComPtr<ITextParagraphFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDefaultParagraphFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_range(&self, startPosition: i32, endPosition: i32) -> Result<ComPtr<ITextRange>> {
+    #[inline] pub unsafe fn get_range(&self, startPosition: i32, endPosition: i32) -> Result<Option<ComPtr<ITextRange>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetRange)(self as *const _ as *mut _, startPosition, endPosition, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_range_from_point(&self, point: super::super::foundation::Point, options: PointOptions) -> Result<ComPtr<ITextRange>> {
+    #[inline] pub unsafe fn get_range_from_point(&self, point: super::super::foundation::Point, options: PointOptions) -> Result<Option<ComPtr<ITextRange>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetRangeFromPoint)(self as *const _ as *mut _, point, options, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_text(&self, options: TextGetOptions) -> Result<HString> {
         let mut value = null_mut();
@@ -9245,10 +9245,10 @@ impl ITextParagraphFormat {
         let hr = ((*self.lpVtbl).DeleteTab)(self as *const _ as *mut _, position);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_clone(&self) -> Result<ComPtr<ITextParagraphFormat>> {
+    #[inline] pub unsafe fn get_clone(&self) -> Result<Option<ComPtr<ITextParagraphFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetClone)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_tab(&self, index: i32) -> Result<(f32, TabAlignment, TabLeader)> {
         let mut position = zeroed(); let mut align = zeroed(); let mut leader = zeroed();
@@ -9341,19 +9341,19 @@ impl ITextRange {
         let hr = ((*self.lpVtbl).put_Character)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_character_format(&self) -> Result<ComPtr<ITextCharacterFormat>> {
+    #[inline] pub unsafe fn get_character_format(&self) -> Result<Option<ComPtr<ITextCharacterFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CharacterFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_character_format(&self, value: &ITextCharacterFormat) -> Result<()> {
         let hr = ((*self.lpVtbl).put_CharacterFormat)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_formatted_text(&self) -> Result<ComPtr<ITextRange>> {
+    #[inline] pub unsafe fn get_formatted_text(&self) -> Result<Option<ComPtr<ITextRange>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FormattedText)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_formatted_text(&self, value: &ITextRange) -> Result<()> {
         let hr = ((*self.lpVtbl).put_FormattedText)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -9391,10 +9391,10 @@ impl ITextRange {
         let hr = ((*self.lpVtbl).put_Link)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_paragraph_format(&self) -> Result<ComPtr<ITextParagraphFormat>> {
+    #[inline] pub unsafe fn get_paragraph_format(&self) -> Result<Option<ComPtr<ITextParagraphFormat>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ParagraphFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_paragraph_format(&self, value: &ITextParagraphFormat) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ParagraphFormat)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -9469,10 +9469,10 @@ impl ITextRange {
         let hr = ((*self.lpVtbl).GetCharacterUtf32)(self as *const _ as *mut _, &mut value, offset);
         if hr == S_OK { Ok(value) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_clone(&self) -> Result<ComPtr<ITextRange>> {
+    #[inline] pub unsafe fn get_clone(&self) -> Result<Option<ComPtr<ITextRange>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetClone)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_index(&self, unit: TextRangeUnit) -> Result<i32> {
         let mut out = zeroed();
@@ -9662,15 +9662,15 @@ impl ICoreTextCompositionCompletedEventArgs {
         let hr = ((*self.lpVtbl).get_IsCanceled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_composition_segments(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<CoreTextCompositionSegment>>> {
+    #[inline] pub unsafe fn get_composition_segments(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<CoreTextCompositionSegment>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CompositionSegments)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreTextCompositionCompletedEventArgs: ICoreTextCompositionCompletedEventArgs}
@@ -9703,10 +9703,10 @@ impl ICoreTextCompositionStartedEventArgs {
         let hr = ((*self.lpVtbl).get_IsCanceled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreTextCompositionStartedEventArgs: ICoreTextCompositionStartedEventArgs}
@@ -9919,25 +9919,25 @@ impl ICoreTextFormatUpdatingEventArgs {
         let hr = ((*self.lpVtbl).get_Range)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_text_color(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<super::super::viewmanagement::UIElementType>>> {
+    #[inline] pub unsafe fn get_text_color(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<super::super::viewmanagement::UIElementType>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TextColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_background_color(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<super::super::viewmanagement::UIElementType>>> {
+    #[inline] pub unsafe fn get_background_color(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<super::super::viewmanagement::UIElementType>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BackgroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_underline_color(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<super::super::viewmanagement::UIElementType>>> {
+    #[inline] pub unsafe fn get_underline_color(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<super::super::viewmanagement::UIElementType>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UnderlineColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_underline_type(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<super::UnderlineType>>> {
+    #[inline] pub unsafe fn get_underline_type(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<super::UnderlineType>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UnderlineType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_reason(&self) -> Result<CoreTextFormatUpdatingReason> {
         let mut out = zeroed();
@@ -9958,10 +9958,10 @@ impl ICoreTextFormatUpdatingEventArgs {
         let hr = ((*self.lpVtbl).get_IsCanceled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreTextFormatUpdatingEventArgs: ICoreTextFormatUpdatingEventArgs}
@@ -10018,20 +10018,20 @@ impl ICoreTextLayoutRequest {
         let hr = ((*self.lpVtbl).get_Range)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_layout_bounds(&self) -> Result<ComPtr<CoreTextLayoutBounds>> {
+    #[inline] pub unsafe fn get_layout_bounds(&self) -> Result<Option<ComPtr<CoreTextLayoutBounds>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LayoutBounds)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_is_canceled(&self) -> Result<bool> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsCanceled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreTextLayoutRequest: ICoreTextLayoutRequest}
@@ -10040,10 +10040,10 @@ RT_INTERFACE!{interface ICoreTextLayoutRequestedEventArgs(ICoreTextLayoutRequest
     fn get_Request(&self, out: *mut *mut CoreTextLayoutRequest) -> HRESULT
 }}
 impl ICoreTextLayoutRequestedEventArgs {
-    #[inline] pub unsafe fn get_request(&self) -> Result<ComPtr<CoreTextLayoutRequest>> {
+    #[inline] pub unsafe fn get_request(&self) -> Result<Option<ComPtr<CoreTextLayoutRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreTextLayoutRequestedEventArgs: ICoreTextLayoutRequestedEventArgs}
@@ -10072,10 +10072,10 @@ impl ICoreTextSelectionRequest {
         let hr = ((*self.lpVtbl).get_IsCanceled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreTextSelectionRequest: ICoreTextSelectionRequest}
@@ -10084,10 +10084,10 @@ RT_INTERFACE!{interface ICoreTextSelectionRequestedEventArgs(ICoreTextSelectionR
     fn get_Request(&self, out: *mut *mut CoreTextSelectionRequest) -> HRESULT
 }}
 impl ICoreTextSelectionRequestedEventArgs {
-    #[inline] pub unsafe fn get_request(&self) -> Result<ComPtr<CoreTextSelectionRequest>> {
+    #[inline] pub unsafe fn get_request(&self) -> Result<Option<ComPtr<CoreTextSelectionRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreTextSelectionRequestedEventArgs: ICoreTextSelectionRequestedEventArgs}
@@ -10119,10 +10119,10 @@ impl ICoreTextSelectionUpdatingEventArgs {
         let hr = ((*self.lpVtbl).get_IsCanceled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreTextSelectionUpdatingEventArgs: ICoreTextSelectionUpdatingEventArgs}
@@ -10146,10 +10146,10 @@ RT_INTERFACE!{interface ICoreTextServicesManager(ICoreTextServicesManagerVtbl): 
     fn CreateEditContext(&self, out: *mut *mut CoreTextEditContext) -> HRESULT
 }}
 impl ICoreTextServicesManager {
-    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_input_language(&self) -> Result<ComPtr<::rt::gen::windows::globalization::Language>> {
+    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_input_language(&self) -> Result<Option<ComPtr<::rt::gen::windows::globalization::Language>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InputLanguage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_input_language_changed(&self, handler: &::rt::gen::windows::foundation::TypedEventHandler<CoreTextServicesManager, IInspectable>) -> Result<::rt::gen::windows::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -10160,16 +10160,16 @@ impl ICoreTextServicesManager {
         let hr = ((*self.lpVtbl).remove_InputLanguageChanged)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_edit_context(&self) -> Result<ComPtr<CoreTextEditContext>> {
+    #[inline] pub unsafe fn create_edit_context(&self) -> Result<Option<ComPtr<CoreTextEditContext>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateEditContext)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreTextServicesManager: ICoreTextServicesManager}
 impl RtActivatable<ICoreTextServicesManagerStatics> for CoreTextServicesManager {}
 impl CoreTextServicesManager {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<CoreTextServicesManager>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<CoreTextServicesManager>>> { unsafe {
         <Self as RtActivatable<ICoreTextServicesManagerStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
@@ -10179,10 +10179,10 @@ RT_INTERFACE!{static interface ICoreTextServicesManagerStatics(ICoreTextServices
     fn GetForCurrentView(&self, out: *mut *mut CoreTextServicesManager) -> HRESULT
 }}
 impl ICoreTextServicesManagerStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<CoreTextServicesManager>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<CoreTextServicesManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICoreTextServicesStatics, 2441452102, 60623, 18340, 138, 231, 9, 138, 156, 111, 187, 21);
@@ -10224,10 +10224,10 @@ impl ICoreTextTextRequest {
         let hr = ((*self.lpVtbl).get_IsCanceled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreTextTextRequest: ICoreTextTextRequest}
@@ -10236,10 +10236,10 @@ RT_INTERFACE!{interface ICoreTextTextRequestedEventArgs(ICoreTextTextRequestedEv
     fn get_Request(&self, out: *mut *mut CoreTextTextRequest) -> HRESULT
 }}
 impl ICoreTextTextRequestedEventArgs {
-    #[inline] pub unsafe fn get_request(&self) -> Result<ComPtr<CoreTextTextRequest>> {
+    #[inline] pub unsafe fn get_request(&self) -> Result<Option<ComPtr<CoreTextTextRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreTextTextRequestedEventArgs: ICoreTextTextRequestedEventArgs}
@@ -10271,10 +10271,10 @@ impl ICoreTextTextUpdatingEventArgs {
         let hr = ((*self.lpVtbl).get_NewSelection)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_input_language(&self) -> Result<ComPtr<::rt::gen::windows::globalization::Language>> {
+    #[cfg(feature="windows-globalization")] #[inline] pub unsafe fn get_input_language(&self) -> Result<Option<ComPtr<::rt::gen::windows::globalization::Language>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InputLanguage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_result(&self) -> Result<CoreTextTextUpdatingResult> {
         let mut out = zeroed();
@@ -10290,10 +10290,10 @@ impl ICoreTextTextUpdatingEventArgs {
         let hr = ((*self.lpVtbl).get_IsCanceled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<::rt::gen::windows::foundation::Deferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CoreTextTextUpdatingEventArgs: ICoreTextTextUpdatingEventArgs}
@@ -10452,7 +10452,7 @@ impl ApplicationView {
     #[inline] pub fn try_unsnap() -> Result<bool> { unsafe {
         <Self as RtActivatable<IApplicationViewStatics>>::get_activation_factory().try_unsnap()
     }}
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<ApplicationView>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<ApplicationView>>> { unsafe {
         <Self as RtActivatable<IApplicationViewStatics2>>::get_activation_factory().get_for_current_view()
     }}
     #[inline] pub fn get_terminate_app_on_final_view_close() -> Result<bool> { unsafe {
@@ -10533,10 +10533,10 @@ RT_INTERFACE!{interface IApplicationView3(IApplicationView3Vtbl): IInspectable(I
     fn SetPreferredMinSize(&self, minSize: super::super::foundation::Size) -> HRESULT
 }}
 impl IApplicationView3 {
-    #[inline] pub unsafe fn get_title_bar(&self) -> Result<ComPtr<ApplicationViewTitleBar>> {
+    #[inline] pub unsafe fn get_title_bar(&self) -> Result<Option<ComPtr<ApplicationViewTitleBar>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TitleBar)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_full_screen_system_overlay_mode(&self) -> Result<FullScreenSystemOverlayMode> {
         let mut out = zeroed();
@@ -10723,10 +10723,10 @@ RT_INTERFACE!{static interface IApplicationViewStatics2(IApplicationViewStatics2
     fn put_TerminateAppOnFinalViewClose(&self, value: bool) -> HRESULT
 }}
 impl IApplicationViewStatics2 {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<ApplicationView>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<ApplicationView>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_terminate_app_on_final_view_close(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -10919,109 +10919,109 @@ impl IApplicationViewTitleBar {
         let hr = ((*self.lpVtbl).put_ForegroundColor)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_foreground_color(&self) -> Result<ComPtr<super::super::foundation::IReference<super::Color>>> {
+    #[inline] pub unsafe fn get_foreground_color(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::Color>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ForegroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_background_color(&self, value: &super::super::foundation::IReference<super::Color>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_BackgroundColor)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_background_color(&self) -> Result<ComPtr<super::super::foundation::IReference<super::Color>>> {
+    #[inline] pub unsafe fn get_background_color(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::Color>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BackgroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_button_foreground_color(&self, value: &super::super::foundation::IReference<super::Color>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ButtonForegroundColor)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_button_foreground_color(&self) -> Result<ComPtr<super::super::foundation::IReference<super::Color>>> {
+    #[inline] pub unsafe fn get_button_foreground_color(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::Color>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ButtonForegroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_button_background_color(&self, value: &super::super::foundation::IReference<super::Color>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ButtonBackgroundColor)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_button_background_color(&self) -> Result<ComPtr<super::super::foundation::IReference<super::Color>>> {
+    #[inline] pub unsafe fn get_button_background_color(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::Color>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ButtonBackgroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_button_hover_foreground_color(&self, value: &super::super::foundation::IReference<super::Color>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ButtonHoverForegroundColor)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_button_hover_foreground_color(&self) -> Result<ComPtr<super::super::foundation::IReference<super::Color>>> {
+    #[inline] pub unsafe fn get_button_hover_foreground_color(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::Color>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ButtonHoverForegroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_button_hover_background_color(&self, value: &super::super::foundation::IReference<super::Color>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ButtonHoverBackgroundColor)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_button_hover_background_color(&self) -> Result<ComPtr<super::super::foundation::IReference<super::Color>>> {
+    #[inline] pub unsafe fn get_button_hover_background_color(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::Color>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ButtonHoverBackgroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_button_pressed_foreground_color(&self, value: &super::super::foundation::IReference<super::Color>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ButtonPressedForegroundColor)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_button_pressed_foreground_color(&self) -> Result<ComPtr<super::super::foundation::IReference<super::Color>>> {
+    #[inline] pub unsafe fn get_button_pressed_foreground_color(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::Color>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ButtonPressedForegroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_button_pressed_background_color(&self, value: &super::super::foundation::IReference<super::Color>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ButtonPressedBackgroundColor)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_button_pressed_background_color(&self) -> Result<ComPtr<super::super::foundation::IReference<super::Color>>> {
+    #[inline] pub unsafe fn get_button_pressed_background_color(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::Color>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ButtonPressedBackgroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_inactive_foreground_color(&self, value: &super::super::foundation::IReference<super::Color>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_InactiveForegroundColor)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_inactive_foreground_color(&self) -> Result<ComPtr<super::super::foundation::IReference<super::Color>>> {
+    #[inline] pub unsafe fn get_inactive_foreground_color(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::Color>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InactiveForegroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_inactive_background_color(&self, value: &super::super::foundation::IReference<super::Color>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_InactiveBackgroundColor)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_inactive_background_color(&self) -> Result<ComPtr<super::super::foundation::IReference<super::Color>>> {
+    #[inline] pub unsafe fn get_inactive_background_color(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::Color>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InactiveBackgroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_button_inactive_foreground_color(&self, value: &super::super::foundation::IReference<super::Color>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ButtonInactiveForegroundColor)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_button_inactive_foreground_color(&self) -> Result<ComPtr<super::super::foundation::IReference<super::Color>>> {
+    #[inline] pub unsafe fn get_button_inactive_foreground_color(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::Color>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ButtonInactiveForegroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_button_inactive_background_color(&self, value: &super::super::foundation::IReference<super::Color>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ButtonInactiveBackgroundColor)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_button_inactive_background_color(&self) -> Result<ComPtr<super::super::foundation::IReference<super::Color>>> {
+    #[inline] pub unsafe fn get_button_inactive_background_color(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::Color>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ButtonInactiveBackgroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ApplicationViewTitleBar: IApplicationViewTitleBar}
@@ -11106,7 +11106,7 @@ impl IInputPane {
 RT_CLASS!{class InputPane: IInputPane}
 impl RtActivatable<IInputPaneStatics> for InputPane {}
 impl InputPane {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<InputPane>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<InputPane>>> { unsafe {
         <Self as RtActivatable<IInputPaneStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
@@ -11149,10 +11149,10 @@ RT_INTERFACE!{static interface IInputPaneStatics(IInputPaneStaticsVtbl): IInspec
     fn GetForCurrentView(&self, out: *mut *mut InputPane) -> HRESULT
 }}
 impl IInputPaneStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<InputPane>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<InputPane>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IInputPaneVisibilityEventArgs, 3527663638, 55559, 20428, 187, 141, 247, 123, 170, 80, 40, 241);
@@ -11456,7 +11456,7 @@ impl IUIViewSettings {
 RT_CLASS!{class UIViewSettings: IUIViewSettings}
 impl RtActivatable<IUIViewSettingsStatics> for UIViewSettings {}
 impl UIViewSettings {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<UIViewSettings>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<UIViewSettings>>> { unsafe {
         <Self as RtActivatable<IUIViewSettingsStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
@@ -11466,10 +11466,10 @@ RT_INTERFACE!{static interface IUIViewSettingsStatics(IUIViewSettingsStaticsVtbl
     fn GetForCurrentView(&self, out: *mut *mut UIViewSettings) -> HRESULT
 }}
 impl IUIViewSettingsStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<UIViewSettings>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<UIViewSettings>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum UserInteractionMode: i32 {
@@ -11505,7 +11505,7 @@ impl IViewModePreferences {
 RT_CLASS!{class ViewModePreferences: IViewModePreferences}
 impl RtActivatable<IViewModePreferencesStatics> for ViewModePreferences {}
 impl ViewModePreferences {
-    #[inline] pub fn create_default(mode: ApplicationViewMode) -> Result<ComPtr<ViewModePreferences>> { unsafe {
+    #[inline] pub fn create_default(mode: ApplicationViewMode) -> Result<Option<ComPtr<ViewModePreferences>>> { unsafe {
         <Self as RtActivatable<IViewModePreferencesStatics>>::get_activation_factory().create_default(mode)
     }}
 }
@@ -11515,10 +11515,10 @@ RT_INTERFACE!{static interface IViewModePreferencesStatics(IViewModePreferencesS
     fn CreateDefault(&self, mode: ApplicationViewMode, out: *mut *mut ViewModePreferences) -> HRESULT
 }}
 impl IViewModePreferencesStatics {
-    #[inline] pub unsafe fn create_default(&self, mode: ApplicationViewMode) -> Result<ComPtr<ViewModePreferences>> {
+    #[inline] pub unsafe fn create_default(&self, mode: ApplicationViewMode) -> Result<Option<ComPtr<ViewModePreferences>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateDefault)(self as *const _ as *mut _, mode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum ViewSizePreference: i32 {
@@ -11544,10 +11544,10 @@ impl ICoreInputView {
         let hr = ((*self.lpVtbl).remove_OcclusionsChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_core_input_view_occlusions(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<CoreInputViewOcclusion>>> {
+    #[inline] pub unsafe fn get_core_input_view_occlusions(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<CoreInputViewOcclusion>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCoreInputViewOcclusions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn try_show_primary_view(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -11563,7 +11563,7 @@ impl ICoreInputView {
 RT_CLASS!{class CoreInputView: ICoreInputView}
 impl RtActivatable<ICoreInputViewStatics> for CoreInputView {}
 impl CoreInputView {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<CoreInputView>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<CoreInputView>>> { unsafe {
         <Self as RtActivatable<ICoreInputViewStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
@@ -11596,10 +11596,10 @@ RT_INTERFACE!{interface ICoreInputViewOcclusionsChangedEventArgs(ICoreInputViewO
     fn put_Handled(&self, value: bool) -> HRESULT
 }}
 impl ICoreInputViewOcclusionsChangedEventArgs {
-    #[inline] pub unsafe fn get_occlusions(&self) -> Result<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<CoreInputViewOcclusion>>> {
+    #[inline] pub unsafe fn get_occlusions(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<CoreInputViewOcclusion>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Occlusions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_handled(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -11617,10 +11617,10 @@ RT_INTERFACE!{static interface ICoreInputViewStatics(ICoreInputViewStaticsVtbl):
     fn GetForCurrentView(&self, out: *mut *mut CoreInputView) -> HRESULT
 }}
 impl ICoreInputViewStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<CoreInputView>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<CoreInputView>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.UI.ViewManagement.Core
@@ -11647,7 +11647,7 @@ RT_CLASS!{class AccountsSettingsPane: IAccountsSettingsPane}
 impl RtActivatable<IAccountsSettingsPaneStatics> for AccountsSettingsPane {}
 impl RtActivatable<IAccountsSettingsPaneStatics2> for AccountsSettingsPane {}
 impl AccountsSettingsPane {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<AccountsSettingsPane>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<AccountsSettingsPane>>> { unsafe {
         <Self as RtActivatable<IAccountsSettingsPaneStatics>>::get_activation_factory().get_for_current_view()
     }}
     #[inline] pub fn show() -> Result<()> { unsafe {
@@ -11672,25 +11672,25 @@ RT_INTERFACE!{interface IAccountsSettingsPaneCommandsRequestedEventArgs(IAccount
     fn GetDeferral(&self, out: *mut *mut AccountsSettingsPaneEventDeferral) -> HRESULT
 }}
 impl IAccountsSettingsPaneCommandsRequestedEventArgs {
-    #[inline] pub unsafe fn get_web_account_provider_commands(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<WebAccountProviderCommand>>> {
+    #[inline] pub unsafe fn get_web_account_provider_commands(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<WebAccountProviderCommand>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WebAccountProviderCommands)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_web_account_commands(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<WebAccountCommand>>> {
+    #[inline] pub unsafe fn get_web_account_commands(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<WebAccountCommand>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WebAccountCommands)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_credential_commands(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<CredentialCommand>>> {
+    #[inline] pub unsafe fn get_credential_commands(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<CredentialCommand>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CredentialCommands)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_commands(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<SettingsCommand>>> {
+    #[inline] pub unsafe fn get_commands(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<SettingsCommand>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Commands)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_header_text(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -11701,10 +11701,10 @@ impl IAccountsSettingsPaneCommandsRequestedEventArgs {
         let hr = ((*self.lpVtbl).put_HeaderText)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<AccountsSettingsPaneEventDeferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<AccountsSettingsPaneEventDeferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class AccountsSettingsPaneCommandsRequestedEventArgs: IAccountsSettingsPaneCommandsRequestedEventArgs}
@@ -11725,10 +11725,10 @@ RT_INTERFACE!{static interface IAccountsSettingsPaneStatics(IAccountsSettingsPan
     fn Show(&self) -> HRESULT
 }}
 impl IAccountsSettingsPaneStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<AccountsSettingsPane>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<AccountsSettingsPane>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn show(&self) -> Result<()> {
         let hr = ((*self.lpVtbl).Show)(self as *const _ as *mut _);
@@ -11759,15 +11759,15 @@ RT_INTERFACE!{interface ICredentialCommand(ICredentialCommandVtbl): IInspectable
     fn get_CredentialDeleted(&self, out: *mut *mut CredentialCommandCredentialDeletedHandler) -> HRESULT
 }}
 impl ICredentialCommand {
-    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_password_credential(&self) -> Result<ComPtr<super::super::security::credentials::PasswordCredential>> {
+    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_password_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PasswordCredential)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_credential_deleted(&self) -> Result<ComPtr<CredentialCommandCredentialDeletedHandler>> {
+    #[inline] pub unsafe fn get_credential_deleted(&self) -> Result<Option<ComPtr<CredentialCommandCredentialDeletedHandler>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CredentialDeleted)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CredentialCommand: ICredentialCommand}
@@ -11815,7 +11815,7 @@ impl SettingsCommand {
     #[inline] pub fn create_settings_command(settingsCommandId: &IInspectable, label: &HStringArg, handler: &super::popups::UICommandInvokedHandler) -> Result<ComPtr<SettingsCommand>> { unsafe {
         <Self as RtActivatable<ISettingsCommandFactory>>::get_activation_factory().create_settings_command(settingsCommandId, label, handler)
     }}
-    #[inline] pub fn get_accounts_command() -> Result<ComPtr<SettingsCommand>> { unsafe {
+    #[inline] pub fn get_accounts_command() -> Result<Option<ComPtr<SettingsCommand>>> { unsafe {
         <Self as RtActivatable<ISettingsCommandStatics>>::get_activation_factory().get_accounts_command()
     }}
 }
@@ -11836,10 +11836,10 @@ RT_INTERFACE!{static interface ISettingsCommandStatics(ISettingsCommandStaticsVt
     fn get_AccountsCommand(&self, out: *mut *mut SettingsCommand) -> HRESULT
 }}
 impl ISettingsCommandStatics {
-    #[inline] pub unsafe fn get_accounts_command(&self) -> Result<ComPtr<SettingsCommand>> {
+    #[inline] pub unsafe fn get_accounts_command(&self) -> Result<Option<ComPtr<SettingsCommand>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AccountsCommand)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum SettingsEdgeLocation: i32 {
@@ -11864,7 +11864,7 @@ impl ISettingsPane {
 RT_CLASS!{class SettingsPane: ISettingsPane}
 impl RtActivatable<ISettingsPaneStatics> for SettingsPane {}
 impl SettingsPane {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<SettingsPane>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<SettingsPane>>> { unsafe {
         <Self as RtActivatable<ISettingsPaneStatics>>::get_activation_factory().get_for_current_view()
     }}
     #[inline] pub fn show() -> Result<()> { unsafe {
@@ -11880,10 +11880,10 @@ RT_INTERFACE!{interface ISettingsPaneCommandsRequest(ISettingsPaneCommandsReques
     fn get_ApplicationCommands(&self, out: *mut *mut super::super::foundation::collections::IVector<SettingsCommand>) -> HRESULT
 }}
 impl ISettingsPaneCommandsRequest {
-    #[inline] pub unsafe fn get_application_commands(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<SettingsCommand>>> {
+    #[inline] pub unsafe fn get_application_commands(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<SettingsCommand>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ApplicationCommands)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SettingsPaneCommandsRequest: ISettingsPaneCommandsRequest}
@@ -11892,10 +11892,10 @@ RT_INTERFACE!{interface ISettingsPaneCommandsRequestedEventArgs(ISettingsPaneCom
     fn get_Request(&self, out: *mut *mut SettingsPaneCommandsRequest) -> HRESULT
 }}
 impl ISettingsPaneCommandsRequestedEventArgs {
-    #[inline] pub unsafe fn get_request(&self) -> Result<ComPtr<SettingsPaneCommandsRequest>> {
+    #[inline] pub unsafe fn get_request(&self) -> Result<Option<ComPtr<SettingsPaneCommandsRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class SettingsPaneCommandsRequestedEventArgs: ISettingsPaneCommandsRequestedEventArgs}
@@ -11906,10 +11906,10 @@ RT_INTERFACE!{static interface ISettingsPaneStatics(ISettingsPaneStaticsVtbl): I
     fn get_Edge(&self, out: *mut SettingsEdgeLocation) -> HRESULT
 }}
 impl ISettingsPaneStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<SettingsPane>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<SettingsPane>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn show(&self) -> Result<()> {
         let hr = ((*self.lpVtbl).Show)(self as *const _ as *mut _);
@@ -11935,15 +11935,15 @@ RT_INTERFACE!{interface IWebAccountCommand(IWebAccountCommandVtbl): IInspectable
     fn get_Actions(&self, out: *mut SupportedWebAccountActions) -> HRESULT
 }}
 impl IWebAccountCommand {
-    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_web_account(&self) -> Result<ComPtr<super::super::security::credentials::WebAccount>> {
+    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_web_account(&self) -> Result<Option<ComPtr<super::super::security::credentials::WebAccount>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WebAccount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_invoked(&self) -> Result<ComPtr<WebAccountCommandInvokedHandler>> {
+    #[inline] pub unsafe fn get_invoked(&self) -> Result<Option<ComPtr<WebAccountCommandInvokedHandler>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Invoked)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_actions(&self) -> Result<SupportedWebAccountActions> {
         let mut out = zeroed();
@@ -11999,15 +11999,15 @@ RT_INTERFACE!{interface IWebAccountProviderCommand(IWebAccountProviderCommandVtb
     fn get_Invoked(&self, out: *mut *mut WebAccountProviderCommandInvokedHandler) -> HRESULT
 }}
 impl IWebAccountProviderCommand {
-    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_web_account_provider(&self) -> Result<ComPtr<super::super::security::credentials::WebAccountProvider>> {
+    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_web_account_provider(&self) -> Result<Option<ComPtr<super::super::security::credentials::WebAccountProvider>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WebAccountProvider)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_invoked(&self) -> Result<ComPtr<WebAccountProviderCommandInvokedHandler>> {
+    #[inline] pub unsafe fn get_invoked(&self) -> Result<Option<ComPtr<WebAccountProviderCommandInvokedHandler>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Invoked)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class WebAccountProviderCommand: IWebAccountProviderCommand}
@@ -12058,10 +12058,10 @@ RT_INTERFACE!{interface IActivatedEventArgsDeferral(IActivatedEventArgsDeferralV
     fn get_ActivatedOperation(&self, out: *mut *mut ActivatedOperation) -> HRESULT
 }}
 impl IActivatedEventArgsDeferral {
-    #[inline] pub unsafe fn get_activated_operation(&self) -> Result<ComPtr<ActivatedOperation>> {
+    #[inline] pub unsafe fn get_activated_operation(&self) -> Result<Option<ComPtr<ActivatedOperation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ActivatedOperation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ActivatedEventHandler, 1358030640, 50641, 19307, 154, 219, 138, 17, 117, 107, 226, 156);
@@ -12079,10 +12079,10 @@ RT_INTERFACE!{interface IActivatedOperation(IActivatedOperationVtbl): IInspectab
     fn GetDeferral(&self, out: *mut *mut ActivatedDeferral) -> HRESULT
 }}
 impl IActivatedOperation {
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<ActivatedDeferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<ActivatedDeferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ActivatedOperation: IActivatedOperation}
@@ -12435,7 +12435,7 @@ impl IWebUIBackgroundTaskInstance {
 RT_CLASS!{static class WebUIBackgroundTaskInstance}
 impl RtActivatable<IWebUIBackgroundTaskInstanceStatics> for WebUIBackgroundTaskInstance {}
 impl WebUIBackgroundTaskInstance {
-    #[inline] pub fn get_current() -> Result<ComPtr<IWebUIBackgroundTaskInstance>> { unsafe {
+    #[inline] pub fn get_current() -> Result<Option<ComPtr<IWebUIBackgroundTaskInstance>>> { unsafe {
         <Self as RtActivatable<IWebUIBackgroundTaskInstanceStatics>>::get_activation_factory().get_current()
     }}
 }
@@ -12446,10 +12446,10 @@ RT_INTERFACE!{static interface IWebUIBackgroundTaskInstanceStatics(IWebUIBackgro
     fn get_Current(&self, out: *mut *mut IWebUIBackgroundTaskInstance) -> HRESULT
 }}
 impl IWebUIBackgroundTaskInstanceStatics {
-    #[inline] pub unsafe fn get_current(&self) -> Result<ComPtr<IWebUIBackgroundTaskInstance>> {
+    #[inline] pub unsafe fn get_current(&self) -> Result<Option<ComPtr<IWebUIBackgroundTaskInstance>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 #[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUICachedFileUpdaterActivatedEventArgs: super::super::applicationmodel::activation::ICachedFileUpdaterActivatedEventArgs}
@@ -12514,10 +12514,10 @@ RT_INTERFACE!{interface IWebUINavigatedEventArgs(IWebUINavigatedEventArgsVtbl): 
     fn get_NavigatedOperation(&self, out: *mut *mut WebUINavigatedOperation) -> HRESULT
 }}
 impl IWebUINavigatedEventArgs {
-    #[inline] pub unsafe fn get_navigated_operation(&self) -> Result<ComPtr<WebUINavigatedOperation>> {
+    #[inline] pub unsafe fn get_navigated_operation(&self) -> Result<Option<ComPtr<WebUINavigatedOperation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NavigatedOperation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class WebUINavigatedEventArgs: IWebUINavigatedEventArgs}
@@ -12526,10 +12526,10 @@ RT_INTERFACE!{interface IWebUINavigatedOperation(IWebUINavigatedOperationVtbl): 
     fn GetDeferral(&self, out: *mut *mut WebUINavigatedDeferral) -> HRESULT
 }}
 impl IWebUINavigatedOperation {
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<WebUINavigatedDeferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<WebUINavigatedDeferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class WebUINavigatedOperation: IWebUINavigatedOperation}
@@ -12580,7 +12580,7 @@ impl IAdaptiveCard {
 RT_CLASS!{static class AdaptiveCardBuilder}
 impl RtActivatable<IAdaptiveCardBuilderStatics> for AdaptiveCardBuilder {}
 impl AdaptiveCardBuilder {
-    #[inline] pub fn create_adaptive_card_from_json(value: &HStringArg) -> Result<ComPtr<IAdaptiveCard>> { unsafe {
+    #[inline] pub fn create_adaptive_card_from_json(value: &HStringArg) -> Result<Option<ComPtr<IAdaptiveCard>>> { unsafe {
         <Self as RtActivatable<IAdaptiveCardBuilderStatics>>::get_activation_factory().create_adaptive_card_from_json(value)
     }}
 }
@@ -12590,10 +12590,10 @@ RT_INTERFACE!{static interface IAdaptiveCardBuilderStatics(IAdaptiveCardBuilderS
     fn CreateAdaptiveCardFromJson(&self, value: HSTRING, out: *mut *mut IAdaptiveCard) -> HRESULT
 }}
 impl IAdaptiveCardBuilderStatics {
-    #[inline] pub unsafe fn create_adaptive_card_from_json(&self, value: &HStringArg) -> Result<ComPtr<IAdaptiveCard>> {
+    #[inline] pub unsafe fn create_adaptive_card_from_json(&self, value: &HStringArg) -> Result<Option<ComPtr<IAdaptiveCard>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAdaptiveCardFromJson)(self as *const _ as *mut _, value.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ITaskbarManager, 2269710873, 6873, 18932, 178, 232, 134, 115, 141, 197, 172, 64);
@@ -12640,7 +12640,7 @@ impl ITaskbarManager {
 RT_CLASS!{class TaskbarManager: ITaskbarManager}
 impl RtActivatable<ITaskbarManagerStatics> for TaskbarManager {}
 impl TaskbarManager {
-    #[inline] pub fn get_default() -> Result<ComPtr<TaskbarManager>> { unsafe {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<TaskbarManager>>> { unsafe {
         <Self as RtActivatable<ITaskbarManagerStatics>>::get_activation_factory().get_default()
     }}
 }
@@ -12650,10 +12650,10 @@ RT_INTERFACE!{static interface ITaskbarManagerStatics(ITaskbarManagerStaticsVtbl
     fn GetDefault(&self, out: *mut *mut TaskbarManager) -> HRESULT
 }}
 impl ITaskbarManagerStatics {
-    #[inline] pub unsafe fn get_default(&self) -> Result<ComPtr<TaskbarManager>> {
+    #[inline] pub unsafe fn get_default(&self) -> Result<Option<ComPtr<TaskbarManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.UI.Shell
@@ -12670,10 +12670,10 @@ RT_INTERFACE!{interface IJumpList(IJumpListVtbl): IInspectable(IInspectableVtbl)
     fn SaveAsync(&self, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT
 }}
 impl IJumpList {
-    #[inline] pub unsafe fn get_items(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<JumpListItem>>> {
+    #[inline] pub unsafe fn get_items(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<JumpListItem>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Items)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_system_group_kind(&self) -> Result<JumpListSystemGroupKind> {
         let mut out = zeroed();
@@ -12758,10 +12758,10 @@ impl IJumpListItem {
         let hr = ((*self.lpVtbl).put_GroupName)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_logo(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_logo(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Logo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_logo(&self, value: &super::super::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -12771,10 +12771,10 @@ impl IJumpListItem {
 RT_CLASS!{class JumpListItem: IJumpListItem}
 impl RtActivatable<IJumpListItemStatics> for JumpListItem {}
 impl JumpListItem {
-    #[inline] pub fn create_with_arguments(arguments: &HStringArg, displayName: &HStringArg) -> Result<ComPtr<JumpListItem>> { unsafe {
+    #[inline] pub fn create_with_arguments(arguments: &HStringArg, displayName: &HStringArg) -> Result<Option<ComPtr<JumpListItem>>> { unsafe {
         <Self as RtActivatable<IJumpListItemStatics>>::get_activation_factory().create_with_arguments(arguments, displayName)
     }}
-    #[inline] pub fn create_separator() -> Result<ComPtr<JumpListItem>> { unsafe {
+    #[inline] pub fn create_separator() -> Result<Option<ComPtr<JumpListItem>>> { unsafe {
         <Self as RtActivatable<IJumpListItemStatics>>::get_activation_factory().create_separator()
     }}
 }
@@ -12788,15 +12788,15 @@ RT_INTERFACE!{static interface IJumpListItemStatics(IJumpListItemStaticsVtbl): I
     fn CreateSeparator(&self, out: *mut *mut JumpListItem) -> HRESULT
 }}
 impl IJumpListItemStatics {
-    #[inline] pub unsafe fn create_with_arguments(&self, arguments: &HStringArg, displayName: &HStringArg) -> Result<ComPtr<JumpListItem>> {
+    #[inline] pub unsafe fn create_with_arguments(&self, arguments: &HStringArg, displayName: &HStringArg) -> Result<Option<ComPtr<JumpListItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateWithArguments)(self as *const _ as *mut _, arguments.get(), displayName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_separator(&self) -> Result<ComPtr<JumpListItem>> {
+    #[inline] pub unsafe fn create_separator(&self) -> Result<Option<ComPtr<JumpListItem>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSeparator)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IJumpListStatics, 2816525953, 59006, 19316, 130, 80, 63, 50, 44, 77, 146, 195);
@@ -12896,37 +12896,37 @@ impl ISecondaryTile {
         let hr = ((*self.lpVtbl).put_Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_logo(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_logo(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Logo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_small_logo(&self, value: &super::super::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_SmallLogo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_small_logo(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_small_logo(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SmallLogo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_wide_logo(&self, value: &super::super::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_WideLogo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_wide_logo(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_wide_logo(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WideLogo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_lock_screen_badge_logo(&self, value: &super::super::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_LockScreenBadgeLogo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_lock_screen_badge_logo(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_lock_screen_badge_logo(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LockScreenBadgeLogo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_lock_screen_display_badge_and_tile_text(&self, value: bool) -> Result<()> {
         let hr = ((*self.lpVtbl).put_LockScreenDisplayBadgeAndTileText)(self as *const _ as *mut _, value);
@@ -13062,10 +13062,10 @@ impl ISecondaryTile2 {
         let hr = ((*self.lpVtbl).get_PhoneticName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_visual_elements(&self) -> Result<ComPtr<SecondaryTileVisualElements>> {
+    #[inline] pub unsafe fn get_visual_elements(&self) -> Result<Option<ComPtr<SecondaryTileVisualElements>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VisualElements)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_roaming_enabled(&self, value: bool) -> Result<()> {
         let hr = ((*self.lpVtbl).put_RoamingEnabled)(self as *const _ as *mut _, value);
@@ -13177,46 +13177,46 @@ impl ISecondaryTileVisualElements {
         let hr = ((*self.lpVtbl).put_Square30x30Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_square30x30_logo(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_square30x30_logo(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square30x30Logo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_square70x70_logo(&self, value: &super::super::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Square70x70Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_square70x70_logo(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_square70x70_logo(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square70x70Logo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_square150x150_logo(&self, value: &super::super::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Square150x150Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_square150x150_logo(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_square150x150_logo(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square150x150Logo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_wide310x150_logo(&self, value: &super::super::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Wide310x150Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_wide310x150_logo(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_wide310x150_logo(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Wide310x150Logo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_square310x310_logo(&self, value: &super::super::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Square310x310Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_square310x310_logo(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_square310x310_logo(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square310x310Logo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_foreground_text(&self, value: ForegroundText) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ForegroundText)(self as *const _ as *mut _, value);
@@ -13275,10 +13275,10 @@ impl ISecondaryTileVisualElements2 {
         let hr = ((*self.lpVtbl).put_Square71x71Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_square71x71_logo(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_square71x71_logo(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square71x71Logo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISecondaryTileVisualElements3, 1454725846, 53596, 16628, 129, 231, 87, 255, 216, 248, 164, 233);
@@ -13291,10 +13291,10 @@ impl ISecondaryTileVisualElements3 {
         let hr = ((*self.lpVtbl).put_Square44x44Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_square44x44_logo(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_square44x44_logo(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square44x44Logo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ISecondaryTileVisualElements4, 1716936983, 46404, 16594, 141, 18, 116, 212, 236, 36, 208, 76);
@@ -13302,10 +13302,10 @@ RT_INTERFACE!{interface ISecondaryTileVisualElements4(ISecondaryTileVisualElemen
     fn get_MixedRealityModel(&self, out: *mut *mut TileMixedRealityModel) -> HRESULT
 }}
 impl ISecondaryTileVisualElements4 {
-    #[inline] pub unsafe fn get_mixed_reality_model(&self) -> Result<ComPtr<TileMixedRealityModel>> {
+    #[inline] pub unsafe fn get_mixed_reality_model(&self) -> Result<Option<ComPtr<TileMixedRealityModel>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MixedRealityModel)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IStartScreenManager, 1243466699, 9961, 20148, 137, 51, 133, 158, 182, 236, 219, 41);
@@ -13317,10 +13317,10 @@ RT_INTERFACE!{interface IStartScreenManager(IStartScreenManagerVtbl): IInspectab
     #[cfg(feature="windows-applicationmodel")] fn RequestAddAppListEntryAsync(&self, appListEntry: *mut super::super::applicationmodel::core::AppListEntry, out: *mut *mut super::super::foundation::IAsyncOperation<bool>) -> HRESULT
 }}
 impl IStartScreenManager {
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<ComPtr<super::super::system::User>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn supports_app_list_entry(&self, appListEntry: &super::super::applicationmodel::core::AppListEntry) -> Result<bool> {
         let mut out = zeroed();
@@ -13341,10 +13341,10 @@ impl IStartScreenManager {
 RT_CLASS!{class StartScreenManager: IStartScreenManager}
 impl RtActivatable<IStartScreenManagerStatics> for StartScreenManager {}
 impl StartScreenManager {
-    #[inline] pub fn get_default() -> Result<ComPtr<StartScreenManager>> { unsafe {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<StartScreenManager>>> { unsafe {
         <Self as RtActivatable<IStartScreenManagerStatics>>::get_activation_factory().get_default()
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<StartScreenManager>> { unsafe {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<Option<ComPtr<StartScreenManager>>> { unsafe {
         <Self as RtActivatable<IStartScreenManagerStatics>>::get_activation_factory().get_for_user(user)
     }}
 }
@@ -13355,15 +13355,15 @@ RT_INTERFACE!{static interface IStartScreenManagerStatics(IStartScreenManagerSta
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut super::super::system::User, out: *mut *mut StartScreenManager) -> HRESULT
 }}
 impl IStartScreenManagerStatics {
-    #[inline] pub unsafe fn get_default(&self) -> Result<ComPtr<StartScreenManager>> {
+    #[inline] pub unsafe fn get_default(&self) -> Result<Option<ComPtr<StartScreenManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &super::super::system::User) -> Result<ComPtr<StartScreenManager>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &super::super::system::User) -> Result<Option<ComPtr<StartScreenManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ITileMixedRealityModel, 2960543323, 34941, 16962, 154, 25, 61, 10, 78, 167, 128, 49);
@@ -13378,19 +13378,19 @@ impl ITileMixedRealityModel {
         let hr = ((*self.lpVtbl).put_Uri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uri(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-perception")] #[inline] pub unsafe fn set_bounding_box(&self, value: &super::super::foundation::IReference<super::super::perception::spatial::SpatialBoundingBox>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_BoundingBox)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_bounding_box(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::perception::spatial::SpatialBoundingBox>>> {
+    #[cfg(feature="windows-perception")] #[inline] pub unsafe fn get_bounding_box(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::perception::spatial::SpatialBoundingBox>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BoundingBox)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class TileMixedRealityModel: ITileMixedRealityModel}
@@ -13408,25 +13408,25 @@ RT_INTERFACE!{interface IVisualElementsRequest(IVisualElementsRequestVtbl): IIns
     fn GetDeferral(&self, out: *mut *mut VisualElementsRequestDeferral) -> HRESULT
 }}
 impl IVisualElementsRequest {
-    #[inline] pub unsafe fn get_visual_elements(&self) -> Result<ComPtr<SecondaryTileVisualElements>> {
+    #[inline] pub unsafe fn get_visual_elements(&self) -> Result<Option<ComPtr<SecondaryTileVisualElements>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VisualElements)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_alternate_visual_elements(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<SecondaryTileVisualElements>>> {
+    #[inline] pub unsafe fn get_alternate_visual_elements(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<SecondaryTileVisualElements>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AlternateVisualElements)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_deadline(&self) -> Result<super::super::foundation::DateTime> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Deadline)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<ComPtr<VisualElementsRequestDeferral>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<VisualElementsRequestDeferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VisualElementsRequest: IVisualElementsRequest}
@@ -13446,10 +13446,10 @@ RT_INTERFACE!{interface IVisualElementsRequestedEventArgs(IVisualElementsRequest
     fn get_Request(&self, out: *mut *mut VisualElementsRequest) -> HRESULT
 }}
 impl IVisualElementsRequestedEventArgs {
-    #[inline] pub unsafe fn get_request(&self) -> Result<ComPtr<VisualElementsRequest>> {
+    #[inline] pub unsafe fn get_request(&self) -> Result<Option<ComPtr<VisualElementsRequest>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class VisualElementsRequestedEventArgs: IVisualElementsRequestedEventArgs}
@@ -13481,10 +13481,10 @@ impl IMessageDialog {
         let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_commands(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<IUICommand>>> {
+    #[inline] pub unsafe fn get_commands(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<IUICommand>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Commands)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_default_command_index(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -13570,10 +13570,10 @@ RT_INTERFACE!{interface IPopupMenu(IPopupMenuVtbl): IInspectable(IInspectableVtb
     fn ShowAsyncWithRectAndPlacement(&self, selection: super::super::foundation::Rect, preferredPlacement: Placement, out: *mut *mut super::super::foundation::IAsyncOperation<IUICommand>) -> HRESULT
 }}
 impl IPopupMenu {
-    #[inline] pub unsafe fn get_commands(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<IUICommand>>> {
+    #[inline] pub unsafe fn get_commands(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<IUICommand>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Commands)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn show_async(&self, invocationPoint: super::super::foundation::Point) -> Result<ComPtr<super::super::foundation::IAsyncOperation<IUICommand>>> {
         let mut out = null_mut();
@@ -13613,19 +13613,19 @@ impl IUICommand {
         let hr = ((*self.lpVtbl).put_Label)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_invoked(&self) -> Result<ComPtr<UICommandInvokedHandler>> {
+    #[inline] pub unsafe fn get_invoked(&self) -> Result<Option<ComPtr<UICommandInvokedHandler>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Invoked)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_invoked(&self, value: &UICommandInvokedHandler) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Invoked)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_id(&self) -> Result<ComPtr<IInspectable>> {
+    #[inline] pub unsafe fn get_id(&self) -> Result<Option<ComPtr<IInspectable>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_id(&self, value: &IInspectable) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Id)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -13697,10 +13697,10 @@ impl IAdaptiveNotificationContent {
         let hr = ((*self.lpVtbl).get_Kind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_hints(&self) -> Result<ComPtr<super::super::foundation::collections::IMap<HString, HString>>> {
+    #[inline] pub unsafe fn get_hints(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IMap<HString, HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Hints)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum AdaptiveNotificationContentKind: i32 {
@@ -13744,19 +13744,19 @@ RT_INTERFACE!{interface IBadgeNotification(IBadgeNotificationVtbl): IInspectable
     fn get_ExpirationTime(&self, out: *mut *mut super::super::foundation::IReference<super::super::foundation::DateTime>) -> HRESULT
 }}
 impl IBadgeNotification {
-    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_content(&self) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> {
+    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_content(&self) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Content)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_expiration_time(&self, value: &super::super::foundation::IReference<super::super::foundation::DateTime>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ExpirationTime)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_expiration_time(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>> {
+    #[inline] pub unsafe fn get_expiration_time(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExpirationTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class BadgeNotification: IBadgeNotification}
@@ -13785,19 +13785,19 @@ RT_CLASS!{static class BadgeUpdateManager}
 impl RtActivatable<IBadgeUpdateManagerStatics> for BadgeUpdateManager {}
 impl RtActivatable<IBadgeUpdateManagerStatics2> for BadgeUpdateManager {}
 impl BadgeUpdateManager {
-    #[inline] pub fn create_badge_updater_for_application() -> Result<ComPtr<BadgeUpdater>> { unsafe {
+    #[inline] pub fn create_badge_updater_for_application() -> Result<Option<ComPtr<BadgeUpdater>>> { unsafe {
         <Self as RtActivatable<IBadgeUpdateManagerStatics>>::get_activation_factory().create_badge_updater_for_application()
     }}
-    #[inline] pub fn create_badge_updater_for_application_with_id(applicationId: &HStringArg) -> Result<ComPtr<BadgeUpdater>> { unsafe {
+    #[inline] pub fn create_badge_updater_for_application_with_id(applicationId: &HStringArg) -> Result<Option<ComPtr<BadgeUpdater>>> { unsafe {
         <Self as RtActivatable<IBadgeUpdateManagerStatics>>::get_activation_factory().create_badge_updater_for_application_with_id(applicationId)
     }}
-    #[inline] pub fn create_badge_updater_for_secondary_tile(tileId: &HStringArg) -> Result<ComPtr<BadgeUpdater>> { unsafe {
+    #[inline] pub fn create_badge_updater_for_secondary_tile(tileId: &HStringArg) -> Result<Option<ComPtr<BadgeUpdater>>> { unsafe {
         <Self as RtActivatable<IBadgeUpdateManagerStatics>>::get_activation_factory().create_badge_updater_for_secondary_tile(tileId)
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_template_content(type_: BadgeTemplateType) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> { unsafe {
+    #[cfg(feature="windows-data")] #[inline] pub fn get_template_content(type_: BadgeTemplateType) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> { unsafe {
         <Self as RtActivatable<IBadgeUpdateManagerStatics>>::get_activation_factory().get_template_content(type_)
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<BadgeUpdateManagerForUser>> { unsafe {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<Option<ComPtr<BadgeUpdateManagerForUser>>> { unsafe {
         <Self as RtActivatable<IBadgeUpdateManagerStatics2>>::get_activation_factory().get_for_user(user)
     }}
 }
@@ -13810,25 +13810,25 @@ RT_INTERFACE!{interface IBadgeUpdateManagerForUser(IBadgeUpdateManagerForUserVtb
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
 }}
 impl IBadgeUpdateManagerForUser {
-    #[inline] pub unsafe fn create_badge_updater_for_application(&self) -> Result<ComPtr<BadgeUpdater>> {
+    #[inline] pub unsafe fn create_badge_updater_for_application(&self) -> Result<Option<ComPtr<BadgeUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateBadgeUpdaterForApplication)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_badge_updater_for_application_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<BadgeUpdater>> {
+    #[inline] pub unsafe fn create_badge_updater_for_application_with_id(&self, applicationId: &HStringArg) -> Result<Option<ComPtr<BadgeUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateBadgeUpdaterForApplicationWithId)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_badge_updater_for_secondary_tile(&self, tileId: &HStringArg) -> Result<ComPtr<BadgeUpdater>> {
+    #[inline] pub unsafe fn create_badge_updater_for_secondary_tile(&self, tileId: &HStringArg) -> Result<Option<ComPtr<BadgeUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateBadgeUpdaterForSecondaryTile)(self as *const _ as *mut _, tileId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<ComPtr<super::super::system::User>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class BadgeUpdateManagerForUser: IBadgeUpdateManagerForUser}
@@ -13840,25 +13840,25 @@ RT_INTERFACE!{static interface IBadgeUpdateManagerStatics(IBadgeUpdateManagerSta
     #[cfg(feature="windows-data")] fn GetTemplateContent(&self, type_: BadgeTemplateType, out: *mut *mut super::super::data::xml::dom::XmlDocument) -> HRESULT
 }}
 impl IBadgeUpdateManagerStatics {
-    #[inline] pub unsafe fn create_badge_updater_for_application(&self) -> Result<ComPtr<BadgeUpdater>> {
+    #[inline] pub unsafe fn create_badge_updater_for_application(&self) -> Result<Option<ComPtr<BadgeUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateBadgeUpdaterForApplication)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_badge_updater_for_application_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<BadgeUpdater>> {
+    #[inline] pub unsafe fn create_badge_updater_for_application_with_id(&self, applicationId: &HStringArg) -> Result<Option<ComPtr<BadgeUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateBadgeUpdaterForApplicationWithId)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_badge_updater_for_secondary_tile(&self, tileId: &HStringArg) -> Result<ComPtr<BadgeUpdater>> {
+    #[inline] pub unsafe fn create_badge_updater_for_secondary_tile(&self, tileId: &HStringArg) -> Result<Option<ComPtr<BadgeUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateBadgeUpdaterForSecondaryTile)(self as *const _ as *mut _, tileId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_template_content(&self, type_: BadgeTemplateType) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> {
+    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_template_content(&self, type_: BadgeTemplateType) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetTemplateContent)(self as *const _ as *mut _, type_, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IBadgeUpdateManagerStatics2, 2543465934, 63808, 18623, 148, 232, 202, 36, 77, 64, 11, 65);
@@ -13866,10 +13866,10 @@ RT_INTERFACE!{static interface IBadgeUpdateManagerStatics2(IBadgeUpdateManagerSt
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut super::super::system::User, out: *mut *mut BadgeUpdateManagerForUser) -> HRESULT
 }}
 impl IBadgeUpdateManagerStatics2 {
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &super::super::system::User) -> Result<ComPtr<BadgeUpdateManagerForUser>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &super::super::system::User) -> Result<Option<ComPtr<BadgeUpdateManagerForUser>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IBadgeUpdater, 3053068244, 30050, 20332, 191, 163, 27, 110, 210, 229, 127, 47);
@@ -14175,19 +14175,19 @@ RT_INTERFACE!{interface INotification(INotificationVtbl): IInspectable(IInspecta
     fn put_Visual(&self, value: *mut NotificationVisual) -> HRESULT
 }}
 impl INotification {
-    #[inline] pub unsafe fn get_expiration_time(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>> {
+    #[inline] pub unsafe fn get_expiration_time(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExpirationTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_expiration_time(&self, value: &super::super::foundation::IReference<super::super::foundation::DateTime>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ExpirationTime)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_visual(&self) -> Result<ComPtr<NotificationVisual>> {
+    #[inline] pub unsafe fn get_visual(&self) -> Result<Option<ComPtr<NotificationVisual>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Visual)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_visual(&self, value: &NotificationVisual) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Visual)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -14225,15 +14225,15 @@ impl INotificationBinding {
         let hr = ((*self.lpVtbl).put_Language)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_hints(&self) -> Result<ComPtr<super::super::foundation::collections::IMap<HString, HString>>> {
+    #[inline] pub unsafe fn get_hints(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IMap<HString, HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Hints)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_text_elements(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<AdaptiveNotificationText>>> {
+    #[inline] pub unsafe fn get_text_elements(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<AdaptiveNotificationText>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetTextElements)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class NotificationBinding: INotificationBinding}
@@ -14244,10 +14244,10 @@ RT_INTERFACE!{interface INotificationData(INotificationDataVtbl): IInspectable(I
     fn put_SequenceNumber(&self, value: u32) -> HRESULT
 }}
 impl INotificationData {
-    #[inline] pub unsafe fn get_values(&self) -> Result<ComPtr<super::super::foundation::collections::IMap<HString, HString>>> {
+    #[inline] pub unsafe fn get_values(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IMap<HString, HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Values)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_sequence_number(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -14317,15 +14317,15 @@ impl INotificationVisual {
         let hr = ((*self.lpVtbl).put_Language)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_bindings(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<NotificationBinding>>> {
+    #[inline] pub unsafe fn get_bindings(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<NotificationBinding>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Bindings)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_binding(&self, templateName: &HStringArg) -> Result<ComPtr<NotificationBinding>> {
+    #[inline] pub unsafe fn get_binding(&self, templateName: &HStringArg) -> Result<Option<ComPtr<NotificationBinding>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetBinding)(self as *const _ as *mut _, templateName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class NotificationVisual: INotificationVisual}
@@ -14345,10 +14345,10 @@ RT_INTERFACE!{interface IScheduledTileNotification(IScheduledTileNotificationVtb
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IScheduledTileNotification {
-    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_content(&self) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> {
+    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_content(&self) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Content)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_delivery_time(&self) -> Result<super::super::foundation::DateTime> {
         let mut out = zeroed();
@@ -14359,10 +14359,10 @@ impl IScheduledTileNotification {
         let hr = ((*self.lpVtbl).put_ExpirationTime)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_expiration_time(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>> {
+    #[inline] pub unsafe fn get_expiration_time(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExpirationTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_tag(&self, value: &HStringArg) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Tag)(self as *const _ as *mut _, value.get());
@@ -14413,20 +14413,20 @@ RT_INTERFACE!{interface IScheduledToastNotification(IScheduledToastNotificationV
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IScheduledToastNotification {
-    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_content(&self) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> {
+    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_content(&self) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Content)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_delivery_time(&self) -> Result<super::super::foundation::DateTime> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_DeliveryTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_snooze_interval(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>> {
+    #[inline] pub unsafe fn get_snooze_interval(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SnoozeInterval)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_maximum_snooze_count(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -14556,19 +14556,19 @@ RT_INTERFACE!{interface ITileFlyoutNotification(ITileFlyoutNotificationVtbl): II
     fn get_ExpirationTime(&self, out: *mut *mut super::super::foundation::IReference<super::super::foundation::DateTime>) -> HRESULT
 }}
 impl ITileFlyoutNotification {
-    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_content(&self) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> {
+    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_content(&self) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Content)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_expiration_time(&self, value: &super::super::foundation::IReference<super::super::foundation::DateTime>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ExpirationTime)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_expiration_time(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>> {
+    #[inline] pub unsafe fn get_expiration_time(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExpirationTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class TileFlyoutNotification: ITileFlyoutNotification}
@@ -14596,16 +14596,16 @@ RT_ENUM! { enum TileFlyoutTemplateType: i32 {
 RT_CLASS!{static class TileFlyoutUpdateManager}
 impl RtActivatable<ITileFlyoutUpdateManagerStatics> for TileFlyoutUpdateManager {}
 impl TileFlyoutUpdateManager {
-    #[inline] pub fn create_tile_flyout_updater_for_application() -> Result<ComPtr<TileFlyoutUpdater>> { unsafe {
+    #[inline] pub fn create_tile_flyout_updater_for_application() -> Result<Option<ComPtr<TileFlyoutUpdater>>> { unsafe {
         <Self as RtActivatable<ITileFlyoutUpdateManagerStatics>>::get_activation_factory().create_tile_flyout_updater_for_application()
     }}
-    #[inline] pub fn create_tile_flyout_updater_for_application_with_id(applicationId: &HStringArg) -> Result<ComPtr<TileFlyoutUpdater>> { unsafe {
+    #[inline] pub fn create_tile_flyout_updater_for_application_with_id(applicationId: &HStringArg) -> Result<Option<ComPtr<TileFlyoutUpdater>>> { unsafe {
         <Self as RtActivatable<ITileFlyoutUpdateManagerStatics>>::get_activation_factory().create_tile_flyout_updater_for_application_with_id(applicationId)
     }}
-    #[inline] pub fn create_tile_flyout_updater_for_secondary_tile(tileId: &HStringArg) -> Result<ComPtr<TileFlyoutUpdater>> { unsafe {
+    #[inline] pub fn create_tile_flyout_updater_for_secondary_tile(tileId: &HStringArg) -> Result<Option<ComPtr<TileFlyoutUpdater>>> { unsafe {
         <Self as RtActivatable<ITileFlyoutUpdateManagerStatics>>::get_activation_factory().create_tile_flyout_updater_for_secondary_tile(tileId)
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_template_content(type_: TileFlyoutTemplateType) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> { unsafe {
+    #[cfg(feature="windows-data")] #[inline] pub fn get_template_content(type_: TileFlyoutTemplateType) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> { unsafe {
         <Self as RtActivatable<ITileFlyoutUpdateManagerStatics>>::get_activation_factory().get_template_content(type_)
     }}
 }
@@ -14618,25 +14618,25 @@ RT_INTERFACE!{static interface ITileFlyoutUpdateManagerStatics(ITileFlyoutUpdate
     #[cfg(feature="windows-data")] fn GetTemplateContent(&self, type_: TileFlyoutTemplateType, out: *mut *mut super::super::data::xml::dom::XmlDocument) -> HRESULT
 }}
 impl ITileFlyoutUpdateManagerStatics {
-    #[inline] pub unsafe fn create_tile_flyout_updater_for_application(&self) -> Result<ComPtr<TileFlyoutUpdater>> {
+    #[inline] pub unsafe fn create_tile_flyout_updater_for_application(&self) -> Result<Option<ComPtr<TileFlyoutUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateTileFlyoutUpdaterForApplication)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_tile_flyout_updater_for_application_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<TileFlyoutUpdater>> {
+    #[inline] pub unsafe fn create_tile_flyout_updater_for_application_with_id(&self, applicationId: &HStringArg) -> Result<Option<ComPtr<TileFlyoutUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateTileFlyoutUpdaterForApplicationWithId)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_tile_flyout_updater_for_secondary_tile(&self, tileId: &HStringArg) -> Result<ComPtr<TileFlyoutUpdater>> {
+    #[inline] pub unsafe fn create_tile_flyout_updater_for_secondary_tile(&self, tileId: &HStringArg) -> Result<Option<ComPtr<TileFlyoutUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateTileFlyoutUpdaterForSecondaryTile)(self as *const _ as *mut _, tileId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_template_content(&self, type_: TileFlyoutTemplateType) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> {
+    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_template_content(&self, type_: TileFlyoutTemplateType) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetTemplateContent)(self as *const _ as *mut _, type_, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ITileFlyoutUpdater, 2369832810, 50277, 16466, 167, 64, 92, 38, 84, 193, 160, 137);
@@ -14686,19 +14686,19 @@ RT_INTERFACE!{interface ITileNotification(ITileNotificationVtbl): IInspectable(I
     fn get_Tag(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ITileNotification {
-    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_content(&self) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> {
+    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_content(&self) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Content)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_expiration_time(&self, value: &super::super::foundation::IReference<super::super::foundation::DateTime>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ExpirationTime)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_expiration_time(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>> {
+    #[inline] pub unsafe fn get_expiration_time(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExpirationTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_tag(&self, value: &HStringArg) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Tag)(self as *const _ as *mut _, value.get());
@@ -14736,19 +14736,19 @@ RT_CLASS!{static class TileUpdateManager}
 impl RtActivatable<ITileUpdateManagerStatics> for TileUpdateManager {}
 impl RtActivatable<ITileUpdateManagerStatics2> for TileUpdateManager {}
 impl TileUpdateManager {
-    #[inline] pub fn create_tile_updater_for_application() -> Result<ComPtr<TileUpdater>> { unsafe {
+    #[inline] pub fn create_tile_updater_for_application() -> Result<Option<ComPtr<TileUpdater>>> { unsafe {
         <Self as RtActivatable<ITileUpdateManagerStatics>>::get_activation_factory().create_tile_updater_for_application()
     }}
-    #[inline] pub fn create_tile_updater_for_application_with_id(applicationId: &HStringArg) -> Result<ComPtr<TileUpdater>> { unsafe {
+    #[inline] pub fn create_tile_updater_for_application_with_id(applicationId: &HStringArg) -> Result<Option<ComPtr<TileUpdater>>> { unsafe {
         <Self as RtActivatable<ITileUpdateManagerStatics>>::get_activation_factory().create_tile_updater_for_application_with_id(applicationId)
     }}
-    #[inline] pub fn create_tile_updater_for_secondary_tile(tileId: &HStringArg) -> Result<ComPtr<TileUpdater>> { unsafe {
+    #[inline] pub fn create_tile_updater_for_secondary_tile(tileId: &HStringArg) -> Result<Option<ComPtr<TileUpdater>>> { unsafe {
         <Self as RtActivatable<ITileUpdateManagerStatics>>::get_activation_factory().create_tile_updater_for_secondary_tile(tileId)
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_template_content(type_: TileTemplateType) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> { unsafe {
+    #[cfg(feature="windows-data")] #[inline] pub fn get_template_content(type_: TileTemplateType) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> { unsafe {
         <Self as RtActivatable<ITileUpdateManagerStatics>>::get_activation_factory().get_template_content(type_)
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<TileUpdateManagerForUser>> { unsafe {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<Option<ComPtr<TileUpdateManagerForUser>>> { unsafe {
         <Self as RtActivatable<ITileUpdateManagerStatics2>>::get_activation_factory().get_for_user(user)
     }}
 }
@@ -14761,25 +14761,25 @@ RT_INTERFACE!{interface ITileUpdateManagerForUser(ITileUpdateManagerForUserVtbl)
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
 }}
 impl ITileUpdateManagerForUser {
-    #[inline] pub unsafe fn create_tile_updater_for_application(&self) -> Result<ComPtr<TileUpdater>> {
+    #[inline] pub unsafe fn create_tile_updater_for_application(&self) -> Result<Option<ComPtr<TileUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateTileUpdaterForApplication)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_tile_updater_for_application_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<TileUpdater>> {
+    #[inline] pub unsafe fn create_tile_updater_for_application_with_id(&self, applicationId: &HStringArg) -> Result<Option<ComPtr<TileUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateTileUpdaterForApplicationWithId)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_tile_updater_for_secondary_tile(&self, tileId: &HStringArg) -> Result<ComPtr<TileUpdater>> {
+    #[inline] pub unsafe fn create_tile_updater_for_secondary_tile(&self, tileId: &HStringArg) -> Result<Option<ComPtr<TileUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateTileUpdaterForSecondaryTile)(self as *const _ as *mut _, tileId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<ComPtr<super::super::system::User>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class TileUpdateManagerForUser: ITileUpdateManagerForUser}
@@ -14791,25 +14791,25 @@ RT_INTERFACE!{static interface ITileUpdateManagerStatics(ITileUpdateManagerStati
     #[cfg(feature="windows-data")] fn GetTemplateContent(&self, type_: TileTemplateType, out: *mut *mut super::super::data::xml::dom::XmlDocument) -> HRESULT
 }}
 impl ITileUpdateManagerStatics {
-    #[inline] pub unsafe fn create_tile_updater_for_application(&self) -> Result<ComPtr<TileUpdater>> {
+    #[inline] pub unsafe fn create_tile_updater_for_application(&self) -> Result<Option<ComPtr<TileUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateTileUpdaterForApplication)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_tile_updater_for_application_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<TileUpdater>> {
+    #[inline] pub unsafe fn create_tile_updater_for_application_with_id(&self, applicationId: &HStringArg) -> Result<Option<ComPtr<TileUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateTileUpdaterForApplicationWithId)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_tile_updater_for_secondary_tile(&self, tileId: &HStringArg) -> Result<ComPtr<TileUpdater>> {
+    #[inline] pub unsafe fn create_tile_updater_for_secondary_tile(&self, tileId: &HStringArg) -> Result<Option<ComPtr<TileUpdater>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateTileUpdaterForSecondaryTile)(self as *const _ as *mut _, tileId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_template_content(&self, type_: TileTemplateType) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> {
+    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_template_content(&self, type_: TileTemplateType) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetTemplateContent)(self as *const _ as *mut _, type_, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ITileUpdateManagerStatics2, 1931222492, 36372, 19324, 163, 75, 157, 34, 222, 118, 200, 77);
@@ -14817,10 +14817,10 @@ RT_INTERFACE!{static interface ITileUpdateManagerStatics2(ITileUpdateManagerStat
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut super::super::system::User, out: *mut *mut TileUpdateManagerForUser) -> HRESULT
 }}
 impl ITileUpdateManagerStatics2 {
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &super::super::system::User) -> Result<ComPtr<TileUpdateManagerForUser>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &super::super::system::User) -> Result<Option<ComPtr<TileUpdateManagerForUser>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ITileUpdater, 155362443, 7569, 17644, 146, 67, 193, 232, 33, 194, 154, 32);
@@ -14864,10 +14864,10 @@ impl ITileUpdater {
         let hr = ((*self.lpVtbl).RemoveFromSchedule)(self as *const _ as *mut _, scheduledTile as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_scheduled_tile_notifications(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<ScheduledTileNotification>>> {
+    #[inline] pub unsafe fn get_scheduled_tile_notifications(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<ScheduledTileNotification>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetScheduledTileNotifications)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn start_periodic_update(&self, tileContent: &super::super::foundation::Uri, requestedInterval: PeriodicUpdateRecurrence) -> Result<()> {
         let hr = ((*self.lpVtbl).StartPeriodicUpdate)(self as *const _ as *mut _, tileContent as *const _ as *mut _, requestedInterval);
@@ -14957,10 +14957,10 @@ impl IToastCollection {
         let hr = ((*self.lpVtbl).put_LaunchArgs)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_icon(&self) -> Result<ComPtr<super::super::foundation::Uri>> {
+    #[inline] pub unsafe fn get_icon(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Icon)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_icon(&self, value: &super::super::foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Icon)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -15023,10 +15023,10 @@ impl IToastCollectionManager {
         let hr = ((*self.lpVtbl).RemoveAllToastCollectionsAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<ComPtr<super::super::system::User>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_app_id(&self) -> Result<HString> {
         let mut out = null_mut();
@@ -15079,19 +15079,19 @@ RT_INTERFACE!{interface IToastNotification(IToastNotificationVtbl): IInspectable
     fn remove_Failed(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IToastNotification {
-    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_content(&self) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> {
+    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_content(&self) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Content)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_expiration_time(&self, value: &super::super::foundation::IReference<super::super::foundation::DateTime>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ExpirationTime)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_expiration_time(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>> {
+    #[inline] pub unsafe fn get_expiration_time(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExpirationTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_dismissed(&self, handler: &super::super::foundation::TypedEventHandler<ToastNotification, ToastDismissedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -15202,10 +15202,10 @@ RT_INTERFACE!{interface IToastNotification4(IToastNotification4Vtbl): IInspectab
     fn put_Priority(&self, value: ToastNotificationPriority) -> HRESULT
 }}
 impl IToastNotification4 {
-    #[inline] pub unsafe fn get_data(&self) -> Result<ComPtr<NotificationData>> {
+    #[inline] pub unsafe fn get_data(&self) -> Result<Option<ComPtr<NotificationData>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Data)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_data(&self, value: &NotificationData) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Data)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -15232,10 +15232,10 @@ impl IToastNotificationActionTriggerDetail {
         let hr = ((*self.lpVtbl).get_Argument)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_user_input(&self) -> Result<ComPtr<super::super::foundation::collections::ValueSet>> {
+    #[inline] pub unsafe fn get_user_input(&self) -> Result<Option<ComPtr<super::super::foundation::collections::ValueSet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UserInput)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ToastNotificationActionTriggerDetail: IToastNotificationActionTriggerDetail}
@@ -15297,15 +15297,15 @@ RT_INTERFACE!{interface IToastNotificationHistory2(IToastNotificationHistory2Vtb
     fn GetHistoryWithId(&self, applicationId: HSTRING, out: *mut *mut super::super::foundation::collections::IVectorView<ToastNotification>) -> HRESULT
 }}
 impl IToastNotificationHistory2 {
-    #[inline] pub unsafe fn get_history(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<ToastNotification>>> {
+    #[inline] pub unsafe fn get_history(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<ToastNotification>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetHistory)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_history_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVectorView<ToastNotification>>> {
+    #[inline] pub unsafe fn get_history_with_id(&self, applicationId: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<ToastNotification>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetHistoryWithId)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IToastNotificationHistoryChangedTriggerDetail, 3674439674, 104, 16684, 156, 131, 38, 124, 55, 246, 86, 112);
@@ -15337,25 +15337,25 @@ impl RtActivatable<IToastNotificationManagerStatics2> for ToastNotificationManag
 impl RtActivatable<IToastNotificationManagerStatics4> for ToastNotificationManager {}
 impl RtActivatable<IToastNotificationManagerStatics5> for ToastNotificationManager {}
 impl ToastNotificationManager {
-    #[inline] pub fn create_toast_notifier() -> Result<ComPtr<ToastNotifier>> { unsafe {
+    #[inline] pub fn create_toast_notifier() -> Result<Option<ComPtr<ToastNotifier>>> { unsafe {
         <Self as RtActivatable<IToastNotificationManagerStatics>>::get_activation_factory().create_toast_notifier()
     }}
-    #[inline] pub fn create_toast_notifier_with_id(applicationId: &HStringArg) -> Result<ComPtr<ToastNotifier>> { unsafe {
+    #[inline] pub fn create_toast_notifier_with_id(applicationId: &HStringArg) -> Result<Option<ComPtr<ToastNotifier>>> { unsafe {
         <Self as RtActivatable<IToastNotificationManagerStatics>>::get_activation_factory().create_toast_notifier_with_id(applicationId)
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_template_content(type_: ToastTemplateType) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> { unsafe {
+    #[cfg(feature="windows-data")] #[inline] pub fn get_template_content(type_: ToastTemplateType) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> { unsafe {
         <Self as RtActivatable<IToastNotificationManagerStatics>>::get_activation_factory().get_template_content(type_)
     }}
-    #[inline] pub fn get_history() -> Result<ComPtr<ToastNotificationHistory>> { unsafe {
+    #[inline] pub fn get_history() -> Result<Option<ComPtr<ToastNotificationHistory>>> { unsafe {
         <Self as RtActivatable<IToastNotificationManagerStatics2>>::get_activation_factory().get_history()
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<ComPtr<ToastNotificationManagerForUser>> { unsafe {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<Option<ComPtr<ToastNotificationManagerForUser>>> { unsafe {
         <Self as RtActivatable<IToastNotificationManagerStatics4>>::get_activation_factory().get_for_user(user)
     }}
     #[inline] pub fn configure_notification_mirroring(value: NotificationMirroring) -> Result<()> { unsafe {
         <Self as RtActivatable<IToastNotificationManagerStatics4>>::get_activation_factory().configure_notification_mirroring(value)
     }}
-    #[inline] pub fn get_default() -> Result<ComPtr<ToastNotificationManagerForUser>> { unsafe {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<ToastNotificationManagerForUser>>> { unsafe {
         <Self as RtActivatable<IToastNotificationManagerStatics5>>::get_activation_factory().get_default()
     }}
 }
@@ -15368,25 +15368,25 @@ RT_INTERFACE!{interface IToastNotificationManagerForUser(IToastNotificationManag
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
 }}
 impl IToastNotificationManagerForUser {
-    #[inline] pub unsafe fn create_toast_notifier(&self) -> Result<ComPtr<ToastNotifier>> {
+    #[inline] pub unsafe fn create_toast_notifier(&self) -> Result<Option<ComPtr<ToastNotifier>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateToastNotifier)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_toast_notifier_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<ToastNotifier>> {
+    #[inline] pub unsafe fn create_toast_notifier_with_id(&self, applicationId: &HStringArg) -> Result<Option<ComPtr<ToastNotifier>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateToastNotifierWithId)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_history(&self) -> Result<ComPtr<ToastNotificationHistory>> {
+    #[inline] pub unsafe fn get_history(&self) -> Result<Option<ComPtr<ToastNotificationHistory>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_History)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<ComPtr<super::super::system::User>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ToastNotificationManagerForUser: IToastNotificationManagerForUser}
@@ -15408,15 +15408,15 @@ impl IToastNotificationManagerForUser2 {
         let hr = ((*self.lpVtbl).GetHistoryForToastCollectionIdAsync)(self as *const _ as *mut _, collectionId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_toast_collection_manager(&self) -> Result<ComPtr<ToastCollectionManager>> {
+    #[inline] pub unsafe fn get_toast_collection_manager(&self) -> Result<Option<ComPtr<ToastCollectionManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetToastCollectionManager)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_toast_collection_manager_with_app_id(&self, appId: &HStringArg) -> Result<ComPtr<ToastCollectionManager>> {
+    #[inline] pub unsafe fn get_toast_collection_manager_with_app_id(&self, appId: &HStringArg) -> Result<Option<ComPtr<ToastCollectionManager>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetToastCollectionManagerWithAppId)(self as *const _ as *mut _, appId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IToastNotificationManagerStatics, 1353453631, 53813, 17816, 187, 239, 152, 254, 77, 26, 58, 212);
@@ -15426,20 +15426,20 @@ RT_INTERFACE!{static interface IToastNotificationManagerStatics(IToastNotificati
     #[cfg(feature="windows-data")] fn GetTemplateContent(&self, type_: ToastTemplateType, out: *mut *mut super::super::data::xml::dom::XmlDocument) -> HRESULT
 }}
 impl IToastNotificationManagerStatics {
-    #[inline] pub unsafe fn create_toast_notifier(&self) -> Result<ComPtr<ToastNotifier>> {
+    #[inline] pub unsafe fn create_toast_notifier(&self) -> Result<Option<ComPtr<ToastNotifier>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateToastNotifier)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_toast_notifier_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<ToastNotifier>> {
+    #[inline] pub unsafe fn create_toast_notifier_with_id(&self, applicationId: &HStringArg) -> Result<Option<ComPtr<ToastNotifier>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateToastNotifierWithId)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_template_content(&self, type_: ToastTemplateType) -> Result<ComPtr<super::super::data::xml::dom::XmlDocument>> {
+    #[cfg(feature="windows-data")] #[inline] pub unsafe fn get_template_content(&self, type_: ToastTemplateType) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetTemplateContent)(self as *const _ as *mut _, type_, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IToastNotificationManagerStatics2, 2058959954, 3656, 18256, 186, 157, 26, 65, 19, 152, 24, 71);
@@ -15447,10 +15447,10 @@ RT_INTERFACE!{static interface IToastNotificationManagerStatics2(IToastNotificat
     fn get_History(&self, out: *mut *mut ToastNotificationHistory) -> HRESULT
 }}
 impl IToastNotificationManagerStatics2 {
-    #[inline] pub unsafe fn get_history(&self) -> Result<ComPtr<ToastNotificationHistory>> {
+    #[inline] pub unsafe fn get_history(&self) -> Result<Option<ComPtr<ToastNotificationHistory>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_History)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IToastNotificationManagerStatics4, 2409185235, 58646, 17915, 129, 48, 57, 142, 147, 250, 82, 195);
@@ -15460,10 +15460,10 @@ RT_INTERFACE!{static interface IToastNotificationManagerStatics4(IToastNotificat
     fn ConfigureNotificationMirroring(&self, value: NotificationMirroring) -> HRESULT
 }}
 impl IToastNotificationManagerStatics4 {
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &super::super::system::User) -> Result<ComPtr<ToastNotificationManagerForUser>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user(&self, user: &super::super::system::User) -> Result<Option<ComPtr<ToastNotificationManagerForUser>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn configure_notification_mirroring(&self, value: NotificationMirroring) -> Result<()> {
         let hr = ((*self.lpVtbl).ConfigureNotificationMirroring)(self as *const _ as *mut _, value);
@@ -15475,10 +15475,10 @@ RT_INTERFACE!{static interface IToastNotificationManagerStatics5(IToastNotificat
     fn GetDefault(&self, out: *mut *mut ToastNotificationManagerForUser) -> HRESULT
 }}
 impl IToastNotificationManagerStatics5 {
-    #[inline] pub unsafe fn get_default(&self) -> Result<ComPtr<ToastNotificationManagerForUser>> {
+    #[inline] pub unsafe fn get_default(&self) -> Result<Option<ComPtr<ToastNotificationManagerForUser>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum ToastNotificationPriority: i32 {
@@ -15515,10 +15515,10 @@ impl IToastNotifier {
         let hr = ((*self.lpVtbl).RemoveFromSchedule)(self as *const _ as *mut _, scheduledToast as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_scheduled_toast_notifications(&self) -> Result<ComPtr<super::super::foundation::collections::IVectorView<ScheduledToastNotification>>> {
+    #[inline] pub unsafe fn get_scheduled_toast_notifications(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<ScheduledToastNotification>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetScheduledToastNotifications)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ToastNotifier: IToastNotifier}
@@ -15551,15 +15551,15 @@ RT_INTERFACE!{interface IUserNotification(IUserNotificationVtbl): IInspectable(I
     fn get_CreationTime(&self, out: *mut super::super::foundation::DateTime) -> HRESULT
 }}
 impl IUserNotification {
-    #[inline] pub unsafe fn get_notification(&self) -> Result<ComPtr<Notification>> {
+    #[inline] pub unsafe fn get_notification(&self) -> Result<Option<ComPtr<Notification>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Notification)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn get_app_info(&self) -> Result<ComPtr<super::super::applicationmodel::AppInfo>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn get_app_info(&self) -> Result<Option<ComPtr<super::super::applicationmodel::AppInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AppInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_id(&self) -> Result<u32> {
         let mut out = zeroed();
@@ -15632,10 +15632,10 @@ impl IUserNotificationListener {
         let hr = ((*self.lpVtbl).GetNotificationsAsync)(self as *const _ as *mut _, kinds, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_notification(&self, notificationId: u32) -> Result<ComPtr<super::UserNotification>> {
+    #[inline] pub unsafe fn get_notification(&self, notificationId: u32) -> Result<Option<ComPtr<super::UserNotification>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetNotification)(self as *const _ as *mut _, notificationId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn clear_notifications(&self) -> Result<()> {
         let hr = ((*self.lpVtbl).ClearNotifications)(self as *const _ as *mut _);
@@ -15649,7 +15649,7 @@ impl IUserNotificationListener {
 RT_CLASS!{class UserNotificationListener: IUserNotificationListener}
 impl RtActivatable<IUserNotificationListenerStatics> for UserNotificationListener {}
 impl UserNotificationListener {
-    #[inline] pub fn get_current() -> Result<ComPtr<UserNotificationListener>> { unsafe {
+    #[inline] pub fn get_current() -> Result<Option<ComPtr<UserNotificationListener>>> { unsafe {
         <Self as RtActivatable<IUserNotificationListenerStatics>>::get_activation_factory().get_current()
     }}
 }
@@ -15662,10 +15662,10 @@ RT_INTERFACE!{static interface IUserNotificationListenerStatics(IUserNotificatio
     fn get_Current(&self, out: *mut *mut UserNotificationListener) -> HRESULT
 }}
 impl IUserNotificationListenerStatics {
-    #[inline] pub unsafe fn get_current(&self) -> Result<ComPtr<UserNotificationListener>> {
+    #[inline] pub unsafe fn get_current(&self) -> Result<Option<ComPtr<UserNotificationListener>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.UI.Notifications.Management
@@ -15831,10 +15831,10 @@ RT_INTERFACE!{interface ICompositionAnimation3(ICompositionAnimation3Vtbl): IIns
     fn get_InitialValueExpressions(&self, out: *mut *mut InitialValueExpressionCollection) -> HRESULT
 }}
 impl ICompositionAnimation3 {
-    #[inline] pub unsafe fn get_initial_value_expressions(&self) -> Result<ComPtr<InitialValueExpressionCollection>> {
+    #[inline] pub unsafe fn get_initial_value_expressions(&self) -> Result<Option<ComPtr<InitialValueExpressionCollection>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InitialValueExpressions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICompositionAnimationBase, 472656281, 59416, 18643, 166, 221, 215, 140, 130, 248, 172, 233);
@@ -15934,7 +15934,7 @@ impl ICompositionCapabilities {
 RT_CLASS!{class CompositionCapabilities: ICompositionCapabilities}
 impl RtActivatable<ICompositionCapabilitiesStatics> for CompositionCapabilities {}
 impl CompositionCapabilities {
-    #[inline] pub fn get_for_current_view() -> Result<ComPtr<CompositionCapabilities>> { unsafe {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<CompositionCapabilities>>> { unsafe {
         <Self as RtActivatable<ICompositionCapabilitiesStatics>>::get_activation_factory().get_for_current_view()
     }}
 }
@@ -15944,10 +15944,10 @@ RT_INTERFACE!{static interface ICompositionCapabilitiesStatics(ICompositionCapab
     fn GetForCurrentView(&self, out: *mut *mut CompositionCapabilities) -> HRESULT
 }}
 impl ICompositionCapabilitiesStatics {
-    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<ComPtr<CompositionCapabilities>> {
+    #[inline] pub unsafe fn get_for_current_view(&self) -> Result<Option<ComPtr<CompositionCapabilities>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICompositionClip, 483207762, 53191, 19150, 153, 131, 20, 107, 184, 235, 106, 60);
@@ -16210,10 +16210,10 @@ RT_INTERFACE!{interface ICompositionEffectBrush(ICompositionEffectBrushVtbl): II
     fn SetSourceParameter(&self, name: HSTRING, source: *mut CompositionBrush) -> HRESULT
 }}
 impl ICompositionEffectBrush {
-    #[inline] pub unsafe fn get_source_parameter(&self, name: &HStringArg) -> Result<ComPtr<CompositionBrush>> {
+    #[inline] pub unsafe fn get_source_parameter(&self, name: &HStringArg) -> Result<Option<ComPtr<CompositionBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetSourceParameter)(self as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_source_parameter(&self, name: &HStringArg, source: &CompositionBrush) -> Result<()> {
         let hr = ((*self.lpVtbl).SetSourceParameter)(self as *const _ as *mut _, name.get(), source as *const _ as *mut _);
@@ -16228,10 +16228,10 @@ RT_INTERFACE!{interface ICompositionEffectFactory(ICompositionEffectFactoryVtbl)
     fn get_LoadStatus(&self, out: *mut CompositionEffectFactoryLoadStatus) -> HRESULT
 }}
 impl ICompositionEffectFactory {
-    #[inline] pub unsafe fn create_brush(&self) -> Result<ComPtr<CompositionEffectBrush>> {
+    #[inline] pub unsafe fn create_brush(&self) -> Result<Option<ComPtr<CompositionEffectBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateBrush)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_extended_error(&self) -> Result<super::super::foundation::HResult> {
         let mut out = zeroed();
@@ -16322,10 +16322,10 @@ impl ICompositionGradientBrush {
         let hr = ((*self.lpVtbl).put_CenterPoint)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_color_stops(&self) -> Result<ComPtr<CompositionColorGradientStopCollection>> {
+    #[inline] pub unsafe fn get_color_stops(&self) -> Result<Option<ComPtr<CompositionColorGradientStopCollection>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ColorStops)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_extend_mode(&self) -> Result<CompositionGradientExtendMode> {
         let mut out = zeroed();
@@ -16407,10 +16407,10 @@ RT_INTERFACE!{interface ICompositionGraphicsDevice(ICompositionGraphicsDeviceVtb
     fn remove_RenderingDeviceReplaced(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ICompositionGraphicsDevice {
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn create_drawing_surface(&self, sizePixels: super::super::foundation::Size, pixelFormat: super::super::graphics::directx::DirectXPixelFormat, alphaMode: super::super::graphics::directx::DirectXAlphaMode) -> Result<ComPtr<CompositionDrawingSurface>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn create_drawing_surface(&self, sizePixels: super::super::foundation::Size, pixelFormat: super::super::graphics::directx::DirectXPixelFormat, alphaMode: super::super::graphics::directx::DirectXAlphaMode) -> Result<Option<ComPtr<CompositionDrawingSurface>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateDrawingSurface)(self as *const _ as *mut _, sizePixels, pixelFormat, alphaMode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn add_rendering_device_replaced(&self, handler: &super::super::foundation::TypedEventHandler<CompositionGraphicsDevice, RenderingDeviceReplacedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
         let mut out = zeroed();
@@ -16429,15 +16429,15 @@ RT_INTERFACE!{interface ICompositionGraphicsDevice2(ICompositionGraphicsDevice2V
     #[cfg(feature="windows-graphics")] fn CreateVirtualDrawingSurface(&self, sizePixels: super::super::graphics::SizeInt32, pixelFormat: super::super::graphics::directx::DirectXPixelFormat, alphaMode: super::super::graphics::directx::DirectXAlphaMode, out: *mut *mut CompositionVirtualDrawingSurface) -> HRESULT
 }}
 impl ICompositionGraphicsDevice2 {
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn create_drawing_surface2(&self, sizePixels: super::super::graphics::SizeInt32, pixelFormat: super::super::graphics::directx::DirectXPixelFormat, alphaMode: super::super::graphics::directx::DirectXAlphaMode) -> Result<ComPtr<CompositionDrawingSurface>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn create_drawing_surface2(&self, sizePixels: super::super::graphics::SizeInt32, pixelFormat: super::super::graphics::directx::DirectXPixelFormat, alphaMode: super::super::graphics::directx::DirectXAlphaMode) -> Result<Option<ComPtr<CompositionDrawingSurface>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateDrawingSurface2)(self as *const _ as *mut _, sizePixels, pixelFormat, alphaMode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn create_virtual_drawing_surface(&self, sizePixels: super::super::graphics::SizeInt32, pixelFormat: super::super::graphics::directx::DirectXPixelFormat, alphaMode: super::super::graphics::directx::DirectXAlphaMode) -> Result<ComPtr<CompositionVirtualDrawingSurface>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn create_virtual_drawing_surface(&self, sizePixels: super::super::graphics::SizeInt32, pixelFormat: super::super::graphics::directx::DirectXPixelFormat, alphaMode: super::super::graphics::directx::DirectXAlphaMode) -> Result<Option<ComPtr<CompositionVirtualDrawingSurface>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateVirtualDrawingSurface)(self as *const _ as *mut _, sizePixels, pixelFormat, alphaMode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICompositionLight, 1101453250, 11869, 19393, 176, 158, 143, 10, 3, 227, 216, 211);
@@ -16445,10 +16445,10 @@ RT_INTERFACE!{interface ICompositionLight(ICompositionLightVtbl): IInspectable(I
     fn get_Targets(&self, out: *mut *mut VisualUnorderedCollection) -> HRESULT
 }}
 impl ICompositionLight {
-    #[inline] pub unsafe fn get_targets(&self) -> Result<ComPtr<VisualUnorderedCollection>> {
+    #[inline] pub unsafe fn get_targets(&self) -> Result<Option<ComPtr<VisualUnorderedCollection>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Targets)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class CompositionLight: ICompositionLight}
@@ -16457,10 +16457,10 @@ RT_INTERFACE!{interface ICompositionLight2(ICompositionLight2Vtbl): IInspectable
     fn get_ExclusionsFromTargets(&self, out: *mut *mut VisualUnorderedCollection) -> HRESULT
 }}
 impl ICompositionLight2 {
-    #[inline] pub unsafe fn get_exclusions_from_targets(&self) -> Result<ComPtr<VisualUnorderedCollection>> {
+    #[inline] pub unsafe fn get_exclusions_from_targets(&self) -> Result<Option<ComPtr<VisualUnorderedCollection>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ExclusionsFromTargets)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICompositionLightFactory, 110949126, 55868, 19268, 131, 138, 94, 3, 213, 26, 206, 85);
@@ -16503,19 +16503,19 @@ RT_INTERFACE!{interface ICompositionMaskBrush(ICompositionMaskBrushVtbl): IInspe
     fn put_Source(&self, value: *mut CompositionBrush) -> HRESULT
 }}
 impl ICompositionMaskBrush {
-    #[inline] pub unsafe fn get_mask(&self) -> Result<ComPtr<CompositionBrush>> {
+    #[inline] pub unsafe fn get_mask(&self) -> Result<Option<ComPtr<CompositionBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Mask)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_mask(&self, value: &CompositionBrush) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Mask)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_source(&self) -> Result<ComPtr<CompositionBrush>> {
+    #[inline] pub unsafe fn get_source(&self) -> Result<Option<ComPtr<CompositionBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_source(&self, value: &CompositionBrush) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Source)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -16614,10 +16614,10 @@ impl ICompositionNineGridBrush {
         let hr = ((*self.lpVtbl).put_RightInsetScale)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_source(&self) -> Result<ComPtr<CompositionBrush>> {
+    #[inline] pub unsafe fn get_source(&self) -> Result<Option<ComPtr<CompositionBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_source(&self, value: &CompositionBrush) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Source)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -16668,20 +16668,20 @@ RT_INTERFACE!{interface ICompositionObject(ICompositionObjectVtbl): IInspectable
     fn StopAnimation(&self, propertyName: HSTRING) -> HRESULT
 }}
 impl ICompositionObject {
-    #[inline] pub unsafe fn get_compositor(&self) -> Result<ComPtr<Compositor>> {
+    #[inline] pub unsafe fn get_compositor(&self) -> Result<Option<ComPtr<Compositor>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Compositor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_dispatcher(&self) -> Result<ComPtr<super::core::CoreDispatcher>> {
+    #[inline] pub unsafe fn get_dispatcher(&self) -> Result<Option<ComPtr<super::core::CoreDispatcher>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Dispatcher)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<ComPtr<CompositionPropertySet>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<CompositionPropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn start_animation(&self, propertyName: &HStringArg, animation: &CompositionAnimation) -> Result<()> {
         let hr = ((*self.lpVtbl).StartAnimation)(self as *const _ as *mut _, propertyName.get(), animation as *const _ as *mut _);
@@ -16712,10 +16712,10 @@ impl ICompositionObject2 {
         let hr = ((*self.lpVtbl).put_Comment)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_implicit_animations(&self) -> Result<ComPtr<ImplicitAnimationCollection>> {
+    #[inline] pub unsafe fn get_implicit_animations(&self) -> Result<Option<ComPtr<ImplicitAnimationCollection>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ImplicitAnimations)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_implicit_animations(&self, value: &ImplicitAnimationCollection) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ImplicitAnimations)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -16735,10 +16735,10 @@ RT_INTERFACE!{interface ICompositionObject3(ICompositionObject3Vtbl): IInspectab
     #[cfg(feature="windows-system")] fn get_DispatcherQueue(&self, out: *mut *mut super::super::system::DispatcherQueue) -> HRESULT
 }}
 impl ICompositionObject3 {
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_dispatcher_queue(&self) -> Result<ComPtr<super::super::system::DispatcherQueue>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_dispatcher_queue(&self) -> Result<Option<ComPtr<super::super::system::DispatcherQueue>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DispatcherQueue)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICompositionObjectFactory, 1361075294, 21898, 20266, 141, 57, 55, 191, 225, 226, 13, 221);
@@ -16956,10 +16956,10 @@ impl ICompositionSurfaceBrush {
         let hr = ((*self.lpVtbl).put_Stretch)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_surface(&self) -> Result<ComPtr<ICompositionSurface>> {
+    #[inline] pub unsafe fn get_surface(&self) -> Result<Option<ComPtr<ICompositionSurface>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Surface)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_surface(&self, value: &ICompositionSurface) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Surface)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -17064,10 +17064,10 @@ RT_INTERFACE!{interface ICompositionTarget(ICompositionTargetVtbl): IInspectable
     fn put_Root(&self, value: *mut Visual) -> HRESULT
 }}
 impl ICompositionTarget {
-    #[inline] pub unsafe fn get_root(&self) -> Result<ComPtr<Visual>> {
+    #[inline] pub unsafe fn get_root(&self) -> Result<Option<ComPtr<Visual>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Root)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_root(&self, value: &Visual) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Root)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -17124,125 +17124,125 @@ RT_INTERFACE!{interface ICompositor(ICompositorVtbl): IInspectable(IInspectableV
     fn GetCommitBatch(&self, batchType: CompositionBatchTypes, out: *mut *mut CompositionCommitBatch) -> HRESULT
 }}
 impl ICompositor {
-    #[inline] pub unsafe fn create_color_key_frame_animation(&self) -> Result<ComPtr<ColorKeyFrameAnimation>> {
+    #[inline] pub unsafe fn create_color_key_frame_animation(&self) -> Result<Option<ComPtr<ColorKeyFrameAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateColorKeyFrameAnimation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_color_brush(&self) -> Result<ComPtr<CompositionColorBrush>> {
+    #[inline] pub unsafe fn create_color_brush(&self) -> Result<Option<ComPtr<CompositionColorBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateColorBrush)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_color_brush_with_color(&self, color: super::Color) -> Result<ComPtr<CompositionColorBrush>> {
+    #[inline] pub unsafe fn create_color_brush_with_color(&self, color: super::Color) -> Result<Option<ComPtr<CompositionColorBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateColorBrushWithColor)(self as *const _ as *mut _, color, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_container_visual(&self) -> Result<ComPtr<ContainerVisual>> {
+    #[inline] pub unsafe fn create_container_visual(&self) -> Result<Option<ComPtr<ContainerVisual>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateContainerVisual)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_cubic_bezier_easing_function(&self, controlPoint1: super::super::foundation::numerics::Vector2, controlPoint2: super::super::foundation::numerics::Vector2) -> Result<ComPtr<CubicBezierEasingFunction>> {
+    #[inline] pub unsafe fn create_cubic_bezier_easing_function(&self, controlPoint1: super::super::foundation::numerics::Vector2, controlPoint2: super::super::foundation::numerics::Vector2) -> Result<Option<ComPtr<CubicBezierEasingFunction>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateCubicBezierEasingFunction)(self as *const _ as *mut _, controlPoint1, controlPoint2, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn create_effect_factory(&self, graphicsEffect: &super::super::graphics::effects::IGraphicsEffect) -> Result<ComPtr<CompositionEffectFactory>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn create_effect_factory(&self, graphicsEffect: &super::super::graphics::effects::IGraphicsEffect) -> Result<Option<ComPtr<CompositionEffectFactory>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateEffectFactory)(self as *const _ as *mut _, graphicsEffect as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn create_effect_factory_with_properties(&self, graphicsEffect: &super::super::graphics::effects::IGraphicsEffect, animatableProperties: &super::super::foundation::collections::IIterable<HString>) -> Result<ComPtr<CompositionEffectFactory>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn create_effect_factory_with_properties(&self, graphicsEffect: &super::super::graphics::effects::IGraphicsEffect, animatableProperties: &super::super::foundation::collections::IIterable<HString>) -> Result<Option<ComPtr<CompositionEffectFactory>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateEffectFactoryWithProperties)(self as *const _ as *mut _, graphicsEffect as *const _ as *mut _, animatableProperties as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_expression_animation(&self) -> Result<ComPtr<ExpressionAnimation>> {
+    #[inline] pub unsafe fn create_expression_animation(&self) -> Result<Option<ComPtr<ExpressionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateExpressionAnimation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_expression_animation_with_expression(&self, expression: &HStringArg) -> Result<ComPtr<ExpressionAnimation>> {
+    #[inline] pub unsafe fn create_expression_animation_with_expression(&self, expression: &HStringArg) -> Result<Option<ComPtr<ExpressionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateExpressionAnimationWithExpression)(self as *const _ as *mut _, expression.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_inset_clip(&self) -> Result<ComPtr<InsetClip>> {
+    #[inline] pub unsafe fn create_inset_clip(&self) -> Result<Option<ComPtr<InsetClip>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateInsetClip)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_inset_clip_with_insets(&self, leftInset: f32, topInset: f32, rightInset: f32, bottomInset: f32) -> Result<ComPtr<InsetClip>> {
+    #[inline] pub unsafe fn create_inset_clip_with_insets(&self, leftInset: f32, topInset: f32, rightInset: f32, bottomInset: f32) -> Result<Option<ComPtr<InsetClip>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateInsetClipWithInsets)(self as *const _ as *mut _, leftInset, topInset, rightInset, bottomInset, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_linear_easing_function(&self) -> Result<ComPtr<LinearEasingFunction>> {
+    #[inline] pub unsafe fn create_linear_easing_function(&self) -> Result<Option<ComPtr<LinearEasingFunction>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateLinearEasingFunction)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_property_set(&self) -> Result<ComPtr<CompositionPropertySet>> {
+    #[inline] pub unsafe fn create_property_set(&self) -> Result<Option<ComPtr<CompositionPropertySet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreatePropertySet)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_quaternion_key_frame_animation(&self) -> Result<ComPtr<QuaternionKeyFrameAnimation>> {
+    #[inline] pub unsafe fn create_quaternion_key_frame_animation(&self) -> Result<Option<ComPtr<QuaternionKeyFrameAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateQuaternionKeyFrameAnimation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_scalar_key_frame_animation(&self) -> Result<ComPtr<ScalarKeyFrameAnimation>> {
+    #[inline] pub unsafe fn create_scalar_key_frame_animation(&self) -> Result<Option<ComPtr<ScalarKeyFrameAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateScalarKeyFrameAnimation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_scoped_batch(&self, batchType: CompositionBatchTypes) -> Result<ComPtr<CompositionScopedBatch>> {
+    #[inline] pub unsafe fn create_scoped_batch(&self, batchType: CompositionBatchTypes) -> Result<Option<ComPtr<CompositionScopedBatch>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateScopedBatch)(self as *const _ as *mut _, batchType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_sprite_visual(&self) -> Result<ComPtr<SpriteVisual>> {
+    #[inline] pub unsafe fn create_sprite_visual(&self) -> Result<Option<ComPtr<SpriteVisual>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSpriteVisual)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_surface_brush(&self) -> Result<ComPtr<CompositionSurfaceBrush>> {
+    #[inline] pub unsafe fn create_surface_brush(&self) -> Result<Option<ComPtr<CompositionSurfaceBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSurfaceBrush)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_surface_brush_with_surface(&self, surface: &ICompositionSurface) -> Result<ComPtr<CompositionSurfaceBrush>> {
+    #[inline] pub unsafe fn create_surface_brush_with_surface(&self, surface: &ICompositionSurface) -> Result<Option<ComPtr<CompositionSurfaceBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSurfaceBrushWithSurface)(self as *const _ as *mut _, surface as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_target_for_current_view(&self) -> Result<ComPtr<CompositionTarget>> {
+    #[inline] pub unsafe fn create_target_for_current_view(&self) -> Result<Option<ComPtr<CompositionTarget>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateTargetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_vector2_key_frame_animation(&self) -> Result<ComPtr<Vector2KeyFrameAnimation>> {
+    #[inline] pub unsafe fn create_vector2_key_frame_animation(&self) -> Result<Option<ComPtr<Vector2KeyFrameAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateVector2KeyFrameAnimation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_vector3_key_frame_animation(&self) -> Result<ComPtr<Vector3KeyFrameAnimation>> {
+    #[inline] pub unsafe fn create_vector3_key_frame_animation(&self) -> Result<Option<ComPtr<Vector3KeyFrameAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateVector3KeyFrameAnimation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_vector4_key_frame_animation(&self) -> Result<ComPtr<Vector4KeyFrameAnimation>> {
+    #[inline] pub unsafe fn create_vector4_key_frame_animation(&self) -> Result<Option<ComPtr<Vector4KeyFrameAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateVector4KeyFrameAnimation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_commit_batch(&self, batchType: CompositionBatchTypes) -> Result<ComPtr<CompositionCommitBatch>> {
+    #[inline] pub unsafe fn get_commit_batch(&self, batchType: CompositionBatchTypes) -> Result<Option<ComPtr<CompositionCommitBatch>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCommitBatch)(self as *const _ as *mut _, batchType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class Compositor: ICompositor}
@@ -17265,70 +17265,70 @@ RT_INTERFACE!{interface ICompositor2(ICompositor2Vtbl): IInspectable(IInspectabl
     fn CreateStepEasingFunctionWithStepCount(&self, stepCount: i32, out: *mut *mut StepEasingFunction) -> HRESULT
 }}
 impl ICompositor2 {
-    #[inline] pub unsafe fn create_ambient_light(&self) -> Result<ComPtr<AmbientLight>> {
+    #[inline] pub unsafe fn create_ambient_light(&self) -> Result<Option<ComPtr<AmbientLight>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAmbientLight)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_animation_group(&self) -> Result<ComPtr<CompositionAnimationGroup>> {
+    #[inline] pub unsafe fn create_animation_group(&self) -> Result<Option<ComPtr<CompositionAnimationGroup>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAnimationGroup)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_backdrop_brush(&self) -> Result<ComPtr<CompositionBackdropBrush>> {
+    #[inline] pub unsafe fn create_backdrop_brush(&self) -> Result<Option<ComPtr<CompositionBackdropBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateBackdropBrush)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_distant_light(&self) -> Result<ComPtr<DistantLight>> {
+    #[inline] pub unsafe fn create_distant_light(&self) -> Result<Option<ComPtr<DistantLight>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateDistantLight)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_drop_shadow(&self) -> Result<ComPtr<DropShadow>> {
+    #[inline] pub unsafe fn create_drop_shadow(&self) -> Result<Option<ComPtr<DropShadow>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateDropShadow)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_implicit_animation_collection(&self) -> Result<ComPtr<ImplicitAnimationCollection>> {
+    #[inline] pub unsafe fn create_implicit_animation_collection(&self) -> Result<Option<ComPtr<ImplicitAnimationCollection>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateImplicitAnimationCollection)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_layer_visual(&self) -> Result<ComPtr<LayerVisual>> {
+    #[inline] pub unsafe fn create_layer_visual(&self) -> Result<Option<ComPtr<LayerVisual>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateLayerVisual)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_mask_brush(&self) -> Result<ComPtr<CompositionMaskBrush>> {
+    #[inline] pub unsafe fn create_mask_brush(&self) -> Result<Option<ComPtr<CompositionMaskBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateMaskBrush)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_nine_grid_brush(&self) -> Result<ComPtr<CompositionNineGridBrush>> {
+    #[inline] pub unsafe fn create_nine_grid_brush(&self) -> Result<Option<ComPtr<CompositionNineGridBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateNineGridBrush)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_point_light(&self) -> Result<ComPtr<PointLight>> {
+    #[inline] pub unsafe fn create_point_light(&self) -> Result<Option<ComPtr<PointLight>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreatePointLight)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_spot_light(&self) -> Result<ComPtr<SpotLight>> {
+    #[inline] pub unsafe fn create_spot_light(&self) -> Result<Option<ComPtr<SpotLight>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSpotLight)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_step_easing_function(&self) -> Result<ComPtr<StepEasingFunction>> {
+    #[inline] pub unsafe fn create_step_easing_function(&self) -> Result<Option<ComPtr<StepEasingFunction>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateStepEasingFunction)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_step_easing_function_with_step_count(&self, stepCount: i32) -> Result<ComPtr<StepEasingFunction>> {
+    #[inline] pub unsafe fn create_step_easing_function_with_step_count(&self, stepCount: i32) -> Result<Option<ComPtr<StepEasingFunction>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateStepEasingFunctionWithStepCount)(self as *const _ as *mut _, stepCount, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICompositor3, 3386740464, 28337, 20028, 166, 88, 103, 93, 156, 100, 212, 171);
@@ -17336,10 +17336,10 @@ RT_INTERFACE!{interface ICompositor3(ICompositor3Vtbl): IInspectable(IInspectabl
     fn CreateHostBackdropBrush(&self, out: *mut *mut CompositionBackdropBrush) -> HRESULT
 }}
 impl ICompositor3 {
-    #[inline] pub unsafe fn create_host_backdrop_brush(&self) -> Result<ComPtr<CompositionBackdropBrush>> {
+    #[inline] pub unsafe fn create_host_backdrop_brush(&self) -> Result<Option<ComPtr<CompositionBackdropBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateHostBackdropBrush)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICompositor4, 2923947914, 30992, 17445, 164, 130, 160, 91, 117, 138, 220, 233);
@@ -17352,35 +17352,35 @@ RT_INTERFACE!{interface ICompositor4(ICompositor4Vtbl): IInspectable(IInspectabl
     fn CreateSpringVector3Animation(&self, out: *mut *mut SpringVector3NaturalMotionAnimation) -> HRESULT
 }}
 impl ICompositor4 {
-    #[inline] pub unsafe fn create_color_gradient_stop(&self) -> Result<ComPtr<CompositionColorGradientStop>> {
+    #[inline] pub unsafe fn create_color_gradient_stop(&self) -> Result<Option<ComPtr<CompositionColorGradientStop>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateColorGradientStop)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_color_gradient_stop_with_offset_and_color(&self, offset: f32, color: super::Color) -> Result<ComPtr<CompositionColorGradientStop>> {
+    #[inline] pub unsafe fn create_color_gradient_stop_with_offset_and_color(&self, offset: f32, color: super::Color) -> Result<Option<ComPtr<CompositionColorGradientStop>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateColorGradientStopWithOffsetAndColor)(self as *const _ as *mut _, offset, color, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_linear_gradient_brush(&self) -> Result<ComPtr<CompositionLinearGradientBrush>> {
+    #[inline] pub unsafe fn create_linear_gradient_brush(&self) -> Result<Option<ComPtr<CompositionLinearGradientBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateLinearGradientBrush)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_spring_scalar_animation(&self) -> Result<ComPtr<SpringScalarNaturalMotionAnimation>> {
+    #[inline] pub unsafe fn create_spring_scalar_animation(&self) -> Result<Option<ComPtr<SpringScalarNaturalMotionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSpringScalarAnimation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_spring_vector2_animation(&self) -> Result<ComPtr<SpringVector2NaturalMotionAnimation>> {
+    #[inline] pub unsafe fn create_spring_vector2_animation(&self) -> Result<Option<ComPtr<SpringVector2NaturalMotionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSpringVector2Animation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_spring_vector3_animation(&self) -> Result<ComPtr<SpringVector3NaturalMotionAnimation>> {
+    #[inline] pub unsafe fn create_spring_vector3_animation(&self) -> Result<Option<ComPtr<SpringVector3NaturalMotionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSpringVector3Animation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IContainerVisual, 49724532, 60704, 18291, 175, 230, 212, 155, 74, 147, 219, 50);
@@ -17388,10 +17388,10 @@ RT_INTERFACE!{interface IContainerVisual(IContainerVisualVtbl): IInspectable(IIn
     fn get_Children(&self, out: *mut *mut VisualCollection) -> HRESULT
 }}
 impl IContainerVisual {
-    #[inline] pub unsafe fn get_children(&self) -> Result<ComPtr<VisualCollection>> {
+    #[inline] pub unsafe fn get_children(&self) -> Result<Option<ComPtr<VisualCollection>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Children)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class ContainerVisual: IContainerVisual}
@@ -17436,10 +17436,10 @@ impl IDistantLight {
         let hr = ((*self.lpVtbl).put_Color)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_coordinate_space(&self) -> Result<ComPtr<Visual>> {
+    #[inline] pub unsafe fn get_coordinate_space(&self) -> Result<Option<ComPtr<Visual>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CoordinateSpace)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_coordinate_space(&self, value: &Visual) -> Result<()> {
         let hr = ((*self.lpVtbl).put_CoordinateSpace)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -17504,10 +17504,10 @@ impl IDropShadow {
         let hr = ((*self.lpVtbl).put_Color)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_mask(&self) -> Result<ComPtr<CompositionBrush>> {
+    #[inline] pub unsafe fn get_mask(&self) -> Result<Option<ComPtr<CompositionBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Mask)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_mask(&self, value: &CompositionBrush) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Mask)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -17741,10 +17741,10 @@ RT_INTERFACE!{interface ILayerVisual(ILayerVisualVtbl): IInspectable(IInspectabl
     fn put_Effect(&self, value: *mut CompositionEffectBrush) -> HRESULT
 }}
 impl ILayerVisual {
-    #[inline] pub unsafe fn get_effect(&self) -> Result<ComPtr<CompositionEffectBrush>> {
+    #[inline] pub unsafe fn get_effect(&self) -> Result<Option<ComPtr<CompositionEffectBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Effect)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_effect(&self, value: &CompositionEffectBrush) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Effect)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -17758,10 +17758,10 @@ RT_INTERFACE!{interface ILayerVisual2(ILayerVisual2Vtbl): IInspectable(IInspecta
     fn put_Shadow(&self, value: *mut CompositionShadow) -> HRESULT
 }}
 impl ILayerVisual2 {
-    #[inline] pub unsafe fn get_shadow(&self) -> Result<ComPtr<CompositionShadow>> {
+    #[inline] pub unsafe fn get_shadow(&self) -> Result<Option<ComPtr<CompositionShadow>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Shadow)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_shadow(&self, value: &CompositionShadow) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Shadow)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -17850,10 +17850,10 @@ impl IPointLight {
         let hr = ((*self.lpVtbl).put_ConstantAttenuation)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_coordinate_space(&self) -> Result<ComPtr<Visual>> {
+    #[inline] pub unsafe fn get_coordinate_space(&self) -> Result<Option<ComPtr<Visual>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CoordinateSpace)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_coordinate_space(&self, value: &Visual) -> Result<()> {
         let hr = ((*self.lpVtbl).put_CoordinateSpace)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -17925,10 +17925,10 @@ RT_INTERFACE!{interface IRenderingDeviceReplacedEventArgs(IRenderingDeviceReplac
     fn get_GraphicsDevice(&self, out: *mut *mut CompositionGraphicsDevice) -> HRESULT
 }}
 impl IRenderingDeviceReplacedEventArgs {
-    #[inline] pub unsafe fn get_graphics_device(&self) -> Result<ComPtr<CompositionGraphicsDevice>> {
+    #[inline] pub unsafe fn get_graphics_device(&self) -> Result<Option<ComPtr<CompositionGraphicsDevice>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_GraphicsDevice)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class RenderingDeviceReplacedEventArgs: IRenderingDeviceReplacedEventArgs}
@@ -17958,19 +17958,19 @@ RT_INTERFACE!{interface IScalarNaturalMotionAnimation(IScalarNaturalMotionAnimat
     fn put_InitialVelocity(&self, value: f32) -> HRESULT
 }}
 impl IScalarNaturalMotionAnimation {
-    #[inline] pub unsafe fn get_final_value(&self) -> Result<ComPtr<super::super::foundation::IReference<f32>>> {
+    #[inline] pub unsafe fn get_final_value(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<f32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FinalValue)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_final_value(&self, value: &super::super::foundation::IReference<f32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_FinalValue)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_initial_value(&self) -> Result<ComPtr<super::super::foundation::IReference<f32>>> {
+    #[inline] pub unsafe fn get_initial_value(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<f32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InitialValue)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_initial_value(&self, value: &super::super::foundation::IReference<f32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_InitialValue)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -18028,10 +18028,10 @@ impl ISpotLight {
         let hr = ((*self.lpVtbl).put_ConstantAttenuation)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_coordinate_space(&self) -> Result<ComPtr<Visual>> {
+    #[inline] pub unsafe fn get_coordinate_space(&self) -> Result<Option<ComPtr<Visual>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CoordinateSpace)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_coordinate_space(&self, value: &Visual) -> Result<()> {
         let hr = ((*self.lpVtbl).put_CoordinateSpace)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -18246,10 +18246,10 @@ RT_INTERFACE!{interface ISpriteVisual(ISpriteVisualVtbl): IInspectable(IInspecta
     fn put_Brush(&self, value: *mut CompositionBrush) -> HRESULT
 }}
 impl ISpriteVisual {
-    #[inline] pub unsafe fn get_brush(&self) -> Result<ComPtr<CompositionBrush>> {
+    #[inline] pub unsafe fn get_brush(&self) -> Result<Option<ComPtr<CompositionBrush>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Brush)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_brush(&self, value: &CompositionBrush) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Brush)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -18263,10 +18263,10 @@ RT_INTERFACE!{interface ISpriteVisual2(ISpriteVisual2Vtbl): IInspectable(IInspec
     fn put_Shadow(&self, value: *mut CompositionShadow) -> HRESULT
 }}
 impl ISpriteVisual2 {
-    #[inline] pub unsafe fn get_shadow(&self) -> Result<ComPtr<CompositionShadow>> {
+    #[inline] pub unsafe fn get_shadow(&self) -> Result<Option<ComPtr<CompositionShadow>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Shadow)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_shadow(&self, value: &CompositionShadow) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Shadow)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -18360,19 +18360,19 @@ RT_INTERFACE!{interface IVector2NaturalMotionAnimation(IVector2NaturalMotionAnim
     fn put_InitialVelocity(&self, value: super::super::foundation::numerics::Vector2) -> HRESULT
 }}
 impl IVector2NaturalMotionAnimation {
-    #[inline] pub unsafe fn get_final_value(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::numerics::Vector2>>> {
+    #[inline] pub unsafe fn get_final_value(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::numerics::Vector2>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FinalValue)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_final_value(&self, value: &super::super::foundation::IReference<super::super::foundation::numerics::Vector2>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_FinalValue)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_initial_value(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::numerics::Vector2>>> {
+    #[inline] pub unsafe fn get_initial_value(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::numerics::Vector2>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InitialValue)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_initial_value(&self, value: &super::super::foundation::IReference<super::super::foundation::numerics::Vector2>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_InitialValue)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -18419,19 +18419,19 @@ RT_INTERFACE!{interface IVector3NaturalMotionAnimation(IVector3NaturalMotionAnim
     fn put_InitialVelocity(&self, value: super::super::foundation::numerics::Vector3) -> HRESULT
 }}
 impl IVector3NaturalMotionAnimation {
-    #[inline] pub unsafe fn get_final_value(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::numerics::Vector3>>> {
+    #[inline] pub unsafe fn get_final_value(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::numerics::Vector3>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FinalValue)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_final_value(&self, value: &super::super::foundation::IReference<super::super::foundation::numerics::Vector3>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_FinalValue)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_initial_value(&self) -> Result<ComPtr<super::super::foundation::IReference<super::super::foundation::numerics::Vector3>>> {
+    #[inline] pub unsafe fn get_initial_value(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::numerics::Vector3>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InitialValue)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_initial_value(&self, value: &super::super::foundation::IReference<super::super::foundation::numerics::Vector3>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_InitialValue)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -18541,10 +18541,10 @@ impl IVisual {
         let hr = ((*self.lpVtbl).put_CenterPoint)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_clip(&self) -> Result<ComPtr<CompositionClip>> {
+    #[inline] pub unsafe fn get_clip(&self) -> Result<Option<ComPtr<CompositionClip>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Clip)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_clip(&self, value: &CompositionClip) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Clip)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -18595,10 +18595,10 @@ impl IVisual {
         let hr = ((*self.lpVtbl).put_Orientation)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_parent(&self) -> Result<ComPtr<ContainerVisual>> {
+    #[inline] pub unsafe fn get_parent(&self) -> Result<Option<ComPtr<ContainerVisual>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Parent)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_rotation_angle(&self) -> Result<f32> {
         let mut out = zeroed();
@@ -18666,10 +18666,10 @@ RT_INTERFACE!{interface IVisual2(IVisual2Vtbl): IInspectable(IInspectableVtbl) [
     fn put_RelativeSizeAdjustment(&self, value: super::super::foundation::numerics::Vector2) -> HRESULT
 }}
 impl IVisual2 {
-    #[inline] pub unsafe fn get_parent_for_transform(&self) -> Result<ComPtr<Visual>> {
+    #[inline] pub unsafe fn get_parent_for_transform(&self) -> Result<Option<ComPtr<Visual>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ParentForTransform)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_parent_for_transform(&self, value: &Visual) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ParentForTransform)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -18803,10 +18803,10 @@ impl ISceneLightingEffect {
         let hr = ((*self.lpVtbl).put_DiffuseAmount)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_normal_map_source(&self) -> Result<ComPtr<::rt::gen::windows::graphics::effects::IGraphicsEffectSource>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn get_normal_map_source(&self) -> Result<Option<ComPtr<::rt::gen::windows::graphics::effects::IGraphicsEffectSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NormalMapSource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[cfg(feature="windows-graphics")] #[inline] pub unsafe fn set_normal_map_source(&self, value: &::rt::gen::windows::graphics::effects::IGraphicsEffectSource) -> Result<()> {
         let hr = ((*self.lpVtbl).put_NormalMapSource)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -18864,19 +18864,19 @@ RT_INTERFACE!{interface ICompositionConditionalValue(ICompositionConditionalValu
     fn put_Value(&self, value: *mut super::ExpressionAnimation) -> HRESULT
 }}
 impl ICompositionConditionalValue {
-    #[inline] pub unsafe fn get_condition(&self) -> Result<ComPtr<super::ExpressionAnimation>> {
+    #[inline] pub unsafe fn get_condition(&self) -> Result<Option<ComPtr<super::ExpressionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Condition)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_condition(&self, value: &super::ExpressionAnimation) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Condition)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_value(&self) -> Result<ComPtr<super::ExpressionAnimation>> {
+    #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<super::ExpressionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_value(&self, value: &super::ExpressionAnimation) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -18886,7 +18886,7 @@ impl ICompositionConditionalValue {
 RT_CLASS!{class CompositionConditionalValue: ICompositionConditionalValue}
 impl RtActivatable<ICompositionConditionalValueStatics> for CompositionConditionalValue {}
 impl CompositionConditionalValue {
-    #[inline] pub fn create(compositor: &super::Compositor) -> Result<ComPtr<CompositionConditionalValue>> { unsafe {
+    #[inline] pub fn create(compositor: &super::Compositor) -> Result<Option<ComPtr<CompositionConditionalValue>>> { unsafe {
         <Self as RtActivatable<ICompositionConditionalValueStatics>>::get_activation_factory().create(compositor)
     }}
 }
@@ -18896,10 +18896,10 @@ RT_INTERFACE!{static interface ICompositionConditionalValueStatics(ICompositionC
     fn Create(&self, compositor: *mut super::Compositor, out: *mut *mut CompositionConditionalValue) -> HRESULT
 }}
 impl ICompositionConditionalValueStatics {
-    #[inline] pub unsafe fn create(&self, compositor: &super::Compositor) -> Result<ComPtr<CompositionConditionalValue>> {
+    #[inline] pub unsafe fn create(&self, compositor: &super::Compositor) -> Result<Option<ComPtr<CompositionConditionalValue>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, compositor as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_ICompositionInteractionSource, 70984753, 1763, 18778, 186, 84, 64, 159, 0, 23, 250, 192);
@@ -18976,10 +18976,10 @@ RT_INTERFACE!{interface IInteractionTracker(IInteractionTrackerVtbl): IInspectab
     fn TryUpdateScaleWithAdditionalVelocity(&self, velocityInPercentPerSecond: f32, centerPoint: ::rt::gen::windows::foundation::numerics::Vector3, out: *mut i32) -> HRESULT
 }}
 impl IInteractionTracker {
-    #[inline] pub unsafe fn get_interaction_sources(&self) -> Result<ComPtr<CompositionInteractionSourceCollection>> {
+    #[inline] pub unsafe fn get_interaction_sources(&self) -> Result<Option<ComPtr<CompositionInteractionSourceCollection>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InteractionSources)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_is_position_rounding_suggested(&self) -> Result<bool> {
         let mut out = zeroed();
@@ -19032,20 +19032,20 @@ impl IInteractionTracker {
         let hr = ((*self.lpVtbl).get_NaturalRestingScale)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_owner(&self) -> Result<ComPtr<IInteractionTrackerOwner>> {
+    #[inline] pub unsafe fn get_owner(&self) -> Result<Option<ComPtr<IInteractionTrackerOwner>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Owner)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_position(&self) -> Result<::rt::gen::windows::foundation::numerics::Vector3> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_position_inertia_decay_rate(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>>> {
+    #[inline] pub unsafe fn get_position_inertia_decay_rate(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PositionInertiaDecayRate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_position_inertia_decay_rate(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PositionInertiaDecayRate)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -19061,10 +19061,10 @@ impl IInteractionTracker {
         let hr = ((*self.lpVtbl).get_Scale)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_scale_inertia_decay_rate(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<f32>>> {
+    #[inline] pub unsafe fn get_scale_inertia_decay_rate(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<f32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ScaleInertiaDecayRate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_scale_inertia_decay_rate(&self, value: &::rt::gen::windows::foundation::IReference<f32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ScaleInertiaDecayRate)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -19134,10 +19134,10 @@ impl IInteractionTracker {
 RT_CLASS!{class InteractionTracker: IInteractionTracker}
 impl RtActivatable<IInteractionTrackerStatics> for InteractionTracker {}
 impl InteractionTracker {
-    #[inline] pub fn create(compositor: &super::Compositor) -> Result<ComPtr<InteractionTracker>> { unsafe {
+    #[inline] pub fn create(compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTracker>>> { unsafe {
         <Self as RtActivatable<IInteractionTrackerStatics>>::get_activation_factory().create(compositor)
     }}
-    #[inline] pub fn create_with_owner(compositor: &super::Compositor, owner: &IInteractionTrackerOwner) -> Result<ComPtr<InteractionTracker>> { unsafe {
+    #[inline] pub fn create_with_owner(compositor: &super::Compositor, owner: &IInteractionTrackerOwner) -> Result<Option<ComPtr<InteractionTracker>>> { unsafe {
         <Self as RtActivatable<IInteractionTrackerStatics>>::get_activation_factory().create_with_owner(compositor, owner)
     }}
 }
@@ -19208,19 +19208,19 @@ RT_INTERFACE!{interface IInteractionTrackerInertiaMotion(IInteractionTrackerIner
     fn put_Motion(&self, value: *mut super::ExpressionAnimation) -> HRESULT
 }}
 impl IInteractionTrackerInertiaMotion {
-    #[inline] pub unsafe fn get_condition(&self) -> Result<ComPtr<super::ExpressionAnimation>> {
+    #[inline] pub unsafe fn get_condition(&self) -> Result<Option<ComPtr<super::ExpressionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Condition)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_condition(&self, value: &super::ExpressionAnimation) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Condition)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_motion(&self) -> Result<ComPtr<super::ExpressionAnimation>> {
+    #[inline] pub unsafe fn get_motion(&self) -> Result<Option<ComPtr<super::ExpressionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Motion)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_motion(&self, value: &super::ExpressionAnimation) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Motion)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -19230,7 +19230,7 @@ impl IInteractionTrackerInertiaMotion {
 RT_CLASS!{class InteractionTrackerInertiaMotion: IInteractionTrackerInertiaMotion}
 impl RtActivatable<IInteractionTrackerInertiaMotionStatics> for InteractionTrackerInertiaMotion {}
 impl InteractionTrackerInertiaMotion {
-    #[inline] pub fn create(compositor: &super::Compositor) -> Result<ComPtr<InteractionTrackerInertiaMotion>> { unsafe {
+    #[inline] pub fn create(compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTrackerInertiaMotion>>> { unsafe {
         <Self as RtActivatable<IInteractionTrackerInertiaMotionStatics>>::get_activation_factory().create(compositor)
     }}
 }
@@ -19240,10 +19240,10 @@ RT_INTERFACE!{static interface IInteractionTrackerInertiaMotionStatics(IInteract
     fn Create(&self, compositor: *mut super::Compositor, out: *mut *mut InteractionTrackerInertiaMotion) -> HRESULT
 }}
 impl IInteractionTrackerInertiaMotionStatics {
-    #[inline] pub unsafe fn create(&self, compositor: &super::Compositor) -> Result<ComPtr<InteractionTrackerInertiaMotion>> {
+    #[inline] pub unsafe fn create(&self, compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTrackerInertiaMotion>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, compositor as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IInteractionTrackerInertiaNaturalMotion, 1890376366, 10204, 18669, 163, 195, 109, 97, 201, 160, 41, 210);
@@ -19254,19 +19254,19 @@ RT_INTERFACE!{interface IInteractionTrackerInertiaNaturalMotion(IInteractionTrac
     fn put_NaturalMotion(&self, value: *mut super::ScalarNaturalMotionAnimation) -> HRESULT
 }}
 impl IInteractionTrackerInertiaNaturalMotion {
-    #[inline] pub unsafe fn get_condition(&self) -> Result<ComPtr<super::ExpressionAnimation>> {
+    #[inline] pub unsafe fn get_condition(&self) -> Result<Option<ComPtr<super::ExpressionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Condition)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_condition(&self, value: &super::ExpressionAnimation) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Condition)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_natural_motion(&self) -> Result<ComPtr<super::ScalarNaturalMotionAnimation>> {
+    #[inline] pub unsafe fn get_natural_motion(&self) -> Result<Option<ComPtr<super::ScalarNaturalMotionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NaturalMotion)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_natural_motion(&self, value: &super::ScalarNaturalMotionAnimation) -> Result<()> {
         let hr = ((*self.lpVtbl).put_NaturalMotion)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -19276,7 +19276,7 @@ impl IInteractionTrackerInertiaNaturalMotion {
 RT_CLASS!{class InteractionTrackerInertiaNaturalMotion: IInteractionTrackerInertiaNaturalMotion}
 impl RtActivatable<IInteractionTrackerInertiaNaturalMotionStatics> for InteractionTrackerInertiaNaturalMotion {}
 impl InteractionTrackerInertiaNaturalMotion {
-    #[inline] pub fn create(compositor: &super::Compositor) -> Result<ComPtr<InteractionTrackerInertiaNaturalMotion>> { unsafe {
+    #[inline] pub fn create(compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTrackerInertiaNaturalMotion>>> { unsafe {
         <Self as RtActivatable<IInteractionTrackerInertiaNaturalMotionStatics>>::get_activation_factory().create(compositor)
     }}
 }
@@ -19286,10 +19286,10 @@ RT_INTERFACE!{static interface IInteractionTrackerInertiaNaturalMotionStatics(II
     fn Create(&self, compositor: *mut super::Compositor, out: *mut *mut InteractionTrackerInertiaNaturalMotion) -> HRESULT
 }}
 impl IInteractionTrackerInertiaNaturalMotionStatics {
-    #[inline] pub unsafe fn create(&self, compositor: &super::Compositor) -> Result<ComPtr<InteractionTrackerInertiaNaturalMotion>> {
+    #[inline] pub unsafe fn create(&self, compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTrackerInertiaNaturalMotion>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, compositor as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IInteractionTrackerInertiaRestingValue, 2264394761, 20630, 16752, 156, 200, 223, 47, 225, 1, 187, 147);
@@ -19300,19 +19300,19 @@ RT_INTERFACE!{interface IInteractionTrackerInertiaRestingValue(IInteractionTrack
     fn put_RestingValue(&self, value: *mut super::ExpressionAnimation) -> HRESULT
 }}
 impl IInteractionTrackerInertiaRestingValue {
-    #[inline] pub unsafe fn get_condition(&self) -> Result<ComPtr<super::ExpressionAnimation>> {
+    #[inline] pub unsafe fn get_condition(&self) -> Result<Option<ComPtr<super::ExpressionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Condition)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_condition(&self, value: &super::ExpressionAnimation) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Condition)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_resting_value(&self) -> Result<ComPtr<super::ExpressionAnimation>> {
+    #[inline] pub unsafe fn get_resting_value(&self) -> Result<Option<ComPtr<super::ExpressionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RestingValue)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_resting_value(&self, value: &super::ExpressionAnimation) -> Result<()> {
         let hr = ((*self.lpVtbl).put_RestingValue)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -19322,7 +19322,7 @@ impl IInteractionTrackerInertiaRestingValue {
 RT_CLASS!{class InteractionTrackerInertiaRestingValue: IInteractionTrackerInertiaRestingValue}
 impl RtActivatable<IInteractionTrackerInertiaRestingValueStatics> for InteractionTrackerInertiaRestingValue {}
 impl InteractionTrackerInertiaRestingValue {
-    #[inline] pub fn create(compositor: &super::Compositor) -> Result<ComPtr<InteractionTrackerInertiaRestingValue>> { unsafe {
+    #[inline] pub fn create(compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTrackerInertiaRestingValue>>> { unsafe {
         <Self as RtActivatable<IInteractionTrackerInertiaRestingValueStatics>>::get_activation_factory().create(compositor)
     }}
 }
@@ -19332,10 +19332,10 @@ RT_INTERFACE!{static interface IInteractionTrackerInertiaRestingValueStatics(IIn
     fn Create(&self, compositor: *mut super::Compositor, out: *mut *mut InteractionTrackerInertiaRestingValue) -> HRESULT
 }}
 impl IInteractionTrackerInertiaRestingValueStatics {
-    #[inline] pub unsafe fn create(&self, compositor: &super::Compositor) -> Result<ComPtr<InteractionTrackerInertiaRestingValue>> {
+    #[inline] pub unsafe fn create(&self, compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTrackerInertiaRestingValue>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, compositor as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IInteractionTrackerInertiaStateEnteredArgs, 2266008818, 59391, 20349, 159, 253, 215, 47, 30, 64, 155, 99);
@@ -19349,15 +19349,15 @@ RT_INTERFACE!{interface IInteractionTrackerInertiaStateEnteredArgs(IInteractionT
     fn get_ScaleVelocityInPercentPerSecond(&self, out: *mut f32) -> HRESULT
 }}
 impl IInteractionTrackerInertiaStateEnteredArgs {
-    #[inline] pub unsafe fn get_modified_resting_position(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>>> {
+    #[inline] pub unsafe fn get_modified_resting_position(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::numerics::Vector3>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ModifiedRestingPosition)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_modified_resting_scale(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IReference<f32>>> {
+    #[inline] pub unsafe fn get_modified_resting_scale(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<f32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ModifiedRestingScale)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_natural_resting_position(&self) -> Result<::rt::gen::windows::foundation::numerics::Vector3> {
         let mut out = zeroed();
@@ -19451,15 +19451,15 @@ RT_INTERFACE!{static interface IInteractionTrackerStatics(IInteractionTrackerSta
     fn CreateWithOwner(&self, compositor: *mut super::Compositor, owner: *mut IInteractionTrackerOwner, out: *mut *mut InteractionTracker) -> HRESULT
 }}
 impl IInteractionTrackerStatics {
-    #[inline] pub unsafe fn create(&self, compositor: &super::Compositor) -> Result<ComPtr<InteractionTracker>> {
+    #[inline] pub unsafe fn create(&self, compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTracker>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, compositor as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_with_owner(&self, compositor: &super::Compositor, owner: &IInteractionTrackerOwner) -> Result<ComPtr<InteractionTracker>> {
+    #[inline] pub unsafe fn create_with_owner(&self, compositor: &super::Compositor, owner: &IInteractionTrackerOwner) -> Result<Option<ComPtr<InteractionTracker>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateWithOwner)(self as *const _ as *mut _, compositor as *const _ as *mut _, owner as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IInteractionTrackerValuesChangedArgs, 3474290927, 54239, 17665, 185, 230, 240, 47, 178, 47, 115, 208);
@@ -19503,19 +19503,19 @@ RT_INTERFACE!{interface IInteractionTrackerVector2InertiaNaturalMotion(IInteract
     fn put_NaturalMotion(&self, value: *mut super::Vector2NaturalMotionAnimation) -> HRESULT
 }}
 impl IInteractionTrackerVector2InertiaNaturalMotion {
-    #[inline] pub unsafe fn get_condition(&self) -> Result<ComPtr<super::ExpressionAnimation>> {
+    #[inline] pub unsafe fn get_condition(&self) -> Result<Option<ComPtr<super::ExpressionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Condition)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_condition(&self, value: &super::ExpressionAnimation) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Condition)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_natural_motion(&self) -> Result<ComPtr<super::Vector2NaturalMotionAnimation>> {
+    #[inline] pub unsafe fn get_natural_motion(&self) -> Result<Option<ComPtr<super::Vector2NaturalMotionAnimation>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NaturalMotion)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_natural_motion(&self, value: &super::Vector2NaturalMotionAnimation) -> Result<()> {
         let hr = ((*self.lpVtbl).put_NaturalMotion)(self as *const _ as *mut _, value as *const _ as *mut _);
@@ -19525,7 +19525,7 @@ impl IInteractionTrackerVector2InertiaNaturalMotion {
 RT_CLASS!{class InteractionTrackerVector2InertiaNaturalMotion: IInteractionTrackerVector2InertiaNaturalMotion}
 impl RtActivatable<IInteractionTrackerVector2InertiaNaturalMotionStatics> for InteractionTrackerVector2InertiaNaturalMotion {}
 impl InteractionTrackerVector2InertiaNaturalMotion {
-    #[inline] pub fn create(compositor: &super::Compositor) -> Result<ComPtr<InteractionTrackerVector2InertiaNaturalMotion>> { unsafe {
+    #[inline] pub fn create(compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTrackerVector2InertiaNaturalMotion>>> { unsafe {
         <Self as RtActivatable<IInteractionTrackerVector2InertiaNaturalMotionStatics>>::get_activation_factory().create(compositor)
     }}
 }
@@ -19535,10 +19535,10 @@ RT_INTERFACE!{static interface IInteractionTrackerVector2InertiaNaturalMotionSta
     fn Create(&self, compositor: *mut super::Compositor, out: *mut *mut InteractionTrackerVector2InertiaNaturalMotion) -> HRESULT
 }}
 impl IInteractionTrackerVector2InertiaNaturalMotionStatics {
-    #[inline] pub unsafe fn create(&self, compositor: &super::Compositor) -> Result<ComPtr<InteractionTrackerVector2InertiaNaturalMotion>> {
+    #[inline] pub unsafe fn create(&self, compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTrackerVector2InertiaNaturalMotion>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, compositor as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IVisualInteractionSource, 3389950598, 55510, 16657, 176, 136, 112, 52, 123, 210, 176, 237);
@@ -19646,10 +19646,10 @@ impl IVisualInteractionSource {
         let hr = ((*self.lpVtbl).put_ScaleSourceMode)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_source(&self) -> Result<ComPtr<super::Visual>> {
+    #[inline] pub unsafe fn get_source(&self) -> Result<Option<ComPtr<super::Visual>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn try_redirect_for_manipulation(&self, pointerPoint: &super::super::input::PointerPoint) -> Result<()> {
         let hr = ((*self.lpVtbl).TryRedirectForManipulation)(self as *const _ as *mut _, pointerPoint as *const _ as *mut _);
@@ -19659,7 +19659,7 @@ impl IVisualInteractionSource {
 RT_CLASS!{class VisualInteractionSource: IVisualInteractionSource}
 impl RtActivatable<IVisualInteractionSourceStatics> for VisualInteractionSource {}
 impl VisualInteractionSource {
-    #[inline] pub fn create(source: &super::Visual) -> Result<ComPtr<VisualInteractionSource>> { unsafe {
+    #[inline] pub fn create(source: &super::Visual) -> Result<Option<ComPtr<VisualInteractionSource>>> { unsafe {
         <Self as RtActivatable<IVisualInteractionSourceStatics>>::get_activation_factory().create(source)
     }}
 }
@@ -19742,10 +19742,10 @@ RT_INTERFACE!{static interface IVisualInteractionSourceStatics(IVisualInteractio
     fn Create(&self, source: *mut super::Visual, out: *mut *mut VisualInteractionSource) -> HRESULT
 }}
 impl IVisualInteractionSourceStatics {
-    #[inline] pub unsafe fn create(&self, source: &super::Visual) -> Result<ComPtr<VisualInteractionSource>> {
+    #[inline] pub unsafe fn create(&self, source: &super::Visual) -> Result<Option<ComPtr<VisualInteractionSource>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, source as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.UI.Composition.Interactions

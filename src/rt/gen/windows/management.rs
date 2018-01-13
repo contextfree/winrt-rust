@@ -97,10 +97,10 @@ RT_INTERFACE!{interface IMdmSession(IMdmSessionVtbl): IInspectable(IInspectableV
     fn StartWithAlertsAsync(&self, alerts: *mut super::foundation::collections::IIterable<MdmAlert>, out: *mut *mut super::foundation::IAsyncAction) -> HRESULT
 }}
 impl IMdmSession {
-    #[inline] pub unsafe fn get_alerts(&self) -> Result<ComPtr<super::foundation::collections::IVectorView<MdmAlert>>> {
+    #[inline] pub unsafe fn get_alerts(&self) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<MdmAlert>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Alerts)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_extended_error(&self) -> Result<super::foundation::HResult> {
         let mut out = zeroed();
@@ -141,16 +141,16 @@ RT_CLASS!{class MdmSession: IMdmSession}
 RT_CLASS!{static class MdmSessionManager}
 impl RtActivatable<IMdmSessionManagerStatics> for MdmSessionManager {}
 impl MdmSessionManager {
-    #[inline] pub fn get_session_ids() -> Result<ComPtr<super::foundation::collections::IVectorView<HString>>> { unsafe {
+    #[inline] pub fn get_session_ids() -> Result<Option<ComPtr<super::foundation::collections::IVectorView<HString>>>> { unsafe {
         <Self as RtActivatable<IMdmSessionManagerStatics>>::get_activation_factory().get_session_ids()
     }}
-    #[inline] pub fn try_create_session() -> Result<ComPtr<MdmSession>> { unsafe {
+    #[inline] pub fn try_create_session() -> Result<Option<ComPtr<MdmSession>>> { unsafe {
         <Self as RtActivatable<IMdmSessionManagerStatics>>::get_activation_factory().try_create_session()
     }}
     #[inline] pub fn delete_session_by_id(sessionId: &HStringArg) -> Result<()> { unsafe {
         <Self as RtActivatable<IMdmSessionManagerStatics>>::get_activation_factory().delete_session_by_id(sessionId)
     }}
-    #[inline] pub fn get_session_by_id(sessionId: &HStringArg) -> Result<ComPtr<MdmSession>> { unsafe {
+    #[inline] pub fn get_session_by_id(sessionId: &HStringArg) -> Result<Option<ComPtr<MdmSession>>> { unsafe {
         <Self as RtActivatable<IMdmSessionManagerStatics>>::get_activation_factory().get_session_by_id(sessionId)
     }}
 }
@@ -163,24 +163,24 @@ RT_INTERFACE!{static interface IMdmSessionManagerStatics(IMdmSessionManagerStati
     fn GetSessionById(&self, sessionId: HSTRING, out: *mut *mut MdmSession) -> HRESULT
 }}
 impl IMdmSessionManagerStatics {
-    #[inline] pub unsafe fn get_session_ids(&self) -> Result<ComPtr<super::foundation::collections::IVectorView<HString>>> {
+    #[inline] pub unsafe fn get_session_ids(&self) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SessionIds)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_create_session(&self) -> Result<ComPtr<MdmSession>> {
+    #[inline] pub unsafe fn try_create_session(&self) -> Result<Option<ComPtr<MdmSession>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryCreateSession)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn delete_session_by_id(&self, sessionId: &HStringArg) -> Result<()> {
         let hr = ((*self.lpVtbl).DeleteSessionById)(self as *const _ as *mut _, sessionId.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_session_by_id(&self, sessionId: &HStringArg) -> Result<ComPtr<MdmSession>> {
+    #[inline] pub unsafe fn get_session_by_id(&self, sessionId: &HStringArg) -> Result<Option<ComPtr<MdmSession>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetSessionById)(self as *const _ as *mut _, sessionId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_ENUM! { enum MdmSessionState: i32 {
@@ -283,59 +283,59 @@ impl IPackageManager {
         let hr = ((*self.lpVtbl).RegisterPackageAsync)(self as *const _ as *mut _, manifestUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages(&self) -> Result<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id(&self, userSecurityId: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id(&self, userSecurityId: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityId)(self as *const _ as *mut _, userSecurityId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher(&self, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher(&self, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByNamePublisher)(self as *const _ as *mut _, packageName.get(), packagePublisher.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdNamePublisher)(self as *const _ as *mut _, userSecurityId.get(), packageName.get(), packagePublisher.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_users(&self, packageFullName: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IIterable<PackageUserInformation>>> {
+    #[inline] pub unsafe fn find_users(&self, packageFullName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<PackageUserInformation>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindUsers)(self as *const _ as *mut _, packageFullName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn set_package_state(&self, packageFullName: &HStringArg, packageState: PackageState) -> Result<()> {
         let hr = ((*self.lpVtbl).SetPackageState)(self as *const _ as *mut _, packageFullName.get(), packageState);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_package_by_package_full_name(&self, packageFullName: &HStringArg) -> Result<ComPtr<super::super::applicationmodel::Package>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_package_by_package_full_name(&self, packageFullName: &HStringArg) -> Result<Option<ComPtr<super::super::applicationmodel::Package>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackageByPackageFullName)(self as *const _ as *mut _, packageFullName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn cleanup_package_for_user_async(&self, packageName: &HStringArg, userSecurityId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CleanupPackageForUserAsync)(self as *const _ as *mut _, packageName.get(), userSecurityId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByPackageFamilyName)(self as *const _ as *mut _, packageFamilyName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdPackageFamilyName)(self as *const _ as *mut _, userSecurityId.get(), packageFamilyName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_package_by_user_security_id_package_full_name(&self, userSecurityId: &HStringArg, packageFullName: &HStringArg) -> Result<ComPtr<super::super::applicationmodel::Package>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_package_by_user_security_id_package_full_name(&self, userSecurityId: &HStringArg, packageFullName: &HStringArg) -> Result<Option<ComPtr<super::super::applicationmodel::Package>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackageByUserSecurityIdPackageFullName)(self as *const _ as *mut _, userSecurityId.get(), packageFullName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PackageManager: IPackageManager}
@@ -376,35 +376,35 @@ impl IPackageManager2 {
         let hr = ((*self.lpVtbl).RegisterPackageByFullNameAsync)(self as *const _ as *mut _, mainPackageFullName.get(), dependencyPackageFullNames as *const _ as *mut _, deploymentOptions, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_with_package_types(&self, packageTypes: PackageTypes) -> Result<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_with_package_types(&self, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesWithPackageTypes)(self as *const _ as *mut _, packageTypes, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes) -> Result<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdWithPackageTypes)(self as *const _ as *mut _, userSecurityId.get(), packageTypes, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher_with_package_types(&self, packageName: &HStringArg, packagePublisher: &HStringArg, packageTypes: PackageTypes) -> Result<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher_with_package_types(&self, packageName: &HStringArg, packagePublisher: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByNamePublisherWithPackageTypes)(self as *const _ as *mut _, packageName.get(), packagePublisher.get(), packageTypes, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher_with_package_types(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg, packageTypes: PackageTypes) -> Result<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher_with_package_types(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdNamePublisherWithPackageTypes)(self as *const _ as *mut _, userSecurityId.get(), packageName.get(), packagePublisher.get(), packageTypes, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name_with_package_types(&self, packageFamilyName: &HStringArg, packageTypes: PackageTypes) -> Result<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name_with_package_types(&self, packageFamilyName: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByPackageFamilyNameWithPackageTypes)(self as *const _ as *mut _, packageFamilyName.get(), packageTypes, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name_with_package_types(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg, packageTypes: PackageTypes) -> Result<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name_with_package_types(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdPackageFamilyNameWithPackageTypes)(self as *const _ as *mut _, userSecurityId.get(), packageFamilyName.get(), packageTypes, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn stage_user_data_async(&self, packageFullName: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
@@ -450,20 +450,20 @@ impl IPackageManager3 {
         let hr = ((*self.lpVtbl).RegisterPackageWithAppDataVolumeAsync)(self as *const _ as *mut _, manifestUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, appDataVolume as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_package_volume_by_name(&self, volumeName: &HStringArg) -> Result<ComPtr<PackageVolume>> {
+    #[inline] pub unsafe fn find_package_volume_by_name(&self, volumeName: &HStringArg) -> Result<Option<ComPtr<PackageVolume>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackageVolumeByName)(self as *const _ as *mut _, volumeName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_package_volumes(&self) -> Result<ComPtr<super::super::foundation::collections::IIterable<PackageVolume>>> {
+    #[inline] pub unsafe fn find_package_volumes(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<PackageVolume>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackageVolumes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_default_package_volume(&self) -> Result<ComPtr<PackageVolume>> {
+    #[inline] pub unsafe fn get_default_package_volume(&self) -> Result<Option<ComPtr<PackageVolume>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDefaultPackageVolume)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn move_package_to_volume_async(&self, packageFullName: &HStringArg, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
@@ -538,10 +538,10 @@ impl IPackageManager5 {
         let hr = ((*self.lpVtbl).RegisterPackageByFamilyNameAndOptionalPackagesAsync)(self as *const _ as *mut _, mainPackageFamilyName.get(), dependencyPackageFamilyNames as *const _ as *mut _, deploymentOptions, appDataVolume as *const _ as *mut _, optionalPackageFamilyNames as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_debug_settings(&self) -> Result<ComPtr<PackageManagerDebugSettings>> {
+    #[inline] pub unsafe fn get_debug_settings(&self) -> Result<Option<ComPtr<PackageManagerDebugSettings>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DebugSettings)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IPackageManager6, 138930441, 21453, 20047, 131, 46, 87, 209, 128, 246, 228, 71);
@@ -684,75 +684,75 @@ impl IPackageVolume {
         let hr = ((*self.lpVtbl).get_SupportsHardLinks)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages(&self) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher(&self, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher(&self, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByNamePublisher)(self as *const _ as *mut _, packageName.get(), packagePublisher.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByPackageFamilyName)(self as *const _ as *mut _, packageFamilyName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_with_package_types(&self, packageTypes: PackageTypes) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_with_package_types(&self, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesWithPackageTypes)(self as *const _ as *mut _, packageTypes, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher_with_packages_types(&self, packageTypes: PackageTypes, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher_with_packages_types(&self, packageTypes: PackageTypes, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByNamePublisherWithPackagesTypes)(self as *const _ as *mut _, packageTypes, packageName.get(), packagePublisher.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name_with_package_types(&self, packageTypes: PackageTypes, packageFamilyName: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name_with_package_types(&self, packageTypes: PackageTypes, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByPackageFamilyNameWithPackageTypes)(self as *const _ as *mut _, packageTypes, packageFamilyName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_package_by_package_full_name(&self, packageFullName: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_package_by_package_full_name(&self, packageFullName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackageByPackageFullName)(self as *const _ as *mut _, packageFullName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id(&self, userSecurityId: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id(&self, userSecurityId: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityId)(self as *const _ as *mut _, userSecurityId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdNamePublisher)(self as *const _ as *mut _, userSecurityId.get(), packageName.get(), packagePublisher.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdPackageFamilyName)(self as *const _ as *mut _, userSecurityId.get(), packageFamilyName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdWithPackageTypes)(self as *const _ as *mut _, userSecurityId.get(), packageTypes, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdNamePublisherWithPackageTypes)(self as *const _ as *mut _, userSecurityId.get(), packageTypes, packageName.get(), packagePublisher.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name_with_packages_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes, packageFamilyName: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name_with_packages_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdPackageFamilyNameWithPackagesTypes)(self as *const _ as *mut _, userSecurityId.get(), packageTypes, packageFamilyName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_package_by_user_security_id_package_full_name(&self, userSecurityId: &HStringArg, packageFullName: &HStringArg) -> Result<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_package_by_user_security_id_package_full_name(&self, userSecurityId: &HStringArg, packageFullName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackageByUserSecurityIdPackageFullName)(self as *const _ as *mut _, userSecurityId.get(), packageFullName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 RT_CLASS!{class PackageVolume: IPackageVolume}
@@ -787,7 +787,7 @@ use ::prelude::*;
 RT_CLASS!{static class ClassicAppManager}
 impl RtActivatable<IClassicAppManagerStatics> for ClassicAppManager {}
 impl ClassicAppManager {
-    #[inline] pub fn find_installed_app(appUninstallKey: &HStringArg) -> Result<ComPtr<InstalledClassicAppInfo>> { unsafe {
+    #[inline] pub fn find_installed_app(appUninstallKey: &HStringArg) -> Result<Option<ComPtr<InstalledClassicAppInfo>>> { unsafe {
         <Self as RtActivatable<IClassicAppManagerStatics>>::get_activation_factory().find_installed_app(appUninstallKey)
     }}
 }
@@ -797,10 +797,10 @@ RT_INTERFACE!{static interface IClassicAppManagerStatics(IClassicAppManagerStati
     fn FindInstalledApp(&self, appUninstallKey: HSTRING, out: *mut *mut InstalledClassicAppInfo) -> HRESULT
 }}
 impl IClassicAppManagerStatics {
-    #[inline] pub unsafe fn find_installed_app(&self, appUninstallKey: &HStringArg) -> Result<ComPtr<InstalledClassicAppInfo>> {
+    #[inline] pub unsafe fn find_installed_app(&self, appUninstallKey: &HStringArg) -> Result<Option<ComPtr<InstalledClassicAppInfo>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindInstalledApp)(self as *const _ as *mut _, appUninstallKey.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IInstalledClassicAppInfo, 175979939, 26064, 16518, 128, 214, 6, 16, 215, 96, 32, 125);
@@ -832,7 +832,7 @@ RT_INTERFACE!{interface IApplicationDataManager(IApplicationDataManagerVtbl): II
 RT_CLASS!{class ApplicationDataManager: IApplicationDataManager}
 impl RtActivatable<IApplicationDataManagerStatics> for ApplicationDataManager {}
 impl ApplicationDataManager {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_for_package_family(packageFamilyName: &HStringArg) -> Result<ComPtr<super::super::storage::ApplicationData>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_for_package_family(packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::storage::ApplicationData>>> { unsafe {
         <Self as RtActivatable<IApplicationDataManagerStatics>>::get_activation_factory().create_for_package_family(packageFamilyName)
     }}
 }
@@ -842,10 +842,10 @@ RT_INTERFACE!{static interface IApplicationDataManagerStatics(IApplicationDataMa
     #[cfg(feature="windows-storage")] fn CreateForPackageFamily(&self, packageFamilyName: HSTRING, out: *mut *mut super::super::storage::ApplicationData) -> HRESULT
 }}
 impl IApplicationDataManagerStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_for_package_family(&self, packageFamilyName: &HStringArg) -> Result<ComPtr<super::super::storage::ApplicationData>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_for_package_family(&self, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::storage::ApplicationData>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateForPackageFamily)(self as *const _ as *mut _, packageFamilyName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.Management.Core
@@ -854,10 +854,10 @@ use ::prelude::*;
 RT_CLASS!{static class NamedPolicy}
 impl RtActivatable<INamedPolicyStatics> for NamedPolicy {}
 impl NamedPolicy {
-    #[inline] pub fn get_policy_from_path(area: &HStringArg, name: &HStringArg) -> Result<ComPtr<NamedPolicyData>> { unsafe {
+    #[inline] pub fn get_policy_from_path(area: &HStringArg, name: &HStringArg) -> Result<Option<ComPtr<NamedPolicyData>>> { unsafe {
         <Self as RtActivatable<INamedPolicyStatics>>::get_activation_factory().get_policy_from_path(area, name)
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_policy_from_path_for_user(user: &super::super::system::User, area: &HStringArg, name: &HStringArg) -> Result<ComPtr<NamedPolicyData>> { unsafe {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_policy_from_path_for_user(user: &super::super::system::User, area: &HStringArg, name: &HStringArg) -> Result<Option<ComPtr<NamedPolicyData>>> { unsafe {
         <Self as RtActivatable<INamedPolicyStatics>>::get_activation_factory().get_policy_from_path_for_user(user, area, name)
     }}
 }
@@ -906,20 +906,20 @@ impl INamedPolicyData {
         let hr = ((*self.lpVtbl).get_IsUserPolicy)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<ComPtr<super::super::system::User>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_boolean(&self) -> Result<bool> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).GetBoolean)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_binary(&self) -> Result<ComPtr<super::super::storage::streams::IBuffer>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_binary(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetBinary)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
     #[inline] pub unsafe fn get_int32(&self) -> Result<i32> {
         let mut out = zeroed();
@@ -956,15 +956,15 @@ RT_INTERFACE!{static interface INamedPolicyStatics(INamedPolicyStaticsVtbl): IIn
     #[cfg(feature="windows-system")] fn GetPolicyFromPathForUser(&self, user: *mut super::super::system::User, area: HSTRING, name: HSTRING, out: *mut *mut NamedPolicyData) -> HRESULT
 }}
 impl INamedPolicyStatics {
-    #[inline] pub unsafe fn get_policy_from_path(&self, area: &HStringArg, name: &HStringArg) -> Result<ComPtr<NamedPolicyData>> {
+    #[inline] pub unsafe fn get_policy_from_path(&self, area: &HStringArg, name: &HStringArg) -> Result<Option<ComPtr<NamedPolicyData>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetPolicyFromPath)(self as *const _ as *mut _, area.get(), name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_policy_from_path_for_user(&self, user: &super::super::system::User, area: &HStringArg, name: &HStringArg) -> Result<ComPtr<NamedPolicyData>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_policy_from_path_for_user(&self, user: &super::super::system::User, area: &HStringArg, name: &HStringArg) -> Result<Option<ComPtr<NamedPolicyData>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetPolicyFromPathForUser)(self as *const _ as *mut _, user as *const _ as *mut _, area.get(), name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
 }
 } // Windows.Management.Policies

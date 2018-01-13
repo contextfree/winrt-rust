@@ -46,7 +46,7 @@ namespace Generator.Types
                     case TypeUsage.Raw: return $"{ t.Name }::Abi";
                     case TypeUsage.In: return $"&{ t.Name }::In";
                     case TypeUsage.Out: return $"{ t.Name }::Out";
-                    case TypeUsage.ArrayOut: return $"{ t.Name }::ArrayOut";
+                    case TypeUsage.OutNonnull: return $"{ t.Name }::ArrayOut";
                     case TypeUsage.GenericArg: return t.Name;
                     default: throw new NotSupportedException();
                 }
@@ -83,6 +83,7 @@ namespace Generator.Types
                     case TypeUsage.Raw: return "HSTRING";
                     case TypeUsage.In: return "&HStringArg";
                     case TypeUsage.Out: return "HString";
+                    case TypeUsage.OutNonnull: return "HString";
                     case TypeUsage.GenericArg: return "HString";
                     default: throw new NotSupportedException();
                 }
@@ -94,7 +95,7 @@ namespace Generator.Types
                     case TypeUsage.Raw: return "*mut IInspectable";
                     case TypeUsage.GenericArg: return "IInspectable";
                     case TypeUsage.In: return "&IInspectable";
-                    case TypeUsage.Out: return "ComPtr<IInspectable>";
+                    case TypeUsage.Out: return "Option<ComPtr<IInspectable>>";
                     default: throw new InvalidOperationException();
                 }
             }
@@ -173,6 +174,10 @@ namespace Generator.Types
                     }
                     else if (usage == TypeUsage.Out)
                     {
+                        name = $"Option<ComPtr<{ name }>>";
+                    }
+                    else if (usage == TypeUsage.OutNonnull)
+                    {
                         name = $"ComPtr<{ name }>";
                     }
                 }
@@ -191,7 +196,7 @@ namespace Generator.Types
                 case InputKind.MutSlice:
                     Assert(t.IsValueType);
                     return $"&mut [{ GetTypeName(gen, source, t, TypeUsage.In) }]";
-                case InputKind.VecBuffer: return $"&mut Vec<{ GetTypeName(gen, source, t, TypeUsage.ArrayOut) }>";
+                case InputKind.VecBuffer: return $"&mut Vec<{ GetTypeName(gen, source, t, TypeUsage.OutNonnull) }>";
                 default: throw new InvalidOperationException();
             }
         }
@@ -317,8 +322,10 @@ namespace Generator.Types
             }
         }
 
-        public static string WrapOutputParameter(string name, TypeReference t)
+        public static string WrapOutputParameter(string name, TypeReference t, bool isNonNull)
         {
+            string wrapFn = isNonNull ? "ComPtr::wrap" : "ComPtr::wrap_optional";
+
             if (t.IsGenericParameter)
             {
                 return $"{ t.Name }::wrap({ name })";
@@ -337,7 +344,7 @@ namespace Generator.Types
             }
             else if (t.FullName == "System.Object")
             {
-                return $"ComPtr::wrap({ name })";
+                return $"{ wrapFn }({ name })";
             }
             else if (t.FullName == "System.Guid")
             {
@@ -369,7 +376,7 @@ namespace Generator.Types
             }
             else // reference type
             {
-                return $"ComPtr::wrap({ name })";
+                return $"{ wrapFn }({ name })";
             }
         }
 
@@ -377,13 +384,45 @@ namespace Generator.Types
         {
             return type.Interfaces.Single(i => i.CustomAttributes.Any(a => a.AttributeType.Name == "DefaultAttribute")).InterfaceType;
         }
+
+        public static bool IsReturnTypeNonNull(TypeReference t, Generator gen)
+        {
+            var nonNullReturnTypes = new string[]
+            {
+                "Windows.Foundation.IAsyncAction",
+                "Windows.Foundation.IAsyncActionWithProgress`1",
+                "Windows.Foundation.IAsyncOperation`1",
+                "Windows.Foundation.IAsyncOperationWithProgress`2"
+            };
+
+            if (nonNullReturnTypes.Contains(t.GetElementType().FullName))
+                return true;
+
+            if (t.IsGenericParameter || t.IsArray || t.IsValueType || t.IsPrimitive ||
+                t.FullName == "System.String" || t.FullName == "System.Object" || t.FullName == "System.Guid")
+            {
+                return false;
+            }
+            else
+            {
+                // we mark class types as non-null if their default interface is non-null
+                var def = gen.GetTypeDefinition(t);
+                if (def.Kind == TypeKind.Class)
+                {
+                    var defaultInterface = TypeHelpers.GetDefaultInterface(def.Type);
+                    return nonNullReturnTypes.Contains(defaultInterface.GetElementType().FullName);
+                }
+                else
+                    return false;
+            }
+        }
     }
 
     public enum TypeUsage
     {
         In,
         Out,
-        ArrayOut,
+        OutNonnull,
         Raw,
         Alias,
         GenericArg,

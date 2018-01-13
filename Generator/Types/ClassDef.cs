@@ -56,11 +56,11 @@ namespace Generator.Types
 
             foreach (var m in factoryMethods)
             {
-                methodWrappers.Add(new ClassMethodDef(m, this));
+                methodWrappers.Add(new ClassMethodDef(m, this, true));
             }
             foreach (var m in staticMethods)
             {
-                methodWrappers.Add(new ClassMethodDef(m, this));
+                methodWrappers.Add(new ClassMethodDef(m, this, false));
             }
 
             // fix name clashes in method wrappers (caused by overloads from different interfaces)

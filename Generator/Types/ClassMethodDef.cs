@@ -54,7 +54,7 @@ namespace Generator.Types
             }
         }
 
-        public ClassMethodDef(MethodDef method, ClassDef containingClass)
+        public ClassMethodDef(MethodDef method, ClassDef containingClass, bool isFactory)
         {
             WrappedMethod = method;
             ContainingClass = containingClass;
@@ -62,7 +62,7 @@ namespace Generator.Types
 
             AddDependency(method.DeclaringType);
             inputParameters = WrappedMethod.Details.MakeInputParameters(Generator, this);
-            outType = WrappedMethod.Details.MakeOutType(Generator, this);
+            outType = WrappedMethod.Details.MakeOutType(Generator, this, isFactory);
         }
 
         public void FixupName(string suffix)

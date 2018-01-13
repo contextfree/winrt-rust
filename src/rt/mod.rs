@@ -146,7 +146,7 @@ impl<'a, T> IntoIterator for &'a IIterable<T> where T: RtType
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        unsafe { self.first().unwrap() }
+        unsafe { self.first().unwrap().unwrap() }
     }
 }
 

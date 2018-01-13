@@ -7,6 +7,14 @@ using Mono.Cecil;
 
 namespace Generator.Types
 {
+    public enum InterfaceKind
+    {
+        Unidentified,
+        Factory,
+        Statics,
+        Instance
+    }
+
     public class InterfaceDef : TypeDef
     {
         public override TypeKind Kind
@@ -18,8 +26,8 @@ namespace Generator.Types
         }
 
         public bool IsDelegate { get; private set; }
+        public InterfaceKind InterfaceKind { get; private set; }
 
-        private bool isFactoryOrStatic;
         private List<MethodDef> methods;
         public override IEnumerable<MethodDef> Methods
         {
@@ -49,7 +57,7 @@ namespace Generator.Types
                 exclusiveToType = exclusiveTo.ConstructorArguments[0].Value as TypeDefinition;
             }
 
-            isFactoryOrStatic = IsFactoryOrStatic(Generator, this, exclusiveToType);
+            InterfaceKind = GetInterfaceKind(Generator, this, exclusiveToType);
 
             rawMethodDeclarations = methods.Select(m => m.GetRawDeclaration()).ToList();
             wrapperMethodDeclarations = methods.Select(m => m.GetWrapperDefinition()).ToList();
@@ -76,7 +84,7 @@ DEFINE_IID!(IID_{ name }, { String.Join(", ", guid.ConstructorArguments.Select(a
                 genericWithBounds = "<" + String.Join(", ", t.GenericParameters.Select(p => p.Name + ": RtType")) + ">";
             }
 
-            string prependStatic = isFactoryOrStatic ? "static " : "";
+            string prependStatic = (InterfaceKind == InterfaceKind.Factory || InterfaceKind == InterfaceKind.Statics)  ? "static " : "";
 
             var rawMethodDeclarationsWithFeatures = new List<string>();
             var lastFeatureAttr = definitionFeatureConditions.LastOrDefault()?.GetAttribute();
@@ -122,7 +130,7 @@ impl{ genericWithBounds } { name }{ generic } {{
             }
         }
 
-        private bool IsFactoryOrStatic(Generator gen, TypeDef t, TypeDefinition exclusiveToType)
+        private InterfaceKind GetInterfaceKind(Generator gen, TypeDef t, TypeDefinition exclusiveToType)
         {
             var trimmedName = t.Name.TrimEnd('1', '2', '3', '4', '5', '6', '7', '8', '9');
             var guessedFromName = trimmedName.EndsWith("Factory") || trimmedName.EndsWith("Statics");
@@ -149,7 +157,12 @@ impl{ genericWithBounds } { name }{ generic } {{
                 }
             }
 
-            return candidates.Any(c => c.GetFactoryTypes().Contains(t.Type) || c.GetStaticTypes().Contains(t.Type));
+            if (candidates.Any(c => c.GetFactoryTypes().Contains(t.Type)))
+                return InterfaceKind.Factory;
+            else if (candidates.Any(c => c.GetStaticTypes().Contains(t.Type)))
+                return InterfaceKind.Statics;
+            else
+                return InterfaceKind.Instance;
         }
     }
 }
