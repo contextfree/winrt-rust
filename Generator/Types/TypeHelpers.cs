@@ -46,6 +46,7 @@ namespace Generator.Types
                     case TypeUsage.Raw: return $"{ t.Name }::Abi";
                     case TypeUsage.In: return $"&{ t.Name }::In";
                     case TypeUsage.Out: return $"{ t.Name }::Out";
+                    case TypeUsage.ArrayOut: return $"{ t.Name }::ArrayOut";
                     case TypeUsage.GenericArg: return t.Name;
                     default: throw new NotSupportedException();
                 }
@@ -190,7 +191,7 @@ namespace Generator.Types
                 case InputKind.MutSlice:
                     Assert(t.IsValueType);
                     return $"&mut [{ GetTypeName(gen, source, t, TypeUsage.In) }]";
-                case InputKind.VecBuffer: return $"&mut Vec<{ GetTypeName(gen, source, t, TypeUsage.Out) }>";
+                case InputKind.VecBuffer: return $"&mut Vec<{ GetTypeName(gen, source, t, TypeUsage.ArrayOut) }>";
                 default: throw new InvalidOperationException();
             }
         }
@@ -382,6 +383,7 @@ namespace Generator.Types
     {
         In,
         Out,
+        ArrayOut,
         Raw,
         Alias,
         GenericArg,

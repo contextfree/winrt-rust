@@ -51,6 +51,7 @@ pub trait RtType {
     type In;
     type Abi;
     type Out;
+    type ArrayOut;
 
     unsafe fn unwrap(input: &Self::In) -> Self::Abi;
     unsafe fn uninitialized() -> Self::Abi;
@@ -61,6 +62,7 @@ impl<'a> RtType for HString {
     type In = HStringArg;
     type Abi = HSTRING;
     type Out = HString;
+    type ArrayOut = Self::Out;
 
     #[doc(hidden)] #[inline]
     unsafe fn unwrap(v: &HStringArg) -> Self::Abi {
@@ -81,6 +83,7 @@ impl<T> RtType for T where T: RtValueType
     type In = T;
     type Abi = T;
     type Out = T;
+    type ArrayOut = Self::Out;
 
     #[doc(hidden)] #[inline]
     unsafe fn unwrap(v: &Self::In) -> Self::Abi {
@@ -234,11 +237,12 @@ macro_rules! RT_INTERFACE {
         impl ::RtType for $interface {
             type In = $interface;
             type Abi = *mut $interface;
-            type Out = ComPtr<$interface>;
+            type Out = Option<Self::ArrayOut>;
+            type ArrayOut = ComPtr<$interface>;
 
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
         impl ::std::ops::Deref for $interface {
             type Target = $crate::$pinterface;
@@ -282,11 +286,12 @@ macro_rules! RT_INTERFACE {
         impl ::RtType for $interface {
             type In = $interface;
             type Abi = *mut $interface;
-            type Out = ComPtr<$interface>;
+            type Out = Option<Self::ArrayOut>;
+            type ArrayOut = ComPtr<$interface>;
 
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
         impl ::std::ops::Deref for $interface {
             type Target = $crate::$pinterface;
@@ -327,11 +332,12 @@ macro_rules! RT_INTERFACE {
         impl<$t1> ::RtType for $interface<$t1> where $t1: RtType{
             type In = $interface<$t1>;
             type Abi = *mut $interface<$t1>;
-            type Out = ComPtr<$interface<$t1>>;
+            type Out = Option<Self::ArrayOut>;
+            type ArrayOut = ComPtr<$interface<$t1>>;
 
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
         impl<$t1> ::std::ops::Deref for $interface<$t1> where $t1: RtType {
             type Target = $pinterface;
@@ -371,11 +377,12 @@ macro_rules! RT_INTERFACE {
         impl<$t1, $t2> ::RtType for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type In = $interface<$t1, $t2>;
             type Abi = *mut $interface<$t1, $t2>;
-            type Out = ComPtr<$interface<$t1, $t2>>;
+            type Out = Option<Self::ArrayOut>;
+            type ArrayOut = ComPtr<$interface<$t1, $t2>>;
 
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
         impl<$t1, $t2> ::std::ops::Deref for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type Target = $pinterface;
@@ -551,11 +558,12 @@ macro_rules! RT_CLASS {
         impl ::RtType for $cls {
             type In = $cls;
             type Abi = *mut $cls;
-            type Out = ComPtr<$cls>;
+            type Out = Option<Self::ArrayOut>;
+            type ArrayOut = ComPtr<$cls>;
             
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
         impl ::std::ops::Deref for $cls {
             type Target = $interface;

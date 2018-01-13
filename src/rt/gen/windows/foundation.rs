@@ -3189,7 +3189,7 @@ impl<T: RtType> IIterator<T> {
         let hr = ((*self.lpVtbl).MoveNext)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_many(&self, items: &mut Vec<T::Out>) -> Result<()> {
+    #[inline] pub unsafe fn get_many(&self, items: &mut Vec<T::ArrayOut>) -> Result<()> {
         debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).GetMany)(self as *const _ as *mut _, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
@@ -3419,7 +3419,7 @@ impl<T: RtType> IVector<T> {
         let hr = ((*self.lpVtbl).Clear)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_many(&self, startIndex: u32, items: &mut Vec<T::Out>) -> Result<()> {
+    #[inline] pub unsafe fn get_many(&self, startIndex: u32, items: &mut Vec<T::ArrayOut>) -> Result<()> {
         debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).GetMany)(self as *const _ as *mut _, startIndex, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
@@ -3480,7 +3480,7 @@ impl<T: RtType> IVectorView<T> {
         let hr = ((*self.lpVtbl).IndexOf)(self as *const _ as *mut _, T::unwrap(value), &mut index, &mut out);
         if hr == S_OK { Ok((index, out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_many(&self, startIndex: u32, items: &mut Vec<T::Out>) -> Result<()> {
+    #[inline] pub unsafe fn get_many(&self, startIndex: u32, items: &mut Vec<T::ArrayOut>) -> Result<()> {
         debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).GetMany)(self as *const _ as *mut _, startIndex, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);

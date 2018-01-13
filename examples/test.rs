@@ -80,7 +80,7 @@ fn run() {
     let status = unsafe { asi.get_status().unwrap() };
     println!("status: {:?}", status);
 
-    let device_information_collection = async_op.blocking_get().unwrap();
+    let device_information_collection = async_op.blocking_get().unwrap().unwrap();
     println!("CLS: {}", device_information_collection.get_runtime_class_name());
     let count = unsafe { device_information_collection.get_size().unwrap() };
     println!("Device Count: {}", count);
@@ -88,6 +88,7 @@ fn run() {
     let mut remember = None;
     let mut i = 0;
     for current in device_information_collection.into_iter() {
+        let current = current.expect("current was null");
         let device_name = unsafe { current.get_name().unwrap() };
         println!("Device Name ({}): {}", i, device_name);
         if i == 100 {
@@ -100,7 +101,7 @@ fn run() {
 
     let mut buffer = Vec::with_capacity(2000);
     unsafe { device_information_collection.get_many(0, &mut buffer).unwrap() };
-    for (b, i) in buffer.iter_mut().zip(0..) {
+    for (b, i) in buffer.iter().zip(0..) {
         let device_name = unsafe { b.get_name().unwrap() };
         println!("Device Name ({}): {}", i, device_name);
     }
@@ -149,7 +150,7 @@ fn run() {
     // Walk directories up to root
     let exe_path = ::std::env::current_exe().expect("current_exe failed");
     let exe_path_str = exe_path.to_str().expect("invalid unicode path");
-    let file = StorageFile::get_file_from_path_async(&*FastHString::new(&exe_path_str)).unwrap().blocking_get().expect("get_file_from_path_async failed");
+    let file = StorageFile::get_file_from_path_async(&*FastHString::new(&exe_path_str)).unwrap().blocking_get().expect("get_file_from_path_async failed").unwrap();
     println!("File: {}", unsafe { file.query_interface::<IStorageItem>().unwrap().get_path().unwrap() });
     /*let mut parent = file.query_interface::<IStorageItem>().unwrap();
     loop {
