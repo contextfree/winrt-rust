@@ -40,7 +40,7 @@ macro_rules! impl_blocking_wait {
         #[inline]
         fn blocking_wait(&self) {
             let info = ::comptr::query_interface::<_, IAsyncInfo>(self).expect("query_interface failed");
-            let status = unsafe { info.get_status().expect("get_status failed") };
+            let status = info.get_status().expect("get_status failed");
 
             if status == ::langcompat::ASYNC_STATUS_COMPLETED {
                 return;
@@ -56,7 +56,7 @@ macro_rules! impl_blocking_wait {
                     cvar.notify_one();
                     Ok(())
                 });
-                unsafe { self.set_completed(&handler).expect("set_completed failed") };
+                self.set_completed(&handler).expect("set_completed failed");
                 // local reference to `handler` is dropped here -> Release() is called
             }
             
@@ -94,7 +94,7 @@ impl<T: RtType + 'static> RtAsyncOperation for IAsyncOperation<T>
 
     #[inline]
     fn get_results(&self) -> Result<Self::TResult> {
-        unsafe { self.get_results() }
+        self.get_results()
     }
 }
 
@@ -111,6 +111,6 @@ impl<T: RtType + 'static, P: RtType + 'static> RtAsyncOperation for IAsyncOperat
 
     #[inline]
     fn get_results(&self) -> Result<Self::TResult> {
-        unsafe { self.get_results() }
+        self.get_results()
     }
 }

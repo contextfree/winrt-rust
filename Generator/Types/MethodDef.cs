@@ -215,8 +215,8 @@ namespace Generator.Types
             var inputParameters = Details.MakeInputParameters(DeclaringType.Generator, this);
             var outType = Details.MakeOutType(DeclaringType.Generator, this, IsFactoryMethod);
 
-            return $@"#[inline] pub unsafe fn { Details.WrappedName }({ String.Join(", ", new string[] { "&self" }.Concat(inputParameters)) }) -> Result<{ outType }> {{{ Details.MakeWrapperBody(Method, IsFactoryMethod) }
-    }}";
+            return $@"#[inline] pub fn { Details.WrappedName }({ String.Join(", ", new string[] { "&self" }.Concat(inputParameters)) }) -> Result<{ outType }> {{ unsafe {{ { Details.MakeWrapperBody(Method, IsFactoryMethod) }
+    }}}}";
         }
 
         private MethodDetailsCache InitializeDetailsCache()

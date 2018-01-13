@@ -146,7 +146,7 @@ impl<'a, T> IntoIterator for &'a IIterable<T> where T: RtType
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        unsafe { self.first().unwrap().unwrap() }
+        self.first().unwrap().unwrap()
     }
 }
 
@@ -169,13 +169,11 @@ impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType
     //       in every iteration. That would require a wrapper struct with a boolean flag.
     #[inline]
     fn next(&mut self) -> Option<Self::Item> {
-        let has_next = unsafe { self.get_has_current().unwrap() };
+        let has_next = self.get_has_current().unwrap();
         if has_next {
-            unsafe {
-                let current = self.get_current().unwrap();
-                assert!(self.move_next().is_ok());
-                Some(current)
-            }
+            let current = self.get_current().unwrap();
+            assert!(self.move_next().is_ok());
+            Some(current)
         } else {
             None
         }

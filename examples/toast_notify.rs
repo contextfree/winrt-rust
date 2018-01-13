@@ -15,7 +15,7 @@ fn main() {
     rt.uninit();
 }
 
-fn run() { unsafe {
+fn run() {
     // Get a toast XML template
     let toast_xml = ToastNotificationManager::get_template_content(ToastTemplateType::ToastText02).unwrap().unwrap();
 
@@ -33,4 +33,4 @@ fn run() { unsafe {
 
     // Show the toast. Use PowerShell's App ID to circumvent the need to register one (this is only an example!).
     ToastNotificationManager::create_toast_notifier_with_id(&FastHString::new("{1AC14E77-02E7-4E5D-B744-2EB1AE5198B7}\\WindowsPowerShell\\v1.0\\powershell.exe")).unwrap().unwrap().show(&*toast).unwrap();
-}}
+}

@@ -19,7 +19,7 @@ fn main() {
 const BYTES_PER_ROW: usize = 24;
 const CHUNK_SIZE: usize = 4096;
 
-fn run() { unsafe {
+fn run() {
     // Use the current executable as source file (because we know that will exist).
     let exe_path = ::std::env::current_exe().expect("current_exe failed");
     let exe_path_str = exe_path.to_str().expect("invalid unicode path");
@@ -70,7 +70,7 @@ fn run() { unsafe {
 
     data_reader.query_interface::<IClosable>().unwrap().close().unwrap();
     input_stream.query_interface::<IClosable>().unwrap().close().unwrap();
-} }
+}
 
 fn print_row(bytes: &[u8], curr_byte: usize) {
     // Format the address of byte i to have 8 hexadecimal digits and add the address
