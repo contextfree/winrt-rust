@@ -1,10 +1,10 @@
 use ::prelude::*;
 DEFINE_IID!(IID_IUriToStreamResolver, 2964039786, 39659, 19770, 149, 144, 0, 62, 60, 167, 226, 144);
 RT_INTERFACE!{interface IUriToStreamResolver(IUriToStreamResolverVtbl): IInspectable(IInspectableVtbl) [IID_IUriToStreamResolver] {
-    #[cfg(feature="windows-storage")] fn UriToStreamAsync(&self, uri: *mut super::foundation::Uri, out: *mut *mut super::foundation::IAsyncOperation<super::storage::streams::IInputStream>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn UriToStreamAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<super::storage::streams::IInputStream>) -> HRESULT
 }}
 impl IUriToStreamResolver {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn uri_to_stream_async(&self, uri: &super::foundation::Uri) -> Result<ComPtr<super::foundation::IAsyncOperation<super::storage::streams::IInputStream>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn uri_to_stream_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<super::storage::streams::IInputStream>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).UriToStreamAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -64,67 +64,67 @@ impl IHttpBufferContentFactory {
 }
 DEFINE_IID!(IID_IHttpClient, 2144997713, 13684, 18560, 168, 186, 230, 177, 224, 6, 31, 61);
 RT_INTERFACE!{interface IHttpClient(IHttpClientVtbl): IInspectable(IInspectableVtbl) [IID_IHttpClient] {
-    fn DeleteAsync(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
-    fn GetAsync(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
-    fn GetWithOptionAsync(&self, uri: *mut super::super::foundation::Uri, completionOption: HttpCompletionOption, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
+    fn DeleteAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
+    fn GetAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
+    fn GetWithOptionAsync(&self, uri: *mut foundation::Uri, completionOption: HttpCompletionOption, out: *mut *mut foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetBufferAsync(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<super::super::storage::streams::IBuffer, HttpProgress>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn GetBufferAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperationWithProgress<super::super::storage::streams::IBuffer, HttpProgress>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetInputStreamAsync(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, HttpProgress>) -> HRESULT,
-    fn GetStringAsync(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<HString, HttpProgress>) -> HRESULT,
-    fn PostAsync(&self, uri: *mut super::super::foundation::Uri, content: *mut IHttpContent, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
-    fn PutAsync(&self, uri: *mut super::super::foundation::Uri, content: *mut IHttpContent, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
-    fn SendRequestAsync(&self, request: *mut HttpRequestMessage, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
-    fn SendRequestWithOptionAsync(&self, request: *mut HttpRequestMessage, completionOption: HttpCompletionOption, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn GetInputStreamAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, HttpProgress>) -> HRESULT,
+    fn GetStringAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperationWithProgress<HString, HttpProgress>) -> HRESULT,
+    fn PostAsync(&self, uri: *mut foundation::Uri, content: *mut IHttpContent, out: *mut *mut foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
+    fn PutAsync(&self, uri: *mut foundation::Uri, content: *mut IHttpContent, out: *mut *mut foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
+    fn SendRequestAsync(&self, request: *mut HttpRequestMessage, out: *mut *mut foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
+    fn SendRequestWithOptionAsync(&self, request: *mut HttpRequestMessage, completionOption: HttpCompletionOption, out: *mut *mut foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>) -> HRESULT,
     fn get_DefaultRequestHeaders(&self, out: *mut *mut headers::HttpRequestHeaderCollection) -> HRESULT
 }}
 impl IHttpClient {
-    #[inline] pub unsafe fn delete_async(&self, uri: &super::super::foundation::Uri) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
+    #[inline] pub unsafe fn delete_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).DeleteAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_async(&self, uri: &super::super::foundation::Uri) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
+    #[inline] pub unsafe fn get_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_with_option_async(&self, uri: &super::super::foundation::Uri, completionOption: HttpCompletionOption) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
+    #[inline] pub unsafe fn get_with_option_async(&self, uri: &foundation::Uri, completionOption: HttpCompletionOption) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetWithOptionAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, completionOption, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_buffer_async(&self, uri: &super::super::foundation::Uri) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<super::super::storage::streams::IBuffer, HttpProgress>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_buffer_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::super::storage::streams::IBuffer, HttpProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetBufferAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_input_stream_async(&self, uri: &super::super::foundation::Uri) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, HttpProgress>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_input_stream_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, HttpProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetInputStreamAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_string_async(&self, uri: &super::super::foundation::Uri) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<HString, HttpProgress>>> {
+    #[inline] pub unsafe fn get_string_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HString, HttpProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetStringAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn post_async(&self, uri: &super::super::foundation::Uri, content: &IHttpContent) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
+    #[inline] pub unsafe fn post_async(&self, uri: &foundation::Uri, content: &IHttpContent) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).PostAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, content as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn put_async(&self, uri: &super::super::foundation::Uri, content: &IHttpContent) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
+    #[inline] pub unsafe fn put_async(&self, uri: &foundation::Uri, content: &IHttpContent) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).PutAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, content as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn send_request_async(&self, request: &HttpRequestMessage) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
+    #[inline] pub unsafe fn send_request_async(&self, request: &HttpRequestMessage) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SendRequestAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn send_request_with_option_async(&self, request: &HttpRequestMessage, completionOption: HttpCompletionOption) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
+    #[inline] pub unsafe fn send_request_with_option_async(&self, request: &HttpRequestMessage, completionOption: HttpCompletionOption) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SendRequestWithOptionAsync)(self as *const _ as *mut _, request as *const _ as *mut _, completionOption, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -161,12 +161,12 @@ RT_ENUM! { enum HttpCompletionOption: i32 {
 DEFINE_IID!(IID_IHttpContent, 1796514881, 64423, 19410, 175, 10, 131, 157, 231, 194, 149, 218);
 RT_INTERFACE!{interface IHttpContent(IHttpContentVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContent] {
     fn get_Headers(&self, out: *mut *mut headers::HttpContentHeaderCollection) -> HRESULT,
-    fn BufferAllAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<u64, u64>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn ReadAsBufferAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<super::super::storage::streams::IBuffer, u64>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn ReadAsInputStreamAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, u64>) -> HRESULT,
-    fn ReadAsStringAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<HString, u64>) -> HRESULT,
+    fn BufferAllAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<u64, u64>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn ReadAsBufferAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<super::super::storage::streams::IBuffer, u64>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn ReadAsInputStreamAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, u64>) -> HRESULT,
+    fn ReadAsStringAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<HString, u64>) -> HRESULT,
     fn TryComputeLength(&self, length: *mut u64, out: *mut bool) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn WriteToStreamAsync(&self, outputStream: *mut super::super::storage::streams::IOutputStream, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<u64, u64>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn WriteToStreamAsync(&self, outputStream: *mut super::super::storage::streams::IOutputStream, out: *mut *mut foundation::IAsyncOperationWithProgress<u64, u64>) -> HRESULT
 }}
 impl IHttpContent {
     #[inline] pub unsafe fn get_headers(&self) -> Result<Option<ComPtr<headers::HttpContentHeaderCollection>>> {
@@ -174,22 +174,22 @@ impl IHttpContent {
         let hr = ((*self.lpVtbl).get_Headers)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn buffer_all_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<u64, u64>>> {
+    #[inline] pub unsafe fn buffer_all_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).BufferAllAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn read_as_buffer_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<super::super::storage::streams::IBuffer, u64>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn read_as_buffer_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::super::storage::streams::IBuffer, u64>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ReadAsBufferAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn read_as_input_stream_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, u64>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn read_as_input_stream_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, u64>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ReadAsInputStreamAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn read_as_string_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<HString, u64>>> {
+    #[inline] pub unsafe fn read_as_string_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HString, u64>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ReadAsStringAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -199,7 +199,7 @@ impl IHttpContent {
         let hr = ((*self.lpVtbl).TryComputeLength)(self as *const _ as *mut _, &mut length, &mut out);
         if hr == S_OK { Ok((length, out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn write_to_stream_async(&self, outputStream: &super::super::storage::streams::IOutputStream) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<u64, u64>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn write_to_stream_async(&self, outputStream: &super::super::storage::streams::IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).WriteToStreamAsync)(self as *const _ as *mut _, outputStream as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -210,8 +210,8 @@ RT_INTERFACE!{interface IHttpCookie(IHttpCookieVtbl): IInspectable(IInspectableV
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Domain(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Path(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Expires(&self, out: *mut *mut super::super::foundation::IReference<super::super::foundation::DateTime>) -> HRESULT,
-    fn put_Expires(&self, value: *mut super::super::foundation::IReference<super::super::foundation::DateTime>) -> HRESULT,
+    fn get_Expires(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn put_Expires(&self, value: *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
     fn get_HttpOnly(&self, out: *mut bool) -> HRESULT,
     fn put_HttpOnly(&self, value: bool) -> HRESULT,
     fn get_Secure(&self, out: *mut bool) -> HRESULT,
@@ -235,12 +235,12 @@ impl IHttpCookie {
         let hr = ((*self.lpVtbl).get_Path)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_expires(&self) -> Result<Option<ComPtr<super::super::foundation::IReference<super::super::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_expires(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Expires)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_expires(&self, value: &super::super::foundation::IReference<super::super::foundation::DateTime>) -> Result<()> {
+    #[inline] pub unsafe fn set_expires(&self, value: &foundation::IReference<foundation::DateTime>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Expires)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -280,7 +280,7 @@ impl HttpCookie {
     }}
 }
 DEFINE_CLSID!(HttpCookie(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,67,111,111,107,105,101,0]) [CLSID_HttpCookie]);
-RT_CLASS!{class HttpCookieCollection: super::super::foundation::collections::IVectorView<HttpCookie>}
+RT_CLASS!{class HttpCookieCollection: foundation::collections::IVectorView<HttpCookie>}
 DEFINE_IID!(IID_IHttpCookieFactory, 1778746793, 37660, 19665, 169, 109, 194, 23, 1, 120, 92, 95);
 RT_INTERFACE!{static interface IHttpCookieFactory(IHttpCookieFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCookieFactory] {
     fn Create(&self, name: HSTRING, domain: HSTRING, path: HSTRING, out: *mut *mut HttpCookie) -> HRESULT
@@ -297,7 +297,7 @@ RT_INTERFACE!{interface IHttpCookieManager(IHttpCookieManagerVtbl): IInspectable
     fn SetCookie(&self, cookie: *mut HttpCookie, out: *mut bool) -> HRESULT,
     fn SetCookieWithThirdParty(&self, cookie: *mut HttpCookie, thirdParty: bool, out: *mut bool) -> HRESULT,
     fn DeleteCookie(&self, cookie: *mut HttpCookie) -> HRESULT,
-    fn GetCookies(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut HttpCookieCollection) -> HRESULT
+    fn GetCookies(&self, uri: *mut foundation::Uri, out: *mut *mut HttpCookieCollection) -> HRESULT
 }}
 impl IHttpCookieManager {
     #[inline] pub unsafe fn set_cookie(&self, cookie: &HttpCookie) -> Result<bool> {
@@ -314,7 +314,7 @@ impl IHttpCookieManager {
         let hr = ((*self.lpVtbl).DeleteCookie)(self as *const _ as *mut _, cookie as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_cookies(&self, uri: &super::super::foundation::Uri) -> Result<Option<ComPtr<HttpCookieCollection>>> {
+    #[inline] pub unsafe fn get_cookies(&self, uri: &foundation::Uri) -> Result<Option<ComPtr<HttpCookieCollection>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCookies)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -324,17 +324,17 @@ RT_CLASS!{class HttpCookieManager: IHttpCookieManager}
 RT_CLASS!{class HttpFormUrlEncodedContent: IHttpContent}
 impl RtActivatable<IHttpFormUrlEncodedContentFactory> for HttpFormUrlEncodedContent {}
 impl HttpFormUrlEncodedContent {
-    #[inline] pub fn create(content: &super::super::foundation::collections::IIterable<super::super::foundation::collections::IKeyValuePair<HString, HString>>) -> Result<ComPtr<HttpFormUrlEncodedContent>> { unsafe {
+    #[inline] pub fn create(content: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, HString>>) -> Result<ComPtr<HttpFormUrlEncodedContent>> { unsafe {
         <Self as RtActivatable<IHttpFormUrlEncodedContentFactory>>::get_activation_factory().create(content)
     }}
 }
 DEFINE_CLSID!(HttpFormUrlEncodedContent(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,70,111,114,109,85,114,108,69,110,99,111,100,101,100,67,111,110,116,101,110,116,0]) [CLSID_HttpFormUrlEncodedContent]);
 DEFINE_IID!(IID_IHttpFormUrlEncodedContentFactory, 1139807116, 12147, 17154, 181, 243, 234, 233, 35, 138, 94, 1);
 RT_INTERFACE!{static interface IHttpFormUrlEncodedContentFactory(IHttpFormUrlEncodedContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpFormUrlEncodedContentFactory] {
-    fn Create(&self, content: *mut super::super::foundation::collections::IIterable<super::super::foundation::collections::IKeyValuePair<HString, HString>>, out: *mut *mut HttpFormUrlEncodedContent) -> HRESULT
+    fn Create(&self, content: *mut foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, HString>>, out: *mut *mut HttpFormUrlEncodedContent) -> HRESULT
 }}
 impl IHttpFormUrlEncodedContentFactory {
-    #[inline] pub unsafe fn create(&self, content: &super::super::foundation::collections::IIterable<super::super::foundation::collections::IKeyValuePair<HString, HString>>) -> Result<ComPtr<HttpFormUrlEncodedContent>> {
+    #[inline] pub unsafe fn create(&self, content: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, HString>>) -> Result<ComPtr<HttpFormUrlEncodedContent>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, content as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -519,7 +519,7 @@ impl IHttpMultipartFormDataContentFactory {
     }
 }
 RT_STRUCT! { struct HttpProgress {
-    Stage: HttpProgressStage, BytesSent: u64, TotalBytesToSend: *mut super::super::foundation::IReference<u64>, BytesReceived: u64, TotalBytesToReceive: *mut super::super::foundation::IReference<u64>, Retries: u32,
+    Stage: HttpProgressStage, BytesSent: u64, TotalBytesToSend: *mut foundation::IReference<u64>, BytesReceived: u64, TotalBytesToReceive: *mut foundation::IReference<u64>, Retries: u32,
 }}
 RT_ENUM! { enum HttpProgressStage: i32 {
     None (HttpProgressStage_None) = 0, DetectingProxy (HttpProgressStage_DetectingProxy) = 10, ResolvingName (HttpProgressStage_ResolvingName) = 20, ConnectingToServer (HttpProgressStage_ConnectingToServer) = 30, NegotiatingSsl (HttpProgressStage_NegotiatingSsl) = 40, SendingHeaders (HttpProgressStage_SendingHeaders) = 50, SendingContent (HttpProgressStage_SendingContent) = 60, WaitingForResponse (HttpProgressStage_WaitingForResponse) = 70, ReceivingHeaders (HttpProgressStage_ReceivingHeaders) = 80, ReceivingContent (HttpProgressStage_ReceivingContent) = 90,
@@ -531,9 +531,9 @@ RT_INTERFACE!{interface IHttpRequestMessage(IHttpRequestMessageVtbl): IInspectab
     fn get_Headers(&self, out: *mut *mut headers::HttpRequestHeaderCollection) -> HRESULT,
     fn get_Method(&self, out: *mut *mut HttpMethod) -> HRESULT,
     fn put_Method(&self, value: *mut HttpMethod) -> HRESULT,
-    fn get_Properties(&self, out: *mut *mut super::super::foundation::collections::IMap<HString, IInspectable>) -> HRESULT,
-    fn get_RequestUri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn put_RequestUri(&self, value: *mut super::super::foundation::Uri) -> HRESULT,
+    fn get_Properties(&self, out: *mut *mut foundation::collections::IMap<HString, IInspectable>) -> HRESULT,
+    fn get_RequestUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_RequestUri(&self, value: *mut foundation::Uri) -> HRESULT,
     fn get_TransportInformation(&self, out: *mut *mut HttpTransportInformation) -> HRESULT
 }}
 impl IHttpRequestMessage {
@@ -560,17 +560,17 @@ impl IHttpRequestMessage {
         let hr = ((*self.lpVtbl).put_Method)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IMap<HString, IInspectable>>>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, IInspectable>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_request_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_request_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RequestUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_request_uri(&self, value: &super::super::foundation::Uri) -> Result<()> {
+    #[inline] pub unsafe fn set_request_uri(&self, value: &foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_RequestUri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -584,17 +584,17 @@ RT_CLASS!{class HttpRequestMessage: IHttpRequestMessage}
 impl RtActivatable<IHttpRequestMessageFactory> for HttpRequestMessage {}
 impl RtActivatable<IActivationFactory> for HttpRequestMessage {}
 impl HttpRequestMessage {
-    #[inline] pub fn create(method: &HttpMethod, uri: &super::super::foundation::Uri) -> Result<ComPtr<HttpRequestMessage>> { unsafe {
+    #[inline] pub fn create(method: &HttpMethod, uri: &foundation::Uri) -> Result<ComPtr<HttpRequestMessage>> { unsafe {
         <Self as RtActivatable<IHttpRequestMessageFactory>>::get_activation_factory().create(method, uri)
     }}
 }
 DEFINE_CLSID!(HttpRequestMessage(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,82,101,113,117,101,115,116,77,101,115,115,97,103,101,0]) [CLSID_HttpRequestMessage]);
 DEFINE_IID!(IID_IHttpRequestMessageFactory, 1538038094, 14470, 16686, 174, 195, 82, 236, 127, 37, 97, 111);
 RT_INTERFACE!{static interface IHttpRequestMessageFactory(IHttpRequestMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpRequestMessageFactory] {
-    fn Create(&self, method: *mut HttpMethod, uri: *mut super::super::foundation::Uri, out: *mut *mut HttpRequestMessage) -> HRESULT
+    fn Create(&self, method: *mut HttpMethod, uri: *mut foundation::Uri, out: *mut *mut HttpRequestMessage) -> HRESULT
 }}
 impl IHttpRequestMessageFactory {
-    #[inline] pub unsafe fn create(&self, method: &HttpMethod, uri: &super::super::foundation::Uri) -> Result<ComPtr<HttpRequestMessage>> {
+    #[inline] pub unsafe fn create(&self, method: &HttpMethod, uri: &foundation::Uri) -> Result<ComPtr<HttpRequestMessage>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, method as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -776,8 +776,8 @@ RT_INTERFACE!{interface IHttpTransportInformation(IHttpTransportInformationVtbl)
     #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut *mut super::super::security::cryptography::certificates::Certificate) -> HRESULT,
     #[cfg(not(feature="windows-networking"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-networking")] fn get_ServerCertificateErrorSeverity(&self, out: *mut super::super::networking::sockets::SocketSslErrorSeverity) -> HRESULT,
-    #[cfg(feature="windows-security")] fn get_ServerCertificateErrors(&self, out: *mut *mut super::super::foundation::collections::IVectorView<super::super::security::cryptography::certificates::ChainValidationResult>) -> HRESULT,
-    #[cfg(feature="windows-security")] fn get_ServerIntermediateCertificates(&self, out: *mut *mut super::super::foundation::collections::IVectorView<super::super::security::cryptography::certificates::Certificate>) -> HRESULT
+    #[cfg(feature="windows-security")] fn get_ServerCertificateErrors(&self, out: *mut *mut foundation::collections::IVectorView<super::super::security::cryptography::certificates::ChainValidationResult>) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ServerIntermediateCertificates(&self, out: *mut *mut foundation::collections::IVectorView<super::super::security::cryptography::certificates::Certificate>) -> HRESULT
 }}
 impl IHttpTransportInformation {
     #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_server_certificate(&self) -> Result<Option<ComPtr<super::super::security::cryptography::certificates::Certificate>>> {
@@ -790,12 +790,12 @@ impl IHttpTransportInformation {
         let hr = ((*self.lpVtbl).get_ServerCertificateErrorSeverity)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_server_certificate_errors(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::security::cryptography::certificates::ChainValidationResult>>>> {
+    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::security::cryptography::certificates::ChainValidationResult>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ServerCertificateErrors)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_server_intermediate_certificates(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::security::cryptography::certificates::Certificate>>>> {
+    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_server_intermediate_certificates(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::security::cryptography::certificates::Certificate>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ServerIntermediateCertificates)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -822,7 +822,7 @@ RT_INTERFACE!{interface IHttpBaseProtocolFilter(IHttpBaseProtocolFilterVtbl): II
     #[cfg(not(feature="windows-security"))] fn __Dummy9(&self) -> (),
     #[cfg(feature="windows-security")] fn put_ClientCertificate(&self, value: *mut ::rt::gen::windows::security::cryptography::certificates::Certificate) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy10(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_IgnorableServerCertificateErrors(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<::rt::gen::windows::security::cryptography::certificates::ChainValidationResult>) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_IgnorableServerCertificateErrors(&self, out: *mut *mut foundation::collections::IVector<::rt::gen::windows::security::cryptography::certificates::ChainValidationResult>) -> HRESULT,
     fn get_MaxConnectionsPerServer(&self, out: *mut u32) -> HRESULT,
     fn put_MaxConnectionsPerServer(&self, value: u32) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy13(&self) -> (),
@@ -883,7 +883,7 @@ impl IHttpBaseProtocolFilter {
         let hr = ((*self.lpVtbl).put_ClientCertificate)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_ignorable_server_certificate_errors(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<::rt::gen::windows::security::cryptography::certificates::ChainValidationResult>>>> {
+    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_ignorable_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<::rt::gen::windows::security::cryptography::certificates::ChainValidationResult>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IgnorableServerCertificateErrors)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -962,17 +962,17 @@ impl IHttpBaseProtocolFilter3 {
 }
 DEFINE_IID!(IID_IHttpBaseProtocolFilter4, 2682481871, 10627, 18579, 148, 31, 235, 81, 140, 168, 206, 249);
 RT_INTERFACE!{interface IHttpBaseProtocolFilter4(IHttpBaseProtocolFilter4Vtbl): IInspectable(IInspectableVtbl) [IID_IHttpBaseProtocolFilter4] {
-    fn add_ServerCustomValidationRequested(&self, eventHandler: *mut ::rt::gen::windows::foundation::TypedEventHandler<HttpBaseProtocolFilter, HttpServerCustomValidationRequestedEventArgs>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_ServerCustomValidationRequested(&self, eventCookie: ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT,
+    fn add_ServerCustomValidationRequested(&self, eventHandler: *mut foundation::TypedEventHandler<HttpBaseProtocolFilter, HttpServerCustomValidationRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ServerCustomValidationRequested(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
     fn ClearAuthenticationCache(&self) -> HRESULT
 }}
 impl IHttpBaseProtocolFilter4 {
-    #[inline] pub unsafe fn add_server_custom_validation_requested(&self, eventHandler: &::rt::gen::windows::foundation::TypedEventHandler<HttpBaseProtocolFilter, HttpServerCustomValidationRequestedEventArgs>) -> Result<::rt::gen::windows::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_server_custom_validation_requested(&self, eventHandler: &foundation::TypedEventHandler<HttpBaseProtocolFilter, HttpServerCustomValidationRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_ServerCustomValidationRequested)(self as *const _ as *mut _, eventHandler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_server_custom_validation_requested(&self, eventCookie: ::rt::gen::windows::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_server_custom_validation_requested(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_ServerCustomValidationRequested)(self as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -1020,10 +1020,10 @@ RT_ENUM! { enum HttpCookieUsageBehavior: i32 {
 }}
 DEFINE_IID!(IID_IHttpFilter, 2764795349, 2306, 17310, 191, 215, 225, 37, 82, 177, 101, 206);
 RT_INTERFACE!{interface IHttpFilter(IHttpFilterVtbl): IInspectable(IInspectableVtbl) [IID_IHttpFilter] {
-    fn SendRequestAsync(&self, request: *mut super::HttpRequestMessage, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperationWithProgress<super::HttpResponseMessage, super::HttpProgress>) -> HRESULT
+    fn SendRequestAsync(&self, request: *mut super::HttpRequestMessage, out: *mut *mut foundation::IAsyncOperationWithProgress<super::HttpResponseMessage, super::HttpProgress>) -> HRESULT
 }}
 impl IHttpFilter {
-    #[inline] pub unsafe fn send_request_async(&self, request: &super::HttpRequestMessage) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperationWithProgress<super::HttpResponseMessage, super::HttpProgress>>> {
+    #[inline] pub unsafe fn send_request_async(&self, request: &super::HttpRequestMessage) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::HttpResponseMessage, super::HttpProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SendRequestAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1037,11 +1037,11 @@ RT_INTERFACE!{interface IHttpServerCustomValidationRequestedEventArgs(IHttpServe
     #[cfg(not(feature="windows-networking"))] fn __Dummy2(&self) -> (),
     #[cfg(feature="windows-networking")] fn get_ServerCertificateErrorSeverity(&self, out: *mut ::rt::gen::windows::networking::sockets::SocketSslErrorSeverity) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ServerCertificateErrors(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::ChainValidationResult>) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ServerCertificateErrors(&self, out: *mut *mut foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::ChainValidationResult>) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ServerIntermediateCertificates(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::Certificate>) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ServerIntermediateCertificates(&self, out: *mut *mut foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::Certificate>) -> HRESULT,
     fn Reject(&self) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut ::rt::gen::windows::foundation::Deferral) -> HRESULT
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
 }}
 impl IHttpServerCustomValidationRequestedEventArgs {
     #[inline] pub unsafe fn get_request_message(&self) -> Result<Option<ComPtr<super::HttpRequestMessage>>> {
@@ -1059,12 +1059,12 @@ impl IHttpServerCustomValidationRequestedEventArgs {
         let hr = ((*self.lpVtbl).get_ServerCertificateErrorSeverity)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_server_certificate_errors(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::ChainValidationResult>>>> {
+    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::ChainValidationResult>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ServerCertificateErrors)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_server_intermediate_certificates(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::Certificate>>>> {
+    #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_server_intermediate_certificates(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::Certificate>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ServerIntermediateCertificates)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1073,7 +1073,7 @@ impl IHttpServerCustomValidationRequestedEventArgs {
         let hr = ((*self.lpVtbl).Reject)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Deferral>>> {
+    #[inline] pub unsafe fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1085,51 +1085,51 @@ pub mod headers { // Windows.Web.Http.Headers
 use ::prelude::*;
 DEFINE_IID!(IID_IHttpCacheDirectiveHeaderValueCollection, 2589485961, 54736, 20414, 189, 157, 181, 179, 99, 104, 17, 180);
 RT_INTERFACE!{interface IHttpCacheDirectiveHeaderValueCollection(IHttpCacheDirectiveHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCacheDirectiveHeaderValueCollection] {
-    fn get_MaxAge(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> HRESULT,
-    fn put_MaxAge(&self, value: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> HRESULT,
-    fn get_MaxStale(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> HRESULT,
-    fn put_MaxStale(&self, value: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> HRESULT,
-    fn get_MinFresh(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> HRESULT,
-    fn put_MinFresh(&self, value: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> HRESULT,
-    fn get_SharedMaxAge(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> HRESULT,
-    fn put_SharedMaxAge(&self, value: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> HRESULT,
+    fn get_MaxAge(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn put_MaxAge(&self, value: *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn get_MaxStale(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn put_MaxStale(&self, value: *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn get_MinFresh(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn put_MinFresh(&self, value: *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn get_SharedMaxAge(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn put_SharedMaxAge(&self, value: *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
     fn TryParseAdd(&self, input: HSTRING, out: *mut bool) -> HRESULT
 }}
 impl IHttpCacheDirectiveHeaderValueCollection {
-    #[inline] pub unsafe fn get_max_age(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
+    #[inline] pub unsafe fn get_max_age(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MaxAge)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_max_age(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> Result<()> {
+    #[inline] pub unsafe fn set_max_age(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_MaxAge)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_max_stale(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
+    #[inline] pub unsafe fn get_max_stale(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MaxStale)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_max_stale(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> Result<()> {
+    #[inline] pub unsafe fn set_max_stale(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_MaxStale)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_min_fresh(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
+    #[inline] pub unsafe fn get_min_fresh(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MinFresh)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_min_fresh(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> Result<()> {
+    #[inline] pub unsafe fn set_min_fresh(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_MinFresh)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_shared_max_age(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
+    #[inline] pub unsafe fn get_shared_max_age(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SharedMaxAge)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_shared_max_age(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> Result<()> {
+    #[inline] pub unsafe fn set_shared_max_age(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_SharedMaxAge)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -1146,12 +1146,12 @@ impl IHttpCacheDirectiveHeaderValueCollection {
 RT_CLASS!{class HttpCacheDirectiveHeaderValueCollection: IHttpCacheDirectiveHeaderValueCollection}
 DEFINE_IID!(IID_IHttpChallengeHeaderValue, 959668655, 3965, 18464, 159, 221, 162, 185, 86, 238, 174, 171);
 RT_INTERFACE!{interface IHttpChallengeHeaderValue(IHttpChallengeHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpChallengeHeaderValue] {
-    fn get_Parameters(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT,
+    fn get_Parameters(&self, out: *mut *mut foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT,
     fn get_Scheme(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Token(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IHttpChallengeHeaderValue {
-    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
+    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Parameters)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1381,7 +1381,7 @@ impl IHttpContentCodingHeaderValueStatics {
 DEFINE_IID!(IID_IHttpContentCodingWithQualityHeaderValue, 2488474837, 35603, 19827, 134, 81, 247, 107, 56, 248, 132, 149);
 RT_INTERFACE!{interface IHttpContentCodingWithQualityHeaderValue(IHttpContentCodingWithQualityHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentCodingWithQualityHeaderValue] {
     fn get_ContentCoding(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Quality(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<f64>) -> HRESULT
+    fn get_Quality(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT
 }}
 impl IHttpContentCodingWithQualityHeaderValue {
     #[inline] pub unsafe fn get_content_coding(&self) -> Result<HString> {
@@ -1389,7 +1389,7 @@ impl IHttpContentCodingWithQualityHeaderValue {
         let hr = ((*self.lpVtbl).get_ContentCoding)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_quality(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<f64>>>> {
+    #[inline] pub unsafe fn get_quality(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Quality)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1474,9 +1474,9 @@ RT_INTERFACE!{interface IHttpContentDispositionHeaderValue(IHttpContentDispositi
     fn put_FileNameStar(&self, value: HSTRING) -> HRESULT,
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Name(&self, value: HSTRING) -> HRESULT,
-    fn get_Parameters(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT,
-    fn get_Size(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<u64>) -> HRESULT,
-    fn put_Size(&self, value: *mut ::rt::gen::windows::foundation::IReference<u64>) -> HRESULT
+    fn get_Parameters(&self, out: *mut *mut foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT,
+    fn get_Size(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
+    fn put_Size(&self, value: *mut foundation::IReference<u64>) -> HRESULT
 }}
 impl IHttpContentDispositionHeaderValue {
     #[inline] pub unsafe fn get_disposition_type(&self) -> Result<HString> {
@@ -1515,17 +1515,17 @@ impl IHttpContentDispositionHeaderValue {
         let hr = ((*self.lpVtbl).put_Name)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
+    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Parameters)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_size(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
+    #[inline] pub unsafe fn get_size(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_size(&self, value: &::rt::gen::windows::foundation::IReference<u64>) -> Result<()> {
+    #[inline] pub unsafe fn set_size(&self, value: &foundation::IReference<u64>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Size)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -1579,10 +1579,10 @@ RT_INTERFACE!{interface IHttpContentHeaderCollection(IHttpContentHeaderCollectio
     fn put_ContentDisposition(&self, value: *mut HttpContentDispositionHeaderValue) -> HRESULT,
     fn get_ContentEncoding(&self, out: *mut *mut HttpContentCodingHeaderValueCollection) -> HRESULT,
     fn get_ContentLanguage(&self, out: *mut *mut HttpLanguageHeaderValueCollection) -> HRESULT,
-    fn get_ContentLength(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<u64>) -> HRESULT,
-    fn put_ContentLength(&self, value: *mut ::rt::gen::windows::foundation::IReference<u64>) -> HRESULT,
-    fn get_ContentLocation(&self, out: *mut *mut ::rt::gen::windows::foundation::Uri) -> HRESULT,
-    fn put_ContentLocation(&self, value: *mut ::rt::gen::windows::foundation::Uri) -> HRESULT,
+    fn get_ContentLength(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
+    fn put_ContentLength(&self, value: *mut foundation::IReference<u64>) -> HRESULT,
+    fn get_ContentLocation(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_ContentLocation(&self, value: *mut foundation::Uri) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy8(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_ContentMD5(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy9(&self) -> (),
@@ -1591,10 +1591,10 @@ RT_INTERFACE!{interface IHttpContentHeaderCollection(IHttpContentHeaderCollectio
     fn put_ContentRange(&self, value: *mut HttpContentRangeHeaderValue) -> HRESULT,
     fn get_ContentType(&self, out: *mut *mut HttpMediaTypeHeaderValue) -> HRESULT,
     fn put_ContentType(&self, value: *mut HttpMediaTypeHeaderValue) -> HRESULT,
-    fn get_Expires(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn put_Expires(&self, value: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn get_LastModified(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn put_LastModified(&self, value: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
+    fn get_Expires(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn put_Expires(&self, value: *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_LastModified(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn put_LastModified(&self, value: *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
     fn Append(&self, name: HSTRING, value: HSTRING) -> HRESULT,
     fn TryAppendWithoutValidation(&self, name: HSTRING, value: HSTRING, out: *mut bool) -> HRESULT
 }}
@@ -1618,21 +1618,21 @@ impl IHttpContentHeaderCollection {
         let hr = ((*self.lpVtbl).get_ContentLanguage)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_content_length(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
+    #[inline] pub unsafe fn get_content_length(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ContentLength)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_content_length(&self, value: &::rt::gen::windows::foundation::IReference<u64>) -> Result<()> {
+    #[inline] pub unsafe fn set_content_length(&self, value: &foundation::IReference<u64>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ContentLength)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_content_location(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_content_location(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ContentLocation)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_content_location(&self, value: &::rt::gen::windows::foundation::Uri) -> Result<()> {
+    #[inline] pub unsafe fn set_content_location(&self, value: &foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ContentLocation)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -1663,21 +1663,21 @@ impl IHttpContentHeaderCollection {
         let hr = ((*self.lpVtbl).put_ContentType)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_expires(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_expires(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Expires)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_expires(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> Result<()> {
+    #[inline] pub unsafe fn set_expires(&self, value: &foundation::IReference<foundation::DateTime>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Expires)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_last_modified(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_last_modified(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LastModified)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_last_modified(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> Result<()> {
+    #[inline] pub unsafe fn set_last_modified(&self, value: &foundation::IReference<foundation::DateTime>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_LastModified)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -1696,24 +1696,24 @@ impl RtActivatable<IActivationFactory> for HttpContentHeaderCollection {}
 DEFINE_CLSID!(HttpContentHeaderCollection(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,116,101,110,116,72,101,97,100,101,114,67,111,108,108,101,99,116,105,111,110,0]) [CLSID_HttpContentHeaderCollection]);
 DEFINE_IID!(IID_IHttpContentRangeHeaderValue, 81356755, 42230, 18780, 149, 48, 133, 121, 252, 186, 138, 169);
 RT_INTERFACE!{interface IHttpContentRangeHeaderValue(IHttpContentRangeHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentRangeHeaderValue] {
-    fn get_FirstBytePosition(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<u64>) -> HRESULT,
-    fn get_LastBytePosition(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<u64>) -> HRESULT,
-    fn get_Length(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<u64>) -> HRESULT,
+    fn get_FirstBytePosition(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
+    fn get_LastBytePosition(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
+    fn get_Length(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
     fn get_Unit(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Unit(&self, value: HSTRING) -> HRESULT
 }}
 impl IHttpContentRangeHeaderValue {
-    #[inline] pub unsafe fn get_first_byte_position(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
+    #[inline] pub unsafe fn get_first_byte_position(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FirstBytePosition)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_last_byte_position(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
+    #[inline] pub unsafe fn get_last_byte_position(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LastBytePosition)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_length(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u64>>>> {
+    #[inline] pub unsafe fn get_length(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Length)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1882,12 +1882,12 @@ impl IHttpCookiePairHeaderValueStatics {
 }
 DEFINE_IID!(IID_IHttpCredentialsHeaderValue, 3276587979, 21550, 16759, 166, 199, 182, 116, 206, 25, 63, 191);
 RT_INTERFACE!{interface IHttpCredentialsHeaderValue(IHttpCredentialsHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCredentialsHeaderValue] {
-    fn get_Parameters(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT,
+    fn get_Parameters(&self, out: *mut *mut foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT,
     fn get_Scheme(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Token(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IHttpCredentialsHeaderValue {
-    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
+    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Parameters)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1957,16 +1957,16 @@ impl IHttpCredentialsHeaderValueStatics {
 }
 DEFINE_IID!(IID_IHttpDateOrDeltaHeaderValue, 3942427242, 50396, 18914, 162, 125, 4, 58, 223, 88, 103, 163);
 RT_INTERFACE!{interface IHttpDateOrDeltaHeaderValue(IHttpDateOrDeltaHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDateOrDeltaHeaderValue] {
-    fn get_Date(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn get_Delta(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> HRESULT
+    fn get_Date(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_Delta(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT
 }}
 impl IHttpDateOrDeltaHeaderValue {
-    #[inline] pub unsafe fn get_date(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_date(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Date)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_delta(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
+    #[inline] pub unsafe fn get_delta(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Delta)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -2005,7 +2005,7 @@ RT_INTERFACE!{interface IHttpExpectationHeaderValue(IHttpExpectationHeaderValueV
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Value(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Value(&self, value: HSTRING) -> HRESULT,
-    fn get_Parameters(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT
+    fn get_Parameters(&self, out: *mut *mut foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT
 }}
 impl IHttpExpectationHeaderValue {
     #[inline] pub unsafe fn get_name(&self) -> Result<HString> {
@@ -2022,7 +2022,7 @@ impl IHttpExpectationHeaderValue {
         let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
+    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Parameters)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -2117,7 +2117,7 @@ RT_CLASS!{class HttpLanguageHeaderValueCollection: IHttpLanguageHeaderValueColle
 DEFINE_IID!(IID_IHttpLanguageRangeWithQualityHeaderValue, 1918296322, 128, 19892, 160, 131, 125, 231, 178, 229, 186, 76);
 RT_INTERFACE!{interface IHttpLanguageRangeWithQualityHeaderValue(IHttpLanguageRangeWithQualityHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpLanguageRangeWithQualityHeaderValue] {
     fn get_LanguageRange(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Quality(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<f64>) -> HRESULT
+    fn get_Quality(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT
 }}
 impl IHttpLanguageRangeWithQualityHeaderValue {
     #[inline] pub unsafe fn get_language_range(&self) -> Result<HString> {
@@ -2125,7 +2125,7 @@ impl IHttpLanguageRangeWithQualityHeaderValue {
         let hr = ((*self.lpVtbl).get_LanguageRange)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_quality(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<f64>>>> {
+    #[inline] pub unsafe fn get_quality(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Quality)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -2206,7 +2206,7 @@ RT_INTERFACE!{interface IHttpMediaTypeHeaderValue(IHttpMediaTypeHeaderValueVtbl)
     fn put_CharSet(&self, value: HSTRING) -> HRESULT,
     fn get_MediaType(&self, out: *mut HSTRING) -> HRESULT,
     fn put_MediaType(&self, value: HSTRING) -> HRESULT,
-    fn get_Parameters(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT
+    fn get_Parameters(&self, out: *mut *mut foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT
 }}
 impl IHttpMediaTypeHeaderValue {
     #[inline] pub unsafe fn get_char_set(&self) -> Result<HString> {
@@ -2227,7 +2227,7 @@ impl IHttpMediaTypeHeaderValue {
         let hr = ((*self.lpVtbl).put_MediaType)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
+    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Parameters)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -2282,9 +2282,9 @@ RT_INTERFACE!{interface IHttpMediaTypeWithQualityHeaderValue(IHttpMediaTypeWithQ
     fn put_CharSet(&self, value: HSTRING) -> HRESULT,
     fn get_MediaType(&self, out: *mut HSTRING) -> HRESULT,
     fn put_MediaType(&self, value: HSTRING) -> HRESULT,
-    fn get_Parameters(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT,
-    fn get_Quality(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<f64>) -> HRESULT,
-    fn put_Quality(&self, value: *mut ::rt::gen::windows::foundation::IReference<f64>) -> HRESULT
+    fn get_Parameters(&self, out: *mut *mut foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT,
+    fn get_Quality(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT,
+    fn put_Quality(&self, value: *mut foundation::IReference<f64>) -> HRESULT
 }}
 impl IHttpMediaTypeWithQualityHeaderValue {
     #[inline] pub unsafe fn get_char_set(&self) -> Result<HString> {
@@ -2305,17 +2305,17 @@ impl IHttpMediaTypeWithQualityHeaderValue {
         let hr = ((*self.lpVtbl).put_MediaType)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
+    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Parameters)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_quality(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<f64>>>> {
+    #[inline] pub unsafe fn get_quality(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Quality)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_quality(&self, value: &::rt::gen::windows::foundation::IReference<f64>) -> Result<()> {
+    #[inline] pub unsafe fn set_quality(&self, value: &foundation::IReference<f64>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Quality)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -2645,8 +2645,8 @@ RT_INTERFACE!{interface IHttpRequestHeaderCollection(IHttpRequestHeaderCollectio
     fn get_CacheControl(&self, out: *mut *mut HttpCacheDirectiveHeaderValueCollection) -> HRESULT,
     fn get_Connection(&self, out: *mut *mut HttpConnectionOptionHeaderValueCollection) -> HRESULT,
     fn get_Cookie(&self, out: *mut *mut HttpCookiePairHeaderValueCollection) -> HRESULT,
-    fn get_Date(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn put_Date(&self, value: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
+    fn get_Date(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn put_Date(&self, value: *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
     fn get_Expect(&self, out: *mut *mut HttpExpectationHeaderValueCollection) -> HRESULT,
     fn get_From(&self, out: *mut HSTRING) -> HRESULT,
     fn put_From(&self, value: HSTRING) -> HRESULT,
@@ -2654,16 +2654,16 @@ RT_INTERFACE!{interface IHttpRequestHeaderCollection(IHttpRequestHeaderCollectio
     #[cfg(feature="windows-networking")] fn get_Host(&self, out: *mut *mut ::rt::gen::windows::networking::HostName) -> HRESULT,
     #[cfg(not(feature="windows-networking"))] fn __Dummy14(&self) -> (),
     #[cfg(feature="windows-networking")] fn put_Host(&self, value: *mut ::rt::gen::windows::networking::HostName) -> HRESULT,
-    fn get_IfModifiedSince(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn put_IfModifiedSince(&self, value: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn get_IfUnmodifiedSince(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn put_IfUnmodifiedSince(&self, value: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn get_MaxForwards(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<u32>) -> HRESULT,
-    fn put_MaxForwards(&self, value: *mut ::rt::gen::windows::foundation::IReference<u32>) -> HRESULT,
+    fn get_IfModifiedSince(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn put_IfModifiedSince(&self, value: *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_IfUnmodifiedSince(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn put_IfUnmodifiedSince(&self, value: *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_MaxForwards(&self, out: *mut *mut foundation::IReference<u32>) -> HRESULT,
+    fn put_MaxForwards(&self, value: *mut foundation::IReference<u32>) -> HRESULT,
     fn get_ProxyAuthorization(&self, out: *mut *mut HttpCredentialsHeaderValue) -> HRESULT,
     fn put_ProxyAuthorization(&self, value: *mut HttpCredentialsHeaderValue) -> HRESULT,
-    fn get_Referer(&self, out: *mut *mut ::rt::gen::windows::foundation::Uri) -> HRESULT,
-    fn put_Referer(&self, value: *mut ::rt::gen::windows::foundation::Uri) -> HRESULT,
+    fn get_Referer(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_Referer(&self, value: *mut foundation::Uri) -> HRESULT,
     fn get_TransferEncoding(&self, out: *mut *mut HttpTransferCodingHeaderValueCollection) -> HRESULT,
     fn get_UserAgent(&self, out: *mut *mut HttpProductInfoHeaderValueCollection) -> HRESULT,
     fn Append(&self, name: HSTRING, value: HSTRING) -> HRESULT,
@@ -2709,12 +2709,12 @@ impl IHttpRequestHeaderCollection {
         let hr = ((*self.lpVtbl).get_Cookie)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_date(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_date(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Date)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_date(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> Result<()> {
+    #[inline] pub unsafe fn set_date(&self, value: &foundation::IReference<foundation::DateTime>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Date)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -2741,30 +2741,30 @@ impl IHttpRequestHeaderCollection {
         let hr = ((*self.lpVtbl).put_Host)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_if_modified_since(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_if_modified_since(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IfModifiedSince)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_if_modified_since(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> Result<()> {
+    #[inline] pub unsafe fn set_if_modified_since(&self, value: &foundation::IReference<foundation::DateTime>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_IfModifiedSince)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_if_unmodified_since(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_if_unmodified_since(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IfUnmodifiedSince)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_if_unmodified_since(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> Result<()> {
+    #[inline] pub unsafe fn set_if_unmodified_since(&self, value: &foundation::IReference<foundation::DateTime>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_IfUnmodifiedSince)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_max_forwards(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<u32>>>> {
+    #[inline] pub unsafe fn get_max_forwards(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MaxForwards)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_max_forwards(&self, value: &::rt::gen::windows::foundation::IReference<u32>) -> Result<()> {
+    #[inline] pub unsafe fn set_max_forwards(&self, value: &foundation::IReference<u32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_MaxForwards)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -2777,12 +2777,12 @@ impl IHttpRequestHeaderCollection {
         let hr = ((*self.lpVtbl).put_ProxyAuthorization)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_referer(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_referer(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Referer)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_referer(&self, value: &::rt::gen::windows::foundation::Uri) -> Result<()> {
+    #[inline] pub unsafe fn set_referer(&self, value: &foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Referer)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -2809,15 +2809,15 @@ impl IHttpRequestHeaderCollection {
 RT_CLASS!{class HttpRequestHeaderCollection: IHttpRequestHeaderCollection}
 DEFINE_IID!(IID_IHttpResponseHeaderCollection, 2056849769, 64063, 16877, 170, 198, 191, 149, 121, 117, 193, 107);
 RT_INTERFACE!{interface IHttpResponseHeaderCollection(IHttpResponseHeaderCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpResponseHeaderCollection] {
-    fn get_Age(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> HRESULT,
-    fn put_Age(&self, value: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> HRESULT,
+    fn get_Age(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn put_Age(&self, value: *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
     fn get_Allow(&self, out: *mut *mut HttpMethodHeaderValueCollection) -> HRESULT,
     fn get_CacheControl(&self, out: *mut *mut HttpCacheDirectiveHeaderValueCollection) -> HRESULT,
     fn get_Connection(&self, out: *mut *mut HttpConnectionOptionHeaderValueCollection) -> HRESULT,
-    fn get_Date(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn put_Date(&self, value: *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn get_Location(&self, out: *mut *mut ::rt::gen::windows::foundation::Uri) -> HRESULT,
-    fn put_Location(&self, value: *mut ::rt::gen::windows::foundation::Uri) -> HRESULT,
+    fn get_Date(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn put_Date(&self, value: *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_Location(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_Location(&self, value: *mut foundation::Uri) -> HRESULT,
     fn get_ProxyAuthenticate(&self, out: *mut *mut HttpChallengeHeaderValueCollection) -> HRESULT,
     fn get_RetryAfter(&self, out: *mut *mut HttpDateOrDeltaHeaderValue) -> HRESULT,
     fn put_RetryAfter(&self, value: *mut HttpDateOrDeltaHeaderValue) -> HRESULT,
@@ -2827,12 +2827,12 @@ RT_INTERFACE!{interface IHttpResponseHeaderCollection(IHttpResponseHeaderCollect
     fn TryAppendWithoutValidation(&self, name: HSTRING, value: HSTRING, out: *mut bool) -> HRESULT
 }}
 impl IHttpResponseHeaderCollection {
-    #[inline] pub unsafe fn get_age(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>>>> {
+    #[inline] pub unsafe fn get_age(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Age)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_age(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::TimeSpan>) -> Result<()> {
+    #[inline] pub unsafe fn set_age(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Age)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -2851,21 +2851,21 @@ impl IHttpResponseHeaderCollection {
         let hr = ((*self.lpVtbl).get_Connection)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_date(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_date(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Date)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_date(&self, value: &::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> Result<()> {
+    #[inline] pub unsafe fn set_date(&self, value: &foundation::IReference<foundation::DateTime>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Date)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_location(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_location(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Location)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_location(&self, value: &::rt::gen::windows::foundation::Uri) -> Result<()> {
+    #[inline] pub unsafe fn set_location(&self, value: &foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Location)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -2906,11 +2906,11 @@ impl IHttpResponseHeaderCollection {
 RT_CLASS!{class HttpResponseHeaderCollection: IHttpResponseHeaderCollection}
 DEFINE_IID!(IID_IHttpTransferCodingHeaderValue, 1131361017, 15853, 17085, 179, 138, 84, 150, 162, 81, 28, 230);
 RT_INTERFACE!{interface IHttpTransferCodingHeaderValue(IHttpTransferCodingHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpTransferCodingHeaderValue] {
-    fn get_Parameters(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT,
+    fn get_Parameters(&self, out: *mut *mut foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT,
     fn get_Value(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IHttpTransferCodingHeaderValue {
-    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
+    #[inline] pub unsafe fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Parameters)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -2988,12 +2988,12 @@ DEFINE_IID!(IID_IHttpDiagnosticProvider, 3179353345, 41046, 19769, 177, 116, 131
 RT_INTERFACE!{interface IHttpDiagnosticProvider(IHttpDiagnosticProviderVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProvider] {
     fn Start(&self) -> HRESULT,
     fn Stop(&self) -> HRESULT,
-    fn add_RequestSent(&self, handler: *mut ::rt::gen::windows::foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderRequestSentEventArgs>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_RequestSent(&self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT,
-    fn add_ResponseReceived(&self, handler: *mut ::rt::gen::windows::foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderResponseReceivedEventArgs>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_ResponseReceived(&self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT,
-    fn add_RequestResponseCompleted(&self, handler: *mut ::rt::gen::windows::foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderRequestResponseCompletedEventArgs>, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_RequestResponseCompleted(&self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT
+    fn add_RequestSent(&self, handler: *mut foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderRequestSentEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_RequestSent(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_ResponseReceived(&self, handler: *mut foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderResponseReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ResponseReceived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_RequestResponseCompleted(&self, handler: *mut foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderRequestResponseCompletedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_RequestResponseCompleted(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IHttpDiagnosticProvider {
     #[inline] pub unsafe fn start(&self) -> Result<()> {
@@ -3004,30 +3004,30 @@ impl IHttpDiagnosticProvider {
         let hr = ((*self.lpVtbl).Stop)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_request_sent(&self, handler: &::rt::gen::windows::foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderRequestSentEventArgs>) -> Result<::rt::gen::windows::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_request_sent(&self, handler: &foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderRequestSentEventArgs>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_RequestSent)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_request_sent(&self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_request_sent(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_RequestSent)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_response_received(&self, handler: &::rt::gen::windows::foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderResponseReceivedEventArgs>) -> Result<::rt::gen::windows::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_response_received(&self, handler: &foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderResponseReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_ResponseReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_response_received(&self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_response_received(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_ResponseReceived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_request_response_completed(&self, handler: &::rt::gen::windows::foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderRequestResponseCompletedEventArgs>) -> Result<::rt::gen::windows::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_request_response_completed(&self, handler: &foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderRequestResponseCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_RequestResponseCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_request_response_completed(&self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_request_response_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_RequestResponseCompleted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -3044,11 +3044,11 @@ DEFINE_IID!(IID_IHttpDiagnosticProviderRequestResponseCompletedEventArgs, 193564
 RT_INTERFACE!{interface IHttpDiagnosticProviderRequestResponseCompletedEventArgs(IHttpDiagnosticProviderRequestResponseCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderRequestResponseCompletedEventArgs] {
     fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
     fn get_Timestamps(&self, out: *mut *mut HttpDiagnosticProviderRequestResponseTimestamps) -> HRESULT,
-    fn get_RequestedUri(&self, out: *mut *mut ::rt::gen::windows::foundation::Uri) -> HRESULT,
+    fn get_RequestedUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
     fn get_ProcessId(&self, out: *mut u32) -> HRESULT,
     fn get_ThreadId(&self, out: *mut u32) -> HRESULT,
     fn get_Initiator(&self, out: *mut HttpDiagnosticRequestInitiator) -> HRESULT,
-    fn get_SourceLocations(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<HttpDiagnosticSourceLocation>) -> HRESULT
+    fn get_SourceLocations(&self, out: *mut *mut foundation::collections::IVectorView<HttpDiagnosticSourceLocation>) -> HRESULT
 }}
 impl IHttpDiagnosticProviderRequestResponseCompletedEventArgs {
     #[inline] pub unsafe fn get_activity_id(&self) -> Result<Guid> {
@@ -3061,7 +3061,7 @@ impl IHttpDiagnosticProviderRequestResponseCompletedEventArgs {
         let hr = ((*self.lpVtbl).get_Timestamps)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_requested_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_requested_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RequestedUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3081,7 +3081,7 @@ impl IHttpDiagnosticProviderRequestResponseCompletedEventArgs {
         let hr = ((*self.lpVtbl).get_Initiator)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_source_locations(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HttpDiagnosticSourceLocation>>>> {
+    #[inline] pub unsafe fn get_source_locations(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HttpDiagnosticSourceLocation>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SourceLocations)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3090,58 +3090,58 @@ impl IHttpDiagnosticProviderRequestResponseCompletedEventArgs {
 RT_CLASS!{class HttpDiagnosticProviderRequestResponseCompletedEventArgs: IHttpDiagnosticProviderRequestResponseCompletedEventArgs}
 DEFINE_IID!(IID_IHttpDiagnosticProviderRequestResponseTimestamps, 3769622032, 21967, 19457, 145, 212, 162, 5, 87, 216, 73, 240);
 RT_INTERFACE!{interface IHttpDiagnosticProviderRequestResponseTimestamps(IHttpDiagnosticProviderRequestResponseTimestampsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderRequestResponseTimestamps] {
-    fn get_CacheCheckedTimestamp(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn get_ConnectionInitiatedTimestamp(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn get_NameResolvedTimestamp(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn get_SslNegotiatedTimestamp(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn get_ConnectionCompletedTimestamp(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn get_RequestSentTimestamp(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn get_RequestCompletedTimestamp(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn get_ResponseReceivedTimestamp(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT,
-    fn get_ResponseCompletedTimestamp(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>) -> HRESULT
+    fn get_CacheCheckedTimestamp(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_ConnectionInitiatedTimestamp(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_NameResolvedTimestamp(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_SslNegotiatedTimestamp(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_ConnectionCompletedTimestamp(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_RequestSentTimestamp(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_RequestCompletedTimestamp(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_ResponseReceivedTimestamp(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_ResponseCompletedTimestamp(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT
 }}
 impl IHttpDiagnosticProviderRequestResponseTimestamps {
-    #[inline] pub unsafe fn get_cache_checked_timestamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_cache_checked_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CacheCheckedTimestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_connection_initiated_timestamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_connection_initiated_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ConnectionInitiatedTimestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_name_resolved_timestamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_name_resolved_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NameResolvedTimestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_ssl_negotiated_timestamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_ssl_negotiated_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SslNegotiatedTimestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_connection_completed_timestamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_connection_completed_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ConnectionCompletedTimestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_request_sent_timestamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_request_sent_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RequestSentTimestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_request_completed_timestamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_request_completed_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RequestCompletedTimestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_response_received_timestamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_response_received_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResponseReceivedTimestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_response_completed_timestamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<::rt::gen::windows::foundation::DateTime>>>> {
+    #[inline] pub unsafe fn get_response_completed_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResponseCompletedTimestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3150,16 +3150,16 @@ impl IHttpDiagnosticProviderRequestResponseTimestamps {
 RT_CLASS!{class HttpDiagnosticProviderRequestResponseTimestamps: IHttpDiagnosticProviderRequestResponseTimestamps}
 DEFINE_IID!(IID_IHttpDiagnosticProviderRequestSentEventArgs, 1062311632, 19487, 20158, 165, 122, 6, 147, 7, 113, 197, 13);
 RT_INTERFACE!{interface IHttpDiagnosticProviderRequestSentEventArgs(IHttpDiagnosticProviderRequestSentEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderRequestSentEventArgs] {
-    fn get_Timestamp(&self, out: *mut ::rt::gen::windows::foundation::DateTime) -> HRESULT,
+    fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
     fn get_Message(&self, out: *mut *mut super::HttpRequestMessage) -> HRESULT,
     fn get_ProcessId(&self, out: *mut u32) -> HRESULT,
     fn get_ThreadId(&self, out: *mut u32) -> HRESULT,
     fn get_Initiator(&self, out: *mut HttpDiagnosticRequestInitiator) -> HRESULT,
-    fn get_SourceLocations(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<HttpDiagnosticSourceLocation>) -> HRESULT
+    fn get_SourceLocations(&self, out: *mut *mut foundation::collections::IVectorView<HttpDiagnosticSourceLocation>) -> HRESULT
 }}
 impl IHttpDiagnosticProviderRequestSentEventArgs {
-    #[inline] pub unsafe fn get_timestamp(&self) -> Result<::rt::gen::windows::foundation::DateTime> {
+    #[inline] pub unsafe fn get_timestamp(&self) -> Result<foundation::DateTime> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Timestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -3189,7 +3189,7 @@ impl IHttpDiagnosticProviderRequestSentEventArgs {
         let hr = ((*self.lpVtbl).get_Initiator)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_source_locations(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HttpDiagnosticSourceLocation>>>> {
+    #[inline] pub unsafe fn get_source_locations(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HttpDiagnosticSourceLocation>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SourceLocations)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3198,12 +3198,12 @@ impl IHttpDiagnosticProviderRequestSentEventArgs {
 RT_CLASS!{class HttpDiagnosticProviderRequestSentEventArgs: IHttpDiagnosticProviderRequestSentEventArgs}
 DEFINE_IID!(IID_IHttpDiagnosticProviderResponseReceivedEventArgs, 2694993516, 43871, 19814, 187, 45, 8, 76, 244, 22, 53, 208);
 RT_INTERFACE!{interface IHttpDiagnosticProviderResponseReceivedEventArgs(IHttpDiagnosticProviderResponseReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderResponseReceivedEventArgs] {
-    fn get_Timestamp(&self, out: *mut ::rt::gen::windows::foundation::DateTime) -> HRESULT,
+    fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
     fn get_Message(&self, out: *mut *mut super::HttpResponseMessage) -> HRESULT
 }}
 impl IHttpDiagnosticProviderResponseReceivedEventArgs {
-    #[inline] pub unsafe fn get_timestamp(&self) -> Result<::rt::gen::windows::foundation::DateTime> {
+    #[inline] pub unsafe fn get_timestamp(&self) -> Result<foundation::DateTime> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Timestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -3236,12 +3236,12 @@ RT_ENUM! { enum HttpDiagnosticRequestInitiator: i32 {
 }}
 DEFINE_IID!(IID_IHttpDiagnosticSourceLocation, 1420415584, 34912, 16959, 182, 250, 215, 119, 22, 246, 71, 167);
 RT_INTERFACE!{interface IHttpDiagnosticSourceLocation(IHttpDiagnosticSourceLocationVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticSourceLocation] {
-    fn get_SourceUri(&self, out: *mut *mut ::rt::gen::windows::foundation::Uri) -> HRESULT,
+    fn get_SourceUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
     fn get_LineNumber(&self, out: *mut u64) -> HRESULT,
     fn get_ColumnNumber(&self, out: *mut u64) -> HRESULT
 }}
 impl IHttpDiagnosticSourceLocation {
-    #[inline] pub unsafe fn get_source_uri(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_source_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SourceUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3407,7 +3407,7 @@ RT_INTERFACE!{interface ISyndicationClient(ISyndicationClientVtbl): IInspectable
     fn get_BypassCacheOnRetrieve(&self, out: *mut bool) -> HRESULT,
     fn put_BypassCacheOnRetrieve(&self, value: bool) -> HRESULT,
     fn SetRequestHeader(&self, name: HSTRING, value: HSTRING) -> HRESULT,
-    fn RetrieveFeedAsync(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<SyndicationFeed, RetrievalProgress>) -> HRESULT
+    fn RetrieveFeedAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperationWithProgress<SyndicationFeed, RetrievalProgress>) -> HRESULT
 }}
 impl ISyndicationClient {
     #[cfg(feature="windows-security")] #[inline] pub unsafe fn get_server_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> {
@@ -3459,7 +3459,7 @@ impl ISyndicationClient {
         let hr = ((*self.lpVtbl).SetRequestHeader)(self as *const _ as *mut _, name.get(), value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn retrieve_feed_async(&self, uri: &super::super::foundation::Uri) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<SyndicationFeed, RetrievalProgress>>> {
+    #[inline] pub unsafe fn retrieve_feed_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<SyndicationFeed, RetrievalProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RetrieveFeedAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -3487,16 +3487,16 @@ impl ISyndicationClientFactory {
 }
 DEFINE_IID!(IID_ISyndicationContent, 1178730238, 3669, 16592, 184, 208, 106, 44, 203, 169, 252, 124);
 RT_INTERFACE!{interface ISyndicationContent(ISyndicationContentVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationContent] {
-    fn get_SourceUri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn put_SourceUri(&self, value: *mut super::super::foundation::Uri) -> HRESULT
+    fn get_SourceUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_SourceUri(&self, value: *mut foundation::Uri) -> HRESULT
 }}
 impl ISyndicationContent {
-    #[inline] pub unsafe fn get_source_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_source_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SourceUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_source_uri(&self, value: &super::super::foundation::Uri) -> Result<()> {
+    #[inline] pub unsafe fn set_source_uri(&self, value: &foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_SourceUri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -3508,7 +3508,7 @@ impl SyndicationContent {
     #[inline] pub fn create_syndication_content(text: &HStringArg, type_: SyndicationTextType) -> Result<ComPtr<SyndicationContent>> { unsafe {
         <Self as RtActivatable<ISyndicationContentFactory>>::get_activation_factory().create_syndication_content(text, type_)
     }}
-    #[inline] pub fn create_syndication_content_with_source_uri(sourceUri: &super::super::foundation::Uri) -> Result<ComPtr<SyndicationContent>> { unsafe {
+    #[inline] pub fn create_syndication_content_with_source_uri(sourceUri: &foundation::Uri) -> Result<ComPtr<SyndicationContent>> { unsafe {
         <Self as RtActivatable<ISyndicationContentFactory>>::get_activation_factory().create_syndication_content_with_source_uri(sourceUri)
     }}
 }
@@ -3516,7 +3516,7 @@ DEFINE_CLSID!(SyndicationContent(&[87,105,110,100,111,119,115,46,87,101,98,46,83
 DEFINE_IID!(IID_ISyndicationContentFactory, 1026538387, 38176, 16755, 147, 136, 126, 45, 243, 36, 168, 160);
 RT_INTERFACE!{static interface ISyndicationContentFactory(ISyndicationContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationContentFactory] {
     fn CreateSyndicationContent(&self, text: HSTRING, type_: SyndicationTextType, out: *mut *mut SyndicationContent) -> HRESULT,
-    fn CreateSyndicationContentWithSourceUri(&self, sourceUri: *mut super::super::foundation::Uri, out: *mut *mut SyndicationContent) -> HRESULT
+    fn CreateSyndicationContentWithSourceUri(&self, sourceUri: *mut foundation::Uri, out: *mut *mut SyndicationContent) -> HRESULT
 }}
 impl ISyndicationContentFactory {
     #[inline] pub unsafe fn create_syndication_content(&self, text: &HStringArg, type_: SyndicationTextType) -> Result<ComPtr<SyndicationContent>> {
@@ -3524,7 +3524,7 @@ impl ISyndicationContentFactory {
         let hr = ((*self.lpVtbl).CreateSyndicationContent)(self as *const _ as *mut _, text.get(), type_, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_syndication_content_with_source_uri(&self, sourceUri: &super::super::foundation::Uri) -> Result<ComPtr<SyndicationContent>> {
+    #[inline] pub unsafe fn create_syndication_content_with_source_uri(&self, sourceUri: &foundation::Uri) -> Result<ComPtr<SyndicationContent>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSyndicationContentWithSourceUri)(self as *const _ as *mut _, sourceUri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -3554,47 +3554,47 @@ RT_ENUM! { enum SyndicationErrorStatus: i32 {
 }}
 DEFINE_IID!(IID_ISyndicationFeed, 2147368146, 23398, 19810, 132, 3, 27, 193, 13, 145, 13, 107);
 RT_INTERFACE!{interface ISyndicationFeed(ISyndicationFeedVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationFeed] {
-    fn get_Authors(&self, out: *mut *mut super::super::foundation::collections::IVector<SyndicationPerson>) -> HRESULT,
-    fn get_Categories(&self, out: *mut *mut super::super::foundation::collections::IVector<SyndicationCategory>) -> HRESULT,
-    fn get_Contributors(&self, out: *mut *mut super::super::foundation::collections::IVector<SyndicationPerson>) -> HRESULT,
+    fn get_Authors(&self, out: *mut *mut foundation::collections::IVector<SyndicationPerson>) -> HRESULT,
+    fn get_Categories(&self, out: *mut *mut foundation::collections::IVector<SyndicationCategory>) -> HRESULT,
+    fn get_Contributors(&self, out: *mut *mut foundation::collections::IVector<SyndicationPerson>) -> HRESULT,
     fn get_Generator(&self, out: *mut *mut SyndicationGenerator) -> HRESULT,
     fn put_Generator(&self, value: *mut SyndicationGenerator) -> HRESULT,
-    fn get_IconUri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn put_IconUri(&self, value: *mut super::super::foundation::Uri) -> HRESULT,
+    fn get_IconUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_IconUri(&self, value: *mut foundation::Uri) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Id(&self, value: HSTRING) -> HRESULT,
-    fn get_Items(&self, out: *mut *mut super::super::foundation::collections::IVector<SyndicationItem>) -> HRESULT,
-    fn get_LastUpdatedTime(&self, out: *mut super::super::foundation::DateTime) -> HRESULT,
-    fn put_LastUpdatedTime(&self, value: super::super::foundation::DateTime) -> HRESULT,
-    fn get_Links(&self, out: *mut *mut super::super::foundation::collections::IVector<SyndicationLink>) -> HRESULT,
-    fn get_ImageUri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn put_ImageUri(&self, value: *mut super::super::foundation::Uri) -> HRESULT,
+    fn get_Items(&self, out: *mut *mut foundation::collections::IVector<SyndicationItem>) -> HRESULT,
+    fn get_LastUpdatedTime(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn put_LastUpdatedTime(&self, value: foundation::DateTime) -> HRESULT,
+    fn get_Links(&self, out: *mut *mut foundation::collections::IVector<SyndicationLink>) -> HRESULT,
+    fn get_ImageUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_ImageUri(&self, value: *mut foundation::Uri) -> HRESULT,
     fn get_Rights(&self, out: *mut *mut ISyndicationText) -> HRESULT,
     fn put_Rights(&self, value: *mut ISyndicationText) -> HRESULT,
     fn get_Subtitle(&self, out: *mut *mut ISyndicationText) -> HRESULT,
     fn put_Subtitle(&self, value: *mut ISyndicationText) -> HRESULT,
     fn get_Title(&self, out: *mut *mut ISyndicationText) -> HRESULT,
     fn put_Title(&self, value: *mut ISyndicationText) -> HRESULT,
-    fn get_FirstUri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn get_LastUri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn get_NextUri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn get_PreviousUri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
+    fn get_FirstUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_LastUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_NextUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_PreviousUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
     fn get_SourceFormat(&self, out: *mut SyndicationFormat) -> HRESULT,
     fn Load(&self, feed: HSTRING) -> HRESULT,
     #[cfg(feature="windows-data")] fn LoadFromXml(&self, feedDocument: *mut super::super::data::xml::dom::XmlDocument) -> HRESULT
 }}
 impl ISyndicationFeed {
-    #[inline] pub unsafe fn get_authors(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<SyndicationPerson>>>> {
+    #[inline] pub unsafe fn get_authors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationPerson>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Authors)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_categories(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<SyndicationCategory>>>> {
+    #[inline] pub unsafe fn get_categories(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationCategory>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Categories)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_contributors(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<SyndicationPerson>>>> {
+    #[inline] pub unsafe fn get_contributors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationPerson>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Contributors)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3608,12 +3608,12 @@ impl ISyndicationFeed {
         let hr = ((*self.lpVtbl).put_Generator)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_icon_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_icon_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IconUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_icon_uri(&self, value: &super::super::foundation::Uri) -> Result<()> {
+    #[inline] pub unsafe fn set_icon_uri(&self, value: &foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_IconUri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -3626,31 +3626,31 @@ impl ISyndicationFeed {
         let hr = ((*self.lpVtbl).put_Id)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_items(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<SyndicationItem>>>> {
+    #[inline] pub unsafe fn get_items(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationItem>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Items)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_last_updated_time(&self) -> Result<super::super::foundation::DateTime> {
+    #[inline] pub unsafe fn get_last_updated_time(&self) -> Result<foundation::DateTime> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_LastUpdatedTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_last_updated_time(&self, value: super::super::foundation::DateTime) -> Result<()> {
+    #[inline] pub unsafe fn set_last_updated_time(&self, value: foundation::DateTime) -> Result<()> {
         let hr = ((*self.lpVtbl).put_LastUpdatedTime)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_links(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<SyndicationLink>>>> {
+    #[inline] pub unsafe fn get_links(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationLink>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Links)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_image_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_image_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ImageUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_image_uri(&self, value: &super::super::foundation::Uri) -> Result<()> {
+    #[inline] pub unsafe fn set_image_uri(&self, value: &foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_ImageUri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -3681,22 +3681,22 @@ impl ISyndicationFeed {
         let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_first_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_first_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FirstUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_last_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_last_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LastUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_next_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_next_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NextUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_previous_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_previous_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PreviousUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3719,17 +3719,17 @@ RT_CLASS!{class SyndicationFeed: ISyndicationFeed}
 impl RtActivatable<ISyndicationFeedFactory> for SyndicationFeed {}
 impl RtActivatable<IActivationFactory> for SyndicationFeed {}
 impl SyndicationFeed {
-    #[inline] pub fn create_syndication_feed(title: &HStringArg, subtitle: &HStringArg, uri: &super::super::foundation::Uri) -> Result<ComPtr<SyndicationFeed>> { unsafe {
+    #[inline] pub fn create_syndication_feed(title: &HStringArg, subtitle: &HStringArg, uri: &foundation::Uri) -> Result<ComPtr<SyndicationFeed>> { unsafe {
         <Self as RtActivatable<ISyndicationFeedFactory>>::get_activation_factory().create_syndication_feed(title, subtitle, uri)
     }}
 }
 DEFINE_CLSID!(SyndicationFeed(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,70,101,101,100,0]) [CLSID_SyndicationFeed]);
 DEFINE_IID!(IID_ISyndicationFeedFactory, 591864370, 35817, 18615, 137, 52, 98, 5, 19, 29, 147, 87);
 RT_INTERFACE!{static interface ISyndicationFeedFactory(ISyndicationFeedFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationFeedFactory] {
-    fn CreateSyndicationFeed(&self, title: HSTRING, subtitle: HSTRING, uri: *mut super::super::foundation::Uri, out: *mut *mut SyndicationFeed) -> HRESULT
+    fn CreateSyndicationFeed(&self, title: HSTRING, subtitle: HSTRING, uri: *mut foundation::Uri, out: *mut *mut SyndicationFeed) -> HRESULT
 }}
 impl ISyndicationFeedFactory {
-    #[inline] pub unsafe fn create_syndication_feed(&self, title: &HStringArg, subtitle: &HStringArg, uri: &super::super::foundation::Uri) -> Result<ComPtr<SyndicationFeed>> {
+    #[inline] pub unsafe fn create_syndication_feed(&self, title: &HStringArg, subtitle: &HStringArg, uri: &foundation::Uri) -> Result<ComPtr<SyndicationFeed>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSyndicationFeed)(self as *const _ as *mut _, title.get(), subtitle.get(), uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -3742,8 +3742,8 @@ DEFINE_IID!(IID_ISyndicationGenerator, 2540221305, 64299, 20333, 180, 28, 8, 138
 RT_INTERFACE!{interface ISyndicationGenerator(ISyndicationGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationGenerator] {
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Text(&self, value: HSTRING) -> HRESULT,
-    fn get_Uri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn put_Uri(&self, value: *mut super::super::foundation::Uri) -> HRESULT,
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_Uri(&self, value: *mut foundation::Uri) -> HRESULT,
     fn get_Version(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Version(&self, value: HSTRING) -> HRESULT
 }}
@@ -3757,12 +3757,12 @@ impl ISyndicationGenerator {
         let hr = ((*self.lpVtbl).put_Text)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_uri(&self, value: &super::super::foundation::Uri) -> Result<()> {
+    #[inline] pub unsafe fn set_uri(&self, value: &foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Uri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -3798,18 +3798,18 @@ impl ISyndicationGeneratorFactory {
 }
 DEFINE_IID!(IID_ISyndicationItem, 1418573955, 50052, 17857, 138, 232, 163, 120, 196, 236, 72, 108);
 RT_INTERFACE!{interface ISyndicationItem(ISyndicationItemVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationItem] {
-    fn get_Authors(&self, out: *mut *mut super::super::foundation::collections::IVector<SyndicationPerson>) -> HRESULT,
-    fn get_Categories(&self, out: *mut *mut super::super::foundation::collections::IVector<SyndicationCategory>) -> HRESULT,
-    fn get_Contributors(&self, out: *mut *mut super::super::foundation::collections::IVector<SyndicationPerson>) -> HRESULT,
+    fn get_Authors(&self, out: *mut *mut foundation::collections::IVector<SyndicationPerson>) -> HRESULT,
+    fn get_Categories(&self, out: *mut *mut foundation::collections::IVector<SyndicationCategory>) -> HRESULT,
+    fn get_Contributors(&self, out: *mut *mut foundation::collections::IVector<SyndicationPerson>) -> HRESULT,
     fn get_Content(&self, out: *mut *mut SyndicationContent) -> HRESULT,
     fn put_Content(&self, value: *mut SyndicationContent) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Id(&self, value: HSTRING) -> HRESULT,
-    fn get_LastUpdatedTime(&self, out: *mut super::super::foundation::DateTime) -> HRESULT,
-    fn put_LastUpdatedTime(&self, value: super::super::foundation::DateTime) -> HRESULT,
-    fn get_Links(&self, out: *mut *mut super::super::foundation::collections::IVector<SyndicationLink>) -> HRESULT,
-    fn get_PublishedDate(&self, out: *mut super::super::foundation::DateTime) -> HRESULT,
-    fn put_PublishedDate(&self, value: super::super::foundation::DateTime) -> HRESULT,
+    fn get_LastUpdatedTime(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn put_LastUpdatedTime(&self, value: foundation::DateTime) -> HRESULT,
+    fn get_Links(&self, out: *mut *mut foundation::collections::IVector<SyndicationLink>) -> HRESULT,
+    fn get_PublishedDate(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn put_PublishedDate(&self, value: foundation::DateTime) -> HRESULT,
     fn get_Rights(&self, out: *mut *mut ISyndicationText) -> HRESULT,
     fn put_Rights(&self, value: *mut ISyndicationText) -> HRESULT,
     fn get_Source(&self, out: *mut *mut SyndicationFeed) -> HRESULT,
@@ -3818,27 +3818,27 @@ RT_INTERFACE!{interface ISyndicationItem(ISyndicationItemVtbl): IInspectable(IIn
     fn put_Summary(&self, value: *mut ISyndicationText) -> HRESULT,
     fn get_Title(&self, out: *mut *mut ISyndicationText) -> HRESULT,
     fn put_Title(&self, value: *mut ISyndicationText) -> HRESULT,
-    fn get_CommentsUri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn put_CommentsUri(&self, value: *mut super::super::foundation::Uri) -> HRESULT,
-    fn get_EditUri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn get_EditMediaUri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
+    fn get_CommentsUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_CommentsUri(&self, value: *mut foundation::Uri) -> HRESULT,
+    fn get_EditUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_EditMediaUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
     fn get_ETag(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_ItemUri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
+    fn get_ItemUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
     fn Load(&self, item: HSTRING) -> HRESULT,
     #[cfg(feature="windows-data")] fn LoadFromXml(&self, itemDocument: *mut super::super::data::xml::dom::XmlDocument) -> HRESULT
 }}
 impl ISyndicationItem {
-    #[inline] pub unsafe fn get_authors(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<SyndicationPerson>>>> {
+    #[inline] pub unsafe fn get_authors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationPerson>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Authors)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_categories(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<SyndicationCategory>>>> {
+    #[inline] pub unsafe fn get_categories(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationCategory>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Categories)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_contributors(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<SyndicationPerson>>>> {
+    #[inline] pub unsafe fn get_contributors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationPerson>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Contributors)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3861,26 +3861,26 @@ impl ISyndicationItem {
         let hr = ((*self.lpVtbl).put_Id)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_last_updated_time(&self) -> Result<super::super::foundation::DateTime> {
+    #[inline] pub unsafe fn get_last_updated_time(&self) -> Result<foundation::DateTime> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_LastUpdatedTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_last_updated_time(&self, value: super::super::foundation::DateTime) -> Result<()> {
+    #[inline] pub unsafe fn set_last_updated_time(&self, value: foundation::DateTime) -> Result<()> {
         let hr = ((*self.lpVtbl).put_LastUpdatedTime)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_links(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<SyndicationLink>>>> {
+    #[inline] pub unsafe fn get_links(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationLink>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Links)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_published_date(&self) -> Result<super::super::foundation::DateTime> {
+    #[inline] pub unsafe fn get_published_date(&self) -> Result<foundation::DateTime> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_PublishedDate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_published_date(&self, value: super::super::foundation::DateTime) -> Result<()> {
+    #[inline] pub unsafe fn set_published_date(&self, value: foundation::DateTime) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PublishedDate)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -3920,21 +3920,21 @@ impl ISyndicationItem {
         let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_comments_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_comments_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CommentsUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_comments_uri(&self, value: &super::super::foundation::Uri) -> Result<()> {
+    #[inline] pub unsafe fn set_comments_uri(&self, value: &foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_CommentsUri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_edit_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_edit_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EditUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_edit_media_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_edit_media_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EditMediaUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3944,7 +3944,7 @@ impl ISyndicationItem {
         let hr = ((*self.lpVtbl).get_ETag)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_item_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_item_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ItemUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3962,17 +3962,17 @@ RT_CLASS!{class SyndicationItem: ISyndicationItem}
 impl RtActivatable<ISyndicationItemFactory> for SyndicationItem {}
 impl RtActivatable<IActivationFactory> for SyndicationItem {}
 impl SyndicationItem {
-    #[inline] pub fn create_syndication_item(title: &HStringArg, content: &SyndicationContent, uri: &super::super::foundation::Uri) -> Result<ComPtr<SyndicationItem>> { unsafe {
+    #[inline] pub fn create_syndication_item(title: &HStringArg, content: &SyndicationContent, uri: &foundation::Uri) -> Result<ComPtr<SyndicationItem>> { unsafe {
         <Self as RtActivatable<ISyndicationItemFactory>>::get_activation_factory().create_syndication_item(title, content, uri)
     }}
 }
 DEFINE_CLSID!(SyndicationItem(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,73,116,101,109,0]) [CLSID_SyndicationItem]);
 DEFINE_IID!(IID_ISyndicationItemFactory, 622674767, 32184, 18554, 133, 228, 16, 209, 145, 230, 110, 187);
 RT_INTERFACE!{static interface ISyndicationItemFactory(ISyndicationItemFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationItemFactory] {
-    fn CreateSyndicationItem(&self, title: HSTRING, content: *mut SyndicationContent, uri: *mut super::super::foundation::Uri, out: *mut *mut SyndicationItem) -> HRESULT
+    fn CreateSyndicationItem(&self, title: HSTRING, content: *mut SyndicationContent, uri: *mut foundation::Uri, out: *mut *mut SyndicationItem) -> HRESULT
 }}
 impl ISyndicationItemFactory {
-    #[inline] pub unsafe fn create_syndication_item(&self, title: &HStringArg, content: &SyndicationContent, uri: &super::super::foundation::Uri) -> Result<ComPtr<SyndicationItem>> {
+    #[inline] pub unsafe fn create_syndication_item(&self, title: &HStringArg, content: &SyndicationContent, uri: &foundation::Uri) -> Result<ComPtr<SyndicationItem>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSyndicationItem)(self as *const _ as *mut _, title.get(), content as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -3988,8 +3988,8 @@ RT_INTERFACE!{interface ISyndicationLink(ISyndicationLinkVtbl): IInspectable(IIn
     fn put_Relationship(&self, value: HSTRING) -> HRESULT,
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Title(&self, value: HSTRING) -> HRESULT,
-    fn get_Uri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn put_Uri(&self, value: *mut super::super::foundation::Uri) -> HRESULT,
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_Uri(&self, value: *mut foundation::Uri) -> HRESULT,
     fn get_ResourceLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn put_ResourceLanguage(&self, value: HSTRING) -> HRESULT
 }}
@@ -4030,12 +4030,12 @@ impl ISyndicationLink {
         let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_uri(&self, value: &super::super::foundation::Uri) -> Result<()> {
+    #[inline] pub unsafe fn set_uri(&self, value: &foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Uri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -4053,26 +4053,26 @@ RT_CLASS!{class SyndicationLink: ISyndicationLink}
 impl RtActivatable<ISyndicationLinkFactory> for SyndicationLink {}
 impl RtActivatable<IActivationFactory> for SyndicationLink {}
 impl SyndicationLink {
-    #[inline] pub fn create_syndication_link(uri: &super::super::foundation::Uri) -> Result<ComPtr<SyndicationLink>> { unsafe {
+    #[inline] pub fn create_syndication_link(uri: &foundation::Uri) -> Result<ComPtr<SyndicationLink>> { unsafe {
         <Self as RtActivatable<ISyndicationLinkFactory>>::get_activation_factory().create_syndication_link(uri)
     }}
-    #[inline] pub fn create_syndication_link_ex(uri: &super::super::foundation::Uri, relationship: &HStringArg, title: &HStringArg, mediaType: &HStringArg, length: u32) -> Result<ComPtr<SyndicationLink>> { unsafe {
+    #[inline] pub fn create_syndication_link_ex(uri: &foundation::Uri, relationship: &HStringArg, title: &HStringArg, mediaType: &HStringArg, length: u32) -> Result<ComPtr<SyndicationLink>> { unsafe {
         <Self as RtActivatable<ISyndicationLinkFactory>>::get_activation_factory().create_syndication_link_ex(uri, relationship, title, mediaType, length)
     }}
 }
 DEFINE_CLSID!(SyndicationLink(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,76,105,110,107,0]) [CLSID_SyndicationLink]);
 DEFINE_IID!(IID_ISyndicationLinkFactory, 1591239636, 21813, 18604, 152, 212, 193, 144, 153, 80, 128, 179);
 RT_INTERFACE!{static interface ISyndicationLinkFactory(ISyndicationLinkFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationLinkFactory] {
-    fn CreateSyndicationLink(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut SyndicationLink) -> HRESULT,
-    fn CreateSyndicationLinkEx(&self, uri: *mut super::super::foundation::Uri, relationship: HSTRING, title: HSTRING, mediaType: HSTRING, length: u32, out: *mut *mut SyndicationLink) -> HRESULT
+    fn CreateSyndicationLink(&self, uri: *mut foundation::Uri, out: *mut *mut SyndicationLink) -> HRESULT,
+    fn CreateSyndicationLinkEx(&self, uri: *mut foundation::Uri, relationship: HSTRING, title: HSTRING, mediaType: HSTRING, length: u32, out: *mut *mut SyndicationLink) -> HRESULT
 }}
 impl ISyndicationLinkFactory {
-    #[inline] pub unsafe fn create_syndication_link(&self, uri: &super::super::foundation::Uri) -> Result<ComPtr<SyndicationLink>> {
+    #[inline] pub unsafe fn create_syndication_link(&self, uri: &foundation::Uri) -> Result<ComPtr<SyndicationLink>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSyndicationLink)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_syndication_link_ex(&self, uri: &super::super::foundation::Uri, relationship: &HStringArg, title: &HStringArg, mediaType: &HStringArg, length: u32) -> Result<ComPtr<SyndicationLink>> {
+    #[inline] pub unsafe fn create_syndication_link_ex(&self, uri: &foundation::Uri, relationship: &HStringArg, title: &HStringArg, mediaType: &HStringArg, length: u32) -> Result<ComPtr<SyndicationLink>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSyndicationLinkEx)(self as *const _ as *mut _, uri as *const _ as *mut _, relationship.get(), title.get(), mediaType.get(), length, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -4088,10 +4088,10 @@ RT_INTERFACE!{interface ISyndicationNode(ISyndicationNodeVtbl): IInspectable(IIn
     fn put_NodeValue(&self, value: HSTRING) -> HRESULT,
     fn get_Language(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Language(&self, value: HSTRING) -> HRESULT,
-    fn get_BaseUri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn put_BaseUri(&self, value: *mut super::super::foundation::Uri) -> HRESULT,
-    fn get_AttributeExtensions(&self, out: *mut *mut super::super::foundation::collections::IVector<SyndicationAttribute>) -> HRESULT,
-    fn get_ElementExtensions(&self, out: *mut *mut super::super::foundation::collections::IVector<ISyndicationNode>) -> HRESULT,
+    fn get_BaseUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_BaseUri(&self, value: *mut foundation::Uri) -> HRESULT,
+    fn get_AttributeExtensions(&self, out: *mut *mut foundation::collections::IVector<SyndicationAttribute>) -> HRESULT,
+    fn get_ElementExtensions(&self, out: *mut *mut foundation::collections::IVector<ISyndicationNode>) -> HRESULT,
     #[cfg(feature="windows-data")] fn GetXmlDocument(&self, format: SyndicationFormat, out: *mut *mut super::super::data::xml::dom::XmlDocument) -> HRESULT
 }}
 impl ISyndicationNode {
@@ -4131,21 +4131,21 @@ impl ISyndicationNode {
         let hr = ((*self.lpVtbl).put_Language)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_base_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_base_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BaseUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_base_uri(&self, value: &super::super::foundation::Uri) -> Result<()> {
+    #[inline] pub unsafe fn set_base_uri(&self, value: &foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_BaseUri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_attribute_extensions(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<SyndicationAttribute>>>> {
+    #[inline] pub unsafe fn get_attribute_extensions(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationAttribute>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AttributeExtensions)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_element_extensions(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<ISyndicationNode>>>> {
+    #[inline] pub unsafe fn get_element_extensions(&self) -> Result<Option<ComPtr<foundation::collections::IVector<ISyndicationNode>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ElementExtensions)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -4182,8 +4182,8 @@ RT_INTERFACE!{interface ISyndicationPerson(ISyndicationPersonVtbl): IInspectable
     fn put_Email(&self, value: HSTRING) -> HRESULT,
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Name(&self, value: HSTRING) -> HRESULT,
-    fn get_Uri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn put_Uri(&self, value: *mut super::super::foundation::Uri) -> HRESULT
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_Uri(&self, value: *mut foundation::Uri) -> HRESULT
 }}
 impl ISyndicationPerson {
     #[inline] pub unsafe fn get_email(&self) -> Result<HString> {
@@ -4204,12 +4204,12 @@ impl ISyndicationPerson {
         let hr = ((*self.lpVtbl).put_Name)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_uri(&self, value: &super::super::foundation::Uri) -> Result<()> {
+    #[inline] pub unsafe fn set_uri(&self, value: &foundation::Uri) -> Result<()> {
         let hr = ((*self.lpVtbl).put_Uri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -4221,7 +4221,7 @@ impl SyndicationPerson {
     #[inline] pub fn create_syndication_person(name: &HStringArg) -> Result<ComPtr<SyndicationPerson>> { unsafe {
         <Self as RtActivatable<ISyndicationPersonFactory>>::get_activation_factory().create_syndication_person(name)
     }}
-    #[inline] pub fn create_syndication_person_ex(name: &HStringArg, email: &HStringArg, uri: &super::super::foundation::Uri) -> Result<ComPtr<SyndicationPerson>> { unsafe {
+    #[inline] pub fn create_syndication_person_ex(name: &HStringArg, email: &HStringArg, uri: &foundation::Uri) -> Result<ComPtr<SyndicationPerson>> { unsafe {
         <Self as RtActivatable<ISyndicationPersonFactory>>::get_activation_factory().create_syndication_person_ex(name, email, uri)
     }}
 }
@@ -4229,7 +4229,7 @@ DEFINE_CLSID!(SyndicationPerson(&[87,105,110,100,111,119,115,46,87,101,98,46,83,
 DEFINE_IID!(IID_ISyndicationPersonFactory, 3707013229, 8861, 19288, 164, 155, 243, 210, 240, 245, 201, 159);
 RT_INTERFACE!{static interface ISyndicationPersonFactory(ISyndicationPersonFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationPersonFactory] {
     fn CreateSyndicationPerson(&self, name: HSTRING, out: *mut *mut SyndicationPerson) -> HRESULT,
-    fn CreateSyndicationPersonEx(&self, name: HSTRING, email: HSTRING, uri: *mut super::super::foundation::Uri, out: *mut *mut SyndicationPerson) -> HRESULT
+    fn CreateSyndicationPersonEx(&self, name: HSTRING, email: HSTRING, uri: *mut foundation::Uri, out: *mut *mut SyndicationPerson) -> HRESULT
 }}
 impl ISyndicationPersonFactory {
     #[inline] pub unsafe fn create_syndication_person(&self, name: &HStringArg) -> Result<ComPtr<SyndicationPerson>> {
@@ -4237,7 +4237,7 @@ impl ISyndicationPersonFactory {
         let hr = ((*self.lpVtbl).CreateSyndicationPerson)(self as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_syndication_person_ex(&self, name: &HStringArg, email: &HStringArg, uri: &super::super::foundation::Uri) -> Result<ComPtr<SyndicationPerson>> {
+    #[inline] pub unsafe fn create_syndication_person_ex(&self, name: &HStringArg, email: &HStringArg, uri: &foundation::Uri) -> Result<ComPtr<SyndicationPerson>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSyndicationPersonEx)(self as *const _ as *mut _, name.get(), email.get(), uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -4321,68 +4321,68 @@ pub mod atompub { // Windows.Web.AtomPub
 use ::prelude::*;
 DEFINE_IID!(IID_IAtomPubClient, 892939320, 52717, 19788, 150, 55, 5, 241, 92, 28, 148, 6);
 RT_INTERFACE!{interface IAtomPubClient(IAtomPubClientVtbl): IInspectable(IInspectableVtbl) [IID_IAtomPubClient] {
-    fn RetrieveServiceDocumentAsync(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<ServiceDocument, super::syndication::RetrievalProgress>) -> HRESULT,
+    fn RetrieveServiceDocumentAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperationWithProgress<ServiceDocument, super::syndication::RetrievalProgress>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn RetrieveMediaResourceAsync(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, super::syndication::RetrievalProgress>) -> HRESULT,
-    fn RetrieveResourceAsync(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::RetrievalProgress>) -> HRESULT,
-    fn CreateResourceAsync(&self, uri: *mut super::super::foundation::Uri, description: HSTRING, item: *mut super::syndication::SyndicationItem, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::TransferProgress>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn RetrieveMediaResourceAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, super::syndication::RetrievalProgress>) -> HRESULT,
+    fn RetrieveResourceAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::RetrievalProgress>) -> HRESULT,
+    fn CreateResourceAsync(&self, uri: *mut foundation::Uri, description: HSTRING, item: *mut super::syndication::SyndicationItem, out: *mut *mut foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::TransferProgress>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-storage")] fn CreateMediaResourceAsync(&self, uri: *mut super::super::foundation::Uri, mediaType: HSTRING, description: HSTRING, mediaStream: *mut super::super::storage::streams::IInputStream, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::TransferProgress>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn CreateMediaResourceAsync(&self, uri: *mut foundation::Uri, mediaType: HSTRING, description: HSTRING, mediaStream: *mut super::super::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::TransferProgress>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-storage")] fn UpdateMediaResourceAsync(&self, uri: *mut super::super::foundation::Uri, mediaType: HSTRING, mediaStream: *mut super::super::storage::streams::IInputStream, out: *mut *mut super::super::foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>) -> HRESULT,
-    fn UpdateResourceAsync(&self, uri: *mut super::super::foundation::Uri, item: *mut super::syndication::SyndicationItem, out: *mut *mut super::super::foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>) -> HRESULT,
-    fn UpdateResourceItemAsync(&self, item: *mut super::syndication::SyndicationItem, out: *mut *mut super::super::foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>) -> HRESULT,
-    fn DeleteResourceAsync(&self, uri: *mut super::super::foundation::Uri, out: *mut *mut super::super::foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>) -> HRESULT,
-    fn DeleteResourceItemAsync(&self, item: *mut super::syndication::SyndicationItem, out: *mut *mut super::super::foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn UpdateMediaResourceAsync(&self, uri: *mut foundation::Uri, mediaType: HSTRING, mediaStream: *mut super::super::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>) -> HRESULT,
+    fn UpdateResourceAsync(&self, uri: *mut foundation::Uri, item: *mut super::syndication::SyndicationItem, out: *mut *mut foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>) -> HRESULT,
+    fn UpdateResourceItemAsync(&self, item: *mut super::syndication::SyndicationItem, out: *mut *mut foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>) -> HRESULT,
+    fn DeleteResourceAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>) -> HRESULT,
+    fn DeleteResourceItemAsync(&self, item: *mut super::syndication::SyndicationItem, out: *mut *mut foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>) -> HRESULT,
     fn CancelAsyncOperations(&self) -> HRESULT
 }}
 impl IAtomPubClient {
-    #[inline] pub unsafe fn retrieve_service_document_async(&self, uri: &super::super::foundation::Uri) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<ServiceDocument, super::syndication::RetrievalProgress>>> {
+    #[inline] pub unsafe fn retrieve_service_document_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<ServiceDocument, super::syndication::RetrievalProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RetrieveServiceDocumentAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn retrieve_media_resource_async(&self, uri: &super::super::foundation::Uri) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, super::syndication::RetrievalProgress>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn retrieve_media_resource_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, super::syndication::RetrievalProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RetrieveMediaResourceAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn retrieve_resource_async(&self, uri: &super::super::foundation::Uri) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::RetrievalProgress>>> {
+    #[inline] pub unsafe fn retrieve_resource_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::RetrievalProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RetrieveResourceAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn create_resource_async(&self, uri: &super::super::foundation::Uri, description: &HStringArg, item: &super::syndication::SyndicationItem) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::TransferProgress>>> {
+    #[inline] pub unsafe fn create_resource_async(&self, uri: &foundation::Uri, description: &HStringArg, item: &super::syndication::SyndicationItem) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::TransferProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateResourceAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, description.get(), item as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_media_resource_async(&self, uri: &super::super::foundation::Uri, mediaType: &HStringArg, description: &HStringArg, mediaStream: &super::super::storage::streams::IInputStream) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::TransferProgress>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn create_media_resource_async(&self, uri: &foundation::Uri, mediaType: &HStringArg, description: &HStringArg, mediaStream: &super::super::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::TransferProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateMediaResourceAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, mediaType.get(), description.get(), mediaStream as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn update_media_resource_async(&self, uri: &super::super::foundation::Uri, mediaType: &HStringArg, mediaStream: &super::super::storage::streams::IInputStream) -> Result<ComPtr<super::super::foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn update_media_resource_async(&self, uri: &foundation::Uri, mediaType: &HStringArg, mediaStream: &super::super::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).UpdateMediaResourceAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, mediaType.get(), mediaStream as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn update_resource_async(&self, uri: &super::super::foundation::Uri, item: &super::syndication::SyndicationItem) -> Result<ComPtr<super::super::foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> {
+    #[inline] pub unsafe fn update_resource_async(&self, uri: &foundation::Uri, item: &super::syndication::SyndicationItem) -> Result<ComPtr<foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).UpdateResourceAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, item as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn update_resource_item_async(&self, item: &super::syndication::SyndicationItem) -> Result<ComPtr<super::super::foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> {
+    #[inline] pub unsafe fn update_resource_item_async(&self, item: &super::syndication::SyndicationItem) -> Result<ComPtr<foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).UpdateResourceItemAsync)(self as *const _ as *mut _, item as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn delete_resource_async(&self, uri: &super::super::foundation::Uri) -> Result<ComPtr<super::super::foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> {
+    #[inline] pub unsafe fn delete_resource_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).DeleteResourceAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn delete_resource_item_async(&self, item: &super::syndication::SyndicationItem) -> Result<ComPtr<super::super::foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> {
+    #[inline] pub unsafe fn delete_resource_item_async(&self, item: &super::syndication::SyndicationItem) -> Result<ComPtr<foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).DeleteResourceItemAsync)(self as *const _ as *mut _, item as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -4415,9 +4415,9 @@ impl IAtomPubClientFactory {
 DEFINE_IID!(IID_IResourceCollection, 2136987145, 48264, 16852, 136, 250, 61, 230, 112, 77, 66, 142);
 RT_INTERFACE!{interface IResourceCollection(IResourceCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IResourceCollection] {
     fn get_Title(&self, out: *mut *mut super::syndication::ISyndicationText) -> HRESULT,
-    fn get_Uri(&self, out: *mut *mut super::super::foundation::Uri) -> HRESULT,
-    fn get_Categories(&self, out: *mut *mut super::super::foundation::collections::IVectorView<super::syndication::SyndicationCategory>) -> HRESULT,
-    fn get_Accepts(&self, out: *mut *mut super::super::foundation::collections::IVectorView<HString>) -> HRESULT
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_Categories(&self, out: *mut *mut foundation::collections::IVectorView<super::syndication::SyndicationCategory>) -> HRESULT,
+    fn get_Accepts(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
 }}
 impl IResourceCollection {
     #[inline] pub unsafe fn get_title(&self) -> Result<Option<ComPtr<super::syndication::ISyndicationText>>> {
@@ -4425,17 +4425,17 @@ impl IResourceCollection {
         let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uri(&self) -> Result<Option<ComPtr<super::super::foundation::Uri>>> {
+    #[inline] pub unsafe fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_categories(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::syndication::SyndicationCategory>>>> {
+    #[inline] pub unsafe fn get_categories(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::syndication::SyndicationCategory>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Categories)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_accepts(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<HString>>>> {
+    #[inline] pub unsafe fn get_accepts(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Accepts)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -4444,10 +4444,10 @@ impl IResourceCollection {
 RT_CLASS!{class ResourceCollection: IResourceCollection}
 DEFINE_IID!(IID_IServiceDocument, 2340341617, 10931, 19902, 139, 204, 119, 143, 146, 183, 94, 81);
 RT_INTERFACE!{interface IServiceDocument(IServiceDocumentVtbl): IInspectable(IInspectableVtbl) [IID_IServiceDocument] {
-    fn get_Workspaces(&self, out: *mut *mut super::super::foundation::collections::IVectorView<Workspace>) -> HRESULT
+    fn get_Workspaces(&self, out: *mut *mut foundation::collections::IVectorView<Workspace>) -> HRESULT
 }}
 impl IServiceDocument {
-    #[inline] pub unsafe fn get_workspaces(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<Workspace>>>> {
+    #[inline] pub unsafe fn get_workspaces(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<Workspace>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Workspaces)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -4457,7 +4457,7 @@ RT_CLASS!{class ServiceDocument: IServiceDocument}
 DEFINE_IID!(IID_IWorkspace, 3021841979, 42168, 16438, 137, 197, 131, 195, 18, 102, 186, 73);
 RT_INTERFACE!{interface IWorkspace(IWorkspaceVtbl): IInspectable(IInspectableVtbl) [IID_IWorkspace] {
     fn get_Title(&self, out: *mut *mut super::syndication::ISyndicationText) -> HRESULT,
-    fn get_Collections(&self, out: *mut *mut super::super::foundation::collections::IVectorView<ResourceCollection>) -> HRESULT
+    fn get_Collections(&self, out: *mut *mut foundation::collections::IVectorView<ResourceCollection>) -> HRESULT
 }}
 impl IWorkspace {
     #[inline] pub unsafe fn get_title(&self) -> Result<Option<ComPtr<super::syndication::ISyndicationText>>> {
@@ -4465,7 +4465,7 @@ impl IWorkspace {
         let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_collections(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<ResourceCollection>>>> {
+    #[inline] pub unsafe fn get_collections(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<ResourceCollection>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Collections)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }

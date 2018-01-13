@@ -87,22 +87,22 @@ RT_ENUM! { enum MdmAlertMark: i32 {
 }}
 DEFINE_IID!(IID_IMdmSession, 4270403916, 36708, 18327, 169, 215, 157, 136, 248, 106, 225, 102);
 RT_INTERFACE!{interface IMdmSession(IMdmSessionVtbl): IInspectable(IInspectableVtbl) [IID_IMdmSession] {
-    fn get_Alerts(&self, out: *mut *mut super::foundation::collections::IVectorView<MdmAlert>) -> HRESULT,
-    fn get_ExtendedError(&self, out: *mut super::foundation::HResult) -> HRESULT,
+    fn get_Alerts(&self, out: *mut *mut foundation::collections::IVectorView<MdmAlert>) -> HRESULT,
+    fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_State(&self, out: *mut MdmSessionState) -> HRESULT,
-    fn AttachAsync(&self, out: *mut *mut super::foundation::IAsyncAction) -> HRESULT,
+    fn AttachAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn Delete(&self) -> HRESULT,
-    fn StartAsync(&self, out: *mut *mut super::foundation::IAsyncAction) -> HRESULT,
-    fn StartWithAlertsAsync(&self, alerts: *mut super::foundation::collections::IIterable<MdmAlert>, out: *mut *mut super::foundation::IAsyncAction) -> HRESULT
+    fn StartAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn StartWithAlertsAsync(&self, alerts: *mut foundation::collections::IIterable<MdmAlert>, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IMdmSession {
-    #[inline] pub unsafe fn get_alerts(&self) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<MdmAlert>>>> {
+    #[inline] pub unsafe fn get_alerts(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MdmAlert>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Alerts)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_extended_error(&self) -> Result<super::foundation::HResult> {
+    #[inline] pub unsafe fn get_extended_error(&self) -> Result<foundation::HResult> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ExtendedError)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -117,7 +117,7 @@ impl IMdmSession {
         let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn attach_async(&self) -> Result<ComPtr<super::foundation::IAsyncAction>> {
+    #[inline] pub unsafe fn attach_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).AttachAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -126,12 +126,12 @@ impl IMdmSession {
         let hr = ((*self.lpVtbl).Delete)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn start_async(&self) -> Result<ComPtr<super::foundation::IAsyncAction>> {
+    #[inline] pub unsafe fn start_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).StartAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn start_with_alerts_async(&self, alerts: &super::foundation::collections::IIterable<MdmAlert>) -> Result<ComPtr<super::foundation::IAsyncAction>> {
+    #[inline] pub unsafe fn start_with_alerts_async(&self, alerts: &foundation::collections::IIterable<MdmAlert>) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).StartWithAlertsAsync)(self as *const _ as *mut _, alerts as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -141,7 +141,7 @@ RT_CLASS!{class MdmSession: IMdmSession}
 RT_CLASS!{static class MdmSessionManager}
 impl RtActivatable<IMdmSessionManagerStatics> for MdmSessionManager {}
 impl MdmSessionManager {
-    #[inline] pub fn get_session_ids() -> Result<Option<ComPtr<super::foundation::collections::IVectorView<HString>>>> { unsafe {
+    #[inline] pub fn get_session_ids() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe {
         <Self as RtActivatable<IMdmSessionManagerStatics>>::get_activation_factory().get_session_ids()
     }}
     #[inline] pub fn try_create_session() -> Result<Option<ComPtr<MdmSession>>> { unsafe {
@@ -157,13 +157,13 @@ impl MdmSessionManager {
 DEFINE_CLSID!(MdmSessionManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,77,100,109,83,101,115,115,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MdmSessionManager]);
 DEFINE_IID!(IID_IMdmSessionManagerStatics, 3477789017, 63301, 19321, 155, 92, 222, 11, 248, 239, 228, 75);
 RT_INTERFACE!{static interface IMdmSessionManagerStatics(IMdmSessionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMdmSessionManagerStatics] {
-    fn get_SessionIds(&self, out: *mut *mut super::foundation::collections::IVectorView<HString>) -> HRESULT,
+    fn get_SessionIds(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
     fn TryCreateSession(&self, out: *mut *mut MdmSession) -> HRESULT,
     fn DeleteSessionById(&self, sessionId: HSTRING) -> HRESULT,
     fn GetSessionById(&self, sessionId: HSTRING, out: *mut *mut MdmSession) -> HRESULT
 }}
 impl IMdmSessionManagerStatics {
-    #[inline] pub unsafe fn get_session_ids(&self) -> Result<Option<ComPtr<super::foundation::collections::IVectorView<HString>>>> {
+    #[inline] pub unsafe fn get_session_ids(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SessionIds)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -204,7 +204,7 @@ DEFINE_IID!(IID_IDeploymentResult, 627292590, 46973, 19487, 138, 123, 32, 230, 1
 RT_INTERFACE!{interface IDeploymentResult(IDeploymentResultVtbl): IInspectable(IInspectableVtbl) [IID_IDeploymentResult] {
     fn get_ErrorText(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
-    fn get_ExtendedErrorCode(&self, out: *mut super::super::foundation::HResult) -> HRESULT
+    fn get_ExtendedErrorCode(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl IDeploymentResult {
     #[inline] pub unsafe fn get_error_text(&self) -> Result<HString> {
@@ -217,7 +217,7 @@ impl IDeploymentResult {
         let hr = ((*self.lpVtbl).get_ActivityId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_extended_error_code(&self) -> Result<super::super::foundation::HResult> {
+    #[inline] pub unsafe fn get_extended_error_code(&self) -> Result<foundation::HResult> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ExtendedErrorCode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -240,70 +240,70 @@ RT_ENUM! { enum PackageInstallState: i32 {
 }}
 DEFINE_IID!(IID_IPackageManager, 2591902565, 24207, 20423, 162, 229, 127, 105, 37, 203, 139, 83);
 RT_INTERFACE!{interface IPackageManager(IPackageManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager] {
-    fn AddPackageAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn UpdatePackageAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn RemovePackageAsync(&self, packageFullName: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn StagePackageAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn RegisterPackageAsync(&self, manifestUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackages(&self, out: *mut *mut super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityId(&self, userSecurityId: HSTRING, out: *mut *mut super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByNamePublisher(&self, packageName: HSTRING, packagePublisher: HSTRING, out: *mut *mut super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdNamePublisher(&self, userSecurityId: HSTRING, packageName: HSTRING, packagePublisher: HSTRING, out: *mut *mut super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
-    fn FindUsers(&self, packageFullName: HSTRING, out: *mut *mut super::super::foundation::collections::IIterable<PackageUserInformation>) -> HRESULT,
+    fn AddPackageAsync(&self, packageUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn UpdatePackageAsync(&self, packageUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn RemovePackageAsync(&self, packageFullName: HSTRING, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn StagePackageAsync(&self, packageUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn RegisterPackageAsync(&self, manifestUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackages(&self, out: *mut *mut foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityId(&self, userSecurityId: HSTRING, out: *mut *mut foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByNamePublisher(&self, packageName: HSTRING, packagePublisher: HSTRING, out: *mut *mut foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdNamePublisher(&self, userSecurityId: HSTRING, packageName: HSTRING, packagePublisher: HSTRING, out: *mut *mut foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
+    fn FindUsers(&self, packageFullName: HSTRING, out: *mut *mut foundation::collections::IIterable<PackageUserInformation>) -> HRESULT,
     fn SetPackageState(&self, packageFullName: HSTRING, packageState: PackageState) -> HRESULT,
     #[cfg(feature="windows-applicationmodel")] fn FindPackageByPackageFullName(&self, packageFullName: HSTRING, out: *mut *mut super::super::applicationmodel::Package) -> HRESULT,
-    fn CleanupPackageForUserAsync(&self, packageName: HSTRING, userSecurityId: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByPackageFamilyName(&self, packageFamilyName: HSTRING, out: *mut *mut super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdPackageFamilyName(&self, userSecurityId: HSTRING, packageFamilyName: HSTRING, out: *mut *mut super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
+    fn CleanupPackageForUserAsync(&self, packageName: HSTRING, userSecurityId: HSTRING, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByPackageFamilyName(&self, packageFamilyName: HSTRING, out: *mut *mut foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdPackageFamilyName(&self, userSecurityId: HSTRING, packageFamilyName: HSTRING, out: *mut *mut foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
     #[cfg(feature="windows-applicationmodel")] fn FindPackageByUserSecurityIdPackageFullName(&self, userSecurityId: HSTRING, packageFullName: HSTRING, out: *mut *mut super::super::applicationmodel::Package) -> HRESULT
 }}
 impl IPackageManager {
-    #[inline] pub unsafe fn add_package_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn add_package_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).AddPackageAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn update_package_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn update_package_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).UpdatePackageAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_package_async(&self, packageFullName: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn remove_package_async(&self, packageFullName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RemovePackageAsync)(self as *const _ as *mut _, packageFullName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn stage_package_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn stage_package_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).StagePackageAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn register_package_async(&self, manifestUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn register_package_async(&self, manifestUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RegisterPackageAsync)(self as *const _ as *mut _, manifestUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages(&self) -> Result<Option<ComPtr<foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackages)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id(&self, userSecurityId: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id(&self, userSecurityId: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityId)(self as *const _ as *mut _, userSecurityId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher(&self, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher(&self, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByNamePublisher)(self as *const _ as *mut _, packageName.get(), packagePublisher.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdNamePublisher)(self as *const _ as *mut _, userSecurityId.get(), packageName.get(), packagePublisher.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_users(&self, packageFullName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<PackageUserInformation>>>> {
+    #[inline] pub unsafe fn find_users(&self, packageFullName: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IIterable<PackageUserInformation>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindUsers)(self as *const _ as *mut _, packageFullName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -317,17 +317,17 @@ impl IPackageManager {
         let hr = ((*self.lpVtbl).FindPackageByPackageFullName)(self as *const _ as *mut _, packageFullName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn cleanup_package_for_user_async(&self, packageName: &HStringArg, userSecurityId: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn cleanup_package_for_user_async(&self, packageName: &HStringArg, userSecurityId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CleanupPackageForUserAsync)(self as *const _ as *mut _, packageName.get(), userSecurityId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByPackageFamilyName)(self as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdPackageFamilyName)(self as *const _ as *mut _, userSecurityId.get(), packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -343,70 +343,70 @@ impl RtActivatable<IActivationFactory> for PackageManager {}
 DEFINE_CLSID!(PackageManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,68,101,112,108,111,121,109,101,110,116,46,80,97,99,107,97,103,101,77,97,110,97,103,101,114,0]) [CLSID_PackageManager]);
 DEFINE_IID!(IID_IPackageManager2, 4155166861, 2112, 18162, 181, 216, 202, 212, 118, 147, 160, 149);
 RT_INTERFACE!{interface IPackageManager2(IPackageManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager2] {
-    fn RemovePackageWithOptionsAsync(&self, packageFullName: HSTRING, removalOptions: RemovalOptions, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn StagePackageWithOptionsAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn RegisterPackageByFullNameAsync(&self, mainPackageFullName: HSTRING, dependencyPackageFullNames: *mut super::super::foundation::collections::IIterable<HString>, deploymentOptions: DeploymentOptions, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn RemovePackageWithOptionsAsync(&self, packageFullName: HSTRING, removalOptions: RemovalOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn StagePackageWithOptionsAsync(&self, packageUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn RegisterPackageByFullNameAsync(&self, mainPackageFullName: HSTRING, dependencyPackageFullNames: *mut foundation::collections::IIterable<HString>, deploymentOptions: DeploymentOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesWithPackageTypes(&self, packageTypes: PackageTypes, out: *mut *mut super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesWithPackageTypes(&self, packageTypes: PackageTypes, out: *mut *mut foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdWithPackageTypes(&self, userSecurityId: HSTRING, packageTypes: PackageTypes, out: *mut *mut super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdWithPackageTypes(&self, userSecurityId: HSTRING, packageTypes: PackageTypes, out: *mut *mut foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByNamePublisherWithPackageTypes(&self, packageName: HSTRING, packagePublisher: HSTRING, packageTypes: PackageTypes, out: *mut *mut super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByNamePublisherWithPackageTypes(&self, packageName: HSTRING, packagePublisher: HSTRING, packageTypes: PackageTypes, out: *mut *mut foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy6(&self) -> (),
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdNamePublisherWithPackageTypes(&self, userSecurityId: HSTRING, packageName: HSTRING, packagePublisher: HSTRING, packageTypes: PackageTypes, out: *mut *mut super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdNamePublisherWithPackageTypes(&self, userSecurityId: HSTRING, packageName: HSTRING, packagePublisher: HSTRING, packageTypes: PackageTypes, out: *mut *mut foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy7(&self) -> (),
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByPackageFamilyNameWithPackageTypes(&self, packageFamilyName: HSTRING, packageTypes: PackageTypes, out: *mut *mut super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByPackageFamilyNameWithPackageTypes(&self, packageFamilyName: HSTRING, packageTypes: PackageTypes, out: *mut *mut foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy8(&self) -> (),
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdPackageFamilyNameWithPackageTypes(&self, userSecurityId: HSTRING, packageFamilyName: HSTRING, packageTypes: PackageTypes, out: *mut *mut super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
-    fn StageUserDataAsync(&self, packageFullName: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdPackageFamilyNameWithPackageTypes(&self, userSecurityId: HSTRING, packageFamilyName: HSTRING, packageTypes: PackageTypes, out: *mut *mut foundation::collections::IIterable<super::super::applicationmodel::Package>) -> HRESULT,
+    fn StageUserDataAsync(&self, packageFullName: HSTRING, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT
 }}
 impl IPackageManager2 {
-    #[inline] pub unsafe fn remove_package_with_options_async(&self, packageFullName: &HStringArg, removalOptions: RemovalOptions) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn remove_package_with_options_async(&self, packageFullName: &HStringArg, removalOptions: RemovalOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RemovePackageWithOptionsAsync)(self as *const _ as *mut _, packageFullName.get(), removalOptions, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn stage_package_with_options_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn stage_package_with_options_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).StagePackageWithOptionsAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn register_package_by_full_name_async(&self, mainPackageFullName: &HStringArg, dependencyPackageFullNames: &super::super::foundation::collections::IIterable<HString>, deploymentOptions: DeploymentOptions) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn register_package_by_full_name_async(&self, mainPackageFullName: &HStringArg, dependencyPackageFullNames: &foundation::collections::IIterable<HString>, deploymentOptions: DeploymentOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RegisterPackageByFullNameAsync)(self as *const _ as *mut _, mainPackageFullName.get(), dependencyPackageFullNames as *const _ as *mut _, deploymentOptions, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_with_package_types(&self, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_with_package_types(&self, packageTypes: PackageTypes) -> Result<Option<ComPtr<foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesWithPackageTypes)(self as *const _ as *mut _, packageTypes, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdWithPackageTypes)(self as *const _ as *mut _, userSecurityId.get(), packageTypes, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher_with_package_types(&self, packageName: &HStringArg, packagePublisher: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher_with_package_types(&self, packageName: &HStringArg, packagePublisher: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByNamePublisherWithPackageTypes)(self as *const _ as *mut _, packageName.get(), packagePublisher.get(), packageTypes, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher_with_package_types(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher_with_package_types(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdNamePublisherWithPackageTypes)(self as *const _ as *mut _, userSecurityId.get(), packageName.get(), packagePublisher.get(), packageTypes, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name_with_package_types(&self, packageFamilyName: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name_with_package_types(&self, packageFamilyName: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByPackageFamilyNameWithPackageTypes)(self as *const _ as *mut _, packageFamilyName.get(), packageTypes, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name_with_package_types(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name_with_package_types(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<foundation::collections::IIterable<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdPackageFamilyNameWithPackageTypes)(self as *const _ as *mut _, userSecurityId.get(), packageFamilyName.get(), packageTypes, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn stage_user_data_async(&self, packageFullName: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn stage_user_data_async(&self, packageFullName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).StageUserDataAsync)(self as *const _ as *mut _, packageFullName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -414,29 +414,29 @@ impl IPackageManager2 {
 }
 DEFINE_IID!(IID_IPackageManager3, 3668810056, 14065, 16807, 145, 136, 188, 38, 62, 13, 203, 114);
 RT_INTERFACE!{interface IPackageManager3(IPackageManager3Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager3] {
-    fn AddPackageVolumeAsync(&self, packageStorePath: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<PackageVolume>) -> HRESULT,
-    fn AddPackageToVolumeAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn AddPackageVolumeAsync(&self, packageStorePath: HSTRING, out: *mut *mut foundation::IAsyncOperation<PackageVolume>) -> HRESULT,
+    fn AddPackageToVolumeAsync(&self, packageUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
     fn ClearPackageStatus(&self, packageFullName: HSTRING, status: PackageStatus) -> HRESULT,
-    fn RegisterPackageWithAppDataVolumeAsync(&self, manifestUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, appDataVolume: *mut PackageVolume, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn RegisterPackageWithAppDataVolumeAsync(&self, manifestUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, appDataVolume: *mut PackageVolume, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
     fn FindPackageVolumeByName(&self, volumeName: HSTRING, out: *mut *mut PackageVolume) -> HRESULT,
-    fn FindPackageVolumes(&self, out: *mut *mut super::super::foundation::collections::IIterable<PackageVolume>) -> HRESULT,
+    fn FindPackageVolumes(&self, out: *mut *mut foundation::collections::IIterable<PackageVolume>) -> HRESULT,
     fn GetDefaultPackageVolume(&self, out: *mut *mut PackageVolume) -> HRESULT,
-    fn MovePackageToVolumeAsync(&self, packageFullName: HSTRING, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn RemovePackageVolumeAsync(&self, volume: *mut PackageVolume, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn MovePackageToVolumeAsync(&self, packageFullName: HSTRING, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn RemovePackageVolumeAsync(&self, volume: *mut PackageVolume, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
     fn SetDefaultPackageVolume(&self, volume: *mut PackageVolume) -> HRESULT,
     fn SetPackageStatus(&self, packageFullName: HSTRING, status: PackageStatus) -> HRESULT,
-    fn SetPackageVolumeOfflineAsync(&self, packageVolume: *mut PackageVolume, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn SetPackageVolumeOnlineAsync(&self, packageVolume: *mut PackageVolume, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn StagePackageToVolumeAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn StageUserDataWithOptionsAsync(&self, packageFullName: HSTRING, deploymentOptions: DeploymentOptions, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT
+    fn SetPackageVolumeOfflineAsync(&self, packageVolume: *mut PackageVolume, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn SetPackageVolumeOnlineAsync(&self, packageVolume: *mut PackageVolume, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn StagePackageToVolumeAsync(&self, packageUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn StageUserDataWithOptionsAsync(&self, packageFullName: HSTRING, deploymentOptions: DeploymentOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT
 }}
 impl IPackageManager3 {
-    #[inline] pub unsafe fn add_package_volume_async(&self, packageStorePath: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<PackageVolume>>> {
+    #[inline] pub unsafe fn add_package_volume_async(&self, packageStorePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PackageVolume>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).AddPackageVolumeAsync)(self as *const _ as *mut _, packageStorePath.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_package_to_volume_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn add_package_to_volume_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).AddPackageToVolumeAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, targetVolume as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -445,7 +445,7 @@ impl IPackageManager3 {
         let hr = ((*self.lpVtbl).ClearPackageStatus)(self as *const _ as *mut _, packageFullName.get(), status);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn register_package_with_app_data_volume_async(&self, manifestUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, appDataVolume: &PackageVolume) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn register_package_with_app_data_volume_async(&self, manifestUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, appDataVolume: &PackageVolume) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RegisterPackageWithAppDataVolumeAsync)(self as *const _ as *mut _, manifestUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, appDataVolume as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -455,7 +455,7 @@ impl IPackageManager3 {
         let hr = ((*self.lpVtbl).FindPackageVolumeByName)(self as *const _ as *mut _, volumeName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_package_volumes(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IIterable<PackageVolume>>>> {
+    #[inline] pub unsafe fn find_package_volumes(&self) -> Result<Option<ComPtr<foundation::collections::IIterable<PackageVolume>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackageVolumes)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -465,12 +465,12 @@ impl IPackageManager3 {
         let hr = ((*self.lpVtbl).GetDefaultPackageVolume)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn move_package_to_volume_async(&self, packageFullName: &HStringArg, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn move_package_to_volume_async(&self, packageFullName: &HStringArg, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).MovePackageToVolumeAsync)(self as *const _ as *mut _, packageFullName.get(), deploymentOptions, targetVolume as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_package_volume_async(&self, volume: &PackageVolume) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn remove_package_volume_async(&self, volume: &PackageVolume) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RemovePackageVolumeAsync)(self as *const _ as *mut _, volume as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -483,22 +483,22 @@ impl IPackageManager3 {
         let hr = ((*self.lpVtbl).SetPackageStatus)(self as *const _ as *mut _, packageFullName.get(), status);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_package_volume_offline_async(&self, packageVolume: &PackageVolume) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn set_package_volume_offline_async(&self, packageVolume: &PackageVolume) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetPackageVolumeOfflineAsync)(self as *const _ as *mut _, packageVolume as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_package_volume_online_async(&self, packageVolume: &PackageVolume) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn set_package_volume_online_async(&self, packageVolume: &PackageVolume) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetPackageVolumeOnlineAsync)(self as *const _ as *mut _, packageVolume as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn stage_package_to_volume_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn stage_package_to_volume_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).StagePackageToVolumeAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, targetVolume as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn stage_user_data_with_options_async(&self, packageFullName: &HStringArg, deploymentOptions: DeploymentOptions) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn stage_user_data_with_options_async(&self, packageFullName: &HStringArg, deploymentOptions: DeploymentOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).StageUserDataWithOptionsAsync)(self as *const _ as *mut _, packageFullName.get(), deploymentOptions, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -506,10 +506,10 @@ impl IPackageManager3 {
 }
 DEFINE_IID!(IID_IPackageManager4, 1014077795, 47798, 18111, 143, 247, 218, 71, 25, 35, 10, 230);
 RT_INTERFACE!{interface IPackageManager4(IPackageManager4Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager4] {
-    fn GetPackageVolumesAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<PackageVolume>>) -> HRESULT
+    fn GetPackageVolumesAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<PackageVolume>>) -> HRESULT
 }}
 impl IPackageManager4 {
-    #[inline] pub unsafe fn get_package_volumes_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<PackageVolume>>>> {
+    #[inline] pub unsafe fn get_package_volumes_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<PackageVolume>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetPackageVolumesAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -517,23 +517,23 @@ impl IPackageManager4 {
 }
 DEFINE_IID!(IID_IPackageManager5, 1897869591, 6909, 17171, 151, 140, 155, 182, 225, 184, 100, 167);
 RT_INTERFACE!{interface IPackageManager5(IPackageManager5Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager5] {
-    fn AddPackageToVolumeAndOptionalPackagesAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut super::super::foundation::collections::IIterable<HString>, externalPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn StagePackageToVolumeAndOptionalPackagesAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut super::super::foundation::collections::IIterable<HString>, externalPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn RegisterPackageByFamilyNameAndOptionalPackagesAsync(&self, mainPackageFamilyName: HSTRING, dependencyPackageFamilyNames: *mut super::super::foundation::collections::IIterable<HString>, deploymentOptions: DeploymentOptions, appDataVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut super::super::foundation::collections::IIterable<HString>, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn AddPackageToVolumeAndOptionalPackagesAsync(&self, packageUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut foundation::collections::IIterable<HString>, externalPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn StagePackageToVolumeAndOptionalPackagesAsync(&self, packageUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut foundation::collections::IIterable<HString>, externalPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn RegisterPackageByFamilyNameAndOptionalPackagesAsync(&self, mainPackageFamilyName: HSTRING, dependencyPackageFamilyNames: *mut foundation::collections::IIterable<HString>, deploymentOptions: DeploymentOptions, appDataVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
     fn get_DebugSettings(&self, out: *mut *mut PackageManagerDebugSettings) -> HRESULT
 }}
 impl IPackageManager5 {
-    #[inline] pub unsafe fn add_package_to_volume_and_optional_packages_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &super::super::foundation::collections::IIterable<HString>, externalPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn add_package_to_volume_and_optional_packages_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>, externalPackageUris: &foundation::collections::IIterable<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).AddPackageToVolumeAndOptionalPackagesAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, targetVolume as *const _ as *mut _, optionalPackageFamilyNames as *const _ as *mut _, externalPackageUris as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn stage_package_to_volume_and_optional_packages_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &super::super::foundation::collections::IIterable<HString>, externalPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn stage_package_to_volume_and_optional_packages_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>, externalPackageUris: &foundation::collections::IIterable<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).StagePackageToVolumeAndOptionalPackagesAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, targetVolume as *const _ as *mut _, optionalPackageFamilyNames as *const _ as *mut _, externalPackageUris as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn register_package_by_family_name_and_optional_packages_async(&self, mainPackageFamilyName: &HStringArg, dependencyPackageFamilyNames: &super::super::foundation::collections::IIterable<HString>, deploymentOptions: DeploymentOptions, appDataVolume: &PackageVolume, optionalPackageFamilyNames: &super::super::foundation::collections::IIterable<HString>) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn register_package_by_family_name_and_optional_packages_async(&self, mainPackageFamilyName: &HStringArg, dependencyPackageFamilyNames: &foundation::collections::IIterable<HString>, deploymentOptions: DeploymentOptions, appDataVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RegisterPackageByFamilyNameAndOptionalPackagesAsync)(self as *const _ as *mut _, mainPackageFamilyName.get(), dependencyPackageFamilyNames as *const _ as *mut _, deploymentOptions, appDataVolume as *const _ as *mut _, optionalPackageFamilyNames as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -546,40 +546,40 @@ impl IPackageManager5 {
 }
 DEFINE_IID!(IID_IPackageManager6, 138930441, 21453, 20047, 131, 46, 87, 209, 128, 246, 228, 71);
 RT_INTERFACE!{interface IPackageManager6(IPackageManager6Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager6] {
-    fn ProvisionPackageForAllUsersAsync(&self, packageFamilyName: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn AddPackageByAppInstallerFileAsync(&self, appInstallerFileUri: *mut super::super::foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: *mut PackageVolume, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn RequestAddPackageByAppInstallerFileAsync(&self, appInstallerFileUri: *mut super::super::foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: *mut PackageVolume, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn AddPackageToVolumeAndRelatedSetAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, options: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut super::super::foundation::collections::IIterable<HString>, packageUrisToInstall: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, relatedPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn StagePackageToVolumeAndRelatedSetAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, options: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut super::super::foundation::collections::IIterable<HString>, packageUrisToInstall: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, relatedPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
-    fn RequestAddPackageAsync(&self, packageUri: *mut super::super::foundation::Uri, dependencyPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut super::super::foundation::collections::IIterable<HString>, relatedPackageUris: *mut super::super::foundation::collections::IIterable<super::super::foundation::Uri>, out: *mut *mut super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT
+    fn ProvisionPackageForAllUsersAsync(&self, packageFamilyName: HSTRING, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn AddPackageByAppInstallerFileAsync(&self, appInstallerFileUri: *mut foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: *mut PackageVolume, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn RequestAddPackageByAppInstallerFileAsync(&self, appInstallerFileUri: *mut foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: *mut PackageVolume, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn AddPackageToVolumeAndRelatedSetAsync(&self, packageUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, options: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut foundation::collections::IIterable<HString>, packageUrisToInstall: *mut foundation::collections::IIterable<foundation::Uri>, relatedPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn StagePackageToVolumeAndRelatedSetAsync(&self, packageUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, options: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut foundation::collections::IIterable<HString>, packageUrisToInstall: *mut foundation::collections::IIterable<foundation::Uri>, relatedPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT,
+    fn RequestAddPackageAsync(&self, packageUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut foundation::collections::IIterable<HString>, relatedPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT
 }}
 impl IPackageManager6 {
-    #[inline] pub unsafe fn provision_package_for_all_users_async(&self, packageFamilyName: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn provision_package_for_all_users_async(&self, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ProvisionPackageForAllUsersAsync)(self as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_package_by_app_installer_file_async(&self, appInstallerFileUri: &super::super::foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: &PackageVolume) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn add_package_by_app_installer_file_async(&self, appInstallerFileUri: &foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: &PackageVolume) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).AddPackageByAppInstallerFileAsync)(self as *const _ as *mut _, appInstallerFileUri as *const _ as *mut _, options, targetVolume as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn request_add_package_by_app_installer_file_async(&self, appInstallerFileUri: &super::super::foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: &PackageVolume) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn request_add_package_by_app_installer_file_async(&self, appInstallerFileUri: &foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: &PackageVolume) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RequestAddPackageByAppInstallerFileAsync)(self as *const _ as *mut _, appInstallerFileUri as *const _ as *mut _, options, targetVolume as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_package_to_volume_and_related_set_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, options: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &super::super::foundation::collections::IIterable<HString>, packageUrisToInstall: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, relatedPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn add_package_to_volume_and_related_set_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, options: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>, packageUrisToInstall: &foundation::collections::IIterable<foundation::Uri>, relatedPackageUris: &foundation::collections::IIterable<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).AddPackageToVolumeAndRelatedSetAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, options, targetVolume as *const _ as *mut _, optionalPackageFamilyNames as *const _ as *mut _, packageUrisToInstall as *const _ as *mut _, relatedPackageUris as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn stage_package_to_volume_and_related_set_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, options: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &super::super::foundation::collections::IIterable<HString>, packageUrisToInstall: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, relatedPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn stage_package_to_volume_and_related_set_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, options: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>, packageUrisToInstall: &foundation::collections::IIterable<foundation::Uri>, relatedPackageUris: &foundation::collections::IIterable<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).StagePackageToVolumeAndRelatedSetAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, options, targetVolume as *const _ as *mut _, optionalPackageFamilyNames as *const _ as *mut _, packageUrisToInstall as *const _ as *mut _, relatedPackageUris as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn request_add_package_async(&self, packageUri: &super::super::foundation::Uri, dependencyPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &super::super::foundation::collections::IIterable<HString>, relatedPackageUris: &super::super::foundation::collections::IIterable<super::super::foundation::Uri>) -> Result<ComPtr<super::super::foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
+    #[inline] pub unsafe fn request_add_package_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>, relatedPackageUris: &foundation::collections::IIterable<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RequestAddPackageAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, targetVolume as *const _ as *mut _, optionalPackageFamilyNames as *const _ as *mut _, relatedPackageUris as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -587,16 +587,16 @@ impl IPackageManager6 {
 }
 DEFINE_IID!(IID_IPackageManagerDebugSettings, 442570371, 43400, 20431, 143, 15, 206, 23, 88, 152, 232, 235);
 RT_INTERFACE!{interface IPackageManagerDebugSettings(IPackageManagerDebugSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IPackageManagerDebugSettings] {
-    #[cfg(feature="windows-applicationmodel")] fn SetContentGroupStateAsync(&self, package: *mut super::super::applicationmodel::Package, contentGroupName: HSTRING, state: super::super::applicationmodel::PackageContentGroupState, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn SetContentGroupStateWithPercentageAsync(&self, package: *mut super::super::applicationmodel::Package, contentGroupName: HSTRING, state: super::super::applicationmodel::PackageContentGroupState, completionPercentage: f64, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT
+    #[cfg(feature="windows-applicationmodel")] fn SetContentGroupStateAsync(&self, package: *mut super::super::applicationmodel::Package, contentGroupName: HSTRING, state: super::super::applicationmodel::PackageContentGroupState, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn SetContentGroupStateWithPercentageAsync(&self, package: *mut super::super::applicationmodel::Package, contentGroupName: HSTRING, state: super::super::applicationmodel::PackageContentGroupState, completionPercentage: f64, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IPackageManagerDebugSettings {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn set_content_group_state_async(&self, package: &super::super::applicationmodel::Package, contentGroupName: &HStringArg, state: super::super::applicationmodel::PackageContentGroupState) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn set_content_group_state_async(&self, package: &super::super::applicationmodel::Package, contentGroupName: &HStringArg, state: super::super::applicationmodel::PackageContentGroupState) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetContentGroupStateAsync)(self as *const _ as *mut _, package as *const _ as *mut _, contentGroupName.get(), state, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn set_content_group_state_with_percentage_async(&self, package: &super::super::applicationmodel::Package, contentGroupName: &HStringArg, state: super::super::applicationmodel::PackageContentGroupState, completionPercentage: f64) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn set_content_group_state_with_percentage_async(&self, package: &super::super::applicationmodel::Package, contentGroupName: &HStringArg, state: super::super::applicationmodel::PackageContentGroupState, completionPercentage: f64) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetContentGroupStateWithPercentageAsync)(self as *const _ as *mut _, package as *const _ as *mut _, contentGroupName.get(), state, completionPercentage, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -638,20 +638,20 @@ RT_INTERFACE!{interface IPackageVolume(IPackageVolumeVtbl): IInspectable(IInspec
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_PackageStorePath(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SupportsHardLinks(&self, out: *mut bool) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackages(&self, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByNamePublisher(&self, packageName: HSTRING, packagePublisher: HSTRING, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByPackageFamilyName(&self, packageFamilyName: HSTRING, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesWithPackageTypes(&self, packageTypes: PackageTypes, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByNamePublisherWithPackagesTypes(&self, packageTypes: PackageTypes, packageName: HSTRING, packagePublisher: HSTRING, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByPackageFamilyNameWithPackageTypes(&self, packageTypes: PackageTypes, packageFamilyName: HSTRING, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackageByPackageFullName(&self, packageFullName: HSTRING, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityId(&self, userSecurityId: HSTRING, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdNamePublisher(&self, userSecurityId: HSTRING, packageName: HSTRING, packagePublisher: HSTRING, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdPackageFamilyName(&self, userSecurityId: HSTRING, packageFamilyName: HSTRING, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdWithPackageTypes(&self, userSecurityId: HSTRING, packageTypes: PackageTypes, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdNamePublisherWithPackageTypes(&self, userSecurityId: HSTRING, packageTypes: PackageTypes, packageName: HSTRING, packagePublisher: HSTRING, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdPackageFamilyNameWithPackagesTypes(&self, userSecurityId: HSTRING, packageTypes: PackageTypes, packageFamilyName: HSTRING, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
-    #[cfg(feature="windows-applicationmodel")] fn FindPackageByUserSecurityIdPackageFullName(&self, userSecurityId: HSTRING, packageFullName: HSTRING, out: *mut *mut super::super::foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT
+    #[cfg(feature="windows-applicationmodel")] fn FindPackages(&self, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByNamePublisher(&self, packageName: HSTRING, packagePublisher: HSTRING, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByPackageFamilyName(&self, packageFamilyName: HSTRING, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesWithPackageTypes(&self, packageTypes: PackageTypes, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByNamePublisherWithPackagesTypes(&self, packageTypes: PackageTypes, packageName: HSTRING, packagePublisher: HSTRING, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByPackageFamilyNameWithPackageTypes(&self, packageTypes: PackageTypes, packageFamilyName: HSTRING, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackageByPackageFullName(&self, packageFullName: HSTRING, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityId(&self, userSecurityId: HSTRING, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdNamePublisher(&self, userSecurityId: HSTRING, packageName: HSTRING, packagePublisher: HSTRING, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdPackageFamilyName(&self, userSecurityId: HSTRING, packageFamilyName: HSTRING, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdWithPackageTypes(&self, userSecurityId: HSTRING, packageTypes: PackageTypes, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdNamePublisherWithPackageTypes(&self, userSecurityId: HSTRING, packageTypes: PackageTypes, packageName: HSTRING, packagePublisher: HSTRING, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackagesByUserSecurityIdPackageFamilyNameWithPackagesTypes(&self, userSecurityId: HSTRING, packageTypes: PackageTypes, packageFamilyName: HSTRING, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn FindPackageByUserSecurityIdPackageFullName(&self, userSecurityId: HSTRING, packageFullName: HSTRING, out: *mut *mut foundation::collections::IVector<super::super::applicationmodel::Package>) -> HRESULT
 }}
 impl IPackageVolume {
     #[inline] pub unsafe fn get_is_offline(&self) -> Result<bool> {
@@ -684,72 +684,72 @@ impl IPackageVolume {
         let hr = ((*self.lpVtbl).get_SupportsHardLinks)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackages)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher(&self, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher(&self, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByNamePublisher)(self as *const _ as *mut _, packageName.get(), packagePublisher.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByPackageFamilyName)(self as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_with_package_types(&self, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_with_package_types(&self, packageTypes: PackageTypes) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesWithPackageTypes)(self as *const _ as *mut _, packageTypes, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher_with_packages_types(&self, packageTypes: PackageTypes, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_name_publisher_with_packages_types(&self, packageTypes: PackageTypes, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByNamePublisherWithPackagesTypes)(self as *const _ as *mut _, packageTypes, packageName.get(), packagePublisher.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name_with_package_types(&self, packageTypes: PackageTypes, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_package_family_name_with_package_types(&self, packageTypes: PackageTypes, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByPackageFamilyNameWithPackageTypes)(self as *const _ as *mut _, packageTypes, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_package_by_package_full_name(&self, packageFullName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_package_by_package_full_name(&self, packageFullName: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackageByPackageFullName)(self as *const _ as *mut _, packageFullName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id(&self, userSecurityId: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id(&self, userSecurityId: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityId)(self as *const _ as *mut _, userSecurityId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdNamePublisher)(self as *const _ as *mut _, userSecurityId.get(), packageName.get(), packagePublisher.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdPackageFamilyName)(self as *const _ as *mut _, userSecurityId.get(), packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdWithPackageTypes)(self as *const _ as *mut _, userSecurityId.get(), packageTypes, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_name_publisher_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdNamePublisherWithPackageTypes)(self as *const _ as *mut _, userSecurityId.get(), packageTypes, packageName.get(), packagePublisher.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name_with_packages_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_packages_by_user_security_id_package_family_name_with_packages_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes, packageFamilyName: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesByUserSecurityIdPackageFamilyNameWithPackagesTypes)(self as *const _ as *mut _, userSecurityId.get(), packageTypes, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_package_by_user_security_id_package_full_name(&self, userSecurityId: &HStringArg, packageFullName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn find_package_by_user_security_id_package_full_name(&self, userSecurityId: &HStringArg, packageFullName: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::applicationmodel::Package>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackageByUserSecurityIdPackageFullName)(self as *const _ as *mut _, userSecurityId.get(), packageFullName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -760,7 +760,7 @@ DEFINE_IID!(IID_IPackageVolume2, 1185664814, 40404, 18338, 171, 140, 198, 64, 13
 RT_INTERFACE!{interface IPackageVolume2(IPackageVolume2Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageVolume2] {
     fn get_IsFullTrustPackageSupported(&self, out: *mut bool) -> HRESULT,
     fn get_IsAppxInstallSupported(&self, out: *mut bool) -> HRESULT,
-    fn GetAvailableSpaceAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<u64>) -> HRESULT
+    fn GetAvailableSpaceAsync(&self, out: *mut *mut foundation::IAsyncOperation<u64>) -> HRESULT
 }}
 impl IPackageVolume2 {
     #[inline] pub unsafe fn get_is_full_trust_package_supported(&self) -> Result<bool> {
@@ -773,7 +773,7 @@ impl IPackageVolume2 {
         let hr = ((*self.lpVtbl).get_IsAppxInstallSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_available_space_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncOperation<u64>>> {
+    #[inline] pub unsafe fn get_available_space_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u64>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetAvailableSpaceAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -877,8 +877,8 @@ RT_INTERFACE!{interface INamedPolicyData(INamedPolicyDataVtbl): IInspectable(IIn
     fn GetInt32(&self, out: *mut i32) -> HRESULT,
     fn GetInt64(&self, out: *mut i64) -> HRESULT,
     fn GetString(&self, out: *mut HSTRING) -> HRESULT,
-    fn add_Changed(&self, changedHandler: *mut super::super::foundation::TypedEventHandler<NamedPolicyData, IInspectable>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_Changed(&self, cookie: super::super::foundation::EventRegistrationToken) -> HRESULT
+    fn add_Changed(&self, changedHandler: *mut foundation::TypedEventHandler<NamedPolicyData, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Changed(&self, cookie: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl INamedPolicyData {
     #[inline] pub unsafe fn get_area(&self) -> Result<HString> {
@@ -936,12 +936,12 @@ impl INamedPolicyData {
         let hr = ((*self.lpVtbl).GetString)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_changed(&self, changedHandler: &super::super::foundation::TypedEventHandler<NamedPolicyData, IInspectable>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_changed(&self, changedHandler: &foundation::TypedEventHandler<NamedPolicyData, IInspectable>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_Changed)(self as *const _ as *mut _, changedHandler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_changed(&self, cookie: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_changed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_Changed)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }

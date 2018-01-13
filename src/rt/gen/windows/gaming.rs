@@ -3,16 +3,16 @@ use ::prelude::*;
 RT_CLASS!{static class GameBar}
 impl RtActivatable<IGameBarStatics> for GameBar {}
 impl GameBar {
-    #[inline] pub fn add_visibility_changed(handler: &super::super::foundation::EventHandler<IInspectable>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_visibility_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().add_visibility_changed(handler)
     }}
-    #[inline] pub fn remove_visibility_changed(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_visibility_changed(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().remove_visibility_changed(token)
     }}
-    #[inline] pub fn add_is_input_redirected_changed(handler: &super::super::foundation::EventHandler<IInspectable>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_is_input_redirected_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().add_is_input_redirected_changed(handler)
     }}
-    #[inline] pub fn remove_is_input_redirected_changed(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_is_input_redirected_changed(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().remove_is_input_redirected_changed(token)
     }}
     #[inline] pub fn get_visible() -> Result<bool> { unsafe {
@@ -25,29 +25,29 @@ impl GameBar {
 DEFINE_CLSID!(GameBar(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,66,97,114,0]) [CLSID_GameBar]);
 DEFINE_IID!(IID_IGameBarStatics, 498705042, 52344, 16755, 190, 69, 182, 30, 103, 40, 62, 167);
 RT_INTERFACE!{static interface IGameBarStatics(IGameBarStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarStatics] {
-    fn add_VisibilityChanged(&self, handler: *mut super::super::foundation::EventHandler<IInspectable>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_VisibilityChanged(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn add_IsInputRedirectedChanged(&self, handler: *mut super::super::foundation::EventHandler<IInspectable>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_IsInputRedirectedChanged(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
+    fn add_VisibilityChanged(&self, handler: *mut foundation::EventHandler<IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_VisibilityChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_IsInputRedirectedChanged(&self, handler: *mut foundation::EventHandler<IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_IsInputRedirectedChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn get_Visible(&self, out: *mut bool) -> HRESULT,
     fn get_IsInputRedirected(&self, out: *mut bool) -> HRESULT
 }}
 impl IGameBarStatics {
-    #[inline] pub unsafe fn add_visibility_changed(&self, handler: &super::super::foundation::EventHandler<IInspectable>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_visibility_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_VisibilityChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_visibility_changed(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_visibility_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_VisibilityChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_is_input_redirected_changed(&self, handler: &super::super::foundation::EventHandler<IInspectable>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_is_input_redirected_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_IsInputRedirectedChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_is_input_redirected_changed(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_is_input_redirected_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_IsInputRedirectedChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -132,21 +132,21 @@ impl GameChatOverlay {
 DEFINE_CLSID!(GameChatOverlay(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,67,104,97,116,79,118,101,114,108,97,121,0]) [CLSID_GameChatOverlay]);
 DEFINE_IID!(IID_IGameChatOverlayMessageSource, 504853399, 23035, 20303, 142, 154, 128, 172, 248, 23, 116, 60);
 RT_INTERFACE!{interface IGameChatOverlayMessageSource(IGameChatOverlayMessageSourceVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatOverlayMessageSource] {
-    fn add_MessageReceived(&self, handler: *mut super::super::foundation::TypedEventHandler<GameChatOverlayMessageSource, GameChatMessageReceivedEventArgs>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_MessageReceived(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn SetDelayBeforeClosingAfterMessageReceived(&self, value: super::super::foundation::TimeSpan) -> HRESULT
+    fn add_MessageReceived(&self, handler: *mut foundation::TypedEventHandler<GameChatOverlayMessageSource, GameChatMessageReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_MessageReceived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn SetDelayBeforeClosingAfterMessageReceived(&self, value: foundation::TimeSpan) -> HRESULT
 }}
 impl IGameChatOverlayMessageSource {
-    #[inline] pub unsafe fn add_message_received(&self, handler: &super::super::foundation::TypedEventHandler<GameChatOverlayMessageSource, GameChatMessageReceivedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_message_received(&self, handler: &foundation::TypedEventHandler<GameChatOverlayMessageSource, GameChatMessageReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_MessageReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_message_received(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_message_received(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_MessageReceived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_delay_before_closing_after_message_received(&self, value: super::super::foundation::TimeSpan) -> Result<()> {
+    #[inline] pub unsafe fn set_delay_before_closing_after_message_received(&self, value: foundation::TimeSpan) -> Result<()> {
         let hr = ((*self.lpVtbl).SetDelayBeforeClosingAfterMessageReceived)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -170,10 +170,10 @@ impl IGameChatOverlayStatics {
 }
 DEFINE_IID!(IID_IGameMonitor, 304300888, 56585, 17681, 173, 205, 141, 89, 117, 216, 16, 40);
 RT_INTERFACE!{interface IGameMonitor(IGameMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IGameMonitor] {
-    fn RequestPermissionAsync(&self, out: *mut *mut super::super::foundation::IAsyncOperation<GameMonitoringPermission>) -> HRESULT
+    fn RequestPermissionAsync(&self, out: *mut *mut foundation::IAsyncOperation<GameMonitoringPermission>) -> HRESULT
 }}
 impl IGameMonitor {
-    #[inline] pub unsafe fn request_permission_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncOperation<GameMonitoringPermission>>> {
+    #[inline] pub unsafe fn request_permission_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GameMonitoringPermission>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RequestPermissionAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -203,16 +203,16 @@ impl IGameMonitorStatics {
 }
 DEFINE_IID!(IID_IGameUIProviderActivatedEventArgs, 2813534270, 51959, 19949, 187, 210, 71, 222, 67, 187, 109, 213);
 RT_INTERFACE!{interface IGameUIProviderActivatedEventArgs(IGameUIProviderActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGameUIProviderActivatedEventArgs] {
-    fn get_GameUIArgs(&self, out: *mut *mut super::super::foundation::collections::ValueSet) -> HRESULT,
-    fn ReportCompleted(&self, results: *mut super::super::foundation::collections::ValueSet) -> HRESULT
+    fn get_GameUIArgs(&self, out: *mut *mut foundation::collections::ValueSet) -> HRESULT,
+    fn ReportCompleted(&self, results: *mut foundation::collections::ValueSet) -> HRESULT
 }}
 impl IGameUIProviderActivatedEventArgs {
-    #[inline] pub unsafe fn get_game_uiargs(&self) -> Result<Option<ComPtr<super::super::foundation::collections::ValueSet>>> {
+    #[inline] pub unsafe fn get_game_uiargs(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_GameUIArgs)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn report_completed(&self, results: &super::super::foundation::collections::ValueSet) -> Result<()> {
+    #[inline] pub unsafe fn report_completed(&self, results: &foundation::collections::ValueSet) -> Result<()> {
         let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _, results as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -242,19 +242,19 @@ RT_CLASS!{class ArcadeStick: IArcadeStick}
 impl RtActivatable<IArcadeStickStatics> for ArcadeStick {}
 impl RtActivatable<IArcadeStickStatics2> for ArcadeStick {}
 impl ArcadeStick {
-    #[inline] pub fn add_arcade_stick_added(value: &super::super::foundation::EventHandler<ArcadeStick>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_arcade_stick_added(value: &foundation::EventHandler<ArcadeStick>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().add_arcade_stick_added(value)
     }}
-    #[inline] pub fn remove_arcade_stick_added(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_arcade_stick_added(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().remove_arcade_stick_added(token)
     }}
-    #[inline] pub fn add_arcade_stick_removed(value: &super::super::foundation::EventHandler<ArcadeStick>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_arcade_stick_removed(value: &foundation::EventHandler<ArcadeStick>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().add_arcade_stick_removed(value)
     }}
-    #[inline] pub fn remove_arcade_stick_removed(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_arcade_stick_removed(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().remove_arcade_stick_removed(token)
     }}
-    #[inline] pub fn get_arcade_sticks() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<ArcadeStick>>>> { unsafe {
+    #[inline] pub fn get_arcade_sticks() -> Result<Option<ComPtr<foundation::collections::IVectorView<ArcadeStick>>>> { unsafe {
         <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().get_arcade_sticks()
     }}
     #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<Option<ComPtr<ArcadeStick>>> { unsafe {
@@ -270,32 +270,32 @@ RT_STRUCT! { struct ArcadeStickReading {
 }}
 DEFINE_IID!(IID_IArcadeStickStatics, 1547155656, 14257, 19160, 148, 88, 32, 15, 26, 48, 1, 142);
 RT_INTERFACE!{static interface IArcadeStickStatics(IArcadeStickStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IArcadeStickStatics] {
-    fn add_ArcadeStickAdded(&self, value: *mut super::super::foundation::EventHandler<ArcadeStick>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_ArcadeStickAdded(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn add_ArcadeStickRemoved(&self, value: *mut super::super::foundation::EventHandler<ArcadeStick>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_ArcadeStickRemoved(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn get_ArcadeSticks(&self, out: *mut *mut super::super::foundation::collections::IVectorView<ArcadeStick>) -> HRESULT
+    fn add_ArcadeStickAdded(&self, value: *mut foundation::EventHandler<ArcadeStick>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ArcadeStickAdded(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_ArcadeStickRemoved(&self, value: *mut foundation::EventHandler<ArcadeStick>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ArcadeStickRemoved(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn get_ArcadeSticks(&self, out: *mut *mut foundation::collections::IVectorView<ArcadeStick>) -> HRESULT
 }}
 impl IArcadeStickStatics {
-    #[inline] pub unsafe fn add_arcade_stick_added(&self, value: &super::super::foundation::EventHandler<ArcadeStick>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_arcade_stick_added(&self, value: &foundation::EventHandler<ArcadeStick>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_ArcadeStickAdded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_arcade_stick_added(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_arcade_stick_added(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_ArcadeStickAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_arcade_stick_removed(&self, value: &super::super::foundation::EventHandler<ArcadeStick>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_arcade_stick_removed(&self, value: &foundation::EventHandler<ArcadeStick>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_ArcadeStickRemoved)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_arcade_stick_removed(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_arcade_stick_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_ArcadeStickRemoved)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_arcade_sticks(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<ArcadeStick>>>> {
+    #[inline] pub unsafe fn get_arcade_sticks(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<ArcadeStick>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ArcadeSticks)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -338,19 +338,19 @@ impl IFlightStick {
 RT_CLASS!{class FlightStick: IFlightStick}
 impl RtActivatable<IFlightStickStatics> for FlightStick {}
 impl FlightStick {
-    #[inline] pub fn add_flight_stick_added(value: &super::super::foundation::EventHandler<FlightStick>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_flight_stick_added(value: &foundation::EventHandler<FlightStick>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().add_flight_stick_added(value)
     }}
-    #[inline] pub fn remove_flight_stick_added(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_flight_stick_added(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().remove_flight_stick_added(token)
     }}
-    #[inline] pub fn add_flight_stick_removed(value: &super::super::foundation::EventHandler<FlightStick>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_flight_stick_removed(value: &foundation::EventHandler<FlightStick>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().add_flight_stick_removed(value)
     }}
-    #[inline] pub fn remove_flight_stick_removed(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_flight_stick_removed(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().remove_flight_stick_removed(token)
     }}
-    #[inline] pub fn get_flight_sticks() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<FlightStick>>>> { unsafe {
+    #[inline] pub fn get_flight_sticks() -> Result<Option<ComPtr<foundation::collections::IVectorView<FlightStick>>>> { unsafe {
         <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().get_flight_sticks()
     }}
     #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<Option<ComPtr<FlightStick>>> { unsafe {
@@ -366,33 +366,33 @@ RT_STRUCT! { struct FlightStickReading {
 }}
 DEFINE_IID!(IID_IFlightStickStatics, 1427411530, 65228, 17246, 131, 220, 92, 236, 138, 24, 165, 32);
 RT_INTERFACE!{static interface IFlightStickStatics(IFlightStickStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFlightStickStatics] {
-    fn add_FlightStickAdded(&self, value: *mut super::super::foundation::EventHandler<FlightStick>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_FlightStickAdded(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn add_FlightStickRemoved(&self, value: *mut super::super::foundation::EventHandler<FlightStick>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_FlightStickRemoved(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn get_FlightSticks(&self, out: *mut *mut super::super::foundation::collections::IVectorView<FlightStick>) -> HRESULT,
+    fn add_FlightStickAdded(&self, value: *mut foundation::EventHandler<FlightStick>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_FlightStickAdded(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_FlightStickRemoved(&self, value: *mut foundation::EventHandler<FlightStick>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_FlightStickRemoved(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn get_FlightSticks(&self, out: *mut *mut foundation::collections::IVectorView<FlightStick>) -> HRESULT,
     fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut FlightStick) -> HRESULT
 }}
 impl IFlightStickStatics {
-    #[inline] pub unsafe fn add_flight_stick_added(&self, value: &super::super::foundation::EventHandler<FlightStick>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_flight_stick_added(&self, value: &foundation::EventHandler<FlightStick>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_FlightStickAdded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_flight_stick_added(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_flight_stick_added(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_FlightStickAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_flight_stick_removed(&self, value: &super::super::foundation::EventHandler<FlightStick>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_flight_stick_removed(&self, value: &foundation::EventHandler<FlightStick>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_FlightStickRemoved)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_flight_stick_removed(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_flight_stick_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_FlightStickRemoved)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_flight_sticks(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<FlightStick>>>> {
+    #[inline] pub unsafe fn get_flight_sticks(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<FlightStick>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_FlightSticks)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -405,41 +405,41 @@ impl IFlightStickStatics {
 }
 DEFINE_IID!(IID_IGameController, 464479522, 24420, 17093, 130, 103, 185, 254, 34, 21, 191, 189);
 RT_INTERFACE!{interface IGameController(IGameControllerVtbl): IInspectable(IInspectableVtbl) [IID_IGameController] {
-    fn add_HeadsetConnected(&self, value: *mut super::super::foundation::TypedEventHandler<IGameController, Headset>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_HeadsetConnected(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn add_HeadsetDisconnected(&self, value: *mut super::super::foundation::TypedEventHandler<IGameController, Headset>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_HeadsetDisconnected(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    #[cfg(feature="windows-system")] fn add_UserChanged(&self, value: *mut super::super::foundation::TypedEventHandler<IGameController, super::super::system::UserChangedEventArgs>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_UserChanged(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
+    fn add_HeadsetConnected(&self, value: *mut foundation::TypedEventHandler<IGameController, Headset>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_HeadsetConnected(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_HeadsetDisconnected(&self, value: *mut foundation::TypedEventHandler<IGameController, Headset>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_HeadsetDisconnected(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    #[cfg(feature="windows-system")] fn add_UserChanged(&self, value: *mut foundation::TypedEventHandler<IGameController, super::super::system::UserChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_UserChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn get_Headset(&self, out: *mut *mut Headset) -> HRESULT,
     fn get_IsWireless(&self, out: *mut bool) -> HRESULT,
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
 }}
 impl IGameController {
-    #[inline] pub unsafe fn add_headset_connected(&self, value: &super::super::foundation::TypedEventHandler<IGameController, Headset>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_headset_connected(&self, value: &foundation::TypedEventHandler<IGameController, Headset>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_HeadsetConnected)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_headset_connected(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_headset_connected(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_HeadsetConnected)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_headset_disconnected(&self, value: &super::super::foundation::TypedEventHandler<IGameController, Headset>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_headset_disconnected(&self, value: &foundation::TypedEventHandler<IGameController, Headset>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_HeadsetDisconnected)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_headset_disconnected(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_headset_disconnected(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_HeadsetDisconnected)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn add_user_changed(&self, value: &super::super::foundation::TypedEventHandler<IGameController, super::super::system::UserChangedEventArgs>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn add_user_changed(&self, value: &foundation::TypedEventHandler<IGameController, super::super::system::UserChangedEventArgs>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_UserChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_user_changed(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_user_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_UserChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -505,19 +505,19 @@ RT_CLASS!{class Gamepad: IGamepad}
 impl RtActivatable<IGamepadStatics> for Gamepad {}
 impl RtActivatable<IGamepadStatics2> for Gamepad {}
 impl Gamepad {
-    #[inline] pub fn add_gamepad_added(value: &super::super::foundation::EventHandler<Gamepad>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_gamepad_added(value: &foundation::EventHandler<Gamepad>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().add_gamepad_added(value)
     }}
-    #[inline] pub fn remove_gamepad_added(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_gamepad_added(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().remove_gamepad_added(token)
     }}
-    #[inline] pub fn add_gamepad_removed(value: &super::super::foundation::EventHandler<Gamepad>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_gamepad_removed(value: &foundation::EventHandler<Gamepad>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().add_gamepad_removed(value)
     }}
-    #[inline] pub fn remove_gamepad_removed(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_gamepad_removed(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().remove_gamepad_removed(token)
     }}
-    #[inline] pub fn get_gamepads() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<Gamepad>>>> { unsafe {
+    #[inline] pub fn get_gamepads() -> Result<Option<ComPtr<foundation::collections::IVectorView<Gamepad>>>> { unsafe {
         <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().get_gamepads()
     }}
     #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<Option<ComPtr<Gamepad>>> { unsafe {
@@ -544,32 +544,32 @@ RT_STRUCT! { struct GamepadReading {
 }}
 DEFINE_IID!(IID_IGamepadStatics, 2344412457, 54428, 14825, 149, 96, 228, 125, 222, 150, 183, 200);
 RT_INTERFACE!{static interface IGamepadStatics(IGamepadStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGamepadStatics] {
-    fn add_GamepadAdded(&self, value: *mut super::super::foundation::EventHandler<Gamepad>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_GamepadAdded(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn add_GamepadRemoved(&self, value: *mut super::super::foundation::EventHandler<Gamepad>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_GamepadRemoved(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn get_Gamepads(&self, out: *mut *mut super::super::foundation::collections::IVectorView<Gamepad>) -> HRESULT
+    fn add_GamepadAdded(&self, value: *mut foundation::EventHandler<Gamepad>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_GamepadAdded(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_GamepadRemoved(&self, value: *mut foundation::EventHandler<Gamepad>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_GamepadRemoved(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn get_Gamepads(&self, out: *mut *mut foundation::collections::IVectorView<Gamepad>) -> HRESULT
 }}
 impl IGamepadStatics {
-    #[inline] pub unsafe fn add_gamepad_added(&self, value: &super::super::foundation::EventHandler<Gamepad>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_gamepad_added(&self, value: &foundation::EventHandler<Gamepad>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_GamepadAdded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_gamepad_added(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_gamepad_added(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_GamepadAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_gamepad_removed(&self, value: &super::super::foundation::EventHandler<Gamepad>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_gamepad_removed(&self, value: &foundation::EventHandler<Gamepad>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_GamepadRemoved)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_gamepad_removed(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_gamepad_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_GamepadRemoved)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_gamepads(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<Gamepad>>>> {
+    #[inline] pub unsafe fn get_gamepads(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<Gamepad>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Gamepads)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -667,19 +667,19 @@ RT_CLASS!{class RacingWheel: IRacingWheel}
 impl RtActivatable<IRacingWheelStatics> for RacingWheel {}
 impl RtActivatable<IRacingWheelStatics2> for RacingWheel {}
 impl RacingWheel {
-    #[inline] pub fn add_racing_wheel_added(value: &super::super::foundation::EventHandler<RacingWheel>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_racing_wheel_added(value: &foundation::EventHandler<RacingWheel>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().add_racing_wheel_added(value)
     }}
-    #[inline] pub fn remove_racing_wheel_added(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_racing_wheel_added(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().remove_racing_wheel_added(token)
     }}
-    #[inline] pub fn add_racing_wheel_removed(value: &super::super::foundation::EventHandler<RacingWheel>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_racing_wheel_removed(value: &foundation::EventHandler<RacingWheel>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().add_racing_wheel_removed(value)
     }}
-    #[inline] pub fn remove_racing_wheel_removed(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_racing_wheel_removed(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().remove_racing_wheel_removed(token)
     }}
-    #[inline] pub fn get_racing_wheels() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<RacingWheel>>>> { unsafe {
+    #[inline] pub fn get_racing_wheels() -> Result<Option<ComPtr<foundation::collections::IVectorView<RacingWheel>>>> { unsafe {
         <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().get_racing_wheels()
     }}
     #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<Option<ComPtr<RacingWheel>>> { unsafe {
@@ -695,32 +695,32 @@ RT_STRUCT! { struct RacingWheelReading {
 }}
 DEFINE_IID!(IID_IRacingWheelStatics, 985738453, 22555, 18742, 159, 148, 105, 241, 230, 81, 76, 125);
 RT_INTERFACE!{static interface IRacingWheelStatics(IRacingWheelStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRacingWheelStatics] {
-    fn add_RacingWheelAdded(&self, value: *mut super::super::foundation::EventHandler<RacingWheel>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_RacingWheelAdded(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn add_RacingWheelRemoved(&self, value: *mut super::super::foundation::EventHandler<RacingWheel>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_RacingWheelRemoved(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn get_RacingWheels(&self, out: *mut *mut super::super::foundation::collections::IVectorView<RacingWheel>) -> HRESULT
+    fn add_RacingWheelAdded(&self, value: *mut foundation::EventHandler<RacingWheel>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_RacingWheelAdded(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_RacingWheelRemoved(&self, value: *mut foundation::EventHandler<RacingWheel>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_RacingWheelRemoved(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn get_RacingWheels(&self, out: *mut *mut foundation::collections::IVectorView<RacingWheel>) -> HRESULT
 }}
 impl IRacingWheelStatics {
-    #[inline] pub unsafe fn add_racing_wheel_added(&self, value: &super::super::foundation::EventHandler<RacingWheel>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_racing_wheel_added(&self, value: &foundation::EventHandler<RacingWheel>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_RacingWheelAdded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_racing_wheel_added(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_racing_wheel_added(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_RacingWheelAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_racing_wheel_removed(&self, value: &super::super::foundation::EventHandler<RacingWheel>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_racing_wheel_removed(&self, value: &foundation::EventHandler<RacingWheel>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_RacingWheelRemoved)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_racing_wheel_removed(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_racing_wheel_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_RacingWheelRemoved)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_racing_wheels(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<RacingWheel>>>> {
+    #[inline] pub unsafe fn get_racing_wheels(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<RacingWheel>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RacingWheels)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -741,7 +741,7 @@ DEFINE_IID!(IID_IRawGameController, 2091740561, 42977, 20337, 154, 120, 51, 233,
 RT_INTERFACE!{interface IRawGameController(IRawGameControllerVtbl): IInspectable(IInspectableVtbl) [IID_IRawGameController] {
     fn get_AxisCount(&self, out: *mut i32) -> HRESULT,
     fn get_ButtonCount(&self, out: *mut i32) -> HRESULT,
-    fn get_ForceFeedbackMotors(&self, out: *mut *mut super::super::foundation::collections::IVectorView<forcefeedback::ForceFeedbackMotor>) -> HRESULT,
+    fn get_ForceFeedbackMotors(&self, out: *mut *mut foundation::collections::IVectorView<forcefeedback::ForceFeedbackMotor>) -> HRESULT,
     fn get_HardwareProductId(&self, out: *mut u16) -> HRESULT,
     fn get_HardwareVendorId(&self, out: *mut u16) -> HRESULT,
     fn get_SwitchCount(&self, out: *mut i32) -> HRESULT,
@@ -760,7 +760,7 @@ impl IRawGameController {
         let hr = ((*self.lpVtbl).get_ButtonCount)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_force_feedback_motors(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<forcefeedback::ForceFeedbackMotor>>>> {
+    #[inline] pub unsafe fn get_force_feedback_motors(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<forcefeedback::ForceFeedbackMotor>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ForceFeedbackMotors)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -799,19 +799,19 @@ impl IRawGameController {
 RT_CLASS!{class RawGameController: IRawGameController}
 impl RtActivatable<IRawGameControllerStatics> for RawGameController {}
 impl RawGameController {
-    #[inline] pub fn add_raw_game_controller_added(value: &super::super::foundation::EventHandler<RawGameController>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_raw_game_controller_added(value: &foundation::EventHandler<RawGameController>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().add_raw_game_controller_added(value)
     }}
-    #[inline] pub fn remove_raw_game_controller_added(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_raw_game_controller_added(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().remove_raw_game_controller_added(token)
     }}
-    #[inline] pub fn add_raw_game_controller_removed(value: &super::super::foundation::EventHandler<RawGameController>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_raw_game_controller_removed(value: &foundation::EventHandler<RawGameController>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().add_raw_game_controller_removed(value)
     }}
-    #[inline] pub fn remove_raw_game_controller_removed(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_raw_game_controller_removed(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().remove_raw_game_controller_removed(token)
     }}
-    #[inline] pub fn get_raw_game_controllers() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<RawGameController>>>> { unsafe {
+    #[inline] pub fn get_raw_game_controllers() -> Result<Option<ComPtr<foundation::collections::IVectorView<RawGameController>>>> { unsafe {
         <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().get_raw_game_controllers()
     }}
     #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<Option<ComPtr<RawGameController>>> { unsafe {
@@ -822,12 +822,12 @@ DEFINE_CLSID!(RawGameController(&[87,105,110,100,111,119,115,46,71,97,109,105,11
 DEFINE_IID!(IID_IRawGameController2, 1136705589, 47987, 18262, 167, 135, 62, 214, 190, 166, 23, 189);
 RT_INTERFACE!{interface IRawGameController2(IRawGameController2Vtbl): IInspectable(IInspectableVtbl) [IID_IRawGameController2] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_SimpleHapticsControllers(&self, out: *mut *mut super::super::foundation::collections::IVectorView<super::super::devices::haptics::SimpleHapticsController>) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_SimpleHapticsControllers(&self, out: *mut *mut foundation::collections::IVectorView<super::super::devices::haptics::SimpleHapticsController>) -> HRESULT,
     fn get_NonRoamableId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IRawGameController2 {
-    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controllers(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<super::super::devices::haptics::SimpleHapticsController>>>> {
+    #[cfg(feature="windows-devices")] #[inline] pub unsafe fn get_simple_haptics_controllers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::devices::haptics::SimpleHapticsController>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SimpleHapticsControllers)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -845,33 +845,33 @@ impl IRawGameController2 {
 }
 DEFINE_IID!(IID_IRawGameControllerStatics, 3951888274, 59738, 19225, 175, 199, 10, 89, 248, 191, 117, 158);
 RT_INTERFACE!{static interface IRawGameControllerStatics(IRawGameControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRawGameControllerStatics] {
-    fn add_RawGameControllerAdded(&self, value: *mut super::super::foundation::EventHandler<RawGameController>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_RawGameControllerAdded(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn add_RawGameControllerRemoved(&self, value: *mut super::super::foundation::EventHandler<RawGameController>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_RawGameControllerRemoved(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn get_RawGameControllers(&self, out: *mut *mut super::super::foundation::collections::IVectorView<RawGameController>) -> HRESULT,
+    fn add_RawGameControllerAdded(&self, value: *mut foundation::EventHandler<RawGameController>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_RawGameControllerAdded(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_RawGameControllerRemoved(&self, value: *mut foundation::EventHandler<RawGameController>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_RawGameControllerRemoved(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn get_RawGameControllers(&self, out: *mut *mut foundation::collections::IVectorView<RawGameController>) -> HRESULT,
     fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut RawGameController) -> HRESULT
 }}
 impl IRawGameControllerStatics {
-    #[inline] pub unsafe fn add_raw_game_controller_added(&self, value: &super::super::foundation::EventHandler<RawGameController>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_raw_game_controller_added(&self, value: &foundation::EventHandler<RawGameController>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_RawGameControllerAdded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_raw_game_controller_added(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_raw_game_controller_added(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_RawGameControllerAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_raw_game_controller_removed(&self, value: &super::super::foundation::EventHandler<RawGameController>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_raw_game_controller_removed(&self, value: &foundation::EventHandler<RawGameController>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_RawGameControllerRemoved)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_raw_game_controller_removed(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_raw_game_controller_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_RawGameControllerRemoved)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_raw_game_controllers(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<RawGameController>>>> {
+    #[inline] pub unsafe fn get_raw_game_controllers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<RawGameController>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RawGameControllers)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -912,19 +912,19 @@ RT_CLASS!{class UINavigationController: IUINavigationController}
 impl RtActivatable<IUINavigationControllerStatics> for UINavigationController {}
 impl RtActivatable<IUINavigationControllerStatics2> for UINavigationController {}
 impl UINavigationController {
-    #[inline] pub fn add_uinavigation_controller_added(value: &super::super::foundation::EventHandler<UINavigationController>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_uinavigation_controller_added(value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().add_uinavigation_controller_added(value)
     }}
-    #[inline] pub fn remove_uinavigation_controller_added(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_uinavigation_controller_added(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().remove_uinavigation_controller_added(token)
     }}
-    #[inline] pub fn add_uinavigation_controller_removed(value: &super::super::foundation::EventHandler<UINavigationController>) -> Result<super::super::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_uinavigation_controller_removed(value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().add_uinavigation_controller_removed(value)
     }}
-    #[inline] pub fn remove_uinavigation_controller_removed(token: super::super::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_uinavigation_controller_removed(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().remove_uinavigation_controller_removed(token)
     }}
-    #[inline] pub fn get_uinavigation_controllers() -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<UINavigationController>>>> { unsafe {
+    #[inline] pub fn get_uinavigation_controllers() -> Result<Option<ComPtr<foundation::collections::IVectorView<UINavigationController>>>> { unsafe {
         <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().get_uinavigation_controllers()
     }}
     #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<Option<ComPtr<UINavigationController>>> { unsafe {
@@ -934,32 +934,32 @@ impl UINavigationController {
 DEFINE_CLSID!(UINavigationController(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,85,73,78,97,118,105,103,97,116,105,111,110,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_UINavigationController]);
 DEFINE_IID!(IID_IUINavigationControllerStatics, 789877514, 63224, 19016, 141, 137, 148, 120, 108, 202, 12, 46);
 RT_INTERFACE!{static interface IUINavigationControllerStatics(IUINavigationControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUINavigationControllerStatics] {
-    fn add_UINavigationControllerAdded(&self, value: *mut super::super::foundation::EventHandler<UINavigationController>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_UINavigationControllerAdded(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn add_UINavigationControllerRemoved(&self, value: *mut super::super::foundation::EventHandler<UINavigationController>, out: *mut super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_UINavigationControllerRemoved(&self, token: super::super::foundation::EventRegistrationToken) -> HRESULT,
-    fn get_UINavigationControllers(&self, out: *mut *mut super::super::foundation::collections::IVectorView<UINavigationController>) -> HRESULT
+    fn add_UINavigationControllerAdded(&self, value: *mut foundation::EventHandler<UINavigationController>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_UINavigationControllerAdded(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_UINavigationControllerRemoved(&self, value: *mut foundation::EventHandler<UINavigationController>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_UINavigationControllerRemoved(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn get_UINavigationControllers(&self, out: *mut *mut foundation::collections::IVectorView<UINavigationController>) -> HRESULT
 }}
 impl IUINavigationControllerStatics {
-    #[inline] pub unsafe fn add_uinavigation_controller_added(&self, value: &super::super::foundation::EventHandler<UINavigationController>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_uinavigation_controller_added(&self, value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_UINavigationControllerAdded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_uinavigation_controller_added(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_uinavigation_controller_added(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_UINavigationControllerAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_uinavigation_controller_removed(&self, value: &super::super::foundation::EventHandler<UINavigationController>) -> Result<super::super::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_uinavigation_controller_removed(&self, value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_UINavigationControllerRemoved)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_uinavigation_controller_removed(&self, token: super::super::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_uinavigation_controller_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_UINavigationControllerRemoved)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_uinavigation_controllers(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<UINavigationController>>>> {
+    #[inline] pub unsafe fn get_uinavigation_controllers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<UINavigationController>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UINavigationControllers)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1153,7 +1153,7 @@ DEFINE_IID!(IID_IGipGameControllerProvider, 3687783961, 6901, 17832, 191, 2, 160
 RT_INTERFACE!{interface IGipGameControllerProvider(IGipGameControllerProviderVtbl): IInspectable(IInspectableVtbl) [IID_IGipGameControllerProvider] {
     fn SendMessage(&self, messageClass: GipMessageClass, messageId: u8, messageBufferSize: u32, messageBuffer: *mut u8) -> HRESULT,
     fn SendReceiveMessage(&self, messageClass: GipMessageClass, messageId: u8, requestMessageBufferSize: u32, requestMessageBuffer: *mut u8, responseMessageBufferSize: u32, responseMessageBuffer: *mut u8) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn UpdateFirmwareAsync(&self, firmwareImage: *mut ::rt::gen::windows::storage::streams::IInputStream, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperationWithProgress<GipFirmwareUpdateResult, GipFirmwareUpdateProgress>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn UpdateFirmwareAsync(&self, firmwareImage: *mut ::rt::gen::windows::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncOperationWithProgress<GipFirmwareUpdateResult, GipFirmwareUpdateProgress>) -> HRESULT
 }}
 impl IGipGameControllerProvider {
     #[inline] pub unsafe fn send_message(&self, messageClass: GipMessageClass, messageId: u8, messageBuffer: &[u8]) -> Result<()> {
@@ -1164,7 +1164,7 @@ impl IGipGameControllerProvider {
         let hr = ((*self.lpVtbl).SendReceiveMessage)(self as *const _ as *mut _, messageClass, messageId, requestMessageBuffer.len() as u32, requestMessageBuffer.as_ptr() as *mut _, responseMessageBuffer.len() as u32, responseMessageBuffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn update_firmware_async(&self, firmwareImage: &::rt::gen::windows::storage::streams::IInputStream) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperationWithProgress<GipFirmwareUpdateResult, GipFirmwareUpdateProgress>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn update_firmware_async(&self, firmwareImage: &::rt::gen::windows::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<GipFirmwareUpdateResult, GipFirmwareUpdateProgress>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).UpdateFirmwareAsync)(self as *const _ as *mut _, firmwareImage as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1250,7 +1250,7 @@ use ::prelude::*;
 DEFINE_IID!(IID_IConditionForceEffect, 852617832, 13973, 20073, 133, 192, 205, 25, 68, 24, 145, 64);
 RT_INTERFACE!{interface IConditionForceEffect(IConditionForceEffectVtbl): IInspectable(IInspectableVtbl) [IID_IConditionForceEffect] {
     fn get_Kind(&self, out: *mut ConditionForceEffectKind) -> HRESULT,
-    fn SetParameters(&self, direction: ::rt::gen::windows::foundation::numerics::Vector3, positiveCoefficient: f32, negativeCoefficient: f32, maxPositiveMagnitude: f32, maxNegativeMagnitude: f32, deadZone: f32, bias: f32) -> HRESULT
+    fn SetParameters(&self, direction: foundation::numerics::Vector3, positiveCoefficient: f32, negativeCoefficient: f32, maxPositiveMagnitude: f32, maxNegativeMagnitude: f32, deadZone: f32, bias: f32) -> HRESULT
 }}
 impl IConditionForceEffect {
     #[inline] pub unsafe fn get_kind(&self) -> Result<ConditionForceEffectKind> {
@@ -1258,7 +1258,7 @@ impl IConditionForceEffect {
         let hr = ((*self.lpVtbl).get_Kind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_parameters(&self, direction: ::rt::gen::windows::foundation::numerics::Vector3, positiveCoefficient: f32, negativeCoefficient: f32, maxPositiveMagnitude: f32, maxNegativeMagnitude: f32, deadZone: f32, bias: f32) -> Result<()> {
+    #[inline] pub unsafe fn set_parameters(&self, direction: foundation::numerics::Vector3, positiveCoefficient: f32, negativeCoefficient: f32, maxPositiveMagnitude: f32, maxNegativeMagnitude: f32, deadZone: f32, bias: f32) -> Result<()> {
         let hr = ((*self.lpVtbl).SetParameters)(self as *const _ as *mut _, direction, positiveCoefficient, negativeCoefficient, maxPositiveMagnitude, maxNegativeMagnitude, deadZone, bias);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -1287,15 +1287,15 @@ RT_ENUM! { enum ConditionForceEffectKind: i32 {
 }}
 DEFINE_IID!(IID_IConstantForceEffect, 2616852800, 62407, 16732, 176, 104, 15, 6, 135, 52, 188, 224);
 RT_INTERFACE!{interface IConstantForceEffect(IConstantForceEffectVtbl): IInspectable(IInspectableVtbl) [IID_IConstantForceEffect] {
-    fn SetParameters(&self, vector: ::rt::gen::windows::foundation::numerics::Vector3, duration: ::rt::gen::windows::foundation::TimeSpan) -> HRESULT,
-    fn SetParametersWithEnvelope(&self, vector: ::rt::gen::windows::foundation::numerics::Vector3, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: ::rt::gen::windows::foundation::TimeSpan, attackDuration: ::rt::gen::windows::foundation::TimeSpan, sustainDuration: ::rt::gen::windows::foundation::TimeSpan, releaseDuration: ::rt::gen::windows::foundation::TimeSpan, repeatCount: u32) -> HRESULT
+    fn SetParameters(&self, vector: foundation::numerics::Vector3, duration: foundation::TimeSpan) -> HRESULT,
+    fn SetParametersWithEnvelope(&self, vector: foundation::numerics::Vector3, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: foundation::TimeSpan, attackDuration: foundation::TimeSpan, sustainDuration: foundation::TimeSpan, releaseDuration: foundation::TimeSpan, repeatCount: u32) -> HRESULT
 }}
 impl IConstantForceEffect {
-    #[inline] pub unsafe fn set_parameters(&self, vector: ::rt::gen::windows::foundation::numerics::Vector3, duration: ::rt::gen::windows::foundation::TimeSpan) -> Result<()> {
+    #[inline] pub unsafe fn set_parameters(&self, vector: foundation::numerics::Vector3, duration: foundation::TimeSpan) -> Result<()> {
         let hr = ((*self.lpVtbl).SetParameters)(self as *const _ as *mut _, vector, duration);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_parameters_with_envelope(&self, vector: ::rt::gen::windows::foundation::numerics::Vector3, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: ::rt::gen::windows::foundation::TimeSpan, attackDuration: ::rt::gen::windows::foundation::TimeSpan, sustainDuration: ::rt::gen::windows::foundation::TimeSpan, releaseDuration: ::rt::gen::windows::foundation::TimeSpan, repeatCount: u32) -> Result<()> {
+    #[inline] pub unsafe fn set_parameters_with_envelope(&self, vector: foundation::numerics::Vector3, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: foundation::TimeSpan, attackDuration: foundation::TimeSpan, sustainDuration: foundation::TimeSpan, releaseDuration: foundation::TimeSpan, repeatCount: u32) -> Result<()> {
         let hr = ((*self.lpVtbl).SetParametersWithEnvelope)(self as *const _ as *mut _, vector, attackGain, sustainGain, releaseGain, startDelay, attackDuration, sustainDuration, releaseDuration, repeatCount);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -1351,14 +1351,14 @@ RT_INTERFACE!{interface IForceFeedbackMotor(IForceFeedbackMotorVtbl): IInspectab
     fn put_MasterGain(&self, value: f64) -> HRESULT,
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
     fn get_SupportedAxes(&self, out: *mut ForceFeedbackEffectAxes) -> HRESULT,
-    fn LoadEffectAsync(&self, effect: *mut IForceFeedbackEffect, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<ForceFeedbackLoadEffectResult>) -> HRESULT,
+    fn LoadEffectAsync(&self, effect: *mut IForceFeedbackEffect, out: *mut *mut foundation::IAsyncOperation<ForceFeedbackLoadEffectResult>) -> HRESULT,
     fn PauseAllEffects(&self) -> HRESULT,
     fn ResumeAllEffects(&self) -> HRESULT,
     fn StopAllEffects(&self) -> HRESULT,
-    fn TryDisableAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<bool>) -> HRESULT,
-    fn TryEnableAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<bool>) -> HRESULT,
-    fn TryResetAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<bool>) -> HRESULT,
-    fn TryUnloadEffectAsync(&self, effect: *mut IForceFeedbackEffect, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<bool>) -> HRESULT
+    fn TryDisableAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn TryEnableAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn TryResetAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn TryUnloadEffectAsync(&self, effect: *mut IForceFeedbackEffect, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
 impl IForceFeedbackMotor {
     #[inline] pub unsafe fn get_are_effects_paused(&self) -> Result<bool> {
@@ -1385,7 +1385,7 @@ impl IForceFeedbackMotor {
         let hr = ((*self.lpVtbl).get_SupportedAxes)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn load_effect_async(&self, effect: &IForceFeedbackEffect) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<ForceFeedbackLoadEffectResult>>> {
+    #[inline] pub unsafe fn load_effect_async(&self, effect: &IForceFeedbackEffect) -> Result<ComPtr<foundation::IAsyncOperation<ForceFeedbackLoadEffectResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadEffectAsync)(self as *const _ as *mut _, effect as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1402,22 +1402,22 @@ impl IForceFeedbackMotor {
         let hr = ((*self.lpVtbl).StopAllEffects)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_disable_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<bool>>> {
+    #[inline] pub unsafe fn try_disable_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryDisableAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_enable_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<bool>>> {
+    #[inline] pub unsafe fn try_enable_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryEnableAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_reset_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<bool>>> {
+    #[inline] pub unsafe fn try_reset_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryResetAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn try_unload_effect_async(&self, effect: &IForceFeedbackEffect) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<bool>>> {
+    #[inline] pub unsafe fn try_unload_effect_async(&self, effect: &IForceFeedbackEffect) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryUnloadEffectAsync)(self as *const _ as *mut _, effect as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1427,8 +1427,8 @@ RT_CLASS!{class ForceFeedbackMotor: IForceFeedbackMotor}
 DEFINE_IID!(IID_IPeriodicForceEffect, 1548826839, 64629, 19794, 154, 10, 239, 228, 202, 181, 254, 100);
 RT_INTERFACE!{interface IPeriodicForceEffect(IPeriodicForceEffectVtbl): IInspectable(IInspectableVtbl) [IID_IPeriodicForceEffect] {
     fn get_Kind(&self, out: *mut PeriodicForceEffectKind) -> HRESULT,
-    fn SetParameters(&self, vector: ::rt::gen::windows::foundation::numerics::Vector3, frequency: f32, phase: f32, bias: f32, duration: ::rt::gen::windows::foundation::TimeSpan) -> HRESULT,
-    fn SetParametersWithEnvelope(&self, vector: ::rt::gen::windows::foundation::numerics::Vector3, frequency: f32, phase: f32, bias: f32, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: ::rt::gen::windows::foundation::TimeSpan, attackDuration: ::rt::gen::windows::foundation::TimeSpan, sustainDuration: ::rt::gen::windows::foundation::TimeSpan, releaseDuration: ::rt::gen::windows::foundation::TimeSpan, repeatCount: u32) -> HRESULT
+    fn SetParameters(&self, vector: foundation::numerics::Vector3, frequency: f32, phase: f32, bias: f32, duration: foundation::TimeSpan) -> HRESULT,
+    fn SetParametersWithEnvelope(&self, vector: foundation::numerics::Vector3, frequency: f32, phase: f32, bias: f32, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: foundation::TimeSpan, attackDuration: foundation::TimeSpan, sustainDuration: foundation::TimeSpan, releaseDuration: foundation::TimeSpan, repeatCount: u32) -> HRESULT
 }}
 impl IPeriodicForceEffect {
     #[inline] pub unsafe fn get_kind(&self) -> Result<PeriodicForceEffectKind> {
@@ -1436,11 +1436,11 @@ impl IPeriodicForceEffect {
         let hr = ((*self.lpVtbl).get_Kind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_parameters(&self, vector: ::rt::gen::windows::foundation::numerics::Vector3, frequency: f32, phase: f32, bias: f32, duration: ::rt::gen::windows::foundation::TimeSpan) -> Result<()> {
+    #[inline] pub unsafe fn set_parameters(&self, vector: foundation::numerics::Vector3, frequency: f32, phase: f32, bias: f32, duration: foundation::TimeSpan) -> Result<()> {
         let hr = ((*self.lpVtbl).SetParameters)(self as *const _ as *mut _, vector, frequency, phase, bias, duration);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_parameters_with_envelope(&self, vector: ::rt::gen::windows::foundation::numerics::Vector3, frequency: f32, phase: f32, bias: f32, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: ::rt::gen::windows::foundation::TimeSpan, attackDuration: ::rt::gen::windows::foundation::TimeSpan, sustainDuration: ::rt::gen::windows::foundation::TimeSpan, releaseDuration: ::rt::gen::windows::foundation::TimeSpan, repeatCount: u32) -> Result<()> {
+    #[inline] pub unsafe fn set_parameters_with_envelope(&self, vector: foundation::numerics::Vector3, frequency: f32, phase: f32, bias: f32, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: foundation::TimeSpan, attackDuration: foundation::TimeSpan, sustainDuration: foundation::TimeSpan, releaseDuration: foundation::TimeSpan, repeatCount: u32) -> Result<()> {
         let hr = ((*self.lpVtbl).SetParametersWithEnvelope)(self as *const _ as *mut _, vector, frequency, phase, bias, attackGain, sustainGain, releaseGain, startDelay, attackDuration, sustainDuration, releaseDuration, repeatCount);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -1469,15 +1469,15 @@ RT_ENUM! { enum PeriodicForceEffectKind: i32 {
 }}
 DEFINE_IID!(IID_IRampForceEffect, 4059566681, 7334, 16512, 181, 109, 180, 63, 51, 84, 208, 82);
 RT_INTERFACE!{interface IRampForceEffect(IRampForceEffectVtbl): IInspectable(IInspectableVtbl) [IID_IRampForceEffect] {
-    fn SetParameters(&self, startVector: ::rt::gen::windows::foundation::numerics::Vector3, endVector: ::rt::gen::windows::foundation::numerics::Vector3, duration: ::rt::gen::windows::foundation::TimeSpan) -> HRESULT,
-    fn SetParametersWithEnvelope(&self, startVector: ::rt::gen::windows::foundation::numerics::Vector3, endVector: ::rt::gen::windows::foundation::numerics::Vector3, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: ::rt::gen::windows::foundation::TimeSpan, attackDuration: ::rt::gen::windows::foundation::TimeSpan, sustainDuration: ::rt::gen::windows::foundation::TimeSpan, releaseDuration: ::rt::gen::windows::foundation::TimeSpan, repeatCount: u32) -> HRESULT
+    fn SetParameters(&self, startVector: foundation::numerics::Vector3, endVector: foundation::numerics::Vector3, duration: foundation::TimeSpan) -> HRESULT,
+    fn SetParametersWithEnvelope(&self, startVector: foundation::numerics::Vector3, endVector: foundation::numerics::Vector3, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: foundation::TimeSpan, attackDuration: foundation::TimeSpan, sustainDuration: foundation::TimeSpan, releaseDuration: foundation::TimeSpan, repeatCount: u32) -> HRESULT
 }}
 impl IRampForceEffect {
-    #[inline] pub unsafe fn set_parameters(&self, startVector: ::rt::gen::windows::foundation::numerics::Vector3, endVector: ::rt::gen::windows::foundation::numerics::Vector3, duration: ::rt::gen::windows::foundation::TimeSpan) -> Result<()> {
+    #[inline] pub unsafe fn set_parameters(&self, startVector: foundation::numerics::Vector3, endVector: foundation::numerics::Vector3, duration: foundation::TimeSpan) -> Result<()> {
         let hr = ((*self.lpVtbl).SetParameters)(self as *const _ as *mut _, startVector, endVector, duration);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_parameters_with_envelope(&self, startVector: ::rt::gen::windows::foundation::numerics::Vector3, endVector: ::rt::gen::windows::foundation::numerics::Vector3, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: ::rt::gen::windows::foundation::TimeSpan, attackDuration: ::rt::gen::windows::foundation::TimeSpan, sustainDuration: ::rt::gen::windows::foundation::TimeSpan, releaseDuration: ::rt::gen::windows::foundation::TimeSpan, repeatCount: u32) -> Result<()> {
+    #[inline] pub unsafe fn set_parameters_with_envelope(&self, startVector: foundation::numerics::Vector3, endVector: foundation::numerics::Vector3, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: foundation::TimeSpan, attackDuration: foundation::TimeSpan, sustainDuration: foundation::TimeSpan, releaseDuration: foundation::TimeSpan, repeatCount: u32) -> Result<()> {
         let hr = ((*self.lpVtbl).SetParametersWithEnvelope)(self as *const _ as *mut _, startVector, endVector, attackGain, sustainGain, releaseGain, startDelay, attackDuration, sustainDuration, releaseDuration, repeatCount);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -1524,7 +1524,7 @@ use ::prelude::*;
 DEFINE_IID!(IID_IGameSaveBlobGetResult, 2440200672, 29185, 18771, 170, 44, 64, 8, 240, 58, 239, 69);
 RT_INTERFACE!{interface IGameSaveBlobGetResult(IGameSaveBlobGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobGetResult] {
     fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut *mut foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>) -> HRESULT
 }}
 impl IGameSaveBlobGetResult {
     #[inline] pub unsafe fn get_status(&self) -> Result<GameSaveErrorStatus> {
@@ -1532,7 +1532,7 @@ impl IGameSaveBlobGetResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1560,7 +1560,7 @@ RT_CLASS!{class GameSaveBlobInfo: IGameSaveBlobInfo}
 DEFINE_IID!(IID_IGameSaveBlobInfoGetResult, 3344401794, 13975, 17087, 152, 156, 102, 93, 146, 59, 82, 49);
 RT_INTERFACE!{interface IGameSaveBlobInfoGetResult(IGameSaveBlobInfoGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobInfoGetResult] {
     fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
-    fn get_Value(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<GameSaveBlobInfo>) -> HRESULT
+    fn get_Value(&self, out: *mut *mut foundation::collections::IVectorView<GameSaveBlobInfo>) -> HRESULT
 }}
 impl IGameSaveBlobInfoGetResult {
     #[inline] pub unsafe fn get_status(&self) -> Result<GameSaveErrorStatus> {
@@ -1568,7 +1568,7 @@ impl IGameSaveBlobInfoGetResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<GameSaveBlobInfo>>>> {
+    #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<GameSaveBlobInfo>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1577,22 +1577,22 @@ impl IGameSaveBlobInfoGetResult {
 RT_CLASS!{class GameSaveBlobInfoGetResult: IGameSaveBlobInfoGetResult}
 DEFINE_IID!(IID_IGameSaveBlobInfoQuery, 2682090674, 61166, 17531, 169, 210, 127, 150, 192, 248, 50, 8);
 RT_INTERFACE!{interface IGameSaveBlobInfoQuery(IGameSaveBlobInfoQueryVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobInfoQuery] {
-    fn GetBlobInfoAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GameSaveBlobInfoGetResult>) -> HRESULT,
-    fn GetBlobInfoWithIndexAndMaxAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GameSaveBlobInfoGetResult>) -> HRESULT,
-    fn GetItemCountAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<u32>) -> HRESULT
+    fn GetBlobInfoAsync(&self, out: *mut *mut foundation::IAsyncOperation<GameSaveBlobInfoGetResult>) -> HRESULT,
+    fn GetBlobInfoWithIndexAndMaxAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<GameSaveBlobInfoGetResult>) -> HRESULT,
+    fn GetItemCountAsync(&self, out: *mut *mut foundation::IAsyncOperation<u32>) -> HRESULT
 }}
 impl IGameSaveBlobInfoQuery {
-    #[inline] pub unsafe fn get_blob_info_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameSaveBlobInfoGetResult>>> {
+    #[inline] pub unsafe fn get_blob_info_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobInfoGetResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetBlobInfoAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_blob_info_with_index_and_max_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameSaveBlobInfoGetResult>>> {
+    #[inline] pub unsafe fn get_blob_info_with_index_and_max_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobInfoGetResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetBlobInfoWithIndexAndMaxAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_item_count_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<u32>>> {
+    #[inline] pub unsafe fn get_item_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetItemCountAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1604,11 +1604,11 @@ RT_INTERFACE!{interface IGameSaveContainer(IGameSaveContainerVtbl): IInspectable
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Provider(&self, out: *mut *mut GameSaveProvider) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn SubmitUpdatesAsync(&self, blobsToWrite: *mut ::rt::gen::windows::foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, blobsToDelete: *mut ::rt::gen::windows::foundation::collections::IIterable<HString>, displayName: HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn SubmitUpdatesAsync(&self, blobsToWrite: *mut foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, blobsToDelete: *mut foundation::collections::IIterable<HString>, displayName: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn ReadAsync(&self, blobsToRead: *mut ::rt::gen::windows::foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
-    fn GetAsync(&self, blobsToRead: *mut ::rt::gen::windows::foundation::collections::IIterable<HString>, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GameSaveBlobGetResult>) -> HRESULT,
-    fn SubmitPropertySetUpdatesAsync(&self, blobsToWrite: *mut ::rt::gen::windows::foundation::collections::IPropertySet, blobsToDelete: *mut ::rt::gen::windows::foundation::collections::IIterable<HString>, displayName: HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn ReadAsync(&self, blobsToRead: *mut foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
+    fn GetAsync(&self, blobsToRead: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<GameSaveBlobGetResult>) -> HRESULT,
+    fn SubmitPropertySetUpdatesAsync(&self, blobsToWrite: *mut foundation::collections::IPropertySet, blobsToDelete: *mut foundation::collections::IIterable<HString>, displayName: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
     fn CreateBlobInfoQuery(&self, blobNamePrefix: HSTRING, out: *mut *mut GameSaveBlobInfoQuery) -> HRESULT
 }}
 impl IGameSaveContainer {
@@ -1622,22 +1622,22 @@ impl IGameSaveContainer {
         let hr = ((*self.lpVtbl).get_Provider)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn submit_updates_async(&self, blobsToWrite: &::rt::gen::windows::foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, blobsToDelete: &::rt::gen::windows::foundation::collections::IIterable<HString>, displayName: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameSaveOperationResult>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn submit_updates_async(&self, blobsToWrite: &foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, blobsToDelete: &foundation::collections::IIterable<HString>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SubmitUpdatesAsync)(self as *const _ as *mut _, blobsToWrite as *const _ as *mut _, blobsToDelete as *const _ as *mut _, displayName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn read_async(&self, blobsToRead: &::rt::gen::windows::foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameSaveOperationResult>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn read_async(&self, blobsToRead: &foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ReadAsync)(self as *const _ as *mut _, blobsToRead as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_async(&self, blobsToRead: &::rt::gen::windows::foundation::collections::IIterable<HString>) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameSaveBlobGetResult>>> {
+    #[inline] pub unsafe fn get_async(&self, blobsToRead: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobGetResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetAsync)(self as *const _ as *mut _, blobsToRead as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn submit_property_set_updates_async(&self, blobsToWrite: &::rt::gen::windows::foundation::collections::IPropertySet, blobsToDelete: &::rt::gen::windows::foundation::collections::IIterable<HString>, displayName: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameSaveOperationResult>>> {
+    #[inline] pub unsafe fn submit_property_set_updates_async(&self, blobsToWrite: &foundation::collections::IPropertySet, blobsToDelete: &foundation::collections::IIterable<HString>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SubmitPropertySetUpdatesAsync)(self as *const _ as *mut _, blobsToWrite as *const _ as *mut _, blobsToDelete as *const _ as *mut _, displayName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1654,7 +1654,7 @@ RT_INTERFACE!{interface IGameSaveContainerInfo(IGameSaveContainerInfoVtbl): IIns
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_TotalSize(&self, out: *mut u64) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_LastModifiedTime(&self, out: *mut ::rt::gen::windows::foundation::DateTime) -> HRESULT,
+    fn get_LastModifiedTime(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_NeedsSync(&self, out: *mut bool) -> HRESULT
 }}
 impl IGameSaveContainerInfo {
@@ -1673,7 +1673,7 @@ impl IGameSaveContainerInfo {
         let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_last_modified_time(&self) -> Result<::rt::gen::windows::foundation::DateTime> {
+    #[inline] pub unsafe fn get_last_modified_time(&self) -> Result<foundation::DateTime> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_LastModifiedTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -1688,7 +1688,7 @@ RT_CLASS!{class GameSaveContainerInfo: IGameSaveContainerInfo}
 DEFINE_IID!(IID_IGameSaveContainerInfoGetResult, 4291104116, 50561, 20381, 158, 57, 48, 161, 12, 30, 76, 80);
 RT_INTERFACE!{interface IGameSaveContainerInfoGetResult(IGameSaveContainerInfoGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainerInfoGetResult] {
     fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
-    fn get_Value(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<GameSaveContainerInfo>) -> HRESULT
+    fn get_Value(&self, out: *mut *mut foundation::collections::IVectorView<GameSaveContainerInfo>) -> HRESULT
 }}
 impl IGameSaveContainerInfoGetResult {
     #[inline] pub unsafe fn get_status(&self) -> Result<GameSaveErrorStatus> {
@@ -1696,7 +1696,7 @@ impl IGameSaveContainerInfoGetResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<GameSaveContainerInfo>>>> {
+    #[inline] pub unsafe fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<GameSaveContainerInfo>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1705,22 +1705,22 @@ impl IGameSaveContainerInfoGetResult {
 RT_CLASS!{class GameSaveContainerInfoGetResult: IGameSaveContainerInfoGetResult}
 DEFINE_IID!(IID_IGameSaveContainerInfoQuery, 1016391779, 28544, 17191, 147, 39, 255, 193, 26, 253, 66, 179);
 RT_INTERFACE!{interface IGameSaveContainerInfoQuery(IGameSaveContainerInfoQueryVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainerInfoQuery] {
-    fn GetContainerInfoAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GameSaveContainerInfoGetResult>) -> HRESULT,
-    fn GetContainerInfoWithIndexAndMaxAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GameSaveContainerInfoGetResult>) -> HRESULT,
-    fn GetItemCountAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<u32>) -> HRESULT
+    fn GetContainerInfoAsync(&self, out: *mut *mut foundation::IAsyncOperation<GameSaveContainerInfoGetResult>) -> HRESULT,
+    fn GetContainerInfoWithIndexAndMaxAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<GameSaveContainerInfoGetResult>) -> HRESULT,
+    fn GetItemCountAsync(&self, out: *mut *mut foundation::IAsyncOperation<u32>) -> HRESULT
 }}
 impl IGameSaveContainerInfoQuery {
-    #[inline] pub unsafe fn get_container_info_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameSaveContainerInfoGetResult>>> {
+    #[inline] pub unsafe fn get_container_info_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveContainerInfoGetResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetContainerInfoAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_container_info_with_index_and_max_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameSaveContainerInfoGetResult>>> {
+    #[inline] pub unsafe fn get_container_info_with_index_and_max_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveContainerInfoGetResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetContainerInfoWithIndexAndMaxAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_item_count_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<u32>>> {
+    #[inline] pub unsafe fn get_item_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetItemCountAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1747,11 +1747,11 @@ RT_INTERFACE!{interface IGameSaveProvider(IGameSaveProviderVtbl): IInspectable(I
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut ::rt::gen::windows::system::User) -> HRESULT,
     fn CreateContainer(&self, name: HSTRING, out: *mut *mut GameSaveContainer) -> HRESULT,
-    fn DeleteContainerAsync(&self, name: HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
+    fn DeleteContainerAsync(&self, name: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
     fn CreateContainerInfoQuery(&self, out: *mut *mut GameSaveContainerInfoQuery) -> HRESULT,
     fn CreateContainerInfoQueryWithName(&self, containerNamePrefix: HSTRING, out: *mut *mut GameSaveContainerInfoQuery) -> HRESULT,
-    fn GetRemainingBytesInQuotaAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<i64>) -> HRESULT,
-    fn get_ContainersChangedSinceLastSync(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVectorView<HString>) -> HRESULT
+    fn GetRemainingBytesInQuotaAsync(&self, out: *mut *mut foundation::IAsyncOperation<i64>) -> HRESULT,
+    fn get_ContainersChangedSinceLastSync(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
 }}
 impl IGameSaveProvider {
     #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_user(&self) -> Result<Option<ComPtr<::rt::gen::windows::system::User>>> {
@@ -1764,7 +1764,7 @@ impl IGameSaveProvider {
         let hr = ((*self.lpVtbl).CreateContainer)(self as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn delete_container_async(&self, name: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameSaveOperationResult>>> {
+    #[inline] pub unsafe fn delete_container_async(&self, name: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).DeleteContainerAsync)(self as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1779,12 +1779,12 @@ impl IGameSaveProvider {
         let hr = ((*self.lpVtbl).CreateContainerInfoQueryWithName)(self as *const _ as *mut _, containerNamePrefix.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_remaining_bytes_in_quota_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<i64>>> {
+    #[inline] pub unsafe fn get_remaining_bytes_in_quota_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<i64>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetRemainingBytesInQuotaAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_containers_changed_since_last_sync(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVectorView<HString>>>> {
+    #[inline] pub unsafe fn get_containers_changed_since_last_sync(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ContainersChangedSinceLastSync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1793,10 +1793,10 @@ impl IGameSaveProvider {
 RT_CLASS!{class GameSaveProvider: IGameSaveProvider}
 impl RtActivatable<IGameSaveProviderStatics> for GameSaveProvider {}
 impl GameSaveProvider {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe {
         <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().get_for_user_async(user, serviceConfigId)
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe {
         <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().get_sync_on_demand_for_user_async(user, serviceConfigId)
     }}
 }
@@ -1821,16 +1821,16 @@ impl IGameSaveProviderGetResult {
 RT_CLASS!{class GameSaveProviderGetResult: IGameSaveProviderGetResult}
 DEFINE_IID!(IID_IGameSaveProviderStatics, 3491577552, 31491, 17565, 140, 189, 52, 2, 132, 42, 16, 72);
 RT_INTERFACE!{static interface IGameSaveProviderStatics(IGameSaveProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProviderStatics] {
-    #[cfg(feature="windows-system")] fn GetForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn GetSyncOnDemandForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT
+    #[cfg(feature="windows-system")] fn GetForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn GetSyncOnDemandForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT
 }}
 impl IGameSaveProviderStatics {
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user_async(&self, user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_for_user_async(&self, user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, serviceConfigId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_sync_on_demand_for_user_async(&self, user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
+    #[cfg(feature="windows-system")] #[inline] pub unsafe fn get_sync_on_demand_for_user_async(&self, user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetSyncOnDemandForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, serviceConfigId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1845,34 +1845,34 @@ RT_CLASS!{static class GameList}
 impl RtActivatable<IGameListStatics> for GameList {}
 impl RtActivatable<IGameListStatics2> for GameList {}
 impl GameList {
-    #[inline] pub fn find_all_async() -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<GameListEntry>>>> { unsafe {
+    #[inline] pub fn find_all_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> { unsafe {
         <Self as RtActivatable<IGameListStatics>>::get_activation_factory().find_all_async()
     }}
-    #[inline] pub fn find_all_async_package_family_name(packageFamilyName: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<GameListEntry>>>> { unsafe {
+    #[inline] pub fn find_all_async_package_family_name(packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> { unsafe {
         <Self as RtActivatable<IGameListStatics>>::get_activation_factory().find_all_async_package_family_name(packageFamilyName)
     }}
-    #[inline] pub fn add_game_added(handler: &GameListChangedEventHandler) -> Result<::rt::gen::windows::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_game_added(handler: &GameListChangedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IGameListStatics>>::get_activation_factory().add_game_added(handler)
     }}
-    #[inline] pub fn remove_game_added(token: ::rt::gen::windows::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_game_added(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IGameListStatics>>::get_activation_factory().remove_game_added(token)
     }}
-    #[inline] pub fn add_game_removed(handler: &GameListRemovedEventHandler) -> Result<::rt::gen::windows::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_game_removed(handler: &GameListRemovedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IGameListStatics>>::get_activation_factory().add_game_removed(handler)
     }}
-    #[inline] pub fn remove_game_removed(token: ::rt::gen::windows::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_game_removed(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IGameListStatics>>::get_activation_factory().remove_game_removed(token)
     }}
-    #[inline] pub fn add_game_updated(handler: &GameListChangedEventHandler) -> Result<::rt::gen::windows::foundation::EventRegistrationToken> { unsafe {
+    #[inline] pub fn add_game_updated(handler: &GameListChangedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe {
         <Self as RtActivatable<IGameListStatics>>::get_activation_factory().add_game_updated(handler)
     }}
-    #[inline] pub fn remove_game_updated(token: ::rt::gen::windows::foundation::EventRegistrationToken) -> Result<()> { unsafe {
+    #[inline] pub fn remove_game_updated(token: foundation::EventRegistrationToken) -> Result<()> { unsafe {
         <Self as RtActivatable<IGameListStatics>>::get_activation_factory().remove_game_updated(token)
     }}
-    #[inline] pub fn merge_entries_async(left: &GameListEntry, right: &GameListEntry) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameListEntry>>> { unsafe {
+    #[inline] pub fn merge_entries_async(left: &GameListEntry, right: &GameListEntry) -> Result<ComPtr<foundation::IAsyncOperation<GameListEntry>>> { unsafe {
         <Self as RtActivatable<IGameListStatics2>>::get_activation_factory().merge_entries_async(left, right)
     }}
-    #[inline] pub fn unmerge_entry_async(mergedEntry: &GameListEntry) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<GameListEntry>>>> { unsafe {
+    #[inline] pub fn unmerge_entry_async(mergedEntry: &GameListEntry) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> { unsafe {
         <Self as RtActivatable<IGameListStatics2>>::get_activation_factory().unmerge_entry_async(mergedEntry)
     }}
 }
@@ -1894,10 +1894,10 @@ DEFINE_IID!(IID_IGameListEntry, 1935221971, 33055, 17556, 182, 156, 198, 65, 160
 RT_INTERFACE!{interface IGameListEntry(IGameListEntryVtbl): IInspectable(IInspectableVtbl) [IID_IGameListEntry] {
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-applicationmodel")] fn get_DisplayInfo(&self, out: *mut *mut ::rt::gen::windows::applicationmodel::AppDisplayInfo) -> HRESULT,
-    fn LaunchAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn LaunchAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
     fn get_Category(&self, out: *mut GameListCategory) -> HRESULT,
-    fn get_Properties(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IMapView<HString, IInspectable>) -> HRESULT,
-    fn SetCategoryAsync(&self, value: GameListCategory, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> HRESULT
+    fn get_Properties(&self, out: *mut *mut foundation::collections::IMapView<HString, IInspectable>) -> HRESULT,
+    fn SetCategoryAsync(&self, value: GameListCategory, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IGameListEntry {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub unsafe fn get_display_info(&self) -> Result<Option<ComPtr<::rt::gen::windows::applicationmodel::AppDisplayInfo>>> {
@@ -1905,7 +1905,7 @@ impl IGameListEntry {
         let hr = ((*self.lpVtbl).get_DisplayInfo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn launch_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<bool>>> {
+    #[inline] pub unsafe fn launch_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LaunchAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1915,12 +1915,12 @@ impl IGameListEntry {
         let hr = ((*self.lpVtbl).get_Category)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IMapView<HString, IInspectable>>>> {
+    #[inline] pub unsafe fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, IInspectable>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_category_async(&self, value: GameListCategory) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> {
+    #[inline] pub unsafe fn set_category_async(&self, value: GameListCategory) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetCategoryAsync)(self as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1934,11 +1934,11 @@ RT_INTERFACE!{interface IGameListEntry2(IGameListEntry2Vtbl): IInspectable(IInsp
     #[cfg(feature="windows-storage")] fn get_LauncherExecutable(&self, out: *mut *mut ::rt::gen::windows::storage::IStorageFile) -> HRESULT,
     fn get_LaunchParameters(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn SetLauncherExecutableFileAsync(&self, executableFile: *mut ::rt::gen::windows::storage::IStorageFile, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn SetLauncherExecutableFileAsync(&self, executableFile: *mut ::rt::gen::windows::storage::IStorageFile, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-storage")] fn SetLauncherExecutableFileWithParamsAsync(&self, executableFile: *mut ::rt::gen::windows::storage::IStorageFile, launchParams: HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn SetLauncherExecutableFileWithParamsAsync(&self, executableFile: *mut ::rt::gen::windows::storage::IStorageFile, launchParams: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn get_TitleId(&self, out: *mut HSTRING) -> HRESULT,
-    fn SetTitleIdAsync(&self, id: HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> HRESULT,
+    fn SetTitleIdAsync(&self, id: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn get_GameModeConfiguration(&self, out: *mut *mut GameModeConfiguration) -> HRESULT
 }}
 impl IGameListEntry2 {
@@ -1957,12 +1957,12 @@ impl IGameListEntry2 {
         let hr = ((*self.lpVtbl).get_LaunchParameters)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn set_launcher_executable_file_async(&self, executableFile: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn set_launcher_executable_file_async(&self, executableFile: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetLauncherExecutableFileAsync)(self as *const _ as *mut _, executableFile as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn set_launcher_executable_file_with_params_async(&self, executableFile: &::rt::gen::windows::storage::IStorageFile, launchParams: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn set_launcher_executable_file_with_params_async(&self, executableFile: &::rt::gen::windows::storage::IStorageFile, launchParams: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetLauncherExecutableFileWithParamsAsync)(self as *const _ as *mut _, executableFile as *const _ as *mut _, launchParams.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1972,7 +1972,7 @@ impl IGameListEntry2 {
         let hr = ((*self.lpVtbl).get_TitleId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_title_id_async(&self, id: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> {
+    #[inline] pub unsafe fn set_title_id_async(&self, id: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetTitleIdAsync)(self as *const _ as *mut _, id.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1998,66 +1998,66 @@ impl GameListRemovedEventHandler {
 }
 DEFINE_IID!(IID_IGameListStatics, 769462127, 40038, 19205, 148, 92, 214, 237, 120, 73, 27, 140);
 RT_INTERFACE!{static interface IGameListStatics(IGameListStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameListStatics] {
-    fn FindAllAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<GameListEntry>>) -> HRESULT,
-    fn FindAllAsyncPackageFamilyName(&self, packageFamilyName: HSTRING, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<GameListEntry>>) -> HRESULT,
-    fn add_GameAdded(&self, handler: *mut GameListChangedEventHandler, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_GameAdded(&self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT,
-    fn add_GameRemoved(&self, handler: *mut GameListRemovedEventHandler, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_GameRemoved(&self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT,
-    fn add_GameUpdated(&self, handler: *mut GameListChangedEventHandler, out: *mut ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_GameUpdated(&self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> HRESULT
+    fn FindAllAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>) -> HRESULT,
+    fn FindAllAsyncPackageFamilyName(&self, packageFamilyName: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>) -> HRESULT,
+    fn add_GameAdded(&self, handler: *mut GameListChangedEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_GameAdded(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_GameRemoved(&self, handler: *mut GameListRemovedEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_GameRemoved(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_GameUpdated(&self, handler: *mut GameListChangedEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_GameUpdated(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IGameListStatics {
-    #[inline] pub unsafe fn find_all_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<GameListEntry>>>> {
+    #[inline] pub unsafe fn find_all_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindAllAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_all_async_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<GameListEntry>>>> {
+    #[inline] pub unsafe fn find_all_async_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindAllAsyncPackageFamilyName)(self as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_game_added(&self, handler: &GameListChangedEventHandler) -> Result<::rt::gen::windows::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_game_added(&self, handler: &GameListChangedEventHandler) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_GameAdded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_game_added(&self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_game_added(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_GameAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_game_removed(&self, handler: &GameListRemovedEventHandler) -> Result<::rt::gen::windows::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_game_removed(&self, handler: &GameListRemovedEventHandler) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_GameRemoved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_game_removed(&self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_game_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_GameRemoved)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn add_game_updated(&self, handler: &GameListChangedEventHandler) -> Result<::rt::gen::windows::foundation::EventRegistrationToken> {
+    #[inline] pub unsafe fn add_game_updated(&self, handler: &GameListChangedEventHandler) -> Result<foundation::EventRegistrationToken> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_GameUpdated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn remove_game_updated(&self, token: ::rt::gen::windows::foundation::EventRegistrationToken) -> Result<()> {
+    #[inline] pub unsafe fn remove_game_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> {
         let hr = ((*self.lpVtbl).remove_GameUpdated)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
 }
 DEFINE_IID!(IID_IGameListStatics2, 962535576, 59930, 17834, 146, 104, 168, 57, 5, 104, 111, 39);
 RT_INTERFACE!{static interface IGameListStatics2(IGameListStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGameListStatics2] {
-    fn MergeEntriesAsync(&self, left: *mut GameListEntry, right: *mut GameListEntry, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<GameListEntry>) -> HRESULT,
-    fn UnmergeEntryAsync(&self, mergedEntry: *mut GameListEntry, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<GameListEntry>>) -> HRESULT
+    fn MergeEntriesAsync(&self, left: *mut GameListEntry, right: *mut GameListEntry, out: *mut *mut foundation::IAsyncOperation<GameListEntry>) -> HRESULT,
+    fn UnmergeEntryAsync(&self, mergedEntry: *mut GameListEntry, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>) -> HRESULT
 }}
 impl IGameListStatics2 {
-    #[inline] pub unsafe fn merge_entries_async(&self, left: &GameListEntry, right: &GameListEntry) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<GameListEntry>>> {
+    #[inline] pub unsafe fn merge_entries_async(&self, left: &GameListEntry, right: &GameListEntry) -> Result<ComPtr<foundation::IAsyncOperation<GameListEntry>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).MergeEntriesAsync)(self as *const _ as *mut _, left as *const _ as *mut _, right as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn unmerge_entry_async(&self, mergedEntry: &GameListEntry) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<::rt::gen::windows::foundation::collections::IVectorView<GameListEntry>>>> {
+    #[inline] pub unsafe fn unmerge_entry_async(&self, mergedEntry: &GameListEntry) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).UnmergeEntryAsync)(self as *const _ as *mut _, mergedEntry as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -2067,22 +2067,22 @@ DEFINE_IID!(IID_IGameModeConfiguration, 2028310959, 45378, 20208, 136, 48, 85, 1
 RT_INTERFACE!{interface IGameModeConfiguration(IGameModeConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IGameModeConfiguration] {
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_IsEnabled(&self, value: bool) -> HRESULT,
-    fn get_RelatedProcessNames(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_PercentGpuTimeAllocatedToGame(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<i32>) -> HRESULT,
-    fn put_PercentGpuTimeAllocatedToGame(&self, value: *mut ::rt::gen::windows::foundation::IReference<i32>) -> HRESULT,
-    fn get_PercentGpuMemoryAllocatedToGame(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<i32>) -> HRESULT,
-    fn put_PercentGpuMemoryAllocatedToGame(&self, value: *mut ::rt::gen::windows::foundation::IReference<i32>) -> HRESULT,
-    fn get_PercentGpuMemoryAllocatedToSystemCompositor(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<i32>) -> HRESULT,
-    fn put_PercentGpuMemoryAllocatedToSystemCompositor(&self, value: *mut ::rt::gen::windows::foundation::IReference<i32>) -> HRESULT,
-    fn get_MaxCpuCount(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<i32>) -> HRESULT,
-    fn put_MaxCpuCount(&self, value: *mut ::rt::gen::windows::foundation::IReference<i32>) -> HRESULT,
-    fn get_CpuExclusivityMaskLow(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<i32>) -> HRESULT,
-    fn put_CpuExclusivityMaskLow(&self, value: *mut ::rt::gen::windows::foundation::IReference<i32>) -> HRESULT,
-    fn get_CpuExclusivityMaskHigh(&self, out: *mut *mut ::rt::gen::windows::foundation::IReference<i32>) -> HRESULT,
-    fn put_CpuExclusivityMaskHigh(&self, value: *mut ::rt::gen::windows::foundation::IReference<i32>) -> HRESULT,
+    fn get_RelatedProcessNames(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_PercentGpuTimeAllocatedToGame(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
+    fn put_PercentGpuTimeAllocatedToGame(&self, value: *mut foundation::IReference<i32>) -> HRESULT,
+    fn get_PercentGpuMemoryAllocatedToGame(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
+    fn put_PercentGpuMemoryAllocatedToGame(&self, value: *mut foundation::IReference<i32>) -> HRESULT,
+    fn get_PercentGpuMemoryAllocatedToSystemCompositor(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
+    fn put_PercentGpuMemoryAllocatedToSystemCompositor(&self, value: *mut foundation::IReference<i32>) -> HRESULT,
+    fn get_MaxCpuCount(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
+    fn put_MaxCpuCount(&self, value: *mut foundation::IReference<i32>) -> HRESULT,
+    fn get_CpuExclusivityMaskLow(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
+    fn put_CpuExclusivityMaskLow(&self, value: *mut foundation::IReference<i32>) -> HRESULT,
+    fn get_CpuExclusivityMaskHigh(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
+    fn put_CpuExclusivityMaskHigh(&self, value: *mut foundation::IReference<i32>) -> HRESULT,
     fn get_AffinitizeToExclusiveCpus(&self, out: *mut bool) -> HRESULT,
     fn put_AffinitizeToExclusiveCpus(&self, value: bool) -> HRESULT,
-    fn SaveAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> HRESULT
+    fn SaveAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IGameModeConfiguration {
     #[inline] pub unsafe fn get_is_enabled(&self) -> Result<bool> {
@@ -2094,62 +2094,62 @@ impl IGameModeConfiguration {
         let hr = ((*self.lpVtbl).put_IsEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_related_process_names(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>>> {
+    #[inline] pub unsafe fn get_related_process_names(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RelatedProcessNames)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_percent_gpu_time_allocated_to_game(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<i32>>>> {
+    #[inline] pub unsafe fn get_percent_gpu_time_allocated_to_game(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PercentGpuTimeAllocatedToGame)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_percent_gpu_time_allocated_to_game(&self, value: &::rt::gen::windows::foundation::IReference<i32>) -> Result<()> {
+    #[inline] pub unsafe fn set_percent_gpu_time_allocated_to_game(&self, value: &foundation::IReference<i32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PercentGpuTimeAllocatedToGame)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_percent_gpu_memory_allocated_to_game(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<i32>>>> {
+    #[inline] pub unsafe fn get_percent_gpu_memory_allocated_to_game(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PercentGpuMemoryAllocatedToGame)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_percent_gpu_memory_allocated_to_game(&self, value: &::rt::gen::windows::foundation::IReference<i32>) -> Result<()> {
+    #[inline] pub unsafe fn set_percent_gpu_memory_allocated_to_game(&self, value: &foundation::IReference<i32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PercentGpuMemoryAllocatedToGame)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_percent_gpu_memory_allocated_to_system_compositor(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<i32>>>> {
+    #[inline] pub unsafe fn get_percent_gpu_memory_allocated_to_system_compositor(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PercentGpuMemoryAllocatedToSystemCompositor)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_percent_gpu_memory_allocated_to_system_compositor(&self, value: &::rt::gen::windows::foundation::IReference<i32>) -> Result<()> {
+    #[inline] pub unsafe fn set_percent_gpu_memory_allocated_to_system_compositor(&self, value: &foundation::IReference<i32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_PercentGpuMemoryAllocatedToSystemCompositor)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_max_cpu_count(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<i32>>>> {
+    #[inline] pub unsafe fn get_max_cpu_count(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_MaxCpuCount)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_max_cpu_count(&self, value: &::rt::gen::windows::foundation::IReference<i32>) -> Result<()> {
+    #[inline] pub unsafe fn set_max_cpu_count(&self, value: &foundation::IReference<i32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_MaxCpuCount)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_cpu_exclusivity_mask_low(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<i32>>>> {
+    #[inline] pub unsafe fn get_cpu_exclusivity_mask_low(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CpuExclusivityMaskLow)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_cpu_exclusivity_mask_low(&self, value: &::rt::gen::windows::foundation::IReference<i32>) -> Result<()> {
+    #[inline] pub unsafe fn set_cpu_exclusivity_mask_low(&self, value: &foundation::IReference<i32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_CpuExclusivityMaskLow)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_cpu_exclusivity_mask_high(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::IReference<i32>>>> {
+    #[inline] pub unsafe fn get_cpu_exclusivity_mask_high(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CpuExclusivityMaskHigh)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_cpu_exclusivity_mask_high(&self, value: &::rt::gen::windows::foundation::IReference<i32>) -> Result<()> {
+    #[inline] pub unsafe fn set_cpu_exclusivity_mask_high(&self, value: &foundation::IReference<i32>) -> Result<()> {
         let hr = ((*self.lpVtbl).put_CpuExclusivityMaskHigh)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -2162,7 +2162,7 @@ impl IGameModeConfiguration {
         let hr = ((*self.lpVtbl).put_AffinitizeToExclusiveCpus)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[inline] pub unsafe fn save_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> {
+    #[inline] pub unsafe fn save_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SaveAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -2171,16 +2171,16 @@ impl IGameModeConfiguration {
 RT_CLASS!{class GameModeConfiguration: IGameModeConfiguration}
 DEFINE_IID!(IID_IGameModeUserConfiguration, 1926449908, 30059, 18191, 160, 194, 186, 98, 169, 7, 149, 219);
 RT_INTERFACE!{interface IGameModeUserConfiguration(IGameModeUserConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IGameModeUserConfiguration] {
-    fn get_GamingRelatedProcessNames(&self, out: *mut *mut ::rt::gen::windows::foundation::collections::IVector<HString>) -> HRESULT,
-    fn SaveAsync(&self, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> HRESULT
+    fn get_GamingRelatedProcessNames(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn SaveAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IGameModeUserConfiguration {
-    #[inline] pub unsafe fn get_gaming_related_process_names(&self) -> Result<Option<ComPtr<::rt::gen::windows::foundation::collections::IVector<HString>>>> {
+    #[inline] pub unsafe fn get_gaming_related_process_names(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_GamingRelatedProcessNames)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn save_async(&self) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> {
+    #[inline] pub unsafe fn save_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SaveAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }

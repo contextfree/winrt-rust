@@ -569,16 +569,16 @@ RT_CLASS!{class XmlDocument: IXmlDocument}
 impl RtActivatable<IXmlDocumentStatics> for XmlDocument {}
 impl RtActivatable<IActivationFactory> for XmlDocument {}
 impl XmlDocument {
-    #[inline] pub fn load_from_uri_async(uri: &::rt::gen::windows::foundation::Uri) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<XmlDocument>>> { unsafe {
+    #[inline] pub fn load_from_uri_async(uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe {
         <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_uri_async(uri)
     }}
-    #[inline] pub fn load_from_uri_with_settings_async(uri: &::rt::gen::windows::foundation::Uri, loadSettings: &XmlLoadSettings) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<XmlDocument>>> { unsafe {
+    #[inline] pub fn load_from_uri_with_settings_async(uri: &foundation::Uri, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe {
         <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_uri_with_settings_async(uri, loadSettings)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<XmlDocument>>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe {
         <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_file_async(file)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(file: &::rt::gen::windows::storage::IStorageFile, loadSettings: &XmlLoadSettings) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<XmlDocument>>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(file: &::rt::gen::windows::storage::IStorageFile, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe {
         <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_file_with_settings_async(file, loadSettings)
     }}
 }
@@ -592,7 +592,7 @@ DEFINE_IID!(IID_IXmlDocumentIO, 1825630030, 61029, 17545, 158, 191, 202, 67, 232
 RT_INTERFACE!{interface IXmlDocumentIO(IXmlDocumentIOVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentIO] {
     fn LoadXml(&self, xml: HSTRING) -> HRESULT,
     fn LoadXmlWithSettings(&self, xml: HSTRING, loadSettings: *mut XmlLoadSettings) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn SaveToFileAsync(&self, file: *mut ::rt::gen::windows::storage::IStorageFile, out: *mut *mut ::rt::gen::windows::foundation::IAsyncAction) -> HRESULT
+    #[cfg(feature="windows-storage")] fn SaveToFileAsync(&self, file: *mut ::rt::gen::windows::storage::IStorageFile, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IXmlDocumentIO {
     #[inline] pub unsafe fn load_xml(&self, xml: &HStringArg) -> Result<()> {
@@ -603,7 +603,7 @@ impl IXmlDocumentIO {
         let hr = ((*self.lpVtbl).LoadXmlWithSettings)(self as *const _ as *mut _, xml.get(), loadSettings as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn save_to_file_async(&self, file: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncAction>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn save_to_file_async(&self, file: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SaveToFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -626,28 +626,28 @@ impl IXmlDocumentIO2 {
 }
 DEFINE_IID!(IID_IXmlDocumentStatics, 1430508116, 55127, 19321, 149, 57, 35, 43, 24, 245, 11, 241);
 RT_INTERFACE!{static interface IXmlDocumentStatics(IXmlDocumentStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentStatics] {
-    fn LoadFromUriAsync(&self, uri: *mut ::rt::gen::windows::foundation::Uri, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
-    fn LoadFromUriWithSettingsAsync(&self, uri: *mut ::rt::gen::windows::foundation::Uri, loadSettings: *mut XmlLoadSettings, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadFromFileAsync(&self, file: *mut ::rt::gen::windows::storage::IStorageFile, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadFromFileWithSettingsAsync(&self, file: *mut ::rt::gen::windows::storage::IStorageFile, loadSettings: *mut XmlLoadSettings, out: *mut *mut ::rt::gen::windows::foundation::IAsyncOperation<XmlDocument>) -> HRESULT
+    fn LoadFromUriAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
+    fn LoadFromUriWithSettingsAsync(&self, uri: *mut foundation::Uri, loadSettings: *mut XmlLoadSettings, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn LoadFromFileAsync(&self, file: *mut ::rt::gen::windows::storage::IStorageFile, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn LoadFromFileWithSettingsAsync(&self, file: *mut ::rt::gen::windows::storage::IStorageFile, loadSettings: *mut XmlLoadSettings, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT
 }}
 impl IXmlDocumentStatics {
-    #[inline] pub unsafe fn load_from_uri_async(&self, uri: &::rt::gen::windows::foundation::Uri) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<XmlDocument>>> {
+    #[inline] pub unsafe fn load_from_uri_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadFromUriAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn load_from_uri_with_settings_async(&self, uri: &::rt::gen::windows::foundation::Uri, loadSettings: &XmlLoadSettings) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<XmlDocument>>> {
+    #[inline] pub unsafe fn load_from_uri_with_settings_async(&self, uri: &foundation::Uri, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadFromUriWithSettingsAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, loadSettings as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn load_from_file_async(&self, file: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<XmlDocument>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn load_from_file_async(&self, file: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadFromFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn load_from_file_with_settings_async(&self, file: &::rt::gen::windows::storage::IStorageFile, loadSettings: &XmlLoadSettings) -> Result<ComPtr<::rt::gen::windows::foundation::IAsyncOperation<XmlDocument>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn load_from_file_with_settings_async(&self, file: &::rt::gen::windows::storage::IStorageFile, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadFromFileWithSettingsAsync)(self as *const _ as *mut _, file as *const _ as *mut _, loadSettings as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1231,44 +1231,44 @@ impl IPdfDocument {
 RT_CLASS!{class PdfDocument: IPdfDocument}
 impl RtActivatable<IPdfDocumentStatics> for PdfDocument {}
 impl PdfDocument {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<super::super::foundation::IAsyncOperation<PdfDocument>>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe {
         <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_file_async(file)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_password_async(file: &super::super::storage::IStorageFile, password: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<PdfDocument>>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_password_async(file: &super::super::storage::IStorageFile, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe {
         <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_file_with_password_async(file, password)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(inputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<super::super::foundation::IAsyncOperation<PdfDocument>>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(inputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe {
         <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_stream_async(inputStream)
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_password_async(inputStream: &super::super::storage::streams::IRandomAccessStream, password: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<PdfDocument>>> { unsafe {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_password_async(inputStream: &super::super::storage::streams::IRandomAccessStream, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe {
         <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_stream_with_password_async(inputStream, password)
     }}
 }
 DEFINE_CLSID!(PdfDocument(&[87,105,110,100,111,119,115,46,68,97,116,97,46,80,100,102,46,80,100,102,68,111,99,117,109,101,110,116,0]) [CLSID_PdfDocument]);
 DEFINE_IID!(IID_IPdfDocumentStatics, 1127877471, 49159, 18312, 144, 242, 8, 20, 61, 146, 37, 153);
 RT_INTERFACE!{static interface IPdfDocumentStatics(IPdfDocumentStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfDocumentStatics] {
-    #[cfg(feature="windows-storage")] fn LoadFromFileAsync(&self, file: *mut super::super::storage::IStorageFile, out: *mut *mut super::super::foundation::IAsyncOperation<PdfDocument>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadFromFileWithPasswordAsync(&self, file: *mut super::super::storage::IStorageFile, password: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<PdfDocument>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadFromStreamAsync(&self, inputStream: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut super::super::foundation::IAsyncOperation<PdfDocument>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadFromStreamWithPasswordAsync(&self, inputStream: *mut super::super::storage::streams::IRandomAccessStream, password: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<PdfDocument>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn LoadFromFileAsync(&self, file: *mut super::super::storage::IStorageFile, out: *mut *mut foundation::IAsyncOperation<PdfDocument>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn LoadFromFileWithPasswordAsync(&self, file: *mut super::super::storage::IStorageFile, password: HSTRING, out: *mut *mut foundation::IAsyncOperation<PdfDocument>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn LoadFromStreamAsync(&self, inputStream: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncOperation<PdfDocument>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn LoadFromStreamWithPasswordAsync(&self, inputStream: *mut super::super::storage::streams::IRandomAccessStream, password: HSTRING, out: *mut *mut foundation::IAsyncOperation<PdfDocument>) -> HRESULT
 }}
 impl IPdfDocumentStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn load_from_file_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<super::super::foundation::IAsyncOperation<PdfDocument>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn load_from_file_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadFromFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn load_from_file_with_password_async(&self, file: &super::super::storage::IStorageFile, password: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<PdfDocument>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn load_from_file_with_password_async(&self, file: &super::super::storage::IStorageFile, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadFromFileWithPasswordAsync)(self as *const _ as *mut _, file as *const _ as *mut _, password.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn load_from_stream_async(&self, inputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<super::super::foundation::IAsyncOperation<PdfDocument>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn load_from_stream_async(&self, inputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadFromStreamAsync)(self as *const _ as *mut _, inputStream as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn load_from_stream_with_password_async(&self, inputStream: &super::super::storage::streams::IRandomAccessStream, password: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<PdfDocument>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn load_from_stream_with_password_async(&self, inputStream: &super::super::storage::streams::IRandomAccessStream, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadFromStreamWithPasswordAsync)(self as *const _ as *mut _, inputStream as *const _ as *mut _, password.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1277,28 +1277,28 @@ impl IPdfDocumentStatics {
 DEFINE_IID!(IID_IPdfPage, 2645864648, 21280, 19708, 173, 118, 73, 63, 218, 208, 229, 148);
 RT_INTERFACE!{interface IPdfPage(IPdfPageVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPage] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn RenderToStreamAsync(&self, outputStream: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn RenderToStreamAsync(&self, outputStream: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn RenderWithOptionsToStreamAsync(&self, outputStream: *mut super::super::storage::streams::IRandomAccessStream, options: *mut PdfPageRenderOptions, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT,
-    fn PreparePageAsync(&self, out: *mut *mut super::super::foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn RenderWithOptionsToStreamAsync(&self, outputStream: *mut super::super::storage::streams::IRandomAccessStream, options: *mut PdfPageRenderOptions, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn PreparePageAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn get_Index(&self, out: *mut u32) -> HRESULT,
-    fn get_Size(&self, out: *mut super::super::foundation::Size) -> HRESULT,
+    fn get_Size(&self, out: *mut foundation::Size) -> HRESULT,
     fn get_Dimensions(&self, out: *mut *mut PdfPageDimensions) -> HRESULT,
     fn get_Rotation(&self, out: *mut PdfPageRotation) -> HRESULT,
     fn get_PreferredZoom(&self, out: *mut f32) -> HRESULT
 }}
 impl IPdfPage {
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn render_to_stream_async(&self, outputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn render_to_stream_async(&self, outputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RenderToStreamAsync)(self as *const _ as *mut _, outputStream as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn render_with_options_to_stream_async(&self, outputStream: &super::super::storage::streams::IRandomAccessStream, options: &PdfPageRenderOptions) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
+    #[cfg(feature="windows-storage")] #[inline] pub unsafe fn render_with_options_to_stream_async(&self, outputStream: &super::super::storage::streams::IRandomAccessStream, options: &PdfPageRenderOptions) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RenderWithOptionsToStreamAsync)(self as *const _ as *mut _, outputStream as *const _ as *mut _, options as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn prepare_page_async(&self) -> Result<ComPtr<super::super::foundation::IAsyncAction>> {
+    #[inline] pub unsafe fn prepare_page_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).PreparePageAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1308,7 +1308,7 @@ impl IPdfPage {
         let hr = ((*self.lpVtbl).get_Index)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_size(&self) -> Result<super::super::foundation::Size> {
+    #[inline] pub unsafe fn get_size(&self) -> Result<foundation::Size> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -1332,34 +1332,34 @@ impl IPdfPage {
 RT_CLASS!{class PdfPage: IPdfPage}
 DEFINE_IID!(IID_IPdfPageDimensions, 571933809, 12606, 17640, 131, 93, 99, 163, 231, 98, 74, 16);
 RT_INTERFACE!{interface IPdfPageDimensions(IPdfPageDimensionsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPageDimensions] {
-    fn get_MediaBox(&self, out: *mut super::super::foundation::Rect) -> HRESULT,
-    fn get_CropBox(&self, out: *mut super::super::foundation::Rect) -> HRESULT,
-    fn get_BleedBox(&self, out: *mut super::super::foundation::Rect) -> HRESULT,
-    fn get_TrimBox(&self, out: *mut super::super::foundation::Rect) -> HRESULT,
-    fn get_ArtBox(&self, out: *mut super::super::foundation::Rect) -> HRESULT
+    fn get_MediaBox(&self, out: *mut foundation::Rect) -> HRESULT,
+    fn get_CropBox(&self, out: *mut foundation::Rect) -> HRESULT,
+    fn get_BleedBox(&self, out: *mut foundation::Rect) -> HRESULT,
+    fn get_TrimBox(&self, out: *mut foundation::Rect) -> HRESULT,
+    fn get_ArtBox(&self, out: *mut foundation::Rect) -> HRESULT
 }}
 impl IPdfPageDimensions {
-    #[inline] pub unsafe fn get_media_box(&self) -> Result<super::super::foundation::Rect> {
+    #[inline] pub unsafe fn get_media_box(&self) -> Result<foundation::Rect> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_MediaBox)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_crop_box(&self) -> Result<super::super::foundation::Rect> {
+    #[inline] pub unsafe fn get_crop_box(&self) -> Result<foundation::Rect> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_CropBox)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_bleed_box(&self) -> Result<super::super::foundation::Rect> {
+    #[inline] pub unsafe fn get_bleed_box(&self) -> Result<foundation::Rect> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_BleedBox)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_trim_box(&self) -> Result<super::super::foundation::Rect> {
+    #[inline] pub unsafe fn get_trim_box(&self) -> Result<foundation::Rect> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_TrimBox)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_art_box(&self) -> Result<super::super::foundation::Rect> {
+    #[inline] pub unsafe fn get_art_box(&self) -> Result<foundation::Rect> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ArtBox)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -1368,8 +1368,8 @@ impl IPdfPageDimensions {
 RT_CLASS!{class PdfPageDimensions: IPdfPageDimensions}
 DEFINE_IID!(IID_IPdfPageRenderOptions, 1016595823, 47055, 19497, 154, 4, 82, 217, 2, 103, 244, 37);
 RT_INTERFACE!{interface IPdfPageRenderOptions(IPdfPageRenderOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPageRenderOptions] {
-    fn get_SourceRect(&self, out: *mut super::super::foundation::Rect) -> HRESULT,
-    fn put_SourceRect(&self, value: super::super::foundation::Rect) -> HRESULT,
+    fn get_SourceRect(&self, out: *mut foundation::Rect) -> HRESULT,
+    fn put_SourceRect(&self, value: foundation::Rect) -> HRESULT,
     fn get_DestinationWidth(&self, out: *mut u32) -> HRESULT,
     fn put_DestinationWidth(&self, value: u32) -> HRESULT,
     fn get_DestinationHeight(&self, out: *mut u32) -> HRESULT,
@@ -1384,12 +1384,12 @@ RT_INTERFACE!{interface IPdfPageRenderOptions(IPdfPageRenderOptionsVtbl): IInspe
     fn put_BitmapEncoderId(&self, value: Guid) -> HRESULT
 }}
 impl IPdfPageRenderOptions {
-    #[inline] pub unsafe fn get_source_rect(&self) -> Result<super::super::foundation::Rect> {
+    #[inline] pub unsafe fn get_source_rect(&self) -> Result<foundation::Rect> {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_SourceRect)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn set_source_rect(&self, value: super::super::foundation::Rect) -> Result<()> {
+    #[inline] pub unsafe fn set_source_rect(&self, value: foundation::Rect) -> Result<()> {
         let hr = ((*self.lpVtbl).put_SourceRect)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -1495,10 +1495,10 @@ impl ISelectableWordSegment {
 RT_CLASS!{class SelectableWordSegment: ISelectableWordSegment}
 DEFINE_IID!(IID_SelectableWordSegmentsTokenizingHandler, 977140892, 44766, 19911, 158, 108, 65, 192, 68, 189, 53, 146);
 RT_DELEGATE!{delegate SelectableWordSegmentsTokenizingHandler(SelectableWordSegmentsTokenizingHandlerVtbl, SelectableWordSegmentsTokenizingHandlerImpl) [IID_SelectableWordSegmentsTokenizingHandler] {
-    fn Invoke(&self, precedingWords: *mut super::super::foundation::collections::IIterable<SelectableWordSegment>, words: *mut super::super::foundation::collections::IIterable<SelectableWordSegment>) -> HRESULT
+    fn Invoke(&self, precedingWords: *mut foundation::collections::IIterable<SelectableWordSegment>, words: *mut foundation::collections::IIterable<SelectableWordSegment>) -> HRESULT
 }}
 impl SelectableWordSegmentsTokenizingHandler {
-    #[inline] pub unsafe fn invoke(&self, precedingWords: &super::super::foundation::collections::IIterable<SelectableWordSegment>, words: &super::super::foundation::collections::IIterable<SelectableWordSegment>) -> Result<()> {
+    #[inline] pub unsafe fn invoke(&self, precedingWords: &foundation::collections::IIterable<SelectableWordSegment>, words: &foundation::collections::IIterable<SelectableWordSegment>) -> Result<()> {
         let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, precedingWords as *const _ as *mut _, words as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -1507,7 +1507,7 @@ DEFINE_IID!(IID_ISelectableWordsSegmenter, 4141625831, 19219, 17861, 136, 151, 1
 RT_INTERFACE!{interface ISelectableWordsSegmenter(ISelectableWordsSegmenterVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordsSegmenter] {
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn GetTokenAt(&self, text: HSTRING, startIndex: u32, out: *mut *mut SelectableWordSegment) -> HRESULT,
-    fn GetTokens(&self, text: HSTRING, out: *mut *mut super::super::foundation::collections::IVectorView<SelectableWordSegment>) -> HRESULT,
+    fn GetTokens(&self, text: HSTRING, out: *mut *mut foundation::collections::IVectorView<SelectableWordSegment>) -> HRESULT,
     fn Tokenize(&self, text: HSTRING, startIndex: u32, handler: *mut SelectableWordSegmentsTokenizingHandler) -> HRESULT
 }}
 impl ISelectableWordsSegmenter {
@@ -1521,7 +1521,7 @@ impl ISelectableWordsSegmenter {
         let hr = ((*self.lpVtbl).GetTokenAt)(self as *const _ as *mut _, text.get(), startIndex, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_tokens(&self, text: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<SelectableWordSegment>>>> {
+    #[inline] pub unsafe fn get_tokens(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<SelectableWordSegment>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetTokens)(self as *const _ as *mut _, text.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1552,16 +1552,16 @@ impl ISelectableWordsSegmenterFactory {
 }
 DEFINE_IID!(IID_ISemanticTextQuery, 1780263761, 8114, 18697, 128, 184, 53, 115, 26, 43, 62, 127);
 RT_INTERFACE!{interface ISemanticTextQuery(ISemanticTextQueryVtbl): IInspectable(IInspectableVtbl) [IID_ISemanticTextQuery] {
-    fn Find(&self, content: HSTRING, out: *mut *mut super::super::foundation::collections::IVectorView<TextSegment>) -> HRESULT,
-    fn FindInProperty(&self, propertyContent: HSTRING, propertyName: HSTRING, out: *mut *mut super::super::foundation::collections::IVectorView<TextSegment>) -> HRESULT
+    fn Find(&self, content: HSTRING, out: *mut *mut foundation::collections::IVectorView<TextSegment>) -> HRESULT,
+    fn FindInProperty(&self, propertyContent: HSTRING, propertyName: HSTRING, out: *mut *mut foundation::collections::IVectorView<TextSegment>) -> HRESULT
 }}
 impl ISemanticTextQuery {
-    #[inline] pub unsafe fn find(&self, content: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<TextSegment>>>> {
+    #[inline] pub unsafe fn find(&self, content: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<TextSegment>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Find)(self as *const _ as *mut _, content.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn find_in_property(&self, propertyContent: &HStringArg, propertyName: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<TextSegment>>>> {
+    #[inline] pub unsafe fn find_in_property(&self, propertyContent: &HStringArg, propertyName: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<TextSegment>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindInProperty)(self as *const _ as *mut _, propertyContent.get(), propertyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1599,8 +1599,8 @@ DEFINE_IID!(IID_ITextConversionGenerator, 56650334, 10921, 19126, 175, 139, 165,
 RT_INTERFACE!{interface ITextConversionGenerator(ITextConversionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextConversionGenerator] {
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LanguageAvailableButNotInstalled(&self, out: *mut bool) -> HRESULT,
-    fn GetCandidatesAsync(&self, input: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<HString>>) -> HRESULT,
-    fn GetCandidatesWithMaxCountAsync(&self, input: HSTRING, maxCandidates: u32, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<HString>>) -> HRESULT
+    fn GetCandidatesAsync(&self, input: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT,
+    fn GetCandidatesWithMaxCountAsync(&self, input: HSTRING, maxCandidates: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT
 }}
 impl ITextConversionGenerator {
     #[inline] pub unsafe fn get_resolved_language(&self) -> Result<HString> {
@@ -1613,12 +1613,12 @@ impl ITextConversionGenerator {
         let hr = ((*self.lpVtbl).get_LanguageAvailableButNotInstalled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_candidates_async(&self, input: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<HString>>>> {
+    #[inline] pub unsafe fn get_candidates_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCandidatesAsync)(self as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_candidates_with_max_count_async(&self, input: &HStringArg, maxCandidates: u32) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<HString>>>> {
+    #[inline] pub unsafe fn get_candidates_with_max_count_async(&self, input: &HStringArg, maxCandidates: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCandidatesWithMaxCountAsync)(self as *const _ as *mut _, input.get(), maxCandidates, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1665,8 +1665,8 @@ DEFINE_IID!(IID_ITextPredictionGenerator, 1588374279, 44017, 19638, 157, 158, 50
 RT_INTERFACE!{interface ITextPredictionGenerator(ITextPredictionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextPredictionGenerator] {
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LanguageAvailableButNotInstalled(&self, out: *mut bool) -> HRESULT,
-    fn GetCandidatesAsync(&self, input: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<HString>>) -> HRESULT,
-    fn GetCandidatesWithMaxCountAsync(&self, input: HSTRING, maxCandidates: u32, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<HString>>) -> HRESULT
+    fn GetCandidatesAsync(&self, input: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT,
+    fn GetCandidatesWithMaxCountAsync(&self, input: HSTRING, maxCandidates: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT
 }}
 impl ITextPredictionGenerator {
     #[inline] pub unsafe fn get_resolved_language(&self) -> Result<HString> {
@@ -1679,12 +1679,12 @@ impl ITextPredictionGenerator {
         let hr = ((*self.lpVtbl).get_LanguageAvailableButNotInstalled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_candidates_async(&self, input: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<HString>>>> {
+    #[inline] pub unsafe fn get_candidates_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCandidatesAsync)(self as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_candidates_with_max_count_async(&self, input: &HStringArg, maxCandidates: u32) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<HString>>>> {
+    #[inline] pub unsafe fn get_candidates_with_max_count_async(&self, input: &HStringArg, maxCandidates: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetCandidatesWithMaxCountAsync)(self as *const _ as *mut _, input.get(), maxCandidates, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1713,7 +1713,7 @@ DEFINE_IID!(IID_ITextReverseConversionGenerator, 1374156052, 40017, 19846, 174, 
 RT_INTERFACE!{interface ITextReverseConversionGenerator(ITextReverseConversionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGenerator] {
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LanguageAvailableButNotInstalled(&self, out: *mut bool) -> HRESULT,
-    fn ConvertBackAsync(&self, input: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<HString>) -> HRESULT
+    fn ConvertBackAsync(&self, input: HSTRING, out: *mut *mut foundation::IAsyncOperation<HString>) -> HRESULT
 }}
 impl ITextReverseConversionGenerator {
     #[inline] pub unsafe fn get_resolved_language(&self) -> Result<HString> {
@@ -1726,7 +1726,7 @@ impl ITextReverseConversionGenerator {
         let hr = ((*self.lpVtbl).get_LanguageAvailableButNotInstalled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn convert_back_async(&self, input: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<HString>>> {
+    #[inline] pub unsafe fn convert_back_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ConvertBackAsync)(self as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1742,10 +1742,10 @@ impl TextReverseConversionGenerator {
 DEFINE_CLSID!(TextReverseConversionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,82,101,118,101,114,115,101,67,111,110,118,101,114,115,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextReverseConversionGenerator]);
 DEFINE_IID!(IID_ITextReverseConversionGenerator2, 447730412, 34262, 18173, 130, 138, 58, 72, 48, 250, 110, 24);
 RT_INTERFACE!{interface ITextReverseConversionGenerator2(ITextReverseConversionGenerator2Vtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGenerator2] {
-    fn GetPhonemesAsync(&self, input: HSTRING, out: *mut *mut super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<TextPhoneme>>) -> HRESULT
+    fn GetPhonemesAsync(&self, input: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<TextPhoneme>>) -> HRESULT
 }}
 impl ITextReverseConversionGenerator2 {
-    #[inline] pub unsafe fn get_phonemes_async(&self, input: &HStringArg) -> Result<ComPtr<super::super::foundation::IAsyncOperation<super::super::foundation::collections::IVectorView<TextPhoneme>>>> {
+    #[inline] pub unsafe fn get_phonemes_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<TextPhoneme>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetPhonemesAsync)(self as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1938,7 +1938,7 @@ DEFINE_IID!(IID_IWordSegment, 3537156717, 39036, 19648, 182, 189, 212, 154, 17, 
 RT_INTERFACE!{interface IWordSegment(IWordSegmentVtbl): IInspectable(IInspectableVtbl) [IID_IWordSegment] {
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SourceTextSegment(&self, out: *mut TextSegment) -> HRESULT,
-    fn get_AlternateForms(&self, out: *mut *mut super::super::foundation::collections::IVectorView<AlternateWordForm>) -> HRESULT
+    fn get_AlternateForms(&self, out: *mut *mut foundation::collections::IVectorView<AlternateWordForm>) -> HRESULT
 }}
 impl IWordSegment {
     #[inline] pub unsafe fn get_text(&self) -> Result<HString> {
@@ -1951,7 +1951,7 @@ impl IWordSegment {
         let hr = ((*self.lpVtbl).get_SourceTextSegment)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_alternate_forms(&self) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<AlternateWordForm>>>> {
+    #[inline] pub unsafe fn get_alternate_forms(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<AlternateWordForm>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AlternateForms)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1960,10 +1960,10 @@ impl IWordSegment {
 RT_CLASS!{class WordSegment: IWordSegment}
 DEFINE_IID!(IID_WordSegmentsTokenizingHandler, 2782749527, 48938, 19535, 163, 31, 41, 231, 28, 111, 139, 53);
 RT_DELEGATE!{delegate WordSegmentsTokenizingHandler(WordSegmentsTokenizingHandlerVtbl, WordSegmentsTokenizingHandlerImpl) [IID_WordSegmentsTokenizingHandler] {
-    fn Invoke(&self, precedingWords: *mut super::super::foundation::collections::IIterable<WordSegment>, words: *mut super::super::foundation::collections::IIterable<WordSegment>) -> HRESULT
+    fn Invoke(&self, precedingWords: *mut foundation::collections::IIterable<WordSegment>, words: *mut foundation::collections::IIterable<WordSegment>) -> HRESULT
 }}
 impl WordSegmentsTokenizingHandler {
-    #[inline] pub unsafe fn invoke(&self, precedingWords: &super::super::foundation::collections::IIterable<WordSegment>, words: &super::super::foundation::collections::IIterable<WordSegment>) -> Result<()> {
+    #[inline] pub unsafe fn invoke(&self, precedingWords: &foundation::collections::IIterable<WordSegment>, words: &foundation::collections::IIterable<WordSegment>) -> Result<()> {
         let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, precedingWords as *const _ as *mut _, words as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }
@@ -1972,7 +1972,7 @@ DEFINE_IID!(IID_IWordsSegmenter, 2259997905, 45822, 20020, 168, 29, 102, 100, 3,
 RT_INTERFACE!{interface IWordsSegmenter(IWordsSegmenterVtbl): IInspectable(IInspectableVtbl) [IID_IWordsSegmenter] {
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn GetTokenAt(&self, text: HSTRING, startIndex: u32, out: *mut *mut WordSegment) -> HRESULT,
-    fn GetTokens(&self, text: HSTRING, out: *mut *mut super::super::foundation::collections::IVectorView<WordSegment>) -> HRESULT,
+    fn GetTokens(&self, text: HSTRING, out: *mut *mut foundation::collections::IVectorView<WordSegment>) -> HRESULT,
     fn Tokenize(&self, text: HSTRING, startIndex: u32, handler: *mut WordSegmentsTokenizingHandler) -> HRESULT
 }}
 impl IWordsSegmenter {
@@ -1986,7 +1986,7 @@ impl IWordsSegmenter {
         let hr = ((*self.lpVtbl).GetTokenAt)(self as *const _ as *mut _, text.get(), startIndex, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }
-    #[inline] pub unsafe fn get_tokens(&self, text: &HStringArg) -> Result<Option<ComPtr<super::super::foundation::collections::IVectorView<WordSegment>>>> {
+    #[inline] pub unsafe fn get_tokens(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<WordSegment>>>> {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetTokens)(self as *const _ as *mut _, text.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
