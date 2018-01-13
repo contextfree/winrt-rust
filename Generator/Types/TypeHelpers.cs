@@ -46,7 +46,7 @@ namespace Generator.Types
                     case TypeUsage.Raw: return $"{ t.Name }::Abi";
                     case TypeUsage.In: return $"&{ t.Name }::In";
                     case TypeUsage.Out: return $"{ t.Name }::Out";
-                    case TypeUsage.OutNonnull: return $"{ t.Name }::ArrayOut";
+                    case TypeUsage.OutNonNull: return $"{ t.Name }::OutNonNull";
                     case TypeUsage.GenericArg: return t.Name;
                     default: throw new NotSupportedException();
                 }
@@ -83,7 +83,6 @@ namespace Generator.Types
                     case TypeUsage.Raw: return "HSTRING";
                     case TypeUsage.In: return "&HStringArg";
                     case TypeUsage.Out: return "HString";
-                    case TypeUsage.OutNonnull: return "HString";
                     case TypeUsage.GenericArg: return "HString";
                     default: throw new NotSupportedException();
                 }
@@ -176,7 +175,7 @@ namespace Generator.Types
                     {
                         name = $"Option<ComPtr<{ name }>>";
                     }
-                    else if (usage == TypeUsage.OutNonnull)
+                    else if (usage == TypeUsage.OutNonNull)
                     {
                         name = $"ComPtr<{ name }>";
                     }
@@ -196,7 +195,7 @@ namespace Generator.Types
                 case InputKind.MutSlice:
                     Assert(t.IsValueType);
                     return $"&mut [{ GetTypeName(gen, source, t, TypeUsage.In) }]";
-                case InputKind.VecBuffer: return $"&mut Vec<{ GetTypeName(gen, source, t, TypeUsage.OutNonnull) }>";
+                case InputKind.VecBuffer: return $"&mut Vec<{ GetTypeName(gen, source, t, TypeUsage.OutNonNull) }>";
                 default: throw new InvalidOperationException();
             }
         }
@@ -422,7 +421,7 @@ namespace Generator.Types
     {
         In,
         Out,
-        OutNonnull,
+        OutNonNull,
         Raw,
         Alias,
         GenericArg,

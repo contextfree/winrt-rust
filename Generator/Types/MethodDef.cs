@@ -14,7 +14,6 @@ namespace Generator.Types
         public string[] InputParameterNames;
         public Tuple<TypeReference, InputKind>[] InputParameterTypes;
         public Tuple<TypeReference, bool>[] OutTypes;
-        //public string WrapperBody;
         public string GetManyParameterName;
         public List<Tuple<string, TypeReference, bool>> Output;
 
@@ -25,7 +24,7 @@ namespace Generator.Types
 
         public string MakeOutType(Generator generator, ITypeRequestSource source, bool isFactoryMethod)
         {
-            string outType = String.Join(", ", OutTypes.Select(o => TypeHelpers.GetTypeName(generator, source, o.Item1, (o.Item2 || isFactoryMethod) ? TypeUsage.OutNonnull : TypeUsage.Out)));
+            string outType = String.Join(", ", OutTypes.Select(o => TypeHelpers.GetTypeName(generator, source, o.Item1, (o.Item2 || isFactoryMethod) ? TypeUsage.OutNonNull : TypeUsage.Out)));
             if (OutTypes.Count() != 1)
             {
                 outType = "(" + outType + ")"; // also works for count == 0 (empty tuple)
@@ -297,7 +296,6 @@ namespace Generator.Types
                 OutTypes = outTypes.ToArray(),
                 GetManyParameterName = isGetMany ? getManyPname : null,
                 Output = output
-                //WrapperBody = GetWrapperBody(rawName, isGetMany, getManyPname, output)
             };
         }
 

@@ -173,16 +173,16 @@ impl<T> ComArray<T> where T: ::RtType {
 }
 
 impl<T> Deref for ComArray<T> where T: ::RtType {
-    type Target = [T::ArrayOut];
+    type Target = [T::OutNonNull];
     #[inline]
-    fn deref(&self) -> &[T::ArrayOut] {
-        unsafe { ::std::slice::from_raw_parts(self.first as *mut T::ArrayOut, self.size as usize) }
+    fn deref(&self) -> &[T::OutNonNull] {
+        unsafe { ::std::slice::from_raw_parts(self.first as *mut T::OutNonNull, self.size as usize) }
     }
 }
 impl<T> DerefMut for ComArray<T> where T: ::RtType {
     #[inline]
-    fn deref_mut(&mut self) -> &mut [T::ArrayOut] {
-        unsafe { ::std::slice::from_raw_parts_mut(self.first as *mut T::ArrayOut, self.size as usize) }
+    fn deref_mut(&mut self) -> &mut [T::OutNonNull] {
+        unsafe { ::std::slice::from_raw_parts_mut(self.first as *mut T::OutNonNull, self.size as usize) }
     }
 }
 
