@@ -51,6 +51,18 @@ impl<T> ComPtr<T> {
         ComPtr(ptr)
     }
 
+    /// Creates an optional `ComPtr` to wrap a raw pointer that may be null.
+    /// It takes ownership over the pointer which means it does __not__ call `AddRef`.
+    /// `T` __must__ be a COM interface that inherits from `IUnknown`.
+    #[inline]
+    pub unsafe fn wrap_optional(ptr: *mut T) -> Option<ComPtr<T>> { // TODO: Add T: ComInterface bound
+        if ptr.is_null() {
+            None
+        } else {
+            Some(ComPtr(ptr))
+        }
+    }
+
     /// Returns the underlying WinRT object as a reference to an `IInspectable` object.
     #[inline]
     fn as_inspectable(&self) -> &mut IInspectable where T: RtInterface {
@@ -161,16 +173,16 @@ impl<T> ComArray<T> where T: ::RtType {
 }
 
 impl<T> Deref for ComArray<T> where T: ::RtType {
-    type Target = [T::Out];
+    type Target = [T::OutNonNull];
     #[inline]
-    fn deref(&self) -> &[T::Out] {
-        unsafe { ::std::slice::from_raw_parts(self.first as *mut T::Out, self.size as usize) }
+    fn deref(&self) -> &[T::OutNonNull] {
+        unsafe { ::std::slice::from_raw_parts(self.first as *mut T::OutNonNull, self.size as usize) }
     }
 }
 impl<T> DerefMut for ComArray<T> where T: ::RtType {
     #[inline]
-    fn deref_mut(&mut self) -> &mut [T::Out] {
-        unsafe { ::std::slice::from_raw_parts_mut(self.first as *mut T::Out, self.size as usize) }
+    fn deref_mut(&mut self) -> &mut [T::OutNonNull] {
+        unsafe { ::std::slice::from_raw_parts_mut(self.first as *mut T::OutNonNull, self.size as usize) }
     }
 }
 

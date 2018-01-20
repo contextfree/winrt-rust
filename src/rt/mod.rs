@@ -51,6 +51,7 @@ pub trait RtType {
     type In;
     type Abi;
     type Out;
+    type OutNonNull;
 
     unsafe fn unwrap(input: &Self::In) -> Self::Abi;
     unsafe fn uninitialized() -> Self::Abi;
@@ -61,6 +62,7 @@ impl<'a> RtType for HString {
     type In = HStringArg;
     type Abi = HSTRING;
     type Out = HString;
+    type OutNonNull = Self::Out;
 
     #[doc(hidden)] #[inline]
     unsafe fn unwrap(v: &HStringArg) -> Self::Abi {
@@ -81,6 +83,7 @@ impl<T> RtType for T where T: RtValueType
     type In = T;
     type Abi = T;
     type Out = T;
+    type OutNonNull = Self::Out;
 
     #[doc(hidden)] #[inline]
     unsafe fn unwrap(v: &Self::In) -> Self::Abi {
@@ -143,7 +146,7 @@ impl<'a, T> IntoIterator for &'a IIterable<T> where T: RtType
     type Item = <T as RtType>::Out;
     type IntoIter = ComPtr<IIterator<T>>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        unsafe { self.first().unwrap() }
+        self.first().unwrap().unwrap()
     }
 }
 
@@ -166,13 +169,11 @@ impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType
     //       in every iteration. That would require a wrapper struct with a boolean flag.
     #[inline]
     fn next(&mut self) -> Option<Self::Item> {
-        let has_next = unsafe { self.get_has_current().unwrap() };
+        let has_next = self.get_has_current().unwrap();
         if has_next {
-            unsafe {
-                let current = self.get_current().unwrap();
-                assert!(self.move_next().is_ok());
-                Some(current)
-            }
+            let current = self.get_current().unwrap();
+            assert!(self.move_next().is_ok());
+            Some(current)
         } else {
             None
         }
@@ -234,11 +235,12 @@ macro_rules! RT_INTERFACE {
         impl ::RtType for $interface {
             type In = $interface;
             type Abi = *mut $interface;
-            type Out = ComPtr<$interface>;
+            type Out = Option<Self::OutNonNull>;
+            type OutNonNull = ComPtr<$interface>;
 
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
         impl ::std::ops::Deref for $interface {
             type Target = $crate::$pinterface;
@@ -282,11 +284,12 @@ macro_rules! RT_INTERFACE {
         impl ::RtType for $interface {
             type In = $interface;
             type Abi = *mut $interface;
-            type Out = ComPtr<$interface>;
+            type Out = Option<Self::OutNonNull>;
+            type OutNonNull = ComPtr<$interface>;
 
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
         impl ::std::ops::Deref for $interface {
             type Target = $crate::$pinterface;
@@ -327,11 +330,12 @@ macro_rules! RT_INTERFACE {
         impl<$t1> ::RtType for $interface<$t1> where $t1: RtType{
             type In = $interface<$t1>;
             type Abi = *mut $interface<$t1>;
-            type Out = ComPtr<$interface<$t1>>;
+            type Out = Option<Self::OutNonNull>;
+            type OutNonNull = ComPtr<$interface<$t1>>;
 
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
         impl<$t1> ::std::ops::Deref for $interface<$t1> where $t1: RtType {
             type Target = $pinterface;
@@ -371,11 +375,12 @@ macro_rules! RT_INTERFACE {
         impl<$t1, $t2> ::RtType for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type In = $interface<$t1, $t2>;
             type Abi = *mut $interface<$t1, $t2>;
-            type Out = ComPtr<$interface<$t1, $t2>>;
+            type Out = Option<Self::OutNonNull>;
+            type OutNonNull = ComPtr<$interface<$t1, $t2>>;
 
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
         impl<$t1, $t2> ::std::ops::Deref for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type Target = $pinterface;
@@ -551,11 +556,12 @@ macro_rules! RT_CLASS {
         impl ::RtType for $cls {
             type In = $cls;
             type Abi = *mut $cls;
-            type Out = ComPtr<$cls>;
+            type Out = Option<Self::OutNonNull>;
+            type OutNonNull = ComPtr<$cls>;
             
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { ::std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
         impl ::std::ops::Deref for $cls {
             type Target = $interface;

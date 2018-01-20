@@ -205,7 +205,17 @@ namespace Generator.Types
             }
             else
             {
-                name = $"::rt::gen::{ Module.Path }::{ Name }";
+                if (Module.Path.StartsWith("windows::foundation"))
+                {
+                    var shortened = Module.Path.Substring("windows::foundation".Length);
+                    if (shortened.Length > 0)
+                        shortened = shortened.Substring(2) + "::";
+                    name = $"foundation::{ shortened }{ Name }";
+                }
+                else
+                {
+                    name = $"::rt::gen::{ Module.Path }::{ Name }";
+                }
                 var relative = $"{ Module.GetRelativePath(requestingModule) }::{ Name }";
                 if (relative.Length < name.Length)
                     name = relative;

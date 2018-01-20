@@ -87,6 +87,7 @@ mod prelude {
     pub use ::std::ptr::null_mut;
     pub use ::std::mem::zeroed;
     pub use ::guid::Guid;
+    pub use ::rt::gen::windows::foundation;
 
     #[inline]
     pub fn err<T>(hr: ::result::HRESULT) -> ::result::Result<T> {

@@ -13,22 +13,105 @@ namespace Generator.Types
         public string RawName;
         public string[] InputParameterNames;
         public Tuple<TypeReference, InputKind>[] InputParameterTypes;
-        public TypeReference[] OutTypes;
-        public string WrapperBody;
+        public Tuple<TypeReference, bool>[] OutTypes;
+        public string GetManyParameterName;
+        public List<Tuple<string, TypeReference, bool>> Output;
 
         public string[] MakeInputParameters(Generator generator, ITypeRequestSource source)
         {
             return InputParameterNames.Zip(InputParameterTypes, (name, t) => name + ": " + TypeHelpers.GetInputTypeName(generator, source, t.Item1, t.Item2)).ToArray();
         }
 
-        public string MakeOutType(Generator generator, ITypeRequestSource source)
+        public string MakeOutType(Generator generator, ITypeRequestSource source, bool isFactoryMethod)
         {
-            string outType = String.Join(", ", OutTypes.Select(o => TypeHelpers.GetTypeName(generator, source, o, TypeUsage.Out)));
+            string outType = String.Join(", ", OutTypes.Select(o => TypeHelpers.GetTypeName(generator, source, o.Item1, (o.Item2 || isFactoryMethod) ? TypeUsage.OutNonNull : TypeUsage.Out)));
             if (OutTypes.Count() != 1)
             {
                 outType = "(" + outType + ")"; // also works for count == 0 (empty tuple)
             }
             return outType;
+        }
+
+        public string MakeWrapperBody(MethodDefinition def, bool isFactoryMethod)
+        {
+            var rawName = RawName;
+            bool isGetMany = GetManyParameterName != null;
+            var getManyPname = GetManyParameterName;
+            var output = Output;
+
+            var rawParams = new List<string> { "self as *const _ as *mut _" };
+            foreach (var p in def.Parameters)
+            {
+                var pname = NameHelpers.PreventKeywords(NameHelpers.FirstToLower(p.Name));
+                if (p.ParameterType.IsByReference)
+                {
+                    if (((ByReferenceType)p.ParameterType).ElementType.IsArray)
+                    {
+                        rawParams.Add("&mut " + pname + "Size");
+                    }
+
+                    // output parameter
+                    rawParams.Add("&mut " + pname);
+                }
+                else
+                {
+                    // input parameter
+                    if (p.ParameterType.IsArray)
+                    {
+                        if (p.IsOut)
+                        {
+                            if (isGetMany)
+                            {
+                                rawParams.Add(pname + ".capacity() as u32");
+                                rawParams.Add(pname + ".as_mut_ptr() as *mut T::Abi");
+                            }
+                            else
+                            {
+                                rawParams.Add(pname + ".len() as u32");
+                                rawParams.Add(pname + ".as_mut_ptr() as *mut _");
+                            }
+                        }
+                        else
+                        {
+                            rawParams.Add(pname + ".len() as u32");
+                            rawParams.Add(pname + ".as_ptr() as *mut _");
+                        }
+                    }
+                    else
+                    {
+                        rawParams.Add(TypeHelpers.UnwrapInputParameter(pname, p.ParameterType));
+                    }
+                }
+            }
+
+            if (def.ReturnType.FullName != "System.Void")
+            {
+                if (def.ReturnType.IsArray)
+                {
+                    rawParams.Add("&mut outSize");
+                }
+                rawParams.Add("&mut out");
+            }
+
+            var outInit = String.Join(" ", output.SelectMany(o => TypeHelpers.CreateUninitializedOutputs(o.Item1, o.Item2)));
+            if (outInit != "") outInit = "\r\n        " + outInit;
+
+            var outWrap = String.Join(", ", output.Select(o => TypeHelpers.WrapOutputParameter(o.Item1, o.Item2, isFactoryMethod || o.Item3)));
+            if (output.Count != 1)
+            {
+                outWrap = "(" + outWrap + ")"; // also works for count == 0 (empty tuple)
+            }
+            outWrap = "Ok(" + outWrap + ")";
+
+            if (isGetMany)
+            {
+                outInit = $"\r\n        debug_assert!({ getManyPname }.capacity() > 0, \"capacity of `{ getManyPname }` must not be 0 (use Vec::with_capacity)\"); { getManyPname }.clear();{ outInit }";
+                outWrap = $"{ getManyPname }.set_len(out as usize); Ok(())";
+            }
+
+            return outInit + $@"
+        let hr = ((*self.lpVtbl).{ rawName })({ String.Join(", ", rawParams) });
+        if hr == S_OK {{ { outWrap } }} else {{ err(hr) }}";
         }
     }
 
@@ -36,6 +119,15 @@ namespace Generator.Types
     {
         public TypeDef DeclaringType { get; private set; }
         public MethodDefinition Method { get; private set; }
+        public bool IsFactoryMethod
+        {
+            get
+            {
+                var kind = ((InterfaceDef)DeclaringType).InterfaceKind;
+                if (kind == InterfaceKind.Unidentified) { throw new InvalidOperationException(); }
+                return kind == InterfaceKind.Factory;
+            }
+        }
 
         public Module Module
         {
@@ -120,10 +212,10 @@ namespace Generator.Types
         public string GetWrapperDefinition()
         {
             var inputParameters = Details.MakeInputParameters(DeclaringType.Generator, this);
-            var outType = Details.MakeOutType(DeclaringType.Generator, this);
+            var outType = Details.MakeOutType(DeclaringType.Generator, this, IsFactoryMethod);
 
-            return $@"#[inline] pub unsafe fn { Details.WrappedName }({ String.Join(", ", new string[] { "&self" }.Concat(inputParameters)) }) -> Result<{ outType }> {{{ Details.WrapperBody }
-    }}";
+            return $@"#[inline] pub fn { Details.WrappedName }({ String.Join(", ", new string[] { "&self" }.Concat(inputParameters)) }) -> Result<{ outType }> {{ unsafe {{ { Details.MakeWrapperBody(Method, IsFactoryMethod) }
+    }}}}";
         }
 
         private MethodDetailsCache InitializeDetailsCache()
@@ -139,7 +231,7 @@ namespace Generator.Types
             // It uses the __RPC__out_ecount_part(capacity, *actual) annotation in the C headers. For the wrapper we use a &mut Vec<> buffer.
 
             var input = new List<Tuple<string, TypeReference, InputKind>>();
-            var output = new List<Tuple<string, TypeReference>>();
+            var output = new List<Tuple<string, TypeReference, bool>>();
 
             foreach (var p in Method.Parameters)
             {
@@ -148,7 +240,7 @@ namespace Generator.Types
                 {
                     Assert(p.IsOut);
                     var realType = ((ByReferenceType)p.ParameterType).ElementType;
-                    output.Add(Tuple.Create(pname, realType));
+                    output.Add(Tuple.Create(pname, realType, false));
                 }
                 else
                 {
@@ -182,17 +274,18 @@ namespace Generator.Types
             if (Method.ReturnType.FullName != "System.Void")
             {
                 // this makes the actual return value the last in the tuple (if multiple)
-                output.Add(Tuple.Create("out", Method.ReturnType));
+                output.Add(Tuple.Create("out", Method.ReturnType, TypeHelpers.IsReturnTypeNonNull(Method.ReturnType, DeclaringType.Generator)));
             }
 
-            var outTypes = output.Select(o => o.Item2).ToArray();
+            // TODO: second tuple element should be true for some method's return value
+            var outTypes = output.Select(o => Tuple.Create(o.Item2, o.Item3)).ToArray();
 
             if (isGetMany)
             {
-                outTypes = new TypeReference[] { }; // GetMany has no return value
+                outTypes = new Tuple<TypeReference, bool>[] { }; // GetMany has no return value
             }
 
-            
+
 
             return new MethodDetailsCache
             {
@@ -201,85 +294,9 @@ namespace Generator.Types
                 InputParameterNames = input.Select(i => i.Item1).ToArray(),
                 InputParameterTypes = input.Select(i => Tuple.Create(i.Item2, i.Item3)).ToArray(),
                 OutTypes = outTypes.ToArray(),
-                WrapperBody = GetWrapperBody(rawName, isGetMany, getManyPname, output)
+                GetManyParameterName = isGetMany ? getManyPname : null,
+                Output = output
             };
-        }
-
-        private string GetWrapperBody(string rawName, bool isGetMany, string getManyPname, List<Tuple<string, TypeReference>> output)
-        {
-            var rawParams = new List<string> { "self as *const _ as *mut _" };
-            foreach (var p in Method.Parameters)
-            {
-                var pname = NameHelpers.PreventKeywords(NameHelpers.FirstToLower(p.Name));
-                if (p.ParameterType.IsByReference)
-                {
-                    if (((ByReferenceType)p.ParameterType).ElementType.IsArray)
-                    {
-                        rawParams.Add("&mut " + pname + "Size");
-                    }
-
-                    // output parameter
-                    rawParams.Add("&mut " + pname);
-                }
-                else
-                {
-                    // input parameter
-                    if (p.ParameterType.IsArray)
-                    {
-                        if (p.IsOut)
-                        {
-                            if (isGetMany)
-                            {
-                                rawParams.Add(pname + ".capacity() as u32");
-                                rawParams.Add(pname + ".as_mut_ptr() as *mut T::Abi");
-                            }
-                            else
-                            {
-                                rawParams.Add(pname + ".len() as u32");
-                                rawParams.Add(pname + ".as_mut_ptr() as *mut _");
-                            }
-                        }
-                        else
-                        {
-                            rawParams.Add(pname + ".len() as u32");
-                            rawParams.Add(pname + ".as_ptr() as *mut _");
-                        }
-                    }
-                    else
-                    {
-                        rawParams.Add(TypeHelpers.UnwrapInputParameter(pname, p.ParameterType));
-                    }
-                }
-            }
-
-            if (Method.ReturnType.FullName != "System.Void")
-            {
-                if (Method.ReturnType.IsArray)
-                {
-                    rawParams.Add("&mut outSize");
-                }
-                rawParams.Add("&mut out");
-            }
-
-            var outInit = String.Join(" ", output.SelectMany(o => TypeHelpers.CreateUninitializedOutputs(o.Item1, o.Item2)));
-            if (outInit != "") outInit = "\r\n        " + outInit;
-
-            var outWrap = String.Join(", ", output.Select(o => TypeHelpers.WrapOutputParameter(o.Item1, o.Item2)));
-            if (output.Count != 1)
-            {
-                outWrap = "(" + outWrap + ")"; // also works for count == 0 (empty tuple)
-            }
-            outWrap = "Ok(" + outWrap + ")";
-
-            if (isGetMany)
-            {
-                outInit = $"\r\n        debug_assert!({ getManyPname }.capacity() > 0, \"capacity of `{ getManyPname }` must not be 0 (use Vec::with_capacity)\"); { getManyPname }.clear();{ outInit }";
-                outWrap = $"{ getManyPname }.set_len(out as usize); Ok(())";
-            }
-
-            return outInit + $@"
-        let hr = ((*self.lpVtbl).{ rawName })({ String.Join(", ", rawParams) });
-        if hr == S_OK {{ { outWrap } }} else {{ err(hr) }}";
         }
 
         public string GetRawDeclaration()
