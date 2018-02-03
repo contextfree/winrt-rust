@@ -159,6 +159,16 @@ impl<'a, T> IntoIterator for &'a IVectorView<T> where T: RtType, IIterable<T>: C
     }
 }
 
+impl<'a, T> IntoIterator for &'a ComPtr<T> where &'a T: IntoIterator
+{
+    type Item = <&'a T as IntoIterator>::Item;
+    type IntoIter = <&'a T as IntoIterator>::IntoIter;
+    #[inline] fn into_iter(self) -> Self::IntoIter {
+        use std::ops::Deref;
+        self.deref().into_iter()
+    }
+}
+
 // TODO: also implement IndexMove for IVectorView etc once that exists (Index or IndexMut won't work since we can't return a reference)
 
 impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType
