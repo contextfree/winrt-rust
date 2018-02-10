@@ -19,6 +19,7 @@ pub enum Error {
     InvalidPointer,
     UnexpectedFailure,
     OutOfBounds,
+    ChangedState, // used for iterator invalidation
     IllegalMethodCall,
     ObjectClosed, // ObjectDisposedException in .NET
     Other(HRESULT)
@@ -40,9 +41,10 @@ impl fmt::Debug for Error {
             InvalidPointer => write!(f, "E_POINTER"),
             UnexpectedFailure => write!(f, "E_UNEXPECTED"),
             OutOfBounds => write!(f, "E_BOUNDS"),
+            ChangedState => write!(f, "E_CHANGED_STATE"),
             IllegalMethodCall => write!(f, "E_ILLEGAL_METHOD_CALL"),
             ObjectClosed => write!(f, "RO_E_CLOSED"),
-            Other(hr) => write!(f, "0x{:X}", hr as u32),
+            Other(hr) => write!(f, "HRESULT 0x{:X}", hr as u32),
         }
     }
 }
@@ -65,6 +67,7 @@ impl Error {
             E_POINTER => InvalidPointer,
             E_UNEXPECTED => UnexpectedFailure,
             E_BOUNDS => OutOfBounds,
+            E_CHANGED_STATE => ChangedState,
             E_ILLEGAL_METHOD_CALL => IllegalMethodCall,
             RO_E_CLOSED => ObjectClosed,
             _ => Other(hr)
@@ -88,6 +91,7 @@ impl Error {
             InvalidPointer => E_POINTER,
             UnexpectedFailure => E_UNEXPECTED,
             OutOfBounds => E_BOUNDS,
+            ChangedState => E_CHANGED_STATE,
             IllegalMethodCall => E_ILLEGAL_METHOD_CALL,
             ObjectClosed => RO_E_CLOSED,
             Other(hr) => hr,

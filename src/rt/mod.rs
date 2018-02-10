@@ -13,7 +13,9 @@ use w::winrt::roapi::{RO_INIT_MULTITHREADED, RoInitialize, RoUninitialize, RoGet
 use self::gen::windows::foundation::collections::{
     IIterable,
     IIterator,
-    IVectorView
+    IVector,
+    IVectorView,
+    IObservableVector
 };
 
 /// Represents a single UTF-16 character. This is the standard character type in WinRT. 
@@ -139,26 +141,89 @@ impl<T> RtDefaultConstructible for T where T: RtActivatable<IActivationFactory> 
     }
 }
 
-// We can also implement IntoIterator for IIterable<T> and IVectorView<T>
-// TODO: This should be extended to more types (at least IVector, IMap, IMapView, IObservableVector, IObservableMap)
+pub struct IteratorAdaptor<'a, T: RtType + 'a> {
+    iter: ComPtr<IIterator<T>>,
+    called_next: bool,
+    phantom: ::std::marker::PhantomData<&'a IIterable<T>>
+}
+
+impl<'a, T: RtType + 'a> IteratorAdaptor<'a, T> {
+    // careful: this creates an unbounded lifetime
+    fn new(iter: ComPtr<IIterator<T>>) -> Self {
+        IteratorAdaptor {
+            iter: iter,
+            called_next: false,
+            phantom: ::std::marker::PhantomData
+        }
+    }
+}
+
+impl<'a, T> Iterator for IteratorAdaptor<'a, T> where T: RtType
+{
+    type Item = <T as RtType>::Out;
+
+    #[inline]
+    fn next(&mut self) -> Option<Self::Item> {
+        if !self.called_next {
+            self.called_next = true;
+            match self.iter.get_has_current().expect("IIterator::get_has_current failed") {
+                true => Some(self.iter.get_current().expect("IIterator::get_current failed")),
+                false => None
+            }
+        } else {
+            match self.iter.move_next() {
+                Ok(true) => Some(self.iter.get_current().expect("IIterator::get_current failed")),
+                Ok(false) => None,
+                Err(::Error::ChangedState) => panic!("the iterator was invalidated by an operation that changed the state of the container"),
+                Err(e) => panic!("IIterator::move_next failed: {:?}", e),
+            }
+        }
+    }
+}
+
+// NOTE: We can't totally prevent iterator invalidation statically (because we cannot
+//       prevent multiple ComPtr's pointing at the same object), but making the
+//       mutating collection methods take `&mut self` already helps prevent many bugs.
+
 impl<'a, T> IntoIterator for &'a IIterable<T> where T: RtType
 {
     type Item = <T as RtType>::Out;
-    type IntoIter = ComPtr<IIterator<T>>;
+    type IntoIter = IteratorAdaptor<'a, T>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        self.first().unwrap().unwrap()
+        IteratorAdaptor::new(self.first().unwrap().unwrap())
+    }
+}
+
+impl<'a, T> IntoIterator for &'a IVector<T> where T: RtType, IIterable<T>: ComIid
+{
+    type Item = <T as RtType>::Out;
+    type IntoIter = IteratorAdaptor<'a, T>;
+    #[inline] fn into_iter(self) -> Self::IntoIter {
+        IteratorAdaptor::new(::comptr::query_interface::<_, IIterable<T>>(self).unwrap().first().unwrap().unwrap())
     }
 }
 
 impl<'a, T> IntoIterator for &'a IVectorView<T> where T: RtType, IIterable<T>: ComIid
 {
     type Item = <T as RtType>::Out;
-    type IntoIter = ComPtr<IIterator<T>>;
+    type IntoIter = IteratorAdaptor<'a, T>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        ::comptr::query_interface::<_, IIterable<T>>(self).unwrap().into_iter()
+        IteratorAdaptor::new(::comptr::query_interface::<_, IIterable<T>>(self).unwrap().first().unwrap().unwrap())
     }
 }
 
+impl<'a, T> IntoIterator for &'a IObservableVector<T> where T: RtType, IIterable<T>: ComIid
+{
+    type Item = <T as RtType>::Out;
+    type IntoIter = IteratorAdaptor<'a, T>;
+    #[inline] fn into_iter(self) -> Self::IntoIter {
+        IteratorAdaptor::new(::comptr::query_interface::<_, IIterable<T>>(self).unwrap().first().unwrap().unwrap())
+    }
+}
+
+// TODO: Implement IntoIterator also for Map types
+
+// Make the for loop desugaring work with references to `ComPtr`s directly
 impl<'a, T> IntoIterator for &'a ComPtr<T> where &'a T: IntoIterator
 {
     type Item = <&'a T as IntoIterator>::Item;
@@ -170,25 +235,6 @@ impl<'a, T> IntoIterator for &'a ComPtr<T> where &'a T: IntoIterator
 }
 
 // TODO: also implement IndexMove for IVectorView etc once that exists (Index or IndexMut won't work since we can't return a reference)
-
-impl<T> Iterator for ComPtr<IIterator<T>> where T: RtType
-{
-    type Item = <T as RtType>::Out;
-
-    // TODO: This could potentially be made faster by using the output of MoveNext instead of calling HasCurrent
-    //       in every iteration. That would require a wrapper struct with a boolean flag.
-    #[inline]
-    fn next(&mut self) -> Option<Self::Item> {
-        let has_next = self.get_has_current().unwrap();
-        if has_next {
-            let current = self.get_current().unwrap();
-            assert!(self.move_next().is_ok());
-            Some(current)
-        } else {
-            None
-        }
-    }
-}
 
 macro_rules! RT_INTERFACE {
     ($(#[$attr:meta])* interface $interface:ident<$t1:ident, $t2:ident> $($rest:tt)*) => {

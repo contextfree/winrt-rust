@@ -117,6 +117,20 @@ namespace Generator.Types
 
     public class MethodDef : ITypeRequestSource
     {
+        static string[] MutatingMethods =
+        {
+            "Windows.Foundation.Collections.IVector::SetAt",
+            "Windows.Foundation.Collections.IVector::InsertAt",
+            "Windows.Foundation.Collections.IVector::RemoveAt",
+            "Windows.Foundation.Collections.IVector::Append",
+            "Windows.Foundation.Collections.IVector::RemoveAtEnd",
+            "Windows.Foundation.Collections.IVector::Clear",
+            "Windows.Foundation.Collections.IVector::ReplaceAll",
+            "Windows.Foundation.Collections.IMap::Insert",
+            "Windows.Foundation.Collections.IMap::Remove",
+            "Windows.Foundation.Collections.IMap::Clear",
+        };
+
         public TypeDef DeclaringType { get; private set; }
         public MethodDefinition Method { get; private set; }
         public bool IsFactoryMethod
@@ -214,7 +228,17 @@ namespace Generator.Types
             var inputParameters = Details.MakeInputParameters(DeclaringType.Generator, this);
             var outType = Details.MakeOutType(DeclaringType.Generator, this, IsFactoryMethod);
 
-            return $@"#[inline] pub fn { Details.WrappedName }({ String.Join(", ", new string[] { "&self" }.Concat(inputParameters)) }) -> Result<{ outType }> {{ unsafe {{ { Details.MakeWrapperBody(Method, IsFactoryMethod) }
+            string selfArg;
+            if (MutatingMethods.Contains(DeclaringType.Namespace + "." + DeclaringType.DefinitionName + "::" + Method.Name))
+            {
+                selfArg = "&mut self";
+            }
+            else
+            {
+                selfArg = "&self";
+            }
+
+            return $@"#[inline] pub fn { Details.WrappedName }({ String.Join(", ", new string[] { selfArg }.Concat(inputParameters)) }) -> Result<{ outType }> {{ unsafe {{ { Details.MakeWrapperBody(Method, IsFactoryMethod) }
     }}}}";
         }
 

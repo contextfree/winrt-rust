@@ -5,6 +5,7 @@ use std::ptr;
 
 use winrt::*;
 use winrt::windows::foundation::*;
+use winrt::windows::foundation::collections::*;
 use winrt::windows::devices::enumeration::*;
 use winrt::windows::devices::midi::*;
 use winrt::windows::storage::*;
@@ -112,6 +113,7 @@ fn run() {
     if let Some(mut r) = remember {
         let (index, found) = device_information_collection.index_of(&mut r).unwrap();
         println!("Found remembered value: {} (index: {})", found, index);
+        assert_eq!(index, 100);
     }
     
     match device_information_collection.get_at(count + 42) {
@@ -151,11 +153,26 @@ fn run() {
     let exe_path = ::std::env::current_exe().expect("current_exe failed");
     let exe_path_str = exe_path.to_str().expect("invalid unicode path");
     let file = StorageFile::get_file_from_path_async(&*FastHString::new(&exe_path_str)).unwrap().blocking_get().expect("get_file_from_path_async failed").unwrap();
-    println!("File: {}", file.query_interface::<IStorageItem>().unwrap().get_path().unwrap());
+    println!("Executable file: {}", file.query_interface::<IStorageItem>().unwrap().get_path().unwrap());
     /*let mut parent = file.query_interface::<IStorageItem>().unwrap();
     loop {
         parent = parent.query_interface::<IStorageItem2>().unwrap().get_parent_async().unwrap().blocking_get().unwrap().unwrap().query_interface::<IStorageItem>().unwrap();
         println!("Parent: {}", parent.get_path().unwrap());
         // ... until parent == null, but this currently does not work because we don't support methods returning null
     }*/
+    let exe_folder = file.query_interface::<IStorageItem2>().unwrap().get_parent_async().unwrap().blocking_get().expect("get_parent_async failed").unwrap();    
+    let txt_file = exe_folder.create_file_async(&*FastHString::new("__test_file.txt"), CreationCollisionOption::ReplaceExisting).unwrap().blocking_get().expect("create_file_async failed").unwrap();
+    println!("Created text file {}", txt_file.query_interface::<IStorageItem>().unwrap().get_path().unwrap());
+    FileIO::append_text_async(&txt_file, &*FastHString::new("This is a test\nand a second line.")).unwrap().blocking_wait();
+    let mut lines: ComPtr<IVector<HString>> = FileIO::read_lines_async(&txt_file).unwrap().blocking_get().expect("read_lines_async failed").unwrap();
+    println!("Read {} lines from the text file", lines.get_size().expect("get_size failed"));
+    // now we have an IVector that we can mess with
+    lines.append(&*FastHString::new("The third line, added later")).expect("append failed");
+    assert_eq!(lines.get_size().unwrap(), 3);
+    println!("=== Lines: ===");
+    for line in &lines {
+        println!("{}", line);
+        // the following won't compile (iterator invalidation):
+        //lines.remove_at(0).expect("remove_at failed");
+    }
 }

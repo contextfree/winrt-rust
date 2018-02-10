@@ -3244,16 +3244,16 @@ impl<K: RtType, V: RtType> IMap<K, V> {
         let hr = ((*self.lpVtbl).GetView)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn insert(&self, key: &K::In, value: &V::In) -> Result<bool> { unsafe { 
+    #[inline] pub fn insert(&mut self, key: &K::In, value: &V::In) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).Insert)(self as *const _ as *mut _, K::unwrap(key), V::unwrap(value), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn remove(&self, key: &K::In) -> Result<()> { unsafe { 
+    #[inline] pub fn remove(&mut self, key: &K::In) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).Remove)(self as *const _ as *mut _, K::unwrap(key));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn clear(&self) -> Result<()> { unsafe { 
+    #[inline] pub fn clear(&mut self) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).Clear)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -3395,27 +3395,27 @@ impl<T: RtType> IVector<T> {
         let hr = ((*self.lpVtbl).IndexOf)(self as *const _ as *mut _, T::unwrap(value), &mut index, &mut out);
         if hr == S_OK { Ok((index, out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_at(&self, index: u32, value: &T::In) -> Result<()> { unsafe { 
+    #[inline] pub fn set_at(&mut self, index: u32, value: &T::In) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetAt)(self as *const _ as *mut _, index, T::unwrap(value));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn insert_at(&self, index: u32, value: &T::In) -> Result<()> { unsafe { 
+    #[inline] pub fn insert_at(&mut self, index: u32, value: &T::In) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).InsertAt)(self as *const _ as *mut _, index, T::unwrap(value));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove_at(&self, index: u32) -> Result<()> { unsafe { 
+    #[inline] pub fn remove_at(&mut self, index: u32) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).RemoveAt)(self as *const _ as *mut _, index);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn append(&self, value: &T::In) -> Result<()> { unsafe { 
+    #[inline] pub fn append(&mut self, value: &T::In) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).Append)(self as *const _ as *mut _, T::unwrap(value));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove_at_end(&self) -> Result<()> { unsafe { 
+    #[inline] pub fn remove_at_end(&mut self) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).RemoveAtEnd)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn clear(&self) -> Result<()> { unsafe { 
+    #[inline] pub fn clear(&mut self) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).Clear)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -3425,7 +3425,7 @@ impl<T: RtType> IVector<T> {
         let hr = ((*self.lpVtbl).GetMany)(self as *const _ as *mut _, startIndex, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
         if hr == S_OK { items.set_len(out as usize); Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn replace_all(&self, items: &[&T::In]) -> Result<()> { unsafe { 
+    #[inline] pub fn replace_all(&mut self, items: &[&T::In]) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ReplaceAll)(self as *const _ as *mut _, items.len() as u32, items.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
