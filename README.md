@@ -5,7 +5,6 @@ This crate provides type and method definitions to use the *Windows Runtime (Win
 ## Status
 This library is still subject to breaking changes, but it is already possible to use all APIs, including asynchronous ones
 (a completion handler can be passed as a closure).
-Since we can not yet guarantee the safety of the generated wrappers, all methods are currently marked as `unsafe`.
 Creating custom WinRT classes using inheritance is not yet supported, so it is currently not possible to create user interfaces using *XAML*. 
 
 ## Prerequisites
@@ -37,11 +36,12 @@ use winrt::windows::system::diagnostics::*; // import namespace Windows.System.D
 
 fn main() {
     let rt = RuntimeContext::init(); // initialize the Windows Runtime
-    let infos = ProcessDiagnosticInfo::get_for_processes().unwrap();
-    println!("Currently executed processes ({}):", unsafe { infos.get_size().unwrap() });
-    for p in infos.into_iter() {
-        let pid = unsafe { p.get_process_id().unwrap() };
-        let exe = unsafe { p.get_executable_file_name().unwrap() };
+    let infos = ProcessDiagnosticInfo::get_for_processes().unwrap().unwrap();
+    println!("Currently executed processes ({}):", infos.get_size().unwrap());
+    for p in &infos {
+        let p = p.unwrap();
+        let pid = p.get_process_id().unwrap();
+        let exe = p.get_executable_file_name().unwrap();
         println!("[{}] {}", pid, exe);
     }
 }
@@ -50,7 +50,7 @@ fn main() {
 Because this example uses the `Windows.System` namespace, we have to enable the `windows-system` feature in `Cargo.toml`:
 ```toml
 [dependencies.winrt]
-version = "0.4.0"
+version = "0.5.0"
 features = ["windows-system"]
 ```
 
@@ -74,6 +74,11 @@ an extension of WinRT, introduced in Windows 10, that allows using additional, m
 *WinRT* is not to be confused with the discontinued flavor of the Windows operating system for ARM devices, *Windows RT*.
 
 ## Changelog
+
+#### Version 0.5.0 (2018-03-30)
+- [Breaking] Wrappers are no longer marked as unsafe 🎉
+- [Breaking] Wrappers for methods that could return `null` will now return `Result<Option<ComPtr<...>>>` instead of `Result<ComPtr<...>>`.
+- [Breaking] Various improvements to how iterators are handled
 
 #### Version 0.4.0 (2017-12-27)
 - [Breaking] Upgrade to winapi 0.3

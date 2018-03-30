@@ -12,7 +12,7 @@ use w::um::combaseapi::CoTaskMemFree;
 /// Smart pointer for Windows Runtime objects. This pointer automatically maintains the
 /// reference count of the underlying COM object.
 #[repr(C)] #[derive(Debug)]
-pub struct ComPtr<T>(*mut T); // TODO: use NonZero or Shared (see https://github.com/rust-lang/rust/issues/27730)
+pub struct ComPtr<T>(*mut T); // TODO: use ptr::NonNull<T> when stabilized (and lang-compat feature is disabled), see https://github.com/rust-lang/rust/issues/27730
 
 impl<T> fmt::Pointer for ComPtr<T> {
     #[inline]

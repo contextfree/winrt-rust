@@ -18,16 +18,21 @@ use ::windows::foundation::{
     AsyncOperationWithProgressCompletedHandler
 };
 
+/// Extension for `IAsyncAction` with helper method.
 pub trait RtAsyncAction {
+    /// Waits for the asynchronous action to complete, blocking the current thread.
     fn blocking_wait(&self);
 }
 
+/// Extension for `IAsyncOperation` with helper methods.
 pub trait RtAsyncOperation: RtAsyncAction {
     type TResult;
     
     fn get_results(&self) -> Result<Self::TResult>;
 
     #[inline]
+    /// Waits for the asynchronous operation to complete, blocking the current thread,
+    /// then return the result.
     fn blocking_get(&self) -> Result<Self::TResult> {
         self.blocking_wait();
         self.get_results()

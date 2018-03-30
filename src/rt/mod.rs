@@ -47,7 +47,7 @@ unsafe impl RtValueType for Char {}
 unsafe impl RtValueType for Guid {}
 
 /// This is a trait implemented by all types that can be used as generic parameters of parameterized interfaces.
-/// `Abi` and `Out` must be binary compatible (i.e. `wrap` must basically be the same as `transmute`)
+/// `Abi` and `OutNonNull` must be binary compatible (i.e. `wrap` must basically be the same as `transmute`)
 /// in order to work in `ComArray`.
 pub trait RtType {
     type In;
@@ -128,6 +128,7 @@ pub trait RtActivatable<Interface> : RtNamedClass {
     }
 }
 
+/// Enables easy access to a default constructor, using `IActivationFactory` under the hood.
 pub trait RtDefaultConstructible {
     /// Uses the default constructor to create an instance of this class.
     fn new() -> ComPtr<Self> where Self: Sized + RtActivatable<IActivationFactory> + ComInterface;
@@ -645,7 +646,6 @@ macro_rules! DEFINE_CLSID {
     }
 }
 
-
 macro_rules! RT_ENUM {
     {enum $name:ident : $t:ty { $($variant:ident ($longvariant:ident) = $value:expr,)+ }} => {
         #[repr(C)] #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
@@ -730,6 +730,9 @@ impl ::comptr::HiddenGetRuntimeClassName for IInspectable {
 
 DEFINE_IID!(IID_IActivationFactory, 0x00000035, 0x0000, 0x0000, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
 RT_INTERFACE!{
+/// Enables classes to be activated using a default constructor.
+/// This interface should not be used directly, but the `new()` method of
+/// the `RtDefaultConstructible` trait should be used instead.
 interface IActivationFactory(IActivationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IActivationFactory]  {
     fn ActivateInstance(&self, instance: *mut *mut IInspectable) -> HRESULT
 }}
@@ -746,6 +749,7 @@ impl IActivationFactory {
 
 DEFINE_IID!(IID_IMemoryBufferByteAccess, 0x5b0d3235, 0x4dba, 0x4d44, 0x86, 0x5e, 0x8f, 0x1d, 0x0e, 0x4f, 0xd0, 0x4d);
 RT_INTERFACE!{
+/// Provides direct byte access to the memory buffer underlying an `IMemoryBuffer`.
 interface IMemoryBufferByteAccess(IMemoryBufferByteAccessVtbl) : IUnknown(IUnknownVtbl) [IID_IMemoryBufferByteAccess]  {
     fn GetBuffer(&self, value: *mut *mut u8, capacity: *mut u32) -> HRESULT
 }}
@@ -777,7 +781,7 @@ impl IMemoryBufferByteAccess {
 
 /// Manages initialization and uninitialization of the Windows Runtime.
 pub struct RuntimeContext {
-    token: ()
+    token: () // only allow construction from inside this module
 }
 
 impl RuntimeContext {
