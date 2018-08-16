@@ -58,10 +58,14 @@ impl BStr {
     
     #[inline(always)]
     fn internal_to_string(&self) -> String {
-        unsafe {
-            let len = self.len();
-            let slice: &[u16] = ::std::slice::from_raw_parts(self.0, len as usize);
-            String::from_utf16_lossy(slice)
+        if self.0.is_null() {
+            String::new()
+        } else {
+            unsafe {
+                let len = self.len();
+                let slice: &[u16] = ::std::slice::from_raw_parts(self.0, len as usize);
+                String::from_utf16_lossy(slice)
+            }
         }
     }
 }
