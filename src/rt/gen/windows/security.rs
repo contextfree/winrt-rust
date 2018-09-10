@@ -420,6 +420,17 @@ impl IWebAccountProvider3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IWebAccountProvider4, 1905252571, 59286, 16912, 183, 78, 132, 210, 152, 148, 176, 128);
+RT_INTERFACE!{interface IWebAccountProvider4(IWebAccountProvider4Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProvider4] {
+    fn get_IsSystemProvider(&self, out: *mut bool) -> HRESULT
+}}
+impl IWebAccountProvider4 {
+    #[inline] pub fn get_is_system_provider(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsSystemProvider)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IWebAccountProviderFactory, 494304753, 57825, 19354, 167, 116, 92, 124, 126, 59, 243, 113);
 RT_INTERFACE!{static interface IWebAccountProviderFactory(IWebAccountProviderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderFactory] {
     fn CreateWebAccountProvider(&self, id: HSTRING, displayName: HSTRING, iconUri: *mut foundation::Uri, out: *mut *mut WebAccountProvider) -> HRESULT
@@ -822,7 +833,7 @@ impl SecondaryAuthenticationFactorAuthentication {
 }
 DEFINE_CLSID!(SecondaryAuthenticationFactorAuthentication(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,80,114,111,118,105,100,101,114,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,0]) [CLSID_SecondaryAuthenticationFactorAuthentication]);
 RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationMessage: i32 {
-    Invalid (SecondaryAuthenticationFactorAuthenticationMessage_Invalid) = 0, SwipeUpWelcome (SecondaryAuthenticationFactorAuthenticationMessage_SwipeUpWelcome) = 1, TapWelcome (SecondaryAuthenticationFactorAuthenticationMessage_TapWelcome) = 2, DeviceNeedsAttention (SecondaryAuthenticationFactorAuthenticationMessage_DeviceNeedsAttention) = 3, LookingForDevice (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevice) = 4, LookingForDevicePluggedin (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevicePluggedin) = 5, BluetoothIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_BluetoothIsDisabled) = 6, NfcIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_NfcIsDisabled) = 7, WiFiIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_WiFiIsDisabled) = 8, ExtraTapIsRequired (SecondaryAuthenticationFactorAuthenticationMessage_ExtraTapIsRequired) = 9, DisabledByPolicy (SecondaryAuthenticationFactorAuthenticationMessage_DisabledByPolicy) = 10, TapOnDeviceRequired (SecondaryAuthenticationFactorAuthenticationMessage_TapOnDeviceRequired) = 11, HoldFinger (SecondaryAuthenticationFactorAuthenticationMessage_HoldFinger) = 12, ScanFinger (SecondaryAuthenticationFactorAuthenticationMessage_ScanFinger) = 13, UnauthorizedUser (SecondaryAuthenticationFactorAuthenticationMessage_UnauthorizedUser) = 14, ReregisterRequired (SecondaryAuthenticationFactorAuthenticationMessage_ReregisterRequired) = 15, TryAgain (SecondaryAuthenticationFactorAuthenticationMessage_TryAgain) = 16, SayPassphrase (SecondaryAuthenticationFactorAuthenticationMessage_SayPassphrase) = 17, ReadyToSignIn (SecondaryAuthenticationFactorAuthenticationMessage_ReadyToSignIn) = 18, UseAnotherSignInOption (SecondaryAuthenticationFactorAuthenticationMessage_UseAnotherSignInOption) = 19,
+    Invalid (SecondaryAuthenticationFactorAuthenticationMessage_Invalid) = 0, SwipeUpWelcome (SecondaryAuthenticationFactorAuthenticationMessage_SwipeUpWelcome) = 1, TapWelcome (SecondaryAuthenticationFactorAuthenticationMessage_TapWelcome) = 2, DeviceNeedsAttention (SecondaryAuthenticationFactorAuthenticationMessage_DeviceNeedsAttention) = 3, LookingForDevice (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevice) = 4, LookingForDevicePluggedin (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevicePluggedin) = 5, BluetoothIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_BluetoothIsDisabled) = 6, NfcIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_NfcIsDisabled) = 7, WiFiIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_WiFiIsDisabled) = 8, ExtraTapIsRequired (SecondaryAuthenticationFactorAuthenticationMessage_ExtraTapIsRequired) = 9, DisabledByPolicy (SecondaryAuthenticationFactorAuthenticationMessage_DisabledByPolicy) = 10, TapOnDeviceRequired (SecondaryAuthenticationFactorAuthenticationMessage_TapOnDeviceRequired) = 11, HoldFinger (SecondaryAuthenticationFactorAuthenticationMessage_HoldFinger) = 12, ScanFinger (SecondaryAuthenticationFactorAuthenticationMessage_ScanFinger) = 13, UnauthorizedUser (SecondaryAuthenticationFactorAuthenticationMessage_UnauthorizedUser) = 14, ReregisterRequired (SecondaryAuthenticationFactorAuthenticationMessage_ReregisterRequired) = 15, TryAgain (SecondaryAuthenticationFactorAuthenticationMessage_TryAgain) = 16, SayPassphrase (SecondaryAuthenticationFactorAuthenticationMessage_SayPassphrase) = 17, ReadyToSignIn (SecondaryAuthenticationFactorAuthenticationMessage_ReadyToSignIn) = 18, UseAnotherSignInOption (SecondaryAuthenticationFactorAuthenticationMessage_UseAnotherSignInOption) = 19, ConnectionRequired (SecondaryAuthenticationFactorAuthenticationMessage_ConnectionRequired) = 20, TimeLimitExceeded (SecondaryAuthenticationFactorAuthenticationMessage_TimeLimitExceeded) = 21, CanceledByUser (SecondaryAuthenticationFactorAuthenticationMessage_CanceledByUser) = 22, CenterHand (SecondaryAuthenticationFactorAuthenticationMessage_CenterHand) = 23, MoveHandCloser (SecondaryAuthenticationFactorAuthenticationMessage_MoveHandCloser) = 24, MoveHandFarther (SecondaryAuthenticationFactorAuthenticationMessage_MoveHandFarther) = 25, PlaceHandAbove (SecondaryAuthenticationFactorAuthenticationMessage_PlaceHandAbove) = 26, RecognitionFailed (SecondaryAuthenticationFactorAuthenticationMessage_RecognitionFailed) = 27, DeviceUnavailable (SecondaryAuthenticationFactorAuthenticationMessage_DeviceUnavailable) = 28,
 }}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationResult, 2629523847, 61293, 19394, 191, 73, 70, 23, 81, 90, 15, 154);
 RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationResult(ISecondaryAuthenticationFactorAuthenticationResultVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationResult] {
@@ -2318,6 +2329,29 @@ impl IWebProviderTokenRequest2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IWebProviderTokenRequest3, 455546538, 17033, 17518, 146, 86, 218, 251, 111, 102, 165, 30);
+RT_INTERFACE!{interface IWebProviderTokenRequest3(IWebProviderTokenRequest3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenRequest3] {
+    fn get_ApplicationPackageFamilyName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_ApplicationProcessName(&self, out: *mut HSTRING) -> HRESULT,
+    fn CheckApplicationForCapabilityAsync(&self, capabilityName: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+}}
+impl IWebProviderTokenRequest3 {
+    #[inline] pub fn get_application_package_family_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ApplicationPackageFamilyName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_application_process_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ApplicationProcessName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn check_application_for_capability_async(&self, capabilityName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CheckApplicationForCapabilityAsync)(self as *const _ as *mut _, capabilityName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IWebProviderTokenResponse, 4011931539, 61269, 16774, 183, 206, 140, 178, 231, 249, 132, 158);
 RT_INTERFACE!{interface IWebProviderTokenResponse(IWebProviderTokenResponseVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenResponse] {
     fn get_ClientResponse(&self, out: *mut *mut super::core::WebTokenResponse) -> HRESULT
@@ -2351,6 +2385,33 @@ impl IWebProviderTokenResponseFactory {
 } // Windows.Security.Authentication.Web.Provider
 pub mod core { // Windows.Security.Authentication.Web.Core
 use ::prelude::*;
+DEFINE_IID!(IID_IFindAllAccountsResult, 2776705885, 46894, 16908, 134, 171, 170, 192, 215, 183, 38, 31);
+RT_INTERFACE!{interface IFindAllAccountsResult(IFindAllAccountsResultVtbl): IInspectable(IInspectableVtbl) [IID_IFindAllAccountsResult] {
+    fn get_Accounts(&self, out: *mut *mut foundation::collections::IVectorView<super::super::super::credentials::WebAccount>) -> HRESULT,
+    fn get_Status(&self, out: *mut FindAllWebAccountsStatus) -> HRESULT,
+    fn get_ProviderError(&self, out: *mut *mut WebProviderError) -> HRESULT
+}}
+impl IFindAllAccountsResult {
+    #[inline] pub fn get_accounts(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Accounts)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_status(&self) -> Result<FindAllWebAccountsStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_provider_error(&self) -> Result<Option<ComPtr<WebProviderError>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderError)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class FindAllAccountsResult: IFindAllAccountsResult}
+RT_ENUM! { enum FindAllWebAccountsStatus: i32 {
+    Success (FindAllWebAccountsStatus_Success) = 0, NotAllowedByProvider (FindAllWebAccountsStatus_NotAllowedByProvider) = 1, NotSupportedByProvider (FindAllWebAccountsStatus_NotSupportedByProvider) = 2, ProviderError (FindAllWebAccountsStatus_ProviderError) = 3,
+}}
 DEFINE_IID!(IID_IWebAccountEventArgs, 1874264957, 16974, 17644, 151, 124, 239, 36, 21, 70, 42, 90);
 RT_INTERFACE!{interface IWebAccountEventArgs(IWebAccountEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountEventArgs] {
     fn get_Account(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT
@@ -2406,6 +2467,7 @@ RT_CLASS!{static class WebAuthenticationCoreManager}
 impl RtActivatable<IWebAuthenticationCoreManagerStatics> for WebAuthenticationCoreManager {}
 impl RtActivatable<IWebAuthenticationCoreManagerStatics2> for WebAuthenticationCoreManager {}
 impl RtActivatable<IWebAuthenticationCoreManagerStatics3> for WebAuthenticationCoreManager {}
+impl RtActivatable<IWebAuthenticationCoreManagerStatics4> for WebAuthenticationCoreManager {}
 impl WebAuthenticationCoreManager {
     #[inline] pub fn get_token_silently_async(request: &WebTokenRequest) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
         <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().get_token_silently_async(request)
@@ -2433,6 +2495,21 @@ impl WebAuthenticationCoreManager {
     }
     #[inline] pub fn create_web_account_monitor(webAccounts: &foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<Option<ComPtr<WebAccountMonitor>>> {
         <Self as RtActivatable<IWebAuthenticationCoreManagerStatics3>>::get_activation_factory().create_web_account_monitor(webAccounts)
+    }
+    #[inline] pub fn find_all_accounts_async(provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_all_accounts_async(provider)
+    }
+    #[inline] pub fn find_all_accounts_with_client_id_async(provider: &super::super::super::credentials::WebAccountProvider, clientId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_all_accounts_with_client_id_async(provider, clientId)
+    }
+    #[inline] pub fn find_system_account_provider_async(webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_system_account_provider_async(webAccountProviderId)
+    }
+    #[inline] pub fn find_system_account_provider_with_authority_async(webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_system_account_provider_with_authority_async(webAccountProviderId, authority)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn find_system_account_provider_with_authority_for_user_async(webAccountProviderId: &HStringArg, authority: &HStringArg, user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_system_account_provider_with_authority_for_user_async(webAccountProviderId, authority, user)
     }
 }
 DEFINE_CLSID!(WebAuthenticationCoreManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,67,111,114,101,77,97,110,97,103,101,114,0]) [CLSID_WebAuthenticationCoreManager]);
@@ -2503,6 +2580,41 @@ impl IWebAuthenticationCoreManagerStatics3 {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateWebAccountMonitor)(self as *const _ as *mut _, webAccounts as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics4, 1424372734, 38624, 16872, 152, 50, 18, 152, 137, 124, 42, 175);
+RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics4(IWebAuthenticationCoreManagerStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics4] {
+    fn FindAllAccountsAsync(&self, provider: *mut super::super::super::credentials::WebAccountProvider, out: *mut *mut foundation::IAsyncOperation<FindAllAccountsResult>) -> HRESULT,
+    fn FindAllAccountsWithClientIdAsync(&self, provider: *mut super::super::super::credentials::WebAccountProvider, clientId: HSTRING, out: *mut *mut foundation::IAsyncOperation<FindAllAccountsResult>) -> HRESULT,
+    fn FindSystemAccountProviderAsync(&self, webAccountProviderId: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT,
+    fn FindSystemAccountProviderWithAuthorityAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn FindSystemAccountProviderWithAuthorityForUserAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, user: *mut ::rt::gen::windows::system::User, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT
+}}
+impl IWebAuthenticationCoreManagerStatics4 {
+    #[inline] pub fn find_all_accounts_async(&self, provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindAllAccountsAsync)(self as *const _ as *mut _, provider as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_all_accounts_with_client_id_async(&self, provider: &super::super::super::credentials::WebAccountProvider, clientId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindAllAccountsWithClientIdAsync)(self as *const _ as *mut _, provider as *const _ as *mut _, clientId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_system_account_provider_async(&self, webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindSystemAccountProviderAsync)(self as *const _ as *mut _, webAccountProviderId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_system_account_provider_with_authority_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindSystemAccountProviderWithAuthorityAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn find_system_account_provider_with_authority_for_user_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg, user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindSystemAccountProviderWithAuthorityForUserAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), user as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IWebProviderError, 3675855793, 20677, 18441, 141, 202, 9, 201, 148, 16, 36, 92);

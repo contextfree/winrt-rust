@@ -1,4 +1,11 @@
 use ::prelude::*;
+RT_STRUCT! { struct DisplayAdapterId {
+    LowPart: u32, HighPart: i32,
+}}
+DEFINE_IID!(IID_IGeometrySource2D, 3405740290, 26380, 16769, 166, 36, 218, 151, 114, 3, 184, 69);
+RT_INTERFACE!{interface IGeometrySource2D(IGeometrySource2DVtbl): IInspectable(IInspectableVtbl) [IID_IGeometrySource2D] {
+    
+}}
 RT_STRUCT! { struct PointInt32 {
     X: i32, Y: i32,
 }}
@@ -1242,6 +1249,81 @@ DEFINE_CLSID!(Printing3DTextureResource(&[87,105,110,100,111,119,115,46,71,114,9
 } // Windows.Graphics.Printing3D
 pub mod display { // Windows.Graphics.Display
 use ::prelude::*;
+DEFINE_IID!(IID_IAdvancedColorInfo, 2274876667, 45609, 16513, 174, 154, 44, 200, 94, 52, 173, 106);
+RT_INTERFACE!{interface IAdvancedColorInfo(IAdvancedColorInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedColorInfo] {
+    fn get_CurrentAdvancedColorKind(&self, out: *mut AdvancedColorKind) -> HRESULT,
+    fn get_RedPrimary(&self, out: *mut foundation::Point) -> HRESULT,
+    fn get_GreenPrimary(&self, out: *mut foundation::Point) -> HRESULT,
+    fn get_BluePrimary(&self, out: *mut foundation::Point) -> HRESULT,
+    fn get_WhitePoint(&self, out: *mut foundation::Point) -> HRESULT,
+    fn get_MaxLuminanceInNits(&self, out: *mut f32) -> HRESULT,
+    fn get_MinLuminanceInNits(&self, out: *mut f32) -> HRESULT,
+    fn get_MaxAverageFullFrameLuminanceInNits(&self, out: *mut f32) -> HRESULT,
+    fn get_SdrWhiteLevelInNits(&self, out: *mut f32) -> HRESULT,
+    fn IsHdrMetadataFormatCurrentlySupported(&self, format: HdrMetadataFormat, out: *mut bool) -> HRESULT,
+    fn IsAdvancedColorKindAvailable(&self, kind: AdvancedColorKind, out: *mut bool) -> HRESULT
+}}
+impl IAdvancedColorInfo {
+    #[inline] pub fn get_current_advanced_color_kind(&self) -> Result<AdvancedColorKind> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CurrentAdvancedColorKind)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_red_primary(&self) -> Result<foundation::Point> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_RedPrimary)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_green_primary(&self) -> Result<foundation::Point> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_GreenPrimary)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_blue_primary(&self) -> Result<foundation::Point> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BluePrimary)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_white_point(&self) -> Result<foundation::Point> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_WhitePoint)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_luminance_in_nits(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxLuminanceInNits)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_min_luminance_in_nits(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MinLuminanceInNits)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_average_full_frame_luminance_in_nits(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxAverageFullFrameLuminanceInNits)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_sdr_white_level_in_nits(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_SdrWhiteLevelInNits)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_hdr_metadata_format_currently_supported(&self, format: HdrMetadataFormat) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsHdrMetadataFormatCurrentlySupported)(self as *const _ as *mut _, format, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_advanced_color_kind_available(&self, kind: AdvancedColorKind) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsAdvancedColorKindAvailable)(self as *const _ as *mut _, kind, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class AdvancedColorInfo: IAdvancedColorInfo}
+RT_ENUM! { enum AdvancedColorKind: i32 {
+    StandardDynamicRange (AdvancedColorKind_StandardDynamicRange) = 0, WideColorGamut (AdvancedColorKind_WideColorGamut) = 1, HighDynamicRange (AdvancedColorKind_HighDynamicRange) = 2,
+}}
 DEFINE_IID!(IID_IBrightnessOverride, 2529780250, 49475, 17298, 190, 221, 74, 126, 149, 116, 200, 253);
 RT_INTERFACE!{interface IBrightnessOverride(IBrightnessOverrideVtbl): IInspectable(IInspectableVtbl) [IID_IBrightnessOverride] {
     fn get_IsSupported(&self, out: *mut bool) -> HRESULT,
@@ -1338,6 +1420,60 @@ impl BrightnessOverride {
     }
 }
 DEFINE_CLSID!(BrightnessOverride(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,66,114,105,103,104,116,110,101,115,115,79,118,101,114,114,105,100,101,0]) [CLSID_BrightnessOverride]);
+DEFINE_IID!(IID_IBrightnessOverrideSettings, 3507661610, 30212, 19898, 188, 248, 75, 111, 73, 80, 44, 176);
+RT_INTERFACE!{interface IBrightnessOverrideSettings(IBrightnessOverrideSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IBrightnessOverrideSettings] {
+    fn get_DesiredLevel(&self, out: *mut f64) -> HRESULT,
+    fn get_DesiredNits(&self, out: *mut f32) -> HRESULT
+}}
+impl IBrightnessOverrideSettings {
+    #[inline] pub fn get_desired_level(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DesiredLevel)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_desired_nits(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DesiredNits)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BrightnessOverrideSettings: IBrightnessOverrideSettings}
+impl RtActivatable<IBrightnessOverrideSettingsStatics> for BrightnessOverrideSettings {}
+impl BrightnessOverrideSettings {
+    #[inline] pub fn create_from_level(level: f64) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> {
+        <Self as RtActivatable<IBrightnessOverrideSettingsStatics>>::get_activation_factory().create_from_level(level)
+    }
+    #[inline] pub fn create_from_nits(nits: f32) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> {
+        <Self as RtActivatable<IBrightnessOverrideSettingsStatics>>::get_activation_factory().create_from_nits(nits)
+    }
+    #[inline] pub fn create_from_display_brightness_override_scenario(overrideScenario: DisplayBrightnessOverrideScenario) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> {
+        <Self as RtActivatable<IBrightnessOverrideSettingsStatics>>::get_activation_factory().create_from_display_brightness_override_scenario(overrideScenario)
+    }
+}
+DEFINE_CLSID!(BrightnessOverrideSettings(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,66,114,105,103,104,116,110,101,115,115,79,118,101,114,114,105,100,101,83,101,116,116,105,110,103,115,0]) [CLSID_BrightnessOverrideSettings]);
+DEFINE_IID!(IID_IBrightnessOverrideSettingsStatics, 3565673616, 28532, 17419, 179, 131, 95, 233, 108, 240, 11, 15);
+RT_INTERFACE!{static interface IBrightnessOverrideSettingsStatics(IBrightnessOverrideSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBrightnessOverrideSettingsStatics] {
+    fn CreateFromLevel(&self, level: f64, out: *mut *mut BrightnessOverrideSettings) -> HRESULT,
+    fn CreateFromNits(&self, nits: f32, out: *mut *mut BrightnessOverrideSettings) -> HRESULT,
+    fn CreateFromDisplayBrightnessOverrideScenario(&self, overrideScenario: DisplayBrightnessOverrideScenario, out: *mut *mut BrightnessOverrideSettings) -> HRESULT
+}}
+impl IBrightnessOverrideSettingsStatics {
+    #[inline] pub fn create_from_level(&self, level: f64) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFromLevel)(self as *const _ as *mut _, level, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_from_nits(&self, nits: f32) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFromNits)(self as *const _ as *mut _, nits, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_from_display_brightness_override_scenario(&self, overrideScenario: DisplayBrightnessOverrideScenario) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFromDisplayBrightnessOverrideScenario)(self as *const _ as *mut _, overrideScenario, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IBrightnessOverrideStatics, 61323757, 57841, 19048, 161, 31, 148, 106, 216, 206, 83, 147);
 RT_INTERFACE!{static interface IBrightnessOverrideStatics(IBrightnessOverrideStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBrightnessOverrideStatics] {
     fn GetDefaultForSystem(&self, out: *mut *mut BrightnessOverride) -> HRESULT,
@@ -1361,12 +1497,191 @@ impl IBrightnessOverrideStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IColorOverrideSettings, 4226785588, 19073, 19533, 165, 182, 125, 27, 92, 75, 208, 11);
+RT_INTERFACE!{interface IColorOverrideSettings(IColorOverrideSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IColorOverrideSettings] {
+    fn get_DesiredDisplayColorOverrideScenario(&self, out: *mut DisplayColorOverrideScenario) -> HRESULT
+}}
+impl IColorOverrideSettings {
+    #[inline] pub fn get_desired_display_color_override_scenario(&self) -> Result<DisplayColorOverrideScenario> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DesiredDisplayColorOverrideScenario)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ColorOverrideSettings: IColorOverrideSettings}
+impl RtActivatable<IColorOverrideSettingsStatics> for ColorOverrideSettings {}
+impl ColorOverrideSettings {
+    #[inline] pub fn create_from_display_color_override_scenario(overrideScenario: DisplayColorOverrideScenario) -> Result<Option<ComPtr<ColorOverrideSettings>>> {
+        <Self as RtActivatable<IColorOverrideSettingsStatics>>::get_activation_factory().create_from_display_color_override_scenario(overrideScenario)
+    }
+}
+DEFINE_CLSID!(ColorOverrideSettings(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,67,111,108,111,114,79,118,101,114,114,105,100,101,83,101,116,116,105,110,103,115,0]) [CLSID_ColorOverrideSettings]);
+DEFINE_IID!(IID_IColorOverrideSettingsStatics, 2959663199, 50207, 19145, 175, 171, 130, 122, 182, 36, 143, 154);
+RT_INTERFACE!{static interface IColorOverrideSettingsStatics(IColorOverrideSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IColorOverrideSettingsStatics] {
+    fn CreateFromDisplayColorOverrideScenario(&self, overrideScenario: DisplayColorOverrideScenario, out: *mut *mut ColorOverrideSettings) -> HRESULT
+}}
+impl IColorOverrideSettingsStatics {
+    #[inline] pub fn create_from_display_color_override_scenario(&self, overrideScenario: DisplayColorOverrideScenario) -> Result<Option<ComPtr<ColorOverrideSettings>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFromDisplayColorOverrideScenario)(self as *const _ as *mut _, overrideScenario, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum DisplayBrightnessOverrideOptions: u32 {
     None (DisplayBrightnessOverrideOptions_None) = 0, UseDimmedPolicyWhenBatteryIsLow (DisplayBrightnessOverrideOptions_UseDimmedPolicyWhenBatteryIsLow) = 1,
+}}
+RT_ENUM! { enum DisplayBrightnessOverrideScenario: i32 {
+    IdleBrightness (DisplayBrightnessOverrideScenario_IdleBrightness) = 0, BarcodeReadingBrightness (DisplayBrightnessOverrideScenario_BarcodeReadingBrightness) = 1, FullBrightness (DisplayBrightnessOverrideScenario_FullBrightness) = 2,
 }}
 RT_ENUM! { enum DisplayBrightnessScenario: i32 {
     DefaultBrightness (DisplayBrightnessScenario_DefaultBrightness) = 0, IdleBrightness (DisplayBrightnessScenario_IdleBrightness) = 1, BarcodeReadingBrightness (DisplayBrightnessScenario_BarcodeReadingBrightness) = 2, FullBrightness (DisplayBrightnessScenario_FullBrightness) = 3,
 }}
+RT_ENUM! { enum DisplayColorOverrideScenario: i32 {
+    Accurate (DisplayColorOverrideScenario_Accurate) = 0,
+}}
+DEFINE_IID!(IID_IDisplayEnhancementOverride, 1117099215, 55674, 19202, 164, 40, 92, 66, 146, 247, 245, 34);
+RT_INTERFACE!{interface IDisplayEnhancementOverride(IDisplayEnhancementOverrideVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverride] {
+    fn get_ColorOverrideSettings(&self, out: *mut *mut ColorOverrideSettings) -> HRESULT,
+    fn put_ColorOverrideSettings(&self, value: *mut ColorOverrideSettings) -> HRESULT,
+    fn get_BrightnessOverrideSettings(&self, out: *mut *mut BrightnessOverrideSettings) -> HRESULT,
+    fn put_BrightnessOverrideSettings(&self, value: *mut BrightnessOverrideSettings) -> HRESULT,
+    fn get_CanOverride(&self, out: *mut bool) -> HRESULT,
+    fn get_IsOverrideActive(&self, out: *mut bool) -> HRESULT,
+    fn GetCurrentDisplayEnhancementOverrideCapabilities(&self, out: *mut *mut DisplayEnhancementOverrideCapabilities) -> HRESULT,
+    fn RequestOverride(&self) -> HRESULT,
+    fn StopOverride(&self) -> HRESULT,
+    fn add_CanOverrideChanged(&self, handler: *mut foundation::TypedEventHandler<DisplayEnhancementOverride, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_CanOverrideChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_IsOverrideActiveChanged(&self, handler: *mut foundation::TypedEventHandler<DisplayEnhancementOverride, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_IsOverrideActiveChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_DisplayEnhancementOverrideCapabilitiesChanged(&self, handler: *mut foundation::TypedEventHandler<DisplayEnhancementOverride, DisplayEnhancementOverrideCapabilitiesChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_DisplayEnhancementOverrideCapabilitiesChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IDisplayEnhancementOverride {
+    #[inline] pub fn get_color_override_settings(&self) -> Result<Option<ComPtr<ColorOverrideSettings>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ColorOverrideSettings)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_color_override_settings(&self, value: &ColorOverrideSettings) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ColorOverrideSettings)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_brightness_override_settings(&self) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_BrightnessOverrideSettings)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_brightness_override_settings(&self, value: &BrightnessOverrideSettings) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_BrightnessOverrideSettings)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_can_override(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanOverride)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_override_active(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsOverrideActive)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_current_display_enhancement_override_capabilities(&self) -> Result<Option<ComPtr<DisplayEnhancementOverrideCapabilities>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCurrentDisplayEnhancementOverrideCapabilities)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_override(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RequestOverride)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn stop_override(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).StopOverride)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_can_override_changed(&self, handler: &foundation::TypedEventHandler<DisplayEnhancementOverride, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_CanOverrideChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_can_override_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_CanOverrideChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_is_override_active_changed(&self, handler: &foundation::TypedEventHandler<DisplayEnhancementOverride, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_IsOverrideActiveChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_is_override_active_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_IsOverrideActiveChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_display_enhancement_override_capabilities_changed(&self, handler: &foundation::TypedEventHandler<DisplayEnhancementOverride, DisplayEnhancementOverrideCapabilitiesChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_DisplayEnhancementOverrideCapabilitiesChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_display_enhancement_override_capabilities_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_DisplayEnhancementOverrideCapabilitiesChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DisplayEnhancementOverride: IDisplayEnhancementOverride}
+impl RtActivatable<IDisplayEnhancementOverrideStatics> for DisplayEnhancementOverride {}
+impl DisplayEnhancementOverride {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<DisplayEnhancementOverride>>> {
+        <Self as RtActivatable<IDisplayEnhancementOverrideStatics>>::get_activation_factory().get_for_current_view()
+    }
+}
+DEFINE_CLSID!(DisplayEnhancementOverride(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,68,105,115,112,108,97,121,69,110,104,97,110,99,101,109,101,110,116,79,118,101,114,114,105,100,101,0]) [CLSID_DisplayEnhancementOverride]);
+DEFINE_IID!(IID_IDisplayEnhancementOverrideCapabilities, 1164992734, 61018, 18359, 153, 24, 30, 81, 232, 18, 204, 200);
+RT_INTERFACE!{interface IDisplayEnhancementOverrideCapabilities(IDisplayEnhancementOverrideCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverrideCapabilities] {
+    fn get_IsBrightnessControlSupported(&self, out: *mut bool) -> HRESULT,
+    fn get_IsBrightnessNitsControlSupported(&self, out: *mut bool) -> HRESULT,
+    fn GetSupportedNitRanges(&self, out: *mut *mut foundation::collections::IVectorView<NitRange>) -> HRESULT
+}}
+impl IDisplayEnhancementOverrideCapabilities {
+    #[inline] pub fn get_is_brightness_control_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsBrightnessControlSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_brightness_nits_control_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsBrightnessNitsControlSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_supported_nit_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<NitRange>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetSupportedNitRanges)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DisplayEnhancementOverrideCapabilities: IDisplayEnhancementOverrideCapabilities}
+DEFINE_IID!(IID_IDisplayEnhancementOverrideCapabilitiesChangedEventArgs, 3680626276, 5626, 18906, 139, 119, 7, 219, 210, 175, 88, 93);
+RT_INTERFACE!{interface IDisplayEnhancementOverrideCapabilitiesChangedEventArgs(IDisplayEnhancementOverrideCapabilitiesChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverrideCapabilitiesChangedEventArgs] {
+    fn get_Capabilities(&self, out: *mut *mut DisplayEnhancementOverrideCapabilities) -> HRESULT
+}}
+impl IDisplayEnhancementOverrideCapabilitiesChangedEventArgs {
+    #[inline] pub fn get_capabilities(&self) -> Result<Option<ComPtr<DisplayEnhancementOverrideCapabilities>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Capabilities)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DisplayEnhancementOverrideCapabilitiesChangedEventArgs: IDisplayEnhancementOverrideCapabilitiesChangedEventArgs}
+DEFINE_IID!(IID_IDisplayEnhancementOverrideStatics, 3478879937, 38801, 17491, 176, 19, 41, 182, 247, 120, 229, 25);
+RT_INTERFACE!{static interface IDisplayEnhancementOverrideStatics(IDisplayEnhancementOverrideStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverrideStatics] {
+    fn GetForCurrentView(&self, out: *mut *mut DisplayEnhancementOverride) -> HRESULT
+}}
+impl IDisplayEnhancementOverrideStatics {
+    #[inline] pub fn get_for_current_view(&self) -> Result<Option<ComPtr<DisplayEnhancementOverride>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IDisplayInformation, 3201372846, 44483, 19913, 174, 101, 133, 31, 77, 125, 71, 153);
 RT_INTERFACE!{interface IDisplayInformation(IDisplayInformationVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayInformation] {
     fn get_CurrentOrientation(&self, out: *mut DisplayOrientations) -> HRESULT,
@@ -1522,6 +1837,28 @@ impl IDisplayInformation4 {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ScreenHeightInRawPixels)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IDisplayInformation5, 978600668, 11486, 19085, 128, 209, 33, 220, 90, 220, 193, 170);
+RT_INTERFACE!{interface IDisplayInformation5(IDisplayInformation5Vtbl): IInspectable(IInspectableVtbl) [IID_IDisplayInformation5] {
+    fn GetAdvancedColorInfo(&self, out: *mut *mut AdvancedColorInfo) -> HRESULT,
+    fn add_AdvancedColorInfoChanged(&self, handler: *mut foundation::TypedEventHandler<DisplayInformation, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_AdvancedColorInfoChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IDisplayInformation5 {
+    #[inline] pub fn get_advanced_color_info(&self) -> Result<Option<ComPtr<AdvancedColorInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAdvancedColorInfo)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_advanced_color_info_changed(&self, handler: &foundation::TypedEventHandler<DisplayInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_AdvancedColorInfoChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_advanced_color_info_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_AdvancedColorInfoChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IDisplayInformationStatics, 3332385388, 54354, 17628, 186, 7, 150, 243, 198, 173, 249, 209);
@@ -1737,6 +2074,12 @@ impl IDisplayPropertiesStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
+RT_ENUM! { enum HdrMetadataFormat: i32 {
+    Hdr10 (HdrMetadataFormat_Hdr10) = 0, Hdr10Plus (HdrMetadataFormat_Hdr10Plus) = 1,
+}}
+RT_STRUCT! { struct NitRange {
+    MinNits: f32, MaxNits: f32, StepSizeNits: f32,
+}}
 RT_ENUM! { enum ResolutionScale: i32 {
     Invalid (ResolutionScale_Invalid) = 0, Scale100Percent (ResolutionScale_Scale100Percent) = 100, Scale120Percent (ResolutionScale_Scale120Percent) = 120, Scale125Percent (ResolutionScale_Scale125Percent) = 125, Scale140Percent (ResolutionScale_Scale140Percent) = 140, Scale150Percent (ResolutionScale_Scale150Percent) = 150, Scale160Percent (ResolutionScale_Scale160Percent) = 160, Scale175Percent (ResolutionScale_Scale175Percent) = 175, Scale180Percent (ResolutionScale_Scale180Percent) = 180, Scale200Percent (ResolutionScale_Scale200Percent) = 200, Scale225Percent (ResolutionScale_Scale225Percent) = 225, Scale250Percent (ResolutionScale_Scale250Percent) = 250, Scale300Percent (ResolutionScale_Scale300Percent) = 300, Scale350Percent (ResolutionScale_Scale350Percent) = 350, Scale400Percent (ResolutionScale_Scale400Percent) = 400, Scale450Percent (ResolutionScale_Scale450Percent) = 450, Scale500Percent (ResolutionScale_Scale500Percent) = 500,
 }}
@@ -2408,7 +2751,7 @@ RT_ENUM! { enum BitmapInterpolationMode: i32 {
     NearestNeighbor (BitmapInterpolationMode_NearestNeighbor) = 0, Linear (BitmapInterpolationMode_Linear) = 1, Cubic (BitmapInterpolationMode_Cubic) = 2, Fant (BitmapInterpolationMode_Fant) = 3,
 }}
 RT_ENUM! { enum BitmapPixelFormat: i32 {
-    Unknown (BitmapPixelFormat_Unknown) = 0, Rgba16 (BitmapPixelFormat_Rgba16) = 12, Rgba8 (BitmapPixelFormat_Rgba8) = 30, Gray16 (BitmapPixelFormat_Gray16) = 57, Gray8 (BitmapPixelFormat_Gray8) = 62, Bgra8 (BitmapPixelFormat_Bgra8) = 87, Nv12 (BitmapPixelFormat_Nv12) = 103, Yuy2 (BitmapPixelFormat_Yuy2) = 107,
+    Unknown (BitmapPixelFormat_Unknown) = 0, Rgba16 (BitmapPixelFormat_Rgba16) = 12, Rgba8 (BitmapPixelFormat_Rgba8) = 30, Gray16 (BitmapPixelFormat_Gray16) = 57, Gray8 (BitmapPixelFormat_Gray8) = 62, Bgra8 (BitmapPixelFormat_Bgra8) = 87, Nv12 (BitmapPixelFormat_Nv12) = 103, P010 (BitmapPixelFormat_P010) = 104, Yuy2 (BitmapPixelFormat_Yuy2) = 107,
 }}
 RT_STRUCT! { struct BitmapPlaneDescription {
     StartIndex: i32, Width: i32, Height: i32, Stride: i32,
@@ -2771,6 +3114,163 @@ RT_ENUM! { enum TiffCompressionMode: i32 {
     Automatic (TiffCompressionMode_Automatic) = 0, None (TiffCompressionMode_None) = 1, Ccitt3 (TiffCompressionMode_Ccitt3) = 2, Ccitt4 (TiffCompressionMode_Ccitt4) = 3, Lzw (TiffCompressionMode_Lzw) = 4, Rle (TiffCompressionMode_Rle) = 5, Zip (TiffCompressionMode_Zip) = 6, LzwhDifferencing (TiffCompressionMode_LzwhDifferencing) = 7,
 }}
 } // Windows.Graphics.Imaging
+pub mod capture { // Windows.Graphics.Capture
+use ::prelude::*;
+DEFINE_IID!(IID_IDirect3D11CaptureFrame, 4199597603, 14554, 19250, 172, 243, 250, 151, 52, 173, 128, 14);
+RT_INTERFACE!{interface IDirect3D11CaptureFrame(IDirect3D11CaptureFrameVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFrame] {
+    fn get_Surface(&self, out: *mut *mut super::directx::direct3d11::IDirect3DSurface) -> HRESULT,
+    fn get_SystemRelativeTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_ContentSize(&self, out: *mut super::SizeInt32) -> HRESULT
+}}
+impl IDirect3D11CaptureFrame {
+    #[inline] pub fn get_surface(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Surface)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_system_relative_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_SystemRelativeTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_content_size(&self) -> Result<super::SizeInt32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ContentSize)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Direct3D11CaptureFrame: IDirect3D11CaptureFrame}
+DEFINE_IID!(IID_IDirect3D11CaptureFramePool, 619408674, 6517, 16942, 130, 231, 120, 13, 189, 141, 223, 36);
+RT_INTERFACE!{interface IDirect3D11CaptureFramePool(IDirect3D11CaptureFramePoolVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePool] {
+    fn Recreate(&self, device: *mut super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> HRESULT,
+    fn TryGetNextFrame(&self, out: *mut *mut Direct3D11CaptureFrame) -> HRESULT,
+    fn add_FrameArrived(&self, handler: *mut foundation::TypedEventHandler<Direct3D11CaptureFramePool, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_FrameArrived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn CreateCaptureSession(&self, item: *mut GraphicsCaptureItem, out: *mut *mut GraphicsCaptureSession) -> HRESULT,
+    #[cfg(feature="windows-system")] fn get_DispatcherQueue(&self, out: *mut *mut super::super::system::DispatcherQueue) -> HRESULT
+}}
+impl IDirect3D11CaptureFramePool {
+    #[inline] pub fn recreate(&self, device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Recreate)(self as *const _ as *mut _, device as *const _ as *mut _, pixelFormat, numberOfBuffers, size);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn try_get_next_frame(&self) -> Result<Option<ComPtr<Direct3D11CaptureFrame>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryGetNextFrame)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_frame_arrived(&self, handler: &foundation::TypedEventHandler<Direct3D11CaptureFramePool, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_FrameArrived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_frame_arrived(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_FrameArrived)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn create_capture_session(&self, item: &GraphicsCaptureItem) -> Result<Option<ComPtr<GraphicsCaptureSession>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateCaptureSession)(self as *const _ as *mut _, item as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_dispatcher_queue(&self) -> Result<Option<ComPtr<super::super::system::DispatcherQueue>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DispatcherQueue)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Direct3D11CaptureFramePool: IDirect3D11CaptureFramePool}
+impl RtActivatable<IDirect3D11CaptureFramePoolStatics> for Direct3D11CaptureFramePool {}
+impl Direct3D11CaptureFramePool {
+    #[inline] pub fn create(device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<ComPtr<Direct3D11CaptureFramePool>>> {
+        <Self as RtActivatable<IDirect3D11CaptureFramePoolStatics>>::get_activation_factory().create(device, pixelFormat, numberOfBuffers, size)
+    }
+}
+DEFINE_CLSID!(Direct3D11CaptureFramePool(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,68,105,114,101,99,116,51,68,49,49,67,97,112,116,117,114,101,70,114,97,109,101,80,111,111,108,0]) [CLSID_Direct3D11CaptureFramePool]);
+DEFINE_IID!(IID_IDirect3D11CaptureFramePoolStatics, 2005140842, 26538, 19795, 174, 84, 16, 136, 213, 168, 202, 33);
+RT_INTERFACE!{static interface IDirect3D11CaptureFramePoolStatics(IDirect3D11CaptureFramePoolStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePoolStatics] {
+    fn Create(&self, device: *mut super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32, out: *mut *mut Direct3D11CaptureFramePool) -> HRESULT
+}}
+impl IDirect3D11CaptureFramePoolStatics {
+    #[inline] pub fn create(&self, device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<ComPtr<Direct3D11CaptureFramePool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, device as *const _ as *mut _, pixelFormat, numberOfBuffers, size, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IGraphicsCaptureItem, 2042886491, 12791, 20162, 164, 100, 99, 46, 245, 211, 7, 96);
+RT_INTERFACE!{interface IGraphicsCaptureItem(IGraphicsCaptureItemVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureItem] {
+    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Size(&self, out: *mut super::SizeInt32) -> HRESULT,
+    fn add_Closed(&self, handler: *mut foundation::TypedEventHandler<GraphicsCaptureItem, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Closed(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IGraphicsCaptureItem {
+    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_size(&self) -> Result<super::SizeInt32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn add_closed(&self, handler: &foundation::TypedEventHandler<GraphicsCaptureItem, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_closed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Closed)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GraphicsCaptureItem: IGraphicsCaptureItem}
+DEFINE_IID!(IID_IGraphicsCapturePicker, 1511461299, 44409, 19274, 147, 54, 19, 24, 253, 222, 53, 57);
+RT_INTERFACE!{interface IGraphicsCapturePicker(IGraphicsCapturePickerVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCapturePicker] {
+    fn PickSingleItemAsync(&self, out: *mut *mut foundation::IAsyncOperation<GraphicsCaptureItem>) -> HRESULT
+}}
+impl IGraphicsCapturePicker {
+    #[inline] pub fn pick_single_item_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GraphicsCaptureItem>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).PickSingleItemAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GraphicsCapturePicker: IGraphicsCapturePicker}
+impl RtActivatable<IActivationFactory> for GraphicsCapturePicker {}
+DEFINE_CLSID!(GraphicsCapturePicker(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,71,114,97,112,104,105,99,115,67,97,112,116,117,114,101,80,105,99,107,101,114,0]) [CLSID_GraphicsCapturePicker]);
+DEFINE_IID!(IID_IGraphicsCaptureSession, 2169389737, 63247, 19159, 147, 155, 253, 220, 198, 235, 136, 13);
+RT_INTERFACE!{interface IGraphicsCaptureSession(IGraphicsCaptureSessionVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureSession] {
+    fn StartCapture(&self) -> HRESULT
+}}
+impl IGraphicsCaptureSession {
+    #[inline] pub fn start_capture(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).StartCapture)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GraphicsCaptureSession: IGraphicsCaptureSession}
+impl RtActivatable<IGraphicsCaptureSessionStatics> for GraphicsCaptureSession {}
+impl GraphicsCaptureSession {
+    #[inline] pub fn is_supported() -> Result<bool> {
+        <Self as RtActivatable<IGraphicsCaptureSessionStatics>>::get_activation_factory().is_supported()
+    }
+}
+DEFINE_CLSID!(GraphicsCaptureSession(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,71,114,97,112,104,105,99,115,67,97,112,116,117,114,101,83,101,115,115,105,111,110,0]) [CLSID_GraphicsCaptureSession]);
+DEFINE_IID!(IID_IGraphicsCaptureSessionStatics, 572826944, 22900, 18858, 178, 50, 8, 130, 83, 111, 76, 181);
+RT_INTERFACE!{static interface IGraphicsCaptureSessionStatics(IGraphicsCaptureSessionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureSessionStatics] {
+    fn IsSupported(&self, out: *mut bool) -> HRESULT
+}}
+impl IGraphicsCaptureSessionStatics {
+    #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+} // Windows.Graphics.Capture
 pub mod effects { // Windows.Graphics.Effects
 use ::prelude::*;
 DEFINE_IID!(IID_IGraphicsEffect, 3411132622, 36838, 17974, 178, 2, 134, 31, 170, 7, 216, 243);
@@ -2952,6 +3452,90 @@ impl IPrintPageInfo {
 RT_CLASS!{class PrintPageInfo: IPrintPageInfo}
 impl RtActivatable<IActivationFactory> for PrintPageInfo {}
 DEFINE_CLSID!(PrintPageInfo(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,80,114,105,110,116,80,97,103,101,73,110,102,111,0]) [CLSID_PrintPageInfo]);
+DEFINE_IID!(IID_IPrintPageRange, 4171263060, 28284, 20933, 87, 253, 6, 96, 194, 215, 21, 19);
+RT_INTERFACE!{interface IPrintPageRange(IPrintPageRangeVtbl): IInspectable(IInspectableVtbl) [IID_IPrintPageRange] {
+    fn get_FirstPageNumber(&self, out: *mut i32) -> HRESULT,
+    fn get_LastPageNumber(&self, out: *mut i32) -> HRESULT
+}}
+impl IPrintPageRange {
+    #[inline] pub fn get_first_page_number(&self) -> Result<i32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_FirstPageNumber)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_last_page_number(&self) -> Result<i32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_LastPageNumber)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PrintPageRange: IPrintPageRange}
+impl RtActivatable<IPrintPageRangeFactory> for PrintPageRange {}
+impl PrintPageRange {
+    #[inline] pub fn create(firstPage: i32, lastPage: i32) -> Result<ComPtr<PrintPageRange>> {
+        <Self as RtActivatable<IPrintPageRangeFactory>>::get_activation_factory().create(firstPage, lastPage)
+    }
+    #[inline] pub fn create_with_single_page(page: i32) -> Result<ComPtr<PrintPageRange>> {
+        <Self as RtActivatable<IPrintPageRangeFactory>>::get_activation_factory().create_with_single_page(page)
+    }
+}
+DEFINE_CLSID!(PrintPageRange(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,80,114,105,110,116,80,97,103,101,82,97,110,103,101,0]) [CLSID_PrintPageRange]);
+DEFINE_IID!(IID_IPrintPageRangeFactory, 1083167839, 57415, 24453, 113, 41, 251, 8, 90, 79, 173, 20);
+RT_INTERFACE!{static interface IPrintPageRangeFactory(IPrintPageRangeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrintPageRangeFactory] {
+    fn Create(&self, firstPage: i32, lastPage: i32, out: *mut *mut PrintPageRange) -> HRESULT,
+    fn CreateWithSinglePage(&self, page: i32, out: *mut *mut PrintPageRange) -> HRESULT
+}}
+impl IPrintPageRangeFactory {
+    #[inline] pub fn create(&self, firstPage: i32, lastPage: i32) -> Result<ComPtr<PrintPageRange>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, firstPage, lastPage, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_with_single_page(&self, page: i32) -> Result<ComPtr<PrintPageRange>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithSinglePage)(self as *const _ as *mut _, page, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPrintPageRangeOptions, 3463296808, 4951, 18098, 169, 35, 121, 249, 149, 244, 72, 252);
+RT_INTERFACE!{interface IPrintPageRangeOptions(IPrintPageRangeOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintPageRangeOptions] {
+    fn put_AllowAllPages(&self, value: bool) -> HRESULT,
+    fn get_AllowAllPages(&self, out: *mut bool) -> HRESULT,
+    fn put_AllowCurrentPage(&self, value: bool) -> HRESULT,
+    fn get_AllowCurrentPage(&self, out: *mut bool) -> HRESULT,
+    fn put_AllowCustomSetOfPages(&self, value: bool) -> HRESULT,
+    fn get_AllowCustomSetOfPages(&self, out: *mut bool) -> HRESULT
+}}
+impl IPrintPageRangeOptions {
+    #[inline] pub fn set_allow_all_pages(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AllowAllPages)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_allow_all_pages(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AllowAllPages)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_allow_current_page(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AllowCurrentPage)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_allow_current_page(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AllowCurrentPage)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_allow_custom_set_of_pages(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AllowCustomSetOfPages)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_allow_custom_set_of_pages(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AllowCustomSetOfPages)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PrintPageRangeOptions: IPrintPageRangeOptions}
 RT_ENUM! { enum PrintQuality: i32 {
     Default (PrintQuality_Default) = 0, NotAvailable (PrintQuality_NotAvailable) = 1, PrinterCustom (PrintQuality_PrinterCustom) = 2, Automatic (PrintQuality_Automatic) = 3, Draft (PrintQuality_Draft) = 4, Fax (PrintQuality_Fax) = 5, High (PrintQuality_High) = 6, Normal (PrintQuality_Normal) = 7, Photographic (PrintQuality_Photographic) = 8, Text (PrintQuality_Text) = 9,
 }}
@@ -3081,6 +3665,23 @@ impl IPrintTaskOptions {
     }}
 }
 RT_CLASS!{class PrintTaskOptions: IPrintTaskOptionsCore}
+DEFINE_IID!(IID_IPrintTaskOptions2, 3952809478, 39478, 19289, 134, 23, 178, 23, 132, 146, 98, 225);
+RT_INTERFACE!{interface IPrintTaskOptions2(IPrintTaskOptions2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptions2] {
+    fn get_PageRangeOptions(&self, out: *mut *mut PrintPageRangeOptions) -> HRESULT,
+    fn get_CustomPageRanges(&self, out: *mut *mut foundation::collections::IVector<PrintPageRange>) -> HRESULT
+}}
+impl IPrintTaskOptions2 {
+    #[inline] pub fn get_page_range_options(&self) -> Result<Option<ComPtr<PrintPageRangeOptions>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PageRangeOptions)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_custom_page_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVector<PrintPageRange>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CustomPageRanges)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IPrintTaskOptionsCore, 467383412, 20177, 16875, 190, 60, 114, 209, 142, 214, 115, 55);
 RT_INTERFACE!{interface IPrintTaskOptionsCore(IPrintTaskOptionsCoreVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionsCore] {
     fn GetPageDescription(&self, jobPageNumber: u32, out: *mut PrintPageDescription) -> HRESULT
@@ -3374,6 +3975,7 @@ impl IPrintTaskTargetDeviceSupport {
 RT_CLASS!{static class StandardPrintTaskOptions}
 impl RtActivatable<IStandardPrintTaskOptionsStatic> for StandardPrintTaskOptions {}
 impl RtActivatable<IStandardPrintTaskOptionsStatic2> for StandardPrintTaskOptions {}
+impl RtActivatable<IStandardPrintTaskOptionsStatic3> for StandardPrintTaskOptions {}
 impl StandardPrintTaskOptions {
     #[inline] pub fn get_media_size() -> Result<HString> {
         <Self as RtActivatable<IStandardPrintTaskOptionsStatic>>::get_activation_factory().get_media_size()
@@ -3416,6 +4018,9 @@ impl StandardPrintTaskOptions {
     }
     #[inline] pub fn get_bordering() -> Result<HString> {
         <Self as RtActivatable<IStandardPrintTaskOptionsStatic2>>::get_activation_factory().get_bordering()
+    }
+    #[inline] pub fn get_custom_page_ranges() -> Result<HString> {
+        <Self as RtActivatable<IStandardPrintTaskOptionsStatic3>>::get_activation_factory().get_custom_page_ranges()
     }
 }
 DEFINE_CLSID!(StandardPrintTaskOptions(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,83,116,97,110,100,97,114,100,80,114,105,110,116,84,97,115,107,79,112,116,105,111,110,115,0]) [CLSID_StandardPrintTaskOptions]);
@@ -3513,12 +4118,158 @@ impl IStandardPrintTaskOptionsStatic2 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IStandardPrintTaskOptionsStatic3, 3153497734, 14424, 16819, 167, 153, 85, 221, 152, 136, 212, 117);
+RT_INTERFACE!{static interface IStandardPrintTaskOptionsStatic3(IStandardPrintTaskOptionsStatic3Vtbl): IInspectable(IInspectableVtbl) [IID_IStandardPrintTaskOptionsStatic3] {
+    fn get_CustomPageRanges(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IStandardPrintTaskOptionsStatic3 {
+    #[inline] pub fn get_custom_page_ranges(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CustomPageRanges)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 pub mod optiondetails { // Windows.Graphics.Printing.OptionDetails
 use ::prelude::*;
+DEFINE_IID!(IID_IPrintBindingOptionDetails, 3287600280, 38244, 20246, 160, 85, 169, 139, 154, 73, 233, 211);
+RT_INTERFACE!{interface IPrintBindingOptionDetails(IPrintBindingOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintBindingOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintBindingOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class PrintBindingOptionDetails: IPrintOptionDetails}
+DEFINE_IID!(IID_IPrintBorderingOptionDetails, 1299430543, 64339, 20146, 152, 95, 29, 145, 222, 11, 118, 57);
+RT_INTERFACE!{interface IPrintBorderingOptionDetails(IPrintBorderingOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintBorderingOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintBorderingOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class PrintBorderingOptionDetails: IPrintOptionDetails}
+DEFINE_IID!(IID_IPrintCollationOptionDetails, 3601576294, 42406, 16604, 172, 195, 115, 159, 40, 241, 229, 211);
+RT_INTERFACE!{interface IPrintCollationOptionDetails(IPrintCollationOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCollationOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintCollationOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class PrintCollationOptionDetails: IPrintOptionDetails}
+DEFINE_IID!(IID_IPrintColorModeOptionDetails, 3685316356, 61910, 18499, 164, 132, 155, 68, 124, 220, 243, 182);
+RT_INTERFACE!{interface IPrintColorModeOptionDetails(IPrintColorModeOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintColorModeOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintColorModeOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class PrintColorModeOptionDetails: IPrintOptionDetails}
+DEFINE_IID!(IID_IPrintCopiesOptionDetails, 1107636377, 17209, 17219, 137, 141, 44, 71, 181, 224, 195, 65);
+RT_INTERFACE!{interface IPrintCopiesOptionDetails(IPrintCopiesOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCopiesOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintCopiesOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class PrintCopiesOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintCustomItemDetails, 1459926583, 23610, 17562, 170, 54, 179, 41, 27, 17, 146, 253);
 RT_INTERFACE!{interface IPrintCustomItemDetails(IPrintCustomItemDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomItemDetails] {
@@ -3554,6 +4305,43 @@ impl IPrintCustomItemListOptionDetails {
     }}
 }
 RT_CLASS!{class PrintCustomItemListOptionDetails: IPrintOptionDetails}
+DEFINE_IID!(IID_IPrintCustomItemListOptionDetails2, 3386258749, 25884, 19001, 144, 110, 16, 145, 161, 128, 27, 241);
+RT_INTERFACE!{interface IPrintCustomItemListOptionDetails2(IPrintCustomItemListOptionDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomItemListOptionDetails2] {
+    #[cfg(feature="windows-storage")] fn AddItem(&self, itemId: HSTRING, displayName: HSTRING, description: HSTRING, icon: *mut ::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType) -> HRESULT
+}}
+impl IPrintCustomItemListOptionDetails2 {
+    #[cfg(feature="windows-storage")] #[inline] pub fn add_item(&self, itemId: &HStringArg, displayName: &HStringArg, description: &HStringArg, icon: &::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddItem)(self as *const _ as *mut _, itemId.get(), displayName.get(), description.get(), icon as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPrintCustomItemListOptionDetails3, 1335997759, 15412, 18536, 164, 7, 252, 94, 171, 37, 155, 33);
+RT_INTERFACE!{interface IPrintCustomItemListOptionDetails3(IPrintCustomItemListOptionDetails3Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomItemListOptionDetails3] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintCustomItemListOptionDetails3 {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IPrintCustomOptionDetails, 3811302940, 10415, 19344, 149, 218, 163, 172, 243, 32, 185, 41);
 RT_INTERFACE!{interface IPrintCustomOptionDetails(IPrintCustomOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomOptionDetails] {
     fn put_DisplayName(&self, value: HSTRING) -> HRESULT,
@@ -3587,7 +4375,116 @@ impl IPrintCustomTextOptionDetails {
     }}
 }
 RT_CLASS!{class PrintCustomTextOptionDetails: IPrintOptionDetails}
+DEFINE_IID!(IID_IPrintCustomTextOptionDetails2, 3467053908, 47479, 18200, 131, 56, 126, 210, 176, 216, 111, 227);
+RT_INTERFACE!{interface IPrintCustomTextOptionDetails2(IPrintCustomTextOptionDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomTextOptionDetails2] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintCustomTextOptionDetails2 {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPrintCustomToggleOptionDetails, 2645873940, 58465, 17928, 142, 233, 219, 111, 94, 208, 115, 198);
+RT_INTERFACE!{interface IPrintCustomToggleOptionDetails(IPrintCustomToggleOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomToggleOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintCustomToggleOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PrintCustomToggleOptionDetails: IPrintOptionDetails}
+DEFINE_IID!(IID_IPrintDuplexOptionDetails, 4242097553, 54436, 17658, 179, 254, 66, 224, 186, 40, 213, 173);
+RT_INTERFACE!{interface IPrintDuplexOptionDetails(IPrintDuplexOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintDuplexOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintDuplexOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class PrintDuplexOptionDetails: IPrintOptionDetails}
+DEFINE_IID!(IID_IPrintHolePunchOptionDetails, 2799574808, 18476, 18007, 157, 113, 141, 221, 219, 234, 30, 30);
+RT_INTERFACE!{interface IPrintHolePunchOptionDetails(IPrintHolePunchOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintHolePunchOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintHolePunchOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class PrintHolePunchOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintItemListOptionDetails, 2585941951, 65121, 17368, 162, 79, 163, 246, 171, 115, 32, 231);
 RT_INTERFACE!{interface IPrintItemListOptionDetails(IPrintItemListOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintItemListOptionDetails] {
@@ -3600,7 +4497,61 @@ impl IPrintItemListOptionDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IPrintMediaSizeOptionDetails, 1821203407, 49343, 18376, 184, 74, 98, 142, 125, 13, 26, 29);
+RT_INTERFACE!{interface IPrintMediaSizeOptionDetails(IPrintMediaSizeOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintMediaSizeOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintMediaSizeOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class PrintMediaSizeOptionDetails: IPrintOptionDetails}
+DEFINE_IID!(IID_IPrintMediaTypeOptionDetails, 4173791243, 44019, 19132, 142, 134, 34, 171, 197, 116, 74, 67);
+RT_INTERFACE!{interface IPrintMediaTypeOptionDetails(IPrintMediaTypeOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintMediaTypeOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintMediaTypeOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class PrintMediaTypeOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintNumberOptionDetails, 1291959215, 25692, 19945, 150, 95, 111, 198, 187, 196, 124, 171);
 RT_INTERFACE!{interface IPrintNumberOptionDetails(IPrintNumberOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintNumberOptionDetails] {
@@ -3674,10 +4625,119 @@ RT_ENUM! { enum PrintOptionStates: u32 {
     None (PrintOptionStates_None) = 0, Enabled (PrintOptionStates_Enabled) = 1, Constrained (PrintOptionStates_Constrained) = 2,
 }}
 RT_ENUM! { enum PrintOptionType: i32 {
-    Unknown (PrintOptionType_Unknown) = 0, Number (PrintOptionType_Number) = 1, Text (PrintOptionType_Text) = 2, ItemList (PrintOptionType_ItemList) = 3,
+    Unknown (PrintOptionType_Unknown) = 0, Number (PrintOptionType_Number) = 1, Text (PrintOptionType_Text) = 2, ItemList (PrintOptionType_ItemList) = 3, Toggle (PrintOptionType_Toggle) = 4,
 }}
+DEFINE_IID!(IID_IPrintOrientationOptionDetails, 1187219577, 26336, 19872, 135, 180, 210, 84, 87, 130, 78, 183);
+RT_INTERFACE!{interface IPrintOrientationOptionDetails(IPrintOrientationOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintOrientationOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintOrientationOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class PrintOrientationOptionDetails: IPrintOptionDetails}
+DEFINE_IID!(IID_IPrintPageRangeOptionDetails, 1511646391, 11240, 19111, 158, 165, 222, 251, 232, 113, 59, 78);
+RT_INTERFACE!{interface IPrintPageRangeOptionDetails(IPrintPageRangeOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintPageRangeOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintPageRangeOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PrintPageRangeOptionDetails: IPrintOptionDetails}
+DEFINE_IID!(IID_IPrintQualityOptionDetails, 768633761, 52762, 17638, 132, 249, 58, 146, 234, 30, 48, 68);
+RT_INTERFACE!{interface IPrintQualityOptionDetails(IPrintQualityOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintQualityOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintQualityOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class PrintQualityOptionDetails: IPrintOptionDetails}
+DEFINE_IID!(IID_IPrintStapleOptionDetails, 3560011197, 39947, 17632, 132, 246, 206, 235, 206, 101, 56, 0);
+RT_INTERFACE!{interface IPrintStapleOptionDetails(IPrintStapleOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintStapleOptionDetails] {
+    fn put_WarningText(&self, value: HSTRING) -> HRESULT,
+    fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Description(&self, value: HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IPrintStapleOptionDetails {
+    #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_WarningText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WarningText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Description)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class PrintStapleOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintTaskOptionChangedEventArgs, 1696169221, 42478, 17159, 148, 7, 154, 202, 209, 71, 103, 156);
 RT_INTERFACE!{interface IPrintTaskOptionChangedEventArgs(IPrintTaskOptionChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionChangedEventArgs] {
@@ -3744,6 +4804,17 @@ impl PrintTaskOptionDetails {
     }
 }
 DEFINE_CLSID!(PrintTaskOptionDetails(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,79,112,116,105,111,110,68,101,116,97,105,108,115,46,80,114,105,110,116,84,97,115,107,79,112,116,105,111,110,68,101,116,97,105,108,115,0]) [CLSID_PrintTaskOptionDetails]);
+DEFINE_IID!(IID_IPrintTaskOptionDetails2, 1400048137, 63848, 18066, 161, 119, 192, 116, 89, 113, 134, 219);
+RT_INTERFACE!{interface IPrintTaskOptionDetails2(IPrintTaskOptionDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionDetails2] {
+    fn CreateToggleOption(&self, optionId: HSTRING, displayName: HSTRING, out: *mut *mut PrintCustomToggleOptionDetails) -> HRESULT
+}}
+impl IPrintTaskOptionDetails2 {
+    #[inline] pub fn create_toggle_option(&self, optionId: &HStringArg, displayName: &HStringArg) -> Result<Option<ComPtr<PrintCustomToggleOptionDetails>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateToggleOption)(self as *const _ as *mut _, optionId.get(), displayName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IPrintTaskOptionDetailsStatic, 324903315, 2401, 19310, 135, 102, 241, 59, 127, 188, 205, 88);
 RT_INTERFACE!{static interface IPrintTaskOptionDetailsStatic(IPrintTaskOptionDetailsStaticVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionDetailsStatic] {
     fn GetFromPrintTaskOptions(&self, printTaskOptions: *mut super::PrintTaskOptions, out: *mut *mut PrintTaskOptionDetails) -> HRESULT
@@ -4744,6 +5815,17 @@ impl IHolographicCamera3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IHolographicCamera4, 2586128854, 18211, 20281, 169, 165, 157, 5, 24, 29, 155, 68);
+RT_INTERFACE!{interface IHolographicCamera4(IHolographicCamera4Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera4] {
+    fn get_CanOverrideViewport(&self, out: *mut bool) -> HRESULT
+}}
+impl IHolographicCamera4 {
+    #[inline] pub fn get_can_override_viewport(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanOverrideViewport)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IHolographicCameraPose, 226328112, 4830, 17853, 145, 43, 199, 246, 86, 21, 153, 209);
 RT_INTERFACE!{interface IHolographicCameraPose(IHolographicCameraPoseVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraPose] {
     fn get_HolographicCamera(&self, out: *mut *mut HolographicCamera) -> HRESULT,
@@ -4801,6 +5883,27 @@ impl IHolographicCameraPose {
     }}
 }
 RT_CLASS!{class HolographicCameraPose: IHolographicCameraPose}
+DEFINE_IID!(IID_IHolographicCameraPose2, 590078067, 23853, 17760, 129, 78, 38, 151, 196, 252, 225, 107);
+RT_INTERFACE!{interface IHolographicCameraPose2(IHolographicCameraPose2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraPose2] {
+    #[cfg(not(feature="windows-perception"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-perception")] fn OverrideViewTransform(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, coordinateSystemToViewTransform: HolographicStereoTransform) -> HRESULT,
+    fn OverrideProjectionTransform(&self, projectionTransform: HolographicStereoTransform) -> HRESULT,
+    fn OverrideViewport(&self, leftViewport: foundation::Rect, rightViewport: foundation::Rect) -> HRESULT
+}}
+impl IHolographicCameraPose2 {
+    #[cfg(feature="windows-perception")] #[inline] pub fn override_view_transform(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, coordinateSystemToViewTransform: HolographicStereoTransform) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).OverrideViewTransform)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, coordinateSystemToViewTransform);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn override_projection_transform(&self, projectionTransform: HolographicStereoTransform) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).OverrideProjectionTransform)(self as *const _ as *mut _, projectionTransform);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn override_viewport(&self, leftViewport: foundation::Rect, rightViewport: foundation::Rect) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).OverrideViewport)(self as *const _ as *mut _, leftViewport, rightViewport);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IHolographicCameraRenderingParameters, 2393648849, 23540, 19990, 130, 54, 174, 8, 0, 193, 29, 13);
 RT_INTERFACE!{interface IHolographicCameraRenderingParameters(IHolographicCameraRenderingParametersVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraRenderingParameters] {
     #[cfg(not(feature="windows-perception"))] fn __Dummy0(&self) -> (),
@@ -5050,6 +6153,54 @@ impl IHolographicFramePrediction {
     }}
 }
 RT_CLASS!{class HolographicFramePrediction: IHolographicFramePrediction}
+DEFINE_IID!(IID_IHolographicFramePresentationMonitor, 3397854572, 28590, 17038, 187, 131, 37, 223, 238, 81, 19, 107);
+RT_INTERFACE!{interface IHolographicFramePresentationMonitor(IHolographicFramePresentationMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePresentationMonitor] {
+    fn ReadReports(&self, out: *mut *mut foundation::collections::IVectorView<HolographicFramePresentationReport>) -> HRESULT
+}}
+impl IHolographicFramePresentationMonitor {
+    #[inline] pub fn read_reports(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HolographicFramePresentationReport>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReadReports)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicFramePresentationMonitor: IHolographicFramePresentationMonitor}
+DEFINE_IID!(IID_IHolographicFramePresentationReport, 2159736340, 62196, 19594, 141, 227, 6, 92, 120, 246, 213, 222);
+RT_INTERFACE!{interface IHolographicFramePresentationReport(IHolographicFramePresentationReportVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePresentationReport] {
+    fn get_CompositorGpuDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_AppGpuDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_AppGpuOverrun(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_MissedPresentationOpportunityCount(&self, out: *mut u32) -> HRESULT,
+    fn get_PresentationCount(&self, out: *mut u32) -> HRESULT
+}}
+impl IHolographicFramePresentationReport {
+    #[inline] pub fn get_compositor_gpu_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CompositorGpuDuration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_app_gpu_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AppGpuDuration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_app_gpu_overrun(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AppGpuOverrun)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_missed_presentation_opportunity_count(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MissedPresentationOpportunityCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_presentation_count(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PresentationCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicFramePresentationReport: IHolographicFramePresentationReport}
 RT_ENUM! { enum HolographicFramePresentResult: i32 {
     Success (HolographicFramePresentResult_Success) = 0, DeviceRemoved (HolographicFramePresentResult_DeviceRemoved) = 1,
 }}
@@ -5211,6 +6362,44 @@ impl HolographicSpace {
     }
 }
 DEFINE_CLSID!(HolographicSpace(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,83,112,97,99,101,0]) [CLSID_HolographicSpace]);
+DEFINE_IID!(IID_IHolographicSpace2, 1333897640, 47103, 18563, 152, 39, 125, 103, 114, 135, 234, 112);
+RT_INTERFACE!{interface IHolographicSpace2(IHolographicSpace2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpace2] {
+    fn get_UserPresence(&self, out: *mut HolographicSpaceUserPresence) -> HRESULT,
+    fn add_UserPresenceChanged(&self, handler: *mut foundation::TypedEventHandler<HolographicSpace, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_UserPresenceChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn WaitForNextFrameReady(&self) -> HRESULT,
+    fn WaitForNextFrameReadyWithHeadStart(&self, requestedHeadStartDuration: foundation::TimeSpan) -> HRESULT,
+    fn CreateFramePresentationMonitor(&self, maxQueuedReports: u32, out: *mut *mut HolographicFramePresentationMonitor) -> HRESULT
+}}
+impl IHolographicSpace2 {
+    #[inline] pub fn get_user_presence(&self) -> Result<HolographicSpaceUserPresence> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_UserPresence)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn add_user_presence_changed(&self, handler: &foundation::TypedEventHandler<HolographicSpace, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_UserPresenceChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_user_presence_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_UserPresenceChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn wait_for_next_frame_ready(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WaitForNextFrameReady)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn wait_for_next_frame_ready_with_head_start(&self, requestedHeadStartDuration: foundation::TimeSpan) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WaitForNextFrameReadyWithHeadStart)(self as *const _ as *mut _, requestedHeadStartDuration);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn create_frame_presentation_monitor(&self, maxQueuedReports: u32) -> Result<Option<ComPtr<HolographicFramePresentationMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFramePresentationMonitor)(self as *const _ as *mut _, maxQueuedReports, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IHolographicSpaceCameraAddedEventArgs, 1492245045, 48051, 15503, 153, 61, 108, 128, 231, 254, 185, 159);
 RT_INTERFACE!{interface IHolographicSpaceCameraAddedEventArgs(IHolographicSpaceCameraAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceCameraAddedEventArgs] {
     fn get_Camera(&self, out: *mut *mut HolographicCamera) -> HRESULT,
@@ -5291,6 +6480,9 @@ impl IHolographicSpaceStatics3 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
+RT_ENUM! { enum HolographicSpaceUserPresence: i32 {
+    Absent (HolographicSpaceUserPresence_Absent) = 0, PresentPassive (HolographicSpaceUserPresence_PresentPassive) = 1, PresentActive (HolographicSpaceUserPresence_PresentActive) = 2,
+}}
 RT_STRUCT! { struct HolographicStereoTransform {
     Left: foundation::numerics::Matrix4x4, Right: foundation::numerics::Matrix4x4,
 }}
@@ -5299,6 +6491,9 @@ pub mod directx { // Windows.Graphics.DirectX
 use ::prelude::*;
 RT_ENUM! { enum DirectXAlphaMode: i32 {
     Unspecified (DirectXAlphaMode_Unspecified) = 0, Premultiplied (DirectXAlphaMode_Premultiplied) = 1, Straight (DirectXAlphaMode_Straight) = 2, Ignore (DirectXAlphaMode_Ignore) = 3,
+}}
+RT_ENUM! { enum DirectXColorSpace: i32 {
+    RgbFullG22NoneP709 (DirectXColorSpace_RgbFullG22NoneP709) = 0, RgbFullG10NoneP709 (DirectXColorSpace_RgbFullG10NoneP709) = 1, RgbStudioG22NoneP709 (DirectXColorSpace_RgbStudioG22NoneP709) = 2, RgbStudioG22NoneP2020 (DirectXColorSpace_RgbStudioG22NoneP2020) = 3, Reserved (DirectXColorSpace_Reserved) = 4, YccFullG22NoneP709X601 (DirectXColorSpace_YccFullG22NoneP709X601) = 5, YccStudioG22LeftP601 (DirectXColorSpace_YccStudioG22LeftP601) = 6, YccFullG22LeftP601 (DirectXColorSpace_YccFullG22LeftP601) = 7, YccStudioG22LeftP709 (DirectXColorSpace_YccStudioG22LeftP709) = 8, YccFullG22LeftP709 (DirectXColorSpace_YccFullG22LeftP709) = 9, YccStudioG22LeftP2020 (DirectXColorSpace_YccStudioG22LeftP2020) = 10, YccFullG22LeftP2020 (DirectXColorSpace_YccFullG22LeftP2020) = 11, RgbFullG2084NoneP2020 (DirectXColorSpace_RgbFullG2084NoneP2020) = 12, YccStudioG2084LeftP2020 (DirectXColorSpace_YccStudioG2084LeftP2020) = 13, RgbStudioG2084NoneP2020 (DirectXColorSpace_RgbStudioG2084NoneP2020) = 14, YccStudioG22TopLeftP2020 (DirectXColorSpace_YccStudioG22TopLeftP2020) = 15, YccStudioG2084TopLeftP2020 (DirectXColorSpace_YccStudioG2084TopLeftP2020) = 16, RgbFullG22NoneP2020 (DirectXColorSpace_RgbFullG22NoneP2020) = 17, YccStudioGHlgTopLeftP2020 (DirectXColorSpace_YccStudioGHlgTopLeftP2020) = 18, YccFullGHlgTopLeftP2020 (DirectXColorSpace_YccFullGHlgTopLeftP2020) = 19, RgbStudioG24NoneP709 (DirectXColorSpace_RgbStudioG24NoneP709) = 20, RgbStudioG24NoneP2020 (DirectXColorSpace_RgbStudioG24NoneP2020) = 21, YccStudioG24LeftP709 (DirectXColorSpace_YccStudioG24LeftP709) = 22, YccStudioG24LeftP2020 (DirectXColorSpace_YccStudioG24LeftP2020) = 23, YccStudioG24TopLeftP2020 (DirectXColorSpace_YccStudioG24TopLeftP2020) = 24,
 }}
 RT_ENUM! { enum DirectXPixelFormat: i32 {
     Unknown (DirectXPixelFormat_Unknown) = 0, R32G32B32A32Typeless (DirectXPixelFormat_R32G32B32A32Typeless) = 1, R32G32B32A32Float (DirectXPixelFormat_R32G32B32A32Float) = 2, R32G32B32A32UInt (DirectXPixelFormat_R32G32B32A32UInt) = 3, R32G32B32A32Int (DirectXPixelFormat_R32G32B32A32Int) = 4, R32G32B32Typeless (DirectXPixelFormat_R32G32B32Typeless) = 5, R32G32B32Float (DirectXPixelFormat_R32G32B32Float) = 6, R32G32B32UInt (DirectXPixelFormat_R32G32B32UInt) = 7, R32G32B32Int (DirectXPixelFormat_R32G32B32Int) = 8, R16G16B16A16Typeless (DirectXPixelFormat_R16G16B16A16Typeless) = 9, R16G16B16A16Float (DirectXPixelFormat_R16G16B16A16Float) = 10, R16G16B16A16UIntNormalized (DirectXPixelFormat_R16G16B16A16UIntNormalized) = 11, R16G16B16A16UInt (DirectXPixelFormat_R16G16B16A16UInt) = 12, R16G16B16A16IntNormalized (DirectXPixelFormat_R16G16B16A16IntNormalized) = 13, R16G16B16A16Int (DirectXPixelFormat_R16G16B16A16Int) = 14, R32G32Typeless (DirectXPixelFormat_R32G32Typeless) = 15, R32G32Float (DirectXPixelFormat_R32G32Float) = 16, R32G32UInt (DirectXPixelFormat_R32G32UInt) = 17, R32G32Int (DirectXPixelFormat_R32G32Int) = 18, R32G8X24Typeless (DirectXPixelFormat_R32G8X24Typeless) = 19, D32FloatS8X24UInt (DirectXPixelFormat_D32FloatS8X24UInt) = 20, R32FloatX8X24Typeless (DirectXPixelFormat_R32FloatX8X24Typeless) = 21, X32TypelessG8X24UInt (DirectXPixelFormat_X32TypelessG8X24UInt) = 22, R10G10B10A2Typeless (DirectXPixelFormat_R10G10B10A2Typeless) = 23, R10G10B10A2UIntNormalized (DirectXPixelFormat_R10G10B10A2UIntNormalized) = 24, R10G10B10A2UInt (DirectXPixelFormat_R10G10B10A2UInt) = 25, R11G11B10Float (DirectXPixelFormat_R11G11B10Float) = 26, R8G8B8A8Typeless (DirectXPixelFormat_R8G8B8A8Typeless) = 27, R8G8B8A8UIntNormalized (DirectXPixelFormat_R8G8B8A8UIntNormalized) = 28, R8G8B8A8UIntNormalizedSrgb (DirectXPixelFormat_R8G8B8A8UIntNormalizedSrgb) = 29, R8G8B8A8UInt (DirectXPixelFormat_R8G8B8A8UInt) = 30, R8G8B8A8IntNormalized (DirectXPixelFormat_R8G8B8A8IntNormalized) = 31, R8G8B8A8Int (DirectXPixelFormat_R8G8B8A8Int) = 32, R16G16Typeless (DirectXPixelFormat_R16G16Typeless) = 33, R16G16Float (DirectXPixelFormat_R16G16Float) = 34, R16G16UIntNormalized (DirectXPixelFormat_R16G16UIntNormalized) = 35, R16G16UInt (DirectXPixelFormat_R16G16UInt) = 36, R16G16IntNormalized (DirectXPixelFormat_R16G16IntNormalized) = 37, R16G16Int (DirectXPixelFormat_R16G16Int) = 38, R32Typeless (DirectXPixelFormat_R32Typeless) = 39, D32Float (DirectXPixelFormat_D32Float) = 40, R32Float (DirectXPixelFormat_R32Float) = 41, R32UInt (DirectXPixelFormat_R32UInt) = 42, R32Int (DirectXPixelFormat_R32Int) = 43, R24G8Typeless (DirectXPixelFormat_R24G8Typeless) = 44, D24UIntNormalizedS8UInt (DirectXPixelFormat_D24UIntNormalizedS8UInt) = 45, R24UIntNormalizedX8Typeless (DirectXPixelFormat_R24UIntNormalizedX8Typeless) = 46, X24TypelessG8UInt (DirectXPixelFormat_X24TypelessG8UInt) = 47, R8G8Typeless (DirectXPixelFormat_R8G8Typeless) = 48, R8G8UIntNormalized (DirectXPixelFormat_R8G8UIntNormalized) = 49, R8G8UInt (DirectXPixelFormat_R8G8UInt) = 50, R8G8IntNormalized (DirectXPixelFormat_R8G8IntNormalized) = 51, R8G8Int (DirectXPixelFormat_R8G8Int) = 52, R16Typeless (DirectXPixelFormat_R16Typeless) = 53, R16Float (DirectXPixelFormat_R16Float) = 54, D16UIntNormalized (DirectXPixelFormat_D16UIntNormalized) = 55, R16UIntNormalized (DirectXPixelFormat_R16UIntNormalized) = 56, R16UInt (DirectXPixelFormat_R16UInt) = 57, R16IntNormalized (DirectXPixelFormat_R16IntNormalized) = 58, R16Int (DirectXPixelFormat_R16Int) = 59, R8Typeless (DirectXPixelFormat_R8Typeless) = 60, R8UIntNormalized (DirectXPixelFormat_R8UIntNormalized) = 61, R8UInt (DirectXPixelFormat_R8UInt) = 62, R8IntNormalized (DirectXPixelFormat_R8IntNormalized) = 63, R8Int (DirectXPixelFormat_R8Int) = 64, A8UIntNormalized (DirectXPixelFormat_A8UIntNormalized) = 65, R1UIntNormalized (DirectXPixelFormat_R1UIntNormalized) = 66, R9G9B9E5SharedExponent (DirectXPixelFormat_R9G9B9E5SharedExponent) = 67, R8G8B8G8UIntNormalized (DirectXPixelFormat_R8G8B8G8UIntNormalized) = 68, G8R8G8B8UIntNormalized (DirectXPixelFormat_G8R8G8B8UIntNormalized) = 69, BC1Typeless (DirectXPixelFormat_BC1Typeless) = 70, BC1UIntNormalized (DirectXPixelFormat_BC1UIntNormalized) = 71, BC1UIntNormalizedSrgb (DirectXPixelFormat_BC1UIntNormalizedSrgb) = 72, BC2Typeless (DirectXPixelFormat_BC2Typeless) = 73, BC2UIntNormalized (DirectXPixelFormat_BC2UIntNormalized) = 74, BC2UIntNormalizedSrgb (DirectXPixelFormat_BC2UIntNormalizedSrgb) = 75, BC3Typeless (DirectXPixelFormat_BC3Typeless) = 76, BC3UIntNormalized (DirectXPixelFormat_BC3UIntNormalized) = 77, BC3UIntNormalizedSrgb (DirectXPixelFormat_BC3UIntNormalizedSrgb) = 78, BC4Typeless (DirectXPixelFormat_BC4Typeless) = 79, BC4UIntNormalized (DirectXPixelFormat_BC4UIntNormalized) = 80, BC4IntNormalized (DirectXPixelFormat_BC4IntNormalized) = 81, BC5Typeless (DirectXPixelFormat_BC5Typeless) = 82, BC5UIntNormalized (DirectXPixelFormat_BC5UIntNormalized) = 83, BC5IntNormalized (DirectXPixelFormat_BC5IntNormalized) = 84, B5G6R5UIntNormalized (DirectXPixelFormat_B5G6R5UIntNormalized) = 85, B5G5R5A1UIntNormalized (DirectXPixelFormat_B5G5R5A1UIntNormalized) = 86, B8G8R8A8UIntNormalized (DirectXPixelFormat_B8G8R8A8UIntNormalized) = 87, B8G8R8X8UIntNormalized (DirectXPixelFormat_B8G8R8X8UIntNormalized) = 88, R10G10B10XRBiasA2UIntNormalized (DirectXPixelFormat_R10G10B10XRBiasA2UIntNormalized) = 89, B8G8R8A8Typeless (DirectXPixelFormat_B8G8R8A8Typeless) = 90, B8G8R8A8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8A8UIntNormalizedSrgb) = 91, B8G8R8X8Typeless (DirectXPixelFormat_B8G8R8X8Typeless) = 92, B8G8R8X8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8X8UIntNormalizedSrgb) = 93, BC6HTypeless (DirectXPixelFormat_BC6HTypeless) = 94, BC6H16UnsignedFloat (DirectXPixelFormat_BC6H16UnsignedFloat) = 95, BC6H16Float (DirectXPixelFormat_BC6H16Float) = 96, BC7Typeless (DirectXPixelFormat_BC7Typeless) = 97, BC7UIntNormalized (DirectXPixelFormat_BC7UIntNormalized) = 98, BC7UIntNormalizedSrgb (DirectXPixelFormat_BC7UIntNormalizedSrgb) = 99, Ayuv (DirectXPixelFormat_Ayuv) = 100, Y410 (DirectXPixelFormat_Y410) = 101, Y416 (DirectXPixelFormat_Y416) = 102, NV12 (DirectXPixelFormat_NV12) = 103, P010 (DirectXPixelFormat_P010) = 104, P016 (DirectXPixelFormat_P016) = 105, Opaque420 (DirectXPixelFormat_Opaque420) = 106, Yuy2 (DirectXPixelFormat_Yuy2) = 107, Y210 (DirectXPixelFormat_Y210) = 108, Y216 (DirectXPixelFormat_Y216) = 109, NV11 (DirectXPixelFormat_NV11) = 110, AI44 (DirectXPixelFormat_AI44) = 111, IA44 (DirectXPixelFormat_IA44) = 112, P8 (DirectXPixelFormat_P8) = 113, A8P8 (DirectXPixelFormat_A8P8) = 114, B4G4R4A4UIntNormalized (DirectXPixelFormat_B4G4R4A4UIntNormalized) = 115, P208 (DirectXPixelFormat_P208) = 130, V208 (DirectXPixelFormat_V208) = 131, V408 (DirectXPixelFormat_V408) = 132,

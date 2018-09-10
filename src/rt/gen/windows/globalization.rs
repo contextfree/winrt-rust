@@ -1,6 +1,7 @@
 use ::prelude::*;
 RT_CLASS!{static class ApplicationLanguages}
 impl RtActivatable<IApplicationLanguagesStatics> for ApplicationLanguages {}
+impl RtActivatable<IApplicationLanguagesStatics2> for ApplicationLanguages {}
 impl ApplicationLanguages {
     #[inline] pub fn get_primary_language_override() -> Result<HString> {
         <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().get_primary_language_override()
@@ -13,6 +14,9 @@ impl ApplicationLanguages {
     }
     #[inline] pub fn get_manifest_languages() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
         <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().get_manifest_languages()
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(user: &super::system::User) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
+        <Self as RtActivatable<IApplicationLanguagesStatics2>>::get_activation_factory().get_languages_for_user(user)
     }
 }
 DEFINE_CLSID!(ApplicationLanguages(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,65,112,112,108,105,99,97,116,105,111,110,76,97,110,103,117,97,103,101,115,0]) [CLSID_ApplicationLanguages]);
@@ -41,6 +45,17 @@ impl IApplicationLanguagesStatics {
     #[inline] pub fn get_manifest_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ManifestLanguages)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IApplicationLanguagesStatics2, 502324815, 1835, 19835, 143, 6, 203, 45, 180, 15, 43, 181);
+RT_INTERFACE!{static interface IApplicationLanguagesStatics2(IApplicationLanguagesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IApplicationLanguagesStatics2] {
+    #[cfg(feature="windows-system")] fn GetLanguagesForUser(&self, user: *mut super::system::User, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
+}}
+impl IApplicationLanguagesStatics2 {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(&self, user: &super::system::User) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetLanguagesForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2462,6 +2477,17 @@ impl Language {
     }
 }
 DEFINE_CLSID!(Language(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,76,97,110,103,117,97,103,101,0]) [CLSID_Language]);
+DEFINE_IID!(IID_ILanguage2, 1783096757, 55629, 18566, 164, 4, 165, 165, 185, 213, 180, 148);
+RT_INTERFACE!{interface ILanguage2(ILanguage2Vtbl): IInspectable(IInspectableVtbl) [IID_ILanguage2] {
+    fn get_LayoutDirection(&self, out: *mut LanguageLayoutDirection) -> HRESULT
+}}
+impl ILanguage2 {
+    #[inline] pub fn get_layout_direction(&self) -> Result<LanguageLayoutDirection> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_LayoutDirection)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_ILanguageExtensionSubtags, 2105388869, 13965, 17252, 133, 43, 222, 201, 39, 3, 123, 133);
 RT_INTERFACE!{interface ILanguageExtensionSubtags(ILanguageExtensionSubtagsVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageExtensionSubtags] {
     fn GetExtensionSubtags(&self, singleton: HSTRING, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
@@ -2484,6 +2510,9 @@ impl ILanguageFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
+RT_ENUM! { enum LanguageLayoutDirection: i32 {
+    Ltr (LanguageLayoutDirection_Ltr) = 0, Rtl (LanguageLayoutDirection_Rtl) = 1, TtbLtr (LanguageLayoutDirection_TtbLtr) = 2, TtbRtl (LanguageLayoutDirection_TtbRtl) = 3,
+}}
 DEFINE_IID!(IID_ILanguageStatics, 2990331223, 2149, 18132, 137, 184, 213, 155, 232, 153, 15, 13);
 RT_INTERFACE!{static interface ILanguageStatics(ILanguageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics] {
     fn IsWellFormed(&self, languageTag: HSTRING, out: *mut bool) -> HRESULT,

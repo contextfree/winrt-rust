@@ -585,6 +585,17 @@ impl IPackageManager6 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IPackageManager7, 4068889844, 11175, 19328, 136, 214, 190, 21, 249, 162, 63, 186);
+RT_INTERFACE!{interface IPackageManager7(IPackageManager7Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager7] {
+    fn RequestAddPackageAndRelatedSetAsync(&self, packageUri: *mut foundation::Uri, dependencyPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: *mut PackageVolume, optionalPackageFamilyNames: *mut foundation::collections::IIterable<HString>, relatedPackageUris: *mut foundation::collections::IIterable<foundation::Uri>, packageUrisToInstall: *mut foundation::collections::IIterable<foundation::Uri>, out: *mut *mut foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>) -> HRESULT
+}}
+impl IPackageManager7 {
+    #[inline] pub fn request_add_package_and_related_set_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>, relatedPackageUris: &foundation::collections::IIterable<foundation::Uri>, packageUrisToInstall: &foundation::collections::IIterable<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAddPackageAndRelatedSetAsync)(self as *const _ as *mut _, packageUri as *const _ as *mut _, dependencyPackageUris as *const _ as *mut _, deploymentOptions, targetVolume as *const _ as *mut _, optionalPackageFamilyNames as *const _ as *mut _, relatedPackageUris as *const _ as *mut _, packageUrisToInstall as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IPackageManagerDebugSettings, 442570371, 43400, 20431, 143, 15, 206, 23, 88, 152, 232, 235);
 RT_INTERFACE!{interface IPackageManagerDebugSettings(IPackageManagerDebugSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IPackageManagerDebugSettings] {
     #[cfg(feature="windows-applicationmodel")] fn SetContentGroupStateAsync(&self, package: *mut super::super::applicationmodel::Package, contentGroupName: HSTRING, state: super::super::applicationmodel::PackageContentGroupState, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -823,6 +834,77 @@ impl IInstalledClassicAppInfo {
 RT_CLASS!{class InstalledClassicAppInfo: IInstalledClassicAppInfo}
 } // Windows.Management.Deployment.Preview
 } // Windows.Management.Deployment
+pub mod update { // Windows.Management.Update
+use ::prelude::*;
+DEFINE_IID!(IID_IPreviewBuildsManager, 4194819425, 32335, 23031, 124, 159, 222, 249, 5, 28, 95, 98);
+RT_INTERFACE!{interface IPreviewBuildsManager(IPreviewBuildsManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPreviewBuildsManager] {
+    fn get_ArePreviewBuildsAllowed(&self, out: *mut bool) -> HRESULT,
+    fn put_ArePreviewBuildsAllowed(&self, value: bool) -> HRESULT,
+    fn GetCurrentState(&self, out: *mut *mut PreviewBuildsState) -> HRESULT,
+    fn SyncAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+}}
+impl IPreviewBuildsManager {
+    #[inline] pub fn get_are_preview_builds_allowed(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ArePreviewBuildsAllowed)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_are_preview_builds_allowed(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ArePreviewBuildsAllowed)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_current_state(&self) -> Result<Option<ComPtr<PreviewBuildsState>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCurrentState)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn sync_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SyncAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PreviewBuildsManager: IPreviewBuildsManager}
+impl RtActivatable<IPreviewBuildsManagerStatics> for PreviewBuildsManager {}
+impl PreviewBuildsManager {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<PreviewBuildsManager>>> {
+        <Self as RtActivatable<IPreviewBuildsManagerStatics>>::get_activation_factory().get_default()
+    }
+    #[inline] pub fn is_supported() -> Result<bool> {
+        <Self as RtActivatable<IPreviewBuildsManagerStatics>>::get_activation_factory().is_supported()
+    }
+}
+DEFINE_CLSID!(PreviewBuildsManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,85,112,100,97,116,101,46,80,114,101,118,105,101,119,66,117,105,108,100,115,77,97,110,97,103,101,114,0]) [CLSID_PreviewBuildsManager]);
+DEFINE_IID!(IID_IPreviewBuildsManagerStatics, 1044523143, 45330, 23152, 125, 161, 151, 215, 141, 50, 170, 41);
+RT_INTERFACE!{static interface IPreviewBuildsManagerStatics(IPreviewBuildsManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPreviewBuildsManagerStatics] {
+    fn GetDefault(&self, out: *mut *mut PreviewBuildsManager) -> HRESULT,
+    fn IsSupported(&self, out: *mut bool) -> HRESULT
+}}
+impl IPreviewBuildsManagerStatics {
+    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<PreviewBuildsManager>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPreviewBuildsState, 2733805630, 45603, 24419, 117, 70, 62, 142, 172, 7, 10, 46);
+RT_INTERFACE!{interface IPreviewBuildsState(IPreviewBuildsStateVtbl): IInspectable(IInspectableVtbl) [IID_IPreviewBuildsState] {
+    fn get_Properties(&self, out: *mut *mut foundation::collections::ValueSet) -> HRESULT
+}}
+impl IPreviewBuildsState {
+    #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PreviewBuildsState: IPreviewBuildsState}
+} // Windows.Management.Update
 pub mod core { // Windows.Management.Core
 use ::prelude::*;
 DEFINE_IID!(IID_IApplicationDataManager, 1959855154, 11929, 16384, 154, 58, 100, 48, 126, 133, 129, 41);

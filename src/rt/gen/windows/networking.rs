@@ -156,6 +156,506 @@ use ::prelude::*;
 RT_ENUM! { enum DataClasses: u32 {
     None (DataClasses_None) = 0, Gprs (DataClasses_Gprs) = 1, Edge (DataClasses_Edge) = 2, Umts (DataClasses_Umts) = 4, Hsdpa (DataClasses_Hsdpa) = 8, Hsupa (DataClasses_Hsupa) = 16, LteAdvanced (DataClasses_LteAdvanced) = 32, Cdma1xRtt (DataClasses_Cdma1xRtt) = 65536, Cdma1xEvdo (DataClasses_Cdma1xEvdo) = 131072, Cdma1xEvdoRevA (DataClasses_Cdma1xEvdoRevA) = 262144, Cdma1xEvdv (DataClasses_Cdma1xEvdv) = 524288, Cdma3xRtt (DataClasses_Cdma3xRtt) = 1048576, Cdma1xEvdoRevB (DataClasses_Cdma1xEvdoRevB) = 2097152, CdmaUmb (DataClasses_CdmaUmb) = 4194304, Custom (DataClasses_Custom) = 2147483648,
 }}
+DEFINE_IID!(IID_IESim, 1869508134, 61731, 17277, 140, 237, 220, 29, 43, 192, 195, 169);
+RT_INTERFACE!{interface IESim(IESimVtbl): IInspectable(IInspectableVtbl) [IID_IESim] {
+    fn get_AvailableMemoryInBytes(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
+    fn get_Eid(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_FirmwareVersion(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_MobileBroadbandModemDeviceId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Policy(&self, out: *mut *mut ESimPolicy) -> HRESULT,
+    fn get_State(&self, out: *mut ESimState) -> HRESULT,
+    fn GetProfiles(&self, out: *mut *mut foundation::collections::IVectorView<ESimProfile>) -> HRESULT,
+    fn DeleteProfileAsync(&self, profileId: HSTRING, out: *mut *mut foundation::IAsyncOperation<ESimOperationResult>) -> HRESULT,
+    fn DownloadProfileMetadataAsync(&self, activationCode: HSTRING, out: *mut *mut foundation::IAsyncOperation<ESimDownloadProfileMetadataResult>) -> HRESULT,
+    fn ResetAsync(&self, out: *mut *mut foundation::IAsyncOperation<ESimOperationResult>) -> HRESULT,
+    fn add_ProfileChanged(&self, handler: *mut foundation::TypedEventHandler<ESim, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ProfileChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IESim {
+    #[inline] pub fn get_available_memory_in_bytes(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AvailableMemoryInBytes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_eid(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Eid)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_firmware_version(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_FirmwareVersion)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_mobile_broadband_modem_device_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_MobileBroadbandModemDeviceId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_policy(&self) -> Result<Option<ComPtr<ESimPolicy>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Policy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_state(&self) -> Result<ESimState> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_profiles(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<ESimProfile>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetProfiles)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn delete_profile_async(&self, profileId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DeleteProfileAsync)(self as *const _ as *mut _, profileId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn download_profile_metadata_async(&self, activationCode: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ESimDownloadProfileMetadataResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DownloadProfileMetadataAsync)(self as *const _ as *mut _, activationCode.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn reset_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ResetAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_profile_changed(&self, handler: &foundation::TypedEventHandler<ESim, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_ProfileChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_profile_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_ProfileChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ESim: IESim}
+DEFINE_IID!(IID_IESimAddedEventArgs, 951913048, 19802, 19720, 141, 167, 231, 62, 255, 54, 157, 221);
+RT_INTERFACE!{interface IESimAddedEventArgs(IESimAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IESimAddedEventArgs] {
+    fn get_ESim(&self, out: *mut *mut ESim) -> HRESULT
+}}
+impl IESimAddedEventArgs {
+    #[inline] pub fn get_esim(&self) -> Result<Option<ComPtr<ESim>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ESim)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ESimAddedEventArgs: IESimAddedEventArgs}
+RT_ENUM! { enum ESimAuthenticationPreference: i32 {
+    OnEntry (ESimAuthenticationPreference_OnEntry) = 0, OnAction (ESimAuthenticationPreference_OnAction) = 1, Never (ESimAuthenticationPreference_Never) = 2,
+}}
+DEFINE_IID!(IID_IESimDownloadProfileMetadataResult, 3290647966, 23254, 17005, 141, 0, 68, 52, 244, 73, 175, 236);
+RT_INTERFACE!{interface IESimDownloadProfileMetadataResult(IESimDownloadProfileMetadataResultVtbl): IInspectable(IInspectableVtbl) [IID_IESimDownloadProfileMetadataResult] {
+    fn get_Result(&self, out: *mut *mut ESimOperationResult) -> HRESULT,
+    fn get_ProfileMetadata(&self, out: *mut *mut ESimProfileMetadata) -> HRESULT
+}}
+impl IESimDownloadProfileMetadataResult {
+    #[inline] pub fn get_result(&self) -> Result<Option<ComPtr<ESimOperationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Result)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_profile_metadata(&self) -> Result<Option<ComPtr<ESimProfileMetadata>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProfileMetadata)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ESimDownloadProfileMetadataResult: IESimDownloadProfileMetadataResult}
+RT_CLASS!{static class ESimManager}
+impl RtActivatable<IESimManagerStatics> for ESimManager {}
+impl ESimManager {
+    #[inline] pub fn get_service_info() -> Result<Option<ComPtr<ESimServiceInfo>>> {
+        <Self as RtActivatable<IESimManagerStatics>>::get_activation_factory().get_service_info()
+    }
+    #[inline] pub fn try_create_esim_watcher() -> Result<Option<ComPtr<ESimWatcher>>> {
+        <Self as RtActivatable<IESimManagerStatics>>::get_activation_factory().try_create_esim_watcher()
+    }
+    #[inline] pub fn add_service_info_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IESimManagerStatics>>::get_activation_factory().add_service_info_changed(handler)
+    }
+    #[inline] pub fn remove_service_info_changed(token: foundation::EventRegistrationToken) -> Result<()> {
+        <Self as RtActivatable<IESimManagerStatics>>::get_activation_factory().remove_service_info_changed(token)
+    }
+}
+DEFINE_CLSID!(ESimManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,69,83,105,109,77,97,110,97,103,101,114,0]) [CLSID_ESimManager]);
+DEFINE_IID!(IID_IESimManagerStatics, 200944652, 57224, 17969, 191, 4, 193, 46, 40, 27, 57, 98);
+RT_INTERFACE!{static interface IESimManagerStatics(IESimManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IESimManagerStatics] {
+    fn get_ServiceInfo(&self, out: *mut *mut ESimServiceInfo) -> HRESULT,
+    fn TryCreateESimWatcher(&self, out: *mut *mut ESimWatcher) -> HRESULT,
+    fn add_ServiceInfoChanged(&self, handler: *mut foundation::EventHandler<IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ServiceInfoChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IESimManagerStatics {
+    #[inline] pub fn get_service_info(&self) -> Result<Option<ComPtr<ESimServiceInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ServiceInfo)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn try_create_esim_watcher(&self) -> Result<Option<ComPtr<ESimWatcher>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryCreateESimWatcher)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_service_info_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_ServiceInfoChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_service_info_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_ServiceInfoChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IESimOperationResult, 2793104305, 12443, 20087, 158, 126, 205, 147, 241, 221, 199, 185);
+RT_INTERFACE!{interface IESimOperationResult(IESimOperationResultVtbl): IInspectable(IInspectableVtbl) [IID_IESimOperationResult] {
+    fn get_Status(&self, out: *mut ESimOperationStatus) -> HRESULT
+}}
+impl IESimOperationResult {
+    #[inline] pub fn get_status(&self) -> Result<ESimOperationStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ESimOperationResult: IESimOperationResult}
+RT_ENUM! { enum ESimOperationStatus: i32 {
+    Success (ESimOperationStatus_Success) = 0, NotAuthorized (ESimOperationStatus_NotAuthorized) = 1, NotFound (ESimOperationStatus_NotFound) = 2, PolicyViolation (ESimOperationStatus_PolicyViolation) = 3, InsufficientSpaceOnCard (ESimOperationStatus_InsufficientSpaceOnCard) = 4, ServerFailure (ESimOperationStatus_ServerFailure) = 5, ServerNotReachable (ESimOperationStatus_ServerNotReachable) = 6, TimeoutWaitingForUserConsent (ESimOperationStatus_TimeoutWaitingForUserConsent) = 7, IncorrectConfirmationCode (ESimOperationStatus_IncorrectConfirmationCode) = 8, ConfirmationCodeMaxRetriesExceeded (ESimOperationStatus_ConfirmationCodeMaxRetriesExceeded) = 9, CardRemoved (ESimOperationStatus_CardRemoved) = 10, CardBusy (ESimOperationStatus_CardBusy) = 11, Other (ESimOperationStatus_Other) = 12,
+}}
+DEFINE_IID!(IID_IESimPolicy, 1105312157, 53118, 17173, 136, 43, 111, 30, 116, 176, 211, 143);
+RT_INTERFACE!{interface IESimPolicy(IESimPolicyVtbl): IInspectable(IInspectableVtbl) [IID_IESimPolicy] {
+    fn get_ShouldEnableManagingUi(&self, out: *mut bool) -> HRESULT
+}}
+impl IESimPolicy {
+    #[inline] pub fn get_should_enable_managing_ui(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ShouldEnableManagingUi)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ESimPolicy: IESimPolicy}
+DEFINE_IID!(IID_IESimProfile, 3994974336, 1705, 16423, 180, 248, 221, 178, 61, 120, 16, 224);
+RT_INTERFACE!{interface IESimProfile(IESimProfileVtbl): IInspectable(IInspectableVtbl) [IID_IESimProfile] {
+    fn get_Class(&self, out: *mut ESimProfileClass) -> HRESULT,
+    fn get_Nickname(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Policy(&self, out: *mut *mut ESimProfilePolicy) -> HRESULT,
+    fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_ProviderIcon(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStreamReference) -> HRESULT,
+    fn get_ProviderId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_ProviderName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_State(&self, out: *mut ESimProfileState) -> HRESULT,
+    fn DisableAsync(&self, out: *mut *mut foundation::IAsyncOperation<ESimOperationResult>) -> HRESULT,
+    fn EnableAsync(&self, out: *mut *mut foundation::IAsyncOperation<ESimOperationResult>) -> HRESULT,
+    fn SetNicknameAsync(&self, newNickname: HSTRING, out: *mut *mut foundation::IAsyncOperation<ESimOperationResult>) -> HRESULT
+}}
+impl IESimProfile {
+    #[inline] pub fn get_class(&self) -> Result<ESimProfileClass> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Class)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_nickname(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Nickname)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_policy(&self) -> Result<Option<ComPtr<ESimProfilePolicy>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Policy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_provider_icon(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderIcon)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_provider_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_provider_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_state(&self) -> Result<ESimProfileState> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn disable_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DisableAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn enable_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).EnableAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_nickname_async(&self, newNickname: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SetNicknameAsync)(self as *const _ as *mut _, newNickname.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ESimProfile: IESimProfile}
+RT_ENUM! { enum ESimProfileClass: i32 {
+    Operational (ESimProfileClass_Operational) = 0, Test (ESimProfileClass_Test) = 1, Provisioning (ESimProfileClass_Provisioning) = 2,
+}}
+RT_STRUCT! { struct ESimProfileInstallProgress {
+    TotalSizeInBytes: i32, InstalledSizeInBytes: i32,
+}}
+DEFINE_IID!(IID_IESimProfileMetadata, 3978658591, 37083, 18829, 167, 180, 235, 206, 128, 125, 60, 35);
+RT_INTERFACE!{interface IESimProfileMetadata(IESimProfileMetadataVtbl): IInspectable(IInspectableVtbl) [IID_IESimProfileMetadata] {
+    fn get_IsConfirmationCodeRequired(&self, out: *mut bool) -> HRESULT,
+    fn get_Policy(&self, out: *mut *mut ESimProfilePolicy) -> HRESULT,
+    fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_ProviderIcon(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStreamReference) -> HRESULT,
+    fn get_ProviderId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_ProviderName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_State(&self, out: *mut ESimProfileMetadataState) -> HRESULT,
+    fn DenyInstallAsync(&self, out: *mut *mut foundation::IAsyncOperation<ESimOperationResult>) -> HRESULT,
+    fn ConfirmInstallAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<ESimOperationResult, ESimProfileInstallProgress>) -> HRESULT,
+    fn ConfirmInstallWithConfirmationCodeAsync(&self, confirmationCode: HSTRING, out: *mut *mut foundation::IAsyncOperationWithProgress<ESimOperationResult, ESimProfileInstallProgress>) -> HRESULT,
+    fn PostponeInstallAsync(&self, out: *mut *mut foundation::IAsyncOperation<ESimOperationResult>) -> HRESULT,
+    fn add_StateChanged(&self, handler: *mut foundation::TypedEventHandler<ESimProfileMetadata, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_StateChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IESimProfileMetadata {
+    #[inline] pub fn get_is_confirmation_code_required(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsConfirmationCodeRequired)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_policy(&self) -> Result<Option<ComPtr<ESimProfilePolicy>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Policy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_provider_icon(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderIcon)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_provider_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_provider_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_state(&self) -> Result<ESimProfileMetadataState> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn deny_install_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DenyInstallAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn confirm_install_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<ESimOperationResult, ESimProfileInstallProgress>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ConfirmInstallAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn confirm_install_with_confirmation_code_async(&self, confirmationCode: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<ESimOperationResult, ESimProfileInstallProgress>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ConfirmInstallWithConfirmationCodeAsync)(self as *const _ as *mut _, confirmationCode.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn postpone_install_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).PostponeInstallAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_state_changed(&self, handler: &foundation::TypedEventHandler<ESimProfileMetadata, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_StateChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ESimProfileMetadata: IESimProfileMetadata}
+RT_ENUM! { enum ESimProfileMetadataState: i32 {
+    Unknown (ESimProfileMetadataState_Unknown) = 0, WaitingForInstall (ESimProfileMetadataState_WaitingForInstall) = 1, Downloading (ESimProfileMetadataState_Downloading) = 2, Installing (ESimProfileMetadataState_Installing) = 3, Expired (ESimProfileMetadataState_Expired) = 4, RejectingDownload (ESimProfileMetadataState_RejectingDownload) = 5, NoLongerAvailable (ESimProfileMetadataState_NoLongerAvailable) = 6, DeniedByPolicy (ESimProfileMetadataState_DeniedByPolicy) = 7,
+}}
+DEFINE_IID!(IID_IESimProfilePolicy, 3873247005, 40028, 18117, 162, 137, 169, 72, 153, 155, 240, 98);
+RT_INTERFACE!{interface IESimProfilePolicy(IESimProfilePolicyVtbl): IInspectable(IInspectableVtbl) [IID_IESimProfilePolicy] {
+    fn get_CanDelete(&self, out: *mut bool) -> HRESULT,
+    fn get_CanDisable(&self, out: *mut bool) -> HRESULT,
+    fn get_IsManagedByEnterprise(&self, out: *mut bool) -> HRESULT
+}}
+impl IESimProfilePolicy {
+    #[inline] pub fn get_can_delete(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanDelete)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_can_disable(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanDisable)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_managed_by_enterprise(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsManagedByEnterprise)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ESimProfilePolicy: IESimProfilePolicy}
+RT_ENUM! { enum ESimProfileState: i32 {
+    Unknown (ESimProfileState_Unknown) = 0, Disabled (ESimProfileState_Disabled) = 1, Enabled (ESimProfileState_Enabled) = 2, Deleted (ESimProfileState_Deleted) = 3,
+}}
+DEFINE_IID!(IID_IESimRemovedEventArgs, 3737462651, 12249, 20185, 131, 118, 217, 181, 228, 18, 120, 163);
+RT_INTERFACE!{interface IESimRemovedEventArgs(IESimRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IESimRemovedEventArgs] {
+    fn get_ESim(&self, out: *mut *mut ESim) -> HRESULT
+}}
+impl IESimRemovedEventArgs {
+    #[inline] pub fn get_esim(&self) -> Result<Option<ComPtr<ESim>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ESim)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ESimRemovedEventArgs: IESimRemovedEventArgs}
+DEFINE_IID!(IID_IESimServiceInfo, 4050299855, 32601, 19025, 132, 148, 189, 137, 213, 255, 80, 238);
+RT_INTERFACE!{interface IESimServiceInfo(IESimServiceInfoVtbl): IInspectable(IInspectableVtbl) [IID_IESimServiceInfo] {
+    fn get_AuthenticationPreference(&self, out: *mut ESimAuthenticationPreference) -> HRESULT,
+    fn get_IsESimUiEnabled(&self, out: *mut bool) -> HRESULT
+}}
+impl IESimServiceInfo {
+    #[inline] pub fn get_authentication_preference(&self) -> Result<ESimAuthenticationPreference> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AuthenticationPreference)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_esim_ui_enabled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsESimUiEnabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ESimServiceInfo: IESimServiceInfo}
+RT_ENUM! { enum ESimState: i32 {
+    Unknown (ESimState_Unknown) = 0, Idle (ESimState_Idle) = 1, Removed (ESimState_Removed) = 2, Busy (ESimState_Busy) = 3,
+}}
+DEFINE_IID!(IID_IESimUpdatedEventArgs, 1276271852, 20621, 19336, 131, 203, 104, 190, 248, 22, 141, 18);
+RT_INTERFACE!{interface IESimUpdatedEventArgs(IESimUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IESimUpdatedEventArgs] {
+    fn get_ESim(&self, out: *mut *mut ESim) -> HRESULT
+}}
+impl IESimUpdatedEventArgs {
+    #[inline] pub fn get_esim(&self) -> Result<Option<ComPtr<ESim>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ESim)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ESimUpdatedEventArgs: IESimUpdatedEventArgs}
+DEFINE_IID!(IID_IESimWatcher, 3254275307, 41613, 20415, 151, 113, 110, 49, 184, 28, 207, 34);
+RT_INTERFACE!{interface IESimWatcher(IESimWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IESimWatcher] {
+    fn get_Status(&self, out: *mut ESimWatcherStatus) -> HRESULT,
+    fn Start(&self) -> HRESULT,
+    fn Stop(&self) -> HRESULT,
+    fn add_Added(&self, handler: *mut foundation::TypedEventHandler<ESimWatcher, ESimAddedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Added(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_EnumerationCompleted(&self, handler: *mut foundation::TypedEventHandler<ESimWatcher, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_EnumerationCompleted(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_Removed(&self, handler: *mut foundation::TypedEventHandler<ESimWatcher, ESimRemovedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Removed(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_Stopped(&self, handler: *mut foundation::TypedEventHandler<ESimWatcher, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Stopped(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_Updated(&self, handler: *mut foundation::TypedEventHandler<ESimWatcher, ESimUpdatedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Updated(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IESimWatcher {
+    #[inline] pub fn get_status(&self) -> Result<ESimWatcherStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn start(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Start)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Stop)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_added(&self, handler: &foundation::TypedEventHandler<ESimWatcher, ESimAddedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Added)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Added)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_enumeration_completed(&self, handler: &foundation::TypedEventHandler<ESimWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_EnumerationCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_EnumerationCompleted)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<ESimWatcher, ESimRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Removed)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_stopped(&self, handler: &foundation::TypedEventHandler<ESimWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Stopped)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_stopped(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Stopped)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_updated(&self, handler: &foundation::TypedEventHandler<ESimWatcher, ESimUpdatedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Updated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Updated)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ESimWatcher: IESimWatcher}
+RT_ENUM! { enum ESimWatcherStatus: i32 {
+    Created (ESimWatcherStatus_Created) = 0, Started (ESimWatcherStatus_Started) = 1, EnumerationCompleted (ESimWatcherStatus_EnumerationCompleted) = 2, Stopping (ESimWatcherStatus_Stopping) = 3, Stopped (ESimWatcherStatus_Stopped) = 4,
+}}
 DEFINE_IID!(IID_IHotspotAuthenticationContext, 3881224081, 4099, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
 RT_INTERFACE!{interface IHotspotAuthenticationContext(IHotspotAuthenticationContextVtbl): IInspectable(IInspectableVtbl) [IID_IHotspotAuthenticationContext] {
     fn get_WirelessNetworkId(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT,
@@ -683,6 +1183,24 @@ impl IMobileBroadbandAntennaSar {
     }}
 }
 RT_CLASS!{class MobileBroadbandAntennaSar: IMobileBroadbandAntennaSar}
+impl RtActivatable<IMobileBroadbandAntennaSarFactory> for MobileBroadbandAntennaSar {}
+impl MobileBroadbandAntennaSar {
+    #[inline] pub fn create_with_index(antennaIndex: i32, sarBackoffIndex: i32) -> Result<ComPtr<MobileBroadbandAntennaSar>> {
+        <Self as RtActivatable<IMobileBroadbandAntennaSarFactory>>::get_activation_factory().create_with_index(antennaIndex, sarBackoffIndex)
+    }
+}
+DEFINE_CLSID!(MobileBroadbandAntennaSar(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,65,110,116,101,110,110,97,83,97,114,0]) [CLSID_MobileBroadbandAntennaSar]);
+DEFINE_IID!(IID_IMobileBroadbandAntennaSarFactory, 2837321494, 49229, 18977, 134, 152, 20, 89, 220, 103, 44, 110);
+RT_INTERFACE!{static interface IMobileBroadbandAntennaSarFactory(IMobileBroadbandAntennaSarFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAntennaSarFactory] {
+    fn CreateWithIndex(&self, antennaIndex: i32, sarBackoffIndex: i32, out: *mut *mut MobileBroadbandAntennaSar) -> HRESULT
+}}
+impl IMobileBroadbandAntennaSarFactory {
+    #[inline] pub fn create_with_index(&self, antennaIndex: i32, sarBackoffIndex: i32) -> Result<ComPtr<MobileBroadbandAntennaSar>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithIndex)(self as *const _ as *mut _, antennaIndex, sarBackoffIndex, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IMobileBroadbandCellCdma, 100774836, 16666, 20270, 130, 135, 118, 245, 101, 12, 96, 205);
 RT_INTERFACE!{interface IMobileBroadbandCellCdma(IMobileBroadbandCellCdmaVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandCellCdma] {
     fn get_BaseStationId(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
@@ -1411,6 +1929,34 @@ impl IMobileBroadbandModem2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IMobileBroadbandModem3, 3925788394, 12084, 17794, 145, 2, 195, 20, 210, 168, 126, 236);
+RT_INTERFACE!{interface IMobileBroadbandModem3(IMobileBroadbandModem3Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModem3] {
+    fn TryGetPcoAsync(&self, out: *mut *mut foundation::IAsyncOperation<MobileBroadbandPco>) -> HRESULT,
+    fn get_IsInEmergencyCallMode(&self, out: *mut bool) -> HRESULT,
+    fn add_IsInEmergencyCallModeChanged(&self, handler: *mut foundation::TypedEventHandler<MobileBroadbandModem, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_IsInEmergencyCallModeChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IMobileBroadbandModem3 {
+    #[inline] pub fn try_get_pco_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandPco>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryGetPcoAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_in_emergency_call_mode(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsInEmergencyCallMode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn add_is_in_emergency_call_mode_changed(&self, handler: &foundation::TypedEventHandler<MobileBroadbandModem, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_IsInEmergencyCallModeChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_is_in_emergency_call_mode_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_IsInEmergencyCallModeChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IMobileBroadbandModemConfiguration, 4242552227, 54989, 17184, 185, 130, 190, 157, 62, 199, 137, 15);
 RT_INTERFACE!{interface IMobileBroadbandModemConfiguration(IMobileBroadbandModemConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemConfiguration] {
     fn get_Uicc(&self, out: *mut *mut MobileBroadbandUicc) -> HRESULT,
@@ -1444,6 +1990,52 @@ impl IMobileBroadbandModemConfiguration2 {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SarManager)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IMobileBroadbandModemIsolation, 3043069932, 58977, 17200, 155, 180, 52, 128, 33, 46, 195, 84);
+RT_INTERFACE!{interface IMobileBroadbandModemIsolation(IMobileBroadbandModemIsolationVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemIsolation] {
+    fn AddAllowedHost(&self, host: *mut super::HostName) -> HRESULT,
+    fn AddAllowedHostRange(&self, first: *mut super::HostName, last: *mut super::HostName) -> HRESULT,
+    fn ApplyConfigurationAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ClearConfigurationAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IMobileBroadbandModemIsolation {
+    #[inline] pub fn add_allowed_host(&self, host: &super::HostName) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddAllowedHost)(self as *const _ as *mut _, host as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_allowed_host_range(&self, first: &super::HostName, last: &super::HostName) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddAllowedHostRange)(self as *const _ as *mut _, first as *const _ as *mut _, last as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn apply_configuration_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ApplyConfigurationAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn clear_configuration_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ClearConfigurationAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class MobileBroadbandModemIsolation: IMobileBroadbandModemIsolation}
+impl RtActivatable<IMobileBroadbandModemIsolationFactory> for MobileBroadbandModemIsolation {}
+impl MobileBroadbandModemIsolation {
+    #[inline] pub fn create(modemDeviceId: &HStringArg, ruleGroupId: &HStringArg) -> Result<ComPtr<MobileBroadbandModemIsolation>> {
+        <Self as RtActivatable<IMobileBroadbandModemIsolationFactory>>::get_activation_factory().create(modemDeviceId, ruleGroupId)
+    }
+}
+DEFINE_CLSID!(MobileBroadbandModemIsolation(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,77,111,100,101,109,73,115,111,108,97,116,105,111,110,0]) [CLSID_MobileBroadbandModemIsolation]);
+DEFINE_IID!(IID_IMobileBroadbandModemIsolationFactory, 567798872, 49841, 19503, 160, 48, 114, 130, 10, 36, 236, 217);
+RT_INTERFACE!{static interface IMobileBroadbandModemIsolationFactory(IMobileBroadbandModemIsolationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemIsolationFactory] {
+    fn Create(&self, modemDeviceId: HSTRING, ruleGroupId: HSTRING, out: *mut *mut MobileBroadbandModemIsolation) -> HRESULT
+}}
+impl IMobileBroadbandModemIsolationFactory {
+    #[inline] pub fn create(&self, modemDeviceId: &HStringArg, ruleGroupId: &HStringArg) -> Result<ComPtr<MobileBroadbandModemIsolation>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, modemDeviceId.get(), ruleGroupId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandModemStatics, 4187936311, 55025, 19064, 140, 188, 100, 33, 166, 80, 99, 200);
@@ -1595,6 +2187,43 @@ impl IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails {
     }}
 }
 RT_CLASS!{class MobileBroadbandNetworkRegistrationStateChangeTriggerDetails: IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails}
+DEFINE_IID!(IID_IMobileBroadbandPco, 3571776702, 58275, 17349, 168, 123, 108, 134, 210, 41, 215, 250);
+RT_INTERFACE!{interface IMobileBroadbandPco(IMobileBroadbandPcoVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPco] {
+    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    fn get_IsComplete(&self, out: *mut bool) -> HRESULT,
+    fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IMobileBroadbandPco {
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Data)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_complete(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsComplete)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DeviceId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class MobileBroadbandPco: IMobileBroadbandPco}
+DEFINE_IID!(IID_IMobileBroadbandPcoDataChangeTriggerDetails, 641683732, 25824, 17555, 144, 155, 45, 20, 160, 25, 98, 177);
+RT_INTERFACE!{interface IMobileBroadbandPcoDataChangeTriggerDetails(IMobileBroadbandPcoDataChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPcoDataChangeTriggerDetails] {
+    fn get_UpdatedData(&self, out: *mut *mut MobileBroadbandPco) -> HRESULT
+}}
+impl IMobileBroadbandPcoDataChangeTriggerDetails {
+    #[inline] pub fn get_updated_data(&self) -> Result<Option<ComPtr<MobileBroadbandPco>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UpdatedData)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class MobileBroadbandPcoDataChangeTriggerDetails: IMobileBroadbandPcoDataChangeTriggerDetails}
 DEFINE_IID!(IID_IMobileBroadbandPin, 3865171721, 59257, 17855, 130, 129, 117, 50, 61, 249, 227, 33);
 RT_INTERFACE!{interface IMobileBroadbandPin(IMobileBroadbandPinVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPin] {
     fn get_Type(&self, out: *mut MobileBroadbandPinType) -> HRESULT,
@@ -2025,6 +2654,21 @@ RT_CLASS!{class MobileBroadbandUiccAppsResult: IMobileBroadbandUiccAppsResult}
 RT_ENUM! { enum NetworkDeviceStatus: i32 {
     DeviceNotReady (NetworkDeviceStatus_DeviceNotReady) = 0, DeviceReady (NetworkDeviceStatus_DeviceReady) = 1, SimNotInserted (NetworkDeviceStatus_SimNotInserted) = 2, BadSim (NetworkDeviceStatus_BadSim) = 3, DeviceHardwareFailure (NetworkDeviceStatus_DeviceHardwareFailure) = 4, AccountNotActivated (NetworkDeviceStatus_AccountNotActivated) = 5, DeviceLocked (NetworkDeviceStatus_DeviceLocked) = 6, DeviceBlocked (NetworkDeviceStatus_DeviceBlocked) = 7,
 }}
+RT_ENUM! { enum NetworkOperatorDataUsageNotificationKind: i32 {
+    DataUsageProgress (NetworkOperatorDataUsageNotificationKind_DataUsageProgress) = 0,
+}}
+DEFINE_IID!(IID_INetworkOperatorDataUsageTriggerDetails, 1357058669, 42085, 20203, 147, 23, 40, 161, 103, 99, 12, 234);
+RT_INTERFACE!{interface INetworkOperatorDataUsageTriggerDetails(INetworkOperatorDataUsageTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorDataUsageTriggerDetails] {
+    fn get_NotificationKind(&self, out: *mut NetworkOperatorDataUsageNotificationKind) -> HRESULT
+}}
+impl INetworkOperatorDataUsageTriggerDetails {
+    #[inline] pub fn get_notification_kind(&self) -> Result<NetworkOperatorDataUsageNotificationKind> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_NotificationKind)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class NetworkOperatorDataUsageTriggerDetails: INetworkOperatorDataUsageTriggerDetails}
 RT_ENUM! { enum NetworkOperatorEventMessageType: i32 {
     Gsm (NetworkOperatorEventMessageType_Gsm) = 0, Cdma (NetworkOperatorEventMessageType_Cdma) = 1, Ussd (NetworkOperatorEventMessageType_Ussd) = 2, DataPlanThresholdReached (NetworkOperatorEventMessageType_DataPlanThresholdReached) = 3, DataPlanReset (NetworkOperatorEventMessageType_DataPlanReset) = 4, DataPlanDeleted (NetworkOperatorEventMessageType_DataPlanDeleted) = 5, ProfileConnected (NetworkOperatorEventMessageType_ProfileConnected) = 6, ProfileDisconnected (NetworkOperatorEventMessageType_ProfileDisconnected) = 7, RegisteredRoaming (NetworkOperatorEventMessageType_RegisteredRoaming) = 8, RegisteredHome (NetworkOperatorEventMessageType_RegisteredHome) = 9, TetheringEntitlementCheck (NetworkOperatorEventMessageType_TetheringEntitlementCheck) = 10, TetheringOperationalStateChanged (NetworkOperatorEventMessageType_TetheringOperationalStateChanged) = 11, TetheringNumberOfClientsChanged (NetworkOperatorEventMessageType_TetheringNumberOfClientsChanged) = 12,
 }}
@@ -2354,6 +2998,28 @@ impl IProvisioningAgentStaticMethods {
 RT_ENUM! { enum TetheringCapability: i32 {
     Enabled (TetheringCapability_Enabled) = 0, DisabledByGroupPolicy (TetheringCapability_DisabledByGroupPolicy) = 1, DisabledByHardwareLimitation (TetheringCapability_DisabledByHardwareLimitation) = 2, DisabledByOperator (TetheringCapability_DisabledByOperator) = 3, DisabledBySku (TetheringCapability_DisabledBySku) = 4, DisabledByRequiredAppNotInstalled (TetheringCapability_DisabledByRequiredAppNotInstalled) = 5, DisabledDueToUnknownCause (TetheringCapability_DisabledDueToUnknownCause) = 6, DisabledBySystemCapability (TetheringCapability_DisabledBySystemCapability) = 7,
 }}
+DEFINE_IID!(IID_ITetheringEntitlementCheckTriggerDetails, 63331997, 22822, 16883, 169, 78, 181, 9, 38, 252, 66, 27);
+RT_INTERFACE!{interface ITetheringEntitlementCheckTriggerDetails(ITetheringEntitlementCheckTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ITetheringEntitlementCheckTriggerDetails] {
+    fn get_NetworkAccountId(&self, out: *mut HSTRING) -> HRESULT,
+    fn AllowTethering(&self) -> HRESULT,
+    fn DenyTethering(&self, entitlementFailureReason: HSTRING) -> HRESULT
+}}
+impl ITetheringEntitlementCheckTriggerDetails {
+    #[inline] pub fn get_network_account_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_NetworkAccountId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn allow_tethering(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AllowTethering)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn deny_tethering(&self, entitlementFailureReason: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).DenyTethering)(self as *const _ as *mut _, entitlementFailureReason.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class TetheringEntitlementCheckTriggerDetails: ITetheringEntitlementCheckTriggerDetails}
 RT_ENUM! { enum TetheringOperationalState: i32 {
     Unknown (TetheringOperationalState_Unknown) = 0, On (TetheringOperationalState_On) = 1, Off (TetheringOperationalState_Off) = 2, InTransition (TetheringOperationalState_InTransition) = 3,
 }}
@@ -2607,6 +3273,22 @@ impl ICellularApnContext {
 RT_CLASS!{class CellularApnContext: ICellularApnContext}
 impl RtActivatable<IActivationFactory> for CellularApnContext {}
 DEFINE_CLSID!(CellularApnContext(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,101,108,108,117,108,97,114,65,112,110,67,111,110,116,101,120,116,0]) [CLSID_CellularApnContext]);
+DEFINE_IID!(IID_ICellularApnContext2, 1991306010, 44105, 17232, 177, 229, 220, 71, 99, 188, 105, 199);
+RT_INTERFACE!{interface ICellularApnContext2(ICellularApnContext2Vtbl): IInspectable(IInspectableVtbl) [IID_ICellularApnContext2] {
+    fn get_ProfileName(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_ProfileName(&self, value: HSTRING) -> HRESULT
+}}
+impl ICellularApnContext2 {
+    #[inline] pub fn get_profile_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProfileName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_profile_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ProfileName)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IConnectionCost, 3134707753, 13334, 19216, 162, 2, 186, 192, 176, 117, 189, 174);
 RT_INTERFACE!{interface IConnectionCost(IConnectionCostVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionCost] {
     fn get_NetworkCostType(&self, out: *mut NetworkCostType) -> HRESULT,
@@ -2893,6 +3575,22 @@ impl IConnectionProfileFilter2 {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_raw_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RawData)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IConnectionProfileFilter3, 178915776, 20500, 17532, 136, 9, 174, 228, 203, 10, 249, 74);
+RT_INTERFACE!{interface IConnectionProfileFilter3(IConnectionProfileFilter3Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfileFilter3] {
+    fn put_PurposeGuid(&self, value: *mut foundation::IReference<Guid>) -> HRESULT,
+    fn get_PurposeGuid(&self, out: *mut *mut foundation::IReference<Guid>) -> HRESULT
+}}
+impl IConnectionProfileFilter3 {
+    #[inline] pub fn set_purpose_guid(&self, value: &foundation::IReference<Guid>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PurposeGuid)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_purpose_guid(&self) -> Result<Option<ComPtr<foundation::IReference<Guid>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PurposeGuid)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3522,8 +4220,28 @@ impl IWwanConnectionProfileDetails {
     }}
 }
 RT_CLASS!{class WwanConnectionProfileDetails: IWwanConnectionProfileDetails}
+DEFINE_IID!(IID_IWwanConnectionProfileDetails2, 2054508254, 41453, 18610, 142, 146, 180, 96, 3, 61, 82, 226);
+RT_INTERFACE!{interface IWwanConnectionProfileDetails2(IWwanConnectionProfileDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IWwanConnectionProfileDetails2] {
+    fn get_IPKind(&self, out: *mut WwanNetworkIPKind) -> HRESULT,
+    fn get_PurposeGuids(&self, out: *mut *mut foundation::collections::IVectorView<Guid>) -> HRESULT
+}}
+impl IWwanConnectionProfileDetails2 {
+    #[inline] pub fn get_ipkind(&self) -> Result<WwanNetworkIPKind> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IPKind)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_purpose_guids(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<Guid>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PurposeGuids)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum WwanDataClass: u32 {
     None (WwanDataClass_None) = 0, Gprs (WwanDataClass_Gprs) = 1, Edge (WwanDataClass_Edge) = 2, Umts (WwanDataClass_Umts) = 4, Hsdpa (WwanDataClass_Hsdpa) = 8, Hsupa (WwanDataClass_Hsupa) = 16, LteAdvanced (WwanDataClass_LteAdvanced) = 32, Cdma1xRtt (WwanDataClass_Cdma1xRtt) = 65536, Cdma1xEvdo (WwanDataClass_Cdma1xEvdo) = 131072, Cdma1xEvdoRevA (WwanDataClass_Cdma1xEvdoRevA) = 262144, Cdma1xEvdv (WwanDataClass_Cdma1xEvdv) = 524288, Cdma3xRtt (WwanDataClass_Cdma3xRtt) = 1048576, Cdma1xEvdoRevB (WwanDataClass_Cdma1xEvdoRevB) = 2097152, CdmaUmb (WwanDataClass_CdmaUmb) = 4194304, Custom (WwanDataClass_Custom) = 2147483648,
+}}
+RT_ENUM! { enum WwanNetworkIPKind: i32 {
+    None (WwanNetworkIPKind_None) = 0, Ipv4 (WwanNetworkIPKind_Ipv4) = 1, Ipv6 (WwanNetworkIPKind_Ipv6) = 2, Ipv4v6 (WwanNetworkIPKind_Ipv4v6) = 3, Ipv4v6v4Xlat (WwanNetworkIPKind_Ipv4v6v4Xlat) = 4,
 }}
 RT_ENUM! { enum WwanNetworkRegistrationState: i32 {
     None (WwanNetworkRegistrationState_None) = 0, Deregistered (WwanNetworkRegistrationState_Deregistered) = 1, Searching (WwanNetworkRegistrationState_Searching) = 2, Home (WwanNetworkRegistrationState_Home) = 3, Roaming (WwanNetworkRegistrationState_Roaming) = 4, Partner (WwanNetworkRegistrationState_Partner) = 5, Denied (WwanNetworkRegistrationState_Denied) = 6,
@@ -4377,6 +5095,16 @@ impl IDownloadOperation3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IDownloadOperation4, 215658228, 36079, 16458, 150, 109, 240, 88, 64, 11, 237, 128);
+RT_INTERFACE!{interface IDownloadOperation4(IDownloadOperation4Vtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation4] {
+    fn MakeCurrentInTransferGroup(&self) -> HRESULT
+}}
+impl IDownloadOperation4 {
+    #[inline] pub fn make_current_in_transfer_group(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).MakeCurrentInTransferGroup)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IResponseInformation, 4173044242, 63251, 18322, 139, 104, 217, 210, 151, 249, 29, 46);
 RT_INTERFACE!{interface IResponseInformation(IResponseInformationVtbl): IInspectable(IInspectableVtbl) [IID_IResponseInformation] {
     fn get_IsResumable(&self, out: *mut bool) -> HRESULT,
@@ -4459,6 +5187,16 @@ impl IUploadOperation2 {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TransferGroup)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IUploadOperation3, 1120480419, 56889, 17734, 188, 98, 55, 116, 180, 41, 77, 227);
+RT_INTERFACE!{interface IUploadOperation3(IUploadOperation3Vtbl): IInspectable(IInspectableVtbl) [IID_IUploadOperation3] {
+    fn MakeCurrentInTransferGroup(&self) -> HRESULT
+}}
+impl IUploadOperation3 {
+    #[inline] pub fn make_current_in_transfer_group(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).MakeCurrentInTransferGroup)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 } // Windows.Networking.BackgroundTransfer
@@ -5762,6 +6500,23 @@ impl IMessageWebSocket2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IMessageWebSocket3, 1507450619, 29103, 17225, 132, 135, 145, 31, 207, 104, 21, 151);
+RT_INTERFACE!{interface IMessageWebSocket3(IMessageWebSocket3Vtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocket3] {
+    #[cfg(feature="windows-storage")] fn SendNonfinalFrameAsync(&self, data: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperationWithProgress<u32, u32>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn SendFinalFrameAsync(&self, data: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperationWithProgress<u32, u32>) -> HRESULT
+}}
+impl IMessageWebSocket3 {
+    #[cfg(feature="windows-storage")] #[inline] pub fn send_nonfinal_frame_async(&self, data: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u32, u32>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SendNonfinalFrameAsync)(self as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn send_final_frame_async(&self, data: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u32, u32>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SendFinalFrameAsync)(self as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IMessageWebSocketControl, 2165848202, 50729, 20234, 128, 251, 129, 252, 5, 83, 136, 98);
 RT_INTERFACE!{interface IMessageWebSocketControl(IMessageWebSocketControlVtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocketControl] {
     fn get_MaxMessageSize(&self, out: *mut u32) -> HRESULT,
@@ -5876,6 +6631,165 @@ RT_ENUM! { enum MessageWebSocketReceiveMode: i32 {
 RT_STRUCT! { struct RoundTripTimeStatistics {
     Variance: u32, Max: u32, Min: u32, Sum: u32,
 }}
+DEFINE_IID!(IID_IServerMessageWebSocket, 3819737664, 33083, 24317, 126, 17, 174, 35, 5, 252, 119, 241);
+RT_INTERFACE!{interface IServerMessageWebSocket(IServerMessageWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IServerMessageWebSocket] {
+    fn add_MessageReceived(&self, value: *mut foundation::TypedEventHandler<ServerMessageWebSocket, MessageWebSocketMessageReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_MessageReceived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn get_Control(&self, out: *mut *mut ServerMessageWebSocketControl) -> HRESULT,
+    fn get_Information(&self, out: *mut *mut ServerMessageWebSocketInformation) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_OutputStream(&self, out: *mut *mut super::super::storage::streams::IOutputStream) -> HRESULT,
+    fn add_Closed(&self, value: *mut foundation::TypedEventHandler<ServerMessageWebSocket, WebSocketClosedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Closed(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn CloseWithStatus(&self, code: u16, reason: HSTRING) -> HRESULT
+}}
+impl IServerMessageWebSocket {
+    #[inline] pub fn add_message_received(&self, value: &foundation::TypedEventHandler<ServerMessageWebSocket, MessageWebSocketMessageReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_MessageReceived)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_message_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_MessageReceived)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_control(&self) -> Result<Option<ComPtr<ServerMessageWebSocketControl>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Control)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_information(&self) -> Result<Option<ComPtr<ServerMessageWebSocketInformation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Information)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IOutputStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_OutputStream)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_closed(&self, value: &foundation::TypedEventHandler<ServerMessageWebSocket, WebSocketClosedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_closed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Closed)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn close_with_status(&self, code: u16, reason: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).CloseWithStatus)(self as *const _ as *mut _, code, reason.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ServerMessageWebSocket: IServerMessageWebSocket}
+DEFINE_IID!(IID_IServerMessageWebSocketControl, 1774383185, 7199, 22650, 69, 25, 33, 129, 97, 1, 146, 183);
+RT_INTERFACE!{interface IServerMessageWebSocketControl(IServerMessageWebSocketControlVtbl): IInspectable(IInspectableVtbl) [IID_IServerMessageWebSocketControl] {
+    fn get_MessageType(&self, out: *mut SocketMessageType) -> HRESULT,
+    fn put_MessageType(&self, value: SocketMessageType) -> HRESULT
+}}
+impl IServerMessageWebSocketControl {
+    #[inline] pub fn get_message_type(&self) -> Result<SocketMessageType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MessageType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_message_type(&self, value: SocketMessageType) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MessageType)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ServerMessageWebSocketControl: IServerMessageWebSocketControl}
+DEFINE_IID!(IID_IServerMessageWebSocketInformation, 4231181407, 17480, 21765, 108, 201, 9, 175, 168, 145, 95, 93);
+RT_INTERFACE!{interface IServerMessageWebSocketInformation(IServerMessageWebSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IServerMessageWebSocketInformation] {
+    fn get_BandwidthStatistics(&self, out: *mut BandwidthStatistics) -> HRESULT,
+    fn get_Protocol(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_LocalAddress(&self, out: *mut *mut super::HostName) -> HRESULT
+}}
+impl IServerMessageWebSocketInformation {
+    #[inline] pub fn get_bandwidth_statistics(&self) -> Result<BandwidthStatistics> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BandwidthStatistics)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_protocol(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Protocol)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_local_address(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_LocalAddress)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ServerMessageWebSocketInformation: IServerMessageWebSocketInformation}
+DEFINE_IID!(IID_IServerStreamWebSocket, 753753023, 29942, 21988, 121, 223, 145, 50, 104, 13, 254, 232);
+RT_INTERFACE!{interface IServerStreamWebSocket(IServerStreamWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IServerStreamWebSocket] {
+    fn get_Information(&self, out: *mut *mut ServerStreamWebSocketInformation) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_InputStream(&self, out: *mut *mut super::super::storage::streams::IInputStream) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_OutputStream(&self, out: *mut *mut super::super::storage::streams::IOutputStream) -> HRESULT,
+    fn add_Closed(&self, value: *mut foundation::TypedEventHandler<ServerStreamWebSocket, WebSocketClosedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Closed(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn CloseWithStatus(&self, code: u16, reason: HSTRING) -> HRESULT
+}}
+impl IServerStreamWebSocket {
+    #[inline] pub fn get_information(&self) -> Result<Option<ComPtr<ServerStreamWebSocketInformation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Information)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_input_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IInputStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_InputStream)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IOutputStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_OutputStream)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_closed(&self, value: &foundation::TypedEventHandler<ServerStreamWebSocket, WebSocketClosedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_closed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Closed)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn close_with_status(&self, code: u16, reason: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).CloseWithStatus)(self as *const _ as *mut _, code, reason.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ServerStreamWebSocket: IServerStreamWebSocket}
+DEFINE_IID!(IID_IServerStreamWebSocketInformation, 4231181407, 17480, 21765, 108, 201, 9, 171, 168, 145, 95, 93);
+RT_INTERFACE!{interface IServerStreamWebSocketInformation(IServerStreamWebSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IServerStreamWebSocketInformation] {
+    fn get_BandwidthStatistics(&self, out: *mut BandwidthStatistics) -> HRESULT,
+    fn get_Protocol(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_LocalAddress(&self, out: *mut *mut super::HostName) -> HRESULT
+}}
+impl IServerStreamWebSocketInformation {
+    #[inline] pub fn get_bandwidth_statistics(&self) -> Result<BandwidthStatistics> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BandwidthStatistics)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_protocol(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Protocol)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_local_address(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_LocalAddress)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ServerStreamWebSocketInformation: IServerStreamWebSocketInformation}
 RT_ENUM! { enum SocketActivityConnectedStandbyAction: i32 {
     DoNotWake (SocketActivityConnectedStandbyAction_DoNotWake) = 0, Wake (SocketActivityConnectedStandbyAction_Wake) = 1,
 }}
@@ -7118,6 +8032,43 @@ impl IVpnChannel2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IVpnChannel4, 3609620190, 10551, 16797, 149, 112, 72, 106, 235, 184, 24, 3);
+RT_INTERFACE!{interface IVpnChannel4(IVpnChannel4Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannel4] {
+    fn AddAndAssociateTransport(&self, transport: *mut IInspectable, context: *mut IInspectable) -> HRESULT,
+    fn StartWithMultipleTransports(&self, assignedClientIpv4Addresses: *mut foundation::collections::IIterable<super::HostName>, assignedClientIpv6Addresses: *mut foundation::collections::IIterable<super::HostName>, vpninterfaceId: *mut VpnInterfaceId, assignedRoutes: *mut VpnRouteAssignment, assignedNamespace: *mut VpnDomainNameAssignment, mtuSize: u32, maxFrameSize: u32, reserved: bool, transports: *mut foundation::collections::IIterable<IInspectable>, assignedTrafficFilters: *mut VpnTrafficFilterAssignment) -> HRESULT,
+    fn ReplaceAndAssociateTransport(&self, transport: *mut IInspectable, context: *mut IInspectable) -> HRESULT,
+    fn StartReconnectingTransport(&self, transport: *mut IInspectable, context: *mut IInspectable) -> HRESULT,
+    fn GetSlotTypeForTransportContext(&self, context: *mut IInspectable, out: *mut super::sockets::ControlChannelTriggerStatus) -> HRESULT,
+    fn get_CurrentRequestTransportContext(&self, out: *mut *mut IInspectable) -> HRESULT
+}}
+impl IVpnChannel4 {
+    #[inline] pub fn add_and_associate_transport(&self, transport: &IInspectable, context: &IInspectable) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddAndAssociateTransport)(self as *const _ as *mut _, transport as *const _ as *mut _, context as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn start_with_multiple_transports(&self, assignedClientIpv4Addresses: &foundation::collections::IIterable<super::HostName>, assignedClientIpv6Addresses: &foundation::collections::IIterable<super::HostName>, vpninterfaceId: &VpnInterfaceId, assignedRoutes: &VpnRouteAssignment, assignedNamespace: &VpnDomainNameAssignment, mtuSize: u32, maxFrameSize: u32, reserved: bool, transports: &foundation::collections::IIterable<IInspectable>, assignedTrafficFilters: &VpnTrafficFilterAssignment) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).StartWithMultipleTransports)(self as *const _ as *mut _, assignedClientIpv4Addresses as *const _ as *mut _, assignedClientIpv6Addresses as *const _ as *mut _, vpninterfaceId as *const _ as *mut _, assignedRoutes as *const _ as *mut _, assignedNamespace as *const _ as *mut _, mtuSize, maxFrameSize, reserved, transports as *const _ as *mut _, assignedTrafficFilters as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn replace_and_associate_transport(&self, transport: &IInspectable, context: &IInspectable) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReplaceAndAssociateTransport)(self as *const _ as *mut _, transport as *const _ as *mut _, context as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn start_reconnecting_transport(&self, transport: &IInspectable, context: &IInspectable) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).StartReconnectingTransport)(self as *const _ as *mut _, transport as *const _ as *mut _, context as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_slot_type_for_transport_context(&self, context: &IInspectable) -> Result<super::sockets::ControlChannelTriggerStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetSlotTypeForTransportContext)(self as *const _ as *mut _, context as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_current_request_transport_context(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CurrentRequestTransportContext)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IVpnChannelActivityEventArgs, 2741799154, 45020, 18293, 133, 93, 212, 172, 10, 53, 252, 85);
 RT_INTERFACE!{interface IVpnChannelActivityEventArgs(IVpnChannelActivityEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannelActivityEventArgs] {
     fn get_Type(&self, out: *mut VpnChannelActivityEventType) -> HRESULT
@@ -7947,6 +8898,22 @@ impl IVpnPacketBuffer2 {
     #[inline] pub fn get_app_id(&self) -> Result<Option<ComPtr<VpnAppId>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AppId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IVpnPacketBuffer3, 3797288751, 4219, 19520, 177, 39, 91, 197, 62, 10, 217, 96);
+RT_INTERFACE!{interface IVpnPacketBuffer3(IVpnPacketBuffer3Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBuffer3] {
+    fn put_TransportContext(&self, value: *mut IInspectable) -> HRESULT,
+    fn get_TransportContext(&self, out: *mut *mut IInspectable) -> HRESULT
+}}
+impl IVpnPacketBuffer3 {
+    #[inline] pub fn set_transport_context(&self, value: &IInspectable) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TransportContext)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_transport_context(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TransportContext)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }

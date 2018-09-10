@@ -1414,6 +1414,7 @@ impl IVideoFrame {
 }
 RT_CLASS!{class VideoFrame: IVideoFrame}
 impl RtActivatable<IVideoFrameFactory> for VideoFrame {}
+impl RtActivatable<IVideoFrameStatics> for VideoFrame {}
 impl VideoFrame {
     #[cfg(feature="windows-graphics")] #[inline] pub fn create(format: super::graphics::imaging::BitmapPixelFormat, width: i32, height: i32) -> Result<ComPtr<VideoFrame>> {
         <Self as RtActivatable<IVideoFrameFactory>>::get_activation_factory().create(format, width, height)
@@ -1421,8 +1422,31 @@ impl VideoFrame {
     #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_alpha(format: super::graphics::imaging::BitmapPixelFormat, width: i32, height: i32, alpha: super::graphics::imaging::BitmapAlphaMode) -> Result<ComPtr<VideoFrame>> {
         <Self as RtActivatable<IVideoFrameFactory>>::get_activation_factory().create_with_alpha(format, width, height, alpha)
     }
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3_d11_surface_backed(format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32) -> Result<Option<ComPtr<VideoFrame>>> {
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_as_direct3_d11_surface_backed(format, width, height)
+    }
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3_d11_surface_backed_with_device(format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<VideoFrame>>> {
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_as_direct3_d11_surface_backed_with_device(format, width, height, device)
+    }
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_software_bitmap(bitmap: &super::graphics::imaging::SoftwareBitmap) -> Result<Option<ComPtr<VideoFrame>>> {
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_with_software_bitmap(bitmap)
+    }
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3_d11_surface(surface: &super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<VideoFrame>>> {
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_with_direct3_d11_surface(surface)
+    }
 }
 DEFINE_CLSID!(VideoFrame(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,86,105,100,101,111,70,114,97,109,101,0]) [CLSID_VideoFrame]);
+DEFINE_IID!(IID_IVideoFrame2, 943162381, 13164, 17254, 141, 70, 6, 7, 152, 115, 108, 93);
+RT_INTERFACE!{interface IVideoFrame2(IVideoFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoFrame2] {
+    #[cfg(feature="windows-graphics")] fn CopyToWithBoundsAsync(&self, frame: *mut VideoFrame, sourceBounds: *mut foundation::IReference<super::graphics::imaging::BitmapBounds>, destinationBounds: *mut foundation::IReference<super::graphics::imaging::BitmapBounds>, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IVideoFrame2 {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn copy_to_with_bounds_async(&self, frame: &VideoFrame, sourceBounds: &foundation::IReference<super::graphics::imaging::BitmapBounds>, destinationBounds: &foundation::IReference<super::graphics::imaging::BitmapBounds>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CopyToWithBoundsAsync)(self as *const _ as *mut _, frame as *const _ as *mut _, sourceBounds as *const _ as *mut _, destinationBounds as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IVideoFrameFactory, 21720425, 8744, 19602, 146, 255, 80, 195, 128, 211, 231, 118);
 RT_INTERFACE!{static interface IVideoFrameFactory(IVideoFrameFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVideoFrameFactory] {
     #[cfg(feature="windows-graphics")] fn Create(&self, format: super::graphics::imaging::BitmapPixelFormat, width: i32, height: i32, out: *mut *mut VideoFrame) -> HRESULT,
@@ -1438,6 +1462,35 @@ impl IVideoFrameFactory {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateWithAlpha)(self as *const _ as *mut _, format, width, height, alpha, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IVideoFrameStatics, 2871678319, 24849, 19251, 142, 195, 43, 32, 154, 2, 225, 122);
+RT_INTERFACE!{static interface IVideoFrameStatics(IVideoFrameStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVideoFrameStatics] {
+    #[cfg(feature="windows-graphics")] fn CreateAsDirect3D11SurfaceBacked(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, out: *mut *mut VideoFrame) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn CreateAsDirect3D11SurfaceBackedWithDevice(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: *mut super::graphics::directx::direct3d11::IDirect3DDevice, out: *mut *mut VideoFrame) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn CreateWithSoftwareBitmap(&self, bitmap: *mut super::graphics::imaging::SoftwareBitmap, out: *mut *mut VideoFrame) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn CreateWithDirect3D11Surface(&self, surface: *mut super::graphics::directx::direct3d11::IDirect3DSurface, out: *mut *mut VideoFrame) -> HRESULT
+}}
+impl IVideoFrameStatics {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3_d11_surface_backed(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateAsDirect3D11SurfaceBacked)(self as *const _ as *mut _, format, width, height, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3_d11_surface_backed_with_device(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateAsDirect3D11SurfaceBackedWithDevice)(self as *const _ as *mut _, format, width, height, device as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_software_bitmap(&self, bitmap: &super::graphics::imaging::SoftwareBitmap) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithSoftwareBitmap)(self as *const _ as *mut _, bitmap as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3_d11_surface(&self, surface: &super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithDirect3D11Surface)(self as *const _ as *mut _, surface as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
 pub mod capture { // Windows.Media.Capture
@@ -4120,6 +4173,23 @@ impl ICapturedFrame {
     }}
 }
 RT_CLASS!{class CapturedFrame: ICapturedFrame}
+DEFINE_IID!(IID_ICapturedFrame2, 1413457617, 48504, 18534, 173, 218, 36, 49, 75, 198, 93, 234);
+RT_INTERFACE!{interface ICapturedFrame2(ICapturedFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_ICapturedFrame2] {
+    fn get_ControlValues(&self, out: *mut *mut CapturedFrameControlValues) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_BitmapProperties(&self, out: *mut *mut super::super::graphics::imaging::BitmapPropertySet) -> HRESULT
+}}
+impl ICapturedFrame2 {
+    #[inline] pub fn get_control_values(&self) -> Result<Option<ComPtr<CapturedFrameControlValues>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ControlValues)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_bitmap_properties(&self) -> Result<Option<ComPtr<super::super::graphics::imaging::BitmapPropertySet>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_BitmapProperties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_ICapturedFrameControlValues, 2428918655, 19981, 19620, 136, 45, 122, 20, 79, 237, 10, 144);
 RT_INTERFACE!{interface ICapturedFrameControlValues(ICapturedFrameControlValuesVtbl): IInspectable(IInspectableVtbl) [IID_ICapturedFrameControlValues] {
     fn get_Exposure(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -4412,7 +4482,7 @@ RT_ENUM! { enum GameBarTargetCapturePolicy: i32 {
     EnabledBySystem (GameBarTargetCapturePolicy_EnabledBySystem) = 0, EnabledByUser (GameBarTargetCapturePolicy_EnabledByUser) = 1, NotEnabled (GameBarTargetCapturePolicy_NotEnabled) = 2, ProhibitedBySystem (GameBarTargetCapturePolicy_ProhibitedBySystem) = 3, ProhibitedByPublisher (GameBarTargetCapturePolicy_ProhibitedByPublisher) = 4,
 }}
 RT_ENUM! { enum KnownVideoProfile: i32 {
-    VideoRecording (KnownVideoProfile_VideoRecording) = 0, HighQualityPhoto (KnownVideoProfile_HighQualityPhoto) = 1, BalancedVideoAndPhoto (KnownVideoProfile_BalancedVideoAndPhoto) = 2, VideoConferencing (KnownVideoProfile_VideoConferencing) = 3, PhotoSequence (KnownVideoProfile_PhotoSequence) = 4,
+    VideoRecording (KnownVideoProfile_VideoRecording) = 0, HighQualityPhoto (KnownVideoProfile_HighQualityPhoto) = 1, BalancedVideoAndPhoto (KnownVideoProfile_BalancedVideoAndPhoto) = 2, VideoConferencing (KnownVideoProfile_VideoConferencing) = 3, PhotoSequence (KnownVideoProfile_PhotoSequence) = 4, HighFrameRate (KnownVideoProfile_HighFrameRate) = 5, VariablePhotoSequence (KnownVideoProfile_VariablePhotoSequence) = 6, HdrWithWcgVideo (KnownVideoProfile_HdrWithWcgVideo) = 7, HdrWithWcgPhoto (KnownVideoProfile_HdrWithWcgPhoto) = 8, VideoHdr8 (KnownVideoProfile_VideoHdr8) = 9,
 }}
 DEFINE_IID!(IID_ILowLagMediaRecording, 1103674103, 65343, 18928, 164, 119, 241, 149, 227, 206, 81, 8);
 RT_INTERFACE!{interface ILowLagMediaRecording(ILowLagMediaRecordingVtbl): IInspectable(IInspectableVtbl) [IID_ILowLagMediaRecording] {
@@ -5314,6 +5384,17 @@ impl IMediaCaptureSettings2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IMediaCaptureSettings3, 809265090, 32856, 19227, 184, 119, 140, 46, 243, 82, 132, 64);
+RT_INTERFACE!{interface IMediaCaptureSettings3(IMediaCaptureSettings3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureSettings3] {
+    #[cfg(feature="windows-graphics")] fn get_Direct3D11Device(&self, out: *mut *mut super::super::graphics::directx::direct3d11::IDirect3DDevice) -> HRESULT
+}}
+impl IMediaCaptureSettings3 {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3_d11_device(&self) -> Result<Option<ComPtr<super::super::graphics::directx::direct3d11::IDirect3DDevice>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Direct3D11Device)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum MediaCaptureSharingMode: i32 {
     ExclusiveControl (MediaCaptureSharingMode_ExclusiveControl) = 0, SharedReadOnly (MediaCaptureSharingMode_SharedReadOnly) = 1,
 }}
@@ -5438,6 +5519,23 @@ impl IMediaCaptureVideoProfile {
     }}
 }
 RT_CLASS!{class MediaCaptureVideoProfile: IMediaCaptureVideoProfile}
+DEFINE_IID!(IID_IMediaCaptureVideoProfile2, 2547894623, 38094, 18063, 147, 22, 252, 91, 194, 99, 143, 107);
+RT_INTERFACE!{interface IMediaCaptureVideoProfile2(IMediaCaptureVideoProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureVideoProfile2] {
+    fn get_FrameSourceInfos(&self, out: *mut *mut foundation::collections::IVectorView<frames::MediaFrameSourceInfo>) -> HRESULT,
+    fn get_Properties(&self, out: *mut *mut foundation::collections::IMapView<Guid, IInspectable>) -> HRESULT
+}}
+impl IMediaCaptureVideoProfile2 {
+    #[inline] pub fn get_frame_source_infos(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<frames::MediaFrameSourceInfo>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_FrameSourceInfos)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<Guid, IInspectable>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IMediaCaptureVideoProfileMediaDescription, 2148708335, 46737, 18943, 131, 242, 193, 231, 110, 170, 234, 27);
 RT_INTERFACE!{interface IMediaCaptureVideoProfileMediaDescription(IMediaCaptureVideoProfileMediaDescriptionVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureVideoProfileMediaDescription] {
     fn get_Width(&self, out: *mut u32) -> HRESULT,
@@ -5474,6 +5572,23 @@ impl IMediaCaptureVideoProfileMediaDescription {
     }}
 }
 RT_CLASS!{class MediaCaptureVideoProfileMediaDescription: IMediaCaptureVideoProfileMediaDescription}
+DEFINE_IID!(IID_IMediaCaptureVideoProfileMediaDescription2, 3332828947, 12845, 16698, 184, 90, 104, 168, 142, 2, 244, 233);
+RT_INTERFACE!{interface IMediaCaptureVideoProfileMediaDescription2(IMediaCaptureVideoProfileMediaDescription2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureVideoProfileMediaDescription2] {
+    fn get_Subtype(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Properties(&self, out: *mut *mut foundation::collections::IMapView<Guid, IInspectable>) -> HRESULT
+}}
+impl IMediaCaptureVideoProfileMediaDescription2 {
+    #[inline] pub fn get_subtype(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Subtype)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<Guid, IInspectable>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum MediaCategory: i32 {
     Other (MediaCategory_Other) = 0, Communications (MediaCategory_Communications) = 1, Media (MediaCategory_Media) = 2, GameChat (MediaCategory_GameChat) = 3, Speech (MediaCategory_Speech) = 4,
 }}
@@ -5588,6 +5703,30 @@ RT_STRUCT! { struct WhiteBalanceGain {
 }}
 pub mod frames { // Windows.Media.Capture.Frames
 use ::prelude::*;
+DEFINE_IID!(IID_IAudioMediaFrame, 2745827071, 32801, 17435, 154, 70, 231, 240, 19, 123, 121, 129);
+RT_INTERFACE!{interface IAudioMediaFrame(IAudioMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IAudioMediaFrame] {
+    fn get_FrameReference(&self, out: *mut *mut MediaFrameReference) -> HRESULT,
+    fn get_AudioEncodingProperties(&self, out: *mut *mut super::super::mediaproperties::AudioEncodingProperties) -> HRESULT,
+    fn GetAudioFrame(&self, out: *mut *mut super::super::AudioFrame) -> HRESULT
+}}
+impl IAudioMediaFrame {
+    #[inline] pub fn get_frame_reference(&self) -> Result<Option<ComPtr<MediaFrameReference>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_FrameReference)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_audio_encoding_properties(&self) -> Result<Option<ComPtr<super::super::mediaproperties::AudioEncodingProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AudioEncodingProperties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_audio_frame(&self) -> Result<Option<ComPtr<super::super::AudioFrame>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAudioFrame)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class AudioMediaFrame: IAudioMediaFrame}
 DEFINE_IID!(IID_IBufferMediaFrame, 3048297415, 39812, 16482, 183, 156, 163, 101, 178, 89, 104, 84);
 RT_INTERFACE!{interface IBufferMediaFrame(IBufferMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IBufferMediaFrame] {
     fn get_FrameReference(&self, out: *mut *mut MediaFrameReference) -> HRESULT,
@@ -5736,6 +5875,17 @@ impl IMediaFrameFormat {
     }}
 }
 RT_CLASS!{class MediaFrameFormat: IMediaFrameFormat}
+DEFINE_IID!(IID_IMediaFrameFormat2, 1669686080, 24199, 19472, 134, 209, 109, 240, 151, 166, 198, 168);
+RT_INTERFACE!{interface IMediaFrameFormat2(IMediaFrameFormat2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameFormat2] {
+    fn get_AudioEncodingProperties(&self, out: *mut *mut super::super::mediaproperties::AudioEncodingProperties) -> HRESULT
+}}
+impl IMediaFrameFormat2 {
+    #[inline] pub fn get_audio_encoding_properties(&self) -> Result<Option<ComPtr<super::super::mediaproperties::AudioEncodingProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AudioEncodingProperties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IMediaFrameReader, 3838395285, 8232, 18669, 144, 176, 209, 193, 177, 98, 226, 76);
 RT_INTERFACE!{interface IMediaFrameReader(IMediaFrameReaderVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameReader] {
     fn add_FrameArrived(&self, handler: *mut foundation::TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5847,6 +5997,17 @@ impl IMediaFrameReference {
     }}
 }
 RT_CLASS!{class MediaFrameReference: IMediaFrameReference}
+DEFINE_IID!(IID_IMediaFrameReference2, 3720101580, 54706, 18927, 131, 106, 148, 125, 152, 155, 128, 193);
+RT_INTERFACE!{interface IMediaFrameReference2(IMediaFrameReference2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameReference2] {
+    fn get_AudioMediaFrame(&self, out: *mut *mut AudioMediaFrame) -> HRESULT
+}}
+impl IMediaFrameReference2 {
+    #[inline] pub fn get_audio_media_frame(&self) -> Result<Option<ComPtr<AudioMediaFrame>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AudioMediaFrame)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IMediaFrameSource, 3598199123, 37083, 18088, 138, 221, 42, 168, 132, 168, 210, 83);
 RT_INTERFACE!{interface IMediaFrameSource(IMediaFrameSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSource] {
     fn get_Info(&self, out: *mut *mut MediaFrameSourceInfo) -> HRESULT,
@@ -5939,6 +6100,17 @@ impl IMediaFrameSourceController2 {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetPropertyByExtendedIdAsync)(self as *const _ as *mut _, extendedPropertyId.len() as u32, extendedPropertyId.as_ptr() as *mut _, propertyValue.len() as u32, propertyValue.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IMediaFrameSourceController3, 520943637, 9316, 18001, 177, 232, 74, 130, 219, 219, 84, 222);
+RT_INTERFACE!{interface IMediaFrameSourceController3(IMediaFrameSourceController3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceController3] {
+    fn get_AudioDeviceController(&self, out: *mut *mut super::super::devices::AudioDeviceController) -> HRESULT
+}}
+impl IMediaFrameSourceController3 {
+    #[inline] pub fn get_audio_device_controller(&self) -> Result<Option<ComPtr<super::super::devices::AudioDeviceController>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AudioDeviceController)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMediaFrameSourceGetPropertyResult, 143005378, 14948, 19413, 189, 43, 231, 200, 152, 210, 243, 122);
@@ -6071,8 +6243,25 @@ impl IMediaFrameSourceInfo {
     }}
 }
 RT_CLASS!{class MediaFrameSourceInfo: IMediaFrameSourceInfo}
+DEFINE_IID!(IID_IMediaFrameSourceInfo2, 425359445, 25687, 17094, 167, 105, 25, 182, 91, 211, 46, 110);
+RT_INTERFACE!{interface IMediaFrameSourceInfo2(IMediaFrameSourceInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceInfo2] {
+    fn get_ProfileId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_VideoProfileMediaDescription(&self, out: *mut *mut foundation::collections::IVectorView<super::MediaCaptureVideoProfileMediaDescription>) -> HRESULT
+}}
+impl IMediaFrameSourceInfo2 {
+    #[inline] pub fn get_profile_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProfileId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_video_profile_media_description(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::MediaCaptureVideoProfileMediaDescription>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_VideoProfileMediaDescription)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum MediaFrameSourceKind: i32 {
-    Custom (MediaFrameSourceKind_Custom) = 0, Color (MediaFrameSourceKind_Color) = 1, Infrared (MediaFrameSourceKind_Infrared) = 2, Depth (MediaFrameSourceKind_Depth) = 3,
+    Custom (MediaFrameSourceKind_Custom) = 0, Color (MediaFrameSourceKind_Color) = 1, Infrared (MediaFrameSourceKind_Infrared) = 2, Depth (MediaFrameSourceKind_Depth) = 3, Audio (MediaFrameSourceKind_Audio) = 4, Image (MediaFrameSourceKind_Image) = 5,
 }}
 RT_ENUM! { enum MediaFrameSourceSetPropertyStatus: i32 {
     Success (MediaFrameSourceSetPropertyStatus_Success) = 0, UnknownFailure (MediaFrameSourceSetPropertyStatus_UnknownFailure) = 1, NotSupported (MediaFrameSourceSetPropertyStatus_NotSupported) = 2, InvalidValue (MediaFrameSourceSetPropertyStatus_InvalidValue) = 3, DeviceNotAvailable (MediaFrameSourceSetPropertyStatus_DeviceNotAvailable) = 4, NotInControl (MediaFrameSourceSetPropertyStatus_NotInControl) = 5,
@@ -7131,6 +7320,23 @@ impl IAudioGraph2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IAudioGraph3, 3721209262, 4485, 17063, 131, 29, 106, 155, 15, 200, 104, 32);
+RT_INTERFACE!{interface IAudioGraph3(IAudioGraph3Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraph3] {
+    fn CreateMediaSourceAudioInputNodeAsync(&self, mediaSource: *mut super::core::MediaSource, out: *mut *mut foundation::IAsyncOperation<CreateMediaSourceAudioInputNodeResult>) -> HRESULT,
+    fn CreateMediaSourceAudioInputNodeWithEmitterAsync(&self, mediaSource: *mut super::core::MediaSource, emitter: *mut AudioNodeEmitter, out: *mut *mut foundation::IAsyncOperation<CreateMediaSourceAudioInputNodeResult>) -> HRESULT
+}}
+impl IAudioGraph3 {
+    #[inline] pub fn create_media_source_audio_input_node_async(&self, mediaSource: &super::core::MediaSource) -> Result<ComPtr<foundation::IAsyncOperation<CreateMediaSourceAudioInputNodeResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateMediaSourceAudioInputNodeAsync)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_media_source_audio_input_node_with_emitter_async(&self, mediaSource: &super::core::MediaSource, emitter: &AudioNodeEmitter) -> Result<ComPtr<foundation::IAsyncOperation<CreateMediaSourceAudioInputNodeResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateMediaSourceAudioInputNodeWithEmitterAsync)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, emitter as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class AudioGraphBatchUpdater: foundation::IClosable}
 DEFINE_IID!(IID_IAudioGraphConnection, 1982886125, 53326, 20396, 178, 51, 96, 11, 66, 237, 212, 105);
 RT_INTERFACE!{interface IAudioGraphConnection(IAudioGraphConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraphConnection] {
@@ -7239,6 +7445,22 @@ impl AudioGraphSettings {
     }
 }
 DEFINE_CLSID!(AudioGraphSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,71,114,97,112,104,83,101,116,116,105,110,103,115,0]) [CLSID_AudioGraphSettings]);
+DEFINE_IID!(IID_IAudioGraphSettings2, 1922144135, 19883, 18147, 180, 201, 216, 225, 162, 99, 96, 98);
+RT_INTERFACE!{interface IAudioGraphSettings2(IAudioGraphSettings2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraphSettings2] {
+    fn put_MaxPlaybackSpeedFactor(&self, value: f64) -> HRESULT,
+    fn get_MaxPlaybackSpeedFactor(&self, out: *mut f64) -> HRESULT
+}}
+impl IAudioGraphSettings2 {
+    #[inline] pub fn set_max_playback_speed_factor(&self, value: f64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaxPlaybackSpeedFactor)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_playback_speed_factor(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxPlaybackSpeedFactor)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IAudioGraphSettingsFactory, 2782469318, 49899, 19041, 162, 20, 29, 102, 215, 95, 131, 218);
 RT_INTERFACE!{static interface IAudioGraphSettingsFactory(IAudioGraphSettingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraphSettingsFactory] {
     fn Create(&self, audioRenderCategory: super::render::AudioRenderCategory, out: *mut *mut AudioGraphSettings) -> HRESULT
@@ -7723,6 +7945,110 @@ impl IAudioNodeWithListener {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IAudioStateMonitor, 487838006, 409, 19676, 184, 78, 231, 44, 43, 88, 30, 206);
+RT_INTERFACE!{interface IAudioStateMonitor(IAudioStateMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IAudioStateMonitor] {
+    fn add_SoundLevelChanged(&self, handler: *mut foundation::TypedEventHandler<AudioStateMonitor, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_SoundLevelChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn get_SoundLevel(&self, out: *mut super::SoundLevel) -> HRESULT
+}}
+impl IAudioStateMonitor {
+    #[inline] pub fn add_sound_level_changed(&self, handler: &foundation::TypedEventHandler<AudioStateMonitor, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_SoundLevelChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_sound_level_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_SoundLevelChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_sound_level(&self) -> Result<super::SoundLevel> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_SoundLevel)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class AudioStateMonitor: IAudioStateMonitor}
+impl RtActivatable<IAudioStateMonitorStatics> for AudioStateMonitor {}
+impl AudioStateMonitor {
+    #[inline] pub fn create_for_render_monitoring() -> Result<Option<ComPtr<AudioStateMonitor>>> {
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_render_monitoring()
+    }
+    #[inline] pub fn create_for_render_monitoring_with_category(category: super::render::AudioRenderCategory) -> Result<Option<ComPtr<AudioStateMonitor>>> {
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_render_monitoring_with_category(category)
+    }
+    #[inline] pub fn create_for_render_monitoring_with_category_and_device_role(category: super::render::AudioRenderCategory, role: super::devices::AudioDeviceRole) -> Result<Option<ComPtr<AudioStateMonitor>>> {
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_render_monitoring_with_category_and_device_role(category, role)
+    }
+    #[inline] pub fn create_for_render_monitoring_with_category_and_device_id(category: super::render::AudioRenderCategory, deviceId: &HStringArg) -> Result<Option<ComPtr<AudioStateMonitor>>> {
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_render_monitoring_with_category_and_device_id(category, deviceId)
+    }
+    #[inline] pub fn create_for_capture_monitoring() -> Result<Option<ComPtr<AudioStateMonitor>>> {
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_capture_monitoring()
+    }
+    #[inline] pub fn create_for_capture_monitoring_with_category(category: super::capture::MediaCategory) -> Result<Option<ComPtr<AudioStateMonitor>>> {
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_capture_monitoring_with_category(category)
+    }
+    #[inline] pub fn create_for_capture_monitoring_with_category_and_device_role(category: super::capture::MediaCategory, role: super::devices::AudioDeviceRole) -> Result<Option<ComPtr<AudioStateMonitor>>> {
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_capture_monitoring_with_category_and_device_role(category, role)
+    }
+    #[inline] pub fn create_for_capture_monitoring_with_category_and_device_id(category: super::capture::MediaCategory, deviceId: &HStringArg) -> Result<Option<ComPtr<AudioStateMonitor>>> {
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_capture_monitoring_with_category_and_device_id(category, deviceId)
+    }
+}
+DEFINE_CLSID!(AudioStateMonitor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,83,116,97,116,101,77,111,110,105,116,111,114,0]) [CLSID_AudioStateMonitor]);
+DEFINE_IID!(IID_IAudioStateMonitorStatics, 1668606540, 6971, 16385, 148, 217, 221, 34, 83, 48, 250, 64);
+RT_INTERFACE!{static interface IAudioStateMonitorStatics(IAudioStateMonitorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioStateMonitorStatics] {
+    fn CreateForRenderMonitoring(&self, out: *mut *mut AudioStateMonitor) -> HRESULT,
+    fn CreateForRenderMonitoringWithCategory(&self, category: super::render::AudioRenderCategory, out: *mut *mut AudioStateMonitor) -> HRESULT,
+    fn CreateForRenderMonitoringWithCategoryAndDeviceRole(&self, category: super::render::AudioRenderCategory, role: super::devices::AudioDeviceRole, out: *mut *mut AudioStateMonitor) -> HRESULT,
+    fn CreateForRenderMonitoringWithCategoryAndDeviceId(&self, category: super::render::AudioRenderCategory, deviceId: HSTRING, out: *mut *mut AudioStateMonitor) -> HRESULT,
+    fn CreateForCaptureMonitoring(&self, out: *mut *mut AudioStateMonitor) -> HRESULT,
+    fn CreateForCaptureMonitoringWithCategory(&self, category: super::capture::MediaCategory, out: *mut *mut AudioStateMonitor) -> HRESULT,
+    fn CreateForCaptureMonitoringWithCategoryAndDeviceRole(&self, category: super::capture::MediaCategory, role: super::devices::AudioDeviceRole, out: *mut *mut AudioStateMonitor) -> HRESULT,
+    fn CreateForCaptureMonitoringWithCategoryAndDeviceId(&self, category: super::capture::MediaCategory, deviceId: HSTRING, out: *mut *mut AudioStateMonitor) -> HRESULT
+}}
+impl IAudioStateMonitorStatics {
+    #[inline] pub fn create_for_render_monitoring(&self) -> Result<Option<ComPtr<AudioStateMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateForRenderMonitoring)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_for_render_monitoring_with_category(&self, category: super::render::AudioRenderCategory) -> Result<Option<ComPtr<AudioStateMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateForRenderMonitoringWithCategory)(self as *const _ as *mut _, category, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_for_render_monitoring_with_category_and_device_role(&self, category: super::render::AudioRenderCategory, role: super::devices::AudioDeviceRole) -> Result<Option<ComPtr<AudioStateMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateForRenderMonitoringWithCategoryAndDeviceRole)(self as *const _ as *mut _, category, role, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_for_render_monitoring_with_category_and_device_id(&self, category: super::render::AudioRenderCategory, deviceId: &HStringArg) -> Result<Option<ComPtr<AudioStateMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateForRenderMonitoringWithCategoryAndDeviceId)(self as *const _ as *mut _, category, deviceId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_for_capture_monitoring(&self) -> Result<Option<ComPtr<AudioStateMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateForCaptureMonitoring)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_for_capture_monitoring_with_category(&self, category: super::capture::MediaCategory) -> Result<Option<ComPtr<AudioStateMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateForCaptureMonitoringWithCategory)(self as *const _ as *mut _, category, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_for_capture_monitoring_with_category_and_device_role(&self, category: super::capture::MediaCategory, role: super::devices::AudioDeviceRole) -> Result<Option<ComPtr<AudioStateMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateForCaptureMonitoringWithCategoryAndDeviceRole)(self as *const _ as *mut _, category, role, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_for_capture_monitoring_with_category_and_device_id(&self, category: super::capture::MediaCategory, deviceId: &HStringArg) -> Result<Option<ComPtr<AudioStateMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateForCaptureMonitoringWithCategoryAndDeviceId)(self as *const _ as *mut _, category, deviceId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{class AudioSubmixNode: IAudioInputNode}
 DEFINE_IID!(IID_ICreateAudioDeviceInputNodeResult, 384747432, 7335, 16623, 145, 164, 211, 70, 224, 170, 27, 186);
 RT_INTERFACE!{interface ICreateAudioDeviceInputNodeResult(ICreateAudioDeviceInputNodeResultVtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioDeviceInputNodeResult] {
@@ -7814,6 +8140,24 @@ impl ICreateAudioGraphResult {
     }}
 }
 RT_CLASS!{class CreateAudioGraphResult: ICreateAudioGraphResult}
+DEFINE_IID!(IID_ICreateMediaSourceAudioInputNodeResult, 1185306787, 21440, 19801, 158, 81, 204, 29, 16, 68, 164, 196);
+RT_INTERFACE!{interface ICreateMediaSourceAudioInputNodeResult(ICreateMediaSourceAudioInputNodeResultVtbl): IInspectable(IInspectableVtbl) [IID_ICreateMediaSourceAudioInputNodeResult] {
+    fn get_Status(&self, out: *mut MediaSourceAudioInputNodeCreationStatus) -> HRESULT,
+    fn get_Node(&self, out: *mut *mut MediaSourceAudioInputNode) -> HRESULT
+}}
+impl ICreateMediaSourceAudioInputNodeResult {
+    #[inline] pub fn get_status(&self) -> Result<MediaSourceAudioInputNodeCreationStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_node(&self) -> Result<Option<ComPtr<MediaSourceAudioInputNode>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Node)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CreateMediaSourceAudioInputNodeResult: ICreateMediaSourceAudioInputNodeResult}
 DEFINE_IID!(IID_IEchoEffectDefinition, 239943594, 14008, 19601, 185, 218, 17, 244, 74, 138, 102, 16);
 RT_INTERFACE!{interface IEchoEffectDefinition(IEchoEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IEchoEffectDefinition] {
     fn put_WetDryMix(&self, value: f64) -> HRESULT,
@@ -7998,6 +8342,93 @@ impl ILimiterEffectDefinitionFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IMediaSourceAudioInputNode, 2581108795, 43146, 16449, 142, 79, 221, 186, 192, 201, 31, 211);
+RT_INTERFACE!{interface IMediaSourceAudioInputNode(IMediaSourceAudioInputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceAudioInputNode] {
+    fn put_PlaybackSpeedFactor(&self, value: f64) -> HRESULT,
+    fn get_PlaybackSpeedFactor(&self, out: *mut f64) -> HRESULT,
+    fn get_Position(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn Seek(&self, position: foundation::TimeSpan) -> HRESULT,
+    fn get_StartTime(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn put_StartTime(&self, value: *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn get_EndTime(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn put_EndTime(&self, value: *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn get_LoopCount(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
+    fn put_LoopCount(&self, value: *mut foundation::IReference<i32>) -> HRESULT,
+    fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_MediaSource(&self, out: *mut *mut super::core::MediaSource) -> HRESULT,
+    fn add_MediaSourceCompleted(&self, handler: *mut foundation::TypedEventHandler<MediaSourceAudioInputNode, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_MediaSourceCompleted(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IMediaSourceAudioInputNode {
+    #[inline] pub fn set_playback_speed_factor(&self, value: f64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PlaybackSpeedFactor)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_playback_speed_factor(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PlaybackSpeedFactor)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_position(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn seek(&self, position: foundation::TimeSpan) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Seek)(self as *const _ as *mut _, position);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_start_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_StartTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_start_time(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StartTime)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_end_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_EndTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_end_time(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_EndTime)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_loop_count(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_LoopCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_loop_count(&self, value: &foundation::IReference<i32>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_LoopCount)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_media_source(&self) -> Result<Option<ComPtr<super::core::MediaSource>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_MediaSource)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_media_source_completed(&self, handler: &foundation::TypedEventHandler<MediaSourceAudioInputNode, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_MediaSourceCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_media_source_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_MediaSourceCompleted)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class MediaSourceAudioInputNode: IMediaSourceAudioInputNode}
+RT_ENUM! { enum MediaSourceAudioInputNodeCreationStatus: i32 {
+    Success (MediaSourceAudioInputNodeCreationStatus_Success) = 0, FormatNotSupported (MediaSourceAudioInputNodeCreationStatus_FormatNotSupported) = 1, NetworkError (MediaSourceAudioInputNodeCreationStatus_NetworkError) = 2, UnknownFailure (MediaSourceAudioInputNodeCreationStatus_UnknownFailure) = 3,
+}}
 RT_ENUM! { enum QuantumSizeSelectionMode: i32 {
     SystemDefault (QuantumSizeSelectionMode_SystemDefault) = 0, LowestLatency (QuantumSizeSelectionMode_LowestLatency) = 1, ClosestToDesired (QuantumSizeSelectionMode_ClosestToDesired) = 2,
 }}
@@ -8641,6 +9072,17 @@ impl IAudioStreamDescriptor2 {
     #[inline] pub fn get_trailing_encoder_padding(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TrailingEncoderPadding)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IAudioStreamDescriptor3, 1294077345, 36483, 17647, 137, 115, 47, 99, 233, 147, 243, 107);
+RT_INTERFACE!{interface IAudioStreamDescriptor3(IAudioStreamDescriptor3Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioStreamDescriptor3] {
+    fn Copy(&self, out: *mut *mut AudioStreamDescriptor) -> HRESULT
+}}
+impl IAudioStreamDescriptor3 {
+    #[inline] pub fn copy(&self) -> Result<Option<ComPtr<AudioStreamDescriptor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Copy)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -9653,6 +10095,16 @@ impl IMediaBindingEventArgs2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IMediaBindingEventArgs3, 4176168798, 6590, 17660, 165, 237, 122, 186, 49, 80, 55, 249);
+RT_INTERFACE!{interface IMediaBindingEventArgs3(IMediaBindingEventArgs3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaBindingEventArgs3] {
+    #[cfg(feature="windows-networking")] fn SetDownloadOperation(&self, downloadOperation: *mut super::super::networking::backgroundtransfer::DownloadOperation) -> HRESULT
+}}
+impl IMediaBindingEventArgs3 {
+    #[cfg(feature="windows-networking")] #[inline] pub fn set_download_operation(&self, downloadOperation: &super::super::networking::backgroundtransfer::DownloadOperation) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetDownloadOperation)(self as *const _ as *mut _, downloadOperation as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IMediaCue, 3352387165, 23004, 17183, 160, 238, 39, 116, 67, 35, 179, 109);
 RT_INTERFACE!{interface IMediaCue(IMediaCueVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCue] {
     fn put_StartTime(&self, value: foundation::TimeSpan) -> HRESULT,
@@ -9714,6 +10166,7 @@ RT_CLASS!{class MediaSource: IMediaSource2}
 impl RtActivatable<IMediaSourceStatics> for MediaSource {}
 impl RtActivatable<IMediaSourceStatics2> for MediaSource {}
 impl RtActivatable<IMediaSourceStatics3> for MediaSource {}
+impl RtActivatable<IMediaSourceStatics4> for MediaSource {}
 impl MediaSource {
     #[inline] pub fn create_from_adaptive_media_source(mediaSource: &super::streaming::adaptive::AdaptiveMediaSource) -> Result<Option<ComPtr<MediaSource>>> {
         <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_adaptive_media_source(mediaSource)
@@ -9744,6 +10197,9 @@ impl MediaSource {
     }
     #[inline] pub fn create_from_media_frame_source(frameSource: &super::capture::frames::MediaFrameSource) -> Result<Option<ComPtr<MediaSource>>> {
         <Self as RtActivatable<IMediaSourceStatics3>>::get_activation_factory().create_from_media_frame_source(frameSource)
+    }
+    #[cfg(feature="windows-networking")] #[inline] pub fn create_from_download_operation(downloadOperation: &super::super::networking::backgroundtransfer::DownloadOperation) -> Result<Option<ComPtr<MediaSource>>> {
+        <Self as RtActivatable<IMediaSourceStatics4>>::get_activation_factory().create_from_download_operation(downloadOperation)
     }
 }
 DEFINE_CLSID!(MediaSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,111,117,114,99,101,0]) [CLSID_MediaSource]);
@@ -9853,6 +10309,17 @@ impl IMediaSource4 {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).OpenAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IMediaSource5, 857350830, 60718, 18978, 148, 200, 183, 67, 169, 43, 48, 34);
+RT_INTERFACE!{interface IMediaSource5(IMediaSource5Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaSource5] {
+    #[cfg(feature="windows-networking")] fn get_DownloadOperation(&self, out: *mut *mut super::super::networking::backgroundtransfer::DownloadOperation) -> HRESULT
+}}
+impl IMediaSource5 {
+    #[cfg(feature="windows-networking")] #[inline] pub fn get_download_operation(&self) -> Result<Option<ComPtr<super::super::networking::backgroundtransfer::DownloadOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DownloadOperation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMediaSourceAppServiceConnection, 1642195607, 6422, 18448, 183, 244, 182, 66, 190, 130, 149, 150);
@@ -10015,6 +10482,17 @@ impl IMediaSourceStatics3 {
     #[inline] pub fn create_from_media_frame_source(&self, frameSource: &super::capture::frames::MediaFrameSource) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromMediaFrameSource)(self as *const _ as *mut _, frameSource as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IMediaSourceStatics4, 672873468, 58634, 17448, 165, 0, 156, 78, 217, 24, 211, 240);
+RT_INTERFACE!{static interface IMediaSourceStatics4(IMediaSourceStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceStatics4] {
+    #[cfg(feature="windows-networking")] fn CreateFromDownloadOperation(&self, downloadOperation: *mut super::super::networking::backgroundtransfer::DownloadOperation, out: *mut *mut MediaSource) -> HRESULT
+}}
+impl IMediaSourceStatics4 {
+    #[cfg(feature="windows-networking")] #[inline] pub fn create_from_download_operation(&self, downloadOperation: &super::super::networking::backgroundtransfer::DownloadOperation) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFromDownloadOperation)(self as *const _ as *mut _, downloadOperation as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -11141,6 +11619,42 @@ DEFINE_CLSID!(SpeechCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,
 RT_ENUM! { enum TimedMetadataKind: i32 {
     Caption (TimedMetadataKind_Caption) = 0, Chapter (TimedMetadataKind_Chapter) = 1, Custom (TimedMetadataKind_Custom) = 2, Data (TimedMetadataKind_Data) = 3, Description (TimedMetadataKind_Description) = 4, Subtitle (TimedMetadataKind_Subtitle) = 5, ImageSubtitle (TimedMetadataKind_ImageSubtitle) = 6, Speech (TimedMetadataKind_Speech) = 7,
 }}
+DEFINE_IID!(IID_ITimedMetadataStreamDescriptor, 322123455, 10602, 17982, 159, 249, 1, 205, 37, 105, 20, 8);
+RT_INTERFACE!{interface ITimedMetadataStreamDescriptor(ITimedMetadataStreamDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataStreamDescriptor] {
+    fn get_EncodingProperties(&self, out: *mut *mut super::mediaproperties::TimedMetadataEncodingProperties) -> HRESULT,
+    fn Copy(&self, out: *mut *mut TimedMetadataStreamDescriptor) -> HRESULT
+}}
+impl ITimedMetadataStreamDescriptor {
+    #[inline] pub fn get_encoding_properties(&self) -> Result<Option<ComPtr<super::mediaproperties::TimedMetadataEncodingProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_EncodingProperties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn copy(&self) -> Result<Option<ComPtr<TimedMetadataStreamDescriptor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Copy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class TimedMetadataStreamDescriptor: IMediaStreamDescriptor}
+impl RtActivatable<ITimedMetadataStreamDescriptorFactory> for TimedMetadataStreamDescriptor {}
+impl TimedMetadataStreamDescriptor {
+    #[inline] pub fn create(encodingProperties: &super::mediaproperties::TimedMetadataEncodingProperties) -> Result<ComPtr<TimedMetadataStreamDescriptor>> {
+        <Self as RtActivatable<ITimedMetadataStreamDescriptorFactory>>::get_activation_factory().create(encodingProperties)
+    }
+}
+DEFINE_CLSID!(TimedMetadataStreamDescriptor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,77,101,116,97,100,97,116,97,83,116,114,101,97,109,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_TimedMetadataStreamDescriptor]);
+DEFINE_IID!(IID_ITimedMetadataStreamDescriptorFactory, 3223838256, 29538, 20473, 152, 177, 45, 253, 11, 141, 28, 174);
+RT_INTERFACE!{static interface ITimedMetadataStreamDescriptorFactory(ITimedMetadataStreamDescriptorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataStreamDescriptorFactory] {
+    fn Create(&self, encodingProperties: *mut super::mediaproperties::TimedMetadataEncodingProperties, out: *mut *mut TimedMetadataStreamDescriptor) -> HRESULT
+}}
+impl ITimedMetadataStreamDescriptorFactory {
+    #[inline] pub fn create(&self, encodingProperties: &super::mediaproperties::TimedMetadataEncodingProperties) -> Result<ComPtr<TimedMetadataStreamDescriptor>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_ITimedMetadataTrack, 2657807774, 63098, 18857, 179, 48, 207, 3, 176, 233, 207, 7);
 RT_INTERFACE!{interface ITimedMetadataTrack(ITimedMetadataTrackVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataTrack] {
     fn add_CueEntered(&self, handler: *mut foundation::TypedEventHandler<TimedMetadataTrack, MediaCueEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -11968,6 +12482,17 @@ impl VideoStreamDescriptor {
     }
 }
 DEFINE_CLSID!(VideoStreamDescriptor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,86,105,100,101,111,83,116,114,101,97,109,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_VideoStreamDescriptor]);
+DEFINE_IID!(IID_IVideoStreamDescriptor2, 2335206928, 17726, 16520, 131, 45, 195, 111, 164, 249, 74, 243);
+RT_INTERFACE!{interface IVideoStreamDescriptor2(IVideoStreamDescriptor2Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoStreamDescriptor2] {
+    fn Copy(&self, out: *mut *mut VideoStreamDescriptor) -> HRESULT
+}}
+impl IVideoStreamDescriptor2 {
+    #[inline] pub fn copy(&self) -> Result<Option<ComPtr<VideoStreamDescriptor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Copy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IVideoStreamDescriptorFactory, 1229911761, 47989, 17362, 158, 94, 123, 121, 163, 175, 206, 212);
 RT_INTERFACE!{static interface IVideoStreamDescriptorFactory(IVideoStreamDescriptorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVideoStreamDescriptorFactory] {
     fn Create(&self, encodingProperties: *mut super::mediaproperties::VideoEncodingProperties, out: *mut *mut VideoStreamDescriptor) -> HRESULT
@@ -12337,6 +12862,17 @@ impl IAdvancedVideoCaptureDeviceController5 {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).SetDevicePropertyByExtendedId)(self as *const _ as *mut _, extendedPropertyId.len() as u32, extendedPropertyId.as_ptr() as *mut _, propertyValue.len() as u32, propertyValue.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IAdvancedVideoCaptureDeviceController6, 3059104339, 26785, 17591, 159, 137, 181, 250, 151, 172, 12, 190);
+RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController6(IAdvancedVideoCaptureDeviceController6Vtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedVideoCaptureDeviceController6] {
+    fn get_VideoTemporalDenoisingControl(&self, out: *mut *mut VideoTemporalDenoisingControl) -> HRESULT
+}}
+impl IAdvancedVideoCaptureDeviceController6 {
+    #[inline] pub fn get_video_temporal_denoising_control(&self) -> Result<Option<ComPtr<VideoTemporalDenoisingControl>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_VideoTemporalDenoisingControl)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IAudioDeviceController, 3990135688, 31175, 20348, 144, 232, 239, 147, 75, 33, 88, 10);
@@ -14014,6 +14550,38 @@ RT_ENUM! { enum VideoDeviceControllerGetDevicePropertyStatus: i32 {
 RT_ENUM! { enum VideoDeviceControllerSetDevicePropertyStatus: i32 {
     Success (VideoDeviceControllerSetDevicePropertyStatus_Success) = 0, UnknownFailure (VideoDeviceControllerSetDevicePropertyStatus_UnknownFailure) = 1, NotSupported (VideoDeviceControllerSetDevicePropertyStatus_NotSupported) = 2, InvalidValue (VideoDeviceControllerSetDevicePropertyStatus_InvalidValue) = 3, DeviceNotAvailable (VideoDeviceControllerSetDevicePropertyStatus_DeviceNotAvailable) = 4, NotInControl (VideoDeviceControllerSetDevicePropertyStatus_NotInControl) = 5,
 }}
+DEFINE_IID!(IID_IVideoTemporalDenoisingControl, 2058569525, 15914, 18994, 186, 255, 67, 88, 196, 251, 221, 87);
+RT_INTERFACE!{interface IVideoTemporalDenoisingControl(IVideoTemporalDenoisingControlVtbl): IInspectable(IInspectableVtbl) [IID_IVideoTemporalDenoisingControl] {
+    fn get_Supported(&self, out: *mut bool) -> HRESULT,
+    fn get_SupportedModes(&self, out: *mut *mut foundation::collections::IVectorView<VideoTemporalDenoisingMode>) -> HRESULT,
+    fn get_Mode(&self, out: *mut VideoTemporalDenoisingMode) -> HRESULT,
+    fn put_Mode(&self, value: VideoTemporalDenoisingMode) -> HRESULT
+}}
+impl IVideoTemporalDenoisingControl {
+    #[inline] pub fn get_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Supported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_supported_modes(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<VideoTemporalDenoisingMode>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SupportedModes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_mode(&self) -> Result<VideoTemporalDenoisingMode> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Mode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_mode(&self, value: VideoTemporalDenoisingMode) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Mode)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class VideoTemporalDenoisingControl: IVideoTemporalDenoisingControl}
+RT_ENUM! { enum VideoTemporalDenoisingMode: i32 {
+    Off (VideoTemporalDenoisingMode_Off) = 0, On (VideoTemporalDenoisingMode_On) = 1, Auto (VideoTemporalDenoisingMode_Auto) = 2,
+}}
 DEFINE_IID!(IID_IWhiteBalanceControl, 2015298686, 29026, 18888, 168, 249, 148, 129, 197, 101, 54, 62);
 RT_INTERFACE!{interface IWhiteBalanceControl(IWhiteBalanceControlVtbl): IInspectable(IInspectableVtbl) [IID_IWhiteBalanceControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -15027,6 +15595,17 @@ impl DialReceiverApp {
     }
 }
 DEFINE_CLSID!(DialReceiverApp(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,105,97,108,80,114,111,116,111,99,111,108,46,68,105,97,108,82,101,99,101,105,118,101,114,65,112,112,0]) [CLSID_DialReceiverApp]);
+DEFINE_IID!(IID_IDialReceiverApp2, 1393317893, 37168, 17068, 165, 4, 25, 119, 220, 178, 234, 138);
+RT_INTERFACE!{interface IDialReceiverApp2(IDialReceiverApp2Vtbl): IInspectable(IInspectableVtbl) [IID_IDialReceiverApp2] {
+    fn GetUniqueDeviceNameAsync(&self, out: *mut *mut foundation::IAsyncOperation<HString>) -> HRESULT
+}}
+impl IDialReceiverApp2 {
+    #[inline] pub fn get_unique_device_name_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetUniqueDeviceNameAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IDialReceiverAppStatics, 1394096700, 19510, 19714, 178, 138, 242, 169, 218, 56, 236, 82);
 RT_INTERFACE!{static interface IDialReceiverAppStatics(IDialReceiverAppStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDialReceiverAppStatics] {
     fn get_Current(&self, out: *mut *mut DialReceiverApp) -> HRESULT
@@ -15573,6 +16152,78 @@ impl IVideoTransformEffectDefinition {
 RT_CLASS!{class VideoTransformEffectDefinition: IVideoEffectDefinition}
 impl RtActivatable<IActivationFactory> for VideoTransformEffectDefinition {}
 DEFINE_CLSID!(VideoTransformEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,86,105,100,101,111,84,114,97,110,115,102,111,114,109,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_VideoTransformEffectDefinition]);
+DEFINE_IID!(IID_IVideoTransformEffectDefinition2, 4037544095, 26312, 18068, 159, 217, 17, 54, 171, 247, 68, 74);
+RT_INTERFACE!{interface IVideoTransformEffectDefinition2(IVideoTransformEffectDefinition2Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoTransformEffectDefinition2] {
+    fn get_SphericalProjection(&self, out: *mut *mut VideoTransformSphericalProjection) -> HRESULT
+}}
+impl IVideoTransformEffectDefinition2 {
+    #[inline] pub fn get_spherical_projection(&self) -> Result<Option<ComPtr<VideoTransformSphericalProjection>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SphericalProjection)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IVideoTransformSphericalProjection, 3477340656, 39922, 19513, 159, 65, 224, 34, 81, 74, 132, 104);
+RT_INTERFACE!{interface IVideoTransformSphericalProjection(IVideoTransformSphericalProjectionVtbl): IInspectable(IInspectableVtbl) [IID_IVideoTransformSphericalProjection] {
+    fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
+    fn put_IsEnabled(&self, value: bool) -> HRESULT,
+    fn get_FrameFormat(&self, out: *mut super::mediaproperties::SphericalVideoFrameFormat) -> HRESULT,
+    fn put_FrameFormat(&self, value: super::mediaproperties::SphericalVideoFrameFormat) -> HRESULT,
+    fn get_ProjectionMode(&self, out: *mut super::playback::SphericalVideoProjectionMode) -> HRESULT,
+    fn put_ProjectionMode(&self, value: super::playback::SphericalVideoProjectionMode) -> HRESULT,
+    fn get_HorizontalFieldOfViewInDegrees(&self, out: *mut f64) -> HRESULT,
+    fn put_HorizontalFieldOfViewInDegrees(&self, value: f64) -> HRESULT,
+    fn get_ViewOrientation(&self, out: *mut foundation::numerics::Quaternion) -> HRESULT,
+    fn put_ViewOrientation(&self, value: foundation::numerics::Quaternion) -> HRESULT
+}}
+impl IVideoTransformSphericalProjection {
+    #[inline] pub fn get_is_enabled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsEnabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_enabled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsEnabled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_frame_format(&self) -> Result<super::mediaproperties::SphericalVideoFrameFormat> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_FrameFormat)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_frame_format(&self, value: super::mediaproperties::SphericalVideoFrameFormat) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_FrameFormat)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_projection_mode(&self) -> Result<super::playback::SphericalVideoProjectionMode> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ProjectionMode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_projection_mode(&self, value: super::playback::SphericalVideoProjectionMode) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ProjectionMode)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_horizontal_field_of_view_in_degrees(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_HorizontalFieldOfViewInDegrees)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_horizontal_field_of_view_in_degrees(&self, value: f64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_HorizontalFieldOfViewInDegrees)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_view_orientation(&self) -> Result<foundation::numerics::Quaternion> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ViewOrientation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_view_orientation(&self, value: foundation::numerics::Quaternion) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ViewOrientation)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class VideoTransformSphericalProjection: IVideoTransformSphericalProjection}
 } // Windows.Media.Effects
 pub mod editing { // Windows.Media.Editing
 use ::prelude::*;
@@ -16134,12 +16785,6 @@ RT_ENUM! { enum VideoFramePrecision: i32 {
     NearestFrame (VideoFramePrecision_NearestFrame) = 0, NearestKeyFrame (VideoFramePrecision_NearestKeyFrame) = 1,
 }}
 } // Windows.Media.Editing
-pub mod render { // Windows.Media.Render
-use ::prelude::*;
-RT_ENUM! { enum AudioRenderCategory: i32 {
-    Other (AudioRenderCategory_Other) = 0, ForegroundOnlyMedia (AudioRenderCategory_ForegroundOnlyMedia) = 1, BackgroundCapableMedia (AudioRenderCategory_BackgroundCapableMedia) = 2, Communications (AudioRenderCategory_Communications) = 3, Alerts (AudioRenderCategory_Alerts) = 4, SoundEffects (AudioRenderCategory_SoundEffects) = 5, GameEffects (AudioRenderCategory_GameEffects) = 6, GameMedia (AudioRenderCategory_GameMedia) = 7, GameChat (AudioRenderCategory_GameChat) = 8, Speech (AudioRenderCategory_Speech) = 9, Movie (AudioRenderCategory_Movie) = 10, Media (AudioRenderCategory_Media) = 11,
-}}
-} // Windows.Media.Render
 pub mod faceanalysis { // Windows.Media.FaceAnalysis
 use ::prelude::*;
 DEFINE_IID!(IID_IDetectedFace, 2181092436, 26300, 13535, 148, 16, 232, 148, 0, 25, 84, 20);
@@ -19070,6 +19715,28 @@ impl IMediaPlaybackSession2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IMediaPlaybackSession3, 2074260506, 41954, 16479, 183, 123, 164, 129, 44, 35, 139, 102);
+RT_INTERFACE!{interface IMediaPlaybackSession3(IMediaPlaybackSession3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSession3] {
+    fn get_PlaybackRotation(&self, out: *mut super::mediaproperties::MediaRotation) -> HRESULT,
+    fn put_PlaybackRotation(&self, value: super::mediaproperties::MediaRotation) -> HRESULT,
+    fn GetOutputDegradationPolicyState(&self, out: *mut *mut MediaPlaybackSessionOutputDegradationPolicyState) -> HRESULT
+}}
+impl IMediaPlaybackSession3 {
+    #[inline] pub fn get_playback_rotation(&self) -> Result<super::mediaproperties::MediaRotation> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PlaybackRotation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_playback_rotation(&self, value: super::mediaproperties::MediaRotation) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PlaybackRotation)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_output_degradation_policy_state(&self) -> Result<Option<ComPtr<MediaPlaybackSessionOutputDegradationPolicyState>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetOutputDegradationPolicyState)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IMediaPlaybackSessionBufferingStartedEventArgs, 3446321133, 29922, 17333, 177, 21, 118, 35, 108, 51, 121, 26);
 RT_INTERFACE!{interface IMediaPlaybackSessionBufferingStartedEventArgs(IMediaPlaybackSessionBufferingStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSessionBufferingStartedEventArgs] {
     fn get_IsPlaybackInterruption(&self, out: *mut bool) -> HRESULT
@@ -19082,6 +19749,21 @@ impl IMediaPlaybackSessionBufferingStartedEventArgs {
     }}
 }
 RT_CLASS!{class MediaPlaybackSessionBufferingStartedEventArgs: IMediaPlaybackSessionBufferingStartedEventArgs}
+DEFINE_IID!(IID_IMediaPlaybackSessionOutputDegradationPolicyState, 1435398781, 63027, 18937, 150, 90, 171, 170, 29, 183, 9, 190);
+RT_INTERFACE!{interface IMediaPlaybackSessionOutputDegradationPolicyState(IMediaPlaybackSessionOutputDegradationPolicyStateVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSessionOutputDegradationPolicyState] {
+    fn get_VideoConstrictionReason(&self, out: *mut MediaPlaybackSessionVideoConstrictionReason) -> HRESULT
+}}
+impl IMediaPlaybackSessionOutputDegradationPolicyState {
+    #[inline] pub fn get_video_constriction_reason(&self) -> Result<MediaPlaybackSessionVideoConstrictionReason> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_VideoConstrictionReason)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class MediaPlaybackSessionOutputDegradationPolicyState: IMediaPlaybackSessionOutputDegradationPolicyState}
+RT_ENUM! { enum MediaPlaybackSessionVideoConstrictionReason: i32 {
+    None (MediaPlaybackSessionVideoConstrictionReason_None) = 0, VirtualMachine (MediaPlaybackSessionVideoConstrictionReason_VirtualMachine) = 1, UnsupportedDisplayAdapter (MediaPlaybackSessionVideoConstrictionReason_UnsupportedDisplayAdapter) = 2, UnsignedDriver (MediaPlaybackSessionVideoConstrictionReason_UnsignedDriver) = 3, FrameServerEnabled (MediaPlaybackSessionVideoConstrictionReason_FrameServerEnabled) = 4, OutputProtectionFailed (MediaPlaybackSessionVideoConstrictionReason_OutputProtectionFailed) = 5, Unknown (MediaPlaybackSessionVideoConstrictionReason_Unknown) = 6,
+}}
 DEFINE_IID!(IID_IMediaPlaybackSource, 4020093628, 37655, 18070, 176, 81, 43, 173, 100, 49, 119, 181);
 RT_INTERFACE!{interface IMediaPlaybackSource(IMediaPlaybackSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSource] {
     
@@ -19666,6 +20348,17 @@ impl IMediaPlayer6 {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).RenderSubtitlesToSurfaceWithTargetRectangle)(self as *const _ as *mut _, destination as *const _ as *mut _, targetRectangle, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IMediaPlayer7, 1562231928, 17664, 17713, 179, 244, 119, 122, 113, 73, 31, 127);
+RT_INTERFACE!{interface IMediaPlayer7(IMediaPlayer7Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayer7] {
+    fn get_AudioStateMonitor(&self, out: *mut *mut super::audio::AudioStateMonitor) -> HRESULT
+}}
+impl IMediaPlayer7 {
+    #[inline] pub fn get_audio_state_monitor(&self) -> Result<Option<ComPtr<super::audio::AudioStateMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AudioStateMonitor)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum MediaPlayerAudioCategory: i32 {
@@ -22384,6 +23077,12 @@ impl IPlayReadyStatics4 {
 }
 } // Windows.Media.Protection.PlayReady
 } // Windows.Media.Protection
+pub mod render { // Windows.Media.Render
+use ::prelude::*;
+RT_ENUM! { enum AudioRenderCategory: i32 {
+    Other (AudioRenderCategory_Other) = 0, ForegroundOnlyMedia (AudioRenderCategory_ForegroundOnlyMedia) = 1, BackgroundCapableMedia (AudioRenderCategory_BackgroundCapableMedia) = 2, Communications (AudioRenderCategory_Communications) = 3, Alerts (AudioRenderCategory_Alerts) = 4, SoundEffects (AudioRenderCategory_SoundEffects) = 5, GameEffects (AudioRenderCategory_GameEffects) = 6, GameMedia (AudioRenderCategory_GameMedia) = 7, GameChat (AudioRenderCategory_GameChat) = 8, Speech (AudioRenderCategory_Speech) = 9, Movie (AudioRenderCategory_Movie) = 10, Media (AudioRenderCategory_Media) = 11,
+}}
+} // Windows.Media.Render
 pub mod speechrecognition { // Windows.Media.SpeechRecognition
 use ::prelude::*;
 DEFINE_IID!(IID_ISpeechContinuousRecognitionCompletedEventArgs, 3822086587, 58124, 24088, 66, 75, 127, 190, 129, 248, 251, 208);
@@ -23115,6 +23814,12 @@ impl IInstalledVoicesStatic2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
+RT_ENUM! { enum SpeechAppendedSilence: i32 {
+    Default (SpeechAppendedSilence_Default) = 0, Min (SpeechAppendedSilence_Min) = 1,
+}}
+RT_ENUM! { enum SpeechPunctuationSilence: i32 {
+    Default (SpeechPunctuationSilence_Default) = 0, Min (SpeechPunctuationSilence_Min) = 1,
+}}
 DEFINE_IID!(IID_ISpeechSynthesisStream, 2212785811, 9292, 17954, 186, 11, 98, 41, 196, 208, 214, 93);
 RT_INTERFACE!{interface ISpeechSynthesisStream(ISpeechSynthesisStreamVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechSynthesisStream] {
     fn get_Markers(&self, out: *mut *mut foundation::collections::IVectorView<super::IMediaMarker>) -> HRESULT
@@ -23245,6 +23950,33 @@ impl ISpeechSynthesizerOptions2 {
     }}
     #[inline] pub fn set_audio_pitch(&self, value: f64) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_AudioPitch)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISpeechSynthesizerOptions3, 1075763319, 36908, 18452, 165, 130, 165, 208, 192, 118, 159, 168);
+RT_INTERFACE!{interface ISpeechSynthesizerOptions3(ISpeechSynthesizerOptions3Vtbl): IInspectable(IInspectableVtbl) [IID_ISpeechSynthesizerOptions3] {
+    fn get_AppendedSilence(&self, out: *mut SpeechAppendedSilence) -> HRESULT,
+    fn put_AppendedSilence(&self, value: SpeechAppendedSilence) -> HRESULT,
+    fn get_PunctuationSilence(&self, out: *mut SpeechPunctuationSilence) -> HRESULT,
+    fn put_PunctuationSilence(&self, value: SpeechPunctuationSilence) -> HRESULT
+}}
+impl ISpeechSynthesizerOptions3 {
+    #[inline] pub fn get_appended_silence(&self) -> Result<SpeechAppendedSilence> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AppendedSilence)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_appended_silence(&self, value: SpeechAppendedSilence) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AppendedSilence)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_punctuation_silence(&self) -> Result<SpeechPunctuationSilence> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PunctuationSilence)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_punctuation_silence(&self, value: SpeechPunctuationSilence) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PunctuationSilence)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -23523,6 +24255,17 @@ impl IAudioEncodingProperties2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IAudioEncodingProperties3, 2271216449, 29836, 20365, 176, 253, 16, 202, 240, 143, 240, 135);
+RT_INTERFACE!{interface IAudioEncodingProperties3(IAudioEncodingProperties3Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioEncodingProperties3] {
+    fn Copy(&self, out: *mut *mut AudioEncodingProperties) -> HRESULT
+}}
+impl IAudioEncodingProperties3 {
+    #[inline] pub fn copy(&self) -> Result<Option<ComPtr<AudioEncodingProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Copy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IAudioEncodingPropertiesStatics, 212677420, 60393, 17703, 179, 109, 228, 42, 19, 207, 56, 219);
 RT_INTERFACE!{static interface IAudioEncodingPropertiesStatics(IAudioEncodingPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioEncodingPropertiesStatics] {
     fn CreateAac(&self, sampleRate: u32, channelCount: u32, bitrate: u32, out: *mut *mut AudioEncodingProperties) -> HRESULT,
@@ -23601,6 +24344,17 @@ RT_INTERFACE!{interface IContainerEncodingProperties(IContainerEncodingPropertie
 RT_CLASS!{class ContainerEncodingProperties: IContainerEncodingProperties}
 impl RtActivatable<IActivationFactory> for ContainerEncodingProperties {}
 DEFINE_CLSID!(ContainerEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,67,111,110,116,97,105,110,101,114,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_ContainerEncodingProperties]);
+DEFINE_IID!(IID_IContainerEncodingProperties2, 2993864745, 44582, 18457, 186, 173, 173, 122, 73, 176, 168, 118);
+RT_INTERFACE!{interface IContainerEncodingProperties2(IContainerEncodingProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IContainerEncodingProperties2] {
+    fn Copy(&self, out: *mut *mut ContainerEncodingProperties) -> HRESULT
+}}
+impl IContainerEncodingProperties2 {
+    #[inline] pub fn copy(&self) -> Result<Option<ComPtr<ContainerEncodingProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Copy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{static class H264ProfileIds}
 impl RtActivatable<IH264ProfileIdsStatics> for H264ProfileIds {}
 impl H264ProfileIds {
@@ -23750,6 +24504,17 @@ impl ImageEncodingProperties {
     }
 }
 DEFINE_CLSID!(ImageEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,73,109,97,103,101,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_ImageEncodingProperties]);
+DEFINE_IID!(IID_IImageEncodingProperties2, 3360989919, 51491, 18075, 172, 142, 106, 159, 60, 28, 217, 227);
+RT_INTERFACE!{interface IImageEncodingProperties2(IImageEncodingProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IImageEncodingProperties2] {
+    fn Copy(&self, out: *mut *mut ImageEncodingProperties) -> HRESULT
+}}
+impl IImageEncodingProperties2 {
+    #[inline] pub fn copy(&self) -> Result<Option<ComPtr<ImageEncodingProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Copy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IImageEncodingPropertiesStatics, 628910300, 35737, 17310, 170, 89, 145, 58, 54, 22, 18, 151);
 RT_INTERFACE!{static interface IImageEncodingPropertiesStatics(IImageEncodingPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IImageEncodingPropertiesStatics] {
     fn CreateJpeg(&self, out: *mut *mut ImageEncodingProperties) -> HRESULT,
@@ -23899,6 +24664,22 @@ impl IMediaEncodingProfile2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IMediaEncodingProfile3, 3127819912, 30064, 20073, 172, 207, 86, 17, 173, 1, 95, 136);
+RT_INTERFACE!{interface IMediaEncodingProfile3(IMediaEncodingProfile3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingProfile3] {
+    fn SetTimedMetadataTracks(&self, value: *mut foundation::collections::IIterable<super::core::TimedMetadataStreamDescriptor>) -> HRESULT,
+    fn GetTimedMetadataTracks(&self, out: *mut *mut foundation::collections::IVector<super::core::TimedMetadataStreamDescriptor>) -> HRESULT
+}}
+impl IMediaEncodingProfile3 {
+    #[inline] pub fn set_timed_metadata_tracks(&self, value: &foundation::collections::IIterable<super::core::TimedMetadataStreamDescriptor>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetTimedMetadataTracks)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_timed_metadata_tracks(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::core::TimedMetadataStreamDescriptor>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetTimedMetadataTracks)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IMediaEncodingProfileStatics, 427767084, 11998, 19013, 168, 150, 129, 122, 72, 84, 248, 254);
 RT_INTERFACE!{static interface IMediaEncodingProfileStatics(IMediaEncodingProfileStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingProfileStatics] {
     fn CreateM4a(&self, quality: AudioEncodingQuality, out: *mut *mut MediaEncodingProfile) -> HRESULT,
@@ -24018,6 +24799,7 @@ RT_CLASS!{static class MediaEncodingSubtypes}
 impl RtActivatable<IMediaEncodingSubtypesStatics> for MediaEncodingSubtypes {}
 impl RtActivatable<IMediaEncodingSubtypesStatics2> for MediaEncodingSubtypes {}
 impl RtActivatable<IMediaEncodingSubtypesStatics3> for MediaEncodingSubtypes {}
+impl RtActivatable<IMediaEncodingSubtypesStatics4> for MediaEncodingSubtypes {}
 impl MediaEncodingSubtypes {
     #[inline] pub fn get_aac() -> Result<HString> {
         <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_aac()
@@ -24156,6 +24938,9 @@ impl MediaEncodingSubtypes {
     }
     #[inline] pub fn get_flac() -> Result<HString> {
         <Self as RtActivatable<IMediaEncodingSubtypesStatics3>>::get_activation_factory().get_flac()
+    }
+    #[inline] pub fn get_p010() -> Result<HString> {
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics4>>::get_activation_factory().get_p010()
     }
 }
 DEFINE_CLSID!(MediaEncodingSubtypes(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,101,100,105,97,69,110,99,111,100,105,110,103,83,117,98,116,121,112,101,115,0]) [CLSID_MediaEncodingSubtypes]);
@@ -24450,11 +25235,22 @@ impl IMediaEncodingSubtypesStatics3 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IMediaEncodingSubtypesStatics4, 3723289994, 14665, 17988, 138, 44, 89, 239, 2, 198, 66, 250);
+RT_INTERFACE!{static interface IMediaEncodingSubtypesStatics4(IMediaEncodingSubtypesStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingSubtypesStatics4] {
+    fn get_P010(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IMediaEncodingSubtypesStatics4 {
+    #[inline] pub fn get_p010(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_P010)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum MediaMirroringOptions: u32 {
     None (MediaMirroringOptions_None) = 0, Horizontal (MediaMirroringOptions_Horizontal) = 1, Vertical (MediaMirroringOptions_Vertical) = 2,
 }}
 RT_ENUM! { enum MediaPixelFormat: i32 {
-    Nv12 (MediaPixelFormat_Nv12) = 0, Bgra8 (MediaPixelFormat_Bgra8) = 1,
+    Nv12 (MediaPixelFormat_Nv12) = 0, Bgra8 (MediaPixelFormat_Bgra8) = 1, P010 (MediaPixelFormat_P010) = 2,
 }}
 RT_CLASS!{class MediaPropertySet: foundation::collections::IMap<Guid, IInspectable>}
 impl RtActivatable<IActivationFactory> for MediaPropertySet {}
@@ -24554,6 +25350,31 @@ RT_ENUM! { enum SphericalVideoFrameFormat: i32 {
 RT_ENUM! { enum StereoscopicVideoPackingMode: i32 {
     None (StereoscopicVideoPackingMode_None) = 0, SideBySide (StereoscopicVideoPackingMode_SideBySide) = 1, TopBottom (StereoscopicVideoPackingMode_TopBottom) = 2,
 }}
+DEFINE_IID!(IID_ITimedMetadataEncodingProperties, 1372401875, 54928, 19706, 151, 244, 74, 57, 142, 157, 180, 32);
+RT_INTERFACE!{interface ITimedMetadataEncodingProperties(ITimedMetadataEncodingPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataEncodingProperties] {
+    fn SetFormatUserData(&self, valueSize: u32, value: *mut u8) -> HRESULT,
+    fn GetFormatUserData(&self, valueSize: *mut u32, value: *mut *mut u8) -> HRESULT,
+    fn Copy(&self, out: *mut *mut TimedMetadataEncodingProperties) -> HRESULT
+}}
+impl ITimedMetadataEncodingProperties {
+    #[inline] pub fn set_format_user_data(&self, value: &[u8]) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetFormatUserData)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_format_user_data(&self) -> Result<ComArray<u8>> { unsafe { 
+        let mut valueSize = 0; let mut value = null_mut();
+        let hr = ((*self.lpVtbl).GetFormatUserData)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
+    }}
+    #[inline] pub fn copy(&self) -> Result<Option<ComPtr<TimedMetadataEncodingProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Copy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class TimedMetadataEncodingProperties: IMediaEncodingProperties}
+impl RtActivatable<IActivationFactory> for TimedMetadataEncodingProperties {}
+DEFINE_CLSID!(TimedMetadataEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,84,105,109,101,100,77,101,116,97,100,97,116,97,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_TimedMetadataEncodingProperties]);
 DEFINE_IID!(IID_IVideoEncodingProperties, 1995336858, 14274, 20266, 136, 10, 18, 130, 187, 180, 55, 61);
 RT_INTERFACE!{interface IVideoEncodingProperties(IVideoEncodingPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IVideoEncodingProperties] {
     fn put_Bitrate(&self, value: u32) -> HRESULT,
@@ -24670,6 +25491,17 @@ impl IVideoEncodingProperties4 {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_SphericalVideoFrameFormat)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IVideoEncodingProperties5, 1230571535, 10031, 20174, 164, 223, 192, 204, 219, 51, 216, 64);
+RT_INTERFACE!{interface IVideoEncodingProperties5(IVideoEncodingProperties5Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoEncodingProperties5] {
+    fn Copy(&self, out: *mut *mut VideoEncodingProperties) -> HRESULT
+}}
+impl IVideoEncodingProperties5 {
+    #[inline] pub fn copy(&self) -> Result<Option<ComPtr<VideoEncodingProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Copy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IVideoEncodingPropertiesStatics, 1021398340, 7621, 17371, 159, 56, 235, 235, 249, 1, 82, 203);
@@ -25246,6 +26078,23 @@ impl IAdaptiveMediaSourceDiagnosticAvailableEventArgs2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs3, 3278179541, 56043, 16643, 132, 218, 104, 118, 154, 213, 19, 255);
+RT_INTERFACE!{interface IAdaptiveMediaSourceDiagnosticAvailableEventArgs3(IAdaptiveMediaSourceDiagnosticAvailableEventArgs3Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs3] {
+    fn get_ResourceDuration(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn get_ResourceContentType(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IAdaptiveMediaSourceDiagnosticAvailableEventArgs3 {
+    #[inline] pub fn get_resource_duration(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResourceDuration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_resource_content_type(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResourceContentType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDiagnostics, 2602888808, 38446, 17548, 174, 191, 178, 155, 86, 9, 142, 35);
 RT_INTERFACE!{interface IAdaptiveMediaSourceDiagnostics(IAdaptiveMediaSourceDiagnosticsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDiagnostics] {
     fn add_DiagnosticAvailable(&self, handler: *mut foundation::TypedEventHandler<AdaptiveMediaSourceDiagnostics, AdaptiveMediaSourceDiagnosticAvailableEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -25357,6 +26206,23 @@ impl IAdaptiveMediaSourceDownloadCompletedEventArgs2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadCompletedEventArgs3, 260738001, 37810, 18374, 186, 220, 139, 226, 200, 247, 246, 232);
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadCompletedEventArgs3(IAdaptiveMediaSourceDownloadCompletedEventArgs3Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadCompletedEventArgs3] {
+    fn get_ResourceDuration(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn get_ResourceContentType(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IAdaptiveMediaSourceDownloadCompletedEventArgs3 {
+    #[inline] pub fn get_resource_duration(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResourceDuration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_resource_content_type(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResourceContentType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadFailedEventArgs, 930320456, 62635, 16548, 177, 53, 198, 223, 216, 189, 127, 241);
 RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadFailedEventArgs(IAdaptiveMediaSourceDownloadFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadFailedEventArgs] {
     fn get_ResourceType(&self, out: *mut AdaptiveMediaSourceResourceType) -> HRESULT,
@@ -25420,6 +26286,23 @@ impl IAdaptiveMediaSourceDownloadFailedEventArgs2 {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadFailedEventArgs3, 3493152073, 4402, 18960, 145, 90, 194, 33, 27, 91, 148, 9);
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadFailedEventArgs3(IAdaptiveMediaSourceDownloadFailedEventArgs3Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadFailedEventArgs3] {
+    fn get_ResourceDuration(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn get_ResourceContentType(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IAdaptiveMediaSourceDownloadFailedEventArgs3 {
+    #[inline] pub fn get_resource_duration(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResourceDuration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_resource_content_type(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResourceContentType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadRequestedDeferral, 96898916, 64032, 19901, 152, 33, 75, 244, 201, 191, 119, 171);
@@ -25490,6 +26373,23 @@ impl IAdaptiveMediaSourceDownloadRequestedEventArgs2 {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadRequestedEventArgs3, 859590909, 20322, 17537, 171, 68, 30, 71, 176, 87, 66, 37);
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadRequestedEventArgs3(IAdaptiveMediaSourceDownloadRequestedEventArgs3Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadRequestedEventArgs3] {
+    fn get_ResourceDuration(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
+    fn get_ResourceContentType(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IAdaptiveMediaSourceDownloadRequestedEventArgs3 {
+    #[inline] pub fn get_resource_duration(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResourceDuration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_resource_content_type(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResourceContentType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadResult, 4105165939, 48366, 19050, 159, 10, 254, 196, 30, 35, 57, 176);

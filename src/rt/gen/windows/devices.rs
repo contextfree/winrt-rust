@@ -84,6 +84,1587 @@ impl ILowLevelDevicesControllerStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
+pub mod smartcards { // Windows.Devices.SmartCards
+use ::prelude::*;
+DEFINE_IID!(IID_ICardAddedEventArgs, 414969752, 61835, 19923, 177, 24, 223, 178, 200, 226, 60, 198);
+RT_INTERFACE!{interface ICardAddedEventArgs(ICardAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICardAddedEventArgs] {
+    fn get_SmartCard(&self, out: *mut *mut SmartCard) -> HRESULT
+}}
+impl ICardAddedEventArgs {
+    #[inline] pub fn get_smart_card(&self) -> Result<Option<ComPtr<SmartCard>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SmartCard)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CardAddedEventArgs: ICardAddedEventArgs}
+DEFINE_IID!(IID_ICardRemovedEventArgs, 355670703, 8919, 18757, 175, 201, 3, 180, 111, 66, 166, 205);
+RT_INTERFACE!{interface ICardRemovedEventArgs(ICardRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICardRemovedEventArgs] {
+    fn get_SmartCard(&self, out: *mut *mut SmartCard) -> HRESULT
+}}
+impl ICardRemovedEventArgs {
+    #[inline] pub fn get_smart_card(&self) -> Result<Option<ComPtr<SmartCard>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SmartCard)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CardRemovedEventArgs: ICardRemovedEventArgs}
+DEFINE_IID!(IID_ISmartCard, 460425329, 25652, 17396, 181, 90, 106, 41, 98, 56, 112, 170);
+RT_INTERFACE!{interface ISmartCard(ISmartCardVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCard] {
+    fn get_Reader(&self, out: *mut *mut SmartCardReader) -> HRESULT,
+    fn GetStatusAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardStatus>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn GetAnswerToResetAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::super::storage::streams::IBuffer>) -> HRESULT
+}}
+impl ISmartCard {
+    #[inline] pub fn get_reader(&self) -> Result<Option<ComPtr<SmartCardReader>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Reader)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_status_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetStatusAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_answer_to_reset_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAnswerToResetAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCard: ISmartCard}
+RT_ENUM! { enum SmartCardActivationPolicyChangeResult: i32 {
+    Denied (SmartCardActivationPolicyChangeResult_Denied) = 0, Allowed (SmartCardActivationPolicyChangeResult_Allowed) = 1,
+}}
+DEFINE_IID!(IID_ISmartCardAppletIdGroup, 2108777958, 25188, 22260, 94, 3, 200, 99, 133, 57, 94, 177);
+RT_INTERFACE!{interface ISmartCardAppletIdGroup(ISmartCardAppletIdGroupVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAppletIdGroup] {
+    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_DisplayName(&self, value: HSTRING) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_AppletIds(&self, out: *mut *mut foundation::collections::IVector<super::super::storage::streams::IBuffer>) -> HRESULT,
+    fn get_SmartCardEmulationCategory(&self, out: *mut SmartCardEmulationCategory) -> HRESULT,
+    fn put_SmartCardEmulationCategory(&self, value: SmartCardEmulationCategory) -> HRESULT,
+    fn get_SmartCardEmulationType(&self, out: *mut SmartCardEmulationType) -> HRESULT,
+    fn put_SmartCardEmulationType(&self, value: SmartCardEmulationType) -> HRESULT,
+    fn get_AutomaticEnablement(&self, out: *mut bool) -> HRESULT,
+    fn put_AutomaticEnablement(&self, value: bool) -> HRESULT
+}}
+impl ISmartCardAppletIdGroup {
+    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_display_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DisplayName)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_applet_ids(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::storage::streams::IBuffer>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AppletIds)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_smart_card_emulation_category(&self) -> Result<SmartCardEmulationCategory> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_SmartCardEmulationCategory)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_smart_card_emulation_category(&self, value: SmartCardEmulationCategory) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SmartCardEmulationCategory)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_smart_card_emulation_type(&self) -> Result<SmartCardEmulationType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_SmartCardEmulationType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_smart_card_emulation_type(&self, value: SmartCardEmulationType) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SmartCardEmulationType)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_automatic_enablement(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AutomaticEnablement)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_automatic_enablement(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AutomaticEnablement)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardAppletIdGroup: ISmartCardAppletIdGroup}
+impl RtActivatable<ISmartCardAppletIdGroupFactory> for SmartCardAppletIdGroup {}
+impl RtActivatable<ISmartCardAppletIdGroupStatics> for SmartCardAppletIdGroup {}
+impl RtActivatable<IActivationFactory> for SmartCardAppletIdGroup {}
+impl SmartCardAppletIdGroup {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(displayName: &HStringArg, appletIds: &foundation::collections::IVector<super::super::storage::streams::IBuffer>, emulationCategory: SmartCardEmulationCategory, emulationType: SmartCardEmulationType) -> Result<ComPtr<SmartCardAppletIdGroup>> {
+        <Self as RtActivatable<ISmartCardAppletIdGroupFactory>>::get_activation_factory().create(displayName, appletIds, emulationCategory, emulationType)
+    }
+    #[inline] pub fn get_max_applet_ids() -> Result<u16> {
+        <Self as RtActivatable<ISmartCardAppletIdGroupStatics>>::get_activation_factory().get_max_applet_ids()
+    }
+}
+DEFINE_CLSID!(SmartCardAppletIdGroup(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,65,112,112,108,101,116,73,100,71,114,111,117,112,0]) [CLSID_SmartCardAppletIdGroup]);
+RT_ENUM! { enum SmartCardAppletIdGroupActivationPolicy: i32 {
+    Disabled (SmartCardAppletIdGroupActivationPolicy_Disabled) = 0, ForegroundOverride (SmartCardAppletIdGroupActivationPolicy_ForegroundOverride) = 1, Enabled (SmartCardAppletIdGroupActivationPolicy_Enabled) = 2,
+}}
+DEFINE_IID!(IID_ISmartCardAppletIdGroupFactory, 2433084237, 19045, 20033, 128, 97, 203, 232, 63, 54, 149, 229);
+RT_INTERFACE!{static interface ISmartCardAppletIdGroupFactory(ISmartCardAppletIdGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAppletIdGroupFactory] {
+    #[cfg(feature="windows-storage")] fn Create(&self, displayName: HSTRING, appletIds: *mut foundation::collections::IVector<super::super::storage::streams::IBuffer>, emulationCategory: SmartCardEmulationCategory, emulationType: SmartCardEmulationType, out: *mut *mut SmartCardAppletIdGroup) -> HRESULT
+}}
+impl ISmartCardAppletIdGroupFactory {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, displayName: &HStringArg, appletIds: &foundation::collections::IVector<super::super::storage::streams::IBuffer>, emulationCategory: SmartCardEmulationCategory, emulationType: SmartCardEmulationType) -> Result<ComPtr<SmartCardAppletIdGroup>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, displayName.get(), appletIds as *const _ as *mut _, emulationCategory, emulationType, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardAppletIdGroupRegistration, 3742501073, 12731, 21910, 67, 177, 109, 105, 160, 37, 123, 58);
+RT_INTERFACE!{interface ISmartCardAppletIdGroupRegistration(ISmartCardAppletIdGroupRegistrationVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAppletIdGroupRegistration] {
+    fn get_ActivationPolicy(&self, out: *mut SmartCardAppletIdGroupActivationPolicy) -> HRESULT,
+    fn get_AppletIdGroup(&self, out: *mut *mut SmartCardAppletIdGroup) -> HRESULT,
+    fn RequestActivationPolicyChangeAsync(&self, policy: SmartCardAppletIdGroupActivationPolicy, out: *mut *mut foundation::IAsyncOperation<SmartCardActivationPolicyChangeResult>) -> HRESULT,
+    fn get_Id(&self, out: *mut Guid) -> HRESULT,
+    fn SetAutomaticResponseApdusAsync(&self, apdus: *mut foundation::collections::IIterable<SmartCardAutomaticResponseApdu>, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl ISmartCardAppletIdGroupRegistration {
+    #[inline] pub fn get_activation_policy(&self) -> Result<SmartCardAppletIdGroupActivationPolicy> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ActivationPolicy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_applet_id_group(&self) -> Result<Option<ComPtr<SmartCardAppletIdGroup>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AppletIdGroup)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_activation_policy_change_async(&self, policy: SmartCardAppletIdGroupActivationPolicy) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardActivationPolicyChangeResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestActivationPolicyChangeAsync)(self as *const _ as *mut _, policy, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_automatic_response_apdus_async(&self, apdus: &foundation::collections::IIterable<SmartCardAutomaticResponseApdu>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SetAutomaticResponseApdusAsync)(self as *const _ as *mut _, apdus as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardAppletIdGroupRegistration: ISmartCardAppletIdGroupRegistration}
+DEFINE_IID!(IID_ISmartCardAppletIdGroupStatics, 2871564713, 59244, 17871, 191, 29, 144, 234, 166, 32, 89, 39);
+RT_INTERFACE!{static interface ISmartCardAppletIdGroupStatics(ISmartCardAppletIdGroupStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAppletIdGroupStatics] {
+    fn get_MaxAppletIds(&self, out: *mut u16) -> HRESULT
+}}
+impl ISmartCardAppletIdGroupStatics {
+    #[inline] pub fn get_max_applet_ids(&self) -> Result<u16> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxAppletIds)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardAutomaticResponseApdu, 1377119147, 50750, 17713, 168, 87, 215, 86, 217, 155, 152, 106);
+RT_INTERFACE!{interface ISmartCardAutomaticResponseApdu(ISmartCardAutomaticResponseApduVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAutomaticResponseApdu] {
+    #[cfg(feature="windows-storage")] fn get_CommandApdu(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_CommandApdu(&self, value: *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_CommandApduBitMask(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_CommandApduBitMask(&self, value: *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    fn get_ShouldMatchLength(&self, out: *mut bool) -> HRESULT,
+    fn put_ShouldMatchLength(&self, value: bool) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_AppletId(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_AppletId(&self, value: *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_ResponseApdu(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_ResponseApdu(&self, value: *mut super::super::storage::streams::IBuffer) -> HRESULT
+}}
+impl ISmartCardAutomaticResponseApdu {
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_command_apdu(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CommandApdu)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_command_apdu(&self, value: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CommandApdu)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_command_apdu_bit_mask(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CommandApduBitMask)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_command_apdu_bit_mask(&self, value: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CommandApduBitMask)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_should_match_length(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ShouldMatchLength)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_should_match_length(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ShouldMatchLength)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_applet_id(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AppletId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_applet_id(&self, value: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AppletId)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_response_apdu(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResponseApdu)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_response_apdu(&self, value: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ResponseApdu)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardAutomaticResponseApdu: ISmartCardAutomaticResponseApdu}
+impl RtActivatable<ISmartCardAutomaticResponseApduFactory> for SmartCardAutomaticResponseApdu {}
+impl SmartCardAutomaticResponseApdu {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(commandApdu: &super::super::storage::streams::IBuffer, responseApdu: &super::super::storage::streams::IBuffer) -> Result<ComPtr<SmartCardAutomaticResponseApdu>> {
+        <Self as RtActivatable<ISmartCardAutomaticResponseApduFactory>>::get_activation_factory().create(commandApdu, responseApdu)
+    }
+}
+DEFINE_CLSID!(SmartCardAutomaticResponseApdu(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,65,117,116,111,109,97,116,105,99,82,101,115,112,111,110,115,101,65,112,100,117,0]) [CLSID_SmartCardAutomaticResponseApdu]);
+DEFINE_IID!(IID_ISmartCardAutomaticResponseApdu2, 1152301844, 21917, 17713, 78, 81, 137, 219, 111, 168, 165, 122);
+RT_INTERFACE!{interface ISmartCardAutomaticResponseApdu2(ISmartCardAutomaticResponseApdu2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAutomaticResponseApdu2] {
+    fn get_InputState(&self, out: *mut *mut foundation::IReference<u32>) -> HRESULT,
+    fn put_InputState(&self, value: *mut foundation::IReference<u32>) -> HRESULT,
+    fn get_OutputState(&self, out: *mut *mut foundation::IReference<u32>) -> HRESULT,
+    fn put_OutputState(&self, value: *mut foundation::IReference<u32>) -> HRESULT
+}}
+impl ISmartCardAutomaticResponseApdu2 {
+    #[inline] pub fn get_input_state(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_InputState)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_input_state(&self, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_InputState)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_output_state(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_OutputState)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_output_state(&self, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_OutputState)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardAutomaticResponseApdu3, 3208895092, 25974, 17298, 147, 103, 254, 59, 201, 226, 212, 150);
+RT_INTERFACE!{interface ISmartCardAutomaticResponseApdu3(ISmartCardAutomaticResponseApdu3Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAutomaticResponseApdu3] {
+    fn get_AllowWhenCryptogramGeneratorNotPrepared(&self, out: *mut bool) -> HRESULT,
+    fn put_AllowWhenCryptogramGeneratorNotPrepared(&self, value: bool) -> HRESULT
+}}
+impl ISmartCardAutomaticResponseApdu3 {
+    #[inline] pub fn get_allow_when_cryptogram_generator_not_prepared(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AllowWhenCryptogramGeneratorNotPrepared)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_allow_when_cryptogram_generator_not_prepared(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AllowWhenCryptogramGeneratorNotPrepared)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardAutomaticResponseApduFactory, 3917390586, 53292, 19541, 176, 42, 140, 255, 127, 169, 240, 91);
+RT_INTERFACE!{static interface ISmartCardAutomaticResponseApduFactory(ISmartCardAutomaticResponseApduFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAutomaticResponseApduFactory] {
+    #[cfg(feature="windows-storage")] fn Create(&self, commandApdu: *mut super::super::storage::streams::IBuffer, responseApdu: *mut super::super::storage::streams::IBuffer, out: *mut *mut SmartCardAutomaticResponseApdu) -> HRESULT
+}}
+impl ISmartCardAutomaticResponseApduFactory {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, commandApdu: &super::super::storage::streams::IBuffer, responseApdu: &super::super::storage::streams::IBuffer) -> Result<ComPtr<SmartCardAutomaticResponseApdu>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, commandApdu as *const _ as *mut _, responseApdu as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum SmartCardAutomaticResponseStatus: i32 {
+    None (SmartCardAutomaticResponseStatus_None) = 0, Success (SmartCardAutomaticResponseStatus_Success) = 1, UnknownError (SmartCardAutomaticResponseStatus_UnknownError) = 2,
+}}
+DEFINE_IID!(IID_ISmartCardChallengeContext, 422204185, 51652, 18759, 129, 204, 68, 121, 74, 97, 239, 145);
+RT_INTERFACE!{interface ISmartCardChallengeContext(ISmartCardChallengeContextVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardChallengeContext] {
+    #[cfg(feature="windows-storage")] fn get_Challenge(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn VerifyResponseAsync(&self, response: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn ProvisionAsync(&self, response: *mut super::super::storage::streams::IBuffer, formatCard: bool, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn ProvisionAsyncWithNewCardId(&self, response: *mut super::super::storage::streams::IBuffer, formatCard: bool, newCardId: Guid, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn ChangeAdministrativeKeyAsync(&self, response: *mut super::super::storage::streams::IBuffer, newAdministrativeKey: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl ISmartCardChallengeContext {
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_challenge(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Challenge)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn verify_response_async(&self, response: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).VerifyResponseAsync)(self as *const _ as *mut _, response as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn provision_async(&self, response: &super::super::storage::streams::IBuffer, formatCard: bool) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ProvisionAsync)(self as *const _ as *mut _, response as *const _ as *mut _, formatCard, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn provision_async_with_new_card_id(&self, response: &super::super::storage::streams::IBuffer, formatCard: bool, newCardId: Guid) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ProvisionAsyncWithNewCardId)(self as *const _ as *mut _, response as *const _ as *mut _, formatCard, newCardId, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn change_administrative_key_async(&self, response: &super::super::storage::streams::IBuffer, newAdministrativeKey: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ChangeAdministrativeKeyAsync)(self as *const _ as *mut _, response as *const _ as *mut _, newAdministrativeKey as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardChallengeContext: ISmartCardChallengeContext}
+DEFINE_IID!(IID_ISmartCardConnect, 803178469, 653, 18718, 160, 88, 51, 130, 195, 152, 111, 64);
+RT_INTERFACE!{interface ISmartCardConnect(ISmartCardConnectVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardConnect] {
+    fn ConnectAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardConnection>) -> HRESULT
+}}
+impl ISmartCardConnect {
+    #[inline] pub fn connect_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardConnection>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ConnectAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardConnection, 2128320794, 43034, 18364, 166, 73, 21, 107, 230, 183, 242, 49);
+RT_INTERFACE!{interface ISmartCardConnection(ISmartCardConnectionVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardConnection] {
+    #[cfg(feature="windows-storage")] fn TransmitAsync(&self, command: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<super::super::storage::streams::IBuffer>) -> HRESULT
+}}
+impl ISmartCardConnection {
+    #[cfg(feature="windows-storage")] #[inline] pub fn transmit_async(&self, command: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TransmitAsync)(self as *const _ as *mut _, command as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardConnection: ISmartCardConnection}
+RT_ENUM! { enum SmartCardCryptogramAlgorithm: i32 {
+    None (SmartCardCryptogramAlgorithm_None) = 0, CbcMac (SmartCardCryptogramAlgorithm_CbcMac) = 1, Cvc3Umd (SmartCardCryptogramAlgorithm_Cvc3Umd) = 2, DecimalizedMsd (SmartCardCryptogramAlgorithm_DecimalizedMsd) = 3, Cvc3MD (SmartCardCryptogramAlgorithm_Cvc3MD) = 4, Sha1 (SmartCardCryptogramAlgorithm_Sha1) = 5, SignedDynamicApplicationData (SmartCardCryptogramAlgorithm_SignedDynamicApplicationData) = 6, RsaPkcs1 (SmartCardCryptogramAlgorithm_RsaPkcs1) = 7, Sha256Hmac (SmartCardCryptogramAlgorithm_Sha256Hmac) = 8,
+}}
+DEFINE_IID!(IID_ISmartCardCryptogramGenerator, 3818870907, 60883, 20041, 181, 148, 15, 245, 228, 208, 199, 111);
+RT_INTERFACE!{interface ISmartCardCryptogramGenerator(ISmartCardCryptogramGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGenerator] {
+    fn get_SupportedCryptogramMaterialTypes(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramMaterialType>) -> HRESULT,
+    fn get_SupportedCryptogramAlgorithms(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramAlgorithm>) -> HRESULT,
+    fn get_SupportedCryptogramMaterialPackageFormats(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageFormat>) -> HRESULT,
+    fn get_SupportedCryptogramMaterialPackageConfirmationResponseFormats(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageConfirmationResponseFormat>) -> HRESULT,
+    fn get_SupportedSmartCardCryptogramStorageKeyCapabilities(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramStorageKeyCapabilities>) -> HRESULT,
+    fn DeleteCryptogramMaterialStorageKeyAsync(&self, storageKeyName: HSTRING, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT,
+    fn CreateCryptogramMaterialStorageKeyAsync(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, storageKeyName: HSTRING, algorithm: SmartCardCryptogramStorageKeyAlgorithm, capabilities: SmartCardCryptogramStorageKeyCapabilities, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT,
+    #[cfg(not(feature="windows-security"))] fn __Dummy7(&self) -> (),
+    #[cfg(feature="windows-security")] fn RequestCryptogramMaterialStorageKeyInfoAsync(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, storageKeyName: HSTRING, format: super::super::security::cryptography::core::CryptographicPublicKeyBlobType, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramStorageKeyInfo>) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy8(&self) -> (),
+    #[cfg(feature="windows-storage")] fn ImportCryptogramMaterialPackageAsync(&self, format: SmartCardCryptogramMaterialPackageFormat, storageKeyName: HSTRING, materialPackageName: HSTRING, cryptogramMaterialPackage: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy9(&self) -> (),
+    #[cfg(feature="windows-storage")] fn TryProvePossessionOfCryptogramMaterialPackageAsync(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, responseFormat: SmartCardCryptogramMaterialPackageConfirmationResponseFormat, materialPackageName: HSTRING, materialName: HSTRING, challenge: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramMaterialPossessionProof>) -> HRESULT,
+    fn RequestUnlockCryptogramMaterialForUseAsync(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT,
+    fn DeleteCryptogramMaterialPackageAsync(&self, materialPackageName: HSTRING, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT
+}}
+impl ISmartCardCryptogramGenerator {
+    #[inline] pub fn get_supported_cryptogram_material_types(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramMaterialType>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SupportedCryptogramMaterialTypes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_supported_cryptogram_algorithms(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramAlgorithm>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SupportedCryptogramAlgorithms)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_supported_cryptogram_material_package_formats(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageFormat>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SupportedCryptogramMaterialPackageFormats)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_supported_cryptogram_material_package_confirmation_response_formats(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageConfirmationResponseFormat>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SupportedCryptogramMaterialPackageConfirmationResponseFormats)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_supported_smart_card_cryptogram_storage_key_capabilities(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramStorageKeyCapabilities>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SupportedSmartCardCryptogramStorageKeyCapabilities)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn delete_cryptogram_material_storage_key_async(&self, storageKeyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DeleteCryptogramMaterialStorageKeyAsync)(self as *const _ as *mut _, storageKeyName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_cryptogram_material_storage_key_async(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, storageKeyName: &HStringArg, algorithm: SmartCardCryptogramStorageKeyAlgorithm, capabilities: SmartCardCryptogramStorageKeyCapabilities) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateCryptogramMaterialStorageKeyAsync)(self as *const _ as *mut _, promptingBehavior, storageKeyName.get(), algorithm, capabilities, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-security")] #[inline] pub fn request_cryptogram_material_storage_key_info_async(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, storageKeyName: &HStringArg, format: super::super::security::cryptography::core::CryptographicPublicKeyBlobType) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramStorageKeyInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestCryptogramMaterialStorageKeyInfoAsync)(self as *const _ as *mut _, promptingBehavior, storageKeyName.get(), format, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn import_cryptogram_material_package_async(&self, format: SmartCardCryptogramMaterialPackageFormat, storageKeyName: &HStringArg, materialPackageName: &HStringArg, cryptogramMaterialPackage: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ImportCryptogramMaterialPackageAsync)(self as *const _ as *mut _, format, storageKeyName.get(), materialPackageName.get(), cryptogramMaterialPackage as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn try_prove_possession_of_cryptogram_material_package_async(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, responseFormat: SmartCardCryptogramMaterialPackageConfirmationResponseFormat, materialPackageName: &HStringArg, materialName: &HStringArg, challenge: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramMaterialPossessionProof>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryProvePossessionOfCryptogramMaterialPackageAsync)(self as *const _ as *mut _, promptingBehavior, responseFormat, materialPackageName.get(), materialName.get(), challenge as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_unlock_cryptogram_material_for_use_async(&self, promptingBehavior: SmartCardUnlockPromptingBehavior) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestUnlockCryptogramMaterialForUseAsync)(self as *const _ as *mut _, promptingBehavior, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn delete_cryptogram_material_package_async(&self, materialPackageName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DeleteCryptogramMaterialPackageAsync)(self as *const _ as *mut _, materialPackageName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardCryptogramGenerator: ISmartCardCryptogramGenerator}
+impl RtActivatable<ISmartCardCryptogramGeneratorStatics> for SmartCardCryptogramGenerator {}
+impl RtActivatable<ISmartCardCryptogramGeneratorStatics2> for SmartCardCryptogramGenerator {}
+impl SmartCardCryptogramGenerator {
+    #[inline] pub fn get_smart_card_cryptogram_generator_async() -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGenerator>>> {
+        <Self as RtActivatable<ISmartCardCryptogramGeneratorStatics>>::get_activation_factory().get_smart_card_cryptogram_generator_async()
+    }
+    #[inline] pub fn is_supported() -> Result<bool> {
+        <Self as RtActivatable<ISmartCardCryptogramGeneratorStatics2>>::get_activation_factory().is_supported()
+    }
+}
+DEFINE_CLSID!(SmartCardCryptogramGenerator(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,110,101,114,97,116,111,114,0]) [CLSID_SmartCardCryptogramGenerator]);
+DEFINE_IID!(IID_ISmartCardCryptogramGenerator2, 1897310772, 23917, 19274, 150, 163, 239, 164, 125, 42, 126, 37);
+RT_INTERFACE!{interface ISmartCardCryptogramGenerator2(ISmartCardCryptogramGenerator2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGenerator2] {
+    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-storage")] fn ValidateRequestApduAsync(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, apduToValidate: *mut super::super::storage::streams::IBuffer, cryptogramPlacementSteps: *mut foundation::collections::IIterable<SmartCardCryptogramPlacementStep>, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT,
+    fn GetAllCryptogramStorageKeyCharacteristicsAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult>) -> HRESULT,
+    fn GetAllCryptogramMaterialPackageCharacteristicsAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult>) -> HRESULT,
+    fn GetAllCryptogramMaterialPackageCharacteristicsWithStorageKeyAsync(&self, storageKeyName: HSTRING, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult>) -> HRESULT,
+    fn GetAllCryptogramMaterialCharacteristicsAsync(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, materialPackageName: HSTRING, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult>) -> HRESULT
+}}
+impl ISmartCardCryptogramGenerator2 {
+    #[cfg(feature="windows-storage")] #[inline] pub fn validate_request_apdu_async(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, apduToValidate: &super::super::storage::streams::IBuffer, cryptogramPlacementSteps: &foundation::collections::IIterable<SmartCardCryptogramPlacementStep>) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ValidateRequestApduAsync)(self as *const _ as *mut _, promptingBehavior, apduToValidate as *const _ as *mut _, cryptogramPlacementSteps as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_all_cryptogram_storage_key_characteristics_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAllCryptogramStorageKeyCharacteristicsAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_all_cryptogram_material_package_characteristics_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAllCryptogramMaterialPackageCharacteristicsAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_all_cryptogram_material_package_characteristics_with_storage_key_async(&self, storageKeyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAllCryptogramMaterialPackageCharacteristicsWithStorageKeyAsync)(self as *const _ as *mut _, storageKeyName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_all_cryptogram_material_characteristics_async(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, materialPackageName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAllCryptogramMaterialCharacteristicsAsync)(self as *const _ as *mut _, promptingBehavior, materialPackageName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum SmartCardCryptogramGeneratorOperationStatus: i32 {
+    Success (SmartCardCryptogramGeneratorOperationStatus_Success) = 0, AuthorizationFailed (SmartCardCryptogramGeneratorOperationStatus_AuthorizationFailed) = 1, AuthorizationCanceled (SmartCardCryptogramGeneratorOperationStatus_AuthorizationCanceled) = 2, AuthorizationRequired (SmartCardCryptogramGeneratorOperationStatus_AuthorizationRequired) = 3, CryptogramMaterialPackageStorageKeyExists (SmartCardCryptogramGeneratorOperationStatus_CryptogramMaterialPackageStorageKeyExists) = 4, NoCryptogramMaterialPackageStorageKey (SmartCardCryptogramGeneratorOperationStatus_NoCryptogramMaterialPackageStorageKey) = 5, NoCryptogramMaterialPackage (SmartCardCryptogramGeneratorOperationStatus_NoCryptogramMaterialPackage) = 6, UnsupportedCryptogramMaterialPackage (SmartCardCryptogramGeneratorOperationStatus_UnsupportedCryptogramMaterialPackage) = 7, UnknownCryptogramMaterialName (SmartCardCryptogramGeneratorOperationStatus_UnknownCryptogramMaterialName) = 8, InvalidCryptogramMaterialUsage (SmartCardCryptogramGeneratorOperationStatus_InvalidCryptogramMaterialUsage) = 9, ApduResponseNotSent (SmartCardCryptogramGeneratorOperationStatus_ApduResponseNotSent) = 10, OtherError (SmartCardCryptogramGeneratorOperationStatus_OtherError) = 11, ValidationFailed (SmartCardCryptogramGeneratorOperationStatus_ValidationFailed) = 12, NotSupported (SmartCardCryptogramGeneratorOperationStatus_NotSupported) = 13,
+}}
+DEFINE_IID!(IID_ISmartCardCryptogramGeneratorStatics, 160643344, 52124, 16405, 150, 125, 82, 52, 243, 176, 41, 0);
+RT_INTERFACE!{static interface ISmartCardCryptogramGeneratorStatics(ISmartCardCryptogramGeneratorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGeneratorStatics] {
+    fn GetSmartCardCryptogramGeneratorAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGenerator>) -> HRESULT
+}}
+impl ISmartCardCryptogramGeneratorStatics {
+    #[inline] pub fn get_smart_card_cryptogram_generator_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGenerator>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetSmartCardCryptogramGeneratorAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardCryptogramGeneratorStatics2, 163444197, 46269, 20003, 165, 136, 116, 70, 146, 4, 193, 40);
+RT_INTERFACE!{static interface ISmartCardCryptogramGeneratorStatics2(ISmartCardCryptogramGeneratorStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGeneratorStatics2] {
+    fn IsSupported(&self, out: *mut bool) -> HRESULT
+}}
+impl ISmartCardCryptogramGeneratorStatics2 {
+    #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult, 664330281, 54919, 19602, 134, 198, 57, 158, 154, 14, 203, 9);
+RT_INTERFACE!{interface ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult(ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResultVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult] {
+    fn get_OperationStatus(&self, out: *mut SmartCardCryptogramGeneratorOperationStatus) -> HRESULT,
+    fn get_Characteristics(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramMaterialCharacteristics>) -> HRESULT
+}}
+impl ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult {
+    #[inline] pub fn get_operation_status(&self) -> Result<SmartCardCryptogramGeneratorOperationStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OperationStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_characteristics(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramMaterialCharacteristics>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Characteristics)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult}
+impl RtActivatable<IActivationFactory> for SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult {}
+DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,116,65,108,108,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,82,101,115,117,108,116,0]) [CLSID_SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult]);
+DEFINE_IID!(IID_ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult, 1315605084, 38771, 18116, 163, 47, 177, 229, 67, 21, 158, 4);
+RT_INTERFACE!{interface ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult(ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResultVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult] {
+    fn get_OperationStatus(&self, out: *mut SmartCardCryptogramGeneratorOperationStatus) -> HRESULT,
+    fn get_Characteristics(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageCharacteristics>) -> HRESULT
+}}
+impl ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult {
+    #[inline] pub fn get_operation_status(&self) -> Result<SmartCardCryptogramGeneratorOperationStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OperationStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_characteristics(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageCharacteristics>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Characteristics)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult}
+impl RtActivatable<IActivationFactory> for SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult {}
+DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,116,65,108,108,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,80,97,99,107,97,103,101,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,82,101,115,117,108,116,0]) [CLSID_SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult]);
+DEFINE_IID!(IID_ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult, 2356996183, 42983, 18589, 185, 214, 54, 128, 97, 81, 80, 18);
+RT_INTERFACE!{interface ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult(ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResultVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult] {
+    fn get_OperationStatus(&self, out: *mut SmartCardCryptogramGeneratorOperationStatus) -> HRESULT,
+    fn get_Characteristics(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramStorageKeyCharacteristics>) -> HRESULT
+}}
+impl ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult {
+    #[inline] pub fn get_operation_status(&self) -> Result<SmartCardCryptogramGeneratorOperationStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OperationStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_characteristics(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramStorageKeyCharacteristics>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Characteristics)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult}
+impl RtActivatable<IActivationFactory> for SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult {}
+DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,116,65,108,108,67,114,121,112,116,111,103,114,97,109,83,116,111,114,97,103,101,75,101,121,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,82,101,115,117,108,116,0]) [CLSID_SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult]);
+DEFINE_IID!(IID_ISmartCardCryptogramMaterialCharacteristics, 4238001612, 49623, 16723, 146, 59, 162, 212, 60, 108, 141, 73);
+RT_INTERFACE!{interface ISmartCardCryptogramMaterialCharacteristics(ISmartCardCryptogramMaterialCharacteristicsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramMaterialCharacteristics] {
+    fn get_MaterialName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_AllowedAlgorithms(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramAlgorithm>) -> HRESULT,
+    fn get_AllowedProofOfPossessionAlgorithms(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageConfirmationResponseFormat>) -> HRESULT,
+    fn get_AllowedValidations(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramAlgorithm>) -> HRESULT,
+    fn get_MaterialType(&self, out: *mut SmartCardCryptogramMaterialType) -> HRESULT,
+    fn get_ProtectionMethod(&self, out: *mut SmartCardCryptogramMaterialProtectionMethod) -> HRESULT,
+    fn get_ProtectionVersion(&self, out: *mut i32) -> HRESULT,
+    fn get_MaterialLength(&self, out: *mut i32) -> HRESULT
+}}
+impl ISmartCardCryptogramMaterialCharacteristics {
+    #[inline] pub fn get_material_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_MaterialName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_allowed_algorithms(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramAlgorithm>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AllowedAlgorithms)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_allowed_proof_of_possession_algorithms(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageConfirmationResponseFormat>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AllowedProofOfPossessionAlgorithms)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_allowed_validations(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramAlgorithm>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AllowedValidations)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_material_type(&self) -> Result<SmartCardCryptogramMaterialType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaterialType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_protection_method(&self) -> Result<SmartCardCryptogramMaterialProtectionMethod> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ProtectionMethod)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_protection_version(&self) -> Result<i32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ProtectionVersion)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_material_length(&self) -> Result<i32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaterialLength)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardCryptogramMaterialCharacteristics: ISmartCardCryptogramMaterialCharacteristics}
+impl RtActivatable<IActivationFactory> for SmartCardCryptogramMaterialCharacteristics {}
+DEFINE_CLSID!(SmartCardCryptogramMaterialCharacteristics(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,0]) [CLSID_SmartCardCryptogramMaterialCharacteristics]);
+DEFINE_IID!(IID_ISmartCardCryptogramMaterialPackageCharacteristics, 4290088479, 1682, 19527, 147, 207, 52, 217, 31, 157, 205, 0);
+RT_INTERFACE!{interface ISmartCardCryptogramMaterialPackageCharacteristics(ISmartCardCryptogramMaterialPackageCharacteristicsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramMaterialPackageCharacteristics] {
+    fn get_PackageName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_StorageKeyName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_DateImported(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn get_PackageFormat(&self, out: *mut SmartCardCryptogramMaterialPackageFormat) -> HRESULT
+}}
+impl ISmartCardCryptogramMaterialPackageCharacteristics {
+    #[inline] pub fn get_package_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PackageName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_storage_key_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_StorageKeyName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_date_imported(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DateImported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_package_format(&self) -> Result<SmartCardCryptogramMaterialPackageFormat> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PackageFormat)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardCryptogramMaterialPackageCharacteristics: ISmartCardCryptogramMaterialPackageCharacteristics}
+impl RtActivatable<IActivationFactory> for SmartCardCryptogramMaterialPackageCharacteristics {}
+DEFINE_CLSID!(SmartCardCryptogramMaterialPackageCharacteristics(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,80,97,99,107,97,103,101,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,0]) [CLSID_SmartCardCryptogramMaterialPackageCharacteristics]);
+RT_ENUM! { enum SmartCardCryptogramMaterialPackageConfirmationResponseFormat: i32 {
+    None (SmartCardCryptogramMaterialPackageConfirmationResponseFormat_None) = 0, VisaHmac (SmartCardCryptogramMaterialPackageConfirmationResponseFormat_VisaHmac) = 1,
+}}
+RT_ENUM! { enum SmartCardCryptogramMaterialPackageFormat: i32 {
+    None (SmartCardCryptogramMaterialPackageFormat_None) = 0, JweRsaPki (SmartCardCryptogramMaterialPackageFormat_JweRsaPki) = 1,
+}}
+DEFINE_IID!(IID_ISmartCardCryptogramMaterialPossessionProof, 3854150540, 41281, 16693, 154, 221, 176, 210, 227, 170, 31, 201);
+RT_INTERFACE!{interface ISmartCardCryptogramMaterialPossessionProof(ISmartCardCryptogramMaterialPossessionProofVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramMaterialPossessionProof] {
+    fn get_OperationStatus(&self, out: *mut SmartCardCryptogramGeneratorOperationStatus) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_Proof(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
+}}
+impl ISmartCardCryptogramMaterialPossessionProof {
+    #[inline] pub fn get_operation_status(&self) -> Result<SmartCardCryptogramGeneratorOperationStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OperationStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_proof(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Proof)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardCryptogramMaterialPossessionProof: ISmartCardCryptogramMaterialPossessionProof}
+RT_ENUM! { enum SmartCardCryptogramMaterialProtectionMethod: i32 {
+    None (SmartCardCryptogramMaterialProtectionMethod_None) = 0, WhiteBoxing (SmartCardCryptogramMaterialProtectionMethod_WhiteBoxing) = 1,
+}}
+RT_ENUM! { enum SmartCardCryptogramMaterialType: i32 {
+    None (SmartCardCryptogramMaterialType_None) = 0, StaticDataAuthentication (SmartCardCryptogramMaterialType_StaticDataAuthentication) = 1, TripleDes112 (SmartCardCryptogramMaterialType_TripleDes112) = 2, Aes (SmartCardCryptogramMaterialType_Aes) = 3, RsaPkcs1 (SmartCardCryptogramMaterialType_RsaPkcs1) = 4,
+}}
+RT_ENUM! { enum SmartCardCryptogramPlacementOptions: u32 {
+    None (SmartCardCryptogramPlacementOptions_None) = 0, UnitsAreInNibbles (SmartCardCryptogramPlacementOptions_UnitsAreInNibbles) = 1, ChainOutput (SmartCardCryptogramPlacementOptions_ChainOutput) = 2,
+}}
+DEFINE_IID!(IID_ISmartCardCryptogramPlacementStep, 2491089899, 33602, 18322, 162, 229, 146, 86, 54, 55, 138, 83);
+RT_INTERFACE!{interface ISmartCardCryptogramPlacementStep(ISmartCardCryptogramPlacementStepVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramPlacementStep] {
+    fn get_Algorithm(&self, out: *mut SmartCardCryptogramAlgorithm) -> HRESULT,
+    fn put_Algorithm(&self, value: SmartCardCryptogramAlgorithm) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_SourceData(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
+    #[cfg(feature="windows-storage")] fn put_SourceData(&self, value: *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    fn get_CryptogramMaterialPackageName(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_CryptogramMaterialPackageName(&self, value: HSTRING) -> HRESULT,
+    fn get_CryptogramMaterialName(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_CryptogramMaterialName(&self, value: HSTRING) -> HRESULT,
+    fn get_TemplateOffset(&self, out: *mut i32) -> HRESULT,
+    fn put_TemplateOffset(&self, value: i32) -> HRESULT,
+    fn get_CryptogramOffset(&self, out: *mut i32) -> HRESULT,
+    fn put_CryptogramOffset(&self, value: i32) -> HRESULT,
+    fn get_CryptogramLength(&self, out: *mut i32) -> HRESULT,
+    fn put_CryptogramLength(&self, value: i32) -> HRESULT,
+    fn get_CryptogramPlacementOptions(&self, out: *mut SmartCardCryptogramPlacementOptions) -> HRESULT,
+    fn put_CryptogramPlacementOptions(&self, value: SmartCardCryptogramPlacementOptions) -> HRESULT,
+    fn get_ChainedOutputStep(&self, out: *mut *mut SmartCardCryptogramPlacementStep) -> HRESULT,
+    fn put_ChainedOutputStep(&self, value: *mut SmartCardCryptogramPlacementStep) -> HRESULT
+}}
+impl ISmartCardCryptogramPlacementStep {
+    #[inline] pub fn get_algorithm(&self) -> Result<SmartCardCryptogramAlgorithm> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Algorithm)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_algorithm(&self, value: SmartCardCryptogramAlgorithm) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Algorithm)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_source_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SourceData)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_source_data(&self, value: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SourceData)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_cryptogram_material_package_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CryptogramMaterialPackageName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_cryptogram_material_package_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CryptogramMaterialPackageName)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_cryptogram_material_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CryptogramMaterialName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_cryptogram_material_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CryptogramMaterialName)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_template_offset(&self) -> Result<i32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TemplateOffset)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_template_offset(&self, value: i32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TemplateOffset)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_cryptogram_offset(&self) -> Result<i32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CryptogramOffset)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_cryptogram_offset(&self, value: i32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CryptogramOffset)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_cryptogram_length(&self) -> Result<i32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CryptogramLength)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_cryptogram_length(&self, value: i32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CryptogramLength)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_cryptogram_placement_options(&self) -> Result<SmartCardCryptogramPlacementOptions> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CryptogramPlacementOptions)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_cryptogram_placement_options(&self, value: SmartCardCryptogramPlacementOptions) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CryptogramPlacementOptions)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_chained_output_step(&self) -> Result<Option<ComPtr<SmartCardCryptogramPlacementStep>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ChainedOutputStep)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_chained_output_step(&self, value: &SmartCardCryptogramPlacementStep) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ChainedOutputStep)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardCryptogramPlacementStep: ISmartCardCryptogramPlacementStep}
+impl RtActivatable<IActivationFactory> for SmartCardCryptogramPlacementStep {}
+DEFINE_CLSID!(SmartCardCryptogramPlacementStep(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,80,108,97,99,101,109,101,110,116,83,116,101,112,0]) [CLSID_SmartCardCryptogramPlacementStep]);
+RT_ENUM! { enum SmartCardCryptogramStorageKeyAlgorithm: i32 {
+    None (SmartCardCryptogramStorageKeyAlgorithm_None) = 0, Rsa2048 (SmartCardCryptogramStorageKeyAlgorithm_Rsa2048) = 1,
+}}
+RT_ENUM! { enum SmartCardCryptogramStorageKeyCapabilities: u32 {
+    None (SmartCardCryptogramStorageKeyCapabilities_None) = 0, HardwareProtection (SmartCardCryptogramStorageKeyCapabilities_HardwareProtection) = 1, UnlockPrompt (SmartCardCryptogramStorageKeyCapabilities_UnlockPrompt) = 2,
+}}
+DEFINE_IID!(IID_ISmartCardCryptogramStorageKeyCharacteristics, 2236765294, 17495, 18469, 180, 100, 99, 84, 113, 163, 159, 92);
+RT_INTERFACE!{interface ISmartCardCryptogramStorageKeyCharacteristics(ISmartCardCryptogramStorageKeyCharacteristicsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramStorageKeyCharacteristics] {
+    fn get_StorageKeyName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_DateCreated(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn get_Algorithm(&self, out: *mut SmartCardCryptogramStorageKeyAlgorithm) -> HRESULT,
+    fn get_Capabilities(&self, out: *mut SmartCardCryptogramStorageKeyCapabilities) -> HRESULT
+}}
+impl ISmartCardCryptogramStorageKeyCharacteristics {
+    #[inline] pub fn get_storage_key_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_StorageKeyName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_date_created(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DateCreated)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_algorithm(&self) -> Result<SmartCardCryptogramStorageKeyAlgorithm> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Algorithm)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_capabilities(&self) -> Result<SmartCardCryptogramStorageKeyCapabilities> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Capabilities)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardCryptogramStorageKeyCharacteristics: ISmartCardCryptogramStorageKeyCharacteristics}
+impl RtActivatable<IActivationFactory> for SmartCardCryptogramStorageKeyCharacteristics {}
+DEFINE_CLSID!(SmartCardCryptogramStorageKeyCharacteristics(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,83,116,111,114,97,103,101,75,101,121,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,0]) [CLSID_SmartCardCryptogramStorageKeyCharacteristics]);
+DEFINE_IID!(IID_ISmartCardCryptogramStorageKeyInfo, 2008084493, 45207, 20321, 162, 106, 149, 97, 99, 156, 156, 58);
+RT_INTERFACE!{interface ISmartCardCryptogramStorageKeyInfo(ISmartCardCryptogramStorageKeyInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramStorageKeyInfo] {
+    fn get_OperationStatus(&self, out: *mut SmartCardCryptogramGeneratorOperationStatus) -> HRESULT,
+    #[cfg(not(feature="windows-security"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-security")] fn get_PublicKeyBlobType(&self, out: *mut super::super::security::cryptography::core::CryptographicPublicKeyBlobType) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_PublicKey(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    fn get_AttestationStatus(&self, out: *mut SmartCardCryptographicKeyAttestationStatus) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_Attestation(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy5(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_AttestationCertificateChain(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    fn get_Capabilities(&self, out: *mut SmartCardCryptogramStorageKeyCapabilities) -> HRESULT
+}}
+impl ISmartCardCryptogramStorageKeyInfo {
+    #[inline] pub fn get_operation_status(&self) -> Result<SmartCardCryptogramGeneratorOperationStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OperationStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-security")] #[inline] pub fn get_public_key_blob_type(&self) -> Result<super::super::security::cryptography::core::CryptographicPublicKeyBlobType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PublicKeyBlobType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_public_key(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PublicKey)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_attestation_status(&self) -> Result<SmartCardCryptographicKeyAttestationStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AttestationStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_attestation(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Attestation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_attestation_certificate_chain(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AttestationCertificateChain)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_capabilities(&self) -> Result<SmartCardCryptogramStorageKeyCapabilities> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Capabilities)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardCryptogramStorageKeyInfo: ISmartCardCryptogramStorageKeyInfo}
+DEFINE_IID!(IID_ISmartCardCryptogramStorageKeyInfo2, 278777, 63485, 16765, 137, 225, 251, 176, 56, 42, 220, 77);
+RT_INTERFACE!{interface ISmartCardCryptogramStorageKeyInfo2(ISmartCardCryptogramStorageKeyInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramStorageKeyInfo2] {
+    fn get_OperationalRequirements(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl ISmartCardCryptogramStorageKeyInfo2 {
+    #[inline] pub fn get_operational_requirements(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_OperationalRequirements)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum SmartCardCryptographicKeyAttestationStatus: i32 {
+    NoAttestation (SmartCardCryptographicKeyAttestationStatus_NoAttestation) = 0, SoftwareKeyWithoutTpm (SmartCardCryptographicKeyAttestationStatus_SoftwareKeyWithoutTpm) = 1, SoftwareKeyWithTpm (SmartCardCryptographicKeyAttestationStatus_SoftwareKeyWithTpm) = 2, TpmKeyUnknownAttestationStatus (SmartCardCryptographicKeyAttestationStatus_TpmKeyUnknownAttestationStatus) = 3, TpmKeyWithoutAttestationCapability (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithoutAttestationCapability) = 4, TpmKeyWithTemporaryAttestationFailure (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithTemporaryAttestationFailure) = 5, TpmKeyWithLongTermAttestationFailure (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithLongTermAttestationFailure) = 6, TpmKeyWithAttestation (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithAttestation) = 7,
+}}
+RT_ENUM! { enum SmartCardEmulationCategory: i32 {
+    Other (SmartCardEmulationCategory_Other) = 0, Payment (SmartCardEmulationCategory_Payment) = 1,
+}}
+RT_ENUM! { enum SmartCardEmulationType: i32 {
+    Host (SmartCardEmulationType_Host) = 0, Uicc (SmartCardEmulationType_Uicc) = 1, EmbeddedSE (SmartCardEmulationType_EmbeddedSE) = 2,
+}}
+DEFINE_IID!(IID_ISmartCardEmulator, 3753445042, 34654, 18405, 128, 119, 232, 191, 241, 177, 198, 251);
+RT_INTERFACE!{interface ISmartCardEmulator(ISmartCardEmulatorVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulator] {
+    fn get_EnablementPolicy(&self, out: *mut SmartCardEmulatorEnablementPolicy) -> HRESULT
+}}
+impl ISmartCardEmulator {
+    #[inline] pub fn get_enablement_policy(&self) -> Result<SmartCardEmulatorEnablementPolicy> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_EnablementPolicy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardEmulator: ISmartCardEmulator}
+impl RtActivatable<ISmartCardEmulatorStatics> for SmartCardEmulator {}
+impl RtActivatable<ISmartCardEmulatorStatics2> for SmartCardEmulator {}
+impl RtActivatable<ISmartCardEmulatorStatics3> for SmartCardEmulator {}
+impl SmartCardEmulator {
+    #[inline] pub fn get_default_async() -> Result<ComPtr<foundation::IAsyncOperation<SmartCardEmulator>>> {
+        <Self as RtActivatable<ISmartCardEmulatorStatics>>::get_activation_factory().get_default_async()
+    }
+    #[inline] pub fn get_applet_id_group_registrations_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<SmartCardAppletIdGroupRegistration>>>> {
+        <Self as RtActivatable<ISmartCardEmulatorStatics2>>::get_activation_factory().get_applet_id_group_registrations_async()
+    }
+    #[inline] pub fn register_applet_id_group_async(appletIdGroup: &SmartCardAppletIdGroup) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardAppletIdGroupRegistration>>> {
+        <Self as RtActivatable<ISmartCardEmulatorStatics2>>::get_activation_factory().register_applet_id_group_async(appletIdGroup)
+    }
+    #[inline] pub fn unregister_applet_id_group_async(registration: &SmartCardAppletIdGroupRegistration) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<ISmartCardEmulatorStatics2>>::get_activation_factory().unregister_applet_id_group_async(registration)
+    }
+    #[inline] pub fn get_max_applet_id_group_registrations() -> Result<u16> {
+        <Self as RtActivatable<ISmartCardEmulatorStatics2>>::get_activation_factory().get_max_applet_id_group_registrations()
+    }
+    #[inline] pub fn is_supported() -> Result<bool> {
+        <Self as RtActivatable<ISmartCardEmulatorStatics3>>::get_activation_factory().is_supported()
+    }
+}
+DEFINE_CLSID!(SmartCardEmulator(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,69,109,117,108,97,116,111,114,0]) [CLSID_SmartCardEmulator]);
+DEFINE_IID!(IID_ISmartCardEmulator2, 4265590968, 34089, 16666, 128, 123, 72, 237, 194, 160, 171, 68);
+RT_INTERFACE!{interface ISmartCardEmulator2(ISmartCardEmulator2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulator2] {
+    fn add_ApduReceived(&self, value: *mut foundation::TypedEventHandler<SmartCardEmulator, SmartCardEmulatorApduReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ApduReceived(&self, value: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_ConnectionDeactivated(&self, value: *mut foundation::TypedEventHandler<SmartCardEmulator, SmartCardEmulatorConnectionDeactivatedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ConnectionDeactivated(&self, value: foundation::EventRegistrationToken) -> HRESULT,
+    fn Start(&self) -> HRESULT,
+    fn IsHostCardEmulationSupported(&self, out: *mut bool) -> HRESULT
+}}
+impl ISmartCardEmulator2 {
+    #[inline] pub fn add_apdu_received(&self, value: &foundation::TypedEventHandler<SmartCardEmulator, SmartCardEmulatorApduReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_ApduReceived)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_apdu_received(&self, value: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_ApduReceived)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_connection_deactivated(&self, value: &foundation::TypedEventHandler<SmartCardEmulator, SmartCardEmulatorConnectionDeactivatedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_ConnectionDeactivated)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_connection_deactivated(&self, value: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_ConnectionDeactivated)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn start(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Start)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn is_host_card_emulation_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsHostCardEmulationSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardEmulatorApduReceivedEventArgs, 3579647350, 27090, 21299, 91, 95, 248, 192, 214, 233, 240, 159);
+RT_INTERFACE!{interface ISmartCardEmulatorApduReceivedEventArgs(ISmartCardEmulatorApduReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorApduReceivedEventArgs] {
+    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_CommandApdu(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    fn get_ConnectionProperties(&self, out: *mut *mut SmartCardEmulatorConnectionProperties) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-storage")] fn TryRespondAsync(&self, responseApdu: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn get_AutomaticResponseStatus(&self, out: *mut SmartCardAutomaticResponseStatus) -> HRESULT
+}}
+impl ISmartCardEmulatorApduReceivedEventArgs {
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_command_apdu(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CommandApdu)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_connection_properties(&self) -> Result<Option<ComPtr<SmartCardEmulatorConnectionProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ConnectionProperties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn try_respond_async(&self, responseApdu: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryRespondAsync)(self as *const _ as *mut _, responseApdu as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_automatic_response_status(&self) -> Result<SmartCardAutomaticResponseStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AutomaticResponseStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardEmulatorApduReceivedEventArgs: ISmartCardEmulatorApduReceivedEventArgs}
+DEFINE_IID!(IID_ISmartCardEmulatorApduReceivedEventArgs2, 2348367344, 8929, 16952, 134, 16, 148, 206, 74, 150, 84, 37);
+RT_INTERFACE!{interface ISmartCardEmulatorApduReceivedEventArgs2(ISmartCardEmulatorApduReceivedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorApduReceivedEventArgs2] {
+    fn get_State(&self, out: *mut u32) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn TryRespondWithStateAsync(&self, responseApdu: *mut super::super::storage::streams::IBuffer, nextState: *mut foundation::IReference<u32>, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+}}
+impl ISmartCardEmulatorApduReceivedEventArgs2 {
+    #[inline] pub fn get_state(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn try_respond_with_state_async(&self, responseApdu: &super::super::storage::streams::IBuffer, nextState: &foundation::IReference<u32>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryRespondWithStateAsync)(self as *const _ as *mut _, responseApdu as *const _ as *mut _, nextState as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardEmulatorApduReceivedEventArgsWithCryptograms, 3578837703, 47039, 20009, 146, 148, 12, 74, 195, 201, 65, 189);
+RT_INTERFACE!{interface ISmartCardEmulatorApduReceivedEventArgsWithCryptograms(ISmartCardEmulatorApduReceivedEventArgsWithCryptogramsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorApduReceivedEventArgsWithCryptograms] {
+    #[cfg(feature="windows-storage")] fn TryRespondWithCryptogramsAsync(&self, responseTemplate: *mut super::super::storage::streams::IBuffer, cryptogramPlacementSteps: *mut foundation::collections::IIterable<SmartCardCryptogramPlacementStep>, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn TryRespondWithCryptogramsAndStateAsync(&self, responseTemplate: *mut super::super::storage::streams::IBuffer, cryptogramPlacementSteps: *mut foundation::collections::IIterable<SmartCardCryptogramPlacementStep>, nextState: *mut foundation::IReference<u32>, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT
+}}
+impl ISmartCardEmulatorApduReceivedEventArgsWithCryptograms {
+    #[cfg(feature="windows-storage")] #[inline] pub fn try_respond_with_cryptograms_async(&self, responseTemplate: &super::super::storage::streams::IBuffer, cryptogramPlacementSteps: &foundation::collections::IIterable<SmartCardCryptogramPlacementStep>) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryRespondWithCryptogramsAsync)(self as *const _ as *mut _, responseTemplate as *const _ as *mut _, cryptogramPlacementSteps as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn try_respond_with_cryptograms_and_state_async(&self, responseTemplate: &super::super::storage::streams::IBuffer, cryptogramPlacementSteps: &foundation::collections::IIterable<SmartCardCryptogramPlacementStep>, nextState: &foundation::IReference<u32>) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryRespondWithCryptogramsAndStateAsync)(self as *const _ as *mut _, responseTemplate as *const _ as *mut _, cryptogramPlacementSteps as *const _ as *mut _, nextState as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardEmulatorConnectionDeactivatedEventArgs, 562485459, 50667, 21090, 67, 223, 98, 160, 161, 181, 85, 87);
+RT_INTERFACE!{interface ISmartCardEmulatorConnectionDeactivatedEventArgs(ISmartCardEmulatorConnectionDeactivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorConnectionDeactivatedEventArgs] {
+    fn get_ConnectionProperties(&self, out: *mut *mut SmartCardEmulatorConnectionProperties) -> HRESULT,
+    fn get_Reason(&self, out: *mut SmartCardEmulatorConnectionDeactivatedReason) -> HRESULT
+}}
+impl ISmartCardEmulatorConnectionDeactivatedEventArgs {
+    #[inline] pub fn get_connection_properties(&self) -> Result<Option<ComPtr<SmartCardEmulatorConnectionProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ConnectionProperties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_reason(&self) -> Result<SmartCardEmulatorConnectionDeactivatedReason> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Reason)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardEmulatorConnectionDeactivatedEventArgs: ISmartCardEmulatorConnectionDeactivatedEventArgs}
+RT_ENUM! { enum SmartCardEmulatorConnectionDeactivatedReason: i32 {
+    ConnectionLost (SmartCardEmulatorConnectionDeactivatedReason_ConnectionLost) = 0, ConnectionRedirected (SmartCardEmulatorConnectionDeactivatedReason_ConnectionRedirected) = 1,
+}}
+DEFINE_IID!(IID_ISmartCardEmulatorConnectionProperties, 1311548910, 63849, 20605, 108, 249, 52, 226, 209, 141, 243, 17);
+RT_INTERFACE!{interface ISmartCardEmulatorConnectionProperties(ISmartCardEmulatorConnectionPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorConnectionProperties] {
+    fn get_Id(&self, out: *mut Guid) -> HRESULT,
+    fn get_Source(&self, out: *mut SmartCardEmulatorConnectionSource) -> HRESULT
+}}
+impl ISmartCardEmulatorConnectionProperties {
+    #[inline] pub fn get_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_source(&self) -> Result<SmartCardEmulatorConnectionSource> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardEmulatorConnectionProperties: ISmartCardEmulatorConnectionProperties}
+RT_ENUM! { enum SmartCardEmulatorConnectionSource: i32 {
+    Unknown (SmartCardEmulatorConnectionSource_Unknown) = 0, NfcReader (SmartCardEmulatorConnectionSource_NfcReader) = 1,
+}}
+RT_ENUM! { enum SmartCardEmulatorEnablementPolicy: i32 {
+    Never (SmartCardEmulatorEnablementPolicy_Never) = 0, Always (SmartCardEmulatorEnablementPolicy_Always) = 1, ScreenOn (SmartCardEmulatorEnablementPolicy_ScreenOn) = 2, ScreenUnlocked (SmartCardEmulatorEnablementPolicy_ScreenUnlocked) = 3,
+}}
+DEFINE_IID!(IID_ISmartCardEmulatorStatics, 2057043019, 50387, 18767, 184, 162, 98, 21, 216, 30, 133, 178);
+RT_INTERFACE!{static interface ISmartCardEmulatorStatics(ISmartCardEmulatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorStatics] {
+    fn GetDefaultAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardEmulator>) -> HRESULT
+}}
+impl ISmartCardEmulatorStatics {
+    #[inline] pub fn get_default_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardEmulator>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDefaultAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardEmulatorStatics2, 1773051786, 46965, 18571, 132, 54, 108, 30, 40, 237, 115, 31);
+RT_INTERFACE!{static interface ISmartCardEmulatorStatics2(ISmartCardEmulatorStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorStatics2] {
+    fn GetAppletIdGroupRegistrationsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<SmartCardAppletIdGroupRegistration>>) -> HRESULT,
+    fn RegisterAppletIdGroupAsync(&self, appletIdGroup: *mut SmartCardAppletIdGroup, out: *mut *mut foundation::IAsyncOperation<SmartCardAppletIdGroupRegistration>) -> HRESULT,
+    fn UnregisterAppletIdGroupAsync(&self, registration: *mut SmartCardAppletIdGroupRegistration, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn get_MaxAppletIdGroupRegistrations(&self, out: *mut u16) -> HRESULT
+}}
+impl ISmartCardEmulatorStatics2 {
+    #[inline] pub fn get_applet_id_group_registrations_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<SmartCardAppletIdGroupRegistration>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAppletIdGroupRegistrationsAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn register_applet_id_group_async(&self, appletIdGroup: &SmartCardAppletIdGroup) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardAppletIdGroupRegistration>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RegisterAppletIdGroupAsync)(self as *const _ as *mut _, appletIdGroup as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn unregister_applet_id_group_async(&self, registration: &SmartCardAppletIdGroupRegistration) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).UnregisterAppletIdGroupAsync)(self as *const _ as *mut _, registration as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_applet_id_group_registrations(&self) -> Result<u16> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxAppletIdGroupRegistrations)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardEmulatorStatics3, 1508512810, 40713, 17397, 133, 101, 207, 168, 20, 142, 76, 178);
+RT_INTERFACE!{static interface ISmartCardEmulatorStatics3(ISmartCardEmulatorStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorStatics3] {
+    fn IsSupported(&self, out: *mut bool) -> HRESULT
+}}
+impl ISmartCardEmulatorStatics3 {
+    #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum SmartCardLaunchBehavior: i32 {
+    Default (SmartCardLaunchBehavior_Default) = 0, AboveLock (SmartCardLaunchBehavior_AboveLock) = 1,
+}}
+RT_ENUM! { enum SmartCardPinCharacterPolicyOption: i32 {
+    Allow (SmartCardPinCharacterPolicyOption_Allow) = 0, RequireAtLeastOne (SmartCardPinCharacterPolicyOption_RequireAtLeastOne) = 1, Disallow (SmartCardPinCharacterPolicyOption_Disallow) = 2,
+}}
+DEFINE_IID!(IID_ISmartCardPinPolicy, 406643076, 19894, 18497, 172, 158, 42, 193, 243, 155, 115, 4);
+RT_INTERFACE!{interface ISmartCardPinPolicy(ISmartCardPinPolicyVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardPinPolicy] {
+    fn get_MinLength(&self, out: *mut u32) -> HRESULT,
+    fn put_MinLength(&self, value: u32) -> HRESULT,
+    fn get_MaxLength(&self, out: *mut u32) -> HRESULT,
+    fn put_MaxLength(&self, value: u32) -> HRESULT,
+    fn get_UppercaseLetters(&self, out: *mut SmartCardPinCharacterPolicyOption) -> HRESULT,
+    fn put_UppercaseLetters(&self, value: SmartCardPinCharacterPolicyOption) -> HRESULT,
+    fn get_LowercaseLetters(&self, out: *mut SmartCardPinCharacterPolicyOption) -> HRESULT,
+    fn put_LowercaseLetters(&self, value: SmartCardPinCharacterPolicyOption) -> HRESULT,
+    fn get_Digits(&self, out: *mut SmartCardPinCharacterPolicyOption) -> HRESULT,
+    fn put_Digits(&self, value: SmartCardPinCharacterPolicyOption) -> HRESULT,
+    fn get_SpecialCharacters(&self, out: *mut SmartCardPinCharacterPolicyOption) -> HRESULT,
+    fn put_SpecialCharacters(&self, value: SmartCardPinCharacterPolicyOption) -> HRESULT
+}}
+impl ISmartCardPinPolicy {
+    #[inline] pub fn get_min_length(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MinLength)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_min_length(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MinLength)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_length(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxLength)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_max_length(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaxLength)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_uppercase_letters(&self) -> Result<SmartCardPinCharacterPolicyOption> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_UppercaseLetters)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_uppercase_letters(&self, value: SmartCardPinCharacterPolicyOption) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_UppercaseLetters)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_lowercase_letters(&self) -> Result<SmartCardPinCharacterPolicyOption> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_LowercaseLetters)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_lowercase_letters(&self, value: SmartCardPinCharacterPolicyOption) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_LowercaseLetters)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_digits(&self) -> Result<SmartCardPinCharacterPolicyOption> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Digits)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_digits(&self, value: SmartCardPinCharacterPolicyOption) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Digits)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_special_characters(&self) -> Result<SmartCardPinCharacterPolicyOption> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_SpecialCharacters)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_special_characters(&self, value: SmartCardPinCharacterPolicyOption) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SpecialCharacters)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardPinPolicy: ISmartCardPinPolicy}
+impl RtActivatable<IActivationFactory> for SmartCardPinPolicy {}
+DEFINE_CLSID!(SmartCardPinPolicy(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,80,105,110,80,111,108,105,99,121,0]) [CLSID_SmartCardPinPolicy]);
+DEFINE_IID!(IID_ISmartCardPinResetDeferral, 415845036, 30725, 16388, 133, 228, 187, 239, 172, 143, 104, 132);
+RT_INTERFACE!{interface ISmartCardPinResetDeferral(ISmartCardPinResetDeferralVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardPinResetDeferral] {
+    fn Complete(&self) -> HRESULT
+}}
+impl ISmartCardPinResetDeferral {
+    #[inline] pub fn complete(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Complete)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardPinResetDeferral: ISmartCardPinResetDeferral}
+DEFINE_IID!(IID_SmartCardPinResetHandler, 328031808, 62396, 19036, 180, 29, 75, 78, 246, 132, 226, 55);
+RT_DELEGATE!{delegate SmartCardPinResetHandler(SmartCardPinResetHandlerVtbl, SmartCardPinResetHandlerImpl) [IID_SmartCardPinResetHandler] {
+    fn Invoke(&self, sender: *mut SmartCardProvisioning, request: *mut SmartCardPinResetRequest) -> HRESULT
+}}
+impl SmartCardPinResetHandler {
+    #[inline] pub fn invoke(&self, sender: &SmartCardProvisioning, request: &SmartCardPinResetRequest) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, request as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardPinResetRequest, 318651469, 24505, 20110, 159, 246, 97, 244, 117, 18, 79, 239);
+RT_INTERFACE!{interface ISmartCardPinResetRequest(ISmartCardPinResetRequestVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardPinResetRequest] {
+    #[cfg(feature="windows-storage")] fn get_Challenge(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    fn get_Deadline(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut SmartCardPinResetDeferral) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn SetResponse(&self, response: *mut super::super::storage::streams::IBuffer) -> HRESULT
+}}
+impl ISmartCardPinResetRequest {
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_challenge(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Challenge)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deadline(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Deadline)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<SmartCardPinResetDeferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_response(&self, response: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetResponse)(self as *const _ as *mut _, response as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardPinResetRequest: ISmartCardPinResetRequest}
+DEFINE_IID!(IID_ISmartCardProvisioning, 435088829, 8107, 18300, 183, 18, 26, 44, 90, 241, 253, 110);
+RT_INTERFACE!{interface ISmartCardProvisioning(ISmartCardProvisioningVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioning] {
+    fn get_SmartCard(&self, out: *mut *mut SmartCard) -> HRESULT,
+    fn GetIdAsync(&self, out: *mut *mut foundation::IAsyncOperation<Guid>) -> HRESULT,
+    fn GetNameAsync(&self, out: *mut *mut foundation::IAsyncOperation<HString>) -> HRESULT,
+    fn GetChallengeContextAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardChallengeContext>) -> HRESULT,
+    fn RequestPinChangeAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn RequestPinResetAsync(&self, handler: *mut SmartCardPinResetHandler, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+}}
+impl ISmartCardProvisioning {
+    #[inline] pub fn get_smart_card(&self) -> Result<Option<ComPtr<SmartCard>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SmartCard)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_id_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<Guid>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetIdAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_name_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetNameAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_challenge_context_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardChallengeContext>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetChallengeContextAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_pin_change_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestPinChangeAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_pin_reset_async(&self, handler: &SmartCardPinResetHandler) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestPinResetAsync)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardProvisioning: ISmartCardProvisioning}
+impl RtActivatable<ISmartCardProvisioningStatics> for SmartCardProvisioning {}
+impl RtActivatable<ISmartCardProvisioningStatics2> for SmartCardProvisioning {}
+impl SmartCardProvisioning {
+    #[inline] pub fn from_smart_card_async(card: &SmartCard) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> {
+        <Self as RtActivatable<ISmartCardProvisioningStatics>>::get_activation_factory().from_smart_card_async(card)
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_virtual_smart_card_creation_async(friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> {
+        <Self as RtActivatable<ISmartCardProvisioningStatics>>::get_activation_factory().request_virtual_smart_card_creation_async(friendlyName, administrativeKey, pinPolicy)
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_virtual_smart_card_creation_async_with_card_id(friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy, cardId: Guid) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> {
+        <Self as RtActivatable<ISmartCardProvisioningStatics>>::get_activation_factory().request_virtual_smart_card_creation_async_with_card_id(friendlyName, administrativeKey, pinPolicy, cardId)
+    }
+    #[inline] pub fn request_virtual_smart_card_deletion_async(card: &SmartCard) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<ISmartCardProvisioningStatics>>::get_activation_factory().request_virtual_smart_card_deletion_async(card)
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_attested_virtual_smart_card_creation_async(friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> {
+        <Self as RtActivatable<ISmartCardProvisioningStatics2>>::get_activation_factory().request_attested_virtual_smart_card_creation_async(friendlyName, administrativeKey, pinPolicy)
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_attested_virtual_smart_card_creation_async_with_card_id(friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy, cardId: Guid) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> {
+        <Self as RtActivatable<ISmartCardProvisioningStatics2>>::get_activation_factory().request_attested_virtual_smart_card_creation_async_with_card_id(friendlyName, administrativeKey, pinPolicy, cardId)
+    }
+}
+DEFINE_CLSID!(SmartCardProvisioning(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,80,114,111,118,105,115,105,111,110,105,110,103,0]) [CLSID_SmartCardProvisioning]);
+DEFINE_IID!(IID_ISmartCardProvisioning2, 285026539, 16249, 19302, 155, 124, 17, 193, 73, 183, 208, 188);
+RT_INTERFACE!{interface ISmartCardProvisioning2(ISmartCardProvisioning2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioning2] {
+    fn GetAuthorityKeyContainerNameAsync(&self, out: *mut *mut foundation::IAsyncOperation<HString>) -> HRESULT
+}}
+impl ISmartCardProvisioning2 {
+    #[inline] pub fn get_authority_key_container_name_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAuthorityKeyContainerNameAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardProvisioningStatics, 327690312, 3347, 20080, 151, 53, 81, 218, 236, 165, 37, 79);
+RT_INTERFACE!{static interface ISmartCardProvisioningStatics(ISmartCardProvisioningStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioningStatics] {
+    fn FromSmartCardAsync(&self, card: *mut SmartCard, out: *mut *mut foundation::IAsyncOperation<SmartCardProvisioning>) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-storage")] fn RequestVirtualSmartCardCreationAsync(&self, friendlyName: HSTRING, administrativeKey: *mut super::super::storage::streams::IBuffer, pinPolicy: *mut SmartCardPinPolicy, out: *mut *mut foundation::IAsyncOperation<SmartCardProvisioning>) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-storage")] fn RequestVirtualSmartCardCreationAsyncWithCardId(&self, friendlyName: HSTRING, administrativeKey: *mut super::super::storage::streams::IBuffer, pinPolicy: *mut SmartCardPinPolicy, cardId: Guid, out: *mut *mut foundation::IAsyncOperation<SmartCardProvisioning>) -> HRESULT,
+    fn RequestVirtualSmartCardDeletionAsync(&self, card: *mut SmartCard, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+}}
+impl ISmartCardProvisioningStatics {
+    #[inline] pub fn from_smart_card_async(&self, card: &SmartCard) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FromSmartCardAsync)(self as *const _ as *mut _, card as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_virtual_smart_card_creation_async(&self, friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestVirtualSmartCardCreationAsync)(self as *const _ as *mut _, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_virtual_smart_card_creation_async_with_card_id(&self, friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy, cardId: Guid) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestVirtualSmartCardCreationAsyncWithCardId)(self as *const _ as *mut _, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, cardId, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_virtual_smart_card_deletion_async(&self, card: &SmartCard) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestVirtualSmartCardDeletionAsync)(self as *const _ as *mut _, card as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardProvisioningStatics2, 877119144, 51616, 19414, 181, 13, 37, 31, 78, 141, 58, 98);
+RT_INTERFACE!{static interface ISmartCardProvisioningStatics2(ISmartCardProvisioningStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioningStatics2] {
+    #[cfg(feature="windows-storage")] fn RequestAttestedVirtualSmartCardCreationAsync(&self, friendlyName: HSTRING, administrativeKey: *mut super::super::storage::streams::IBuffer, pinPolicy: *mut SmartCardPinPolicy, out: *mut *mut foundation::IAsyncOperation<SmartCardProvisioning>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn RequestAttestedVirtualSmartCardCreationAsyncWithCardId(&self, friendlyName: HSTRING, administrativeKey: *mut super::super::storage::streams::IBuffer, pinPolicy: *mut SmartCardPinPolicy, cardId: Guid, out: *mut *mut foundation::IAsyncOperation<SmartCardProvisioning>) -> HRESULT
+}}
+impl ISmartCardProvisioningStatics2 {
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_attested_virtual_smart_card_creation_async(&self, friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAttestedVirtualSmartCardCreationAsync)(self as *const _ as *mut _, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_attested_virtual_smart_card_creation_async_with_card_id(&self, friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy, cardId: Guid) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAttestedVirtualSmartCardCreationAsyncWithCardId)(self as *const _ as *mut _, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, cardId, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardReader, 276083936, 21698, 19952, 129, 122, 20, 193, 67, 120, 240, 108);
+RT_INTERFACE!{interface ISmartCardReader(ISmartCardReaderVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardReader] {
+    fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Kind(&self, out: *mut SmartCardReaderKind) -> HRESULT,
+    fn GetStatusAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardReaderStatus>) -> HRESULT,
+    fn FindAllCardsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<SmartCard>>) -> HRESULT,
+    fn add_CardAdded(&self, handler: *mut foundation::TypedEventHandler<SmartCardReader, CardAddedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_CardAdded(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_CardRemoved(&self, handler: *mut foundation::TypedEventHandler<SmartCardReader, CardRemovedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_CardRemoved(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl ISmartCardReader {
+    #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DeviceId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_kind(&self) -> Result<SmartCardReaderKind> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Kind)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_status_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardReaderStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetStatusAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_all_cards_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<SmartCard>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindAllCardsAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_card_added(&self, handler: &foundation::TypedEventHandler<SmartCardReader, CardAddedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_CardAdded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_card_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_CardAdded)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_card_removed(&self, handler: &foundation::TypedEventHandler<SmartCardReader, CardRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_CardRemoved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_card_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_CardRemoved)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardReader: ISmartCardReader}
+impl RtActivatable<ISmartCardReaderStatics> for SmartCardReader {}
+impl SmartCardReader {
+    #[inline] pub fn get_device_selector() -> Result<HString> {
+        <Self as RtActivatable<ISmartCardReaderStatics>>::get_activation_factory().get_device_selector()
+    }
+    #[inline] pub fn get_device_selector_with_kind(kind: SmartCardReaderKind) -> Result<HString> {
+        <Self as RtActivatable<ISmartCardReaderStatics>>::get_activation_factory().get_device_selector_with_kind(kind)
+    }
+    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardReader>>> {
+        <Self as RtActivatable<ISmartCardReaderStatics>>::get_activation_factory().from_id_async(deviceId)
+    }
+}
+DEFINE_CLSID!(SmartCardReader(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,82,101,97,100,101,114,0]) [CLSID_SmartCardReader]);
+RT_ENUM! { enum SmartCardReaderKind: i32 {
+    Any (SmartCardReaderKind_Any) = 0, Generic (SmartCardReaderKind_Generic) = 1, Tpm (SmartCardReaderKind_Tpm) = 2, Nfc (SmartCardReaderKind_Nfc) = 3, Uicc (SmartCardReaderKind_Uicc) = 4, EmbeddedSE (SmartCardReaderKind_EmbeddedSE) = 5,
+}}
+DEFINE_IID!(IID_ISmartCardReaderStatics, 272368865, 41418, 18674, 162, 129, 91, 111, 102, 154, 241, 7);
+RT_INTERFACE!{static interface ISmartCardReaderStatics(ISmartCardReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardReaderStatics] {
+    fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
+    fn GetDeviceSelectorWithKind(&self, kind: SmartCardReaderKind, out: *mut HSTRING) -> HRESULT,
+    fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncOperation<SmartCardReader>) -> HRESULT
+}}
+impl ISmartCardReaderStatics {
+    #[inline] pub fn get_device_selector(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeviceSelector)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_device_selector_with_kind(&self, kind: SmartCardReaderKind) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeviceSelectorWithKind)(self as *const _ as *mut _, kind, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn from_id_async(&self, deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardReader>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FromIdAsync)(self as *const _ as *mut _, deviceId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum SmartCardReaderStatus: i32 {
+    Disconnected (SmartCardReaderStatus_Disconnected) = 0, Ready (SmartCardReaderStatus_Ready) = 1, Exclusive (SmartCardReaderStatus_Exclusive) = 2,
+}}
+RT_ENUM! { enum SmartCardStatus: i32 {
+    Disconnected (SmartCardStatus_Disconnected) = 0, Ready (SmartCardStatus_Ready) = 1, Shared (SmartCardStatus_Shared) = 2, Exclusive (SmartCardStatus_Exclusive) = 3, Unresponsive (SmartCardStatus_Unresponsive) = 4,
+}}
+DEFINE_IID!(IID_ISmartCardTriggerDetails, 1604055326, 14831, 20267, 180, 79, 10, 145, 85, 177, 119, 188);
+RT_INTERFACE!{interface ISmartCardTriggerDetails(ISmartCardTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardTriggerDetails] {
+    fn get_TriggerType(&self, out: *mut SmartCardTriggerType) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_SourceAppletId(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_TriggerData(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
+}}
+impl ISmartCardTriggerDetails {
+    #[inline] pub fn get_trigger_type(&self) -> Result<SmartCardTriggerType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TriggerType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_source_applet_id(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SourceAppletId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_trigger_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TriggerData)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardTriggerDetails: ISmartCardTriggerDetails}
+DEFINE_IID!(IID_ISmartCardTriggerDetails2, 692438377, 35189, 19025, 158, 26, 95, 138, 118, 238, 81, 175);
+RT_INTERFACE!{interface ISmartCardTriggerDetails2(ISmartCardTriggerDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardTriggerDetails2] {
+    fn get_Emulator(&self, out: *mut *mut SmartCardEmulator) -> HRESULT,
+    fn TryLaunchCurrentAppAsync(&self, arguments: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn TryLaunchCurrentAppWithBehaviorAsync(&self, arguments: HSTRING, behavior: SmartCardLaunchBehavior, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+}}
+impl ISmartCardTriggerDetails2 {
+    #[inline] pub fn get_emulator(&self) -> Result<Option<ComPtr<SmartCardEmulator>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Emulator)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn try_launch_current_app_async(&self, arguments: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryLaunchCurrentAppAsync)(self as *const _ as *mut _, arguments.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn try_launch_current_app_with_behavior_async(&self, arguments: &HStringArg, behavior: SmartCardLaunchBehavior) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryLaunchCurrentAppWithBehaviorAsync)(self as *const _ as *mut _, arguments.get(), behavior, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardTriggerDetails3, 3017982589, 6342, 19368, 131, 118, 239, 3, 212, 145, 38, 102);
+RT_INTERFACE!{interface ISmartCardTriggerDetails3(ISmartCardTriggerDetails3Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardTriggerDetails3] {
+    fn get_SmartCard(&self, out: *mut *mut SmartCard) -> HRESULT
+}}
+impl ISmartCardTriggerDetails3 {
+    #[inline] pub fn get_smart_card(&self) -> Result<Option<ComPtr<SmartCard>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SmartCard)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum SmartCardTriggerType: i32 {
+    EmulatorTransaction (SmartCardTriggerType_EmulatorTransaction) = 0, EmulatorNearFieldEntry (SmartCardTriggerType_EmulatorNearFieldEntry) = 1, EmulatorNearFieldExit (SmartCardTriggerType_EmulatorNearFieldExit) = 2, EmulatorHostApplicationActivated (SmartCardTriggerType_EmulatorHostApplicationActivated) = 3, EmulatorAppletIdGroupRegistrationChanged (SmartCardTriggerType_EmulatorAppletIdGroupRegistrationChanged) = 4, ReaderCardAdded (SmartCardTriggerType_ReaderCardAdded) = 5,
+}}
+RT_ENUM! { enum SmartCardUnlockPromptingBehavior: i32 {
+    AllowUnlockPrompt (SmartCardUnlockPromptingBehavior_AllowUnlockPrompt) = 0, RequireUnlockPrompt (SmartCardUnlockPromptingBehavior_RequireUnlockPrompt) = 1, PreventUnlockPrompt (SmartCardUnlockPromptingBehavior_PreventUnlockPrompt) = 2,
+}}
+} // Windows.Devices.SmartCards
 pub mod custom { // Windows.Devices.Custom
 use ::prelude::*;
 DEFINE_IID!(IID_ICustomDevice, 3710919967, 50315, 17341, 188, 177, 222, 200, 143, 21, 20, 62);
@@ -2148,1587 +3729,6 @@ impl ISpiProvider {
 }
 } // Windows.Devices.Spi.Provider
 } // Windows.Devices.Spi
-pub mod smartcards { // Windows.Devices.SmartCards
-use ::prelude::*;
-DEFINE_IID!(IID_ICardAddedEventArgs, 414969752, 61835, 19923, 177, 24, 223, 178, 200, 226, 60, 198);
-RT_INTERFACE!{interface ICardAddedEventArgs(ICardAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICardAddedEventArgs] {
-    fn get_SmartCard(&self, out: *mut *mut SmartCard) -> HRESULT
-}}
-impl ICardAddedEventArgs {
-    #[inline] pub fn get_smart_card(&self) -> Result<Option<ComPtr<SmartCard>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SmartCard)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class CardAddedEventArgs: ICardAddedEventArgs}
-DEFINE_IID!(IID_ICardRemovedEventArgs, 355670703, 8919, 18757, 175, 201, 3, 180, 111, 66, 166, 205);
-RT_INTERFACE!{interface ICardRemovedEventArgs(ICardRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICardRemovedEventArgs] {
-    fn get_SmartCard(&self, out: *mut *mut SmartCard) -> HRESULT
-}}
-impl ICardRemovedEventArgs {
-    #[inline] pub fn get_smart_card(&self) -> Result<Option<ComPtr<SmartCard>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SmartCard)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class CardRemovedEventArgs: ICardRemovedEventArgs}
-DEFINE_IID!(IID_ISmartCard, 460425329, 25652, 17396, 181, 90, 106, 41, 98, 56, 112, 170);
-RT_INTERFACE!{interface ISmartCard(ISmartCardVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCard] {
-    fn get_Reader(&self, out: *mut *mut SmartCardReader) -> HRESULT,
-    fn GetStatusAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardStatus>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn GetAnswerToResetAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::super::storage::streams::IBuffer>) -> HRESULT
-}}
-impl ISmartCard {
-    #[inline] pub fn get_reader(&self) -> Result<Option<ComPtr<SmartCardReader>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Reader)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_status_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetStatusAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_answer_to_reset_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAnswerToResetAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCard: ISmartCard}
-RT_ENUM! { enum SmartCardActivationPolicyChangeResult: i32 {
-    Denied (SmartCardActivationPolicyChangeResult_Denied) = 0, Allowed (SmartCardActivationPolicyChangeResult_Allowed) = 1,
-}}
-DEFINE_IID!(IID_ISmartCardAppletIdGroup, 2108777958, 25188, 22260, 94, 3, 200, 99, 133, 57, 94, 177);
-RT_INTERFACE!{interface ISmartCardAppletIdGroup(ISmartCardAppletIdGroupVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAppletIdGroup] {
-    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_DisplayName(&self, value: HSTRING) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_AppletIds(&self, out: *mut *mut foundation::collections::IVector<super::super::storage::streams::IBuffer>) -> HRESULT,
-    fn get_SmartCardEmulationCategory(&self, out: *mut SmartCardEmulationCategory) -> HRESULT,
-    fn put_SmartCardEmulationCategory(&self, value: SmartCardEmulationCategory) -> HRESULT,
-    fn get_SmartCardEmulationType(&self, out: *mut SmartCardEmulationType) -> HRESULT,
-    fn put_SmartCardEmulationType(&self, value: SmartCardEmulationType) -> HRESULT,
-    fn get_AutomaticEnablement(&self, out: *mut bool) -> HRESULT,
-    fn put_AutomaticEnablement(&self, value: bool) -> HRESULT
-}}
-impl ISmartCardAppletIdGroup {
-    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_display_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DisplayName)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_applet_ids(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::storage::streams::IBuffer>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AppletIds)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_smart_card_emulation_category(&self) -> Result<SmartCardEmulationCategory> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_SmartCardEmulationCategory)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_smart_card_emulation_category(&self, value: SmartCardEmulationCategory) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SmartCardEmulationCategory)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_smart_card_emulation_type(&self) -> Result<SmartCardEmulationType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_SmartCardEmulationType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_smart_card_emulation_type(&self, value: SmartCardEmulationType) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SmartCardEmulationType)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_automatic_enablement(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_AutomaticEnablement)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_automatic_enablement(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AutomaticEnablement)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardAppletIdGroup: ISmartCardAppletIdGroup}
-impl RtActivatable<ISmartCardAppletIdGroupFactory> for SmartCardAppletIdGroup {}
-impl RtActivatable<ISmartCardAppletIdGroupStatics> for SmartCardAppletIdGroup {}
-impl RtActivatable<IActivationFactory> for SmartCardAppletIdGroup {}
-impl SmartCardAppletIdGroup {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(displayName: &HStringArg, appletIds: &foundation::collections::IVector<super::super::storage::streams::IBuffer>, emulationCategory: SmartCardEmulationCategory, emulationType: SmartCardEmulationType) -> Result<ComPtr<SmartCardAppletIdGroup>> {
-        <Self as RtActivatable<ISmartCardAppletIdGroupFactory>>::get_activation_factory().create(displayName, appletIds, emulationCategory, emulationType)
-    }
-    #[inline] pub fn get_max_applet_ids() -> Result<u16> {
-        <Self as RtActivatable<ISmartCardAppletIdGroupStatics>>::get_activation_factory().get_max_applet_ids()
-    }
-}
-DEFINE_CLSID!(SmartCardAppletIdGroup(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,65,112,112,108,101,116,73,100,71,114,111,117,112,0]) [CLSID_SmartCardAppletIdGroup]);
-RT_ENUM! { enum SmartCardAppletIdGroupActivationPolicy: i32 {
-    Disabled (SmartCardAppletIdGroupActivationPolicy_Disabled) = 0, ForegroundOverride (SmartCardAppletIdGroupActivationPolicy_ForegroundOverride) = 1, Enabled (SmartCardAppletIdGroupActivationPolicy_Enabled) = 2,
-}}
-DEFINE_IID!(IID_ISmartCardAppletIdGroupFactory, 2433084237, 19045, 20033, 128, 97, 203, 232, 63, 54, 149, 229);
-RT_INTERFACE!{static interface ISmartCardAppletIdGroupFactory(ISmartCardAppletIdGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAppletIdGroupFactory] {
-    #[cfg(feature="windows-storage")] fn Create(&self, displayName: HSTRING, appletIds: *mut foundation::collections::IVector<super::super::storage::streams::IBuffer>, emulationCategory: SmartCardEmulationCategory, emulationType: SmartCardEmulationType, out: *mut *mut SmartCardAppletIdGroup) -> HRESULT
-}}
-impl ISmartCardAppletIdGroupFactory {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, displayName: &HStringArg, appletIds: &foundation::collections::IVector<super::super::storage::streams::IBuffer>, emulationCategory: SmartCardEmulationCategory, emulationType: SmartCardEmulationType) -> Result<ComPtr<SmartCardAppletIdGroup>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, displayName.get(), appletIds as *const _ as *mut _, emulationCategory, emulationType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardAppletIdGroupRegistration, 3742501073, 12731, 21910, 67, 177, 109, 105, 160, 37, 123, 58);
-RT_INTERFACE!{interface ISmartCardAppletIdGroupRegistration(ISmartCardAppletIdGroupRegistrationVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAppletIdGroupRegistration] {
-    fn get_ActivationPolicy(&self, out: *mut SmartCardAppletIdGroupActivationPolicy) -> HRESULT,
-    fn get_AppletIdGroup(&self, out: *mut *mut SmartCardAppletIdGroup) -> HRESULT,
-    fn RequestActivationPolicyChangeAsync(&self, policy: SmartCardAppletIdGroupActivationPolicy, out: *mut *mut foundation::IAsyncOperation<SmartCardActivationPolicyChangeResult>) -> HRESULT,
-    fn get_Id(&self, out: *mut Guid) -> HRESULT,
-    fn SetAutomaticResponseApdusAsync(&self, apdus: *mut foundation::collections::IIterable<SmartCardAutomaticResponseApdu>, out: *mut *mut foundation::IAsyncAction) -> HRESULT
-}}
-impl ISmartCardAppletIdGroupRegistration {
-    #[inline] pub fn get_activation_policy(&self) -> Result<SmartCardAppletIdGroupActivationPolicy> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ActivationPolicy)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_applet_id_group(&self) -> Result<Option<ComPtr<SmartCardAppletIdGroup>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AppletIdGroup)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn request_activation_policy_change_async(&self, policy: SmartCardAppletIdGroupActivationPolicy) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardActivationPolicyChangeResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestActivationPolicyChangeAsync)(self as *const _ as *mut _, policy, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_id(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_automatic_response_apdus_async(&self, apdus: &foundation::collections::IIterable<SmartCardAutomaticResponseApdu>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetAutomaticResponseApdusAsync)(self as *const _ as *mut _, apdus as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardAppletIdGroupRegistration: ISmartCardAppletIdGroupRegistration}
-DEFINE_IID!(IID_ISmartCardAppletIdGroupStatics, 2871564713, 59244, 17871, 191, 29, 144, 234, 166, 32, 89, 39);
-RT_INTERFACE!{static interface ISmartCardAppletIdGroupStatics(ISmartCardAppletIdGroupStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAppletIdGroupStatics] {
-    fn get_MaxAppletIds(&self, out: *mut u16) -> HRESULT
-}}
-impl ISmartCardAppletIdGroupStatics {
-    #[inline] pub fn get_max_applet_ids(&self) -> Result<u16> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaxAppletIds)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardAutomaticResponseApdu, 1377119147, 50750, 17713, 168, 87, 215, 86, 217, 155, 152, 106);
-RT_INTERFACE!{interface ISmartCardAutomaticResponseApdu(ISmartCardAutomaticResponseApduVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAutomaticResponseApdu] {
-    #[cfg(feature="windows-storage")] fn get_CommandApdu(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn put_CommandApdu(&self, value: *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_CommandApduBitMask(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn put_CommandApduBitMask(&self, value: *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    fn get_ShouldMatchLength(&self, out: *mut bool) -> HRESULT,
-    fn put_ShouldMatchLength(&self, value: bool) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_AppletId(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn put_AppletId(&self, value: *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_ResponseApdu(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn put_ResponseApdu(&self, value: *mut super::super::storage::streams::IBuffer) -> HRESULT
-}}
-impl ISmartCardAutomaticResponseApdu {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_command_apdu(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CommandApdu)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_command_apdu(&self, value: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CommandApdu)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_command_apdu_bit_mask(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CommandApduBitMask)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_command_apdu_bit_mask(&self, value: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CommandApduBitMask)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_should_match_length(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ShouldMatchLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_should_match_length(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ShouldMatchLength)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_applet_id(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AppletId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_applet_id(&self, value: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AppletId)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_response_apdu(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ResponseApdu)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_response_apdu(&self, value: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ResponseApdu)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardAutomaticResponseApdu: ISmartCardAutomaticResponseApdu}
-impl RtActivatable<ISmartCardAutomaticResponseApduFactory> for SmartCardAutomaticResponseApdu {}
-impl SmartCardAutomaticResponseApdu {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(commandApdu: &super::super::storage::streams::IBuffer, responseApdu: &super::super::storage::streams::IBuffer) -> Result<ComPtr<SmartCardAutomaticResponseApdu>> {
-        <Self as RtActivatable<ISmartCardAutomaticResponseApduFactory>>::get_activation_factory().create(commandApdu, responseApdu)
-    }
-}
-DEFINE_CLSID!(SmartCardAutomaticResponseApdu(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,65,117,116,111,109,97,116,105,99,82,101,115,112,111,110,115,101,65,112,100,117,0]) [CLSID_SmartCardAutomaticResponseApdu]);
-DEFINE_IID!(IID_ISmartCardAutomaticResponseApdu2, 1152301844, 21917, 17713, 78, 81, 137, 219, 111, 168, 165, 122);
-RT_INTERFACE!{interface ISmartCardAutomaticResponseApdu2(ISmartCardAutomaticResponseApdu2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAutomaticResponseApdu2] {
-    fn get_InputState(&self, out: *mut *mut foundation::IReference<u32>) -> HRESULT,
-    fn put_InputState(&self, value: *mut foundation::IReference<u32>) -> HRESULT,
-    fn get_OutputState(&self, out: *mut *mut foundation::IReference<u32>) -> HRESULT,
-    fn put_OutputState(&self, value: *mut foundation::IReference<u32>) -> HRESULT
-}}
-impl ISmartCardAutomaticResponseApdu2 {
-    #[inline] pub fn get_input_state(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_InputState)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_input_state(&self, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_InputState)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_output_state(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_OutputState)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_output_state(&self, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_OutputState)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardAutomaticResponseApdu3, 3208895092, 25974, 17298, 147, 103, 254, 59, 201, 226, 212, 150);
-RT_INTERFACE!{interface ISmartCardAutomaticResponseApdu3(ISmartCardAutomaticResponseApdu3Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAutomaticResponseApdu3] {
-    fn get_AllowWhenCryptogramGeneratorNotPrepared(&self, out: *mut bool) -> HRESULT,
-    fn put_AllowWhenCryptogramGeneratorNotPrepared(&self, value: bool) -> HRESULT
-}}
-impl ISmartCardAutomaticResponseApdu3 {
-    #[inline] pub fn get_allow_when_cryptogram_generator_not_prepared(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_AllowWhenCryptogramGeneratorNotPrepared)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_allow_when_cryptogram_generator_not_prepared(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AllowWhenCryptogramGeneratorNotPrepared)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardAutomaticResponseApduFactory, 3917390586, 53292, 19541, 176, 42, 140, 255, 127, 169, 240, 91);
-RT_INTERFACE!{static interface ISmartCardAutomaticResponseApduFactory(ISmartCardAutomaticResponseApduFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAutomaticResponseApduFactory] {
-    #[cfg(feature="windows-storage")] fn Create(&self, commandApdu: *mut super::super::storage::streams::IBuffer, responseApdu: *mut super::super::storage::streams::IBuffer, out: *mut *mut SmartCardAutomaticResponseApdu) -> HRESULT
-}}
-impl ISmartCardAutomaticResponseApduFactory {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, commandApdu: &super::super::storage::streams::IBuffer, responseApdu: &super::super::storage::streams::IBuffer) -> Result<ComPtr<SmartCardAutomaticResponseApdu>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, commandApdu as *const _ as *mut _, responseApdu as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum SmartCardAutomaticResponseStatus: i32 {
-    None (SmartCardAutomaticResponseStatus_None) = 0, Success (SmartCardAutomaticResponseStatus_Success) = 1, UnknownError (SmartCardAutomaticResponseStatus_UnknownError) = 2,
-}}
-DEFINE_IID!(IID_ISmartCardChallengeContext, 422204185, 51652, 18759, 129, 204, 68, 121, 74, 97, 239, 145);
-RT_INTERFACE!{interface ISmartCardChallengeContext(ISmartCardChallengeContextVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardChallengeContext] {
-    #[cfg(feature="windows-storage")] fn get_Challenge(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn VerifyResponseAsync(&self, response: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn ProvisionAsync(&self, response: *mut super::super::storage::streams::IBuffer, formatCard: bool, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn ProvisionAsyncWithNewCardId(&self, response: *mut super::super::storage::streams::IBuffer, formatCard: bool, newCardId: Guid, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn ChangeAdministrativeKeyAsync(&self, response: *mut super::super::storage::streams::IBuffer, newAdministrativeKey: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncAction) -> HRESULT
-}}
-impl ISmartCardChallengeContext {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_challenge(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Challenge)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn verify_response_async(&self, response: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).VerifyResponseAsync)(self as *const _ as *mut _, response as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn provision_async(&self, response: &super::super::storage::streams::IBuffer, formatCard: bool) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ProvisionAsync)(self as *const _ as *mut _, response as *const _ as *mut _, formatCard, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn provision_async_with_new_card_id(&self, response: &super::super::storage::streams::IBuffer, formatCard: bool, newCardId: Guid) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ProvisionAsyncWithNewCardId)(self as *const _ as *mut _, response as *const _ as *mut _, formatCard, newCardId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn change_administrative_key_async(&self, response: &super::super::storage::streams::IBuffer, newAdministrativeKey: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ChangeAdministrativeKeyAsync)(self as *const _ as *mut _, response as *const _ as *mut _, newAdministrativeKey as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardChallengeContext: ISmartCardChallengeContext}
-DEFINE_IID!(IID_ISmartCardConnect, 803178469, 653, 18718, 160, 88, 51, 130, 195, 152, 111, 64);
-RT_INTERFACE!{interface ISmartCardConnect(ISmartCardConnectVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardConnect] {
-    fn ConnectAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardConnection>) -> HRESULT
-}}
-impl ISmartCardConnect {
-    #[inline] pub fn connect_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardConnection>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ConnectAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardConnection, 2128320794, 43034, 18364, 166, 73, 21, 107, 230, 183, 242, 49);
-RT_INTERFACE!{interface ISmartCardConnection(ISmartCardConnectionVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardConnection] {
-    #[cfg(feature="windows-storage")] fn TransmitAsync(&self, command: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<super::super::storage::streams::IBuffer>) -> HRESULT
-}}
-impl ISmartCardConnection {
-    #[cfg(feature="windows-storage")] #[inline] pub fn transmit_async(&self, command: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TransmitAsync)(self as *const _ as *mut _, command as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardConnection: ISmartCardConnection}
-RT_ENUM! { enum SmartCardCryptogramAlgorithm: i32 {
-    None (SmartCardCryptogramAlgorithm_None) = 0, CbcMac (SmartCardCryptogramAlgorithm_CbcMac) = 1, Cvc3Umd (SmartCardCryptogramAlgorithm_Cvc3Umd) = 2, DecimalizedMsd (SmartCardCryptogramAlgorithm_DecimalizedMsd) = 3, Cvc3MD (SmartCardCryptogramAlgorithm_Cvc3MD) = 4, Sha1 (SmartCardCryptogramAlgorithm_Sha1) = 5, SignedDynamicApplicationData (SmartCardCryptogramAlgorithm_SignedDynamicApplicationData) = 6, RsaPkcs1 (SmartCardCryptogramAlgorithm_RsaPkcs1) = 7, Sha256Hmac (SmartCardCryptogramAlgorithm_Sha256Hmac) = 8,
-}}
-DEFINE_IID!(IID_ISmartCardCryptogramGenerator, 3818870907, 60883, 20041, 181, 148, 15, 245, 228, 208, 199, 111);
-RT_INTERFACE!{interface ISmartCardCryptogramGenerator(ISmartCardCryptogramGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGenerator] {
-    fn get_SupportedCryptogramMaterialTypes(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramMaterialType>) -> HRESULT,
-    fn get_SupportedCryptogramAlgorithms(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramAlgorithm>) -> HRESULT,
-    fn get_SupportedCryptogramMaterialPackageFormats(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageFormat>) -> HRESULT,
-    fn get_SupportedCryptogramMaterialPackageConfirmationResponseFormats(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageConfirmationResponseFormat>) -> HRESULT,
-    fn get_SupportedSmartCardCryptogramStorageKeyCapabilities(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramStorageKeyCapabilities>) -> HRESULT,
-    fn DeleteCryptogramMaterialStorageKeyAsync(&self, storageKeyName: HSTRING, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT,
-    fn CreateCryptogramMaterialStorageKeyAsync(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, storageKeyName: HSTRING, algorithm: SmartCardCryptogramStorageKeyAlgorithm, capabilities: SmartCardCryptogramStorageKeyCapabilities, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT,
-    #[cfg(not(feature="windows-security"))] fn __Dummy7(&self) -> (),
-    #[cfg(feature="windows-security")] fn RequestCryptogramMaterialStorageKeyInfoAsync(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, storageKeyName: HSTRING, format: super::super::security::cryptography::core::CryptographicPublicKeyBlobType, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramStorageKeyInfo>) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy8(&self) -> (),
-    #[cfg(feature="windows-storage")] fn ImportCryptogramMaterialPackageAsync(&self, format: SmartCardCryptogramMaterialPackageFormat, storageKeyName: HSTRING, materialPackageName: HSTRING, cryptogramMaterialPackage: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy9(&self) -> (),
-    #[cfg(feature="windows-storage")] fn TryProvePossessionOfCryptogramMaterialPackageAsync(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, responseFormat: SmartCardCryptogramMaterialPackageConfirmationResponseFormat, materialPackageName: HSTRING, materialName: HSTRING, challenge: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramMaterialPossessionProof>) -> HRESULT,
-    fn RequestUnlockCryptogramMaterialForUseAsync(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT,
-    fn DeleteCryptogramMaterialPackageAsync(&self, materialPackageName: HSTRING, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT
-}}
-impl ISmartCardCryptogramGenerator {
-    #[inline] pub fn get_supported_cryptogram_material_types(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramMaterialType>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SupportedCryptogramMaterialTypes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_supported_cryptogram_algorithms(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramAlgorithm>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SupportedCryptogramAlgorithms)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_supported_cryptogram_material_package_formats(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageFormat>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SupportedCryptogramMaterialPackageFormats)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_supported_cryptogram_material_package_confirmation_response_formats(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageConfirmationResponseFormat>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SupportedCryptogramMaterialPackageConfirmationResponseFormats)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_supported_smart_card_cryptogram_storage_key_capabilities(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramStorageKeyCapabilities>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SupportedSmartCardCryptogramStorageKeyCapabilities)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn delete_cryptogram_material_storage_key_async(&self, storageKeyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteCryptogramMaterialStorageKeyAsync)(self as *const _ as *mut _, storageKeyName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_cryptogram_material_storage_key_async(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, storageKeyName: &HStringArg, algorithm: SmartCardCryptogramStorageKeyAlgorithm, capabilities: SmartCardCryptogramStorageKeyCapabilities) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCryptogramMaterialStorageKeyAsync)(self as *const _ as *mut _, promptingBehavior, storageKeyName.get(), algorithm, capabilities, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-security")] #[inline] pub fn request_cryptogram_material_storage_key_info_async(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, storageKeyName: &HStringArg, format: super::super::security::cryptography::core::CryptographicPublicKeyBlobType) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramStorageKeyInfo>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestCryptogramMaterialStorageKeyInfoAsync)(self as *const _ as *mut _, promptingBehavior, storageKeyName.get(), format, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn import_cryptogram_material_package_async(&self, format: SmartCardCryptogramMaterialPackageFormat, storageKeyName: &HStringArg, materialPackageName: &HStringArg, cryptogramMaterialPackage: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ImportCryptogramMaterialPackageAsync)(self as *const _ as *mut _, format, storageKeyName.get(), materialPackageName.get(), cryptogramMaterialPackage as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn try_prove_possession_of_cryptogram_material_package_async(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, responseFormat: SmartCardCryptogramMaterialPackageConfirmationResponseFormat, materialPackageName: &HStringArg, materialName: &HStringArg, challenge: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramMaterialPossessionProof>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryProvePossessionOfCryptogramMaterialPackageAsync)(self as *const _ as *mut _, promptingBehavior, responseFormat, materialPackageName.get(), materialName.get(), challenge as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn request_unlock_cryptogram_material_for_use_async(&self, promptingBehavior: SmartCardUnlockPromptingBehavior) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestUnlockCryptogramMaterialForUseAsync)(self as *const _ as *mut _, promptingBehavior, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn delete_cryptogram_material_package_async(&self, materialPackageName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteCryptogramMaterialPackageAsync)(self as *const _ as *mut _, materialPackageName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardCryptogramGenerator: ISmartCardCryptogramGenerator}
-impl RtActivatable<ISmartCardCryptogramGeneratorStatics> for SmartCardCryptogramGenerator {}
-impl RtActivatable<ISmartCardCryptogramGeneratorStatics2> for SmartCardCryptogramGenerator {}
-impl SmartCardCryptogramGenerator {
-    #[inline] pub fn get_smart_card_cryptogram_generator_async() -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGenerator>>> {
-        <Self as RtActivatable<ISmartCardCryptogramGeneratorStatics>>::get_activation_factory().get_smart_card_cryptogram_generator_async()
-    }
-    #[inline] pub fn is_supported() -> Result<bool> {
-        <Self as RtActivatable<ISmartCardCryptogramGeneratorStatics2>>::get_activation_factory().is_supported()
-    }
-}
-DEFINE_CLSID!(SmartCardCryptogramGenerator(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,110,101,114,97,116,111,114,0]) [CLSID_SmartCardCryptogramGenerator]);
-DEFINE_IID!(IID_ISmartCardCryptogramGenerator2, 1897310772, 23917, 19274, 150, 163, 239, 164, 125, 42, 126, 37);
-RT_INTERFACE!{interface ISmartCardCryptogramGenerator2(ISmartCardCryptogramGenerator2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGenerator2] {
-    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn ValidateRequestApduAsync(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, apduToValidate: *mut super::super::storage::streams::IBuffer, cryptogramPlacementSteps: *mut foundation::collections::IIterable<SmartCardCryptogramPlacementStep>, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT,
-    fn GetAllCryptogramStorageKeyCharacteristicsAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult>) -> HRESULT,
-    fn GetAllCryptogramMaterialPackageCharacteristicsAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult>) -> HRESULT,
-    fn GetAllCryptogramMaterialPackageCharacteristicsWithStorageKeyAsync(&self, storageKeyName: HSTRING, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult>) -> HRESULT,
-    fn GetAllCryptogramMaterialCharacteristicsAsync(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, materialPackageName: HSTRING, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult>) -> HRESULT
-}}
-impl ISmartCardCryptogramGenerator2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn validate_request_apdu_async(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, apduToValidate: &super::super::storage::streams::IBuffer, cryptogramPlacementSteps: &foundation::collections::IIterable<SmartCardCryptogramPlacementStep>) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ValidateRequestApduAsync)(self as *const _ as *mut _, promptingBehavior, apduToValidate as *const _ as *mut _, cryptogramPlacementSteps as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_all_cryptogram_storage_key_characteristics_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAllCryptogramStorageKeyCharacteristicsAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_all_cryptogram_material_package_characteristics_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAllCryptogramMaterialPackageCharacteristicsAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_all_cryptogram_material_package_characteristics_with_storage_key_async(&self, storageKeyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAllCryptogramMaterialPackageCharacteristicsWithStorageKeyAsync)(self as *const _ as *mut _, storageKeyName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_all_cryptogram_material_characteristics_async(&self, promptingBehavior: SmartCardUnlockPromptingBehavior, materialPackageName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAllCryptogramMaterialCharacteristicsAsync)(self as *const _ as *mut _, promptingBehavior, materialPackageName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum SmartCardCryptogramGeneratorOperationStatus: i32 {
-    Success (SmartCardCryptogramGeneratorOperationStatus_Success) = 0, AuthorizationFailed (SmartCardCryptogramGeneratorOperationStatus_AuthorizationFailed) = 1, AuthorizationCanceled (SmartCardCryptogramGeneratorOperationStatus_AuthorizationCanceled) = 2, AuthorizationRequired (SmartCardCryptogramGeneratorOperationStatus_AuthorizationRequired) = 3, CryptogramMaterialPackageStorageKeyExists (SmartCardCryptogramGeneratorOperationStatus_CryptogramMaterialPackageStorageKeyExists) = 4, NoCryptogramMaterialPackageStorageKey (SmartCardCryptogramGeneratorOperationStatus_NoCryptogramMaterialPackageStorageKey) = 5, NoCryptogramMaterialPackage (SmartCardCryptogramGeneratorOperationStatus_NoCryptogramMaterialPackage) = 6, UnsupportedCryptogramMaterialPackage (SmartCardCryptogramGeneratorOperationStatus_UnsupportedCryptogramMaterialPackage) = 7, UnknownCryptogramMaterialName (SmartCardCryptogramGeneratorOperationStatus_UnknownCryptogramMaterialName) = 8, InvalidCryptogramMaterialUsage (SmartCardCryptogramGeneratorOperationStatus_InvalidCryptogramMaterialUsage) = 9, ApduResponseNotSent (SmartCardCryptogramGeneratorOperationStatus_ApduResponseNotSent) = 10, OtherError (SmartCardCryptogramGeneratorOperationStatus_OtherError) = 11, ValidationFailed (SmartCardCryptogramGeneratorOperationStatus_ValidationFailed) = 12, NotSupported (SmartCardCryptogramGeneratorOperationStatus_NotSupported) = 13,
-}}
-DEFINE_IID!(IID_ISmartCardCryptogramGeneratorStatics, 160643344, 52124, 16405, 150, 125, 82, 52, 243, 176, 41, 0);
-RT_INTERFACE!{static interface ISmartCardCryptogramGeneratorStatics(ISmartCardCryptogramGeneratorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGeneratorStatics] {
-    fn GetSmartCardCryptogramGeneratorAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGenerator>) -> HRESULT
-}}
-impl ISmartCardCryptogramGeneratorStatics {
-    #[inline] pub fn get_smart_card_cryptogram_generator_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGenerator>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSmartCardCryptogramGeneratorAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardCryptogramGeneratorStatics2, 163444197, 46269, 20003, 165, 136, 116, 70, 146, 4, 193, 40);
-RT_INTERFACE!{static interface ISmartCardCryptogramGeneratorStatics2(ISmartCardCryptogramGeneratorStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGeneratorStatics2] {
-    fn IsSupported(&self, out: *mut bool) -> HRESULT
-}}
-impl ISmartCardCryptogramGeneratorStatics2 {
-    #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsSupported)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult, 664330281, 54919, 19602, 134, 198, 57, 158, 154, 14, 203, 9);
-RT_INTERFACE!{interface ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult(ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResultVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult] {
-    fn get_OperationStatus(&self, out: *mut SmartCardCryptogramGeneratorOperationStatus) -> HRESULT,
-    fn get_Characteristics(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramMaterialCharacteristics>) -> HRESULT
-}}
-impl ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult {
-    #[inline] pub fn get_operation_status(&self) -> Result<SmartCardCryptogramGeneratorOperationStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OperationStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_characteristics(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramMaterialCharacteristics>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Characteristics)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult}
-impl RtActivatable<IActivationFactory> for SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult {}
-DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,116,65,108,108,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,82,101,115,117,108,116,0]) [CLSID_SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult]);
-DEFINE_IID!(IID_ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult, 1315605084, 38771, 18116, 163, 47, 177, 229, 67, 21, 158, 4);
-RT_INTERFACE!{interface ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult(ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResultVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult] {
-    fn get_OperationStatus(&self, out: *mut SmartCardCryptogramGeneratorOperationStatus) -> HRESULT,
-    fn get_Characteristics(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageCharacteristics>) -> HRESULT
-}}
-impl ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult {
-    #[inline] pub fn get_operation_status(&self) -> Result<SmartCardCryptogramGeneratorOperationStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OperationStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_characteristics(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageCharacteristics>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Characteristics)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult}
-impl RtActivatable<IActivationFactory> for SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult {}
-DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,116,65,108,108,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,80,97,99,107,97,103,101,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,82,101,115,117,108,116,0]) [CLSID_SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult]);
-DEFINE_IID!(IID_ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult, 2356996183, 42983, 18589, 185, 214, 54, 128, 97, 81, 80, 18);
-RT_INTERFACE!{interface ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult(ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResultVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult] {
-    fn get_OperationStatus(&self, out: *mut SmartCardCryptogramGeneratorOperationStatus) -> HRESULT,
-    fn get_Characteristics(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramStorageKeyCharacteristics>) -> HRESULT
-}}
-impl ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult {
-    #[inline] pub fn get_operation_status(&self) -> Result<SmartCardCryptogramGeneratorOperationStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OperationStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_characteristics(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramStorageKeyCharacteristics>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Characteristics)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult}
-impl RtActivatable<IActivationFactory> for SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult {}
-DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,116,65,108,108,67,114,121,112,116,111,103,114,97,109,83,116,111,114,97,103,101,75,101,121,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,82,101,115,117,108,116,0]) [CLSID_SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult]);
-DEFINE_IID!(IID_ISmartCardCryptogramMaterialCharacteristics, 4238001612, 49623, 16723, 146, 59, 162, 212, 60, 108, 141, 73);
-RT_INTERFACE!{interface ISmartCardCryptogramMaterialCharacteristics(ISmartCardCryptogramMaterialCharacteristicsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramMaterialCharacteristics] {
-    fn get_MaterialName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_AllowedAlgorithms(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramAlgorithm>) -> HRESULT,
-    fn get_AllowedProofOfPossessionAlgorithms(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageConfirmationResponseFormat>) -> HRESULT,
-    fn get_AllowedValidations(&self, out: *mut *mut foundation::collections::IVectorView<SmartCardCryptogramAlgorithm>) -> HRESULT,
-    fn get_MaterialType(&self, out: *mut SmartCardCryptogramMaterialType) -> HRESULT,
-    fn get_ProtectionMethod(&self, out: *mut SmartCardCryptogramMaterialProtectionMethod) -> HRESULT,
-    fn get_ProtectionVersion(&self, out: *mut i32) -> HRESULT,
-    fn get_MaterialLength(&self, out: *mut i32) -> HRESULT
-}}
-impl ISmartCardCryptogramMaterialCharacteristics {
-    #[inline] pub fn get_material_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_MaterialName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_allowed_algorithms(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramAlgorithm>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AllowedAlgorithms)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_allowed_proof_of_possession_algorithms(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramMaterialPackageConfirmationResponseFormat>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AllowedProofOfPossessionAlgorithms)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_allowed_validations(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<SmartCardCryptogramAlgorithm>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AllowedValidations)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_material_type(&self) -> Result<SmartCardCryptogramMaterialType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaterialType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_protection_method(&self) -> Result<SmartCardCryptogramMaterialProtectionMethod> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ProtectionMethod)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_protection_version(&self) -> Result<i32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ProtectionVersion)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_material_length(&self) -> Result<i32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaterialLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardCryptogramMaterialCharacteristics: ISmartCardCryptogramMaterialCharacteristics}
-impl RtActivatable<IActivationFactory> for SmartCardCryptogramMaterialCharacteristics {}
-DEFINE_CLSID!(SmartCardCryptogramMaterialCharacteristics(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,0]) [CLSID_SmartCardCryptogramMaterialCharacteristics]);
-DEFINE_IID!(IID_ISmartCardCryptogramMaterialPackageCharacteristics, 4290088479, 1682, 19527, 147, 207, 52, 217, 31, 157, 205, 0);
-RT_INTERFACE!{interface ISmartCardCryptogramMaterialPackageCharacteristics(ISmartCardCryptogramMaterialPackageCharacteristicsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramMaterialPackageCharacteristics] {
-    fn get_PackageName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_StorageKeyName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_DateImported(&self, out: *mut foundation::DateTime) -> HRESULT,
-    fn get_PackageFormat(&self, out: *mut SmartCardCryptogramMaterialPackageFormat) -> HRESULT
-}}
-impl ISmartCardCryptogramMaterialPackageCharacteristics {
-    #[inline] pub fn get_package_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PackageName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_storage_key_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_StorageKeyName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_date_imported(&self) -> Result<foundation::DateTime> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_DateImported)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_package_format(&self) -> Result<SmartCardCryptogramMaterialPackageFormat> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_PackageFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardCryptogramMaterialPackageCharacteristics: ISmartCardCryptogramMaterialPackageCharacteristics}
-impl RtActivatable<IActivationFactory> for SmartCardCryptogramMaterialPackageCharacteristics {}
-DEFINE_CLSID!(SmartCardCryptogramMaterialPackageCharacteristics(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,80,97,99,107,97,103,101,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,0]) [CLSID_SmartCardCryptogramMaterialPackageCharacteristics]);
-RT_ENUM! { enum SmartCardCryptogramMaterialPackageConfirmationResponseFormat: i32 {
-    None (SmartCardCryptogramMaterialPackageConfirmationResponseFormat_None) = 0, VisaHmac (SmartCardCryptogramMaterialPackageConfirmationResponseFormat_VisaHmac) = 1,
-}}
-RT_ENUM! { enum SmartCardCryptogramMaterialPackageFormat: i32 {
-    None (SmartCardCryptogramMaterialPackageFormat_None) = 0, JweRsaPki (SmartCardCryptogramMaterialPackageFormat_JweRsaPki) = 1,
-}}
-DEFINE_IID!(IID_ISmartCardCryptogramMaterialPossessionProof, 3854150540, 41281, 16693, 154, 221, 176, 210, 227, 170, 31, 201);
-RT_INTERFACE!{interface ISmartCardCryptogramMaterialPossessionProof(ISmartCardCryptogramMaterialPossessionProofVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramMaterialPossessionProof] {
-    fn get_OperationStatus(&self, out: *mut SmartCardCryptogramGeneratorOperationStatus) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_Proof(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
-}}
-impl ISmartCardCryptogramMaterialPossessionProof {
-    #[inline] pub fn get_operation_status(&self) -> Result<SmartCardCryptogramGeneratorOperationStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OperationStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_proof(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Proof)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardCryptogramMaterialPossessionProof: ISmartCardCryptogramMaterialPossessionProof}
-RT_ENUM! { enum SmartCardCryptogramMaterialProtectionMethod: i32 {
-    None (SmartCardCryptogramMaterialProtectionMethod_None) = 0, WhiteBoxing (SmartCardCryptogramMaterialProtectionMethod_WhiteBoxing) = 1,
-}}
-RT_ENUM! { enum SmartCardCryptogramMaterialType: i32 {
-    None (SmartCardCryptogramMaterialType_None) = 0, StaticDataAuthentication (SmartCardCryptogramMaterialType_StaticDataAuthentication) = 1, TripleDes112 (SmartCardCryptogramMaterialType_TripleDes112) = 2, Aes (SmartCardCryptogramMaterialType_Aes) = 3, RsaPkcs1 (SmartCardCryptogramMaterialType_RsaPkcs1) = 4,
-}}
-RT_ENUM! { enum SmartCardCryptogramPlacementOptions: u32 {
-    None (SmartCardCryptogramPlacementOptions_None) = 0, UnitsAreInNibbles (SmartCardCryptogramPlacementOptions_UnitsAreInNibbles) = 1, ChainOutput (SmartCardCryptogramPlacementOptions_ChainOutput) = 2,
-}}
-DEFINE_IID!(IID_ISmartCardCryptogramPlacementStep, 2491089899, 33602, 18322, 162, 229, 146, 86, 54, 55, 138, 83);
-RT_INTERFACE!{interface ISmartCardCryptogramPlacementStep(ISmartCardCryptogramPlacementStepVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramPlacementStep] {
-    fn get_Algorithm(&self, out: *mut SmartCardCryptogramAlgorithm) -> HRESULT,
-    fn put_Algorithm(&self, value: SmartCardCryptogramAlgorithm) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_SourceData(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_SourceData(&self, value: *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    fn get_CryptogramMaterialPackageName(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_CryptogramMaterialPackageName(&self, value: HSTRING) -> HRESULT,
-    fn get_CryptogramMaterialName(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_CryptogramMaterialName(&self, value: HSTRING) -> HRESULT,
-    fn get_TemplateOffset(&self, out: *mut i32) -> HRESULT,
-    fn put_TemplateOffset(&self, value: i32) -> HRESULT,
-    fn get_CryptogramOffset(&self, out: *mut i32) -> HRESULT,
-    fn put_CryptogramOffset(&self, value: i32) -> HRESULT,
-    fn get_CryptogramLength(&self, out: *mut i32) -> HRESULT,
-    fn put_CryptogramLength(&self, value: i32) -> HRESULT,
-    fn get_CryptogramPlacementOptions(&self, out: *mut SmartCardCryptogramPlacementOptions) -> HRESULT,
-    fn put_CryptogramPlacementOptions(&self, value: SmartCardCryptogramPlacementOptions) -> HRESULT,
-    fn get_ChainedOutputStep(&self, out: *mut *mut SmartCardCryptogramPlacementStep) -> HRESULT,
-    fn put_ChainedOutputStep(&self, value: *mut SmartCardCryptogramPlacementStep) -> HRESULT
-}}
-impl ISmartCardCryptogramPlacementStep {
-    #[inline] pub fn get_algorithm(&self) -> Result<SmartCardCryptogramAlgorithm> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Algorithm)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_algorithm(&self, value: SmartCardCryptogramAlgorithm) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Algorithm)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_source_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SourceData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_source_data(&self, value: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SourceData)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_cryptogram_material_package_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CryptogramMaterialPackageName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_cryptogram_material_package_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CryptogramMaterialPackageName)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_cryptogram_material_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CryptogramMaterialName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_cryptogram_material_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CryptogramMaterialName)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_template_offset(&self) -> Result<i32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TemplateOffset)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_template_offset(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TemplateOffset)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_cryptogram_offset(&self) -> Result<i32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CryptogramOffset)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_cryptogram_offset(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CryptogramOffset)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_cryptogram_length(&self) -> Result<i32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CryptogramLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_cryptogram_length(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CryptogramLength)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_cryptogram_placement_options(&self) -> Result<SmartCardCryptogramPlacementOptions> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CryptogramPlacementOptions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_cryptogram_placement_options(&self, value: SmartCardCryptogramPlacementOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CryptogramPlacementOptions)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_chained_output_step(&self) -> Result<Option<ComPtr<SmartCardCryptogramPlacementStep>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ChainedOutputStep)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_chained_output_step(&self, value: &SmartCardCryptogramPlacementStep) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ChainedOutputStep)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardCryptogramPlacementStep: ISmartCardCryptogramPlacementStep}
-impl RtActivatable<IActivationFactory> for SmartCardCryptogramPlacementStep {}
-DEFINE_CLSID!(SmartCardCryptogramPlacementStep(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,80,108,97,99,101,109,101,110,116,83,116,101,112,0]) [CLSID_SmartCardCryptogramPlacementStep]);
-RT_ENUM! { enum SmartCardCryptogramStorageKeyAlgorithm: i32 {
-    None (SmartCardCryptogramStorageKeyAlgorithm_None) = 0, Rsa2048 (SmartCardCryptogramStorageKeyAlgorithm_Rsa2048) = 1,
-}}
-RT_ENUM! { enum SmartCardCryptogramStorageKeyCapabilities: u32 {
-    None (SmartCardCryptogramStorageKeyCapabilities_None) = 0, HardwareProtection (SmartCardCryptogramStorageKeyCapabilities_HardwareProtection) = 1, UnlockPrompt (SmartCardCryptogramStorageKeyCapabilities_UnlockPrompt) = 2,
-}}
-DEFINE_IID!(IID_ISmartCardCryptogramStorageKeyCharacteristics, 2236765294, 17495, 18469, 180, 100, 99, 84, 113, 163, 159, 92);
-RT_INTERFACE!{interface ISmartCardCryptogramStorageKeyCharacteristics(ISmartCardCryptogramStorageKeyCharacteristicsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramStorageKeyCharacteristics] {
-    fn get_StorageKeyName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_DateCreated(&self, out: *mut foundation::DateTime) -> HRESULT,
-    fn get_Algorithm(&self, out: *mut SmartCardCryptogramStorageKeyAlgorithm) -> HRESULT,
-    fn get_Capabilities(&self, out: *mut SmartCardCryptogramStorageKeyCapabilities) -> HRESULT
-}}
-impl ISmartCardCryptogramStorageKeyCharacteristics {
-    #[inline] pub fn get_storage_key_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_StorageKeyName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_date_created(&self) -> Result<foundation::DateTime> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_DateCreated)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_algorithm(&self) -> Result<SmartCardCryptogramStorageKeyAlgorithm> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Algorithm)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_capabilities(&self) -> Result<SmartCardCryptogramStorageKeyCapabilities> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Capabilities)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardCryptogramStorageKeyCharacteristics: ISmartCardCryptogramStorageKeyCharacteristics}
-impl RtActivatable<IActivationFactory> for SmartCardCryptogramStorageKeyCharacteristics {}
-DEFINE_CLSID!(SmartCardCryptogramStorageKeyCharacteristics(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,83,116,111,114,97,103,101,75,101,121,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,0]) [CLSID_SmartCardCryptogramStorageKeyCharacteristics]);
-DEFINE_IID!(IID_ISmartCardCryptogramStorageKeyInfo, 2008084493, 45207, 20321, 162, 106, 149, 97, 99, 156, 156, 58);
-RT_INTERFACE!{interface ISmartCardCryptogramStorageKeyInfo(ISmartCardCryptogramStorageKeyInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramStorageKeyInfo] {
-    fn get_OperationStatus(&self, out: *mut SmartCardCryptogramGeneratorOperationStatus) -> HRESULT,
-    #[cfg(not(feature="windows-security"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_PublicKeyBlobType(&self, out: *mut super::super::security::cryptography::core::CryptographicPublicKeyBlobType) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_PublicKey(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    fn get_AttestationStatus(&self, out: *mut SmartCardCryptographicKeyAttestationStatus) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_Attestation(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_AttestationCertificateChain(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    fn get_Capabilities(&self, out: *mut SmartCardCryptogramStorageKeyCapabilities) -> HRESULT
-}}
-impl ISmartCardCryptogramStorageKeyInfo {
-    #[inline] pub fn get_operation_status(&self) -> Result<SmartCardCryptogramGeneratorOperationStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OperationStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_public_key_blob_type(&self) -> Result<super::super::security::cryptography::core::CryptographicPublicKeyBlobType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_PublicKeyBlobType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_public_key(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PublicKey)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_attestation_status(&self) -> Result<SmartCardCryptographicKeyAttestationStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_AttestationStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_attestation(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Attestation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_attestation_certificate_chain(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AttestationCertificateChain)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_capabilities(&self) -> Result<SmartCardCryptogramStorageKeyCapabilities> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Capabilities)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardCryptogramStorageKeyInfo: ISmartCardCryptogramStorageKeyInfo}
-DEFINE_IID!(IID_ISmartCardCryptogramStorageKeyInfo2, 278777, 63485, 16765, 137, 225, 251, 176, 56, 42, 220, 77);
-RT_INTERFACE!{interface ISmartCardCryptogramStorageKeyInfo2(ISmartCardCryptogramStorageKeyInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramStorageKeyInfo2] {
-    fn get_OperationalRequirements(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl ISmartCardCryptogramStorageKeyInfo2 {
-    #[inline] pub fn get_operational_requirements(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_OperationalRequirements)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum SmartCardCryptographicKeyAttestationStatus: i32 {
-    NoAttestation (SmartCardCryptographicKeyAttestationStatus_NoAttestation) = 0, SoftwareKeyWithoutTpm (SmartCardCryptographicKeyAttestationStatus_SoftwareKeyWithoutTpm) = 1, SoftwareKeyWithTpm (SmartCardCryptographicKeyAttestationStatus_SoftwareKeyWithTpm) = 2, TpmKeyUnknownAttestationStatus (SmartCardCryptographicKeyAttestationStatus_TpmKeyUnknownAttestationStatus) = 3, TpmKeyWithoutAttestationCapability (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithoutAttestationCapability) = 4, TpmKeyWithTemporaryAttestationFailure (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithTemporaryAttestationFailure) = 5, TpmKeyWithLongTermAttestationFailure (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithLongTermAttestationFailure) = 6, TpmKeyWithAttestation (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithAttestation) = 7,
-}}
-RT_ENUM! { enum SmartCardEmulationCategory: i32 {
-    Other (SmartCardEmulationCategory_Other) = 0, Payment (SmartCardEmulationCategory_Payment) = 1,
-}}
-RT_ENUM! { enum SmartCardEmulationType: i32 {
-    Host (SmartCardEmulationType_Host) = 0, Uicc (SmartCardEmulationType_Uicc) = 1, EmbeddedSE (SmartCardEmulationType_EmbeddedSE) = 2,
-}}
-DEFINE_IID!(IID_ISmartCardEmulator, 3753445042, 34654, 18405, 128, 119, 232, 191, 241, 177, 198, 251);
-RT_INTERFACE!{interface ISmartCardEmulator(ISmartCardEmulatorVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulator] {
-    fn get_EnablementPolicy(&self, out: *mut SmartCardEmulatorEnablementPolicy) -> HRESULT
-}}
-impl ISmartCardEmulator {
-    #[inline] pub fn get_enablement_policy(&self) -> Result<SmartCardEmulatorEnablementPolicy> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_EnablementPolicy)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardEmulator: ISmartCardEmulator}
-impl RtActivatable<ISmartCardEmulatorStatics> for SmartCardEmulator {}
-impl RtActivatable<ISmartCardEmulatorStatics2> for SmartCardEmulator {}
-impl RtActivatable<ISmartCardEmulatorStatics3> for SmartCardEmulator {}
-impl SmartCardEmulator {
-    #[inline] pub fn get_default_async() -> Result<ComPtr<foundation::IAsyncOperation<SmartCardEmulator>>> {
-        <Self as RtActivatable<ISmartCardEmulatorStatics>>::get_activation_factory().get_default_async()
-    }
-    #[inline] pub fn get_applet_id_group_registrations_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<SmartCardAppletIdGroupRegistration>>>> {
-        <Self as RtActivatable<ISmartCardEmulatorStatics2>>::get_activation_factory().get_applet_id_group_registrations_async()
-    }
-    #[inline] pub fn register_applet_id_group_async(appletIdGroup: &SmartCardAppletIdGroup) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardAppletIdGroupRegistration>>> {
-        <Self as RtActivatable<ISmartCardEmulatorStatics2>>::get_activation_factory().register_applet_id_group_async(appletIdGroup)
-    }
-    #[inline] pub fn unregister_applet_id_group_async(registration: &SmartCardAppletIdGroupRegistration) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ISmartCardEmulatorStatics2>>::get_activation_factory().unregister_applet_id_group_async(registration)
-    }
-    #[inline] pub fn get_max_applet_id_group_registrations() -> Result<u16> {
-        <Self as RtActivatable<ISmartCardEmulatorStatics2>>::get_activation_factory().get_max_applet_id_group_registrations()
-    }
-    #[inline] pub fn is_supported() -> Result<bool> {
-        <Self as RtActivatable<ISmartCardEmulatorStatics3>>::get_activation_factory().is_supported()
-    }
-}
-DEFINE_CLSID!(SmartCardEmulator(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,69,109,117,108,97,116,111,114,0]) [CLSID_SmartCardEmulator]);
-DEFINE_IID!(IID_ISmartCardEmulator2, 4265590968, 34089, 16666, 128, 123, 72, 237, 194, 160, 171, 68);
-RT_INTERFACE!{interface ISmartCardEmulator2(ISmartCardEmulator2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulator2] {
-    fn add_ApduReceived(&self, value: *mut foundation::TypedEventHandler<SmartCardEmulator, SmartCardEmulatorApduReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_ApduReceived(&self, value: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_ConnectionDeactivated(&self, value: *mut foundation::TypedEventHandler<SmartCardEmulator, SmartCardEmulatorConnectionDeactivatedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_ConnectionDeactivated(&self, value: foundation::EventRegistrationToken) -> HRESULT,
-    fn Start(&self) -> HRESULT,
-    fn IsHostCardEmulationSupported(&self, out: *mut bool) -> HRESULT
-}}
-impl ISmartCardEmulator2 {
-    #[inline] pub fn add_apdu_received(&self, value: &foundation::TypedEventHandler<SmartCardEmulator, SmartCardEmulatorApduReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ApduReceived)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_apdu_received(&self, value: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_ApduReceived)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_connection_deactivated(&self, value: &foundation::TypedEventHandler<SmartCardEmulator, SmartCardEmulatorConnectionDeactivatedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ConnectionDeactivated)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_connection_deactivated(&self, value: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_ConnectionDeactivated)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn start(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Start)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn is_host_card_emulation_supported(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsHostCardEmulationSupported)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardEmulatorApduReceivedEventArgs, 3579647350, 27090, 21299, 91, 95, 248, 192, 214, 233, 240, 159);
-RT_INTERFACE!{interface ISmartCardEmulatorApduReceivedEventArgs(ISmartCardEmulatorApduReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorApduReceivedEventArgs] {
-    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_CommandApdu(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    fn get_ConnectionProperties(&self, out: *mut *mut SmartCardEmulatorConnectionProperties) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn TryRespondAsync(&self, responseApdu: *mut super::super::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
-    fn get_AutomaticResponseStatus(&self, out: *mut SmartCardAutomaticResponseStatus) -> HRESULT
-}}
-impl ISmartCardEmulatorApduReceivedEventArgs {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_command_apdu(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CommandApdu)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_connection_properties(&self) -> Result<Option<ComPtr<SmartCardEmulatorConnectionProperties>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ConnectionProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn try_respond_async(&self, responseApdu: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryRespondAsync)(self as *const _ as *mut _, responseApdu as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_automatic_response_status(&self) -> Result<SmartCardAutomaticResponseStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_AutomaticResponseStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardEmulatorApduReceivedEventArgs: ISmartCardEmulatorApduReceivedEventArgs}
-DEFINE_IID!(IID_ISmartCardEmulatorApduReceivedEventArgs2, 2348367344, 8929, 16952, 134, 16, 148, 206, 74, 150, 84, 37);
-RT_INTERFACE!{interface ISmartCardEmulatorApduReceivedEventArgs2(ISmartCardEmulatorApduReceivedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorApduReceivedEventArgs2] {
-    fn get_State(&self, out: *mut u32) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn TryRespondWithStateAsync(&self, responseApdu: *mut super::super::storage::streams::IBuffer, nextState: *mut foundation::IReference<u32>, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
-}}
-impl ISmartCardEmulatorApduReceivedEventArgs2 {
-    #[inline] pub fn get_state(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn try_respond_with_state_async(&self, responseApdu: &super::super::storage::streams::IBuffer, nextState: &foundation::IReference<u32>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryRespondWithStateAsync)(self as *const _ as *mut _, responseApdu as *const _ as *mut _, nextState as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardEmulatorApduReceivedEventArgsWithCryptograms, 3578837703, 47039, 20009, 146, 148, 12, 74, 195, 201, 65, 189);
-RT_INTERFACE!{interface ISmartCardEmulatorApduReceivedEventArgsWithCryptograms(ISmartCardEmulatorApduReceivedEventArgsWithCryptogramsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorApduReceivedEventArgsWithCryptograms] {
-    #[cfg(feature="windows-storage")] fn TryRespondWithCryptogramsAsync(&self, responseTemplate: *mut super::super::storage::streams::IBuffer, cryptogramPlacementSteps: *mut foundation::collections::IIterable<SmartCardCryptogramPlacementStep>, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn TryRespondWithCryptogramsAndStateAsync(&self, responseTemplate: *mut super::super::storage::streams::IBuffer, cryptogramPlacementSteps: *mut foundation::collections::IIterable<SmartCardCryptogramPlacementStep>, nextState: *mut foundation::IReference<u32>, out: *mut *mut foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>) -> HRESULT
-}}
-impl ISmartCardEmulatorApduReceivedEventArgsWithCryptograms {
-    #[cfg(feature="windows-storage")] #[inline] pub fn try_respond_with_cryptograms_async(&self, responseTemplate: &super::super::storage::streams::IBuffer, cryptogramPlacementSteps: &foundation::collections::IIterable<SmartCardCryptogramPlacementStep>) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryRespondWithCryptogramsAsync)(self as *const _ as *mut _, responseTemplate as *const _ as *mut _, cryptogramPlacementSteps as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn try_respond_with_cryptograms_and_state_async(&self, responseTemplate: &super::super::storage::streams::IBuffer, cryptogramPlacementSteps: &foundation::collections::IIterable<SmartCardCryptogramPlacementStep>, nextState: &foundation::IReference<u32>) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardCryptogramGeneratorOperationStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryRespondWithCryptogramsAndStateAsync)(self as *const _ as *mut _, responseTemplate as *const _ as *mut _, cryptogramPlacementSteps as *const _ as *mut _, nextState as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardEmulatorConnectionDeactivatedEventArgs, 562485459, 50667, 21090, 67, 223, 98, 160, 161, 181, 85, 87);
-RT_INTERFACE!{interface ISmartCardEmulatorConnectionDeactivatedEventArgs(ISmartCardEmulatorConnectionDeactivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorConnectionDeactivatedEventArgs] {
-    fn get_ConnectionProperties(&self, out: *mut *mut SmartCardEmulatorConnectionProperties) -> HRESULT,
-    fn get_Reason(&self, out: *mut SmartCardEmulatorConnectionDeactivatedReason) -> HRESULT
-}}
-impl ISmartCardEmulatorConnectionDeactivatedEventArgs {
-    #[inline] pub fn get_connection_properties(&self) -> Result<Option<ComPtr<SmartCardEmulatorConnectionProperties>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ConnectionProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_reason(&self) -> Result<SmartCardEmulatorConnectionDeactivatedReason> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Reason)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardEmulatorConnectionDeactivatedEventArgs: ISmartCardEmulatorConnectionDeactivatedEventArgs}
-RT_ENUM! { enum SmartCardEmulatorConnectionDeactivatedReason: i32 {
-    ConnectionLost (SmartCardEmulatorConnectionDeactivatedReason_ConnectionLost) = 0, ConnectionRedirected (SmartCardEmulatorConnectionDeactivatedReason_ConnectionRedirected) = 1,
-}}
-DEFINE_IID!(IID_ISmartCardEmulatorConnectionProperties, 1311548910, 63849, 20605, 108, 249, 52, 226, 209, 141, 243, 17);
-RT_INTERFACE!{interface ISmartCardEmulatorConnectionProperties(ISmartCardEmulatorConnectionPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorConnectionProperties] {
-    fn get_Id(&self, out: *mut Guid) -> HRESULT,
-    fn get_Source(&self, out: *mut SmartCardEmulatorConnectionSource) -> HRESULT
-}}
-impl ISmartCardEmulatorConnectionProperties {
-    #[inline] pub fn get_id(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_source(&self) -> Result<SmartCardEmulatorConnectionSource> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardEmulatorConnectionProperties: ISmartCardEmulatorConnectionProperties}
-RT_ENUM! { enum SmartCardEmulatorConnectionSource: i32 {
-    Unknown (SmartCardEmulatorConnectionSource_Unknown) = 0, NfcReader (SmartCardEmulatorConnectionSource_NfcReader) = 1,
-}}
-RT_ENUM! { enum SmartCardEmulatorEnablementPolicy: i32 {
-    Never (SmartCardEmulatorEnablementPolicy_Never) = 0, Always (SmartCardEmulatorEnablementPolicy_Always) = 1, ScreenOn (SmartCardEmulatorEnablementPolicy_ScreenOn) = 2, ScreenUnlocked (SmartCardEmulatorEnablementPolicy_ScreenUnlocked) = 3,
-}}
-DEFINE_IID!(IID_ISmartCardEmulatorStatics, 2057043019, 50387, 18767, 184, 162, 98, 21, 216, 30, 133, 178);
-RT_INTERFACE!{static interface ISmartCardEmulatorStatics(ISmartCardEmulatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorStatics] {
-    fn GetDefaultAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardEmulator>) -> HRESULT
-}}
-impl ISmartCardEmulatorStatics {
-    #[inline] pub fn get_default_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardEmulator>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDefaultAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardEmulatorStatics2, 1773051786, 46965, 18571, 132, 54, 108, 30, 40, 237, 115, 31);
-RT_INTERFACE!{static interface ISmartCardEmulatorStatics2(ISmartCardEmulatorStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorStatics2] {
-    fn GetAppletIdGroupRegistrationsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<SmartCardAppletIdGroupRegistration>>) -> HRESULT,
-    fn RegisterAppletIdGroupAsync(&self, appletIdGroup: *mut SmartCardAppletIdGroup, out: *mut *mut foundation::IAsyncOperation<SmartCardAppletIdGroupRegistration>) -> HRESULT,
-    fn UnregisterAppletIdGroupAsync(&self, registration: *mut SmartCardAppletIdGroupRegistration, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn get_MaxAppletIdGroupRegistrations(&self, out: *mut u16) -> HRESULT
-}}
-impl ISmartCardEmulatorStatics2 {
-    #[inline] pub fn get_applet_id_group_registrations_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<SmartCardAppletIdGroupRegistration>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAppletIdGroupRegistrationsAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn register_applet_id_group_async(&self, appletIdGroup: &SmartCardAppletIdGroup) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardAppletIdGroupRegistration>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RegisterAppletIdGroupAsync)(self as *const _ as *mut _, appletIdGroup as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn unregister_applet_id_group_async(&self, registration: &SmartCardAppletIdGroupRegistration) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnregisterAppletIdGroupAsync)(self as *const _ as *mut _, registration as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_max_applet_id_group_registrations(&self) -> Result<u16> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaxAppletIdGroupRegistrations)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardEmulatorStatics3, 1508512810, 40713, 17397, 133, 101, 207, 168, 20, 142, 76, 178);
-RT_INTERFACE!{static interface ISmartCardEmulatorStatics3(ISmartCardEmulatorStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorStatics3] {
-    fn IsSupported(&self, out: *mut bool) -> HRESULT
-}}
-impl ISmartCardEmulatorStatics3 {
-    #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsSupported)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum SmartCardLaunchBehavior: i32 {
-    Default (SmartCardLaunchBehavior_Default) = 0, AboveLock (SmartCardLaunchBehavior_AboveLock) = 1,
-}}
-RT_ENUM! { enum SmartCardPinCharacterPolicyOption: i32 {
-    Allow (SmartCardPinCharacterPolicyOption_Allow) = 0, RequireAtLeastOne (SmartCardPinCharacterPolicyOption_RequireAtLeastOne) = 1, Disallow (SmartCardPinCharacterPolicyOption_Disallow) = 2,
-}}
-DEFINE_IID!(IID_ISmartCardPinPolicy, 406643076, 19894, 18497, 172, 158, 42, 193, 243, 155, 115, 4);
-RT_INTERFACE!{interface ISmartCardPinPolicy(ISmartCardPinPolicyVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardPinPolicy] {
-    fn get_MinLength(&self, out: *mut u32) -> HRESULT,
-    fn put_MinLength(&self, value: u32) -> HRESULT,
-    fn get_MaxLength(&self, out: *mut u32) -> HRESULT,
-    fn put_MaxLength(&self, value: u32) -> HRESULT,
-    fn get_UppercaseLetters(&self, out: *mut SmartCardPinCharacterPolicyOption) -> HRESULT,
-    fn put_UppercaseLetters(&self, value: SmartCardPinCharacterPolicyOption) -> HRESULT,
-    fn get_LowercaseLetters(&self, out: *mut SmartCardPinCharacterPolicyOption) -> HRESULT,
-    fn put_LowercaseLetters(&self, value: SmartCardPinCharacterPolicyOption) -> HRESULT,
-    fn get_Digits(&self, out: *mut SmartCardPinCharacterPolicyOption) -> HRESULT,
-    fn put_Digits(&self, value: SmartCardPinCharacterPolicyOption) -> HRESULT,
-    fn get_SpecialCharacters(&self, out: *mut SmartCardPinCharacterPolicyOption) -> HRESULT,
-    fn put_SpecialCharacters(&self, value: SmartCardPinCharacterPolicyOption) -> HRESULT
-}}
-impl ISmartCardPinPolicy {
-    #[inline] pub fn get_min_length(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MinLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_min_length(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MinLength)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_max_length(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaxLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_max_length(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MaxLength)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_uppercase_letters(&self) -> Result<SmartCardPinCharacterPolicyOption> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UppercaseLetters)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_uppercase_letters(&self, value: SmartCardPinCharacterPolicyOption) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_UppercaseLetters)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_lowercase_letters(&self) -> Result<SmartCardPinCharacterPolicyOption> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_LowercaseLetters)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_lowercase_letters(&self, value: SmartCardPinCharacterPolicyOption) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_LowercaseLetters)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_digits(&self) -> Result<SmartCardPinCharacterPolicyOption> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Digits)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_digits(&self, value: SmartCardPinCharacterPolicyOption) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Digits)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_special_characters(&self) -> Result<SmartCardPinCharacterPolicyOption> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_SpecialCharacters)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_special_characters(&self, value: SmartCardPinCharacterPolicyOption) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SpecialCharacters)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardPinPolicy: ISmartCardPinPolicy}
-impl RtActivatable<IActivationFactory> for SmartCardPinPolicy {}
-DEFINE_CLSID!(SmartCardPinPolicy(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,80,105,110,80,111,108,105,99,121,0]) [CLSID_SmartCardPinPolicy]);
-DEFINE_IID!(IID_ISmartCardPinResetDeferral, 415845036, 30725, 16388, 133, 228, 187, 239, 172, 143, 104, 132);
-RT_INTERFACE!{interface ISmartCardPinResetDeferral(ISmartCardPinResetDeferralVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardPinResetDeferral] {
-    fn Complete(&self) -> HRESULT
-}}
-impl ISmartCardPinResetDeferral {
-    #[inline] pub fn complete(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Complete)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardPinResetDeferral: ISmartCardPinResetDeferral}
-DEFINE_IID!(IID_SmartCardPinResetHandler, 328031808, 62396, 19036, 180, 29, 75, 78, 246, 132, 226, 55);
-RT_DELEGATE!{delegate SmartCardPinResetHandler(SmartCardPinResetHandlerVtbl, SmartCardPinResetHandlerImpl) [IID_SmartCardPinResetHandler] {
-    fn Invoke(&self, sender: *mut SmartCardProvisioning, request: *mut SmartCardPinResetRequest) -> HRESULT
-}}
-impl SmartCardPinResetHandler {
-    #[inline] pub fn invoke(&self, sender: &SmartCardProvisioning, request: &SmartCardPinResetRequest) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, request as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardPinResetRequest, 318651469, 24505, 20110, 159, 246, 97, 244, 117, 18, 79, 239);
-RT_INTERFACE!{interface ISmartCardPinResetRequest(ISmartCardPinResetRequestVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardPinResetRequest] {
-    #[cfg(feature="windows-storage")] fn get_Challenge(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    fn get_Deadline(&self, out: *mut foundation::DateTime) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut SmartCardPinResetDeferral) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn SetResponse(&self, response: *mut super::super::storage::streams::IBuffer) -> HRESULT
-}}
-impl ISmartCardPinResetRequest {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_challenge(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Challenge)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_deadline(&self) -> Result<foundation::DateTime> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Deadline)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<SmartCardPinResetDeferral>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_response(&self, response: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetResponse)(self as *const _ as *mut _, response as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardPinResetRequest: ISmartCardPinResetRequest}
-DEFINE_IID!(IID_ISmartCardProvisioning, 435088829, 8107, 18300, 183, 18, 26, 44, 90, 241, 253, 110);
-RT_INTERFACE!{interface ISmartCardProvisioning(ISmartCardProvisioningVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioning] {
-    fn get_SmartCard(&self, out: *mut *mut SmartCard) -> HRESULT,
-    fn GetIdAsync(&self, out: *mut *mut foundation::IAsyncOperation<Guid>) -> HRESULT,
-    fn GetNameAsync(&self, out: *mut *mut foundation::IAsyncOperation<HString>) -> HRESULT,
-    fn GetChallengeContextAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardChallengeContext>) -> HRESULT,
-    fn RequestPinChangeAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
-    fn RequestPinResetAsync(&self, handler: *mut SmartCardPinResetHandler, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
-}}
-impl ISmartCardProvisioning {
-    #[inline] pub fn get_smart_card(&self) -> Result<Option<ComPtr<SmartCard>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SmartCard)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_id_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<Guid>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetIdAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_name_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetNameAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_challenge_context_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardChallengeContext>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetChallengeContextAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn request_pin_change_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestPinChangeAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn request_pin_reset_async(&self, handler: &SmartCardPinResetHandler) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestPinResetAsync)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardProvisioning: ISmartCardProvisioning}
-impl RtActivatable<ISmartCardProvisioningStatics> for SmartCardProvisioning {}
-impl RtActivatable<ISmartCardProvisioningStatics2> for SmartCardProvisioning {}
-impl SmartCardProvisioning {
-    #[inline] pub fn from_smart_card_async(card: &SmartCard) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> {
-        <Self as RtActivatable<ISmartCardProvisioningStatics>>::get_activation_factory().from_smart_card_async(card)
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_virtual_smart_card_creation_async(friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> {
-        <Self as RtActivatable<ISmartCardProvisioningStatics>>::get_activation_factory().request_virtual_smart_card_creation_async(friendlyName, administrativeKey, pinPolicy)
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_virtual_smart_card_creation_async_with_card_id(friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy, cardId: Guid) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> {
-        <Self as RtActivatable<ISmartCardProvisioningStatics>>::get_activation_factory().request_virtual_smart_card_creation_async_with_card_id(friendlyName, administrativeKey, pinPolicy, cardId)
-    }
-    #[inline] pub fn request_virtual_smart_card_deletion_async(card: &SmartCard) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ISmartCardProvisioningStatics>>::get_activation_factory().request_virtual_smart_card_deletion_async(card)
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_attested_virtual_smart_card_creation_async(friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> {
-        <Self as RtActivatable<ISmartCardProvisioningStatics2>>::get_activation_factory().request_attested_virtual_smart_card_creation_async(friendlyName, administrativeKey, pinPolicy)
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_attested_virtual_smart_card_creation_async_with_card_id(friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy, cardId: Guid) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> {
-        <Self as RtActivatable<ISmartCardProvisioningStatics2>>::get_activation_factory().request_attested_virtual_smart_card_creation_async_with_card_id(friendlyName, administrativeKey, pinPolicy, cardId)
-    }
-}
-DEFINE_CLSID!(SmartCardProvisioning(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,80,114,111,118,105,115,105,111,110,105,110,103,0]) [CLSID_SmartCardProvisioning]);
-DEFINE_IID!(IID_ISmartCardProvisioning2, 285026539, 16249, 19302, 155, 124, 17, 193, 73, 183, 208, 188);
-RT_INTERFACE!{interface ISmartCardProvisioning2(ISmartCardProvisioning2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioning2] {
-    fn GetAuthorityKeyContainerNameAsync(&self, out: *mut *mut foundation::IAsyncOperation<HString>) -> HRESULT
-}}
-impl ISmartCardProvisioning2 {
-    #[inline] pub fn get_authority_key_container_name_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAuthorityKeyContainerNameAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardProvisioningStatics, 327690312, 3347, 20080, 151, 53, 81, 218, 236, 165, 37, 79);
-RT_INTERFACE!{static interface ISmartCardProvisioningStatics(ISmartCardProvisioningStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioningStatics] {
-    fn FromSmartCardAsync(&self, card: *mut SmartCard, out: *mut *mut foundation::IAsyncOperation<SmartCardProvisioning>) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn RequestVirtualSmartCardCreationAsync(&self, friendlyName: HSTRING, administrativeKey: *mut super::super::storage::streams::IBuffer, pinPolicy: *mut SmartCardPinPolicy, out: *mut *mut foundation::IAsyncOperation<SmartCardProvisioning>) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn RequestVirtualSmartCardCreationAsyncWithCardId(&self, friendlyName: HSTRING, administrativeKey: *mut super::super::storage::streams::IBuffer, pinPolicy: *mut SmartCardPinPolicy, cardId: Guid, out: *mut *mut foundation::IAsyncOperation<SmartCardProvisioning>) -> HRESULT,
-    fn RequestVirtualSmartCardDeletionAsync(&self, card: *mut SmartCard, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
-}}
-impl ISmartCardProvisioningStatics {
-    #[inline] pub fn from_smart_card_async(&self, card: &SmartCard) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FromSmartCardAsync)(self as *const _ as *mut _, card as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_virtual_smart_card_creation_async(&self, friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestVirtualSmartCardCreationAsync)(self as *const _ as *mut _, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_virtual_smart_card_creation_async_with_card_id(&self, friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy, cardId: Guid) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestVirtualSmartCardCreationAsyncWithCardId)(self as *const _ as *mut _, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, cardId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn request_virtual_smart_card_deletion_async(&self, card: &SmartCard) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestVirtualSmartCardDeletionAsync)(self as *const _ as *mut _, card as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardProvisioningStatics2, 877119144, 51616, 19414, 181, 13, 37, 31, 78, 141, 58, 98);
-RT_INTERFACE!{static interface ISmartCardProvisioningStatics2(ISmartCardProvisioningStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioningStatics2] {
-    #[cfg(feature="windows-storage")] fn RequestAttestedVirtualSmartCardCreationAsync(&self, friendlyName: HSTRING, administrativeKey: *mut super::super::storage::streams::IBuffer, pinPolicy: *mut SmartCardPinPolicy, out: *mut *mut foundation::IAsyncOperation<SmartCardProvisioning>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn RequestAttestedVirtualSmartCardCreationAsyncWithCardId(&self, friendlyName: HSTRING, administrativeKey: *mut super::super::storage::streams::IBuffer, pinPolicy: *mut SmartCardPinPolicy, cardId: Guid, out: *mut *mut foundation::IAsyncOperation<SmartCardProvisioning>) -> HRESULT
-}}
-impl ISmartCardProvisioningStatics2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_attested_virtual_smart_card_creation_async(&self, friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAttestedVirtualSmartCardCreationAsync)(self as *const _ as *mut _, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_attested_virtual_smart_card_creation_async_with_card_id(&self, friendlyName: &HStringArg, administrativeKey: &super::super::storage::streams::IBuffer, pinPolicy: &SmartCardPinPolicy, cardId: Guid) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardProvisioning>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAttestedVirtualSmartCardCreationAsyncWithCardId)(self as *const _ as *mut _, friendlyName.get(), administrativeKey as *const _ as *mut _, pinPolicy as *const _ as *mut _, cardId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardReader, 276083936, 21698, 19952, 129, 122, 20, 193, 67, 120, 240, 108);
-RT_INTERFACE!{interface ISmartCardReader(ISmartCardReaderVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardReader] {
-    fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Kind(&self, out: *mut SmartCardReaderKind) -> HRESULT,
-    fn GetStatusAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardReaderStatus>) -> HRESULT,
-    fn FindAllCardsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<SmartCard>>) -> HRESULT,
-    fn add_CardAdded(&self, handler: *mut foundation::TypedEventHandler<SmartCardReader, CardAddedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_CardAdded(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_CardRemoved(&self, handler: *mut foundation::TypedEventHandler<SmartCardReader, CardRemovedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_CardRemoved(&self, token: foundation::EventRegistrationToken) -> HRESULT
-}}
-impl ISmartCardReader {
-    #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DeviceId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_kind(&self) -> Result<SmartCardReaderKind> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Kind)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_status_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardReaderStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetStatusAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn find_all_cards_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<SmartCard>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAllCardsAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_card_added(&self, handler: &foundation::TypedEventHandler<SmartCardReader, CardAddedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CardAdded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_card_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_CardAdded)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_card_removed(&self, handler: &foundation::TypedEventHandler<SmartCardReader, CardRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CardRemoved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_card_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_CardRemoved)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardReader: ISmartCardReader}
-impl RtActivatable<ISmartCardReaderStatics> for SmartCardReader {}
-impl SmartCardReader {
-    #[inline] pub fn get_device_selector() -> Result<HString> {
-        <Self as RtActivatable<ISmartCardReaderStatics>>::get_activation_factory().get_device_selector()
-    }
-    #[inline] pub fn get_device_selector_with_kind(kind: SmartCardReaderKind) -> Result<HString> {
-        <Self as RtActivatable<ISmartCardReaderStatics>>::get_activation_factory().get_device_selector_with_kind(kind)
-    }
-    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardReader>>> {
-        <Self as RtActivatable<ISmartCardReaderStatics>>::get_activation_factory().from_id_async(deviceId)
-    }
-}
-DEFINE_CLSID!(SmartCardReader(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,82,101,97,100,101,114,0]) [CLSID_SmartCardReader]);
-RT_ENUM! { enum SmartCardReaderKind: i32 {
-    Any (SmartCardReaderKind_Any) = 0, Generic (SmartCardReaderKind_Generic) = 1, Tpm (SmartCardReaderKind_Tpm) = 2, Nfc (SmartCardReaderKind_Nfc) = 3, Uicc (SmartCardReaderKind_Uicc) = 4, EmbeddedSE (SmartCardReaderKind_EmbeddedSE) = 5,
-}}
-DEFINE_IID!(IID_ISmartCardReaderStatics, 272368865, 41418, 18674, 162, 129, 91, 111, 102, 154, 241, 7);
-RT_INTERFACE!{static interface ISmartCardReaderStatics(ISmartCardReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardReaderStatics] {
-    fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
-    fn GetDeviceSelectorWithKind(&self, kind: SmartCardReaderKind, out: *mut HSTRING) -> HRESULT,
-    fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncOperation<SmartCardReader>) -> HRESULT
-}}
-impl ISmartCardReaderStatics {
-    #[inline] pub fn get_device_selector(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDeviceSelector)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_device_selector_with_kind(&self, kind: SmartCardReaderKind) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDeviceSelectorWithKind)(self as *const _ as *mut _, kind, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn from_id_async(&self, deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<SmartCardReader>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FromIdAsync)(self as *const _ as *mut _, deviceId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum SmartCardReaderStatus: i32 {
-    Disconnected (SmartCardReaderStatus_Disconnected) = 0, Ready (SmartCardReaderStatus_Ready) = 1, Exclusive (SmartCardReaderStatus_Exclusive) = 2,
-}}
-RT_ENUM! { enum SmartCardStatus: i32 {
-    Disconnected (SmartCardStatus_Disconnected) = 0, Ready (SmartCardStatus_Ready) = 1, Shared (SmartCardStatus_Shared) = 2, Exclusive (SmartCardStatus_Exclusive) = 3, Unresponsive (SmartCardStatus_Unresponsive) = 4,
-}}
-DEFINE_IID!(IID_ISmartCardTriggerDetails, 1604055326, 14831, 20267, 180, 79, 10, 145, 85, 177, 119, 188);
-RT_INTERFACE!{interface ISmartCardTriggerDetails(ISmartCardTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardTriggerDetails] {
-    fn get_TriggerType(&self, out: *mut SmartCardTriggerType) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_SourceAppletId(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_TriggerData(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
-}}
-impl ISmartCardTriggerDetails {
-    #[inline] pub fn get_trigger_type(&self) -> Result<SmartCardTriggerType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TriggerType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_source_applet_id(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SourceAppletId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_trigger_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TriggerData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardTriggerDetails: ISmartCardTriggerDetails}
-DEFINE_IID!(IID_ISmartCardTriggerDetails2, 692438377, 35189, 19025, 158, 26, 95, 138, 118, 238, 81, 175);
-RT_INTERFACE!{interface ISmartCardTriggerDetails2(ISmartCardTriggerDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardTriggerDetails2] {
-    fn get_Emulator(&self, out: *mut *mut SmartCardEmulator) -> HRESULT,
-    fn TryLaunchCurrentAppAsync(&self, arguments: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
-    fn TryLaunchCurrentAppWithBehaviorAsync(&self, arguments: HSTRING, behavior: SmartCardLaunchBehavior, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
-}}
-impl ISmartCardTriggerDetails2 {
-    #[inline] pub fn get_emulator(&self) -> Result<Option<ComPtr<SmartCardEmulator>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Emulator)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn try_launch_current_app_async(&self, arguments: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryLaunchCurrentAppAsync)(self as *const _ as *mut _, arguments.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn try_launch_current_app_with_behavior_async(&self, arguments: &HStringArg, behavior: SmartCardLaunchBehavior) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryLaunchCurrentAppWithBehaviorAsync)(self as *const _ as *mut _, arguments.get(), behavior, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardTriggerDetails3, 3017982589, 6342, 19368, 131, 118, 239, 3, 212, 145, 38, 102);
-RT_INTERFACE!{interface ISmartCardTriggerDetails3(ISmartCardTriggerDetails3Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardTriggerDetails3] {
-    fn get_SmartCard(&self, out: *mut *mut SmartCard) -> HRESULT
-}}
-impl ISmartCardTriggerDetails3 {
-    #[inline] pub fn get_smart_card(&self) -> Result<Option<ComPtr<SmartCard>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SmartCard)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum SmartCardTriggerType: i32 {
-    EmulatorTransaction (SmartCardTriggerType_EmulatorTransaction) = 0, EmulatorNearFieldEntry (SmartCardTriggerType_EmulatorNearFieldEntry) = 1, EmulatorNearFieldExit (SmartCardTriggerType_EmulatorNearFieldExit) = 2, EmulatorHostApplicationActivated (SmartCardTriggerType_EmulatorHostApplicationActivated) = 3, EmulatorAppletIdGroupRegistrationChanged (SmartCardTriggerType_EmulatorAppletIdGroupRegistrationChanged) = 4, ReaderCardAdded (SmartCardTriggerType_ReaderCardAdded) = 5,
-}}
-RT_ENUM! { enum SmartCardUnlockPromptingBehavior: i32 {
-    AllowUnlockPrompt (SmartCardUnlockPromptingBehavior_AllowUnlockPrompt) = 0, RequireUnlockPrompt (SmartCardUnlockPromptingBehavior_RequireUnlockPrompt) = 1, PreventUnlockPrompt (SmartCardUnlockPromptingBehavior_PreventUnlockPrompt) = 2,
-}}
-} // Windows.Devices.SmartCards
 pub mod power { // Windows.Devices.Power
 use ::prelude::*;
 DEFINE_IID!(IID_IBattery, 3163115462, 114, 18376, 139, 93, 97, 74, 170, 122, 67, 126);
@@ -6612,6 +6612,23 @@ impl BluetoothAdapter {
     }
 }
 DEFINE_CLSID!(BluetoothAdapter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,65,100,97,112,116,101,114,0]) [CLSID_BluetoothAdapter]);
+DEFINE_IID!(IID_IBluetoothAdapter2, 2895433420, 9429, 16819, 145, 109, 16, 151, 197, 11, 16, 43);
+RT_INTERFACE!{interface IBluetoothAdapter2(IBluetoothAdapter2Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothAdapter2] {
+    fn get_AreClassicSecureConnectionsSupported(&self, out: *mut bool) -> HRESULT,
+    fn get_AreLowEnergySecureConnectionsSupported(&self, out: *mut bool) -> HRESULT
+}}
+impl IBluetoothAdapter2 {
+    #[inline] pub fn get_are_classic_secure_connections_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AreClassicSecureConnectionsSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_are_low_energy_secure_connections_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AreLowEnergySecureConnectionsSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IBluetoothAdapterStatics, 2332228458, 44108, 18241, 134, 97, 142, 171, 125, 23, 234, 159);
 RT_INTERFACE!{static interface IBluetoothAdapterStatics(IBluetoothAdapterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothAdapterStatics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
@@ -6883,6 +6900,17 @@ impl IBluetoothDevice4 {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BluetoothDeviceId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBluetoothDevice5, 3051402117, 24197, 17753, 161, 13, 28, 114, 129, 55, 159, 150);
+RT_INTERFACE!{interface IBluetoothDevice5(IBluetoothDevice5Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDevice5] {
+    fn get_WasSecureConnectionUsedForPairing(&self, out: *mut bool) -> HRESULT
+}}
+impl IBluetoothDevice5 {
+    #[inline] pub fn get_was_secure_connection_used_for_pairing(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_WasSecureConnectionUsedForPairing)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBluetoothDeviceId, 3245951407, 22465, 17986, 188, 206, 230, 192, 107, 32, 174, 118);
@@ -7699,6 +7727,17 @@ impl IBluetoothLEDevice4 {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BluetoothDeviceId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBluetoothLEDevice5, 2640974432, 21127, 17806, 149, 186, 23, 200, 183, 187, 50, 110);
+RT_INTERFACE!{interface IBluetoothLEDevice5(IBluetoothLEDevice5Vtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEDevice5] {
+    fn get_WasSecureConnectionUsedForPairing(&self, out: *mut bool) -> HRESULT
+}}
+impl IBluetoothLEDevice5 {
+    #[inline] pub fn get_was_secure_connection_used_for_pairing(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_WasSecureConnectionUsedForPairing)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBluetoothLEDeviceStatics, 3369015833, 61622, 19440, 134, 137, 65, 48, 61, 226, 217, 244);
@@ -13296,6 +13335,185 @@ impl IPnpObjectWatcher {
 RT_CLASS!{class PnpObjectWatcher: IPnpObjectWatcher}
 } // Windows.Devices.Enumeration.Pnp
 } // Windows.Devices.Enumeration
+pub mod display { // Windows.Devices.Display
+use ::prelude::*;
+DEFINE_IID!(IID_IDisplayMonitor, 527111636, 7425, 19537, 135, 226, 111, 149, 74, 119, 43, 89);
+RT_INTERFACE!{interface IDisplayMonitor(IDisplayMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayMonitor] {
+    fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_ConnectionKind(&self, out: *mut DisplayMonitorConnectionKind) -> HRESULT,
+    fn get_PhysicalConnector(&self, out: *mut DisplayMonitorPhysicalConnectorKind) -> HRESULT,
+    fn get_DisplayAdapterDeviceId(&self, out: *mut HSTRING) -> HRESULT,
+    #[cfg(not(feature="windows-graphics"))] fn __Dummy5(&self) -> (),
+    #[cfg(feature="windows-graphics")] fn get_DisplayAdapterId(&self, out: *mut super::super::graphics::DisplayAdapterId) -> HRESULT,
+    fn get_DisplayAdapterTargetId(&self, out: *mut u32) -> HRESULT,
+    fn get_UsageKind(&self, out: *mut DisplayMonitorUsageKind) -> HRESULT,
+    #[cfg(not(feature="windows-graphics"))] fn __Dummy8(&self) -> (),
+    #[cfg(feature="windows-graphics")] fn get_NativeResolutionInRawPixels(&self, out: *mut super::super::graphics::SizeInt32) -> HRESULT,
+    fn get_PhysicalSizeInInches(&self, out: *mut *mut foundation::IReference<foundation::Size>) -> HRESULT,
+    fn get_RawDpiX(&self, out: *mut f32) -> HRESULT,
+    fn get_RawDpiY(&self, out: *mut f32) -> HRESULT,
+    fn get_RedPrimary(&self, out: *mut foundation::Point) -> HRESULT,
+    fn get_GreenPrimary(&self, out: *mut foundation::Point) -> HRESULT,
+    fn get_BluePrimary(&self, out: *mut foundation::Point) -> HRESULT,
+    fn get_WhitePoint(&self, out: *mut foundation::Point) -> HRESULT,
+    fn get_MaxLuminanceInNits(&self, out: *mut f32) -> HRESULT,
+    fn get_MinLuminanceInNits(&self, out: *mut f32) -> HRESULT,
+    fn get_MaxAverageFullFrameLuminanceInNits(&self, out: *mut f32) -> HRESULT,
+    fn GetDescriptor(&self, descriptorKind: DisplayMonitorDescriptorKind, outSize: *mut u32, out: *mut *mut u8) -> HRESULT
+}}
+impl IDisplayMonitor {
+    #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DeviceId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_connection_kind(&self) -> Result<DisplayMonitorConnectionKind> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ConnectionKind)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_physical_connector(&self) -> Result<DisplayMonitorPhysicalConnectorKind> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PhysicalConnector)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_display_adapter_device_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayAdapterDeviceId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_display_adapter_id(&self) -> Result<super::super::graphics::DisplayAdapterId> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DisplayAdapterId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_display_adapter_target_id(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DisplayAdapterTargetId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_usage_kind(&self) -> Result<DisplayMonitorUsageKind> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_UsageKind)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_native_resolution_in_raw_pixels(&self) -> Result<super::super::graphics::SizeInt32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_NativeResolutionInRawPixels)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_physical_size_in_inches(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::Size>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PhysicalSizeInInches)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_raw_dpi_x(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_RawDpiX)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_raw_dpi_y(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_RawDpiY)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_red_primary(&self) -> Result<foundation::Point> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_RedPrimary)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_green_primary(&self) -> Result<foundation::Point> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_GreenPrimary)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_blue_primary(&self) -> Result<foundation::Point> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BluePrimary)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_white_point(&self) -> Result<foundation::Point> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_WhitePoint)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_luminance_in_nits(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxLuminanceInNits)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_min_luminance_in_nits(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MinLuminanceInNits)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_average_full_frame_luminance_in_nits(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxAverageFullFrameLuminanceInNits)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_descriptor(&self, descriptorKind: DisplayMonitorDescriptorKind) -> Result<ComArray<u8>> { unsafe { 
+        let mut outSize = 0; let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDescriptor)(self as *const _ as *mut _, descriptorKind, &mut outSize, &mut out);
+        if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DisplayMonitor: IDisplayMonitor}
+impl RtActivatable<IDisplayMonitorStatics> for DisplayMonitor {}
+impl DisplayMonitor {
+    #[inline] pub fn get_device_selector() -> Result<HString> {
+        <Self as RtActivatable<IDisplayMonitorStatics>>::get_activation_factory().get_device_selector()
+    }
+    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DisplayMonitor>>> {
+        <Self as RtActivatable<IDisplayMonitorStatics>>::get_activation_factory().from_id_async(deviceId)
+    }
+    #[inline] pub fn from_interface_id_async(deviceInterfaceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DisplayMonitor>>> {
+        <Self as RtActivatable<IDisplayMonitorStatics>>::get_activation_factory().from_interface_id_async(deviceInterfaceId)
+    }
+}
+DEFINE_CLSID!(DisplayMonitor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,68,105,115,112,108,97,121,46,68,105,115,112,108,97,121,77,111,110,105,116,111,114,0]) [CLSID_DisplayMonitor]);
+RT_ENUM! { enum DisplayMonitorConnectionKind: i32 {
+    Internal (DisplayMonitorConnectionKind_Internal) = 0, Wired (DisplayMonitorConnectionKind_Wired) = 1, Wireless (DisplayMonitorConnectionKind_Wireless) = 2, Virtual (DisplayMonitorConnectionKind_Virtual) = 3,
+}}
+RT_ENUM! { enum DisplayMonitorDescriptorKind: i32 {
+    Edid (DisplayMonitorDescriptorKind_Edid) = 0, DisplayId (DisplayMonitorDescriptorKind_DisplayId) = 1,
+}}
+RT_ENUM! { enum DisplayMonitorPhysicalConnectorKind: i32 {
+    Unknown (DisplayMonitorPhysicalConnectorKind_Unknown) = 0, HD15 (DisplayMonitorPhysicalConnectorKind_HD15) = 1, AnalogTV (DisplayMonitorPhysicalConnectorKind_AnalogTV) = 2, Dvi (DisplayMonitorPhysicalConnectorKind_Dvi) = 3, Hdmi (DisplayMonitorPhysicalConnectorKind_Hdmi) = 4, Lvds (DisplayMonitorPhysicalConnectorKind_Lvds) = 5, Sdi (DisplayMonitorPhysicalConnectorKind_Sdi) = 6, DisplayPort (DisplayMonitorPhysicalConnectorKind_DisplayPort) = 7,
+}}
+DEFINE_IID!(IID_IDisplayMonitorStatics, 1856924047, 41512, 19461, 130, 29, 182, 149, 214, 103, 222, 142);
+RT_INTERFACE!{static interface IDisplayMonitorStatics(IDisplayMonitorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayMonitorStatics] {
+    fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
+    fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncOperation<DisplayMonitor>) -> HRESULT,
+    fn FromInterfaceIdAsync(&self, deviceInterfaceId: HSTRING, out: *mut *mut foundation::IAsyncOperation<DisplayMonitor>) -> HRESULT
+}}
+impl IDisplayMonitorStatics {
+    #[inline] pub fn get_device_selector(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeviceSelector)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn from_id_async(&self, deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DisplayMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FromIdAsync)(self as *const _ as *mut _, deviceId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn from_interface_id_async(&self, deviceInterfaceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DisplayMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FromInterfaceIdAsync)(self as *const _ as *mut _, deviceInterfaceId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum DisplayMonitorUsageKind: i32 {
+    Standard (DisplayMonitorUsageKind_Standard) = 0, HeadMounted (DisplayMonitorUsageKind_HeadMounted) = 1, SpecialPurpose (DisplayMonitorUsageKind_SpecialPurpose) = 2,
+}}
+} // Windows.Devices.Display
 pub mod geolocation { // Windows.Devices.Geolocation
 use ::prelude::*;
 RT_ENUM! { enum AltitudeReferenceSystem: i32 {
@@ -15351,6 +15569,333 @@ impl ITouchCapabilities {
 RT_CLASS!{class TouchCapabilities: ITouchCapabilities}
 impl RtActivatable<IActivationFactory> for TouchCapabilities {}
 DEFINE_CLSID!(TouchCapabilities(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,110,112,117,116,46,84,111,117,99,104,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_TouchCapabilities]);
+pub mod preview { // Windows.Devices.Input.Preview
+use ::prelude::*;
+RT_ENUM! { enum GazeDeviceConfigurationStatePreview: i32 {
+    Unknown (GazeDeviceConfigurationStatePreview_Unknown) = 0, Ready (GazeDeviceConfigurationStatePreview_Ready) = 1, Configuring (GazeDeviceConfigurationStatePreview_Configuring) = 2, ScreenSetupNeeded (GazeDeviceConfigurationStatePreview_ScreenSetupNeeded) = 3, UserCalibrationNeeded (GazeDeviceConfigurationStatePreview_UserCalibrationNeeded) = 4,
+}}
+DEFINE_IID!(IID_IGazeDevicePreview, 3885924073, 45961, 4583, 178, 1, 200, 211, 255, 183, 87, 33);
+RT_INTERFACE!{interface IGazeDevicePreview(IGazeDevicePreviewVtbl): IInspectable(IInspectableVtbl) [IID_IGazeDevicePreview] {
+    fn get_Id(&self, out: *mut u32) -> HRESULT,
+    fn get_CanTrackEyes(&self, out: *mut bool) -> HRESULT,
+    fn get_CanTrackHead(&self, out: *mut bool) -> HRESULT,
+    fn get_ConfigurationState(&self, out: *mut GazeDeviceConfigurationStatePreview) -> HRESULT,
+    fn RequestCalibrationAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn GetNumericControlDescriptions(&self, usagePage: u16, usageId: u16, out: *mut *mut foundation::collections::IVectorView<super::super::humaninterfacedevice::HidNumericControlDescription>) -> HRESULT,
+    fn GetBooleanControlDescriptions(&self, usagePage: u16, usageId: u16, out: *mut *mut foundation::collections::IVectorView<super::super::humaninterfacedevice::HidBooleanControlDescription>) -> HRESULT
+}}
+impl IGazeDevicePreview {
+    #[inline] pub fn get_id(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_can_track_eyes(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanTrackEyes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_can_track_head(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanTrackHead)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_configuration_state(&self) -> Result<GazeDeviceConfigurationStatePreview> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ConfigurationState)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn request_calibration_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestCalibrationAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_numeric_control_descriptions(&self, usagePage: u16, usageId: u16) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::humaninterfacedevice::HidNumericControlDescription>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetNumericControlDescriptions)(self as *const _ as *mut _, usagePage, usageId, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_boolean_control_descriptions(&self, usagePage: u16, usageId: u16) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::humaninterfacedevice::HidBooleanControlDescription>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetBooleanControlDescriptions)(self as *const _ as *mut _, usagePage, usageId, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GazeDevicePreview: IGazeDevicePreview}
+DEFINE_IID!(IID_IGazeDeviceWatcherAddedPreviewEventArgs, 3885924077, 45961, 4583, 178, 1, 200, 211, 255, 183, 87, 33);
+RT_INTERFACE!{interface IGazeDeviceWatcherAddedPreviewEventArgs(IGazeDeviceWatcherAddedPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGazeDeviceWatcherAddedPreviewEventArgs] {
+    fn get_Device(&self, out: *mut *mut GazeDevicePreview) -> HRESULT
+}}
+impl IGazeDeviceWatcherAddedPreviewEventArgs {
+    #[inline] pub fn get_device(&self) -> Result<Option<ComPtr<GazeDevicePreview>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Device)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GazeDeviceWatcherAddedPreviewEventArgs: IGazeDeviceWatcherAddedPreviewEventArgs}
+DEFINE_IID!(IID_IGazeDeviceWatcherPreview, 3885924071, 45961, 4583, 178, 1, 200, 211, 255, 183, 87, 33);
+RT_INTERFACE!{interface IGazeDeviceWatcherPreview(IGazeDeviceWatcherPreviewVtbl): IInspectable(IInspectableVtbl) [IID_IGazeDeviceWatcherPreview] {
+    fn add_Added(&self, handler: *mut foundation::TypedEventHandler<GazeDeviceWatcherPreview, GazeDeviceWatcherAddedPreviewEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Added(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_Removed(&self, handler: *mut foundation::TypedEventHandler<GazeDeviceWatcherPreview, GazeDeviceWatcherRemovedPreviewEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Removed(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_Updated(&self, handler: *mut foundation::TypedEventHandler<GazeDeviceWatcherPreview, GazeDeviceWatcherUpdatedPreviewEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Updated(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_EnumerationCompleted(&self, handler: *mut foundation::TypedEventHandler<GazeDeviceWatcherPreview, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_EnumerationCompleted(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn Start(&self) -> HRESULT,
+    fn Stop(&self) -> HRESULT
+}}
+impl IGazeDeviceWatcherPreview {
+    #[inline] pub fn add_added(&self, handler: &foundation::TypedEventHandler<GazeDeviceWatcherPreview, GazeDeviceWatcherAddedPreviewEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Added)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Added)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<GazeDeviceWatcherPreview, GazeDeviceWatcherRemovedPreviewEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Removed)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_updated(&self, handler: &foundation::TypedEventHandler<GazeDeviceWatcherPreview, GazeDeviceWatcherUpdatedPreviewEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Updated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Updated)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_enumeration_completed(&self, handler: &foundation::TypedEventHandler<GazeDeviceWatcherPreview, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_EnumerationCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_EnumerationCompleted)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn start(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Start)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Stop)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GazeDeviceWatcherPreview: IGazeDeviceWatcherPreview}
+DEFINE_IID!(IID_IGazeDeviceWatcherRemovedPreviewEventArgs, 4066582280, 3647, 17183, 166, 6, 80, 179, 90, 249, 74, 28);
+RT_INTERFACE!{interface IGazeDeviceWatcherRemovedPreviewEventArgs(IGazeDeviceWatcherRemovedPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGazeDeviceWatcherRemovedPreviewEventArgs] {
+    fn get_Device(&self, out: *mut *mut GazeDevicePreview) -> HRESULT
+}}
+impl IGazeDeviceWatcherRemovedPreviewEventArgs {
+    #[inline] pub fn get_device(&self) -> Result<Option<ComPtr<GazeDevicePreview>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Device)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GazeDeviceWatcherRemovedPreviewEventArgs: IGazeDeviceWatcherRemovedPreviewEventArgs}
+DEFINE_IID!(IID_IGazeDeviceWatcherUpdatedPreviewEventArgs, 2145923311, 32520, 18231, 136, 225, 74, 131, 174, 78, 72, 133);
+RT_INTERFACE!{interface IGazeDeviceWatcherUpdatedPreviewEventArgs(IGazeDeviceWatcherUpdatedPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGazeDeviceWatcherUpdatedPreviewEventArgs] {
+    fn get_Device(&self, out: *mut *mut GazeDevicePreview) -> HRESULT
+}}
+impl IGazeDeviceWatcherUpdatedPreviewEventArgs {
+    #[inline] pub fn get_device(&self) -> Result<Option<ComPtr<GazeDevicePreview>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Device)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GazeDeviceWatcherUpdatedPreviewEventArgs: IGazeDeviceWatcherUpdatedPreviewEventArgs}
+DEFINE_IID!(IID_IGazeEnteredPreviewEventArgs, 627556163, 4645, 18591, 157, 209, 218, 167, 197, 15, 191, 75);
+RT_INTERFACE!{interface IGazeEnteredPreviewEventArgs(IGazeEnteredPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGazeEnteredPreviewEventArgs] {
+    fn get_Handled(&self, out: *mut bool) -> HRESULT,
+    fn put_Handled(&self, value: bool) -> HRESULT,
+    fn get_CurrentPoint(&self, out: *mut *mut GazePointPreview) -> HRESULT
+}}
+impl IGazeEnteredPreviewEventArgs {
+    #[inline] pub fn get_handled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Handled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_handled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Handled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_current_point(&self) -> Result<Option<ComPtr<GazePointPreview>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CurrentPoint)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GazeEnteredPreviewEventArgs: IGazeEnteredPreviewEventArgs}
+DEFINE_IID!(IID_IGazeExitedPreviewEventArgs, 1560998014, 32131, 16623, 159, 10, 251, 193, 187, 220, 197, 172);
+RT_INTERFACE!{interface IGazeExitedPreviewEventArgs(IGazeExitedPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGazeExitedPreviewEventArgs] {
+    fn get_Handled(&self, out: *mut bool) -> HRESULT,
+    fn put_Handled(&self, value: bool) -> HRESULT,
+    fn get_CurrentPoint(&self, out: *mut *mut GazePointPreview) -> HRESULT
+}}
+impl IGazeExitedPreviewEventArgs {
+    #[inline] pub fn get_handled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Handled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_handled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Handled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_current_point(&self) -> Result<Option<ComPtr<GazePointPreview>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CurrentPoint)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GazeExitedPreviewEventArgs: IGazeExitedPreviewEventArgs}
+DEFINE_IID!(IID_IGazeInputSourcePreview, 3885924072, 45961, 4583, 178, 1, 200, 211, 255, 183, 87, 33);
+RT_INTERFACE!{interface IGazeInputSourcePreview(IGazeInputSourcePreviewVtbl): IInspectable(IInspectableVtbl) [IID_IGazeInputSourcePreview] {
+    fn add_GazeMoved(&self, handler: *mut foundation::TypedEventHandler<GazeInputSourcePreview, GazeMovedPreviewEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_GazeMoved(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_GazeEntered(&self, handler: *mut foundation::TypedEventHandler<GazeInputSourcePreview, GazeEnteredPreviewEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_GazeEntered(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_GazeExited(&self, handler: *mut foundation::TypedEventHandler<GazeInputSourcePreview, GazeExitedPreviewEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_GazeExited(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IGazeInputSourcePreview {
+    #[inline] pub fn add_gaze_moved(&self, handler: &foundation::TypedEventHandler<GazeInputSourcePreview, GazeMovedPreviewEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_GazeMoved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_gaze_moved(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_GazeMoved)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_gaze_entered(&self, handler: &foundation::TypedEventHandler<GazeInputSourcePreview, GazeEnteredPreviewEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_GazeEntered)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_gaze_entered(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_GazeEntered)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_gaze_exited(&self, handler: &foundation::TypedEventHandler<GazeInputSourcePreview, GazeExitedPreviewEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_GazeExited)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_gaze_exited(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_GazeExited)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GazeInputSourcePreview: IGazeInputSourcePreview}
+impl RtActivatable<IGazeInputSourcePreviewStatics> for GazeInputSourcePreview {}
+impl GazeInputSourcePreview {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<GazeInputSourcePreview>>> {
+        <Self as RtActivatable<IGazeInputSourcePreviewStatics>>::get_activation_factory().get_for_current_view()
+    }
+    #[inline] pub fn create_watcher() -> Result<Option<ComPtr<GazeDeviceWatcherPreview>>> {
+        <Self as RtActivatable<IGazeInputSourcePreviewStatics>>::get_activation_factory().create_watcher()
+    }
+}
+DEFINE_CLSID!(GazeInputSourcePreview(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,71,97,122,101,73,110,112,117,116,83,111,117,114,99,101,80,114,101,118,105,101,119,0]) [CLSID_GazeInputSourcePreview]);
+DEFINE_IID!(IID_IGazeInputSourcePreviewStatics, 3885924070, 45961, 4583, 178, 1, 200, 211, 255, 183, 87, 33);
+RT_INTERFACE!{static interface IGazeInputSourcePreviewStatics(IGazeInputSourcePreviewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGazeInputSourcePreviewStatics] {
+    fn GetForCurrentView(&self, out: *mut *mut GazeInputSourcePreview) -> HRESULT,
+    fn CreateWatcher(&self, out: *mut *mut GazeDeviceWatcherPreview) -> HRESULT
+}}
+impl IGazeInputSourcePreviewStatics {
+    #[inline] pub fn get_for_current_view(&self) -> Result<Option<ComPtr<GazeInputSourcePreview>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_watcher(&self) -> Result<Option<ComPtr<GazeDeviceWatcherPreview>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWatcher)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IGazeMovedPreviewEventArgs, 3885924075, 45961, 4583, 178, 1, 200, 211, 255, 183, 87, 33);
+RT_INTERFACE!{interface IGazeMovedPreviewEventArgs(IGazeMovedPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGazeMovedPreviewEventArgs] {
+    fn get_Handled(&self, out: *mut bool) -> HRESULT,
+    fn put_Handled(&self, value: bool) -> HRESULT,
+    fn get_CurrentPoint(&self, out: *mut *mut GazePointPreview) -> HRESULT,
+    fn GetIntermediatePoints(&self, out: *mut *mut foundation::collections::IVector<GazePointPreview>) -> HRESULT
+}}
+impl IGazeMovedPreviewEventArgs {
+    #[inline] pub fn get_handled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Handled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_handled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Handled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_current_point(&self) -> Result<Option<ComPtr<GazePointPreview>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CurrentPoint)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_intermediate_points(&self) -> Result<Option<ComPtr<foundation::collections::IVector<GazePointPreview>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetIntermediatePoints)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GazeMovedPreviewEventArgs: IGazeMovedPreviewEventArgs}
+DEFINE_IID!(IID_IGazePointPreview, 3885924074, 45961, 4583, 178, 1, 200, 211, 255, 183, 87, 33);
+RT_INTERFACE!{interface IGazePointPreview(IGazePointPreviewVtbl): IInspectable(IInspectableVtbl) [IID_IGazePointPreview] {
+    fn get_SourceDevice(&self, out: *mut *mut GazeDevicePreview) -> HRESULT,
+    fn get_EyeGazePosition(&self, out: *mut *mut foundation::IReference<foundation::Point>) -> HRESULT,
+    fn get_HeadGazePosition(&self, out: *mut *mut foundation::IReference<foundation::Point>) -> HRESULT,
+    fn get_Timestamp(&self, out: *mut u64) -> HRESULT,
+    fn get_HidInputReport(&self, out: *mut *mut super::super::humaninterfacedevice::HidInputReport) -> HRESULT
+}}
+impl IGazePointPreview {
+    #[inline] pub fn get_source_device(&self) -> Result<Option<ComPtr<GazeDevicePreview>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SourceDevice)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_eye_gaze_position(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::Point>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_EyeGazePosition)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_head_gaze_position(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::Point>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_HeadGazePosition)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_timestamp(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Timestamp)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_hid_input_report(&self) -> Result<Option<ComPtr<super::super::humaninterfacedevice::HidInputReport>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_HidInputReport)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GazePointPreview: IGazePointPreview}
+} // Windows.Devices.Input.Preview
 } // Windows.Devices.Input
 pub mod lights { // Windows.Devices.Lights
 use ::prelude::*;
@@ -18500,6 +19045,24 @@ impl IBarcodeScannerReport {
     }}
 }
 RT_CLASS!{class BarcodeScannerReport: IBarcodeScannerReport}
+impl RtActivatable<IBarcodeScannerReportFactory> for BarcodeScannerReport {}
+impl BarcodeScannerReport {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_instance(scanDataType: u32, scanData: &super::super::storage::streams::IBuffer, scanDataLabel: &super::super::storage::streams::IBuffer) -> Result<ComPtr<BarcodeScannerReport>> {
+        <Self as RtActivatable<IBarcodeScannerReportFactory>>::get_activation_factory().create_instance(scanDataType, scanData, scanDataLabel)
+    }
+}
+DEFINE_CLSID!(BarcodeScannerReport(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,66,97,114,99,111,100,101,83,99,97,110,110,101,114,82,101,112,111,114,116,0]) [CLSID_BarcodeScannerReport]);
+DEFINE_IID!(IID_IBarcodeScannerReportFactory, 2723443494, 8211, 17788, 137, 99, 73, 193, 93, 202, 120, 206);
+RT_INTERFACE!{static interface IBarcodeScannerReportFactory(IBarcodeScannerReportFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerReportFactory] {
+    #[cfg(feature="windows-storage")] fn CreateInstance(&self, scanDataType: u32, scanData: *mut super::super::storage::streams::IBuffer, scanDataLabel: *mut super::super::storage::streams::IBuffer, out: *mut *mut BarcodeScannerReport) -> HRESULT
+}}
+impl IBarcodeScannerReportFactory {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_instance(&self, scanDataType: u32, scanData: &super::super::storage::streams::IBuffer, scanDataLabel: &super::super::storage::streams::IBuffer) -> Result<ComPtr<BarcodeScannerReport>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateInstance)(self as *const _ as *mut _, scanDataType, scanData as *const _ as *mut _, scanDataLabel as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IBarcodeScannerStatics, 1561419631, 55881, 16872, 140, 140, 240, 203, 98, 169, 196, 252);
 RT_INTERFACE!{static interface IBarcodeScannerStatics(IBarcodeScannerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerStatics] {
     fn GetDefaultAsync(&self, out: *mut *mut foundation::IAsyncOperation<BarcodeScanner>) -> HRESULT,
@@ -19986,6 +20549,33 @@ impl IClaimedBarcodeScanner2 {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetSymbologyAttributesAsync)(self as *const _ as *mut _, barcodeSymbology, attributes as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IClaimedBarcodeScanner3, 3872306224, 28974, 17916, 139, 134, 205, 85, 245, 174, 247, 157);
+RT_INTERFACE!{interface IClaimedBarcodeScanner3(IClaimedBarcodeScanner3Vtbl): IInspectable(IInspectableVtbl) [IID_IClaimedBarcodeScanner3] {
+    fn ShowVideoPreviewAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn HideVideoPreview(&self) -> HRESULT,
+    fn put_IsVideoPreviewShownOnEnable(&self, value: bool) -> HRESULT,
+    fn get_IsVideoPreviewShownOnEnable(&self, out: *mut bool) -> HRESULT
+}}
+impl IClaimedBarcodeScanner3 {
+    #[inline] pub fn show_video_preview_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ShowVideoPreviewAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn hide_video_preview(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).HideVideoPreview)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_video_preview_shown_on_enable(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsVideoPreviewShownOnEnable)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_video_preview_shown_on_enable(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsVideoPreviewShownOnEnable)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IClaimedCashDrawer, 3393165743, 43960, 17089, 138, 132, 92, 102, 81, 47, 90, 117);
@@ -22814,6 +23404,24 @@ impl IUnifiedPosErrorData {
     }}
 }
 RT_CLASS!{class UnifiedPosErrorData: IUnifiedPosErrorData}
+impl RtActivatable<IUnifiedPosErrorDataFactory> for UnifiedPosErrorData {}
+impl UnifiedPosErrorData {
+    #[inline] pub fn create_instance(message: &HStringArg, severity: UnifiedPosErrorSeverity, reason: UnifiedPosErrorReason, extendedReason: u32) -> Result<ComPtr<UnifiedPosErrorData>> {
+        <Self as RtActivatable<IUnifiedPosErrorDataFactory>>::get_activation_factory().create_instance(message, severity, reason, extendedReason)
+    }
+}
+DEFINE_CLSID!(UnifiedPosErrorData(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,85,110,105,102,105,101,100,80,111,115,69,114,114,111,114,68,97,116,97,0]) [CLSID_UnifiedPosErrorData]);
+DEFINE_IID!(IID_IUnifiedPosErrorDataFactory, 1268262225, 8190, 17691, 163, 104, 99, 224, 206, 70, 95, 90);
+RT_INTERFACE!{static interface IUnifiedPosErrorDataFactory(IUnifiedPosErrorDataFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUnifiedPosErrorDataFactory] {
+    fn CreateInstance(&self, message: HSTRING, severity: UnifiedPosErrorSeverity, reason: UnifiedPosErrorReason, extendedReason: u32, out: *mut *mut UnifiedPosErrorData) -> HRESULT
+}}
+impl IUnifiedPosErrorDataFactory {
+    #[inline] pub fn create_instance(&self, message: &HStringArg, severity: UnifiedPosErrorSeverity, reason: UnifiedPosErrorReason, extendedReason: u32) -> Result<ComPtr<UnifiedPosErrorData>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateInstance)(self as *const _ as *mut _, message.get(), severity, reason, extendedReason, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum UnifiedPosErrorReason: i32 {
     UnknownErrorReason (UnifiedPosErrorReason_UnknownErrorReason) = 0, NoService (UnifiedPosErrorReason_NoService) = 1, Disabled (UnifiedPosErrorReason_Disabled) = 2, Illegal (UnifiedPosErrorReason_Illegal) = 3, NoHardware (UnifiedPosErrorReason_NoHardware) = 4, Closed (UnifiedPosErrorReason_Closed) = 5, Offline (UnifiedPosErrorReason_Offline) = 6, Failure (UnifiedPosErrorReason_Failure) = 7, Timeout (UnifiedPosErrorReason_Timeout) = 8, Busy (UnifiedPosErrorReason_Busy) = 9, Extended (UnifiedPosErrorReason_Extended) = 10,
 }}
@@ -22826,6 +23434,557 @@ RT_ENUM! { enum UnifiedPosHealthCheckLevel: i32 {
 RT_ENUM! { enum UnifiedPosPowerReportingType: i32 {
     UnknownPowerReportingType (UnifiedPosPowerReportingType_UnknownPowerReportingType) = 0, Standard (UnifiedPosPowerReportingType_Standard) = 1, Advanced (UnifiedPosPowerReportingType_Advanced) = 2,
 }}
+pub mod provider { // Windows.Devices.PointOfService.Provider
+use ::prelude::*;
+DEFINE_IID!(IID_IBarcodeScannerDisableScannerRequest, 2297231296, 14265, 17013, 142, 119, 200, 229, 42, 229, 169, 200);
+RT_INTERFACE!{interface IBarcodeScannerDisableScannerRequest(IBarcodeScannerDisableScannerRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerDisableScannerRequest] {
+    fn ReportCompletedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ReportFailedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IBarcodeScannerDisableScannerRequest {
+    #[inline] pub fn report_completed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportCompletedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_failed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportFailedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerDisableScannerRequest: IBarcodeScannerDisableScannerRequest}
+DEFINE_IID!(IID_IBarcodeScannerDisableScannerRequestEventArgs, 1879499074, 59394, 18165, 182, 4, 53, 42, 21, 206, 146, 50);
+RT_INTERFACE!{interface IBarcodeScannerDisableScannerRequestEventArgs(IBarcodeScannerDisableScannerRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerDisableScannerRequestEventArgs] {
+    fn get_Request(&self, out: *mut *mut BarcodeScannerDisableScannerRequest) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+}}
+impl IBarcodeScannerDisableScannerRequestEventArgs {
+    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<BarcodeScannerDisableScannerRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerDisableScannerRequestEventArgs: IBarcodeScannerDisableScannerRequestEventArgs}
+DEFINE_IID!(IID_IBarcodeScannerEnableScannerRequest, 3233016250, 33130, 17707, 189, 119, 183, 228, 83, 236, 68, 109);
+RT_INTERFACE!{interface IBarcodeScannerEnableScannerRequest(IBarcodeScannerEnableScannerRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerEnableScannerRequest] {
+    fn ReportCompletedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ReportFailedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IBarcodeScannerEnableScannerRequest {
+    #[inline] pub fn report_completed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportCompletedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_failed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportFailedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerEnableScannerRequest: IBarcodeScannerEnableScannerRequest}
+DEFINE_IID!(IID_IBarcodeScannerEnableScannerRequestEventArgs, 2506920985, 31566, 17489, 140, 65, 142, 16, 207, 188, 91, 65);
+RT_INTERFACE!{interface IBarcodeScannerEnableScannerRequestEventArgs(IBarcodeScannerEnableScannerRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerEnableScannerRequestEventArgs] {
+    fn get_Request(&self, out: *mut *mut BarcodeScannerEnableScannerRequest) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+}}
+impl IBarcodeScannerEnableScannerRequestEventArgs {
+    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<BarcodeScannerEnableScannerRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerEnableScannerRequestEventArgs: IBarcodeScannerEnableScannerRequestEventArgs}
+DEFINE_IID!(IID_IBarcodeScannerGetSymbologyAttributesRequest, 2541012074, 22756, 19551, 184, 233, 228, 20, 103, 99, 39, 0);
+RT_INTERFACE!{interface IBarcodeScannerGetSymbologyAttributesRequest(IBarcodeScannerGetSymbologyAttributesRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerGetSymbologyAttributesRequest] {
+    fn get_Symbology(&self, out: *mut u32) -> HRESULT,
+    fn ReportCompletedAsync(&self, attributes: *mut super::BarcodeSymbologyAttributes, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ReportFailedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IBarcodeScannerGetSymbologyAttributesRequest {
+    #[inline] pub fn get_symbology(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Symbology)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn report_completed_async(&self, attributes: &super::BarcodeSymbologyAttributes) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportCompletedAsync)(self as *const _ as *mut _, attributes as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_failed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportFailedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerGetSymbologyAttributesRequest: IBarcodeScannerGetSymbologyAttributesRequest}
+DEFINE_IID!(IID_IBarcodeScannerGetSymbologyAttributesRequestEventArgs, 2139741758, 64349, 18748, 180, 2, 53, 107, 36, 213, 116, 166);
+RT_INTERFACE!{interface IBarcodeScannerGetSymbologyAttributesRequestEventArgs(IBarcodeScannerGetSymbologyAttributesRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerGetSymbologyAttributesRequestEventArgs] {
+    fn get_Request(&self, out: *mut *mut BarcodeScannerGetSymbologyAttributesRequest) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+}}
+impl IBarcodeScannerGetSymbologyAttributesRequestEventArgs {
+    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<BarcodeScannerGetSymbologyAttributesRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerGetSymbologyAttributesRequestEventArgs: IBarcodeScannerGetSymbologyAttributesRequestEventArgs}
+DEFINE_IID!(IID_IBarcodeScannerHideVideoPreviewRequest, 4199464575, 26224, 16609, 185, 11, 187, 16, 216, 212, 37, 250);
+RT_INTERFACE!{interface IBarcodeScannerHideVideoPreviewRequest(IBarcodeScannerHideVideoPreviewRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerHideVideoPreviewRequest] {
+    fn ReportCompletedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ReportFailedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IBarcodeScannerHideVideoPreviewRequest {
+    #[inline] pub fn report_completed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportCompletedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_failed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportFailedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerHideVideoPreviewRequest: IBarcodeScannerHideVideoPreviewRequest}
+DEFINE_IID!(IID_IBarcodeScannerHideVideoPreviewRequestEventArgs, 379748860, 54974, 19399, 157, 241, 51, 116, 31, 62, 173, 234);
+RT_INTERFACE!{interface IBarcodeScannerHideVideoPreviewRequestEventArgs(IBarcodeScannerHideVideoPreviewRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerHideVideoPreviewRequestEventArgs] {
+    fn get_Request(&self, out: *mut *mut BarcodeScannerHideVideoPreviewRequest) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+}}
+impl IBarcodeScannerHideVideoPreviewRequestEventArgs {
+    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<BarcodeScannerHideVideoPreviewRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerHideVideoPreviewRequestEventArgs: IBarcodeScannerHideVideoPreviewRequestEventArgs}
+DEFINE_IID!(IID_IBarcodeScannerProviderConnection, 3024800749, 2874, 20387, 134, 197, 73, 30, 163, 7, 128, 235);
+RT_INTERFACE!{interface IBarcodeScannerProviderConnection(IBarcodeScannerProviderConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerProviderConnection] {
+    fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_VideoDeviceId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_SupportedSymbologies(&self, out: *mut *mut foundation::collections::IVector<u32>) -> HRESULT,
+    fn get_CompanyName(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_CompanyName(&self, value: HSTRING) -> HRESULT,
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Name(&self, value: HSTRING) -> HRESULT,
+    fn get_Version(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Version(&self, value: HSTRING) -> HRESULT,
+    fn Start(&self) -> HRESULT,
+    fn ReportScannedDataAsync(&self, report: *mut super::BarcodeScannerReport, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ReportTriggerStateAsync(&self, state: BarcodeScannerTriggerState, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ReportErrorAsync(&self, errorData: *mut super::UnifiedPosErrorData, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ReportErrorAsyncWithScanReport(&self, errorData: *mut super::UnifiedPosErrorData, isRetriable: bool, scanReport: *mut super::BarcodeScannerReport, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn add_EnableScannerRequested(&self, handler: *mut foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerEnableScannerRequestEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_EnableScannerRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_DisableScannerRequested(&self, handler: *mut foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerDisableScannerRequestEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_DisableScannerRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_SetActiveSymbologiesRequested(&self, handler: *mut foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerSetActiveSymbologiesRequestEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_SetActiveSymbologiesRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_StartSoftwareTriggerRequested(&self, handler: *mut foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerStartSoftwareTriggerRequestEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_StartSoftwareTriggerRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_StopSoftwareTriggerRequested(&self, handler: *mut foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerStopSoftwareTriggerRequestEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_StopSoftwareTriggerRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_GetBarcodeSymbologyAttributesRequested(&self, handler: *mut foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerGetSymbologyAttributesRequestEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_GetBarcodeSymbologyAttributesRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_SetBarcodeSymbologyAttributesRequested(&self, handler: *mut foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerSetSymbologyAttributesRequestEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_SetBarcodeSymbologyAttributesRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_HideVideoPreviewRequested(&self, handler: *mut foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerHideVideoPreviewRequestEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_HideVideoPreviewRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IBarcodeScannerProviderConnection {
+    #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_video_device_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_VideoDeviceId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_supported_symbologies(&self) -> Result<Option<ComPtr<foundation::collections::IVector<u32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SupportedSymbologies)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_company_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CompanyName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_company_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CompanyName)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Name)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_version(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Version)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_version(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Version)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn start(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Start)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn report_scanned_data_async(&self, report: &super::BarcodeScannerReport) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportScannedDataAsync)(self as *const _ as *mut _, report as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_trigger_state_async(&self, state: BarcodeScannerTriggerState) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportTriggerStateAsync)(self as *const _ as *mut _, state, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_error_async(&self, errorData: &super::UnifiedPosErrorData) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportErrorAsync)(self as *const _ as *mut _, errorData as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_error_async_with_scan_report(&self, errorData: &super::UnifiedPosErrorData, isRetriable: bool, scanReport: &super::BarcodeScannerReport) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportErrorAsyncWithScanReport)(self as *const _ as *mut _, errorData as *const _ as *mut _, isRetriable, scanReport as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_enable_scanner_requested(&self, handler: &foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerEnableScannerRequestEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_EnableScannerRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_enable_scanner_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_EnableScannerRequested)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_disable_scanner_requested(&self, handler: &foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerDisableScannerRequestEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_DisableScannerRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_disable_scanner_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_DisableScannerRequested)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_set_active_symbologies_requested(&self, handler: &foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerSetActiveSymbologiesRequestEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_SetActiveSymbologiesRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_set_active_symbologies_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_SetActiveSymbologiesRequested)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_start_software_trigger_requested(&self, handler: &foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerStartSoftwareTriggerRequestEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_StartSoftwareTriggerRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_start_software_trigger_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_StartSoftwareTriggerRequested)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_stop_software_trigger_requested(&self, handler: &foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerStopSoftwareTriggerRequestEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_StopSoftwareTriggerRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_stop_software_trigger_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_StopSoftwareTriggerRequested)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_get_barcode_symbology_attributes_requested(&self, handler: &foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerGetSymbologyAttributesRequestEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_GetBarcodeSymbologyAttributesRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_get_barcode_symbology_attributes_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_GetBarcodeSymbologyAttributesRequested)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_set_barcode_symbology_attributes_requested(&self, handler: &foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerSetSymbologyAttributesRequestEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_SetBarcodeSymbologyAttributesRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_set_barcode_symbology_attributes_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_SetBarcodeSymbologyAttributesRequested)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_hide_video_preview_requested(&self, handler: &foundation::TypedEventHandler<BarcodeScannerProviderConnection, BarcodeScannerHideVideoPreviewRequestEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_HideVideoPreviewRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_hide_video_preview_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_HideVideoPreviewRequested)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerProviderConnection: IBarcodeScannerProviderConnection}
+DEFINE_IID!(IID_IBarcodeScannerProviderTriggerDetails, 1350921602, 9443, 18638, 153, 199, 112, 170, 193, 203, 201, 247);
+RT_INTERFACE!{interface IBarcodeScannerProviderTriggerDetails(IBarcodeScannerProviderTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerProviderTriggerDetails] {
+    fn get_Connection(&self, out: *mut *mut BarcodeScannerProviderConnection) -> HRESULT
+}}
+impl IBarcodeScannerProviderTriggerDetails {
+    #[inline] pub fn get_connection(&self) -> Result<Option<ComPtr<BarcodeScannerProviderConnection>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Connection)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerProviderTriggerDetails: IBarcodeScannerProviderTriggerDetails}
+DEFINE_IID!(IID_IBarcodeScannerSetActiveSymbologiesRequest, 3678352057, 63450, 16801, 159, 121, 7, 188, 217, 95, 11, 223);
+RT_INTERFACE!{interface IBarcodeScannerSetActiveSymbologiesRequest(IBarcodeScannerSetActiveSymbologiesRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerSetActiveSymbologiesRequest] {
+    fn get_Symbologies(&self, out: *mut *mut foundation::collections::IVectorView<u32>) -> HRESULT,
+    fn ReportCompletedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ReportFailedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IBarcodeScannerSetActiveSymbologiesRequest {
+    #[inline] pub fn get_symbologies(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Symbologies)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_completed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportCompletedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_failed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportFailedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerSetActiveSymbologiesRequest: IBarcodeScannerSetActiveSymbologiesRequest}
+DEFINE_IID!(IID_IBarcodeScannerSetActiveSymbologiesRequestEventArgs, 103832314, 31734, 19794, 128, 26, 51, 2, 114, 246, 10, 225);
+RT_INTERFACE!{interface IBarcodeScannerSetActiveSymbologiesRequestEventArgs(IBarcodeScannerSetActiveSymbologiesRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerSetActiveSymbologiesRequestEventArgs] {
+    fn get_Request(&self, out: *mut *mut BarcodeScannerSetActiveSymbologiesRequest) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+}}
+impl IBarcodeScannerSetActiveSymbologiesRequestEventArgs {
+    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<BarcodeScannerSetActiveSymbologiesRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerSetActiveSymbologiesRequestEventArgs: IBarcodeScannerSetActiveSymbologiesRequestEventArgs}
+DEFINE_IID!(IID_IBarcodeScannerSetSymbologyAttributesRequest, 855343439, 41855, 18608, 172, 234, 220, 225, 72, 15, 18, 174);
+RT_INTERFACE!{interface IBarcodeScannerSetSymbologyAttributesRequest(IBarcodeScannerSetSymbologyAttributesRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerSetSymbologyAttributesRequest] {
+    fn get_Symbology(&self, out: *mut u32) -> HRESULT,
+    fn get_Attributes(&self, out: *mut *mut super::BarcodeSymbologyAttributes) -> HRESULT,
+    fn ReportCompletedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ReportFailedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IBarcodeScannerSetSymbologyAttributesRequest {
+    #[inline] pub fn get_symbology(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Symbology)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_attributes(&self) -> Result<Option<ComPtr<super::BarcodeSymbologyAttributes>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Attributes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_completed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportCompletedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_failed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportFailedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerSetSymbologyAttributesRequest: IBarcodeScannerSetSymbologyAttributesRequest}
+DEFINE_IID!(IID_IBarcodeScannerSetSymbologyAttributesRequestEventArgs, 2998441993, 38948, 18388, 133, 189, 208, 7, 123, 170, 123, 210);
+RT_INTERFACE!{interface IBarcodeScannerSetSymbologyAttributesRequestEventArgs(IBarcodeScannerSetSymbologyAttributesRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerSetSymbologyAttributesRequestEventArgs] {
+    fn get_Request(&self, out: *mut *mut BarcodeScannerSetSymbologyAttributesRequest) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+}}
+impl IBarcodeScannerSetSymbologyAttributesRequestEventArgs {
+    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<BarcodeScannerSetSymbologyAttributesRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerSetSymbologyAttributesRequestEventArgs: IBarcodeScannerSetSymbologyAttributesRequestEventArgs}
+DEFINE_IID!(IID_IBarcodeScannerStartSoftwareTriggerRequest, 3824843559, 65378, 17492, 175, 74, 203, 97, 68, 163, 227, 247);
+RT_INTERFACE!{interface IBarcodeScannerStartSoftwareTriggerRequest(IBarcodeScannerStartSoftwareTriggerRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerStartSoftwareTriggerRequest] {
+    fn ReportCompletedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ReportFailedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IBarcodeScannerStartSoftwareTriggerRequest {
+    #[inline] pub fn report_completed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportCompletedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_failed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportFailedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerStartSoftwareTriggerRequest: IBarcodeScannerStartSoftwareTriggerRequest}
+DEFINE_IID!(IID_IBarcodeScannerStartSoftwareTriggerRequestEventArgs, 587585603, 51343, 20283, 140, 59, 211, 223, 7, 16, 81, 236);
+RT_INTERFACE!{interface IBarcodeScannerStartSoftwareTriggerRequestEventArgs(IBarcodeScannerStartSoftwareTriggerRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerStartSoftwareTriggerRequestEventArgs] {
+    fn get_Request(&self, out: *mut *mut BarcodeScannerStartSoftwareTriggerRequest) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+}}
+impl IBarcodeScannerStartSoftwareTriggerRequestEventArgs {
+    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<BarcodeScannerStartSoftwareTriggerRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerStartSoftwareTriggerRequestEventArgs: IBarcodeScannerStartSoftwareTriggerRequestEventArgs}
+DEFINE_IID!(IID_IBarcodeScannerStopSoftwareTriggerRequest, 1872736053, 57991, 19624, 183, 13, 90, 145, 214, 148, 246, 104);
+RT_INTERFACE!{interface IBarcodeScannerStopSoftwareTriggerRequest(IBarcodeScannerStopSoftwareTriggerRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerStopSoftwareTriggerRequest] {
+    fn ReportCompletedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ReportFailedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IBarcodeScannerStopSoftwareTriggerRequest {
+    #[inline] pub fn report_completed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportCompletedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_failed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReportFailedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerStopSoftwareTriggerRequest: IBarcodeScannerStopSoftwareTriggerRequest}
+DEFINE_IID!(IID_IBarcodeScannerStopSoftwareTriggerRequestEventArgs, 3938665552, 20151, 18458, 146, 115, 20, 122, 39, 59, 153, 184);
+RT_INTERFACE!{interface IBarcodeScannerStopSoftwareTriggerRequestEventArgs(IBarcodeScannerStopSoftwareTriggerRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerStopSoftwareTriggerRequestEventArgs] {
+    fn get_Request(&self, out: *mut *mut BarcodeScannerStopSoftwareTriggerRequest) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+}}
+impl IBarcodeScannerStopSoftwareTriggerRequestEventArgs {
+    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<BarcodeScannerStopSoftwareTriggerRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerStopSoftwareTriggerRequestEventArgs: IBarcodeScannerStopSoftwareTriggerRequestEventArgs}
+RT_ENUM! { enum BarcodeScannerTriggerState: i32 {
+    Released (BarcodeScannerTriggerState_Released) = 0, Pressed (BarcodeScannerTriggerState_Pressed) = 1,
+}}
+DEFINE_IID!(IID_IBarcodeSymbologyAttributesBuilder, 3313175743, 58613, 16569, 132, 207, 230, 63, 186, 234, 66, 180);
+RT_INTERFACE!{interface IBarcodeSymbologyAttributesBuilder(IBarcodeSymbologyAttributesBuilderVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeSymbologyAttributesBuilder] {
+    fn get_IsCheckDigitValidationSupported(&self, out: *mut bool) -> HRESULT,
+    fn put_IsCheckDigitValidationSupported(&self, value: bool) -> HRESULT,
+    fn get_IsCheckDigitTransmissionSupported(&self, out: *mut bool) -> HRESULT,
+    fn put_IsCheckDigitTransmissionSupported(&self, value: bool) -> HRESULT,
+    fn get_IsDecodeLengthSupported(&self, out: *mut bool) -> HRESULT,
+    fn put_IsDecodeLengthSupported(&self, value: bool) -> HRESULT,
+    fn CreateAttributes(&self, out: *mut *mut super::BarcodeSymbologyAttributes) -> HRESULT
+}}
+impl IBarcodeSymbologyAttributesBuilder {
+    #[inline] pub fn get_is_check_digit_validation_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsCheckDigitValidationSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_check_digit_validation_supported(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsCheckDigitValidationSupported)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_check_digit_transmission_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsCheckDigitTransmissionSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_check_digit_transmission_supported(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsCheckDigitTransmissionSupported)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_decode_length_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsDecodeLengthSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_decode_length_supported(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsDecodeLengthSupported)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn create_attributes(&self) -> Result<Option<ComPtr<super::BarcodeSymbologyAttributes>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateAttributes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeSymbologyAttributesBuilder: IBarcodeSymbologyAttributesBuilder}
+impl RtActivatable<IActivationFactory> for BarcodeSymbologyAttributesBuilder {}
+DEFINE_CLSID!(BarcodeSymbologyAttributesBuilder(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,80,114,111,118,105,100,101,114,46,66,97,114,99,111,100,101,83,121,109,98,111,108,111,103,121,65,116,116,114,105,98,117,116,101,115,66,117,105,108,100,101,114,0]) [CLSID_BarcodeSymbologyAttributesBuilder]);
+} // Windows.Devices.PointOfService.Provider
 } // Windows.Devices.PointOfService
 pub mod radios { // Windows.Devices.Radios
 use ::prelude::*;

@@ -1,3 +1,4 @@
+#[cfg(feature="windows-ai")] pub mod ai; // Windows.AI
 #[cfg(feature="windows-applicationmodel")] pub mod applicationmodel; // Windows.ApplicationModel
 #[cfg(feature="windows-data")] pub mod data; // Windows.Data
 #[cfg(feature="windows-devices")] pub mod devices; // Windows.Devices

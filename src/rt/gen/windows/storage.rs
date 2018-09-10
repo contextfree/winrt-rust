@@ -1177,6 +1177,17 @@ impl IStorageFolder2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IStorageFolder3, 2673965209, 48609, 16676, 174, 179, 176, 106, 217, 111, 152, 212);
+RT_INTERFACE!{interface IStorageFolder3(IStorageFolder3Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolder3] {
+    fn TryGetChangeTracker(&self, out: *mut *mut StorageLibraryChangeTracker) -> HRESULT
+}}
+impl IStorageFolder3 {
+    #[inline] pub fn try_get_change_tracker(&self) -> Result<Option<ComPtr<StorageLibraryChangeTracker>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryGetChangeTracker)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IStorageFolderStatics, 150153215, 34261, 18617, 174, 233, 40, 81, 30, 51, 159, 159);
 RT_INTERFACE!{static interface IStorageFolderStatics(IStorageFolderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolderStatics] {
     fn GetFolderFromPathAsync(&self, path: HSTRING, out: *mut *mut foundation::IAsyncOperation<StorageFolder>) -> HRESULT
@@ -3551,6 +3562,24 @@ impl IStorageItemQueryResult {
     }}
 }
 RT_CLASS!{class StorageItemQueryResult: IStorageItemQueryResult}
+DEFINE_IID!(IID_IStorageLibraryChangeTrackerTriggerDetails, 499622761, 47011, 19954, 157, 97, 235, 168, 90, 3, 67, 210);
+RT_INTERFACE!{interface IStorageLibraryChangeTrackerTriggerDetails(IStorageLibraryChangeTrackerTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryChangeTrackerTriggerDetails] {
+    fn get_Folder(&self, out: *mut *mut super::StorageFolder) -> HRESULT,
+    fn get_ChangeTracker(&self, out: *mut *mut super::StorageLibraryChangeTracker) -> HRESULT
+}}
+impl IStorageLibraryChangeTrackerTriggerDetails {
+    #[inline] pub fn get_folder(&self) -> Result<Option<ComPtr<super::StorageFolder>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Folder)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_change_tracker(&self) -> Result<Option<ComPtr<super::StorageLibraryChangeTracker>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ChangeTracker)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StorageLibraryChangeTrackerTriggerDetails: IStorageLibraryChangeTrackerTriggerDetails}
 DEFINE_IID!(IID_IStorageLibraryContentChangedTriggerDetails, 708254071, 43967, 19997, 138, 165, 99, 133, 216, 136, 71, 153);
 RT_INTERFACE!{interface IStorageLibraryContentChangedTriggerDetails(IStorageLibraryContentChangedTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryContentChangedTriggerDetails] {
     fn get_Folder(&self, out: *mut *mut super::StorageFolder) -> HRESULT,
@@ -4424,6 +4453,77 @@ RT_ENUM! { enum FileUpdateStatus: i32 {
 RT_ENUM! { enum ReadActivationMode: i32 {
     NotNeeded (ReadActivationMode_NotNeeded) = 0, BeforeAccess (ReadActivationMode_BeforeAccess) = 1,
 }}
+DEFINE_IID!(IID_IStorageProviderGetContentInfoForPathResult, 627339549, 43657, 19730, 130, 227, 247, 42, 146, 227, 57, 102);
+RT_INTERFACE!{interface IStorageProviderGetContentInfoForPathResult(IStorageProviderGetContentInfoForPathResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderGetContentInfoForPathResult] {
+    fn get_Status(&self, out: *mut StorageProviderUriSourceStatus) -> HRESULT,
+    fn put_Status(&self, value: StorageProviderUriSourceStatus) -> HRESULT,
+    fn get_ContentUri(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_ContentUri(&self, value: HSTRING) -> HRESULT,
+    fn get_ContentId(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_ContentId(&self, value: HSTRING) -> HRESULT
+}}
+impl IStorageProviderGetContentInfoForPathResult {
+    #[inline] pub fn get_status(&self) -> Result<StorageProviderUriSourceStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_status(&self, value: StorageProviderUriSourceStatus) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Status)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_content_uri(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ContentUri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_content_uri(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ContentUri)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_content_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ContentId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_content_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ContentId)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StorageProviderGetContentInfoForPathResult: IStorageProviderGetContentInfoForPathResult}
+impl RtActivatable<IActivationFactory> for StorageProviderGetContentInfoForPathResult {}
+DEFINE_CLSID!(StorageProviderGetContentInfoForPathResult(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,71,101,116,67,111,110,116,101,110,116,73,110,102,111,70,111,114,80,97,116,104,82,101,115,117,108,116,0]) [CLSID_StorageProviderGetContentInfoForPathResult]);
+DEFINE_IID!(IID_IStorageProviderGetPathForContentUriResult, 1668356765, 16664, 17830, 172, 182, 34, 196, 157, 1, 159, 64);
+RT_INTERFACE!{interface IStorageProviderGetPathForContentUriResult(IStorageProviderGetPathForContentUriResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderGetPathForContentUriResult] {
+    fn get_Status(&self, out: *mut StorageProviderUriSourceStatus) -> HRESULT,
+    fn put_Status(&self, value: StorageProviderUriSourceStatus) -> HRESULT,
+    fn get_Path(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Path(&self, value: HSTRING) -> HRESULT
+}}
+impl IStorageProviderGetPathForContentUriResult {
+    #[inline] pub fn get_status(&self) -> Result<StorageProviderUriSourceStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_status(&self, value: StorageProviderUriSourceStatus) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Status)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_path(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Path)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_path(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Path)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StorageProviderGetPathForContentUriResult: IStorageProviderGetPathForContentUriResult}
+impl RtActivatable<IActivationFactory> for StorageProviderGetPathForContentUriResult {}
+DEFINE_CLSID!(StorageProviderGetPathForContentUriResult(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,71,101,116,80,97,116,104,70,111,114,67,111,110,116,101,110,116,85,114,105,82,101,115,117,108,116,0]) [CLSID_StorageProviderGetPathForContentUriResult]);
 RT_ENUM! { enum StorageProviderHardlinkPolicy: u32 {
     None (StorageProviderHardlinkPolicy_None) = 0, Allowed (StorageProviderHardlinkPolicy_Allowed) = 1,
 }}
@@ -4786,6 +4886,24 @@ impl IStorageProviderSyncRootManagerStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IStorageProviderUriSource, 2996307665, 35808, 18786, 139, 182, 13, 76, 46, 20, 212, 122);
+RT_INTERFACE!{interface IStorageProviderUriSource(IStorageProviderUriSourceVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderUriSource] {
+    fn GetPathForContentUri(&self, contentUri: HSTRING, result: *mut StorageProviderGetPathForContentUriResult) -> HRESULT,
+    fn GetContentInfoForPath(&self, path: HSTRING, result: *mut StorageProviderGetContentInfoForPathResult) -> HRESULT
+}}
+impl IStorageProviderUriSource {
+    #[inline] pub fn get_path_for_content_uri(&self, contentUri: &HStringArg, result: &StorageProviderGetPathForContentUriResult) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).GetPathForContentUri)(self as *const _ as *mut _, contentUri.get(), result as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_content_info_for_path(&self, path: &HStringArg, result: &StorageProviderGetContentInfoForPathResult) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).GetContentInfoForPath)(self as *const _ as *mut _, path.get(), result as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum StorageProviderUriSourceStatus: i32 {
+    Success (StorageProviderUriSourceStatus_Success) = 0, NoSyncRoot (StorageProviderUriSourceStatus_NoSyncRoot) = 1, FileNotFound (StorageProviderUriSourceStatus_FileNotFound) = 2,
+}}
 RT_ENUM! { enum UIStatus: i32 {
     Unavailable (UIStatus_Unavailable) = 0, Hidden (UIStatus_Hidden) = 1, Visible (UIStatus_Visible) = 2, Complete (UIStatus_Complete) = 3,
 }}

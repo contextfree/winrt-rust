@@ -552,6 +552,22 @@ impl IMapRouteDrivingOptions {
 RT_CLASS!{class MapRouteDrivingOptions: IMapRouteDrivingOptions}
 impl RtActivatable<IActivationFactory> for MapRouteDrivingOptions {}
 DEFINE_CLSID!(MapRouteDrivingOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,77,97,112,82,111,117,116,101,68,114,105,118,105,110,103,79,112,116,105,111,110,115,0]) [CLSID_MapRouteDrivingOptions]);
+DEFINE_IID!(IID_IMapRouteDrivingOptions2, 903644784, 49816, 18640, 181, 173, 130, 84, 96, 100, 86, 3);
+RT_INTERFACE!{interface IMapRouteDrivingOptions2(IMapRouteDrivingOptions2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteDrivingOptions2] {
+    fn get_DepartureTime(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn put_DepartureTime(&self, value: *mut foundation::IReference<foundation::DateTime>) -> HRESULT
+}}
+impl IMapRouteDrivingOptions2 {
+    #[inline] pub fn get_departure_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DepartureTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_departure_time(&self, value: &foundation::IReference<foundation::DateTime>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DepartureTime)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
 RT_CLASS!{static class MapRouteFinder}
 impl RtActivatable<IMapRouteFinderStatics> for MapRouteFinder {}
 impl RtActivatable<IMapRouteFinderStatics2> for MapRouteFinder {}
@@ -989,6 +1005,7 @@ impl IPlaceInfo {
 }
 RT_CLASS!{class PlaceInfo: IPlaceInfo}
 impl RtActivatable<IPlaceInfoStatics> for PlaceInfo {}
+impl RtActivatable<IPlaceInfoStatics2> for PlaceInfo {}
 impl PlaceInfo {
     #[cfg(feature="windows-devices")] #[inline] pub fn create(referencePoint: &super::super::devices::geolocation::Geopoint) -> Result<Option<ComPtr<PlaceInfo>>> {
         <Self as RtActivatable<IPlaceInfoStatics>>::get_activation_factory().create(referencePoint)
@@ -1007,6 +1024,12 @@ impl PlaceInfo {
     }
     #[inline] pub fn get_is_show_supported() -> Result<bool> {
         <Self as RtActivatable<IPlaceInfoStatics>>::get_activation_factory().get_is_show_supported()
+    }
+    #[inline] pub fn create_from_address(displayAddress: &HStringArg) -> Result<Option<ComPtr<PlaceInfo>>> {
+        <Self as RtActivatable<IPlaceInfoStatics2>>::get_activation_factory().create_from_address(displayAddress)
+    }
+    #[inline] pub fn create_from_address_with_name(displayAddress: &HStringArg, displayName: &HStringArg) -> Result<Option<ComPtr<PlaceInfo>>> {
+        <Self as RtActivatable<IPlaceInfoStatics2>>::get_activation_factory().create_from_address_with_name(displayAddress, displayName)
     }
 }
 DEFINE_CLSID!(PlaceInfo(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,80,108,97,99,101,73,110,102,111,0]) [CLSID_PlaceInfo]);
@@ -1082,6 +1105,23 @@ impl IPlaceInfoStatics {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsShowSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPlaceInfoStatics2, 1930363465, 16455, 17571, 143, 129, 37, 80, 165, 33, 99, 112);
+RT_INTERFACE!{static interface IPlaceInfoStatics2(IPlaceInfoStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPlaceInfoStatics2] {
+    fn CreateFromAddress(&self, displayAddress: HSTRING, out: *mut *mut PlaceInfo) -> HRESULT,
+    fn CreateFromAddressWithName(&self, displayAddress: HSTRING, displayName: HSTRING, out: *mut *mut PlaceInfo) -> HRESULT
+}}
+impl IPlaceInfoStatics2 {
+    #[inline] pub fn create_from_address(&self, displayAddress: &HStringArg) -> Result<Option<ComPtr<PlaceInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFromAddress)(self as *const _ as *mut _, displayAddress.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_from_address_with_name(&self, displayAddress: &HStringArg, displayName: &HStringArg) -> Result<Option<ComPtr<PlaceInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFromAddressWithName)(self as *const _ as *mut _, displayAddress.get(), displayName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum TrafficCongestion: i32 {
@@ -2348,6 +2388,33 @@ impl IStoreAvailability {
     }}
 }
 RT_CLASS!{class StoreAvailability: IStoreAvailability}
+DEFINE_IID!(IID_IStoreCanAcquireLicenseResult, 979975603, 136, 18479, 134, 213, 189, 70, 82, 38, 99, 173);
+RT_INTERFACE!{interface IStoreCanAcquireLicenseResult(IStoreCanAcquireLicenseResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreCanAcquireLicenseResult] {
+    fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
+    fn get_LicensableSku(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Status(&self, out: *mut StoreCanLicenseStatus) -> HRESULT
+}}
+impl IStoreCanAcquireLicenseResult {
+    #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ExtendedError)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_licensable_sku(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_LicensableSku)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_status(&self) -> Result<StoreCanLicenseStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StoreCanAcquireLicenseResult: IStoreCanAcquireLicenseResult}
+RT_ENUM! { enum StoreCanLicenseStatus: i32 {
+    NotLicensableToUser (StoreCanLicenseStatus_NotLicensableToUser) = 0, Licensable (StoreCanLicenseStatus_Licensable) = 1, LicenseActionNotApplicableToProduct (StoreCanLicenseStatus_LicenseActionNotApplicableToProduct) = 2, NetworkError (StoreCanLicenseStatus_NetworkError) = 3, ServerError (StoreCanLicenseStatus_ServerError) = 4,
+}}
 DEFINE_IID!(IID_IStoreCollectionData, 2326053811, 23475, 17434, 42, 180, 77, 171, 115, 213, 206, 103);
 RT_INTERFACE!{interface IStoreCollectionData(IStoreCollectionDataVtbl): IInspectable(IInspectableVtbl) [IID_IStoreCollectionData] {
     fn get_IsTrial(&self, out: *mut bool) -> HRESULT,
@@ -2589,6 +2656,98 @@ impl IStoreContext2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IStoreContext3, 3798083274, 6657, 18224, 133, 166, 236, 200, 150, 228, 174, 56);
+RT_INTERFACE!{interface IStoreContext3(IStoreContext3Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreContext3] {
+    fn get_CanSilentlyDownloadStorePackageUpdates(&self, out: *mut bool) -> HRESULT,
+    fn TrySilentDownloadStorePackageUpdatesAsync(&self, storePackageUpdates: *mut foundation::collections::IIterable<StorePackageUpdate>, out: *mut *mut foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>) -> HRESULT,
+    fn TrySilentDownloadAndInstallStorePackageUpdatesAsync(&self, storePackageUpdates: *mut foundation::collections::IIterable<StorePackageUpdate>, out: *mut *mut foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>) -> HRESULT,
+    #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy3(&self) -> (),
+    #[cfg(feature="windows-applicationmodel")] fn CanAcquireStoreLicenseForOptionalPackageAsync(&self, optionalPackage: *mut super::super::applicationmodel::Package, out: *mut *mut foundation::IAsyncOperation<StoreCanAcquireLicenseResult>) -> HRESULT,
+    fn CanAcquireStoreLicenseAsync(&self, productStoreId: HSTRING, out: *mut *mut foundation::IAsyncOperation<StoreCanAcquireLicenseResult>) -> HRESULT,
+    fn GetStoreProductsWithOptionsAsync(&self, productKinds: *mut foundation::collections::IIterable<HString>, storeIds: *mut foundation::collections::IIterable<HString>, storeProductOptions: *mut StoreProductOptions, out: *mut *mut foundation::IAsyncOperation<StoreProductQueryResult>) -> HRESULT,
+    fn GetAssociatedStoreQueueItemsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<StoreQueueItem>>) -> HRESULT,
+    fn GetStoreQueueItemsAsync(&self, storeIds: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<StoreQueueItem>>) -> HRESULT,
+    fn RequestDownloadAndInstallStorePackagesWithInstallOptionsAsync(&self, storeIds: *mut foundation::collections::IIterable<HString>, storePackageInstallOptions: *mut StorePackageInstallOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>) -> HRESULT,
+    fn DownloadAndInstallStorePackagesAsync(&self, storeIds: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>) -> HRESULT,
+    #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy10(&self) -> (),
+    #[cfg(feature="windows-applicationmodel")] fn RequestUninstallStorePackageAsync(&self, package: *mut super::super::applicationmodel::Package, out: *mut *mut foundation::IAsyncOperation<StoreUninstallStorePackageResult>) -> HRESULT,
+    fn RequestUninstallStorePackageByStoreIdAsync(&self, storeId: HSTRING, out: *mut *mut foundation::IAsyncOperation<StoreUninstallStorePackageResult>) -> HRESULT,
+    #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy12(&self) -> (),
+    #[cfg(feature="windows-applicationmodel")] fn UninstallStorePackageAsync(&self, package: *mut super::super::applicationmodel::Package, out: *mut *mut foundation::IAsyncOperation<StoreUninstallStorePackageResult>) -> HRESULT,
+    fn UninstallStorePackageByStoreIdAsync(&self, storeId: HSTRING, out: *mut *mut foundation::IAsyncOperation<StoreUninstallStorePackageResult>) -> HRESULT
+}}
+impl IStoreContext3 {
+    #[inline] pub fn get_can_silently_download_store_package_updates(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanSilentlyDownloadStorePackageUpdates)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn try_silent_download_store_package_updates_async(&self, storePackageUpdates: &foundation::collections::IIterable<StorePackageUpdate>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TrySilentDownloadStorePackageUpdatesAsync)(self as *const _ as *mut _, storePackageUpdates as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn try_silent_download_and_install_store_package_updates_async(&self, storePackageUpdates: &foundation::collections::IIterable<StorePackageUpdate>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TrySilentDownloadAndInstallStorePackageUpdatesAsync)(self as *const _ as *mut _, storePackageUpdates as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn can_acquire_store_license_for_optional_package_async(&self, optionalPackage: &super::super::applicationmodel::Package) -> Result<ComPtr<foundation::IAsyncOperation<StoreCanAcquireLicenseResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CanAcquireStoreLicenseForOptionalPackageAsync)(self as *const _ as *mut _, optionalPackage as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn can_acquire_store_license_async(&self, productStoreId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StoreCanAcquireLicenseResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CanAcquireStoreLicenseAsync)(self as *const _ as *mut _, productStoreId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_store_products_with_options_async(&self, productKinds: &foundation::collections::IIterable<HString>, storeIds: &foundation::collections::IIterable<HString>, storeProductOptions: &StoreProductOptions) -> Result<ComPtr<foundation::IAsyncOperation<StoreProductQueryResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetStoreProductsWithOptionsAsync)(self as *const _ as *mut _, productKinds as *const _ as *mut _, storeIds as *const _ as *mut _, storeProductOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_associated_store_queue_items_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<StoreQueueItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAssociatedStoreQueueItemsAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_store_queue_items_async(&self, storeIds: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<StoreQueueItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetStoreQueueItemsAsync)(self as *const _ as *mut _, storeIds as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_download_and_install_store_packages_with_install_options_async(&self, storeIds: &foundation::collections::IIterable<HString>, storePackageInstallOptions: &StorePackageInstallOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestDownloadAndInstallStorePackagesWithInstallOptionsAsync)(self as *const _ as *mut _, storeIds as *const _ as *mut _, storePackageInstallOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn download_and_install_store_packages_async(&self, storeIds: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DownloadAndInstallStorePackagesAsync)(self as *const _ as *mut _, storeIds as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn request_uninstall_store_package_async(&self, package: &super::super::applicationmodel::Package) -> Result<ComPtr<foundation::IAsyncOperation<StoreUninstallStorePackageResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestUninstallStorePackageAsync)(self as *const _ as *mut _, package as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_uninstall_store_package_by_store_id_async(&self, storeId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StoreUninstallStorePackageResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestUninstallStorePackageByStoreIdAsync)(self as *const _ as *mut _, storeId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn uninstall_store_package_async(&self, package: &super::super::applicationmodel::Package) -> Result<ComPtr<foundation::IAsyncOperation<StoreUninstallStorePackageResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).UninstallStorePackageAsync)(self as *const _ as *mut _, package as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn uninstall_store_package_by_store_id_async(&self, storeId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StoreUninstallStorePackageResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).UninstallStorePackageByStoreIdAsync)(self as *const _ as *mut _, storeId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IStoreContextStatics, 2617699935, 5568, 20082, 147, 48, 214, 25, 28, 235, 209, 156);
 RT_INTERFACE!{static interface IStoreContextStatics(IStoreContextStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStoreContextStatics] {
     fn GetDefault(&self, out: *mut *mut StoreContext) -> HRESULT,
@@ -2681,6 +2840,25 @@ impl IStoreLicense {
     }}
 }
 RT_CLASS!{class StoreLicense: IStoreLicense}
+DEFINE_IID!(IID_IStorePackageInstallOptions, 490562316, 3277, 17629, 140, 89, 128, 129, 10, 114, 153, 115);
+RT_INTERFACE!{interface IStorePackageInstallOptions(IStorePackageInstallOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IStorePackageInstallOptions] {
+    fn get_AllowForcedAppRestart(&self, out: *mut bool) -> HRESULT,
+    fn put_AllowForcedAppRestart(&self, value: bool) -> HRESULT
+}}
+impl IStorePackageInstallOptions {
+    #[inline] pub fn get_allow_forced_app_restart(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AllowForcedAppRestart)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_allow_forced_app_restart(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AllowForcedAppRestart)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StorePackageInstallOptions: IStorePackageInstallOptions}
+impl RtActivatable<IActivationFactory> for StorePackageInstallOptions {}
+DEFINE_CLSID!(StorePackageInstallOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,83,116,111,114,101,46,83,116,111,114,101,80,97,99,107,97,103,101,73,110,115,116,97,108,108,79,112,116,105,111,110,115,0]) [CLSID_StorePackageInstallOptions]);
 DEFINE_IID!(IID_IStorePackageLicense, 205936404, 5345, 18803, 189, 20, 247, 119, 36, 39, 30, 153);
 RT_INTERFACE!{interface IStorePackageLicense(IStorePackageLicenseVtbl): IInspectable(IInspectableVtbl) [IID_IStorePackageLicense] {
     fn add_LicenseLost(&self, handler: *mut foundation::TypedEventHandler<StorePackageLicense, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -2753,6 +2931,17 @@ impl IStorePackageUpdateResult {
     }}
 }
 RT_CLASS!{class StorePackageUpdateResult: IStorePackageUpdateResult}
+DEFINE_IID!(IID_IStorePackageUpdateResult2, 119341358, 48226, 20270, 135, 234, 153, 216, 1, 174, 175, 152);
+RT_INTERFACE!{interface IStorePackageUpdateResult2(IStorePackageUpdateResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorePackageUpdateResult2] {
+    fn get_StoreQueueItems(&self, out: *mut *mut foundation::collections::IVectorView<StoreQueueItem>) -> HRESULT
+}}
+impl IStorePackageUpdateResult2 {
+    #[inline] pub fn get_store_queue_items(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<StoreQueueItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_StoreQueueItems)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum StorePackageUpdateState: i32 {
     Pending (StorePackageUpdateState_Pending) = 0, Downloading (StorePackageUpdateState_Downloading) = 1, Deploying (StorePackageUpdateState_Deploying) = 2, Completed (StorePackageUpdateState_Completed) = 3, Canceled (StorePackageUpdateState_Canceled) = 4, OtherError (StorePackageUpdateState_OtherError) = 5, ErrorLowBattery (StorePackageUpdateState_ErrorLowBattery) = 6, ErrorWiFiRecommended (StorePackageUpdateState_ErrorWiFiRecommended) = 7, ErrorWiFiRequired (StorePackageUpdateState_ErrorWiFiRequired) = 8,
 }}
@@ -2915,6 +3104,20 @@ impl IStoreProduct {
     }}
 }
 RT_CLASS!{class StoreProduct: IStoreProduct}
+DEFINE_IID!(IID_IStoreProductOptions, 1530175737, 41235, 18449, 131, 38, 22, 25, 156, 146, 127, 49);
+RT_INTERFACE!{interface IStoreProductOptions(IStoreProductOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IStoreProductOptions] {
+    fn get_ActionFilters(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT
+}}
+impl IStoreProductOptions {
+    #[inline] pub fn get_action_filters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ActionFilters)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StoreProductOptions: IStoreProductOptions}
+impl RtActivatable<IActivationFactory> for StoreProductOptions {}
+DEFINE_CLSID!(StoreProductOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,83,116,111,114,101,46,83,116,111,114,101,80,114,111,100,117,99,116,79,112,116,105,111,110,115,0]) [CLSID_StoreProductOptions]);
 DEFINE_IID!(IID_IStoreProductPagedQueryResult, 3374782661, 19925, 18537, 164, 98, 236, 198, 135, 46, 67, 197);
 RT_INTERFACE!{interface IStoreProductPagedQueryResult(IStoreProductPagedQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreProductPagedQueryResult] {
     fn get_Products(&self, out: *mut *mut foundation::collections::IMapView<HString, StoreProduct>) -> HRESULT,
@@ -3049,6 +3252,109 @@ RT_CLASS!{class StorePurchaseResult: IStorePurchaseResult}
 RT_ENUM! { enum StorePurchaseStatus: i32 {
     Succeeded (StorePurchaseStatus_Succeeded) = 0, AlreadyPurchased (StorePurchaseStatus_AlreadyPurchased) = 1, NotPurchased (StorePurchaseStatus_NotPurchased) = 2, NetworkError (StorePurchaseStatus_NetworkError) = 3, ServerError (StorePurchaseStatus_ServerError) = 4,
 }}
+DEFINE_IID!(IID_IStoreQueueItem, 1456849707, 63536, 17043, 145, 136, 202, 210, 220, 222, 115, 87);
+RT_INTERFACE!{interface IStoreQueueItem(IStoreQueueItemVtbl): IInspectable(IInspectableVtbl) [IID_IStoreQueueItem] {
+    fn get_ProductId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_PackageFamilyName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_InstallKind(&self, out: *mut StoreQueueItemKind) -> HRESULT,
+    fn GetCurrentStatus(&self, out: *mut *mut StoreQueueItemStatus) -> HRESULT,
+    fn add_Completed(&self, handler: *mut foundation::TypedEventHandler<StoreQueueItem, StoreQueueItemCompletedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Completed(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_StatusChanged(&self, handler: *mut foundation::TypedEventHandler<StoreQueueItem, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_StatusChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IStoreQueueItem {
+    #[inline] pub fn get_product_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProductId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_package_family_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PackageFamilyName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_install_kind(&self) -> Result<StoreQueueItemKind> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_InstallKind)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_current_status(&self) -> Result<Option<ComPtr<StoreQueueItemStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCurrentStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_completed(&self, handler: &foundation::TypedEventHandler<StoreQueueItem, StoreQueueItemCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Completed)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_status_changed(&self, handler: &foundation::TypedEventHandler<StoreQueueItem, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_StatusChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_StatusChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StoreQueueItem: IStoreQueueItem}
+DEFINE_IID!(IID_IStoreQueueItemCompletedEventArgs, 306700140, 46154, 17307, 187, 7, 29, 48, 3, 208, 5, 194);
+RT_INTERFACE!{interface IStoreQueueItemCompletedEventArgs(IStoreQueueItemCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IStoreQueueItemCompletedEventArgs] {
+    fn get_Status(&self, out: *mut *mut StoreQueueItemStatus) -> HRESULT
+}}
+impl IStoreQueueItemCompletedEventArgs {
+    #[inline] pub fn get_status(&self) -> Result<Option<ComPtr<StoreQueueItemStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StoreQueueItemCompletedEventArgs: IStoreQueueItemCompletedEventArgs}
+RT_ENUM! { enum StoreQueueItemExtendedState: i32 {
+    ActivePending (StoreQueueItemExtendedState_ActivePending) = 0, ActiveStarting (StoreQueueItemExtendedState_ActiveStarting) = 1, ActiveAcquiringLicense (StoreQueueItemExtendedState_ActiveAcquiringLicense) = 2, ActiveDownloading (StoreQueueItemExtendedState_ActiveDownloading) = 3, ActiveRestoringData (StoreQueueItemExtendedState_ActiveRestoringData) = 4, ActiveInstalling (StoreQueueItemExtendedState_ActiveInstalling) = 5, Completed (StoreQueueItemExtendedState_Completed) = 6, Canceled (StoreQueueItemExtendedState_Canceled) = 7, Paused (StoreQueueItemExtendedState_Paused) = 8, Error (StoreQueueItemExtendedState_Error) = 9, PausedPackagesInUse (StoreQueueItemExtendedState_PausedPackagesInUse) = 10, PausedLowBattery (StoreQueueItemExtendedState_PausedLowBattery) = 11, PausedWiFiRecommended (StoreQueueItemExtendedState_PausedWiFiRecommended) = 12, PausedWiFiRequired (StoreQueueItemExtendedState_PausedWiFiRequired) = 13, PausedReadyToInstall (StoreQueueItemExtendedState_PausedReadyToInstall) = 14,
+}}
+RT_ENUM! { enum StoreQueueItemKind: i32 {
+    Install (StoreQueueItemKind_Install) = 0, Update (StoreQueueItemKind_Update) = 1, Repair (StoreQueueItemKind_Repair) = 2,
+}}
+RT_ENUM! { enum StoreQueueItemState: i32 {
+    Active (StoreQueueItemState_Active) = 0, Completed (StoreQueueItemState_Completed) = 1, Canceled (StoreQueueItemState_Canceled) = 2, Error (StoreQueueItemState_Error) = 3, Paused (StoreQueueItemState_Paused) = 4,
+}}
+DEFINE_IID!(IID_IStoreQueueItemStatus, 2614524271, 40131, 20163, 178, 239, 123, 228, 51, 179, 1, 116);
+RT_INTERFACE!{interface IStoreQueueItemStatus(IStoreQueueItemStatusVtbl): IInspectable(IInspectableVtbl) [IID_IStoreQueueItemStatus] {
+    fn get_PackageInstallState(&self, out: *mut StoreQueueItemState) -> HRESULT,
+    fn get_PackageInstallExtendedState(&self, out: *mut StoreQueueItemExtendedState) -> HRESULT,
+    fn get_UpdateStatus(&self, out: *mut StorePackageUpdateStatus) -> HRESULT,
+    fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
+}}
+impl IStoreQueueItemStatus {
+    #[inline] pub fn get_package_install_state(&self) -> Result<StoreQueueItemState> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PackageInstallState)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_package_install_extended_state(&self) -> Result<StoreQueueItemExtendedState> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PackageInstallExtendedState)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_update_status(&self) -> Result<StorePackageUpdateStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_UpdateStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ExtendedError)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StoreQueueItemStatus: IStoreQueueItemStatus}
 RT_CLASS!{static class StoreRequestHelper}
 impl RtActivatable<IStoreRequestHelperStatics> for StoreRequestHelper {}
 impl StoreRequestHelper {
@@ -3253,6 +3559,27 @@ impl IStoreSubscriptionInfo {
     }}
 }
 RT_CLASS!{class StoreSubscriptionInfo: IStoreSubscriptionInfo}
+DEFINE_IID!(IID_IStoreUninstallStorePackageResult, 2680830461, 4719, 19674, 184, 1, 19, 70, 184, 208, 162, 96);
+RT_INTERFACE!{interface IStoreUninstallStorePackageResult(IStoreUninstallStorePackageResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreUninstallStorePackageResult] {
+    fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
+    fn get_Status(&self, out: *mut StoreUninstallStorePackageStatus) -> HRESULT
+}}
+impl IStoreUninstallStorePackageResult {
+    #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ExtendedError)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_status(&self) -> Result<StoreUninstallStorePackageStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StoreUninstallStorePackageResult: IStoreUninstallStorePackageResult}
+RT_ENUM! { enum StoreUninstallStorePackageStatus: i32 {
+    Succeeded (StoreUninstallStorePackageStatus_Succeeded) = 0, CanceledByUser (StoreUninstallStorePackageStatus_CanceledByUser) = 1, NetworkError (StoreUninstallStorePackageStatus_NetworkError) = 2, UninstallNotApplicable (StoreUninstallStorePackageStatus_UninstallNotApplicable) = 3, Error (StoreUninstallStorePackageStatus_Error) = 4,
+}}
 DEFINE_IID!(IID_IStoreVideo, 4067209604, 28510, 19906, 136, 108, 60, 99, 8, 60, 47, 148);
 RT_INTERFACE!{interface IStoreVideo(IStoreVideoVtbl): IInspectable(IInspectableVtbl) [IID_IStoreVideo] {
     fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,

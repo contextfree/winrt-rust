@@ -1362,7 +1362,7 @@ impl IAcceleratorKeyEventArgs2 {
     }}
 }
 RT_ENUM! { enum AppViewBackButtonVisibility: i32 {
-    Visible (AppViewBackButtonVisibility_Visible) = 0, Collapsed (AppViewBackButtonVisibility_Collapsed) = 1,
+    Visible (AppViewBackButtonVisibility_Visible) = 0, Collapsed (AppViewBackButtonVisibility_Collapsed) = 1, Disabled (AppViewBackButtonVisibility_Disabled) = 2,
 }}
 DEFINE_IID!(IID_IAutomationProviderRequestedEventArgs, 2518676056, 8639, 19266, 162, 152, 250, 71, 157, 76, 82, 226);
 RT_INTERFACE!{interface IAutomationProviderRequestedEventArgs(IAutomationProviderRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAutomationProviderRequestedEventArgs] {
@@ -1845,6 +1845,17 @@ impl ICorePointerInputSource {
     #[inline] pub fn remove_pointer_wheel_changed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PointerWheelChanged)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ICorePointerInputSource2, 3607326858, 17686, 18310, 177, 229, 39, 81, 213, 99, 249, 151);
+RT_INTERFACE!{interface ICorePointerInputSource2(ICorePointerInputSource2Vtbl): IInspectable(IInspectableVtbl) [IID_ICorePointerInputSource2] {
+    #[cfg(feature="windows-system")] fn get_DispatcherQueue(&self, out: *mut *mut super::super::system::DispatcherQueue) -> HRESULT
+}}
+impl ICorePointerInputSource2 {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_dispatcher_queue(&self) -> Result<Option<ComPtr<super::super::system::DispatcherQueue>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DispatcherQueue)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ICorePointerRedirector, 2409434260, 22152, 19212, 169, 241, 249, 49, 247, 250, 61, 195);
@@ -5643,6 +5654,17 @@ impl ISpatialInteractionController2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_ISpatialInteractionController3, 1652844192, 40337, 18955, 136, 141, 22, 94, 103, 10, 140, 213);
+RT_INTERFACE!{interface ISpatialInteractionController3(ISpatialInteractionController3Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionController3] {
+    #[cfg(feature="windows-devices")] fn TryGetBatteryReport(&self, out: *mut *mut ::rt::gen::windows::devices::power::BatteryReport) -> HRESULT
+}}
+impl ISpatialInteractionController3 {
+    #[cfg(feature="windows-devices")] #[inline] pub fn try_get_battery_report(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::power::BatteryReport>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryGetBatteryReport)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_ISpatialInteractionControllerProperties, 1627746225, 31657, 20021, 185, 63, 146, 114, 203, 169, 178, 139);
 RT_INTERFACE!{interface ISpatialInteractionControllerProperties(ISpatialInteractionControllerPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionControllerProperties] {
     fn get_IsTouchpadTouched(&self, out: *mut bool) -> HRESULT,
@@ -6410,6 +6432,17 @@ impl RadialControllerIndependentInputSource {
     }
 }
 DEFINE_CLSID!(RadialControllerIndependentInputSource(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,67,111,114,101,46,82,97,100,105,97,108,67,111,110,116,114,111,108,108,101,114,73,110,100,101,112,101,110,100,101,110,116,73,110,112,117,116,83,111,117,114,99,101,0]) [CLSID_RadialControllerIndependentInputSource]);
+DEFINE_IID!(IID_IRadialControllerIndependentInputSource2, 1886628568, 13811, 20203, 135, 81, 190, 77, 10, 102, 250, 244);
+RT_INTERFACE!{interface IRadialControllerIndependentInputSource2(IRadialControllerIndependentInputSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerIndependentInputSource2] {
+    #[cfg(feature="windows-system")] fn get_DispatcherQueue(&self, out: *mut *mut ::rt::gen::windows::system::DispatcherQueue) -> HRESULT
+}}
+impl IRadialControllerIndependentInputSource2 {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_dispatcher_queue(&self) -> Result<Option<ComPtr<::rt::gen::windows::system::DispatcherQueue>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DispatcherQueue)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IRadialControllerIndependentInputSourceStatics, 1029144309, 19694, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{static interface IRadialControllerIndependentInputSourceStatics(IRadialControllerIndependentInputSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerIndependentInputSourceStatics] {
     #[cfg(feature="windows-applicationmodel")] fn CreateForView(&self, view: *mut ::rt::gen::windows::applicationmodel::core::CoreApplicationView, out: *mut *mut RadialControllerIndependentInputSource) -> HRESULT
@@ -6553,6 +6586,17 @@ impl IInkDrawingAttributes4 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IInkDrawingAttributes5, 3508183227, 1909, 18514, 174, 100, 65, 20, 58, 122, 230, 201);
+RT_INTERFACE!{interface IInkDrawingAttributes5(IInkDrawingAttributes5Vtbl): IInspectable(IInspectableVtbl) [IID_IInkDrawingAttributes5] {
+    fn get_ModelerAttributes(&self, out: *mut *mut InkModelerAttributes) -> HRESULT
+}}
+impl IInkDrawingAttributes5 {
+    #[inline] pub fn get_modeler_attributes(&self) -> Result<Option<ComPtr<InkModelerAttributes>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ModelerAttributes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum InkDrawingAttributesKind: i32 {
     Default (InkDrawingAttributesKind_Default) = 0, Pencil (InkDrawingAttributesKind_Pencil) = 1,
 }}
@@ -6587,6 +6631,34 @@ impl IInkDrawingAttributesStatics {
 RT_ENUM! { enum InkHighContrastAdjustment: i32 {
     UseSystemColorsWhenNecessary (InkHighContrastAdjustment_UseSystemColorsWhenNecessary) = 0, UseSystemColors (InkHighContrastAdjustment_UseSystemColors) = 1, UseOriginalColors (InkHighContrastAdjustment_UseOriginalColors) = 2,
 }}
+DEFINE_IID!(IID_IInkInputConfiguration, 2477166020, 2939, 18903, 179, 79, 153, 1, 229, 36, 220, 242);
+RT_INTERFACE!{interface IInkInputConfiguration(IInkInputConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IInkInputConfiguration] {
+    fn get_IsPrimaryBarrelButtonInputEnabled(&self, out: *mut bool) -> HRESULT,
+    fn put_IsPrimaryBarrelButtonInputEnabled(&self, value: bool) -> HRESULT,
+    fn get_IsEraserInputEnabled(&self, out: *mut bool) -> HRESULT,
+    fn put_IsEraserInputEnabled(&self, value: bool) -> HRESULT
+}}
+impl IInkInputConfiguration {
+    #[inline] pub fn get_is_primary_barrel_button_input_enabled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsPrimaryBarrelButtonInputEnabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_primary_barrel_button_input_enabled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsPrimaryBarrelButtonInputEnabled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_eraser_input_enabled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsEraserInputEnabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_eraser_input_enabled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsEraserInputEnabled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class InkInputConfiguration: IInkInputConfiguration}
 DEFINE_IID!(IID_IInkInputProcessingConfiguration, 662231134, 13258, 19206, 166, 211, 172, 57, 69, 17, 109, 55);
 RT_INTERFACE!{interface IInkInputProcessingConfiguration(IInkInputProcessingConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IInkInputProcessingConfiguration] {
     fn get_Mode(&self, out: *mut InkInputProcessingMode) -> HRESULT,
@@ -6671,6 +6743,34 @@ DEFINE_CLSID!(InkManager(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117
 RT_ENUM! { enum InkManipulationMode: i32 {
     Inking (InkManipulationMode_Inking) = 0, Erasing (InkManipulationMode_Erasing) = 1, Selecting (InkManipulationMode_Selecting) = 2,
 }}
+DEFINE_IID!(IID_IInkModelerAttributes, 3134398247, 3289, 19453, 182, 243, 158, 3, 186, 141, 116, 84);
+RT_INTERFACE!{interface IInkModelerAttributes(IInkModelerAttributesVtbl): IInspectable(IInspectableVtbl) [IID_IInkModelerAttributes] {
+    fn get_PredictionTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn put_PredictionTime(&self, value: foundation::TimeSpan) -> HRESULT,
+    fn get_ScalingFactor(&self, out: *mut f32) -> HRESULT,
+    fn put_ScalingFactor(&self, value: f32) -> HRESULT
+}}
+impl IInkModelerAttributes {
+    #[inline] pub fn get_prediction_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PredictionTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_prediction_time(&self, value: foundation::TimeSpan) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PredictionTime)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_scaling_factor(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ScalingFactor)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_scaling_factor(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ScalingFactor)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class InkModelerAttributes: IInkModelerAttributes}
 RT_ENUM! { enum InkPersistenceFormat: i32 {
     GifWithEmbeddedIsf (InkPersistenceFormat_GifWithEmbeddedIsf) = 0, Isf (InkPersistenceFormat_Isf) = 1,
 }}
@@ -6863,6 +6963,17 @@ impl IInkPresenter2 {
     #[inline] pub fn set_high_contrast_adjustment(&self, value: InkHighContrastAdjustment) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_HighContrastAdjustment)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IInkPresenter3, 1373752969, 54141, 19088, 131, 252, 127, 94, 157, 251, 242, 23);
+RT_INTERFACE!{interface IInkPresenter3(IInkPresenter3Vtbl): IInspectable(IInspectableVtbl) [IID_IInkPresenter3] {
+    fn get_InputConfiguration(&self, out: *mut *mut InkInputConfiguration) -> HRESULT
+}}
+impl IInkPresenter3 {
+    #[inline] pub fn get_input_configuration(&self) -> Result<Option<ComPtr<InkInputConfiguration>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_InputConfiguration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum InkPresenterPredefinedConfiguration: i32 {
@@ -8276,6 +8387,69 @@ use ::prelude::*;
 RT_ENUM! { enum CaretType: i32 {
     Normal (CaretType_Normal) = 0, Null (CaretType_Null) = 1,
 }}
+DEFINE_IID!(IID_IContentLinkInfo, 517285157, 7263, 18635, 179, 53, 120, 181, 10, 46, 230, 66);
+RT_INTERFACE!{interface IContentLinkInfo(IContentLinkInfoVtbl): IInspectable(IInspectableVtbl) [IID_IContentLinkInfo] {
+    fn get_Id(&self, out: *mut u32) -> HRESULT,
+    fn put_Id(&self, value: u32) -> HRESULT,
+    fn get_DisplayText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_DisplayText(&self, value: HSTRING) -> HRESULT,
+    fn get_SecondaryText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_SecondaryText(&self, value: HSTRING) -> HRESULT,
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_Uri(&self, value: *mut foundation::Uri) -> HRESULT,
+    fn get_LinkContentKind(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_LinkContentKind(&self, value: HSTRING) -> HRESULT
+}}
+impl IContentLinkInfo {
+    #[inline] pub fn get_id(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_id(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Id)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_display_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_display_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DisplayText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_secondary_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SecondaryText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_secondary_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SecondaryText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Uri)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_link_content_kind(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_LinkContentKind)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_link_content_kind(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_LinkContentKind)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ContentLinkInfo: IContentLinkInfo}
+impl RtActivatable<IActivationFactory> for ContentLinkInfo {}
+DEFINE_CLSID!(ContentLinkInfo(&[87,105,110,100,111,119,115,46,85,73,46,84,101,120,116,46,67,111,110,116,101,110,116,76,105,110,107,73,110,102,111,0]) [CLSID_ContentLinkInfo]);
 RT_ENUM! { enum FindOptions: u32 {
     None (FindOptions_None) = 0, Word (FindOptions_Word) = 2, Case (FindOptions_Case) = 4,
 }}
@@ -8438,6 +8612,23 @@ RT_ENUM! { enum RangeGravity: i32 {
     UIBehavior (RangeGravity_UIBehavior) = 0, Backward (RangeGravity_Backward) = 1, Forward (RangeGravity_Forward) = 2, Inward (RangeGravity_Inward) = 3, Outward (RangeGravity_Outward) = 4,
 }}
 RT_CLASS!{class RichEditTextDocument: ITextDocument}
+DEFINE_IID!(IID_IRichEditTextRange, 927872277, 47754, 19054, 140, 89, 13, 222, 61, 12, 245, 205);
+RT_INTERFACE!{interface IRichEditTextRange(IRichEditTextRangeVtbl): IInspectable(IInspectableVtbl) [IID_IRichEditTextRange] {
+    fn get_ContentLinkInfo(&self, out: *mut *mut ContentLinkInfo) -> HRESULT,
+    fn put_ContentLinkInfo(&self, value: *mut ContentLinkInfo) -> HRESULT
+}}
+impl IRichEditTextRange {
+    #[inline] pub fn get_content_link_info(&self) -> Result<Option<ComPtr<ContentLinkInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ContentLinkInfo)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_content_link_info(&self, value: &ContentLinkInfo) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ContentLinkInfo)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class RichEditTextRange: ITextRange}
 RT_ENUM! { enum SelectionOptions: u32 {
     StartActive (SelectionOptions_StartActive) = 1, AtEndOfLine (SelectionOptions_AtEndOfLine) = 2, Overtype (SelectionOptions_Overtype) = 4, Active (SelectionOptions_Active) = 8, Replace (SelectionOptions_Replace) = 16,
 }}
@@ -9571,7 +9762,7 @@ impl ITextRange {
     }}
 }
 RT_ENUM! { enum TextRangeUnit: i32 {
-    Character (TextRangeUnit_Character) = 0, Word (TextRangeUnit_Word) = 1, Sentence (TextRangeUnit_Sentence) = 2, Paragraph (TextRangeUnit_Paragraph) = 3, Line (TextRangeUnit_Line) = 4, Story (TextRangeUnit_Story) = 5, Screen (TextRangeUnit_Screen) = 6, Section (TextRangeUnit_Section) = 7, Window (TextRangeUnit_Window) = 8, CharacterFormat (TextRangeUnit_CharacterFormat) = 9, ParagraphFormat (TextRangeUnit_ParagraphFormat) = 10, Object (TextRangeUnit_Object) = 11, HardParagraph (TextRangeUnit_HardParagraph) = 12, Cluster (TextRangeUnit_Cluster) = 13, Bold (TextRangeUnit_Bold) = 14, Italic (TextRangeUnit_Italic) = 15, Underline (TextRangeUnit_Underline) = 16, Strikethrough (TextRangeUnit_Strikethrough) = 17, ProtectedText (TextRangeUnit_ProtectedText) = 18, Link (TextRangeUnit_Link) = 19, SmallCaps (TextRangeUnit_SmallCaps) = 20, AllCaps (TextRangeUnit_AllCaps) = 21, Hidden (TextRangeUnit_Hidden) = 22, Outline (TextRangeUnit_Outline) = 23, Shadow (TextRangeUnit_Shadow) = 24, Imprint (TextRangeUnit_Imprint) = 25, Disabled (TextRangeUnit_Disabled) = 26, Revised (TextRangeUnit_Revised) = 27, Subscript (TextRangeUnit_Subscript) = 28, Superscript (TextRangeUnit_Superscript) = 29, FontBound (TextRangeUnit_FontBound) = 30, LinkProtected (TextRangeUnit_LinkProtected) = 31,
+    Character (TextRangeUnit_Character) = 0, Word (TextRangeUnit_Word) = 1, Sentence (TextRangeUnit_Sentence) = 2, Paragraph (TextRangeUnit_Paragraph) = 3, Line (TextRangeUnit_Line) = 4, Story (TextRangeUnit_Story) = 5, Screen (TextRangeUnit_Screen) = 6, Section (TextRangeUnit_Section) = 7, Window (TextRangeUnit_Window) = 8, CharacterFormat (TextRangeUnit_CharacterFormat) = 9, ParagraphFormat (TextRangeUnit_ParagraphFormat) = 10, Object (TextRangeUnit_Object) = 11, HardParagraph (TextRangeUnit_HardParagraph) = 12, Cluster (TextRangeUnit_Cluster) = 13, Bold (TextRangeUnit_Bold) = 14, Italic (TextRangeUnit_Italic) = 15, Underline (TextRangeUnit_Underline) = 16, Strikethrough (TextRangeUnit_Strikethrough) = 17, ProtectedText (TextRangeUnit_ProtectedText) = 18, Link (TextRangeUnit_Link) = 19, SmallCaps (TextRangeUnit_SmallCaps) = 20, AllCaps (TextRangeUnit_AllCaps) = 21, Hidden (TextRangeUnit_Hidden) = 22, Outline (TextRangeUnit_Outline) = 23, Shadow (TextRangeUnit_Shadow) = 24, Imprint (TextRangeUnit_Imprint) = 25, Disabled (TextRangeUnit_Disabled) = 26, Revised (TextRangeUnit_Revised) = 27, Subscript (TextRangeUnit_Subscript) = 28, Superscript (TextRangeUnit_Superscript) = 29, FontBound (TextRangeUnit_FontBound) = 30, LinkProtected (TextRangeUnit_LinkProtected) = 31, ContentLink (TextRangeUnit_ContentLink) = 32,
 }}
 RT_ENUM! { enum TextScript: i32 {
     Undefined (TextScript_Undefined) = 0, Ansi (TextScript_Ansi) = 1, EastEurope (TextScript_EastEurope) = 2, Cyrillic (TextScript_Cyrillic) = 3, Greek (TextScript_Greek) = 4, Turkish (TextScript_Turkish) = 5, Hebrew (TextScript_Hebrew) = 6, Arabic (TextScript_Arabic) = 7, Baltic (TextScript_Baltic) = 8, Vietnamese (TextScript_Vietnamese) = 9, Default (TextScript_Default) = 10, Symbol (TextScript_Symbol) = 11, Thai (TextScript_Thai) = 12, ShiftJis (TextScript_ShiftJis) = 13, GB2312 (TextScript_GB2312) = 14, Hangul (TextScript_Hangul) = 15, Big5 (TextScript_Big5) = 16, PC437 (TextScript_PC437) = 17, Oem (TextScript_Oem) = 18, Mac (TextScript_Mac) = 19, Armenian (TextScript_Armenian) = 20, Syriac (TextScript_Syriac) = 21, Thaana (TextScript_Thaana) = 22, Devanagari (TextScript_Devanagari) = 23, Bengali (TextScript_Bengali) = 24, Gurmukhi (TextScript_Gurmukhi) = 25, Gujarati (TextScript_Gujarati) = 26, Oriya (TextScript_Oriya) = 27, Tamil (TextScript_Tamil) = 28, Telugu (TextScript_Telugu) = 29, Kannada (TextScript_Kannada) = 30, Malayalam (TextScript_Malayalam) = 31, Sinhala (TextScript_Sinhala) = 32, Lao (TextScript_Lao) = 33, Tibetan (TextScript_Tibetan) = 34, Myanmar (TextScript_Myanmar) = 35, Georgian (TextScript_Georgian) = 36, Jamo (TextScript_Jamo) = 37, Ethiopic (TextScript_Ethiopic) = 38, Cherokee (TextScript_Cherokee) = 39, Aboriginal (TextScript_Aboriginal) = 40, Ogham (TextScript_Ogham) = 41, Runic (TextScript_Runic) = 42, Khmer (TextScript_Khmer) = 43, Mongolian (TextScript_Mongolian) = 44, Braille (TextScript_Braille) = 45, Yi (TextScript_Yi) = 46, Limbu (TextScript_Limbu) = 47, TaiLe (TextScript_TaiLe) = 48, NewTaiLue (TextScript_NewTaiLue) = 49, SylotiNagri (TextScript_SylotiNagri) = 50, Kharoshthi (TextScript_Kharoshthi) = 51, Kayahli (TextScript_Kayahli) = 52, UnicodeSymbol (TextScript_UnicodeSymbol) = 53, Emoji (TextScript_Emoji) = 54, Glagolitic (TextScript_Glagolitic) = 55, Lisu (TextScript_Lisu) = 56, Vai (TextScript_Vai) = 57, NKo (TextScript_NKo) = 58, Osmanya (TextScript_Osmanya) = 59, PhagsPa (TextScript_PhagsPa) = 60, Gothic (TextScript_Gothic) = 61, Deseret (TextScript_Deseret) = 62, Tifinagh (TextScript_Tifinagh) = 63,
@@ -11568,6 +11759,39 @@ impl CoreInputView {
     }
 }
 DEFINE_CLSID!(CoreInputView(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,67,111,114,101,46,67,111,114,101,73,110,112,117,116,86,105,101,119,0]) [CLSID_CoreInputView]);
+DEFINE_IID!(IID_ICoreInputView2, 248981185, 57498, 19176, 174, 223, 223, 164, 133, 125, 26, 1);
+RT_INTERFACE!{interface ICoreInputView2(ICoreInputView2Vtbl): IInspectable(IInspectableVtbl) [IID_ICoreInputView2] {
+    fn add_XYFocusTransferringFromPrimaryView(&self, handler: *mut foundation::TypedEventHandler<CoreInputView, CoreInputViewTransferringXYFocusEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_XYFocusTransferringFromPrimaryView(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_XYFocusTransferredToPrimaryView(&self, handler: *mut foundation::TypedEventHandler<CoreInputView, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_XYFocusTransferredToPrimaryView(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn TryTransferXYFocusToPrimaryView(&self, origin: foundation::Rect, direction: CoreInputViewXYFocusTransferDirection, out: *mut bool) -> HRESULT
+}}
+impl ICoreInputView2 {
+    #[inline] pub fn add_xyfocus_transferring_from_primary_view(&self, handler: &foundation::TypedEventHandler<CoreInputView, CoreInputViewTransferringXYFocusEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_XYFocusTransferringFromPrimaryView)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_xyfocus_transferring_from_primary_view(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_XYFocusTransferringFromPrimaryView)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_xyfocus_transferred_to_primary_view(&self, handler: &foundation::TypedEventHandler<CoreInputView, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_XYFocusTransferredToPrimaryView)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_xyfocus_transferred_to_primary_view(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_XYFocusTransferredToPrimaryView)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn try_transfer_xyfocus_to_primary_view(&self, origin: foundation::Rect, direction: CoreInputViewXYFocusTransferDirection) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).TryTransferXYFocusToPrimaryView)(self as *const _ as *mut _, origin, direction, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_ICoreInputViewOcclusion, 3426143750, 14437, 16759, 181, 245, 139, 101, 224, 185, 206, 132);
 RT_INTERFACE!{interface ICoreInputViewOcclusion(ICoreInputViewOcclusionVtbl): IInspectable(IInspectableVtbl) [IID_ICoreInputViewOcclusion] {
     fn get_OccludingRect(&self, out: *mut foundation::Rect) -> HRESULT,
@@ -11623,6 +11847,49 @@ impl ICoreInputViewStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_ICoreInputViewTransferringXYFocusEventArgs, 81663647, 47618, 18512, 139, 85, 216, 45, 3, 186, 109, 127);
+RT_INTERFACE!{interface ICoreInputViewTransferringXYFocusEventArgs(ICoreInputViewTransferringXYFocusEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreInputViewTransferringXYFocusEventArgs] {
+    fn get_Origin(&self, out: *mut foundation::Rect) -> HRESULT,
+    fn get_Direction(&self, out: *mut CoreInputViewXYFocusTransferDirection) -> HRESULT,
+    fn put_TransferHandled(&self, value: bool) -> HRESULT,
+    fn get_TransferHandled(&self, out: *mut bool) -> HRESULT,
+    fn put_KeepPrimaryViewVisible(&self, value: bool) -> HRESULT,
+    fn get_KeepPrimaryViewVisible(&self, out: *mut bool) -> HRESULT
+}}
+impl ICoreInputViewTransferringXYFocusEventArgs {
+    #[inline] pub fn get_origin(&self) -> Result<foundation::Rect> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Origin)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_direction(&self) -> Result<CoreInputViewXYFocusTransferDirection> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Direction)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_transfer_handled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TransferHandled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_transfer_handled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TransferHandled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_keep_primary_view_visible(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_KeepPrimaryViewVisible)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_keep_primary_view_visible(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_KeepPrimaryViewVisible)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CoreInputViewTransferringXYFocusEventArgs: ICoreInputViewTransferringXYFocusEventArgs}
+RT_ENUM! { enum CoreInputViewXYFocusTransferDirection: i32 {
+    Up (CoreInputViewXYFocusTransferDirection_Up) = 0, Right (CoreInputViewXYFocusTransferDirection_Right) = 1, Down (CoreInputViewXYFocusTransferDirection_Down) = 2, Left (CoreInputViewXYFocusTransferDirection_Left) = 3,
+}}
 } // Windows.UI.ViewManagement.Core
 } // Windows.UI.ViewManagement
 pub mod applicationsettings { // Windows.UI.ApplicationSettings
@@ -11646,6 +11913,7 @@ impl IAccountsSettingsPane {
 RT_CLASS!{class AccountsSettingsPane: IAccountsSettingsPane}
 impl RtActivatable<IAccountsSettingsPaneStatics> for AccountsSettingsPane {}
 impl RtActivatable<IAccountsSettingsPaneStatics2> for AccountsSettingsPane {}
+impl RtActivatable<IAccountsSettingsPaneStatics3> for AccountsSettingsPane {}
 impl AccountsSettingsPane {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<AccountsSettingsPane>>> {
         <Self as RtActivatable<IAccountsSettingsPaneStatics>>::get_activation_factory().get_for_current_view()
@@ -11658,6 +11926,12 @@ impl AccountsSettingsPane {
     }
     #[inline] pub fn show_add_account_async() -> Result<ComPtr<foundation::IAsyncAction>> {
         <Self as RtActivatable<IAccountsSettingsPaneStatics2>>::get_activation_factory().show_add_account_async()
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn show_manage_accounts_for_user_async(user: &super::super::system::User) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IAccountsSettingsPaneStatics3>>::get_activation_factory().show_manage_accounts_for_user_async(user)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn show_add_account_for_user_async(user: &super::super::system::User) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IAccountsSettingsPaneStatics3>>::get_activation_factory().show_add_account_for_user_async(user)
     }
 }
 DEFINE_CLSID!(AccountsSettingsPane(&[87,105,110,100,111,119,115,46,85,73,46,65,112,112,108,105,99,97,116,105,111,110,83,101,116,116,105,110,103,115,46,65,99,99,111,117,110,116,115,83,101,116,116,105,110,103,115,80,97,110,101,0]) [CLSID_AccountsSettingsPane]);
@@ -11708,6 +11982,17 @@ impl IAccountsSettingsPaneCommandsRequestedEventArgs {
     }}
 }
 RT_CLASS!{class AccountsSettingsPaneCommandsRequestedEventArgs: IAccountsSettingsPaneCommandsRequestedEventArgs}
+DEFINE_IID!(IID_IAccountsSettingsPaneCommandsRequestedEventArgs2, 909081517, 20023, 18791, 140, 64, 231, 142, 231, 161, 229, 187);
+RT_INTERFACE!{interface IAccountsSettingsPaneCommandsRequestedEventArgs2(IAccountsSettingsPaneCommandsRequestedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IAccountsSettingsPaneCommandsRequestedEventArgs2] {
+    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
+}}
+impl IAccountsSettingsPaneCommandsRequestedEventArgs2 {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IAccountsSettingsPaneEventDeferral, 3421658431, 58810, 16623, 147, 218, 101, 224, 150, 229, 251, 4);
 RT_INTERFACE!{interface IAccountsSettingsPaneEventDeferral(IAccountsSettingsPaneEventDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IAccountsSettingsPaneEventDeferral] {
     fn Complete(&self) -> HRESULT
@@ -11749,6 +12034,23 @@ impl IAccountsSettingsPaneStatics2 {
     #[inline] pub fn show_add_account_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ShowAddAccountAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IAccountsSettingsPaneStatics3, 138478680, 41658, 19567, 180, 172, 72, 245, 20, 51, 18, 22);
+RT_INTERFACE!{static interface IAccountsSettingsPaneStatics3(IAccountsSettingsPaneStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IAccountsSettingsPaneStatics3] {
+    #[cfg(feature="windows-system")] fn ShowManageAccountsForUserAsync(&self, user: *mut super::super::system::User, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-system")] fn ShowAddAccountForUserAsync(&self, user: *mut super::super::system::User, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IAccountsSettingsPaneStatics3 {
+    #[cfg(feature="windows-system")] #[inline] pub fn show_manage_accounts_for_user_async(&self, user: &super::super::system::User) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ShowManageAccountsForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn show_add_account_for_user_async(&self, user: &super::super::system::User) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ShowAddAccountForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -12452,6 +12754,8 @@ impl IWebUIBackgroundTaskInstanceStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIBarcodeScannerPreviewActivatedEventArgs: super::super::applicationmodel::activation::IBarcodeScannerPreviewActivatedEventArgs}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIBarcodeScannerPreviewActivatedEventArgs: IInspectable}
 #[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUICachedFileUpdaterActivatedEventArgs: super::super::applicationmodel::activation::ICachedFileUpdaterActivatedEventArgs}
 #[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUICachedFileUpdaterActivatedEventArgs: IInspectable}
 #[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUICameraSettingsActivatedEventArgs: super::super::applicationmodel::activation::ICameraSettingsActivatedEventArgs}
@@ -13394,6 +13698,25 @@ impl ITileMixedRealityModel {
     }}
 }
 RT_CLASS!{class TileMixedRealityModel: ITileMixedRealityModel}
+DEFINE_IID!(IID_ITileMixedRealityModel2, 1133801650, 55237, 16651, 131, 25, 148, 134, 162, 123, 108, 103);
+RT_INTERFACE!{interface ITileMixedRealityModel2(ITileMixedRealityModel2Vtbl): IInspectable(IInspectableVtbl) [IID_ITileMixedRealityModel2] {
+    fn put_ActivationBehavior(&self, value: TileMixedRealityModelActivationBehavior) -> HRESULT,
+    fn get_ActivationBehavior(&self, out: *mut TileMixedRealityModelActivationBehavior) -> HRESULT
+}}
+impl ITileMixedRealityModel2 {
+    #[inline] pub fn set_activation_behavior(&self, value: TileMixedRealityModelActivationBehavior) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ActivationBehavior)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_activation_behavior(&self) -> Result<TileMixedRealityModelActivationBehavior> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ActivationBehavior)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum TileMixedRealityModelActivationBehavior: i32 {
+    Default (TileMixedRealityModelActivationBehavior_Default) = 0, None (TileMixedRealityModelActivationBehavior_None) = 1,
+}}
 RT_ENUM! { enum TileOptions: u32 {
     None (TileOptions_None) = 0, ShowNameOnLogo (TileOptions_ShowNameOnLogo) = 1, ShowNameOnWideLogo (TileOptions_ShowNameOnWideLogo) = 2, CopyOnDeployment (TileOptions_CopyOnDeployment) = 4,
 }}
@@ -14516,6 +14839,22 @@ impl IScheduledToastNotification3 {
     }}
     #[inline] pub fn set_remote_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_RemoteId)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IScheduledToastNotification4, 491217405, 48623, 20042, 150, 190, 1, 1, 54, 155, 88, 210);
+RT_INTERFACE!{interface IScheduledToastNotification4(IScheduledToastNotification4Vtbl): IInspectable(IInspectableVtbl) [IID_IScheduledToastNotification4] {
+    fn get_ExpirationTime(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn put_ExpirationTime(&self, value: *mut foundation::IReference<foundation::DateTime>) -> HRESULT
+}}
+impl IScheduledToastNotification4 {
+    #[inline] pub fn get_expiration_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ExpirationTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_expiration_time(&self, value: &foundation::IReference<foundation::DateTime>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ExpirationTime)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -15705,6 +16044,85 @@ impl IAmbientLight2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IAnimationController, 3375689682, 1826, 20319, 164, 226, 149, 16, 243, 212, 59, 247);
+RT_INTERFACE!{interface IAnimationController(IAnimationControllerVtbl): IInspectable(IInspectableVtbl) [IID_IAnimationController] {
+    fn get_PlaybackRate(&self, out: *mut f32) -> HRESULT,
+    fn put_PlaybackRate(&self, value: f32) -> HRESULT,
+    fn get_Progress(&self, out: *mut f32) -> HRESULT,
+    fn put_Progress(&self, value: f32) -> HRESULT,
+    fn get_ProgressBehavior(&self, out: *mut AnimationControllerProgressBehavior) -> HRESULT,
+    fn put_ProgressBehavior(&self, value: AnimationControllerProgressBehavior) -> HRESULT,
+    fn Pause(&self) -> HRESULT,
+    fn Resume(&self) -> HRESULT
+}}
+impl IAnimationController {
+    #[inline] pub fn get_playback_rate(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PlaybackRate)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_playback_rate(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PlaybackRate)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_progress(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_progress(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Progress)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_progress_behavior(&self) -> Result<AnimationControllerProgressBehavior> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ProgressBehavior)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_progress_behavior(&self, value: AnimationControllerProgressBehavior) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ProgressBehavior)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn pause(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Pause)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn resume(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Resume)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class AnimationController: IAnimationController}
+impl RtActivatable<IAnimationControllerStatics> for AnimationController {}
+impl AnimationController {
+    #[inline] pub fn get_max_playback_rate() -> Result<f32> {
+        <Self as RtActivatable<IAnimationControllerStatics>>::get_activation_factory().get_max_playback_rate()
+    }
+    #[inline] pub fn get_min_playback_rate() -> Result<f32> {
+        <Self as RtActivatable<IAnimationControllerStatics>>::get_activation_factory().get_min_playback_rate()
+    }
+}
+DEFINE_CLSID!(AnimationController(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,65,110,105,109,97,116,105,111,110,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_AnimationController]);
+RT_ENUM! { enum AnimationControllerProgressBehavior: i32 {
+    Default (AnimationControllerProgressBehavior_Default) = 0, IncludesDelayTime (AnimationControllerProgressBehavior_IncludesDelayTime) = 1,
+}}
+DEFINE_IID!(IID_IAnimationControllerStatics, 3876676831, 25883, 18432, 185, 229, 106, 59, 207, 237, 51, 101);
+RT_INTERFACE!{static interface IAnimationControllerStatics(IAnimationControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAnimationControllerStatics] {
+    fn get_MaxPlaybackRate(&self, out: *mut f32) -> HRESULT,
+    fn get_MinPlaybackRate(&self, out: *mut f32) -> HRESULT
+}}
+impl IAnimationControllerStatics {
+    #[inline] pub fn get_max_playback_rate(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxPlaybackRate)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_min_playback_rate(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MinPlaybackRate)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum AnimationDelayBehavior: i32 {
     SetInitialValueAfterDelay (AnimationDelayBehavior_SetInitialValueAfterDelay) = 0, SetInitialValueBeforeDelay (AnimationDelayBehavior_SetInitialValueBeforeDelay) = 1,
 }}
@@ -15717,6 +16135,90 @@ RT_ENUM! { enum AnimationIterationBehavior: i32 {
 RT_ENUM! { enum AnimationStopBehavior: i32 {
     LeaveCurrentValue (AnimationStopBehavior_LeaveCurrentValue) = 0, SetToInitialValue (AnimationStopBehavior_SetToInitialValue) = 1, SetToFinalValue (AnimationStopBehavior_SetToFinalValue) = 2,
 }}
+DEFINE_IID!(IID_IBounceScalarNaturalMotionAnimation, 3131248076, 42547, 17944, 155, 6, 127, 124, 114, 200, 124, 255);
+RT_INTERFACE!{interface IBounceScalarNaturalMotionAnimation(IBounceScalarNaturalMotionAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IBounceScalarNaturalMotionAnimation] {
+    fn get_Acceleration(&self, out: *mut f32) -> HRESULT,
+    fn put_Acceleration(&self, value: f32) -> HRESULT,
+    fn get_Restitution(&self, out: *mut f32) -> HRESULT,
+    fn put_Restitution(&self, value: f32) -> HRESULT
+}}
+impl IBounceScalarNaturalMotionAnimation {
+    #[inline] pub fn get_acceleration(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Acceleration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_acceleration(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Acceleration)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_restitution(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Restitution)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_restitution(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Restitution)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BounceScalarNaturalMotionAnimation: IBounceScalarNaturalMotionAnimation}
+DEFINE_IID!(IID_IBounceVector2NaturalMotionAnimation, 3660857750, 8532, 19260, 136, 170, 71, 54, 18, 4, 236, 205);
+RT_INTERFACE!{interface IBounceVector2NaturalMotionAnimation(IBounceVector2NaturalMotionAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IBounceVector2NaturalMotionAnimation] {
+    fn get_Acceleration(&self, out: *mut f32) -> HRESULT,
+    fn put_Acceleration(&self, value: f32) -> HRESULT,
+    fn get_Restitution(&self, out: *mut f32) -> HRESULT,
+    fn put_Restitution(&self, value: f32) -> HRESULT
+}}
+impl IBounceVector2NaturalMotionAnimation {
+    #[inline] pub fn get_acceleration(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Acceleration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_acceleration(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Acceleration)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_restitution(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Restitution)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_restitution(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Restitution)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BounceVector2NaturalMotionAnimation: IBounceVector2NaturalMotionAnimation}
+DEFINE_IID!(IID_IBounceVector3NaturalMotionAnimation, 1205517361, 4307, 17688, 134, 241, 9, 202, 247, 66, 209, 19);
+RT_INTERFACE!{interface IBounceVector3NaturalMotionAnimation(IBounceVector3NaturalMotionAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IBounceVector3NaturalMotionAnimation] {
+    fn get_Acceleration(&self, out: *mut f32) -> HRESULT,
+    fn put_Acceleration(&self, value: f32) -> HRESULT,
+    fn get_Restitution(&self, out: *mut f32) -> HRESULT,
+    fn put_Restitution(&self, value: f32) -> HRESULT
+}}
+impl IBounceVector3NaturalMotionAnimation {
+    #[inline] pub fn get_acceleration(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Acceleration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_acceleration(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Acceleration)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_restitution(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Restitution)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_restitution(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Restitution)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BounceVector3NaturalMotionAnimation: IBounceVector3NaturalMotionAnimation}
 DEFINE_IID!(IID_IColorKeyFrameAnimation, 2477635049, 36357, 17811, 132, 163, 220, 161, 82, 120, 30, 86);
 RT_INTERFACE!{interface IColorKeyFrameAnimation(IColorKeyFrameAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IColorKeyFrameAnimation] {
     fn get_InterpolationColorSpace(&self, out: *mut CompositionColorSpace) -> HRESULT,
@@ -16126,6 +16628,18 @@ RT_CLASS!{class CompositionCommitBatch: ICompositionCommitBatch}
 RT_ENUM! { enum CompositionCompositeMode: i32 {
     Inherit (CompositionCompositeMode_Inherit) = 0, SourceOver (CompositionCompositeMode_SourceOver) = 1, DestinationInvert (CompositionCompositeMode_DestinationInvert) = 2, MinBlend (CompositionCompositeMode_MinBlend) = 3,
 }}
+DEFINE_IID!(IID_ICompositionContainerShape, 1331594651, 11867, 17576, 152, 44, 170, 15, 105, 193, 96, 89);
+RT_INTERFACE!{interface ICompositionContainerShape(ICompositionContainerShapeVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionContainerShape] {
+    fn get_Shapes(&self, out: *mut *mut CompositionShapeCollection) -> HRESULT
+}}
+impl ICompositionContainerShape {
+    #[inline] pub fn get_shapes(&self) -> Result<Option<ComPtr<CompositionShapeCollection>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Shapes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CompositionContainerShape: ICompositionContainerShape}
 DEFINE_IID!(IID_ICompositionDrawingSurface, 2707866368, 64208, 19729, 158, 103, 228, 51, 22, 47, 244, 158);
 RT_INTERFACE!{interface ICompositionDrawingSurface(ICompositionDrawingSurfaceVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionDrawingSurface] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
@@ -16278,6 +16792,77 @@ impl ICompositionEffectSourceParameterFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_ICompositionEllipseGeometry, 1208088708, 63149, 19347, 175, 169, 137, 123, 100, 229, 123, 31);
+RT_INTERFACE!{interface ICompositionEllipseGeometry(ICompositionEllipseGeometryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionEllipseGeometry] {
+    fn get_Center(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_Center(&self, value: foundation::numerics::Vector2) -> HRESULT,
+    fn get_Radius(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_Radius(&self, value: foundation::numerics::Vector2) -> HRESULT
+}}
+impl ICompositionEllipseGeometry {
+    #[inline] pub fn get_center(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Center)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_center(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Center)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_radius(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Radius)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_radius(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Radius)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CompositionEllipseGeometry: ICompositionEllipseGeometry}
+DEFINE_IID!(IID_ICompositionGeometry, 3917816188, 27159, 16903, 171, 216, 95, 211, 221, 97, 42, 157);
+RT_INTERFACE!{interface ICompositionGeometry(ICompositionGeometryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionGeometry] {
+    fn get_TrimEnd(&self, out: *mut f32) -> HRESULT,
+    fn put_TrimEnd(&self, value: f32) -> HRESULT,
+    fn get_TrimOffset(&self, out: *mut f32) -> HRESULT,
+    fn put_TrimOffset(&self, value: f32) -> HRESULT,
+    fn get_TrimStart(&self, out: *mut f32) -> HRESULT,
+    fn put_TrimStart(&self, value: f32) -> HRESULT
+}}
+impl ICompositionGeometry {
+    #[inline] pub fn get_trim_end(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TrimEnd)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_trim_end(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TrimEnd)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_trim_offset(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TrimOffset)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_trim_offset(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TrimOffset)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_trim_start(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TrimStart)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_trim_start(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TrimStart)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CompositionGeometry: ICompositionGeometry}
+DEFINE_IID!(IID_ICompositionGeometryFactory, 3221143521, 35877, 18443, 159, 86, 254, 214, 178, 136, 5, 93);
+RT_INTERFACE!{interface ICompositionGeometryFactory(ICompositionGeometryFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionGeometryFactory] {
+    
+}}
 RT_ENUM! { enum CompositionGetValueStatus: i32 {
     Succeeded (CompositionGetValueStatus_Succeeded) = 0, TypeMismatch (CompositionGetValueStatus_TypeMismatch) = 1, NotFound (CompositionGetValueStatus_NotFound) = 2,
 }}
@@ -16463,6 +17048,22 @@ impl ICompositionLight2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_ICompositionLight3, 1259012324, 57095, 18777, 183, 164, 79, 126, 66, 51, 248, 56);
+RT_INTERFACE!{interface ICompositionLight3(ICompositionLight3Vtbl): IInspectable(IInspectableVtbl) [IID_ICompositionLight3] {
+    fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
+    fn put_IsEnabled(&self, value: bool) -> HRESULT
+}}
+impl ICompositionLight3 {
+    #[inline] pub fn get_is_enabled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsEnabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_enabled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsEnabled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_ICompositionLightFactory, 110949126, 55868, 19268, 131, 138, 94, 3, 213, 26, 206, 85);
 RT_INTERFACE!{interface ICompositionLightFactory(ICompositionLightFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionLightFactory] {
     
@@ -16495,6 +17096,34 @@ impl ICompositionLinearGradientBrush {
     }}
 }
 RT_CLASS!{class CompositionLinearGradientBrush: ICompositionLinearGradientBrush}
+DEFINE_IID!(IID_ICompositionLineGeometry, 3715503524, 3226, 19303, 141, 206, 68, 10, 91, 249, 205, 236);
+RT_INTERFACE!{interface ICompositionLineGeometry(ICompositionLineGeometryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionLineGeometry] {
+    fn get_Start(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_Start(&self, value: foundation::numerics::Vector2) -> HRESULT,
+    fn get_End(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_End(&self, value: foundation::numerics::Vector2) -> HRESULT
+}}
+impl ICompositionLineGeometry {
+    #[inline] pub fn get_start(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Start)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_start(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Start)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_end(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_End)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_end(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_End)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CompositionLineGeometry: ICompositionLineGeometry}
 DEFINE_IID!(IID_ICompositionMaskBrush, 1378676894, 48747, 20289, 190, 73, 249, 34, 109, 71, 27, 74);
 RT_INTERFACE!{interface ICompositionMaskBrush(ICompositionMaskBrushVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionMaskBrush] {
     fn get_Mask(&self, out: *mut *mut CompositionBrush) -> HRESULT,
@@ -16741,10 +17370,61 @@ impl ICompositionObject3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_ICompositionObject4, 196311116, 13419, 19068, 150, 107, 115, 16, 150, 101, 83, 213);
+RT_INTERFACE!{interface ICompositionObject4(ICompositionObject4Vtbl): IInspectable(IInspectableVtbl) [IID_ICompositionObject4] {
+    fn TryGetAnimationController(&self, propertyName: HSTRING, out: *mut *mut AnimationController) -> HRESULT
+}}
+impl ICompositionObject4 {
+    #[inline] pub fn try_get_animation_controller(&self, propertyName: &HStringArg) -> Result<Option<ComPtr<AnimationController>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryGetAnimationController)(self as *const _ as *mut _, propertyName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_ICompositionObjectFactory, 1361075294, 21898, 20266, 141, 57, 55, 191, 225, 226, 13, 221);
 RT_INTERFACE!{interface ICompositionObjectFactory(ICompositionObjectFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionObjectFactory] {
     
 }}
+DEFINE_IID!(IID_ICompositionPath, 1725570399, 11792, 20258, 138, 6, 10, 129, 81, 145, 158, 96);
+RT_INTERFACE!{interface ICompositionPath(ICompositionPathVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionPath] {
+    
+}}
+RT_CLASS!{class CompositionPath: ICompositionPath}
+impl RtActivatable<ICompositionPathFactory> for CompositionPath {}
+impl CompositionPath {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create(source: &super::super::graphics::IGeometrySource2D) -> Result<ComPtr<CompositionPath>> {
+        <Self as RtActivatable<ICompositionPathFactory>>::get_activation_factory().create(source)
+    }
+}
+DEFINE_CLSID!(CompositionPath(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,67,111,109,112,111,115,105,116,105,111,110,80,97,116,104,0]) [CLSID_CompositionPath]);
+DEFINE_IID!(IID_ICompositionPathFactory, 2619247722, 3891, 18257, 148, 55, 235, 63, 185, 211, 171, 7);
+RT_INTERFACE!{static interface ICompositionPathFactory(ICompositionPathFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionPathFactory] {
+    #[cfg(feature="windows-graphics")] fn Create(&self, source: *mut super::super::graphics::IGeometrySource2D, out: *mut *mut CompositionPath) -> HRESULT
+}}
+impl ICompositionPathFactory {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create(&self, source: &super::super::graphics::IGeometrySource2D) -> Result<ComPtr<CompositionPath>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, source as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ICompositionPathGeometry, 191512958, 11383, 19491, 175, 94, 99, 4, 193, 71, 187, 97);
+RT_INTERFACE!{interface ICompositionPathGeometry(ICompositionPathGeometryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionPathGeometry] {
+    fn get_Path(&self, out: *mut *mut CompositionPath) -> HRESULT,
+    fn put_Path(&self, value: *mut CompositionPath) -> HRESULT
+}}
+impl ICompositionPathGeometry {
+    #[inline] pub fn get_path(&self) -> Result<Option<ComPtr<CompositionPath>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Path)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_path(&self, value: &CompositionPath) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Path)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CompositionPathGeometry: ICompositionPathGeometry}
 DEFINE_IID!(IID_ICompositionPropertySet, 3386298882, 24423, 17491, 145, 23, 158, 173, 212, 48, 211, 194);
 RT_INTERFACE!{interface ICompositionPropertySet(ICompositionPropertySetVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionPropertySet] {
     fn InsertColor(&self, propertyName: HSTRING, value: super::Color) -> HRESULT,
@@ -16855,6 +17535,73 @@ impl ICompositionPropertySet2 {
         if hr == S_OK { Ok((value, out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_ICompositionRectangleGeometry, 215290920, 21334, 16966, 174, 207, 122, 11, 118, 151, 84, 0);
+RT_INTERFACE!{interface ICompositionRectangleGeometry(ICompositionRectangleGeometryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionRectangleGeometry] {
+    fn get_Offset(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_Offset(&self, value: foundation::numerics::Vector2) -> HRESULT,
+    fn get_Size(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_Size(&self, value: foundation::numerics::Vector2) -> HRESULT
+}}
+impl ICompositionRectangleGeometry {
+    #[inline] pub fn get_offset(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Offset)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_offset(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Offset)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_size(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_size(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Size)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CompositionRectangleGeometry: ICompositionRectangleGeometry}
+DEFINE_IID!(IID_ICompositionRoundedRectangleGeometry, 2272315426, 7504, 19339, 176, 19, 124, 154, 14, 70, 147, 95);
+RT_INTERFACE!{interface ICompositionRoundedRectangleGeometry(ICompositionRoundedRectangleGeometryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionRoundedRectangleGeometry] {
+    fn get_CornerRadius(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_CornerRadius(&self, value: foundation::numerics::Vector2) -> HRESULT,
+    fn get_Offset(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_Offset(&self, value: foundation::numerics::Vector2) -> HRESULT,
+    fn get_Size(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_Size(&self, value: foundation::numerics::Vector2) -> HRESULT
+}}
+impl ICompositionRoundedRectangleGeometry {
+    #[inline] pub fn get_corner_radius(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CornerRadius)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_corner_radius(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CornerRadius)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_offset(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Offset)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_offset(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Offset)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_size(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_size(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Size)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CompositionRoundedRectangleGeometry: ICompositionRoundedRectangleGeometry}
 DEFINE_IID!(IID_ICompositionScopedBatch, 218159824, 64263, 18173, 140, 114, 98, 128, 209, 163, 209, 221);
 RT_INTERFACE!{interface ICompositionScopedBatch(ICompositionScopedBatchVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionScopedBatch] {
     fn get_IsActive(&self, out: *mut bool) -> HRESULT,
@@ -16908,8 +17655,225 @@ DEFINE_IID!(IID_ICompositionShadowFactory, 572475695, 56506, 19345, 153, 158, 29
 RT_INTERFACE!{interface ICompositionShadowFactory(ICompositionShadowFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionShadowFactory] {
     
 }}
+DEFINE_IID!(IID_ICompositionShape, 3028083447, 39560, 17092, 158, 135, 46, 80, 12, 168, 104, 140);
+RT_INTERFACE!{interface ICompositionShape(ICompositionShapeVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionShape] {
+    fn get_CenterPoint(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_CenterPoint(&self, value: foundation::numerics::Vector2) -> HRESULT,
+    fn get_Offset(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_Offset(&self, value: foundation::numerics::Vector2) -> HRESULT,
+    fn get_RotationAngle(&self, out: *mut f32) -> HRESULT,
+    fn put_RotationAngle(&self, value: f32) -> HRESULT,
+    fn get_RotationAngleInDegrees(&self, out: *mut f32) -> HRESULT,
+    fn put_RotationAngleInDegrees(&self, value: f32) -> HRESULT,
+    fn get_Scale(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_Scale(&self, value: foundation::numerics::Vector2) -> HRESULT,
+    fn get_TransformMatrix(&self, out: *mut foundation::numerics::Matrix3x2) -> HRESULT,
+    fn put_TransformMatrix(&self, value: foundation::numerics::Matrix3x2) -> HRESULT
+}}
+impl ICompositionShape {
+    #[inline] pub fn get_center_point(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CenterPoint)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_center_point(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CenterPoint)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_offset(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Offset)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_offset(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Offset)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_rotation_angle(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_RotationAngle)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_rotation_angle(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_RotationAngle)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_rotation_angle_in_degrees(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_RotationAngleInDegrees)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_rotation_angle_in_degrees(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_RotationAngleInDegrees)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_scale(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Scale)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_scale(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Scale)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_transform_matrix(&self) -> Result<foundation::numerics::Matrix3x2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TransformMatrix)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_transform_matrix(&self, value: foundation::numerics::Matrix3x2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TransformMatrix)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CompositionShape: ICompositionShape}
+RT_CLASS!{class CompositionShapeCollection: foundation::collections::IVector<CompositionShape>}
+DEFINE_IID!(IID_ICompositionShapeFactory, 503068368, 45146, 17647, 130, 176, 18, 17, 139, 205, 76, 208);
+RT_INTERFACE!{interface ICompositionShapeFactory(ICompositionShapeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionShapeFactory] {
+    
+}}
+DEFINE_IID!(IID_ICompositionSpriteShape, 1075536315, 7, 17251, 177, 243, 107, 204, 0, 63, 184, 62);
+RT_INTERFACE!{interface ICompositionSpriteShape(ICompositionSpriteShapeVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionSpriteShape] {
+    fn get_FillBrush(&self, out: *mut *mut CompositionBrush) -> HRESULT,
+    fn put_FillBrush(&self, value: *mut CompositionBrush) -> HRESULT,
+    fn get_Geometry(&self, out: *mut *mut CompositionGeometry) -> HRESULT,
+    fn put_Geometry(&self, value: *mut CompositionGeometry) -> HRESULT,
+    fn get_IsStrokeNonScaling(&self, out: *mut bool) -> HRESULT,
+    fn put_IsStrokeNonScaling(&self, value: bool) -> HRESULT,
+    fn get_StrokeBrush(&self, out: *mut *mut CompositionBrush) -> HRESULT,
+    fn put_StrokeBrush(&self, value: *mut CompositionBrush) -> HRESULT,
+    fn get_StrokeDashArray(&self, out: *mut *mut CompositionStrokeDashArray) -> HRESULT,
+    fn get_StrokeDashCap(&self, out: *mut CompositionStrokeCap) -> HRESULT,
+    fn put_StrokeDashCap(&self, value: CompositionStrokeCap) -> HRESULT,
+    fn get_StrokeDashOffset(&self, out: *mut f32) -> HRESULT,
+    fn put_StrokeDashOffset(&self, value: f32) -> HRESULT,
+    fn get_StrokeEndCap(&self, out: *mut CompositionStrokeCap) -> HRESULT,
+    fn put_StrokeEndCap(&self, value: CompositionStrokeCap) -> HRESULT,
+    fn get_StrokeLineJoin(&self, out: *mut CompositionStrokeLineJoin) -> HRESULT,
+    fn put_StrokeLineJoin(&self, value: CompositionStrokeLineJoin) -> HRESULT,
+    fn get_StrokeMiterLimit(&self, out: *mut f32) -> HRESULT,
+    fn put_StrokeMiterLimit(&self, value: f32) -> HRESULT,
+    fn get_StrokeStartCap(&self, out: *mut CompositionStrokeCap) -> HRESULT,
+    fn put_StrokeStartCap(&self, value: CompositionStrokeCap) -> HRESULT,
+    fn get_StrokeThickness(&self, out: *mut f32) -> HRESULT,
+    fn put_StrokeThickness(&self, value: f32) -> HRESULT
+}}
+impl ICompositionSpriteShape {
+    #[inline] pub fn get_fill_brush(&self) -> Result<Option<ComPtr<CompositionBrush>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_FillBrush)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_fill_brush(&self, value: &CompositionBrush) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_FillBrush)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_geometry(&self) -> Result<Option<ComPtr<CompositionGeometry>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Geometry)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_geometry(&self, value: &CompositionGeometry) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Geometry)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_stroke_non_scaling(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsStrokeNonScaling)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_stroke_non_scaling(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsStrokeNonScaling)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stroke_brush(&self) -> Result<Option<ComPtr<CompositionBrush>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_StrokeBrush)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_stroke_brush(&self, value: &CompositionBrush) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StrokeBrush)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stroke_dash_array(&self) -> Result<Option<ComPtr<CompositionStrokeDashArray>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_StrokeDashArray)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stroke_dash_cap(&self) -> Result<CompositionStrokeCap> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_StrokeDashCap)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_stroke_dash_cap(&self, value: CompositionStrokeCap) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StrokeDashCap)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stroke_dash_offset(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_StrokeDashOffset)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_stroke_dash_offset(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StrokeDashOffset)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stroke_end_cap(&self) -> Result<CompositionStrokeCap> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_StrokeEndCap)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_stroke_end_cap(&self, value: CompositionStrokeCap) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StrokeEndCap)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stroke_line_join(&self) -> Result<CompositionStrokeLineJoin> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_StrokeLineJoin)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_stroke_line_join(&self, value: CompositionStrokeLineJoin) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StrokeLineJoin)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stroke_miter_limit(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_StrokeMiterLimit)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_stroke_miter_limit(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StrokeMiterLimit)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stroke_start_cap(&self) -> Result<CompositionStrokeCap> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_StrokeStartCap)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_stroke_start_cap(&self, value: CompositionStrokeCap) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StrokeStartCap)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stroke_thickness(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_StrokeThickness)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_stroke_thickness(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StrokeThickness)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CompositionSpriteShape: ICompositionSpriteShape}
 RT_ENUM! { enum CompositionStretch: i32 {
     None (CompositionStretch_None) = 0, Fill (CompositionStretch_Fill) = 1, Uniform (CompositionStretch_Uniform) = 2, UniformToFill (CompositionStretch_UniformToFill) = 3,
+}}
+RT_ENUM! { enum CompositionStrokeCap: i32 {
+    Flat (CompositionStrokeCap_Flat) = 0, Square (CompositionStrokeCap_Square) = 1, Round (CompositionStrokeCap_Round) = 2, Triangle (CompositionStrokeCap_Triangle) = 3,
+}}
+RT_CLASS!{class CompositionStrokeDashArray: foundation::collections::IVector<f32>}
+RT_ENUM! { enum CompositionStrokeLineJoin: i32 {
+    Miter (CompositionStrokeLineJoin_Miter) = 0, Bevel (CompositionStrokeLineJoin_Bevel) = 1, Round (CompositionStrokeLineJoin_Round) = 2, MiterOrBevel (CompositionStrokeLineJoin_MiterOrBevel) = 3,
 }}
 DEFINE_IID!(IID_ICompositionSurface, 354898957, 17095, 18342, 164, 8, 102, 143, 121, 169, 13, 251);
 RT_INTERFACE!{interface ICompositionSurface(ICompositionSurfaceVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionSurface] {
@@ -17079,6 +18043,67 @@ DEFINE_IID!(IID_ICompositionTargetFactory, 2479725867, 34070, 19220, 168, 206, 2
 RT_INTERFACE!{interface ICompositionTargetFactory(ICompositionTargetFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionTargetFactory] {
     
 }}
+DEFINE_IID!(IID_ICompositionViewBox, 3024142087, 1679, 17719, 132, 198, 78, 203, 224, 25, 225, 244);
+RT_INTERFACE!{interface ICompositionViewBox(ICompositionViewBoxVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionViewBox] {
+    fn get_HorizontalAlignmentRatio(&self, out: *mut f32) -> HRESULT,
+    fn put_HorizontalAlignmentRatio(&self, value: f32) -> HRESULT,
+    fn get_Offset(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_Offset(&self, value: foundation::numerics::Vector2) -> HRESULT,
+    fn get_Size(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
+    fn put_Size(&self, value: foundation::numerics::Vector2) -> HRESULT,
+    fn get_Stretch(&self, out: *mut CompositionStretch) -> HRESULT,
+    fn put_Stretch(&self, value: CompositionStretch) -> HRESULT,
+    fn get_VerticalAlignmentRatio(&self, out: *mut f32) -> HRESULT,
+    fn put_VerticalAlignmentRatio(&self, value: f32) -> HRESULT
+}}
+impl ICompositionViewBox {
+    #[inline] pub fn get_horizontal_alignment_ratio(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_HorizontalAlignmentRatio)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_horizontal_alignment_ratio(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_HorizontalAlignmentRatio)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_offset(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Offset)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_offset(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Offset)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_size(&self) -> Result<foundation::numerics::Vector2> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_size(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Size)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stretch(&self) -> Result<CompositionStretch> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Stretch)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_stretch(&self, value: CompositionStretch) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Stretch)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_vertical_alignment_ratio(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_VerticalAlignmentRatio)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_vertical_alignment_ratio(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_VerticalAlignmentRatio)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CompositionViewBox: ICompositionViewBox}
 DEFINE_IID!(IID_ICompositionVirtualDrawingSurface, 2848163035, 34624, 20372, 139, 157, 182, 133, 33, 231, 134, 61);
 RT_INTERFACE!{interface ICompositionVirtualDrawingSurface(ICompositionVirtualDrawingSurfaceVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionVirtualDrawingSurface] {
     #[cfg(feature="windows-graphics")] fn Trim(&self, rectsSize: u32, rects: *mut super::super::graphics::RectInt32) -> HRESULT
@@ -17246,7 +18271,16 @@ impl ICompositor {
     }}
 }
 RT_CLASS!{class Compositor: ICompositor}
+impl RtActivatable<ICompositorStatics> for Compositor {}
 impl RtActivatable<IActivationFactory> for Compositor {}
+impl Compositor {
+    #[inline] pub fn get_max_global_playback_rate() -> Result<f32> {
+        <Self as RtActivatable<ICompositorStatics>>::get_activation_factory().get_max_global_playback_rate()
+    }
+    #[inline] pub fn get_min_global_playback_rate() -> Result<f32> {
+        <Self as RtActivatable<ICompositorStatics>>::get_activation_factory().get_min_global_playback_rate()
+    }
+}
 DEFINE_CLSID!(Compositor(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,67,111,109,112,111,115,105,116,111,114,0]) [CLSID_Compositor]);
 DEFINE_IID!(IID_ICompositor2, 1934655964, 24100, 17882, 163, 143, 227, 44, 195, 73, 169, 160);
 RT_INTERFACE!{interface ICompositor2(ICompositor2Vtbl): IInspectable(IInspectableVtbl) [IID_ICompositor2] {
@@ -17381,6 +18415,146 @@ impl ICompositor4 {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateSpringVector3Animation)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ICompositor5, 1223307693, 32717, 16502, 167, 156, 144, 204, 75, 133, 44, 155);
+RT_INTERFACE!{interface ICompositor5(ICompositor5Vtbl): IInspectable(IInspectableVtbl) [IID_ICompositor5] {
+    fn get_Comment(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Comment(&self, value: HSTRING) -> HRESULT,
+    fn get_GlobalPlaybackRate(&self, out: *mut f32) -> HRESULT,
+    fn put_GlobalPlaybackRate(&self, value: f32) -> HRESULT,
+    fn CreateBounceScalarAnimation(&self, out: *mut *mut BounceScalarNaturalMotionAnimation) -> HRESULT,
+    fn CreateBounceVector2Animation(&self, out: *mut *mut BounceVector2NaturalMotionAnimation) -> HRESULT,
+    fn CreateBounceVector3Animation(&self, out: *mut *mut BounceVector3NaturalMotionAnimation) -> HRESULT,
+    fn CreateContainerShape(&self, out: *mut *mut CompositionContainerShape) -> HRESULT,
+    fn CreateEllipseGeometry(&self, out: *mut *mut CompositionEllipseGeometry) -> HRESULT,
+    fn CreateLineGeometry(&self, out: *mut *mut CompositionLineGeometry) -> HRESULT,
+    fn CreatePathGeometry(&self, out: *mut *mut CompositionPathGeometry) -> HRESULT,
+    fn CreatePathGeometryWithPath(&self, path: *mut CompositionPath, out: *mut *mut CompositionPathGeometry) -> HRESULT,
+    fn CreatePathKeyFrameAnimation(&self, out: *mut *mut PathKeyFrameAnimation) -> HRESULT,
+    fn CreateRectangleGeometry(&self, out: *mut *mut CompositionRectangleGeometry) -> HRESULT,
+    fn CreateRoundedRectangleGeometry(&self, out: *mut *mut CompositionRoundedRectangleGeometry) -> HRESULT,
+    fn CreateShapeVisual(&self, out: *mut *mut ShapeVisual) -> HRESULT,
+    fn CreateSpriteShape(&self, out: *mut *mut CompositionSpriteShape) -> HRESULT,
+    fn CreateSpriteShapeWithGeometry(&self, geometry: *mut CompositionGeometry, out: *mut *mut CompositionSpriteShape) -> HRESULT,
+    fn CreateViewBox(&self, out: *mut *mut CompositionViewBox) -> HRESULT,
+    fn RequestCommitAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl ICompositor5 {
+    #[inline] pub fn get_comment(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Comment)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_comment(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Comment)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_global_playback_rate(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_GlobalPlaybackRate)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_global_playback_rate(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_GlobalPlaybackRate)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn create_bounce_scalar_animation(&self) -> Result<Option<ComPtr<BounceScalarNaturalMotionAnimation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateBounceScalarAnimation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_bounce_vector2_animation(&self) -> Result<Option<ComPtr<BounceVector2NaturalMotionAnimation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateBounceVector2Animation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_bounce_vector3_animation(&self) -> Result<Option<ComPtr<BounceVector3NaturalMotionAnimation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateBounceVector3Animation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_container_shape(&self) -> Result<Option<ComPtr<CompositionContainerShape>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateContainerShape)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_ellipse_geometry(&self) -> Result<Option<ComPtr<CompositionEllipseGeometry>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateEllipseGeometry)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_line_geometry(&self) -> Result<Option<ComPtr<CompositionLineGeometry>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateLineGeometry)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_path_geometry(&self) -> Result<Option<ComPtr<CompositionPathGeometry>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreatePathGeometry)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_path_geometry_with_path(&self, path: &CompositionPath) -> Result<Option<ComPtr<CompositionPathGeometry>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreatePathGeometryWithPath)(self as *const _ as *mut _, path as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_path_key_frame_animation(&self) -> Result<Option<ComPtr<PathKeyFrameAnimation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreatePathKeyFrameAnimation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_rectangle_geometry(&self) -> Result<Option<ComPtr<CompositionRectangleGeometry>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateRectangleGeometry)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_rounded_rectangle_geometry(&self) -> Result<Option<ComPtr<CompositionRoundedRectangleGeometry>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateRoundedRectangleGeometry)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_shape_visual(&self) -> Result<Option<ComPtr<ShapeVisual>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateShapeVisual)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_sprite_shape(&self) -> Result<Option<ComPtr<CompositionSpriteShape>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateSpriteShape)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_sprite_shape_with_geometry(&self, geometry: &CompositionGeometry) -> Result<Option<ComPtr<CompositionSpriteShape>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateSpriteShapeWithGeometry)(self as *const _ as *mut _, geometry as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_view_box(&self) -> Result<Option<ComPtr<CompositionViewBox>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateViewBox)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_commit_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestCommitAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ICompositorStatics, 135117118, 4638, 19863, 139, 116, 29, 252, 249, 25, 135, 234);
+RT_INTERFACE!{static interface ICompositorStatics(ICompositorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICompositorStatics] {
+    fn get_MaxGlobalPlaybackRate(&self, out: *mut f32) -> HRESULT,
+    fn get_MinGlobalPlaybackRate(&self, out: *mut f32) -> HRESULT
+}}
+impl ICompositorStatics {
+    #[inline] pub fn get_max_global_playback_rate(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxGlobalPlaybackRate)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_min_global_playback_rate(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MinGlobalPlaybackRate)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IContainerVisual, 49724532, 60704, 18291, 175, 230, 212, 155, 74, 147, 219, 50);
@@ -17816,6 +18990,22 @@ DEFINE_IID!(IID_INaturalMotionAnimationFactory, 4114270982, 53098, 17287, 163, 2
 RT_INTERFACE!{interface INaturalMotionAnimationFactory(INaturalMotionAnimationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INaturalMotionAnimationFactory] {
     
 }}
+DEFINE_IID!(IID_IPathKeyFrameAnimation, 2634881225, 5494, 19263, 190, 96, 29, 80, 49, 245, 231, 27);
+RT_INTERFACE!{interface IPathKeyFrameAnimation(IPathKeyFrameAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IPathKeyFrameAnimation] {
+    fn InsertKeyFrame(&self, normalizedProgressKey: f32, path: *mut CompositionPath) -> HRESULT,
+    fn InsertKeyFrameWithEasingFunction(&self, normalizedProgressKey: f32, path: *mut CompositionPath, easingFunction: *mut CompositionEasingFunction) -> HRESULT
+}}
+impl IPathKeyFrameAnimation {
+    #[inline] pub fn insert_key_frame(&self, normalizedProgressKey: f32, path: &CompositionPath) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).InsertKeyFrame)(self as *const _ as *mut _, normalizedProgressKey, path as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn insert_key_frame_with_easing_function(&self, normalizedProgressKey: f32, path: &CompositionPath, easingFunction: &CompositionEasingFunction) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).InsertKeyFrameWithEasingFunction)(self as *const _ as *mut _, normalizedProgressKey, path as *const _ as *mut _, easingFunction as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PathKeyFrameAnimation: IPathKeyFrameAnimation}
 DEFINE_IID!(IID_IPointLight, 2978301363, 3162, 19120, 190, 220, 79, 53, 70, 148, 130, 114);
 RT_INTERFACE!{interface IPointLight(IPointLightVtbl): IInspectable(IInspectableVtbl) [IID_IPointLight] {
     fn get_Color(&self, out: *mut super::Color) -> HRESULT,
@@ -17901,6 +19091,33 @@ impl IPointLight2 {
     }}
     #[inline] pub fn set_intensity(&self, value: f32) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Intensity)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPointLight3, 1275757415, 54505, 18058, 135, 174, 123, 164, 58, 178, 148, 133);
+RT_INTERFACE!{interface IPointLight3(IPointLight3Vtbl): IInspectable(IInspectableVtbl) [IID_IPointLight3] {
+    fn get_MinAttenuationCutoff(&self, out: *mut f32) -> HRESULT,
+    fn put_MinAttenuationCutoff(&self, value: f32) -> HRESULT,
+    fn get_MaxAttenuationCutoff(&self, out: *mut f32) -> HRESULT,
+    fn put_MaxAttenuationCutoff(&self, value: f32) -> HRESULT
+}}
+impl IPointLight3 {
+    #[inline] pub fn get_min_attenuation_cutoff(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MinAttenuationCutoff)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_min_attenuation_cutoff(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MinAttenuationCutoff)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_attenuation_cutoff(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxAttenuationCutoff)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_max_attenuation_cutoff(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaxAttenuationCutoff)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -17991,6 +19208,29 @@ DEFINE_IID!(IID_IScalarNaturalMotionAnimationFactory, 2203755772, 26396, 16861, 
 RT_INTERFACE!{interface IScalarNaturalMotionAnimationFactory(IScalarNaturalMotionAnimationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IScalarNaturalMotionAnimationFactory] {
     
 }}
+DEFINE_IID!(IID_IShapeVisual, 4072477635, 47742, 19215, 145, 38, 255, 183, 83, 107, 129, 118);
+RT_INTERFACE!{interface IShapeVisual(IShapeVisualVtbl): IInspectable(IInspectableVtbl) [IID_IShapeVisual] {
+    fn get_Shapes(&self, out: *mut *mut CompositionShapeCollection) -> HRESULT,
+    fn get_ViewBox(&self, out: *mut *mut CompositionViewBox) -> HRESULT,
+    fn put_ViewBox(&self, value: *mut CompositionViewBox) -> HRESULT
+}}
+impl IShapeVisual {
+    #[inline] pub fn get_shapes(&self) -> Result<Option<ComPtr<CompositionShapeCollection>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Shapes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_view_box(&self) -> Result<Option<ComPtr<CompositionViewBox>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ViewBox)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_view_box(&self, value: &CompositionViewBox) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ViewBox)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ShapeVisual: IShapeVisual}
 DEFINE_IID!(IID_ISpotLight, 1520427635, 17569, 20373, 164, 34, 143, 165, 17, 107, 219, 68);
 RT_INTERFACE!{interface ISpotLight(ISpotLightVtbl): IInspectable(IInspectableVtbl) [IID_ISpotLight] {
     fn get_ConstantAttenuation(&self, out: *mut f32) -> HRESULT,
@@ -18153,6 +19393,33 @@ impl ISpotLight2 {
     }}
     #[inline] pub fn set_outer_cone_intensity(&self, value: f32) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_OuterConeIntensity)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISpotLight3, 3838852842, 4895, 18446, 133, 158, 184, 39, 5, 183, 67, 96);
+RT_INTERFACE!{interface ISpotLight3(ISpotLight3Vtbl): IInspectable(IInspectableVtbl) [IID_ISpotLight3] {
+    fn get_MinAttenuationCutoff(&self, out: *mut f32) -> HRESULT,
+    fn put_MinAttenuationCutoff(&self, value: f32) -> HRESULT,
+    fn get_MaxAttenuationCutoff(&self, out: *mut f32) -> HRESULT,
+    fn put_MaxAttenuationCutoff(&self, value: f32) -> HRESULT
+}}
+impl ISpotLight3 {
+    #[inline] pub fn get_min_attenuation_cutoff(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MinAttenuationCutoff)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_min_attenuation_cutoff(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MinAttenuationCutoff)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_attenuation_cutoff(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxAttenuationCutoff)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_max_attenuation_cutoff(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaxAttenuationCutoff)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -18767,6 +20034,122 @@ impl IVisualUnorderedCollection {
     }}
 }
 RT_CLASS!{class VisualUnorderedCollection: IVisualUnorderedCollection}
+pub mod core { // Windows.UI.Composition.Core
+use ::prelude::*;
+DEFINE_IID!(IID_ICompositorController, 762704730, 28839, 17301, 186, 45, 206, 240, 177, 131, 153, 249);
+RT_INTERFACE!{interface ICompositorController(ICompositorControllerVtbl): IInspectable(IInspectableVtbl) [IID_ICompositorController] {
+    fn get_Compositor(&self, out: *mut *mut super::Compositor) -> HRESULT,
+    fn Commit(&self) -> HRESULT,
+    fn EnsurePreviousCommitCompletedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn add_CommitNeeded(&self, handler: *mut foundation::TypedEventHandler<CompositorController, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_CommitNeeded(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl ICompositorController {
+    #[inline] pub fn get_compositor(&self) -> Result<Option<ComPtr<super::Compositor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Compositor)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn commit(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Commit)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn ensure_previous_commit_completed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).EnsurePreviousCommitCompletedAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_commit_needed(&self, handler: &foundation::TypedEventHandler<CompositorController, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_CommitNeeded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_commit_needed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_CommitNeeded)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CompositorController: ICompositorController}
+impl RtActivatable<IActivationFactory> for CompositorController {}
+DEFINE_CLSID!(CompositorController(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,67,111,114,101,46,67,111,109,112,111,115,105,116,111,114,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_CompositorController]);
+} // Windows.UI.Composition.Core
+pub mod desktop { // Windows.UI.Composition.Desktop
+use ::prelude::*;
+DEFINE_IID!(IID_IDesktopWindowTarget, 1663686346, 13158, 18702, 157, 179, 37, 49, 41, 41, 172, 81);
+RT_INTERFACE!{interface IDesktopWindowTarget(IDesktopWindowTargetVtbl): IInspectable(IInspectableVtbl) [IID_IDesktopWindowTarget] {
+    fn get_IsTopmost(&self, out: *mut bool) -> HRESULT
+}}
+impl IDesktopWindowTarget {
+    #[inline] pub fn get_is_topmost(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsTopmost)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DesktopWindowTarget: IDesktopWindowTarget}
+} // Windows.UI.Composition.Desktop
+pub mod diagnostics { // Windows.UI.Composition.Diagnostics
+use ::prelude::*;
+DEFINE_IID!(IID_ICompositionDebugHeatMaps, 3835465900, 12275, 22533, 113, 140, 183, 37, 238, 7, 101, 15);
+RT_INTERFACE!{interface ICompositionDebugHeatMaps(ICompositionDebugHeatMapsVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionDebugHeatMaps] {
+    fn Hide(&self, subtree: *mut super::Visual) -> HRESULT,
+    fn ShowMemoryUsage(&self, subtree: *mut super::Visual) -> HRESULT,
+    fn ShowOverdraw(&self, subtree: *mut super::Visual, contentKinds: CompositionDebugOverdrawContentKinds) -> HRESULT,
+    fn ShowRedraw(&self, subtree: *mut super::Visual) -> HRESULT
+}}
+impl ICompositionDebugHeatMaps {
+    #[inline] pub fn hide(&self, subtree: &super::Visual) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Hide)(self as *const _ as *mut _, subtree as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn show_memory_usage(&self, subtree: &super::Visual) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ShowMemoryUsage)(self as *const _ as *mut _, subtree as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn show_overdraw(&self, subtree: &super::Visual, contentKinds: CompositionDebugOverdrawContentKinds) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ShowOverdraw)(self as *const _ as *mut _, subtree as *const _ as *mut _, contentKinds);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn show_redraw(&self, subtree: &super::Visual) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ShowRedraw)(self as *const _ as *mut _, subtree as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CompositionDebugHeatMaps: ICompositionDebugHeatMaps}
+RT_ENUM! { enum CompositionDebugOverdrawContentKinds: u32 {
+    None (CompositionDebugOverdrawContentKinds_None) = 0, OffscreenRendered (CompositionDebugOverdrawContentKinds_OffscreenRendered) = 1, Colors (CompositionDebugOverdrawContentKinds_Colors) = 2, Effects (CompositionDebugOverdrawContentKinds_Effects) = 4, Shadows (CompositionDebugOverdrawContentKinds_Shadows) = 8, Lights (CompositionDebugOverdrawContentKinds_Lights) = 16, Surfaces (CompositionDebugOverdrawContentKinds_Surfaces) = 32, SwapChains (CompositionDebugOverdrawContentKinds_SwapChains) = 64, All (CompositionDebugOverdrawContentKinds_All) = 4294967295,
+}}
+DEFINE_IID!(IID_ICompositionDebugSettings, 674338942, 7554, 19768, 183, 183, 239, 209, 28, 123, 195, 209);
+RT_INTERFACE!{interface ICompositionDebugSettings(ICompositionDebugSettingsVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionDebugSettings] {
+    fn get_HeatMaps(&self, out: *mut *mut CompositionDebugHeatMaps) -> HRESULT
+}}
+impl ICompositionDebugSettings {
+    #[inline] pub fn get_heat_maps(&self) -> Result<Option<ComPtr<CompositionDebugHeatMaps>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_HeatMaps)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CompositionDebugSettings: ICompositionDebugSettings}
+impl RtActivatable<ICompositionDebugSettingsStatics> for CompositionDebugSettings {}
+impl CompositionDebugSettings {
+    #[inline] pub fn try_get_settings(compositor: &super::Compositor) -> Result<Option<ComPtr<CompositionDebugSettings>>> {
+        <Self as RtActivatable<ICompositionDebugSettingsStatics>>::get_activation_factory().try_get_settings(compositor)
+    }
+}
+DEFINE_CLSID!(CompositionDebugSettings(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,67,111,109,112,111,115,105,116,105,111,110,68,101,98,117,103,83,101,116,116,105,110,103,115,0]) [CLSID_CompositionDebugSettings]);
+DEFINE_IID!(IID_ICompositionDebugSettingsStatics, 1693196062, 27384, 19192, 184, 20, 200, 112, 253, 90, 149, 5);
+RT_INTERFACE!{static interface ICompositionDebugSettingsStatics(ICompositionDebugSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionDebugSettingsStatics] {
+    fn TryGetSettings(&self, compositor: *mut super::Compositor, out: *mut *mut CompositionDebugSettings) -> HRESULT
+}}
+impl ICompositionDebugSettingsStatics {
+    #[inline] pub fn try_get_settings(&self, compositor: &super::Compositor) -> Result<Option<ComPtr<CompositionDebugSettings>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryGetSettings)(self as *const _ as *mut _, compositor as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+} // Windows.UI.Composition.Diagnostics
 pub mod effects { // Windows.UI.Composition.Effects
 use ::prelude::*;
 DEFINE_IID!(IID_ISceneLightingEffect, 2444975698, 38353, 20363, 154, 90, 100, 8, 178, 75, 140, 106);
@@ -19735,7 +21118,7 @@ RT_INTERFACE!{interface IVisualInteractionSourceObjectFactory(IVisualInteraction
     
 }}
 RT_ENUM! { enum VisualInteractionSourceRedirectionMode: i32 {
-    Off (VisualInteractionSourceRedirectionMode_Off) = 0, CapableTouchpadOnly (VisualInteractionSourceRedirectionMode_CapableTouchpadOnly) = 1,
+    Off (VisualInteractionSourceRedirectionMode_Off) = 0, CapableTouchpadOnly (VisualInteractionSourceRedirectionMode_CapableTouchpadOnly) = 1, PointerWheelOnly (VisualInteractionSourceRedirectionMode_PointerWheelOnly) = 2, CapableTouchpadAndPointerWheel (VisualInteractionSourceRedirectionMode_CapableTouchpadAndPointerWheel) = 3,
 }}
 DEFINE_IID!(IID_IVisualInteractionSourceStatics, 916022753, 34373, 20341, 186, 0, 100, 121, 205, 16, 200, 230);
 RT_INTERFACE!{static interface IVisualInteractionSourceStatics(IVisualInteractionSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVisualInteractionSourceStatics] {

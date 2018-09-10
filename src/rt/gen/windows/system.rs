@@ -1,4 +1,22 @@
 use ::prelude::*;
+DEFINE_IID!(IID_IAppActivationResult, 1800571136, 62574, 20144, 170, 108, 56, 175, 85, 124, 249, 237);
+RT_INTERFACE!{interface IAppActivationResult(IAppActivationResultVtbl): IInspectable(IInspectableVtbl) [IID_IAppActivationResult] {
+    fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
+    fn get_AppResourceGroupInfo(&self, out: *mut *mut AppResourceGroupInfo) -> HRESULT
+}}
+impl IAppActivationResult {
+    #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ExtendedError)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_app_resource_group_info(&self) -> Result<Option<ComPtr<AppResourceGroupInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AppResourceGroupInfo)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class AppActivationResult: IAppActivationResult}
 DEFINE_IID!(IID_IAppDiagnosticInfo, 3813189274, 34953, 19619, 190, 7, 213, 255, 255, 95, 8, 4);
 RT_INTERFACE!{interface IAppDiagnosticInfo(IAppDiagnosticInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppDiagnosticInfo] {
     #[cfg(feature="windows-applicationmodel")] fn get_AppInfo(&self, out: *mut *mut super::applicationmodel::AppInfo) -> HRESULT
@@ -49,6 +67,17 @@ impl IAppDiagnosticInfo2 {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateResourceGroupWatcher)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IAppDiagnosticInfo3, 3365258813, 56673, 19557, 186, 189, 129, 161, 11, 79, 152, 21);
+RT_INTERFACE!{interface IAppDiagnosticInfo3(IAppDiagnosticInfo3Vtbl): IInspectable(IInspectableVtbl) [IID_IAppDiagnosticInfo3] {
+    fn LaunchAsync(&self, out: *mut *mut foundation::IAsyncOperation<AppActivationResult>) -> HRESULT
+}}
+impl IAppDiagnosticInfo3 {
+    #[inline] pub fn launch_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<AppActivationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).LaunchAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IAppDiagnosticInfoStatics, 3462997439, 4298, 16584, 169, 202, 197, 201, 101, 1, 134, 110);
@@ -178,6 +207,18 @@ RT_CLASS!{class AppDiagnosticInfoWatcherEventArgs: IAppDiagnosticInfoWatcherEven
 RT_ENUM! { enum AppDiagnosticInfoWatcherStatus: i32 {
     Created (AppDiagnosticInfoWatcherStatus_Created) = 0, Started (AppDiagnosticInfoWatcherStatus_Started) = 1, EnumerationCompleted (AppDiagnosticInfoWatcherStatus_EnumerationCompleted) = 2, Stopping (AppDiagnosticInfoWatcherStatus_Stopping) = 3, Stopped (AppDiagnosticInfoWatcherStatus_Stopped) = 4, Aborted (AppDiagnosticInfoWatcherStatus_Aborted) = 5,
 }}
+DEFINE_IID!(IID_IAppExecutionStateChangeResult, 1862507504, 63771, 19960, 174, 119, 48, 51, 204, 182, 145, 20);
+RT_INTERFACE!{interface IAppExecutionStateChangeResult(IAppExecutionStateChangeResultVtbl): IInspectable(IInspectableVtbl) [IID_IAppExecutionStateChangeResult] {
+    fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
+}}
+impl IAppExecutionStateChangeResult {
+    #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ExtendedError)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class AppExecutionStateChangeResult: IAppExecutionStateChangeResult}
 DEFINE_IID!(IID_IAppMemoryReport, 1835348891, 19823, 17852, 156, 94, 228, 155, 63, 242, 117, 141);
 RT_INTERFACE!{interface IAppMemoryReport(IAppMemoryReportVtbl): IInspectable(IInspectableVtbl) [IID_IAppMemoryReport] {
     fn get_PrivateCommitUsage(&self, out: *mut u64) -> HRESULT,
@@ -318,6 +359,29 @@ impl IAppResourceGroupInfo {
     }}
 }
 RT_CLASS!{class AppResourceGroupInfo: IAppResourceGroupInfo}
+DEFINE_IID!(IID_IAppResourceGroupInfo2, 4003144557, 54021, 19819, 146, 247, 106, 253, 173, 114, 222, 220);
+RT_INTERFACE!{interface IAppResourceGroupInfo2(IAppResourceGroupInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupInfo2] {
+    fn StartSuspendAsync(&self, out: *mut *mut foundation::IAsyncOperation<AppExecutionStateChangeResult>) -> HRESULT,
+    fn StartResumeAsync(&self, out: *mut *mut foundation::IAsyncOperation<AppExecutionStateChangeResult>) -> HRESULT,
+    fn StartTerminateAsync(&self, out: *mut *mut foundation::IAsyncOperation<AppExecutionStateChangeResult>) -> HRESULT
+}}
+impl IAppResourceGroupInfo2 {
+    #[inline] pub fn start_suspend_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<AppExecutionStateChangeResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).StartSuspendAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn start_resume_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<AppExecutionStateChangeResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).StartResumeAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn start_terminate_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<AppExecutionStateChangeResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).StartTerminateAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IAppResourceGroupInfoWatcher, 3652231421, 28250, 19570, 139, 23, 9, 254, 196, 162, 18, 189);
 RT_INTERFACE!{interface IAppResourceGroupInfoWatcher(IAppResourceGroupInfoWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupInfoWatcher] {
     fn add_Added(&self, handler: *mut foundation::TypedEventHandler<AppResourceGroupInfoWatcher, AppResourceGroupInfoWatcherEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -482,6 +546,9 @@ impl IAppResourceGroupStateReport {
     }}
 }
 RT_CLASS!{class AppResourceGroupStateReport: IAppResourceGroupStateReport}
+RT_ENUM! { enum AutoUpdateTimeZoneStatus: i32 {
+    Attempted (AutoUpdateTimeZoneStatus_Attempted) = 0, TimedOut (AutoUpdateTimeZoneStatus_TimedOut) = 1, Failed (AutoUpdateTimeZoneStatus_Failed) = 2,
+}}
 RT_CLASS!{static class DateTimeSettings}
 impl RtActivatable<IDateTimeSettingsStatics> for DateTimeSettings {}
 impl DateTimeSettings {
@@ -1663,6 +1730,7 @@ impl IShutdownManagerStatics2 {
 }
 RT_CLASS!{static class TimeZoneSettings}
 impl RtActivatable<ITimeZoneSettingsStatics> for TimeZoneSettings {}
+impl RtActivatable<ITimeZoneSettingsStatics2> for TimeZoneSettings {}
 impl TimeZoneSettings {
     #[inline] pub fn get_current_time_zone_display_name() -> Result<HString> {
         <Self as RtActivatable<ITimeZoneSettingsStatics>>::get_activation_factory().get_current_time_zone_display_name()
@@ -1675,6 +1743,9 @@ impl TimeZoneSettings {
     }
     #[inline] pub fn change_time_zone_by_display_name(timeZoneDisplayName: &HStringArg) -> Result<()> {
         <Self as RtActivatable<ITimeZoneSettingsStatics>>::get_activation_factory().change_time_zone_by_display_name(timeZoneDisplayName)
+    }
+    #[inline] pub fn auto_update_time_zone_async(timeout: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<AutoUpdateTimeZoneStatus>>> {
+        <Self as RtActivatable<ITimeZoneSettingsStatics2>>::get_activation_factory().auto_update_time_zone_async(timeout)
     }
 }
 DEFINE_CLSID!(TimeZoneSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,105,109,101,90,111,110,101,83,101,116,116,105,110,103,115,0]) [CLSID_TimeZoneSettings]);
@@ -1704,6 +1775,17 @@ impl ITimeZoneSettingsStatics {
     #[inline] pub fn change_time_zone_by_display_name(&self, timeZoneDisplayName: &HStringArg) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ChangeTimeZoneByDisplayName)(self as *const _ as *mut _, timeZoneDisplayName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ITimeZoneSettingsStatics2, 1432096184, 14760, 18938, 180, 246, 162, 199, 252, 40, 66, 236);
+RT_INTERFACE!{static interface ITimeZoneSettingsStatics2(ITimeZoneSettingsStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ITimeZoneSettingsStatics2] {
+    fn AutoUpdateTimeZoneAsync(&self, timeout: foundation::TimeSpan, out: *mut *mut foundation::IAsyncOperation<AutoUpdateTimeZoneStatus>) -> HRESULT
+}}
+impl ITimeZoneSettingsStatics2 {
+    #[inline] pub fn auto_update_time_zone_async(&self, timeout: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<AutoUpdateTimeZoneStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AutoUpdateTimeZoneAsync)(self as *const _ as *mut _, timeout, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IUser, 3751421638, 59206, 19405, 181, 212, 18, 1, 3, 196, 32, 155);
@@ -2213,6 +2295,7 @@ impl IFirstSignInSettingsStatics {
 RT_CLASS!{static class GlobalizationPreferences}
 impl RtActivatable<IGlobalizationPreferencesStatics> for GlobalizationPreferences {}
 impl RtActivatable<IGlobalizationPreferencesStatics2> for GlobalizationPreferences {}
+impl RtActivatable<IGlobalizationPreferencesStatics3> for GlobalizationPreferences {}
 impl GlobalizationPreferences {
     #[inline] pub fn get_calendars() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
         <Self as RtActivatable<IGlobalizationPreferencesStatics>>::get_activation_factory().get_calendars()
@@ -2238,8 +2321,59 @@ impl GlobalizationPreferences {
     #[inline] pub fn try_set_languages(languageTags: &foundation::collections::IIterable<HString>) -> Result<bool> {
         <Self as RtActivatable<IGlobalizationPreferencesStatics2>>::get_activation_factory().try_set_languages(languageTags)
     }
+    #[inline] pub fn get_for_user(user: &super::User) -> Result<Option<ComPtr<GlobalizationPreferencesForUser>>> {
+        <Self as RtActivatable<IGlobalizationPreferencesStatics3>>::get_activation_factory().get_for_user(user)
+    }
 }
 DEFINE_CLSID!(GlobalizationPreferences(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,71,108,111,98,97,108,105,122,97,116,105,111,110,80,114,101,102,101,114,101,110,99,101,115,0]) [CLSID_GlobalizationPreferences]);
+DEFINE_IID!(IID_IGlobalizationPreferencesForUser, 353306517, 20334, 16570, 160, 16, 226, 125, 129, 189, 167, 245);
+RT_INTERFACE!{interface IGlobalizationPreferencesForUser(IGlobalizationPreferencesForUserVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalizationPreferencesForUser] {
+    fn get_User(&self, out: *mut *mut super::User) -> HRESULT,
+    fn get_Calendars(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
+    fn get_Clocks(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
+    fn get_Currencies(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
+    fn get_Languages(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
+    fn get_HomeGeographicRegion(&self, out: *mut HSTRING) -> HRESULT,
+    #[cfg(feature="windows-globalization")] fn get_WeekStartsOn(&self, out: *mut super::super::globalization::DayOfWeek) -> HRESULT
+}}
+impl IGlobalizationPreferencesForUser {
+    #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<super::User>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_calendars(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Calendars)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_clocks(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Clocks)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_currencies(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Currencies)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Languages)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_home_geographic_region(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_HomeGeographicRegion)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-globalization")] #[inline] pub fn get_week_starts_on(&self) -> Result<super::super::globalization::DayOfWeek> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_WeekStartsOn)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GlobalizationPreferencesForUser: IGlobalizationPreferencesForUser}
 DEFINE_IID!(IID_IGlobalizationPreferencesStatics, 29311782, 60727, 20118, 176, 233, 193, 52, 13, 30, 161, 88);
 RT_INTERFACE!{static interface IGlobalizationPreferencesStatics(IGlobalizationPreferencesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalizationPreferencesStatics] {
     fn get_Calendars(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
@@ -2296,6 +2430,17 @@ impl IGlobalizationPreferencesStatics2 {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).TrySetLanguages)(self as *const _ as *mut _, languageTags as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IGlobalizationPreferencesStatics3, 503682867, 13813, 16600, 185, 232, 174, 243, 239, 133, 111, 206);
+RT_INTERFACE!{static interface IGlobalizationPreferencesStatics3(IGlobalizationPreferencesStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IGlobalizationPreferencesStatics3] {
+    fn GetForUser(&self, user: *mut super::User, out: *mut *mut GlobalizationPreferencesForUser) -> HRESULT
+}}
+impl IGlobalizationPreferencesStatics3 {
+    #[inline] pub fn get_for_user(&self, user: &super::User) -> Result<Option<ComPtr<GlobalizationPreferencesForUser>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{static class LockScreen}
@@ -2573,12 +2718,16 @@ pub mod profile { // Windows.System.Profile
 use ::prelude::*;
 RT_CLASS!{static class AnalyticsInfo}
 impl RtActivatable<IAnalyticsInfoStatics> for AnalyticsInfo {}
+impl RtActivatable<IAnalyticsInfoStatics2> for AnalyticsInfo {}
 impl AnalyticsInfo {
     #[inline] pub fn get_version_info() -> Result<Option<ComPtr<AnalyticsVersionInfo>>> {
         <Self as RtActivatable<IAnalyticsInfoStatics>>::get_activation_factory().get_version_info()
     }
     #[inline] pub fn get_device_form() -> Result<HString> {
         <Self as RtActivatable<IAnalyticsInfoStatics>>::get_activation_factory().get_device_form()
+    }
+    #[inline] pub fn get_system_properties_async(attributeNames: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<HString, HString>>>> {
+        <Self as RtActivatable<IAnalyticsInfoStatics2>>::get_activation_factory().get_system_properties_async(attributeNames)
     }
 }
 DEFINE_CLSID!(AnalyticsInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,65,110,97,108,121,116,105,99,115,73,110,102,111,0]) [CLSID_AnalyticsInfo]);
@@ -2597,6 +2746,17 @@ impl IAnalyticsInfoStatics {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DeviceForm)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IAnalyticsInfoStatics2, 269944042, 43001, 18130, 171, 148, 1, 104, 101, 175, 219, 37);
+RT_INTERFACE!{static interface IAnalyticsInfoStatics2(IAnalyticsInfoStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IAnalyticsInfoStatics2] {
+    fn GetSystemPropertiesAsync(&self, attributeNames: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IMapView<HString, HString>>) -> HRESULT
+}}
+impl IAnalyticsInfoStatics2 {
+    #[inline] pub fn get_system_properties_async(&self, attributeNames: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<HString, HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetSystemPropertiesAsync)(self as *const _ as *mut _, attributeNames as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IAnalyticsVersionInfo, 2455843000, 39253, 19572, 189, 193, 124, 208, 222, 207, 155, 3);
@@ -3633,6 +3793,17 @@ impl DiagnosticInvoker {
     }
 }
 DEFINE_CLSID!(DiagnosticInvoker(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,68,105,97,103,110,111,115,116,105,99,73,110,118,111,107,101,114,0]) [CLSID_DiagnosticInvoker]);
+DEFINE_IID!(IID_IDiagnosticInvoker2, 3820983388, 5466, 19282, 168, 236, 7, 12, 68, 249, 80, 0);
+RT_INTERFACE!{interface IDiagnosticInvoker2(IDiagnosticInvoker2Vtbl): IInspectable(IInspectableVtbl) [IID_IDiagnosticInvoker2] {
+    fn RunDiagnosticActionFromStringAsync(&self, context: HSTRING, out: *mut *mut foundation::IAsyncOperationWithProgress<DiagnosticActionResult, DiagnosticActionState>) -> HRESULT
+}}
+impl IDiagnosticInvoker2 {
+    #[inline] pub fn run_diagnostic_action_from_string_async(&self, context: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DiagnosticActionResult, DiagnosticActionState>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RunDiagnosticActionFromStringAsync)(self as *const _ as *mut _, context.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IDiagnosticInvokerStatics, 1559943390, 61788, 17748, 168, 19, 193, 19, 195, 136, 27, 9);
 RT_INTERFACE!{static interface IDiagnosticInvokerStatics(IDiagnosticInvokerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDiagnosticInvokerStatics] {
     fn GetDefault(&self, out: *mut *mut DiagnosticInvoker) -> HRESULT,
@@ -4365,6 +4536,64 @@ impl IDevicePortalConnectionStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IDevicePortalWebSocketConnection, 1734703392, 54874, 17136, 174, 244, 120, 120, 8, 9, 139, 123);
+RT_INTERFACE!{interface IDevicePortalWebSocketConnection(IDevicePortalWebSocketConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalWebSocketConnection] {
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerMessageWebSocketForRequest(&self, request: *mut ::rt::gen::windows::web::http::HttpRequestMessage, out: *mut *mut ::rt::gen::windows::networking::sockets::ServerMessageWebSocket) -> HRESULT,
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerMessageWebSocketForRequest2(&self, request: *mut ::rt::gen::windows::web::http::HttpRequestMessage, messageType: ::rt::gen::windows::networking::sockets::SocketMessageType, protocol: HSTRING, out: *mut *mut ::rt::gen::windows::networking::sockets::ServerMessageWebSocket) -> HRESULT,
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerMessageWebSocketForRequest3(&self, request: *mut ::rt::gen::windows::web::http::HttpRequestMessage, messageType: ::rt::gen::windows::networking::sockets::SocketMessageType, protocol: HSTRING, outboundBufferSizeInBytes: u32, maxMessageSize: u32, receiveMode: ::rt::gen::windows::networking::sockets::MessageWebSocketReceiveMode, out: *mut *mut ::rt::gen::windows::networking::sockets::ServerMessageWebSocket) -> HRESULT,
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerStreamWebSocketForRequest(&self, request: *mut ::rt::gen::windows::web::http::HttpRequestMessage, out: *mut *mut ::rt::gen::windows::networking::sockets::ServerStreamWebSocket) -> HRESULT,
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerStreamWebSocketForRequest2(&self, request: *mut ::rt::gen::windows::web::http::HttpRequestMessage, protocol: HSTRING, outboundBufferSizeInBytes: u32, noDelay: bool, out: *mut *mut ::rt::gen::windows::networking::sockets::ServerStreamWebSocket) -> HRESULT
+}}
+impl IDevicePortalWebSocketConnection {
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request(&self, request: &::rt::gen::windows::web::http::HttpRequestMessage) -> Result<Option<ComPtr<::rt::gen::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetServerMessageWebSocketForRequest)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request2(&self, request: &::rt::gen::windows::web::http::HttpRequestMessage, messageType: ::rt::gen::windows::networking::sockets::SocketMessageType, protocol: &HStringArg) -> Result<Option<ComPtr<::rt::gen::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetServerMessageWebSocketForRequest2)(self as *const _ as *mut _, request as *const _ as *mut _, messageType, protocol.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request3(&self, request: &::rt::gen::windows::web::http::HttpRequestMessage, messageType: ::rt::gen::windows::networking::sockets::SocketMessageType, protocol: &HStringArg, outboundBufferSizeInBytes: u32, maxMessageSize: u32, receiveMode: ::rt::gen::windows::networking::sockets::MessageWebSocketReceiveMode) -> Result<Option<ComPtr<::rt::gen::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetServerMessageWebSocketForRequest3)(self as *const _ as *mut _, request as *const _ as *mut _, messageType, protocol.get(), outboundBufferSizeInBytes, maxMessageSize, receiveMode, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_stream_web_socket_for_request(&self, request: &::rt::gen::windows::web::http::HttpRequestMessage) -> Result<Option<ComPtr<::rt::gen::windows::networking::sockets::ServerStreamWebSocket>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetServerStreamWebSocketForRequest)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_stream_web_socket_for_request2(&self, request: &::rt::gen::windows::web::http::HttpRequestMessage, protocol: &HStringArg, outboundBufferSizeInBytes: u32, noDelay: bool) -> Result<Option<ComPtr<::rt::gen::windows::networking::sockets::ServerStreamWebSocket>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetServerStreamWebSocketForRequest2)(self as *const _ as *mut _, request as *const _ as *mut _, protocol.get(), outboundBufferSizeInBytes, noDelay, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IDevicePortalWebSocketConnectionRequestReceivedEventArgs, 2046675642, 5980, 18233, 159, 116, 221, 167, 151, 195, 91, 63);
+RT_INTERFACE!{interface IDevicePortalWebSocketConnectionRequestReceivedEventArgs(IDevicePortalWebSocketConnectionRequestReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalWebSocketConnectionRequestReceivedEventArgs] {
+    fn get_IsWebSocketUpgradeRequest(&self, out: *mut bool) -> HRESULT,
+    fn get_WebSocketProtocolsRequested(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+}}
+impl IDevicePortalWebSocketConnectionRequestReceivedEventArgs {
+    #[inline] pub fn get_is_web_socket_upgrade_request(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsWebSocketUpgradeRequest)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_web_socket_protocols_requested(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WebSocketProtocolsRequested)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 } // Windows.System.Diagnostics.DevicePortal
 } // Windows.System.Diagnostics
 pub mod remotesystems { // Windows.System.RemoteSystems
@@ -4505,6 +4734,17 @@ impl IRemoteSystem3 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IRemoteSystem4, 4049928165, 47495, 19621, 153, 38, 250, 4, 56, 190, 98, 115);
+RT_INTERFACE!{interface IRemoteSystem4(IRemoteSystem4Vtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystem4] {
+    fn get_Platform(&self, out: *mut RemoteSystemPlatform) -> HRESULT
+}}
+impl IRemoteSystem4 {
+    #[inline] pub fn get_platform(&self) -> Result<RemoteSystemPlatform> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Platform)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum RemoteSystemAccessStatus: i32 {
     Unspecified (RemoteSystemAccessStatus_Unspecified) = 0, Allowed (RemoteSystemAccessStatus_Allowed) = 1, DeniedByUser (RemoteSystemAccessStatus_DeniedByUser) = 2, DeniedBySystem (RemoteSystemAccessStatus_DeniedBySystem) = 3,
 }}
@@ -4616,6 +4856,11 @@ impl IRemoteSystemDiscoveryTypeFilterFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IRemoteSystemEnumerationCompletedEventArgs, 3337108831, 16432, 17236, 160, 96, 20, 241, 178, 44, 84, 93);
+RT_INTERFACE!{interface IRemoteSystemEnumerationCompletedEventArgs(IRemoteSystemEnumerationCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemEnumerationCompletedEventArgs] {
+    
+}}
+RT_CLASS!{class RemoteSystemEnumerationCompletedEventArgs: IRemoteSystemEnumerationCompletedEventArgs}
 DEFINE_IID!(IID_IRemoteSystemFilter, 1245424100, 39403, 17899, 186, 22, 3, 103, 114, 143, 243, 116);
 RT_INTERFACE!{interface IRemoteSystemFilter(IRemoteSystemFilterVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemFilter] {
     
@@ -4738,6 +4983,9 @@ impl IRemoteSystemKindStatics2 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
+RT_ENUM! { enum RemoteSystemPlatform: i32 {
+    Unknown (RemoteSystemPlatform_Unknown) = 0, Windows (RemoteSystemPlatform_Windows) = 1, Android (RemoteSystemPlatform_Android) = 2, Ios (RemoteSystemPlatform_Ios) = 3, Linux (RemoteSystemPlatform_Linux) = 4,
+}}
 DEFINE_IID!(IID_IRemoteSystemRemovedEventArgs, 2336036539, 29446, 18922, 183, 223, 103, 213, 113, 76, 176, 19);
 RT_INTERFACE!{interface IRemoteSystemRemovedEventArgs(IRemoteSystemRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemRemovedEventArgs] {
     fn get_RemoteSystemId(&self, out: *mut HSTRING) -> HRESULT
@@ -5476,6 +5724,48 @@ impl IRemoteSystemWatcher {
     }}
 }
 RT_CLASS!{class RemoteSystemWatcher: IRemoteSystemWatcher}
+DEFINE_IID!(IID_IRemoteSystemWatcher2, 1933797120, 6602, 18681, 164, 205, 120, 15, 122, 213, 140, 113);
+RT_INTERFACE!{interface IRemoteSystemWatcher2(IRemoteSystemWatcher2Vtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemWatcher2] {
+    fn add_EnumerationCompleted(&self, handler: *mut foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemEnumerationCompletedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_EnumerationCompleted(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_ErrorOccurred(&self, handler: *mut foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemWatcherErrorOccurredEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ErrorOccurred(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IRemoteSystemWatcher2 {
+    #[inline] pub fn add_enumeration_completed(&self, handler: &foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemEnumerationCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_EnumerationCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_EnumerationCompleted)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_error_occurred(&self, handler: &foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemWatcherErrorOccurredEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_ErrorOccurred)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_error_occurred(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_ErrorOccurred)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum RemoteSystemWatcherError: i32 {
+    Unknown (RemoteSystemWatcherError_Unknown) = 0, InternetNotAvailable (RemoteSystemWatcherError_InternetNotAvailable) = 1, AuthenticationError (RemoteSystemWatcherError_AuthenticationError) = 2,
+}}
+DEFINE_IID!(IID_IRemoteSystemWatcherErrorOccurredEventArgs, 1959118511, 20756, 17446, 146, 22, 32, 216, 31, 133, 25, 174);
+RT_INTERFACE!{interface IRemoteSystemWatcherErrorOccurredEventArgs(IRemoteSystemWatcherErrorOccurredEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemWatcherErrorOccurredEventArgs] {
+    fn get_Error(&self, out: *mut RemoteSystemWatcherError) -> HRESULT
+}}
+impl IRemoteSystemWatcherErrorOccurredEventArgs {
+    #[inline] pub fn get_error(&self) -> Result<RemoteSystemWatcherError> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Error)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class RemoteSystemWatcherErrorOccurredEventArgs: IRemoteSystemWatcherErrorOccurredEventArgs}
 } // Windows.System.RemoteSystems
 pub mod threading { // Windows.System.Threading
 use ::prelude::*;
@@ -5764,3 +6054,54 @@ RT_CLASS!{class DisplayRequest: IDisplayRequest}
 impl RtActivatable<IActivationFactory> for DisplayRequest {}
 DEFINE_CLSID!(DisplayRequest(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,115,112,108,97,121,46,68,105,115,112,108,97,121,82,101,113,117,101,115,116,0]) [CLSID_DisplayRequest]);
 } // Windows.System.Display
+pub mod inventory { // Windows.System.Inventory
+use ::prelude::*;
+DEFINE_IID!(IID_IInstalledDesktopApp, 1978317037, 49340, 21348, 76, 40, 22, 110, 5, 69, 22, 122);
+RT_INTERFACE!{interface IInstalledDesktopApp(IInstalledDesktopAppVtbl): IInspectable(IInspectableVtbl) [IID_IInstalledDesktopApp] {
+    fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Publisher(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_DisplayVersion(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IInstalledDesktopApp {
+    #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_publisher(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Publisher)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_display_version(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayVersion)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class InstalledDesktopApp: IInstalledDesktopApp}
+impl RtActivatable<IInstalledDesktopAppStatics> for InstalledDesktopApp {}
+impl InstalledDesktopApp {
+    #[inline] pub fn get_inventory_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<InstalledDesktopApp>>>> {
+        <Self as RtActivatable<IInstalledDesktopAppStatics>>::get_activation_factory().get_inventory_async()
+    }
+}
+DEFINE_CLSID!(InstalledDesktopApp(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,73,110,118,101,110,116,111,114,121,46,73,110,115,116,97,108,108,101,100,68,101,115,107,116,111,112,65,112,112,0]) [CLSID_InstalledDesktopApp]);
+DEFINE_IID!(IID_IInstalledDesktopAppStatics, 642578254, 8653, 24475, 96, 86, 120, 102, 173, 114, 72, 154);
+RT_INTERFACE!{static interface IInstalledDesktopAppStatics(IInstalledDesktopAppStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IInstalledDesktopAppStatics] {
+    fn GetInventoryAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<InstalledDesktopApp>>) -> HRESULT
+}}
+impl IInstalledDesktopAppStatics {
+    #[inline] pub fn get_inventory_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<InstalledDesktopApp>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetInventoryAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+} // Windows.System.Inventory

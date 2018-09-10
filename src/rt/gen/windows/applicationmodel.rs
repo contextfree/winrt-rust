@@ -1,4 +1,7 @@
 use ::prelude::*;
+RT_ENUM! { enum AddResourcePackageOptions: u32 {
+    None (AddResourcePackageOptions_None) = 0, ForceTargetAppShutdown (AddResourcePackageOptions_ForceTargetAppShutdown) = 1, ApplyUpdateIfAvailable (AddResourcePackageOptions_ApplyUpdateIfAvailable) = 2,
+}}
 DEFINE_IID!(IID_IAppDisplayInfo, 451612931, 58580, 16810, 164, 246, 196, 162, 118, 231, 158, 172);
 RT_INTERFACE!{interface IAppDisplayInfo(IAppDisplayInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppDisplayInfo] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -53,6 +56,82 @@ impl IAppInfo {
     }}
 }
 RT_CLASS!{class AppInfo: IAppInfo}
+DEFINE_IID!(IID_IAppInstance, 1734290247, 62047, 17714, 159, 214, 54, 51, 224, 99, 77, 1);
+RT_INTERFACE!{interface IAppInstance(IAppInstanceVtbl): IInspectable(IInspectableVtbl) [IID_IAppInstance] {
+    fn get_Key(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_IsCurrentInstance(&self, out: *mut bool) -> HRESULT,
+    fn RedirectActivationTo(&self) -> HRESULT
+}}
+impl IAppInstance {
+    #[inline] pub fn get_key(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Key)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_current_instance(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsCurrentInstance)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn redirect_activation_to(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RedirectActivationTo)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class AppInstance: IAppInstance}
+impl RtActivatable<IAppInstanceStatics> for AppInstance {}
+impl AppInstance {
+    #[inline] pub fn get_recommended_instance() -> Result<Option<ComPtr<AppInstance>>> {
+        <Self as RtActivatable<IAppInstanceStatics>>::get_activation_factory().get_recommended_instance()
+    }
+    #[inline] pub fn get_activated_event_args() -> Result<Option<ComPtr<activation::IActivatedEventArgs>>> {
+        <Self as RtActivatable<IAppInstanceStatics>>::get_activation_factory().get_activated_event_args()
+    }
+    #[inline] pub fn find_or_register_instance_for_key(key: &HStringArg) -> Result<Option<ComPtr<AppInstance>>> {
+        <Self as RtActivatable<IAppInstanceStatics>>::get_activation_factory().find_or_register_instance_for_key(key)
+    }
+    #[inline] pub fn unregister() -> Result<()> {
+        <Self as RtActivatable<IAppInstanceStatics>>::get_activation_factory().unregister()
+    }
+    #[inline] pub fn get_instances() -> Result<Option<ComPtr<foundation::collections::IVector<AppInstance>>>> {
+        <Self as RtActivatable<IAppInstanceStatics>>::get_activation_factory().get_instances()
+    }
+}
+DEFINE_CLSID!(AppInstance(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,73,110,115,116,97,110,99,101,0]) [CLSID_AppInstance]);
+DEFINE_IID!(IID_IAppInstanceStatics, 2635196287, 40614, 18351, 166, 236, 70, 120, 76, 91, 162, 84);
+RT_INTERFACE!{static interface IAppInstanceStatics(IAppInstanceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppInstanceStatics] {
+    fn get_RecommendedInstance(&self, out: *mut *mut AppInstance) -> HRESULT,
+    fn GetActivatedEventArgs(&self, out: *mut *mut activation::IActivatedEventArgs) -> HRESULT,
+    fn FindOrRegisterInstanceForKey(&self, key: HSTRING, out: *mut *mut AppInstance) -> HRESULT,
+    fn Unregister(&self) -> HRESULT,
+    fn GetInstances(&self, out: *mut *mut foundation::collections::IVector<AppInstance>) -> HRESULT
+}}
+impl IAppInstanceStatics {
+    #[inline] pub fn get_recommended_instance(&self) -> Result<Option<ComPtr<AppInstance>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_RecommendedInstance)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_activated_event_args(&self) -> Result<Option<ComPtr<activation::IActivatedEventArgs>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetActivatedEventArgs)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_or_register_instance_for_key(&self, key: &HStringArg) -> Result<Option<ComPtr<AppInstance>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindOrRegisterInstanceForKey)(self as *const _ as *mut _, key.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn unregister(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Unregister)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_instances(&self) -> Result<Option<ComPtr<foundation::collections::IVector<AppInstance>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetInstances)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 RT_CLASS!{static class DesignMode}
 impl RtActivatable<IDesignModeStatics> for DesignMode {}
 impl RtActivatable<IDesignModeStatics2> for DesignMode {}
@@ -427,6 +506,23 @@ impl IPackageCatalog3 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IPackageCatalog4, 3279698331, 17612, 19323, 139, 175, 121, 108, 4, 234, 211, 185);
+RT_INTERFACE!{interface IPackageCatalog4(IPackageCatalog4Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageCatalog4] {
+    fn AddResourcePackageAsync(&self, resourcePackageFamilyName: HSTRING, resourceID: HSTRING, options: AddResourcePackageOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<PackageCatalogAddResourcePackageResult, PackageInstallProgress>) -> HRESULT,
+    fn RemoveResourcePackagesAsync(&self, resourcePackages: *mut foundation::collections::IIterable<Package>, out: *mut *mut foundation::IAsyncOperation<PackageCatalogRemoveResourcePackagesResult>) -> HRESULT
+}}
+impl IPackageCatalog4 {
+    #[inline] pub fn add_resource_package_async(&self, resourcePackageFamilyName: &HStringArg, resourceID: &HStringArg, options: AddResourcePackageOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<PackageCatalogAddResourcePackageResult, PackageInstallProgress>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AddResourcePackageAsync)(self as *const _ as *mut _, resourcePackageFamilyName.get(), resourceID.get(), options, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_resource_packages_async(&self, resourcePackages: &foundation::collections::IIterable<Package>) -> Result<ComPtr<foundation::IAsyncOperation<PackageCatalogRemoveResourcePackagesResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RemoveResourcePackagesAsync)(self as *const _ as *mut _, resourcePackages as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IPackageCatalogAddOptionalPackageResult, 1005653204, 46303, 18355, 169, 99, 226, 250, 131, 47, 125, 211);
 RT_INTERFACE!{interface IPackageCatalogAddOptionalPackageResult(IPackageCatalogAddOptionalPackageResultVtbl): IInspectable(IInspectableVtbl) [IID_IPackageCatalogAddOptionalPackageResult] {
     fn get_Package(&self, out: *mut *mut Package) -> HRESULT,
@@ -445,6 +541,30 @@ impl IPackageCatalogAddOptionalPackageResult {
     }}
 }
 RT_CLASS!{class PackageCatalogAddOptionalPackageResult: IPackageCatalogAddOptionalPackageResult}
+DEFINE_IID!(IID_IPackageCatalogAddResourcePackageResult, 2520174093, 15895, 18751, 170, 8, 204, 236, 111, 222, 246, 153);
+RT_INTERFACE!{interface IPackageCatalogAddResourcePackageResult(IPackageCatalogAddResourcePackageResultVtbl): IInspectable(IInspectableVtbl) [IID_IPackageCatalogAddResourcePackageResult] {
+    fn get_Package(&self, out: *mut *mut Package) -> HRESULT,
+    fn get_IsComplete(&self, out: *mut bool) -> HRESULT,
+    fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
+}}
+impl IPackageCatalogAddResourcePackageResult {
+    #[inline] pub fn get_package(&self) -> Result<Option<ComPtr<Package>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Package)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_complete(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsComplete)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ExtendedError)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PackageCatalogAddResourcePackageResult: IPackageCatalogAddResourcePackageResult}
 DEFINE_IID!(IID_IPackageCatalogRemoveOptionalPackagesResult, 701692283, 55668, 20068, 147, 89, 34, 202, 223, 215, 152, 40);
 RT_INTERFACE!{interface IPackageCatalogRemoveOptionalPackagesResult(IPackageCatalogRemoveOptionalPackagesResultVtbl): IInspectable(IInspectableVtbl) [IID_IPackageCatalogRemoveOptionalPackagesResult] {
     fn get_PackagesRemoved(&self, out: *mut *mut foundation::collections::IVectorView<Package>) -> HRESULT,
@@ -463,6 +583,24 @@ impl IPackageCatalogRemoveOptionalPackagesResult {
     }}
 }
 RT_CLASS!{class PackageCatalogRemoveOptionalPackagesResult: IPackageCatalogRemoveOptionalPackagesResult}
+DEFINE_IID!(IID_IPackageCatalogRemoveResourcePackagesResult, 2926679817, 6738, 17185, 135, 179, 229, 161, 161, 121, 129, 167);
+RT_INTERFACE!{interface IPackageCatalogRemoveResourcePackagesResult(IPackageCatalogRemoveResourcePackagesResultVtbl): IInspectable(IInspectableVtbl) [IID_IPackageCatalogRemoveResourcePackagesResult] {
+    fn get_PackagesRemoved(&self, out: *mut *mut foundation::collections::IVectorView<Package>) -> HRESULT,
+    fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
+}}
+impl IPackageCatalogRemoveResourcePackagesResult {
+    #[inline] pub fn get_packages_removed(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<Package>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PackagesRemoved)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ExtendedError)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PackageCatalogRemoveResourcePackagesResult: IPackageCatalogRemoveResourcePackagesResult}
 DEFINE_IID!(IID_IPackageCatalogStatics, 2710345366, 58971, 17972, 186, 33, 94, 99, 235, 114, 68, 167);
 RT_INTERFACE!{static interface IPackageCatalogStatics(IPackageCatalogStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPackageCatalogStatics] {
     fn OpenForCurrentPackage(&self, out: *mut *mut PackageCatalog) -> HRESULT,
@@ -687,6 +825,9 @@ impl IPackageInstallingEventArgs {
     }}
 }
 RT_CLASS!{class PackageInstallingEventArgs: IPackageInstallingEventArgs}
+RT_STRUCT! { struct PackageInstallProgress {
+    PercentComplete: u32,
+}}
 RT_ENUM! { enum PackageSignatureKind: i32 {
     None (PackageSignatureKind_None) = 0, Developer (PackageSignatureKind_Developer) = 1, Enterprise (PackageSignatureKind_Enterprise) = 2, Store (PackageSignatureKind_Store) = 3, System (PackageSignatureKind_System) = 4,
 }}
@@ -981,7 +1122,7 @@ impl StartupTask {
 }
 DEFINE_CLSID!(StartupTask(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,97,114,116,117,112,84,97,115,107,0]) [CLSID_StartupTask]);
 RT_ENUM! { enum StartupTaskState: i32 {
-    Disabled (StartupTaskState_Disabled) = 0, DisabledByUser (StartupTaskState_DisabledByUser) = 1, Enabled (StartupTaskState_Enabled) = 2, DisabledByPolicy (StartupTaskState_DisabledByPolicy) = 3,
+    Disabled (StartupTaskState_Disabled) = 0, DisabledByUser (StartupTaskState_DisabledByUser) = 1, Enabled (StartupTaskState_Enabled) = 2, DisabledByPolicy (StartupTaskState_DisabledByPolicy) = 3, EnabledByPolicy (StartupTaskState_EnabledByPolicy) = 4,
 }}
 DEFINE_IID!(IID_IStartupTaskStatics, 3998965949, 41288, 16807, 178, 110, 232, 184, 138, 30, 98, 248);
 RT_INTERFACE!{static interface IStartupTaskStatics(IStartupTaskStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStartupTaskStatics] {
@@ -1041,6 +1182,1840 @@ impl ISuspendingOperation {
     }}
 }
 RT_CLASS!{class SuspendingOperation: ISuspendingOperation}
+pub mod background { // Windows.ApplicationModel.Background
+use ::prelude::*;
+DEFINE_IID!(IID_IActivitySensorTrigger, 3504161602, 58235, 18467, 165, 254, 107, 49, 223, 239, 222, 176);
+RT_INTERFACE!{interface IActivitySensorTrigger(IActivitySensorTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IActivitySensorTrigger] {
+    #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-devices")] fn get_SubscribedActivities(&self, out: *mut *mut foundation::collections::IVector<super::super::devices::sensors::ActivityType>) -> HRESULT,
+    fn get_ReportInterval(&self, out: *mut u32) -> HRESULT,
+    #[cfg(not(feature="windows-devices"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-devices")] fn get_SupportedActivities(&self, out: *mut *mut foundation::collections::IVectorView<super::super::devices::sensors::ActivityType>) -> HRESULT,
+    fn get_MinimumReportInterval(&self, out: *mut u32) -> HRESULT
+}}
+impl IActivitySensorTrigger {
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_subscribed_activities(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::devices::sensors::ActivityType>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SubscribedActivities)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_report_interval(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ReportInterval)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_supported_activities(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::devices::sensors::ActivityType>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SupportedActivities)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_minimum_report_interval(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MinimumReportInterval)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ActivitySensorTrigger: IActivitySensorTrigger}
+impl RtActivatable<IActivitySensorTriggerFactory> for ActivitySensorTrigger {}
+impl ActivitySensorTrigger {
+    #[inline] pub fn create(reportIntervalInMilliseconds: u32) -> Result<ComPtr<ActivitySensorTrigger>> {
+        <Self as RtActivatable<IActivitySensorTriggerFactory>>::get_activation_factory().create(reportIntervalInMilliseconds)
+    }
+}
+DEFINE_CLSID!(ActivitySensorTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,99,116,105,118,105,116,121,83,101,110,115,111,114,84,114,105,103,103,101,114,0]) [CLSID_ActivitySensorTrigger]);
+DEFINE_IID!(IID_IActivitySensorTriggerFactory, 2804322755, 14391, 17655, 131, 27, 1, 50, 204, 135, 43, 195);
+RT_INTERFACE!{static interface IActivitySensorTriggerFactory(IActivitySensorTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IActivitySensorTriggerFactory] {
+    fn Create(&self, reportIntervalInMilliseconds: u32, out: *mut *mut ActivitySensorTrigger) -> HRESULT
+}}
+impl IActivitySensorTriggerFactory {
+    #[inline] pub fn create(&self, reportIntervalInMilliseconds: u32) -> Result<ComPtr<ActivitySensorTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, reportIntervalInMilliseconds, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum AlarmAccessStatus: i32 {
+    Unspecified (AlarmAccessStatus_Unspecified) = 0, AllowedWithWakeupCapability (AlarmAccessStatus_AllowedWithWakeupCapability) = 1, AllowedWithoutWakeupCapability (AlarmAccessStatus_AllowedWithoutWakeupCapability) = 2, Denied (AlarmAccessStatus_Denied) = 3,
+}}
+RT_CLASS!{static class AlarmApplicationManager}
+impl RtActivatable<IAlarmApplicationManagerStatics> for AlarmApplicationManager {}
+impl AlarmApplicationManager {
+    #[inline] pub fn request_access_async() -> Result<ComPtr<foundation::IAsyncOperation<AlarmAccessStatus>>> {
+        <Self as RtActivatable<IAlarmApplicationManagerStatics>>::get_activation_factory().request_access_async()
+    }
+    #[inline] pub fn get_access_status() -> Result<AlarmAccessStatus> {
+        <Self as RtActivatable<IAlarmApplicationManagerStatics>>::get_activation_factory().get_access_status()
+    }
+}
+DEFINE_CLSID!(AlarmApplicationManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,108,97,114,109,65,112,112,108,105,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_AlarmApplicationManager]);
+DEFINE_IID!(IID_IAlarmApplicationManagerStatics, 3389258299, 52454, 19938, 176, 155, 150, 40, 189, 51, 187, 190);
+RT_INTERFACE!{static interface IAlarmApplicationManagerStatics(IAlarmApplicationManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAlarmApplicationManagerStatics] {
+    fn RequestAccessAsync(&self, out: *mut *mut foundation::IAsyncOperation<AlarmAccessStatus>) -> HRESULT,
+    fn GetAccessStatus(&self, out: *mut AlarmAccessStatus) -> HRESULT
+}}
+impl IAlarmApplicationManagerStatics {
+    #[inline] pub fn request_access_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<AlarmAccessStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAccessAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_access_status(&self) -> Result<AlarmAccessStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetAccessStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IAppBroadcastTrigger, 1960113302, 36151, 17644, 148, 129, 42, 11, 152, 84, 235, 72);
+RT_INTERFACE!{interface IAppBroadcastTrigger(IAppBroadcastTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastTrigger] {
+    fn put_ProviderInfo(&self, value: *mut AppBroadcastTriggerProviderInfo) -> HRESULT,
+    fn get_ProviderInfo(&self, out: *mut *mut AppBroadcastTriggerProviderInfo) -> HRESULT
+}}
+impl IAppBroadcastTrigger {
+    #[inline] pub fn set_provider_info(&self, value: &AppBroadcastTriggerProviderInfo) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ProviderInfo)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_provider_info(&self) -> Result<Option<ComPtr<AppBroadcastTriggerProviderInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderInfo)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class AppBroadcastTrigger: IAppBroadcastTrigger}
+impl RtActivatable<IAppBroadcastTriggerFactory> for AppBroadcastTrigger {}
+impl AppBroadcastTrigger {
+    #[inline] pub fn create_app_broadcast_trigger(providerKey: &HStringArg) -> Result<ComPtr<AppBroadcastTrigger>> {
+        <Self as RtActivatable<IAppBroadcastTriggerFactory>>::get_activation_factory().create_app_broadcast_trigger(providerKey)
+    }
+}
+DEFINE_CLSID!(AppBroadcastTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,112,112,66,114,111,97,100,99,97,115,116,84,114,105,103,103,101,114,0]) [CLSID_AppBroadcastTrigger]);
+DEFINE_IID!(IID_IAppBroadcastTriggerFactory, 671850308, 8948, 17944, 160, 46, 231, 228, 17, 235, 114, 56);
+RT_INTERFACE!{static interface IAppBroadcastTriggerFactory(IAppBroadcastTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastTriggerFactory] {
+    fn CreateAppBroadcastTrigger(&self, providerKey: HSTRING, out: *mut *mut AppBroadcastTrigger) -> HRESULT
+}}
+impl IAppBroadcastTriggerFactory {
+    #[inline] pub fn create_app_broadcast_trigger(&self, providerKey: &HStringArg) -> Result<ComPtr<AppBroadcastTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateAppBroadcastTrigger)(self as *const _ as *mut _, providerKey.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IAppBroadcastTriggerProviderInfo, 4061738285, 40424, 17440, 156, 226, 94, 255, 143, 23, 55, 107);
+RT_INTERFACE!{interface IAppBroadcastTriggerProviderInfo(IAppBroadcastTriggerProviderInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastTriggerProviderInfo] {
+    fn put_DisplayNameResource(&self, value: HSTRING) -> HRESULT,
+    fn get_DisplayNameResource(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_LogoResource(&self, value: HSTRING) -> HRESULT,
+    fn get_LogoResource(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_VideoKeyFrameInterval(&self, value: foundation::TimeSpan) -> HRESULT,
+    fn get_VideoKeyFrameInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn put_MaxVideoBitrate(&self, value: u32) -> HRESULT,
+    fn get_MaxVideoBitrate(&self, out: *mut u32) -> HRESULT,
+    fn put_MaxVideoWidth(&self, value: u32) -> HRESULT,
+    fn get_MaxVideoWidth(&self, out: *mut u32) -> HRESULT,
+    fn put_MaxVideoHeight(&self, value: u32) -> HRESULT,
+    fn get_MaxVideoHeight(&self, out: *mut u32) -> HRESULT
+}}
+impl IAppBroadcastTriggerProviderInfo {
+    #[inline] pub fn set_display_name_resource(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DisplayNameResource)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_display_name_resource(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayNameResource)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_logo_resource(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_LogoResource)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_logo_resource(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_LogoResource)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_video_key_frame_interval(&self, value: foundation::TimeSpan) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_VideoKeyFrameInterval)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_video_key_frame_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_VideoKeyFrameInterval)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_max_video_bitrate(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaxVideoBitrate)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_video_bitrate(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxVideoBitrate)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_max_video_width(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaxVideoWidth)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_video_width(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxVideoWidth)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_max_video_height(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaxVideoHeight)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_video_height(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxVideoHeight)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class AppBroadcastTriggerProviderInfo: IAppBroadcastTriggerProviderInfo}
+DEFINE_IID!(IID_IApplicationTrigger, 189171248, 38260, 18732, 158, 147, 26, 58, 230, 51, 95, 233);
+RT_INTERFACE!{interface IApplicationTrigger(IApplicationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationTrigger] {
+    fn RequestAsync(&self, out: *mut *mut foundation::IAsyncOperation<ApplicationTriggerResult>) -> HRESULT,
+    fn RequestAsyncWithArguments(&self, arguments: *mut foundation::collections::ValueSet, out: *mut *mut foundation::IAsyncOperation<ApplicationTriggerResult>) -> HRESULT
+}}
+impl IApplicationTrigger {
+    #[inline] pub fn request_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ApplicationTriggerResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_async_with_arguments(&self, arguments: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<ApplicationTriggerResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAsyncWithArguments)(self as *const _ as *mut _, arguments as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ApplicationTrigger: IApplicationTrigger}
+impl RtActivatable<IActivationFactory> for ApplicationTrigger {}
+DEFINE_CLSID!(ApplicationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,112,112,108,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ApplicationTrigger]);
+DEFINE_IID!(IID_IApplicationTriggerDetails, 2547804850, 8729, 19102, 156, 94, 65, 208, 71, 247, 110, 130);
+RT_INTERFACE!{interface IApplicationTriggerDetails(IApplicationTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationTriggerDetails] {
+    fn get_Arguments(&self, out: *mut *mut foundation::collections::ValueSet) -> HRESULT
+}}
+impl IApplicationTriggerDetails {
+    #[inline] pub fn get_arguments(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Arguments)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ApplicationTriggerDetails: IApplicationTriggerDetails}
+RT_ENUM! { enum ApplicationTriggerResult: i32 {
+    Allowed (ApplicationTriggerResult_Allowed) = 0, CurrentlyRunning (ApplicationTriggerResult_CurrentlyRunning) = 1, DisabledByPolicy (ApplicationTriggerResult_DisabledByPolicy) = 2, UnknownError (ApplicationTriggerResult_UnknownError) = 3,
+}}
+DEFINE_IID!(IID_IAppointmentStoreNotificationTrigger, 1691616268, 49665, 17069, 170, 42, 226, 27, 163, 66, 91, 109);
+RT_INTERFACE!{interface IAppointmentStoreNotificationTrigger(IAppointmentStoreNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStoreNotificationTrigger] {
+    
+}}
+RT_CLASS!{class AppointmentStoreNotificationTrigger: IAppointmentStoreNotificationTrigger}
+impl RtActivatable<IActivationFactory> for AppointmentStoreNotificationTrigger {}
+DEFINE_CLSID!(AppointmentStoreNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,112,112,111,105,110,116,109,101,110,116,83,116,111,114,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_AppointmentStoreNotificationTrigger]);
+RT_ENUM! { enum BackgroundAccessRequestKind: i32 {
+    AlwaysAllowed (BackgroundAccessRequestKind_AlwaysAllowed) = 0, AllowedSubjectToSystemPolicy (BackgroundAccessRequestKind_AllowedSubjectToSystemPolicy) = 1,
+}}
+RT_ENUM! { enum BackgroundAccessStatus: i32 {
+    Unspecified (BackgroundAccessStatus_Unspecified) = 0, AllowedWithAlwaysOnRealTimeConnectivity (BackgroundAccessStatus_AllowedWithAlwaysOnRealTimeConnectivity) = 1, AllowedMayUseActiveRealTimeConnectivity (BackgroundAccessStatus_AllowedMayUseActiveRealTimeConnectivity) = 2, Denied (BackgroundAccessStatus_Denied) = 3, AlwaysAllowed (BackgroundAccessStatus_AlwaysAllowed) = 4, AllowedSubjectToSystemPolicy (BackgroundAccessStatus_AllowedSubjectToSystemPolicy) = 5, DeniedBySystemPolicy (BackgroundAccessStatus_DeniedBySystemPolicy) = 6, DeniedByUser (BackgroundAccessStatus_DeniedByUser) = 7,
+}}
+DEFINE_IID!(IID_IBackgroundCondition, 2923995630, 35153, 16394, 131, 2, 156, 156, 154, 42, 58, 59);
+RT_INTERFACE!{interface IBackgroundCondition(IBackgroundConditionVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundCondition] {
+    
+}}
+RT_CLASS!{static class BackgroundExecutionManager}
+impl RtActivatable<IBackgroundExecutionManagerStatics> for BackgroundExecutionManager {}
+impl RtActivatable<IBackgroundExecutionManagerStatics2> for BackgroundExecutionManager {}
+impl BackgroundExecutionManager {
+    #[inline] pub fn request_access_async() -> Result<ComPtr<foundation::IAsyncOperation<BackgroundAccessStatus>>> {
+        <Self as RtActivatable<IBackgroundExecutionManagerStatics>>::get_activation_factory().request_access_async()
+    }
+    #[inline] pub fn request_access_for_application_async(applicationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<BackgroundAccessStatus>>> {
+        <Self as RtActivatable<IBackgroundExecutionManagerStatics>>::get_activation_factory().request_access_for_application_async(applicationId)
+    }
+    #[inline] pub fn remove_access() -> Result<()> {
+        <Self as RtActivatable<IBackgroundExecutionManagerStatics>>::get_activation_factory().remove_access()
+    }
+    #[inline] pub fn remove_access_for_application(applicationId: &HStringArg) -> Result<()> {
+        <Self as RtActivatable<IBackgroundExecutionManagerStatics>>::get_activation_factory().remove_access_for_application(applicationId)
+    }
+    #[inline] pub fn get_access_status() -> Result<BackgroundAccessStatus> {
+        <Self as RtActivatable<IBackgroundExecutionManagerStatics>>::get_activation_factory().get_access_status()
+    }
+    #[inline] pub fn get_access_status_for_application(applicationId: &HStringArg) -> Result<BackgroundAccessStatus> {
+        <Self as RtActivatable<IBackgroundExecutionManagerStatics>>::get_activation_factory().get_access_status_for_application(applicationId)
+    }
+    #[inline] pub fn request_access_kind_async(requestedAccess: BackgroundAccessRequestKind, reason: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<IBackgroundExecutionManagerStatics2>>::get_activation_factory().request_access_kind_async(requestedAccess, reason)
+    }
+}
+DEFINE_CLSID!(BackgroundExecutionManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,69,120,101,99,117,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_BackgroundExecutionManager]);
+DEFINE_IID!(IID_IBackgroundExecutionManagerStatics, 3894864472, 26281, 19777, 131, 212, 180, 193, 140, 135, 184, 70);
+RT_INTERFACE!{static interface IBackgroundExecutionManagerStatics(IBackgroundExecutionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundExecutionManagerStatics] {
+    fn RequestAccessAsync(&self, out: *mut *mut foundation::IAsyncOperation<BackgroundAccessStatus>) -> HRESULT,
+    fn RequestAccessForApplicationAsync(&self, applicationId: HSTRING, out: *mut *mut foundation::IAsyncOperation<BackgroundAccessStatus>) -> HRESULT,
+    fn RemoveAccess(&self) -> HRESULT,
+    fn RemoveAccessForApplication(&self, applicationId: HSTRING) -> HRESULT,
+    fn GetAccessStatus(&self, out: *mut BackgroundAccessStatus) -> HRESULT,
+    fn GetAccessStatusForApplication(&self, applicationId: HSTRING, out: *mut BackgroundAccessStatus) -> HRESULT
+}}
+impl IBackgroundExecutionManagerStatics {
+    #[inline] pub fn request_access_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<BackgroundAccessStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAccessAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_access_for_application_async(&self, applicationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<BackgroundAccessStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAccessForApplicationAsync)(self as *const _ as *mut _, applicationId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_access(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RemoveAccess)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_access_for_application(&self, applicationId: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RemoveAccessForApplication)(self as *const _ as *mut _, applicationId.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_access_status(&self) -> Result<BackgroundAccessStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetAccessStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_access_status_for_application(&self, applicationId: &HStringArg) -> Result<BackgroundAccessStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetAccessStatusForApplication)(self as *const _ as *mut _, applicationId.get(), &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundExecutionManagerStatics2, 1184572655, 39867, 19992, 153, 154, 253, 101, 18, 147, 27, 233);
+RT_INTERFACE!{static interface IBackgroundExecutionManagerStatics2(IBackgroundExecutionManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundExecutionManagerStatics2] {
+    fn RequestAccessKindAsync(&self, requestedAccess: BackgroundAccessRequestKind, reason: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+}}
+impl IBackgroundExecutionManagerStatics2 {
+    #[inline] pub fn request_access_kind_async(&self, requestedAccess: BackgroundAccessRequestKind, reason: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAccessKindAsync)(self as *const _ as *mut _, requestedAccess, reason.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTask, 2098451764, 64786, 17358, 140, 34, 234, 31, 241, 60, 6, 223);
+RT_INTERFACE!{interface IBackgroundTask(IBackgroundTaskVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTask] {
+    fn Run(&self, taskInstance: *mut IBackgroundTaskInstance) -> HRESULT
+}}
+impl IBackgroundTask {
+    #[inline] pub fn run(&self, taskInstance: &IBackgroundTaskInstance) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Run)(self as *const _ as *mut _, taskInstance as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTaskBuilder, 55661838, 15972, 17778, 169, 58, 132, 7, 90, 55, 201, 23);
+RT_INTERFACE!{interface IBackgroundTaskBuilder(IBackgroundTaskBuilderVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskBuilder] {
+    fn put_TaskEntryPoint(&self, value: HSTRING) -> HRESULT,
+    fn get_TaskEntryPoint(&self, out: *mut HSTRING) -> HRESULT,
+    fn SetTrigger(&self, trigger: *mut IBackgroundTrigger) -> HRESULT,
+    fn AddCondition(&self, condition: *mut IBackgroundCondition) -> HRESULT,
+    fn put_Name(&self, value: HSTRING) -> HRESULT,
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn Register(&self, out: *mut *mut BackgroundTaskRegistration) -> HRESULT
+}}
+impl IBackgroundTaskBuilder {
+    #[inline] pub fn set_task_entry_point(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TaskEntryPoint)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_task_entry_point(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TaskEntryPoint)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_trigger(&self, trigger: &IBackgroundTrigger) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetTrigger)(self as *const _ as *mut _, trigger as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_condition(&self, condition: &IBackgroundCondition) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddCondition)(self as *const _ as *mut _, condition as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Name)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn register(&self) -> Result<Option<ComPtr<BackgroundTaskRegistration>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Register)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BackgroundTaskBuilder: IBackgroundTaskBuilder}
+impl RtActivatable<IActivationFactory> for BackgroundTaskBuilder {}
+DEFINE_CLSID!(BackgroundTaskBuilder(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,84,97,115,107,66,117,105,108,100,101,114,0]) [CLSID_BackgroundTaskBuilder]);
+DEFINE_IID!(IID_IBackgroundTaskBuilder2, 1793576881, 4175, 16493, 141, 182, 132, 74, 87, 15, 66, 187);
+RT_INTERFACE!{interface IBackgroundTaskBuilder2(IBackgroundTaskBuilder2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskBuilder2] {
+    fn put_CancelOnConditionLoss(&self, value: bool) -> HRESULT,
+    fn get_CancelOnConditionLoss(&self, out: *mut bool) -> HRESULT
+}}
+impl IBackgroundTaskBuilder2 {
+    #[inline] pub fn set_cancel_on_condition_loss(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CancelOnConditionLoss)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_cancel_on_condition_loss(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CancelOnConditionLoss)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTaskBuilder3, 684150602, 35753, 19465, 162, 79, 25, 104, 62, 44, 146, 76);
+RT_INTERFACE!{interface IBackgroundTaskBuilder3(IBackgroundTaskBuilder3Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskBuilder3] {
+    fn put_IsNetworkRequested(&self, value: bool) -> HRESULT,
+    fn get_IsNetworkRequested(&self, out: *mut bool) -> HRESULT
+}}
+impl IBackgroundTaskBuilder3 {
+    #[inline] pub fn set_is_network_requested(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsNetworkRequested)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_network_requested(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsNetworkRequested)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTaskBuilder4, 1196811554, 52130, 20021, 189, 22, 166, 218, 127, 28, 25, 170);
+RT_INTERFACE!{interface IBackgroundTaskBuilder4(IBackgroundTaskBuilder4Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskBuilder4] {
+    fn get_TaskGroup(&self, out: *mut *mut BackgroundTaskRegistrationGroup) -> HRESULT,
+    fn put_TaskGroup(&self, value: *mut BackgroundTaskRegistrationGroup) -> HRESULT
+}}
+impl IBackgroundTaskBuilder4 {
+    #[inline] pub fn get_task_group(&self) -> Result<Option<ComPtr<BackgroundTaskRegistrationGroup>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TaskGroup)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_task_group(&self, value: &BackgroundTaskRegistrationGroup) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TaskGroup)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_BackgroundTaskCanceledEventHandler, 2797910720, 20984, 19543, 172, 63, 21, 109, 209, 104, 12, 79);
+RT_DELEGATE!{delegate BackgroundTaskCanceledEventHandler(BackgroundTaskCanceledEventHandlerVtbl, BackgroundTaskCanceledEventHandlerImpl) [IID_BackgroundTaskCanceledEventHandler] {
+    fn Invoke(&self, sender: *mut IBackgroundTaskInstance, reason: BackgroundTaskCancellationReason) -> HRESULT
+}}
+impl BackgroundTaskCanceledEventHandler {
+    #[inline] pub fn invoke(&self, sender: &IBackgroundTaskInstance, reason: BackgroundTaskCancellationReason) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, reason);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum BackgroundTaskCancellationReason: i32 {
+    Abort (BackgroundTaskCancellationReason_Abort) = 0, Terminating (BackgroundTaskCancellationReason_Terminating) = 1, LoggingOff (BackgroundTaskCancellationReason_LoggingOff) = 2, ServicingUpdate (BackgroundTaskCancellationReason_ServicingUpdate) = 3, IdleTask (BackgroundTaskCancellationReason_IdleTask) = 4, Uninstall (BackgroundTaskCancellationReason_Uninstall) = 5, ConditionLoss (BackgroundTaskCancellationReason_ConditionLoss) = 6, SystemPolicy (BackgroundTaskCancellationReason_SystemPolicy) = 7, QuietHoursEntered (BackgroundTaskCancellationReason_QuietHoursEntered) = 8, ExecutionTimeExceeded (BackgroundTaskCancellationReason_ExecutionTimeExceeded) = 9, ResourceRevocation (BackgroundTaskCancellationReason_ResourceRevocation) = 10, EnergySaver (BackgroundTaskCancellationReason_EnergySaver) = 11,
+}}
+DEFINE_IID!(IID_IBackgroundTaskCompletedEventArgs, 1448945103, 61961, 18676, 153, 103, 43, 24, 79, 123, 251, 240);
+RT_INTERFACE!{interface IBackgroundTaskCompletedEventArgs(IBackgroundTaskCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskCompletedEventArgs] {
+    fn get_InstanceId(&self, out: *mut Guid) -> HRESULT,
+    fn CheckResult(&self) -> HRESULT
+}}
+impl IBackgroundTaskCompletedEventArgs {
+    #[inline] pub fn get_instance_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_InstanceId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn check_result(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).CheckResult)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BackgroundTaskCompletedEventArgs: IBackgroundTaskCompletedEventArgs}
+DEFINE_IID!(IID_BackgroundTaskCompletedEventHandler, 1530456361, 41094, 18087, 166, 120, 67, 145, 53, 130, 43, 207);
+RT_DELEGATE!{delegate BackgroundTaskCompletedEventHandler(BackgroundTaskCompletedEventHandlerVtbl, BackgroundTaskCompletedEventHandlerImpl) [IID_BackgroundTaskCompletedEventHandler] {
+    fn Invoke(&self, sender: *mut BackgroundTaskRegistration, args: *mut BackgroundTaskCompletedEventArgs) -> HRESULT
+}}
+impl BackgroundTaskCompletedEventHandler {
+    #[inline] pub fn invoke(&self, sender: &BackgroundTaskRegistration, args: &BackgroundTaskCompletedEventArgs) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, args as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTaskDeferral, 2479625581, 44839, 19923, 132, 110, 36, 238, 64, 202, 221, 37);
+RT_INTERFACE!{interface IBackgroundTaskDeferral(IBackgroundTaskDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskDeferral] {
+    fn Complete(&self) -> HRESULT
+}}
+impl IBackgroundTaskDeferral {
+    #[inline] pub fn complete(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Complete)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BackgroundTaskDeferral: IBackgroundTaskDeferral}
+DEFINE_IID!(IID_IBackgroundTaskInstance, 2254166650, 8664, 17779, 143, 50, 146, 138, 27, 6, 65, 246);
+RT_INTERFACE!{interface IBackgroundTaskInstance(IBackgroundTaskInstanceVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskInstance] {
+    fn get_InstanceId(&self, out: *mut Guid) -> HRESULT,
+    fn get_Task(&self, out: *mut *mut BackgroundTaskRegistration) -> HRESULT,
+    fn get_Progress(&self, out: *mut u32) -> HRESULT,
+    fn put_Progress(&self, value: u32) -> HRESULT,
+    fn get_TriggerDetails(&self, out: *mut *mut IInspectable) -> HRESULT,
+    fn add_Canceled(&self, cancelHandler: *mut BackgroundTaskCanceledEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Canceled(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
+    fn get_SuspendedCount(&self, out: *mut u32) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut BackgroundTaskDeferral) -> HRESULT
+}}
+impl IBackgroundTaskInstance {
+    #[inline] pub fn get_instance_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_InstanceId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_task(&self) -> Result<Option<ComPtr<BackgroundTaskRegistration>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Task)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_progress(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_progress(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Progress)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_trigger_details(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TriggerDetails)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_canceled(&self, cancelHandler: &BackgroundTaskCanceledEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Canceled)(self as *const _ as *mut _, cancelHandler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_canceled(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Canceled)(self as *const _ as *mut _, cookie);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_suspended_count(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_SuspendedCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<BackgroundTaskDeferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTaskInstance2, 1333592438, 3190, 20404, 137, 109, 93, 225, 134, 65, 34, 246);
+RT_INTERFACE!{interface IBackgroundTaskInstance2(IBackgroundTaskInstance2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskInstance2] {
+    fn GetThrottleCount(&self, counter: BackgroundTaskThrottleCounter, out: *mut u32) -> HRESULT
+}}
+impl IBackgroundTaskInstance2 {
+    #[inline] pub fn get_throttle_count(&self, counter: BackgroundTaskThrottleCounter) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetThrottleCount)(self as *const _ as *mut _, counter, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTaskInstance4, 2133455420, 43524, 19208, 151, 176, 6, 216, 116, 205, 171, 245);
+RT_INTERFACE!{interface IBackgroundTaskInstance4(IBackgroundTaskInstance4Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskInstance4] {
+    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
+}}
+impl IBackgroundTaskInstance4 {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTaskProgressEventArgs, 4212418732, 33586, 19722, 149, 50, 3, 234, 230, 132, 218, 49);
+RT_INTERFACE!{interface IBackgroundTaskProgressEventArgs(IBackgroundTaskProgressEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskProgressEventArgs] {
+    fn get_InstanceId(&self, out: *mut Guid) -> HRESULT,
+    fn get_Progress(&self, out: *mut u32) -> HRESULT
+}}
+impl IBackgroundTaskProgressEventArgs {
+    #[inline] pub fn get_instance_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_InstanceId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_progress(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BackgroundTaskProgressEventArgs: IBackgroundTaskProgressEventArgs}
+DEFINE_IID!(IID_BackgroundTaskProgressEventHandler, 1189111868, 35464, 19609, 128, 76, 118, 137, 127, 98, 119, 166);
+RT_DELEGATE!{delegate BackgroundTaskProgressEventHandler(BackgroundTaskProgressEventHandlerVtbl, BackgroundTaskProgressEventHandlerImpl) [IID_BackgroundTaskProgressEventHandler] {
+    fn Invoke(&self, sender: *mut BackgroundTaskRegistration, args: *mut BackgroundTaskProgressEventArgs) -> HRESULT
+}}
+impl BackgroundTaskProgressEventHandler {
+    #[inline] pub fn invoke(&self, sender: &BackgroundTaskRegistration, args: &BackgroundTaskProgressEventArgs) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, args as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTaskRegistration, 275074242, 41582, 17343, 140, 18, 31, 180, 13, 191, 191, 160);
+RT_INTERFACE!{interface IBackgroundTaskRegistration(IBackgroundTaskRegistrationVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistration] {
+    fn get_TaskId(&self, out: *mut Guid) -> HRESULT,
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn add_Progress(&self, handler: *mut BackgroundTaskProgressEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Progress(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_Completed(&self, handler: *mut BackgroundTaskCompletedEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Completed(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
+    fn Unregister(&self, cancelTask: bool) -> HRESULT
+}}
+impl IBackgroundTaskRegistration {
+    #[inline] pub fn get_task_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TaskId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_progress(&self, handler: &BackgroundTaskProgressEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Progress)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_progress(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Progress)(self as *const _ as *mut _, cookie);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_completed(&self, handler: &BackgroundTaskCompletedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_completed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Completed)(self as *const _ as *mut _, cookie);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn unregister(&self, cancelTask: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Unregister)(self as *const _ as *mut _, cancelTask);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BackgroundTaskRegistration: IBackgroundTaskRegistration}
+impl RtActivatable<IBackgroundTaskRegistrationStatics> for BackgroundTaskRegistration {}
+impl RtActivatable<IBackgroundTaskRegistrationStatics2> for BackgroundTaskRegistration {}
+impl BackgroundTaskRegistration {
+    #[inline] pub fn get_all_tasks() -> Result<Option<ComPtr<foundation::collections::IMapView<Guid, IBackgroundTaskRegistration>>>> {
+        <Self as RtActivatable<IBackgroundTaskRegistrationStatics>>::get_activation_factory().get_all_tasks()
+    }
+    #[inline] pub fn get_all_task_groups() -> Result<Option<ComPtr<foundation::collections::IMapView<HString, BackgroundTaskRegistrationGroup>>>> {
+        <Self as RtActivatable<IBackgroundTaskRegistrationStatics2>>::get_activation_factory().get_all_task_groups()
+    }
+    #[inline] pub fn get_task_group(groupId: &HStringArg) -> Result<Option<ComPtr<BackgroundTaskRegistrationGroup>>> {
+        <Self as RtActivatable<IBackgroundTaskRegistrationStatics2>>::get_activation_factory().get_task_group(groupId)
+    }
+}
+DEFINE_CLSID!(BackgroundTaskRegistration(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,84,97,115,107,82,101,103,105,115,116,114,97,116,105,111,110,0]) [CLSID_BackgroundTaskRegistration]);
+DEFINE_IID!(IID_IBackgroundTaskRegistration2, 1631110915, 48006, 16658, 175, 195, 127, 147, 155, 22, 110, 59);
+RT_INTERFACE!{interface IBackgroundTaskRegistration2(IBackgroundTaskRegistration2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistration2] {
+    fn get_Trigger(&self, out: *mut *mut IBackgroundTrigger) -> HRESULT
+}}
+impl IBackgroundTaskRegistration2 {
+    #[inline] pub fn get_trigger(&self) -> Result<Option<ComPtr<IBackgroundTrigger>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Trigger)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTaskRegistration3, 4264788373, 37923, 19851, 131, 13, 177, 221, 44, 123, 173, 213);
+RT_INTERFACE!{interface IBackgroundTaskRegistration3(IBackgroundTaskRegistration3Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistration3] {
+    fn get_TaskGroup(&self, out: *mut *mut BackgroundTaskRegistrationGroup) -> HRESULT
+}}
+impl IBackgroundTaskRegistration3 {
+    #[inline] pub fn get_task_group(&self) -> Result<Option<ComPtr<BackgroundTaskRegistrationGroup>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TaskGroup)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTaskRegistrationGroup, 716280218, 34587, 16743, 138, 118, 5, 92, 214, 123, 91, 35);
+RT_INTERFACE!{interface IBackgroundTaskRegistrationGroup(IBackgroundTaskRegistrationGroupVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistrationGroup] {
+    fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn add_BackgroundActivated(&self, handler: *mut foundation::TypedEventHandler<BackgroundTaskRegistrationGroup, super::activation::BackgroundActivatedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_BackgroundActivated(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn get_AllTasks(&self, out: *mut *mut foundation::collections::IMapView<Guid, BackgroundTaskRegistration>) -> HRESULT
+}}
+impl IBackgroundTaskRegistrationGroup {
+    #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_background_activated(&self, handler: &foundation::TypedEventHandler<BackgroundTaskRegistrationGroup, super::activation::BackgroundActivatedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_BackgroundActivated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_background_activated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_BackgroundActivated)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_all_tasks(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<Guid, BackgroundTaskRegistration>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AllTasks)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BackgroundTaskRegistrationGroup: IBackgroundTaskRegistrationGroup}
+impl RtActivatable<IBackgroundTaskRegistrationGroupFactory> for BackgroundTaskRegistrationGroup {}
+impl BackgroundTaskRegistrationGroup {
+    #[inline] pub fn create(id: &HStringArg) -> Result<ComPtr<BackgroundTaskRegistrationGroup>> {
+        <Self as RtActivatable<IBackgroundTaskRegistrationGroupFactory>>::get_activation_factory().create(id)
+    }
+    #[inline] pub fn create_with_name(id: &HStringArg, name: &HStringArg) -> Result<ComPtr<BackgroundTaskRegistrationGroup>> {
+        <Self as RtActivatable<IBackgroundTaskRegistrationGroupFactory>>::get_activation_factory().create_with_name(id, name)
+    }
+}
+DEFINE_CLSID!(BackgroundTaskRegistrationGroup(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,84,97,115,107,82,101,103,105,115,116,114,97,116,105,111,110,71,114,111,117,112,0]) [CLSID_BackgroundTaskRegistrationGroup]);
+DEFINE_IID!(IID_IBackgroundTaskRegistrationGroupFactory, 2212047721, 17615, 17969, 151, 64, 3, 199, 216, 116, 27, 197);
+RT_INTERFACE!{static interface IBackgroundTaskRegistrationGroupFactory(IBackgroundTaskRegistrationGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistrationGroupFactory] {
+    fn Create(&self, id: HSTRING, out: *mut *mut BackgroundTaskRegistrationGroup) -> HRESULT,
+    fn CreateWithName(&self, id: HSTRING, name: HSTRING, out: *mut *mut BackgroundTaskRegistrationGroup) -> HRESULT
+}}
+impl IBackgroundTaskRegistrationGroupFactory {
+    #[inline] pub fn create(&self, id: &HStringArg) -> Result<ComPtr<BackgroundTaskRegistrationGroup>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, id.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_with_name(&self, id: &HStringArg, name: &HStringArg) -> Result<ComPtr<BackgroundTaskRegistrationGroup>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithName)(self as *const _ as *mut _, id.get(), name.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTaskRegistrationStatics, 1280585577, 45056, 17082, 160, 147, 106, 86, 60, 101, 227, 248);
+RT_INTERFACE!{static interface IBackgroundTaskRegistrationStatics(IBackgroundTaskRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistrationStatics] {
+    fn get_AllTasks(&self, out: *mut *mut foundation::collections::IMapView<Guid, IBackgroundTaskRegistration>) -> HRESULT
+}}
+impl IBackgroundTaskRegistrationStatics {
+    #[inline] pub fn get_all_tasks(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<Guid, IBackgroundTaskRegistration>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AllTasks)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTaskRegistrationStatics2, 390817566, 45581, 20393, 173, 154, 233, 58, 214, 199, 30, 1);
+RT_INTERFACE!{static interface IBackgroundTaskRegistrationStatics2(IBackgroundTaskRegistrationStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistrationStatics2] {
+    fn get_AllTaskGroups(&self, out: *mut *mut foundation::collections::IMapView<HString, BackgroundTaskRegistrationGroup>) -> HRESULT,
+    fn GetTaskGroup(&self, groupId: HSTRING, out: *mut *mut BackgroundTaskRegistrationGroup) -> HRESULT
+}}
+impl IBackgroundTaskRegistrationStatics2 {
+    #[inline] pub fn get_all_task_groups(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, BackgroundTaskRegistrationGroup>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AllTaskGroups)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_task_group(&self, groupId: &HStringArg) -> Result<Option<ComPtr<BackgroundTaskRegistrationGroup>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetTaskGroup)(self as *const _ as *mut _, groupId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum BackgroundTaskThrottleCounter: i32 {
+    All (BackgroundTaskThrottleCounter_All) = 0, Cpu (BackgroundTaskThrottleCounter_Cpu) = 1, Network (BackgroundTaskThrottleCounter_Network) = 2,
+}}
+DEFINE_IID!(IID_IBackgroundTrigger, 2226364504, 24615, 19335, 151, 144, 189, 243, 247, 87, 219, 215);
+RT_INTERFACE!{interface IBackgroundTrigger(IBackgroundTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTrigger] {
+    
+}}
+RT_CLASS!{static class BackgroundWorkCost}
+impl RtActivatable<IBackgroundWorkCostStatics> for BackgroundWorkCost {}
+impl BackgroundWorkCost {
+    #[inline] pub fn get_current_background_work_cost() -> Result<BackgroundWorkCostValue> {
+        <Self as RtActivatable<IBackgroundWorkCostStatics>>::get_activation_factory().get_current_background_work_cost()
+    }
+}
+DEFINE_CLSID!(BackgroundWorkCost(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,87,111,114,107,67,111,115,116,0]) [CLSID_BackgroundWorkCost]);
+DEFINE_IID!(IID_IBackgroundWorkCostStatics, 3342902882, 49936, 19330, 179, 227, 59, 207, 185, 228, 199, 125);
+RT_INTERFACE!{static interface IBackgroundWorkCostStatics(IBackgroundWorkCostStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundWorkCostStatics] {
+    fn get_CurrentBackgroundWorkCost(&self, out: *mut BackgroundWorkCostValue) -> HRESULT
+}}
+impl IBackgroundWorkCostStatics {
+    #[inline] pub fn get_current_background_work_cost(&self) -> Result<BackgroundWorkCostValue> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CurrentBackgroundWorkCost)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum BackgroundWorkCostValue: i32 {
+    Low (BackgroundWorkCostValue_Low) = 0, Medium (BackgroundWorkCostValue_Medium) = 1, High (BackgroundWorkCostValue_High) = 2,
+}}
+DEFINE_IID!(IID_IBluetoothLEAdvertisementPublisherTrigger, 2872976914, 9683, 18606, 135, 36, 216, 24, 119, 174, 97, 41);
+RT_INTERFACE!{interface IBluetoothLEAdvertisementPublisherTrigger(IBluetoothLEAdvertisementPublisherTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementPublisherTrigger] {
+    #[cfg(feature="windows-devices")] fn get_Advertisement(&self, out: *mut *mut super::super::devices::bluetooth::advertisement::BluetoothLEAdvertisement) -> HRESULT
+}}
+impl IBluetoothLEAdvertisementPublisherTrigger {
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_advertisement(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::advertisement::BluetoothLEAdvertisement>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Advertisement)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BluetoothLEAdvertisementPublisherTrigger: IBluetoothLEAdvertisementPublisherTrigger}
+impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementPublisherTrigger {}
+DEFINE_CLSID!(BluetoothLEAdvertisementPublisherTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,80,117,98,108,105,115,104,101,114,84,114,105,103,103,101,114,0]) [CLSID_BluetoothLEAdvertisementPublisherTrigger]);
+DEFINE_IID!(IID_IBluetoothLEAdvertisementWatcherTrigger, 447420441, 48353, 18667, 168, 39, 89, 251, 124, 238, 82, 166);
+RT_INTERFACE!{interface IBluetoothLEAdvertisementWatcherTrigger(IBluetoothLEAdvertisementWatcherTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementWatcherTrigger] {
+    fn get_MinSamplingInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_MaxSamplingInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_MinOutOfRangeTimeout(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_MaxOutOfRangeTimeout(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_SignalStrengthFilter(&self, out: *mut *mut super::super::devices::bluetooth::BluetoothSignalStrengthFilter) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn put_SignalStrengthFilter(&self, value: *mut super::super::devices::bluetooth::BluetoothSignalStrengthFilter) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_AdvertisementFilter(&self, out: *mut *mut super::super::devices::bluetooth::advertisement::BluetoothLEAdvertisementFilter) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn put_AdvertisementFilter(&self, value: *mut super::super::devices::bluetooth::advertisement::BluetoothLEAdvertisementFilter) -> HRESULT
+}}
+impl IBluetoothLEAdvertisementWatcherTrigger {
+    #[inline] pub fn get_min_sampling_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MinSamplingInterval)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_sampling_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxSamplingInterval)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_min_out_of_range_timeout(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MinOutOfRangeTimeout)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_out_of_range_timeout(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxOutOfRangeTimeout)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_signal_strength_filter(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::BluetoothSignalStrengthFilter>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SignalStrengthFilter)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_signal_strength_filter(&self, value: &super::super::devices::bluetooth::BluetoothSignalStrengthFilter) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SignalStrengthFilter)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_advertisement_filter(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::advertisement::BluetoothLEAdvertisementFilter>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AdvertisementFilter)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_advertisement_filter(&self, value: &super::super::devices::bluetooth::advertisement::BluetoothLEAdvertisementFilter) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AdvertisementFilter)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BluetoothLEAdvertisementWatcherTrigger: IBluetoothLEAdvertisementWatcherTrigger}
+impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementWatcherTrigger {}
+DEFINE_CLSID!(BluetoothLEAdvertisementWatcherTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,87,97,116,99,104,101,114,84,114,105,103,103,101,114,0]) [CLSID_BluetoothLEAdvertisementWatcherTrigger]);
+DEFINE_IID!(IID_ICachedFileUpdaterTrigger, 3793530603, 13042, 19761, 181, 83, 185, 224, 27, 222, 55, 224);
+RT_INTERFACE!{interface ICachedFileUpdaterTrigger(ICachedFileUpdaterTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterTrigger] {
+    
+}}
+RT_CLASS!{class CachedFileUpdaterTrigger: ICachedFileUpdaterTrigger}
+impl RtActivatable<IActivationFactory> for CachedFileUpdaterTrigger {}
+DEFINE_CLSID!(CachedFileUpdaterTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,97,99,104,101,100,70,105,108,101,85,112,100,97,116,101,114,84,114,105,103,103,101,114,0]) [CLSID_CachedFileUpdaterTrigger]);
+DEFINE_IID!(IID_ICachedFileUpdaterTriggerDetails, 1904446483, 4884, 18356, 149, 151, 220, 126, 36, 140, 23, 204);
+RT_INTERFACE!{interface ICachedFileUpdaterTriggerDetails(ICachedFileUpdaterTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterTriggerDetails] {
+    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_UpdateTarget(&self, out: *mut super::super::storage::provider::CachedFileTarget) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_UpdateRequest(&self, out: *mut *mut super::super::storage::provider::FileUpdateRequest) -> HRESULT,
+    fn get_CanRequestUserInput(&self, out: *mut bool) -> HRESULT
+}}
+impl ICachedFileUpdaterTriggerDetails {
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_update_target(&self) -> Result<super::super::storage::provider::CachedFileTarget> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_UpdateTarget)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_update_request(&self) -> Result<Option<ComPtr<super::super::storage::provider::FileUpdateRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UpdateRequest)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_can_request_user_input(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanRequestUserInput)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CachedFileUpdaterTriggerDetails: ICachedFileUpdaterTriggerDetails}
+DEFINE_IID!(IID_IChatMessageNotificationTrigger, 1362838463, 7488, 23645, 120, 245, 201, 35, 254, 227, 115, 158);
+RT_INTERFACE!{interface IChatMessageNotificationTrigger(IChatMessageNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageNotificationTrigger] {
+    
+}}
+RT_CLASS!{class ChatMessageNotificationTrigger: IChatMessageNotificationTrigger}
+impl RtActivatable<IActivationFactory> for ChatMessageNotificationTrigger {}
+DEFINE_CLSID!(ChatMessageNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,104,97,116,77,101,115,115,97,103,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ChatMessageNotificationTrigger]);
+DEFINE_IID!(IID_IChatMessageReceivedNotificationTrigger, 1050899982, 47861, 16503, 136, 233, 6, 12, 246, 240, 198, 213);
+RT_INTERFACE!{interface IChatMessageReceivedNotificationTrigger(IChatMessageReceivedNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageReceivedNotificationTrigger] {
+    
+}}
+RT_CLASS!{class ChatMessageReceivedNotificationTrigger: IChatMessageReceivedNotificationTrigger}
+impl RtActivatable<IActivationFactory> for ChatMessageReceivedNotificationTrigger {}
+DEFINE_CLSID!(ChatMessageReceivedNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,104,97,116,77,101,115,115,97,103,101,82,101,99,101,105,118,101,100,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ChatMessageReceivedNotificationTrigger]);
+DEFINE_IID!(IID_IContactStoreNotificationTrigger, 3358802331, 18181, 17777, 154, 22, 6, 185, 151, 191, 156, 150);
+RT_INTERFACE!{interface IContactStoreNotificationTrigger(IContactStoreNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IContactStoreNotificationTrigger] {
+    
+}}
+RT_CLASS!{class ContactStoreNotificationTrigger: IContactStoreNotificationTrigger}
+impl RtActivatable<IActivationFactory> for ContactStoreNotificationTrigger {}
+DEFINE_CLSID!(ContactStoreNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,111,110,116,97,99,116,83,116,111,114,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ContactStoreNotificationTrigger]);
+DEFINE_IID!(IID_IContentPrefetchTrigger, 1896228846, 1274, 17419, 128, 192, 23, 50, 2, 25, 158, 93);
+RT_INTERFACE!{interface IContentPrefetchTrigger(IContentPrefetchTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetchTrigger] {
+    fn get_WaitInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT
+}}
+impl IContentPrefetchTrigger {
+    #[inline] pub fn get_wait_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_WaitInterval)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ContentPrefetchTrigger: IContentPrefetchTrigger}
+impl RtActivatable<IContentPrefetchTriggerFactory> for ContentPrefetchTrigger {}
+impl RtActivatable<IActivationFactory> for ContentPrefetchTrigger {}
+impl ContentPrefetchTrigger {
+    #[inline] pub fn create(waitInterval: foundation::TimeSpan) -> Result<ComPtr<ContentPrefetchTrigger>> {
+        <Self as RtActivatable<IContentPrefetchTriggerFactory>>::get_activation_factory().create(waitInterval)
+    }
+}
+DEFINE_CLSID!(ContentPrefetchTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,111,110,116,101,110,116,80,114,101,102,101,116,99,104,84,114,105,103,103,101,114,0]) [CLSID_ContentPrefetchTrigger]);
+DEFINE_IID!(IID_IContentPrefetchTriggerFactory, 3261349594, 35331, 16542, 184, 196, 136, 129, 76, 40, 204, 182);
+RT_INTERFACE!{static interface IContentPrefetchTriggerFactory(IContentPrefetchTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetchTriggerFactory] {
+    fn Create(&self, waitInterval: foundation::TimeSpan, out: *mut *mut ContentPrefetchTrigger) -> HRESULT
+}}
+impl IContentPrefetchTriggerFactory {
+    #[inline] pub fn create(&self, waitInterval: foundation::TimeSpan) -> Result<ComPtr<ContentPrefetchTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, waitInterval, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ICustomSystemEventTrigger, 4082722712, 53099, 20212, 160, 202, 41, 207, 74, 39, 140, 135);
+RT_INTERFACE!{interface ICustomSystemEventTrigger(ICustomSystemEventTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ICustomSystemEventTrigger] {
+    fn get_TriggerId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Recurrence(&self, out: *mut CustomSystemEventTriggerRecurrence) -> HRESULT
+}}
+impl ICustomSystemEventTrigger {
+    #[inline] pub fn get_trigger_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TriggerId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_recurrence(&self) -> Result<CustomSystemEventTriggerRecurrence> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Recurrence)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CustomSystemEventTrigger: ICustomSystemEventTrigger}
+impl RtActivatable<ICustomSystemEventTriggerFactory> for CustomSystemEventTrigger {}
+impl CustomSystemEventTrigger {
+    #[inline] pub fn create(triggerId: &HStringArg, recurrence: CustomSystemEventTriggerRecurrence) -> Result<ComPtr<CustomSystemEventTrigger>> {
+        <Self as RtActivatable<ICustomSystemEventTriggerFactory>>::get_activation_factory().create(triggerId, recurrence)
+    }
+}
+DEFINE_CLSID!(CustomSystemEventTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,117,115,116,111,109,83,121,115,116,101,109,69,118,101,110,116,84,114,105,103,103,101,114,0]) [CLSID_CustomSystemEventTrigger]);
+DEFINE_IID!(IID_ICustomSystemEventTriggerFactory, 1808471749, 62172, 16818, 158, 253, 185, 107, 220, 209, 60, 237);
+RT_INTERFACE!{static interface ICustomSystemEventTriggerFactory(ICustomSystemEventTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICustomSystemEventTriggerFactory] {
+    fn Create(&self, triggerId: HSTRING, recurrence: CustomSystemEventTriggerRecurrence, out: *mut *mut CustomSystemEventTrigger) -> HRESULT
+}}
+impl ICustomSystemEventTriggerFactory {
+    #[inline] pub fn create(&self, triggerId: &HStringArg, recurrence: CustomSystemEventTriggerRecurrence) -> Result<ComPtr<CustomSystemEventTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, triggerId.get(), recurrence, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum CustomSystemEventTriggerRecurrence: i32 {
+    Once (CustomSystemEventTriggerRecurrence_Once) = 0, Always (CustomSystemEventTriggerRecurrence_Always) = 1,
+}}
+DEFINE_IID!(IID_IDeviceConnectionChangeTrigger, 2424790628, 15581, 20219, 171, 28, 91, 59, 106, 96, 206, 52);
+RT_INTERFACE!{interface IDeviceConnectionChangeTrigger(IDeviceConnectionChangeTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceConnectionChangeTrigger] {
+    fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_CanMaintainConnection(&self, out: *mut bool) -> HRESULT,
+    fn get_MaintainConnection(&self, out: *mut bool) -> HRESULT,
+    fn put_MaintainConnection(&self, value: bool) -> HRESULT
+}}
+impl IDeviceConnectionChangeTrigger {
+    #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DeviceId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_can_maintain_connection(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanMaintainConnection)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_maintain_connection(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaintainConnection)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_maintain_connection(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaintainConnection)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DeviceConnectionChangeTrigger: IDeviceConnectionChangeTrigger}
+impl RtActivatable<IDeviceConnectionChangeTriggerStatics> for DeviceConnectionChangeTrigger {}
+impl DeviceConnectionChangeTrigger {
+    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DeviceConnectionChangeTrigger>>> {
+        <Self as RtActivatable<IDeviceConnectionChangeTriggerStatics>>::get_activation_factory().from_id_async(deviceId)
+    }
+}
+DEFINE_CLSID!(DeviceConnectionChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,67,111,110,110,101,99,116,105,111,110,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_DeviceConnectionChangeTrigger]);
+DEFINE_IID!(IID_IDeviceConnectionChangeTriggerStatics, 3286901866, 20221, 17560, 170, 96, 164, 228, 227, 177, 122, 185);
+RT_INTERFACE!{static interface IDeviceConnectionChangeTriggerStatics(IDeviceConnectionChangeTriggerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceConnectionChangeTriggerStatics] {
+    fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncOperation<DeviceConnectionChangeTrigger>) -> HRESULT
+}}
+impl IDeviceConnectionChangeTriggerStatics {
+    #[inline] pub fn from_id_async(&self, deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DeviceConnectionChangeTrigger>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FromIdAsync)(self as *const _ as *mut _, deviceId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IDeviceManufacturerNotificationTrigger, 2166852277, 16811, 5850, 134, 194, 127, 123, 240, 145, 47, 91);
+RT_INTERFACE!{interface IDeviceManufacturerNotificationTrigger(IDeviceManufacturerNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceManufacturerNotificationTrigger] {
+    fn get_TriggerQualifier(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_OneShot(&self, out: *mut bool) -> HRESULT
+}}
+impl IDeviceManufacturerNotificationTrigger {
+    #[inline] pub fn get_trigger_qualifier(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TriggerQualifier)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_one_shot(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OneShot)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DeviceManufacturerNotificationTrigger: IDeviceManufacturerNotificationTrigger}
+impl RtActivatable<IDeviceManufacturerNotificationTriggerFactory> for DeviceManufacturerNotificationTrigger {}
+impl DeviceManufacturerNotificationTrigger {
+    #[inline] pub fn create(triggerQualifier: &HStringArg, oneShot: bool) -> Result<ComPtr<DeviceManufacturerNotificationTrigger>> {
+        <Self as RtActivatable<IDeviceManufacturerNotificationTriggerFactory>>::get_activation_factory().create(triggerQualifier, oneShot)
+    }
+}
+DEFINE_CLSID!(DeviceManufacturerNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,77,97,110,117,102,97,99,116,117,114,101,114,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_DeviceManufacturerNotificationTrigger]);
+DEFINE_IID!(IID_IDeviceManufacturerNotificationTriggerFactory, 2035670645, 9659, 16723, 161, 162, 48, 41, 252, 171, 182, 82);
+RT_INTERFACE!{static interface IDeviceManufacturerNotificationTriggerFactory(IDeviceManufacturerNotificationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceManufacturerNotificationTriggerFactory] {
+    fn Create(&self, triggerQualifier: HSTRING, oneShot: bool, out: *mut *mut DeviceManufacturerNotificationTrigger) -> HRESULT
+}}
+impl IDeviceManufacturerNotificationTriggerFactory {
+    #[inline] pub fn create(&self, triggerQualifier: &HStringArg, oneShot: bool) -> Result<ComPtr<DeviceManufacturerNotificationTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, triggerQualifier.get(), oneShot, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IDeviceServicingTrigger, 447879085, 28212, 18899, 158, 111, 23, 241, 182, 223, 168, 129);
+RT_INTERFACE!{interface IDeviceServicingTrigger(IDeviceServicingTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceServicingTrigger] {
+    fn RequestAsyncSimple(&self, deviceId: HSTRING, expectedDuration: foundation::TimeSpan, out: *mut *mut foundation::IAsyncOperation<DeviceTriggerResult>) -> HRESULT,
+    fn RequestAsyncWithArguments(&self, deviceId: HSTRING, expectedDuration: foundation::TimeSpan, arguments: HSTRING, out: *mut *mut foundation::IAsyncOperation<DeviceTriggerResult>) -> HRESULT
+}}
+impl IDeviceServicingTrigger {
+    #[inline] pub fn request_async_simple(&self, deviceId: &HStringArg, expectedDuration: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<DeviceTriggerResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAsyncSimple)(self as *const _ as *mut _, deviceId.get(), expectedDuration, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_async_with_arguments(&self, deviceId: &HStringArg, expectedDuration: foundation::TimeSpan, arguments: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DeviceTriggerResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAsyncWithArguments)(self as *const _ as *mut _, deviceId.get(), expectedDuration, arguments.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DeviceServicingTrigger: IDeviceServicingTrigger}
+impl RtActivatable<IActivationFactory> for DeviceServicingTrigger {}
+DEFINE_CLSID!(DeviceServicingTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,83,101,114,118,105,99,105,110,103,84,114,105,103,103,101,114,0]) [CLSID_DeviceServicingTrigger]);
+RT_ENUM! { enum DeviceTriggerResult: i32 {
+    Allowed (DeviceTriggerResult_Allowed) = 0, DeniedByUser (DeviceTriggerResult_DeniedByUser) = 1, DeniedBySystem (DeviceTriggerResult_DeniedBySystem) = 2, LowBattery (DeviceTriggerResult_LowBattery) = 3,
+}}
+DEFINE_IID!(IID_IDeviceUseTrigger, 229015569, 13135, 19799, 182, 236, 109, 202, 100, 180, 18, 228);
+RT_INTERFACE!{interface IDeviceUseTrigger(IDeviceUseTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceUseTrigger] {
+    fn RequestAsyncSimple(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncOperation<DeviceTriggerResult>) -> HRESULT,
+    fn RequestAsyncWithArguments(&self, deviceId: HSTRING, arguments: HSTRING, out: *mut *mut foundation::IAsyncOperation<DeviceTriggerResult>) -> HRESULT
+}}
+impl IDeviceUseTrigger {
+    #[inline] pub fn request_async_simple(&self, deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DeviceTriggerResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAsyncSimple)(self as *const _ as *mut _, deviceId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_async_with_arguments(&self, deviceId: &HStringArg, arguments: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DeviceTriggerResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAsyncWithArguments)(self as *const _ as *mut _, deviceId.get(), arguments.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DeviceUseTrigger: IDeviceUseTrigger}
+impl RtActivatable<IActivationFactory> for DeviceUseTrigger {}
+DEFINE_CLSID!(DeviceUseTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,85,115,101,84,114,105,103,103,101,114,0]) [CLSID_DeviceUseTrigger]);
+DEFINE_IID!(IID_IDeviceWatcherTrigger, 2757853149, 34163, 16992, 190, 252, 91, 236, 137, 203, 105, 61);
+RT_INTERFACE!{interface IDeviceWatcherTrigger(IDeviceWatcherTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceWatcherTrigger] {
+    
+}}
+RT_CLASS!{class DeviceWatcherTrigger: IDeviceWatcherTrigger}
+DEFINE_IID!(IID_IEmailStoreNotificationTrigger, 2557282010, 18411, 17000, 164, 242, 243, 247, 113, 136, 56, 138);
+RT_INTERFACE!{interface IEmailStoreNotificationTrigger(IEmailStoreNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IEmailStoreNotificationTrigger] {
+    
+}}
+RT_CLASS!{class EmailStoreNotificationTrigger: IEmailStoreNotificationTrigger}
+impl RtActivatable<IActivationFactory> for EmailStoreNotificationTrigger {}
+DEFINE_CLSID!(EmailStoreNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,69,109,97,105,108,83,116,111,114,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_EmailStoreNotificationTrigger]);
+DEFINE_IID!(IID_IGattCharacteristicNotificationTrigger, 3797913544, 1686, 18255, 167, 50, 242, 146, 176, 206, 188, 93);
+RT_INTERFACE!{interface IGattCharacteristicNotificationTrigger(IGattCharacteristicNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicNotificationTrigger] {
+    #[cfg(feature="windows-devices")] fn get_Characteristic(&self, out: *mut *mut super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic) -> HRESULT
+}}
+impl IGattCharacteristicNotificationTrigger {
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_characteristic(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Characteristic)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GattCharacteristicNotificationTrigger: IGattCharacteristicNotificationTrigger}
+impl RtActivatable<IGattCharacteristicNotificationTriggerFactory> for GattCharacteristicNotificationTrigger {}
+impl RtActivatable<IGattCharacteristicNotificationTriggerFactory2> for GattCharacteristicNotificationTrigger {}
+impl GattCharacteristicNotificationTrigger {
+    #[cfg(feature="windows-devices")] #[inline] pub fn create(characteristic: &super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic) -> Result<ComPtr<GattCharacteristicNotificationTrigger>> {
+        <Self as RtActivatable<IGattCharacteristicNotificationTriggerFactory>>::get_activation_factory().create(characteristic)
+    }
+    #[cfg(feature="windows-devices")] #[inline] pub fn create_with_event_triggering_mode(characteristic: &super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic, eventTriggeringMode: super::super::devices::bluetooth::background::BluetoothEventTriggeringMode) -> Result<ComPtr<GattCharacteristicNotificationTrigger>> {
+        <Self as RtActivatable<IGattCharacteristicNotificationTriggerFactory2>>::get_activation_factory().create_with_event_triggering_mode(characteristic, eventTriggeringMode)
+    }
+}
+DEFINE_CLSID!(GattCharacteristicNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,71,97,116,116,67,104,97,114,97,99,116,101,114,105,115,116,105,99,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_GattCharacteristicNotificationTrigger]);
+DEFINE_IID!(IID_IGattCharacteristicNotificationTrigger2, 2468520644, 44558, 17138, 178, 140, 245, 19, 114, 230, 146, 69);
+RT_INTERFACE!{interface IGattCharacteristicNotificationTrigger2(IGattCharacteristicNotificationTrigger2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicNotificationTrigger2] {
+    #[cfg(feature="windows-devices")] fn get_EventTriggeringMode(&self, out: *mut super::super::devices::bluetooth::background::BluetoothEventTriggeringMode) -> HRESULT
+}}
+impl IGattCharacteristicNotificationTrigger2 {
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_event_triggering_mode(&self) -> Result<super::super::devices::bluetooth::background::BluetoothEventTriggeringMode> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_EventTriggeringMode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IGattCharacteristicNotificationTriggerFactory, 1471814037, 45379, 17781, 159, 107, 253, 89, 217, 58, 206, 26);
+RT_INTERFACE!{static interface IGattCharacteristicNotificationTriggerFactory(IGattCharacteristicNotificationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicNotificationTriggerFactory] {
+    #[cfg(feature="windows-devices")] fn Create(&self, characteristic: *mut super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic, out: *mut *mut GattCharacteristicNotificationTrigger) -> HRESULT
+}}
+impl IGattCharacteristicNotificationTriggerFactory {
+    #[cfg(feature="windows-devices")] #[inline] pub fn create(&self, characteristic: &super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic) -> Result<ComPtr<GattCharacteristicNotificationTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, characteristic as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IGattCharacteristicNotificationTriggerFactory2, 1503193375, 35411, 20127, 163, 44, 35, 205, 51, 102, 76, 238);
+RT_INTERFACE!{static interface IGattCharacteristicNotificationTriggerFactory2(IGattCharacteristicNotificationTriggerFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicNotificationTriggerFactory2] {
+    #[cfg(feature="windows-devices")] fn CreateWithEventTriggeringMode(&self, characteristic: *mut super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic, eventTriggeringMode: super::super::devices::bluetooth::background::BluetoothEventTriggeringMode, out: *mut *mut GattCharacteristicNotificationTrigger) -> HRESULT
+}}
+impl IGattCharacteristicNotificationTriggerFactory2 {
+    #[cfg(feature="windows-devices")] #[inline] pub fn create_with_event_triggering_mode(&self, characteristic: &super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic, eventTriggeringMode: super::super::devices::bluetooth::background::BluetoothEventTriggeringMode) -> Result<ComPtr<GattCharacteristicNotificationTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithEventTriggeringMode)(self as *const _ as *mut _, characteristic as *const _ as *mut _, eventTriggeringMode, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IGattServiceProviderTrigger, 3720782825, 5463, 19416, 133, 66, 70, 138, 160, 198, 150, 246);
+RT_INTERFACE!{interface IGattServiceProviderTrigger(IGattServiceProviderTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProviderTrigger] {
+    fn get_TriggerId(&self, out: *mut HSTRING) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_Service(&self, out: *mut *mut super::super::devices::bluetooth::genericattributeprofile::GattLocalService) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn put_AdvertisingParameters(&self, value: *mut super::super::devices::bluetooth::genericattributeprofile::GattServiceProviderAdvertisingParameters) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_AdvertisingParameters(&self, out: *mut *mut super::super::devices::bluetooth::genericattributeprofile::GattServiceProviderAdvertisingParameters) -> HRESULT
+}}
+impl IGattServiceProviderTrigger {
+    #[inline] pub fn get_trigger_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TriggerId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_service(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::genericattributeprofile::GattLocalService>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Service)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_advertising_parameters(&self, value: &super::super::devices::bluetooth::genericattributeprofile::GattServiceProviderAdvertisingParameters) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AdvertisingParameters)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_advertising_parameters(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::genericattributeprofile::GattServiceProviderAdvertisingParameters>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AdvertisingParameters)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GattServiceProviderTrigger: IGattServiceProviderTrigger}
+impl RtActivatable<IGattServiceProviderTriggerStatics> for GattServiceProviderTrigger {}
+impl GattServiceProviderTrigger {
+    #[inline] pub fn create_async(triggerId: &HStringArg, serviceUuid: Guid) -> Result<ComPtr<foundation::IAsyncOperation<GattServiceProviderTriggerResult>>> {
+        <Self as RtActivatable<IGattServiceProviderTriggerStatics>>::get_activation_factory().create_async(triggerId, serviceUuid)
+    }
+}
+DEFINE_CLSID!(GattServiceProviderTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,71,97,116,116,83,101,114,118,105,99,101,80,114,111,118,105,100,101,114,84,114,105,103,103,101,114,0]) [CLSID_GattServiceProviderTrigger]);
+DEFINE_IID!(IID_IGattServiceProviderTriggerResult, 1011257777, 45464, 20100, 186, 212, 207, 74, 210, 153, 237, 58);
+RT_INTERFACE!{interface IGattServiceProviderTriggerResult(IGattServiceProviderTriggerResultVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProviderTriggerResult] {
+    fn get_Trigger(&self, out: *mut *mut GattServiceProviderTrigger) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_Error(&self, out: *mut super::super::devices::bluetooth::BluetoothError) -> HRESULT
+}}
+impl IGattServiceProviderTriggerResult {
+    #[inline] pub fn get_trigger(&self) -> Result<Option<ComPtr<GattServiceProviderTrigger>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Trigger)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_error(&self) -> Result<super::super::devices::bluetooth::BluetoothError> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Error)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GattServiceProviderTriggerResult: IGattServiceProviderTriggerResult}
+DEFINE_IID!(IID_IGattServiceProviderTriggerStatics, 3021185898, 58004, 17809, 165, 166, 100, 137, 26, 130, 129, 83);
+RT_INTERFACE!{static interface IGattServiceProviderTriggerStatics(IGattServiceProviderTriggerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProviderTriggerStatics] {
+    fn CreateAsync(&self, triggerId: HSTRING, serviceUuid: Guid, out: *mut *mut foundation::IAsyncOperation<GattServiceProviderTriggerResult>) -> HRESULT
+}}
+impl IGattServiceProviderTriggerStatics {
+    #[inline] pub fn create_async(&self, triggerId: &HStringArg, serviceUuid: Guid) -> Result<ComPtr<foundation::IAsyncOperation<GattServiceProviderTriggerResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateAsync)(self as *const _ as *mut _, triggerId.get(), serviceUuid, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IGeovisitTrigger, 1209593258, 1249, 16679, 154, 76, 25, 53, 27, 138, 128, 164);
+RT_INTERFACE!{interface IGeovisitTrigger(IGeovisitTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IGeovisitTrigger] {
+    #[cfg(feature="windows-devices")] fn get_MonitoringScope(&self, out: *mut super::super::devices::geolocation::VisitMonitoringScope) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn put_MonitoringScope(&self, value: super::super::devices::geolocation::VisitMonitoringScope) -> HRESULT
+}}
+impl IGeovisitTrigger {
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_monitoring_scope(&self) -> Result<super::super::devices::geolocation::VisitMonitoringScope> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MonitoringScope)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_monitoring_scope(&self, value: super::super::devices::geolocation::VisitMonitoringScope) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MonitoringScope)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GeovisitTrigger: IGeovisitTrigger}
+impl RtActivatable<IActivationFactory> for GeovisitTrigger {}
+DEFINE_CLSID!(GeovisitTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,71,101,111,118,105,115,105,116,84,114,105,103,103,101,114,0]) [CLSID_GeovisitTrigger]);
+DEFINE_IID!(IID_ILocationTrigger, 1197894172, 26743, 18462, 128, 38, 255, 126, 20, 168, 17, 160);
+RT_INTERFACE!{interface ILocationTrigger(ILocationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ILocationTrigger] {
+    fn get_TriggerType(&self, out: *mut LocationTriggerType) -> HRESULT
+}}
+impl ILocationTrigger {
+    #[inline] pub fn get_trigger_type(&self) -> Result<LocationTriggerType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TriggerType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class LocationTrigger: ILocationTrigger}
+impl RtActivatable<ILocationTriggerFactory> for LocationTrigger {}
+impl LocationTrigger {
+    #[inline] pub fn create(triggerType: LocationTriggerType) -> Result<ComPtr<LocationTrigger>> {
+        <Self as RtActivatable<ILocationTriggerFactory>>::get_activation_factory().create(triggerType)
+    }
+}
+DEFINE_CLSID!(LocationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,76,111,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_LocationTrigger]);
+DEFINE_IID!(IID_ILocationTriggerFactory, 285653767, 65385, 19977, 170, 139, 19, 132, 234, 71, 94, 152);
+RT_INTERFACE!{static interface ILocationTriggerFactory(ILocationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILocationTriggerFactory] {
+    fn Create(&self, triggerType: LocationTriggerType, out: *mut *mut LocationTrigger) -> HRESULT
+}}
+impl ILocationTriggerFactory {
+    #[inline] pub fn create(&self, triggerType: LocationTriggerType) -> Result<ComPtr<LocationTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, triggerType, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum LocationTriggerType: i32 {
+    Geofence (LocationTriggerType_Geofence) = 0,
+}}
+DEFINE_IID!(IID_IMaintenanceTrigger, 1746422915, 64546, 19685, 132, 26, 114, 57, 169, 129, 0, 71);
+RT_INTERFACE!{interface IMaintenanceTrigger(IMaintenanceTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IMaintenanceTrigger] {
+    fn get_FreshnessTime(&self, out: *mut u32) -> HRESULT,
+    fn get_OneShot(&self, out: *mut bool) -> HRESULT
+}}
+impl IMaintenanceTrigger {
+    #[inline] pub fn get_freshness_time(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_FreshnessTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_one_shot(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OneShot)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class MaintenanceTrigger: IMaintenanceTrigger}
+impl RtActivatable<IMaintenanceTriggerFactory> for MaintenanceTrigger {}
+impl MaintenanceTrigger {
+    #[inline] pub fn create(freshnessTime: u32, oneShot: bool) -> Result<ComPtr<MaintenanceTrigger>> {
+        <Self as RtActivatable<IMaintenanceTriggerFactory>>::get_activation_factory().create(freshnessTime, oneShot)
+    }
+}
+DEFINE_CLSID!(MaintenanceTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,97,105,110,116,101,110,97,110,99,101,84,114,105,103,103,101,114,0]) [CLSID_MaintenanceTrigger]);
+DEFINE_IID!(IID_IMaintenanceTriggerFactory, 1262345006, 38877, 17961, 136, 176, 176, 108, 249, 72, 42, 229);
+RT_INTERFACE!{static interface IMaintenanceTriggerFactory(IMaintenanceTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMaintenanceTriggerFactory] {
+    fn Create(&self, freshnessTime: u32, oneShot: bool, out: *mut *mut MaintenanceTrigger) -> HRESULT
+}}
+impl IMaintenanceTriggerFactory {
+    #[inline] pub fn create(&self, freshnessTime: u32, oneShot: bool) -> Result<ComPtr<MaintenanceTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, freshnessTime, oneShot, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IMediaProcessingTrigger, 2593504869, 35410, 19248, 144, 17, 207, 56, 4, 14, 168, 176);
+RT_INTERFACE!{interface IMediaProcessingTrigger(IMediaProcessingTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaProcessingTrigger] {
+    fn RequestAsync(&self, out: *mut *mut foundation::IAsyncOperation<MediaProcessingTriggerResult>) -> HRESULT,
+    fn RequestAsyncWithArguments(&self, arguments: *mut foundation::collections::ValueSet, out: *mut *mut foundation::IAsyncOperation<MediaProcessingTriggerResult>) -> HRESULT
+}}
+impl IMediaProcessingTrigger {
+    #[inline] pub fn request_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<MediaProcessingTriggerResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_async_with_arguments(&self, arguments: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<MediaProcessingTriggerResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAsyncWithArguments)(self as *const _ as *mut _, arguments as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class MediaProcessingTrigger: IMediaProcessingTrigger}
+impl RtActivatable<IActivationFactory> for MediaProcessingTrigger {}
+DEFINE_CLSID!(MediaProcessingTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,101,100,105,97,80,114,111,99,101,115,115,105,110,103,84,114,105,103,103,101,114,0]) [CLSID_MediaProcessingTrigger]);
+RT_ENUM! { enum MediaProcessingTriggerResult: i32 {
+    Allowed (MediaProcessingTriggerResult_Allowed) = 0, CurrentlyRunning (MediaProcessingTriggerResult_CurrentlyRunning) = 1, DisabledByPolicy (MediaProcessingTriggerResult_DisabledByPolicy) = 2, UnknownError (MediaProcessingTriggerResult_UnknownError) = 3,
+}}
+RT_CLASS!{class MobileBroadbandDeviceServiceNotificationTrigger: IBackgroundTrigger}
+impl RtActivatable<IActivationFactory> for MobileBroadbandDeviceServiceNotificationTrigger {}
+DEFINE_CLSID!(MobileBroadbandDeviceServiceNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,68,101,118,105,99,101,83,101,114,118,105,99,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandDeviceServiceNotificationTrigger]);
+RT_CLASS!{class MobileBroadbandPcoDataChangeTrigger: IBackgroundTrigger}
+impl RtActivatable<IActivationFactory> for MobileBroadbandPcoDataChangeTrigger {}
+DEFINE_CLSID!(MobileBroadbandPcoDataChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,80,99,111,68,97,116,97,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandPcoDataChangeTrigger]);
+RT_CLASS!{class MobileBroadbandPinLockStateChangeTrigger: IBackgroundTrigger}
+impl RtActivatable<IActivationFactory> for MobileBroadbandPinLockStateChangeTrigger {}
+DEFINE_CLSID!(MobileBroadbandPinLockStateChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,80,105,110,76,111,99,107,83,116,97,116,101,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandPinLockStateChangeTrigger]);
+RT_CLASS!{class MobileBroadbandRadioStateChangeTrigger: IBackgroundTrigger}
+impl RtActivatable<IActivationFactory> for MobileBroadbandRadioStateChangeTrigger {}
+DEFINE_CLSID!(MobileBroadbandRadioStateChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,82,97,100,105,111,83,116,97,116,101,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandRadioStateChangeTrigger]);
+RT_CLASS!{class MobileBroadbandRegistrationStateChangeTrigger: IBackgroundTrigger}
+impl RtActivatable<IActivationFactory> for MobileBroadbandRegistrationStateChangeTrigger {}
+DEFINE_CLSID!(MobileBroadbandRegistrationStateChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,82,101,103,105,115,116,114,97,116,105,111,110,83,116,97,116,101,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandRegistrationStateChangeTrigger]);
+RT_CLASS!{class NetworkOperatorDataUsageTrigger: IBackgroundTrigger}
+impl RtActivatable<IActivationFactory> for NetworkOperatorDataUsageTrigger {}
+DEFINE_CLSID!(NetworkOperatorDataUsageTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,68,97,116,97,85,115,97,103,101,84,114,105,103,103,101,114,0]) [CLSID_NetworkOperatorDataUsageTrigger]);
+DEFINE_IID!(IID_INetworkOperatorHotspotAuthenticationTrigger, 3881224081, 12289, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
+RT_INTERFACE!{interface INetworkOperatorHotspotAuthenticationTrigger(INetworkOperatorHotspotAuthenticationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorHotspotAuthenticationTrigger] {
+    
+}}
+RT_CLASS!{class NetworkOperatorHotspotAuthenticationTrigger: INetworkOperatorHotspotAuthenticationTrigger}
+impl RtActivatable<IActivationFactory> for NetworkOperatorHotspotAuthenticationTrigger {}
+DEFINE_CLSID!(NetworkOperatorHotspotAuthenticationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,72,111,116,115,112,111,116,65,117,116,104,101,110,116,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_NetworkOperatorHotspotAuthenticationTrigger]);
+DEFINE_IID!(IID_INetworkOperatorNotificationTrigger, 2416483526, 25549, 18444, 149, 209, 110, 106, 239, 128, 30, 74);
+RT_INTERFACE!{interface INetworkOperatorNotificationTrigger(INetworkOperatorNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorNotificationTrigger] {
+    fn get_NetworkAccountId(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl INetworkOperatorNotificationTrigger {
+    #[inline] pub fn get_network_account_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_NetworkAccountId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class NetworkOperatorNotificationTrigger: INetworkOperatorNotificationTrigger}
+impl RtActivatable<INetworkOperatorNotificationTriggerFactory> for NetworkOperatorNotificationTrigger {}
+impl NetworkOperatorNotificationTrigger {
+    #[inline] pub fn create(networkAccountId: &HStringArg) -> Result<ComPtr<NetworkOperatorNotificationTrigger>> {
+        <Self as RtActivatable<INetworkOperatorNotificationTriggerFactory>>::get_activation_factory().create(networkAccountId)
+    }
+}
+DEFINE_CLSID!(NetworkOperatorNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_NetworkOperatorNotificationTrigger]);
+DEFINE_IID!(IID_INetworkOperatorNotificationTriggerFactory, 170016256, 10199, 17235, 173, 185, 146, 101, 170, 234, 87, 157);
+RT_INTERFACE!{static interface INetworkOperatorNotificationTriggerFactory(INetworkOperatorNotificationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorNotificationTriggerFactory] {
+    fn Create(&self, networkAccountId: HSTRING, out: *mut *mut NetworkOperatorNotificationTrigger) -> HRESULT
+}}
+impl INetworkOperatorNotificationTriggerFactory {
+    #[inline] pub fn create(&self, networkAccountId: &HStringArg) -> Result<ComPtr<NetworkOperatorNotificationTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, networkAccountId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PaymentAppCanMakePaymentTrigger: IBackgroundTrigger}
+impl RtActivatable<IActivationFactory> for PaymentAppCanMakePaymentTrigger {}
+DEFINE_CLSID!(PaymentAppCanMakePaymentTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,80,97,121,109,101,110,116,65,112,112,67,97,110,77,97,107,101,80,97,121,109,101,110,116,84,114,105,103,103,101,114,0]) [CLSID_PaymentAppCanMakePaymentTrigger]);
+DEFINE_IID!(IID_IPhoneTrigger, 2379213211, 54469, 18929, 183, 211, 130, 232, 122, 14, 157, 222);
+RT_INTERFACE!{interface IPhoneTrigger(IPhoneTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneTrigger] {
+    fn get_OneShot(&self, out: *mut bool) -> HRESULT,
+    fn get_TriggerType(&self, out: *mut super::calls::background::PhoneTriggerType) -> HRESULT
+}}
+impl IPhoneTrigger {
+    #[inline] pub fn get_one_shot(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OneShot)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_trigger_type(&self) -> Result<super::calls::background::PhoneTriggerType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TriggerType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PhoneTrigger: IPhoneTrigger}
+impl RtActivatable<IPhoneTriggerFactory> for PhoneTrigger {}
+impl PhoneTrigger {
+    #[inline] pub fn create(type_: super::calls::background::PhoneTriggerType, oneShot: bool) -> Result<ComPtr<PhoneTrigger>> {
+        <Self as RtActivatable<IPhoneTriggerFactory>>::get_activation_factory().create(type_, oneShot)
+    }
+}
+DEFINE_CLSID!(PhoneTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,80,104,111,110,101,84,114,105,103,103,101,114,0]) [CLSID_PhoneTrigger]);
+DEFINE_IID!(IID_IPhoneTriggerFactory, 2698591450, 24513, 18683, 165, 70, 50, 38, 32, 64, 21, 123);
+RT_INTERFACE!{static interface IPhoneTriggerFactory(IPhoneTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneTriggerFactory] {
+    fn Create(&self, type_: super::calls::background::PhoneTriggerType, oneShot: bool, out: *mut *mut PhoneTrigger) -> HRESULT
+}}
+impl IPhoneTriggerFactory {
+    #[inline] pub fn create(&self, type_: super::calls::background::PhoneTriggerType, oneShot: bool) -> Result<ComPtr<PhoneTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, type_, oneShot, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PushNotificationTrigger: IBackgroundTrigger}
+impl RtActivatable<IPushNotificationTriggerFactory> for PushNotificationTrigger {}
+impl RtActivatable<IActivationFactory> for PushNotificationTrigger {}
+impl PushNotificationTrigger {
+    #[inline] pub fn create(applicationId: &HStringArg) -> Result<ComPtr<PushNotificationTrigger>> {
+        <Self as RtActivatable<IPushNotificationTriggerFactory>>::get_activation_factory().create(applicationId)
+    }
+}
+DEFINE_CLSID!(PushNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,80,117,115,104,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_PushNotificationTrigger]);
+DEFINE_IID!(IID_IPushNotificationTriggerFactory, 1842933019, 17806, 20418, 188, 46, 213, 102, 79, 119, 237, 25);
+RT_INTERFACE!{static interface IPushNotificationTriggerFactory(IPushNotificationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationTriggerFactory] {
+    fn Create(&self, applicationId: HSTRING, out: *mut *mut PushNotificationTrigger) -> HRESULT
+}}
+impl IPushNotificationTriggerFactory {
+    #[inline] pub fn create(&self, applicationId: &HStringArg) -> Result<ComPtr<PushNotificationTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, applicationId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IRcsEndUserMessageAvailableTrigger, 2557283690, 45814, 18047, 169, 120, 164, 64, 145, 193, 26, 102);
+RT_INTERFACE!{interface IRcsEndUserMessageAvailableTrigger(IRcsEndUserMessageAvailableTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IRcsEndUserMessageAvailableTrigger] {
+    
+}}
+RT_CLASS!{class RcsEndUserMessageAvailableTrigger: IRcsEndUserMessageAvailableTrigger}
+impl RtActivatable<IActivationFactory> for RcsEndUserMessageAvailableTrigger {}
+DEFINE_CLSID!(RcsEndUserMessageAvailableTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,82,99,115,69,110,100,85,115,101,114,77,101,115,115,97,103,101,65,118,97,105,108,97,98,108,101,84,114,105,103,103,101,114,0]) [CLSID_RcsEndUserMessageAvailableTrigger]);
+DEFINE_IID!(IID_IRfcommConnectionTrigger, 3905211106, 2899, 17508, 147, 148, 253, 135, 86, 84, 222, 100);
+RT_INTERFACE!{interface IRfcommConnectionTrigger(IRfcommConnectionTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommConnectionTrigger] {
+    #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-devices")] fn get_InboundConnection(&self, out: *mut *mut super::super::devices::bluetooth::background::RfcommInboundConnectionInformation) -> HRESULT,
+    #[cfg(not(feature="windows-devices"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-devices")] fn get_OutboundConnection(&self, out: *mut *mut super::super::devices::bluetooth::background::RfcommOutboundConnectionInformation) -> HRESULT,
+    fn get_AllowMultipleConnections(&self, out: *mut bool) -> HRESULT,
+    fn put_AllowMultipleConnections(&self, value: bool) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn get_ProtectionLevel(&self, out: *mut super::super::networking::sockets::SocketProtectionLevel) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn put_ProtectionLevel(&self, value: super::super::networking::sockets::SocketProtectionLevel) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn get_RemoteHostName(&self, out: *mut *mut super::super::networking::HostName) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn put_RemoteHostName(&self, value: *mut super::super::networking::HostName) -> HRESULT
+}}
+impl IRfcommConnectionTrigger {
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_inbound_connection(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::background::RfcommInboundConnectionInformation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_InboundConnection)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_outbound_connection(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::background::RfcommOutboundConnectionInformation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_OutboundConnection)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_allow_multiple_connections(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AllowMultipleConnections)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_allow_multiple_connections(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AllowMultipleConnections)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-networking")] #[inline] pub fn get_protection_level(&self) -> Result<super::super::networking::sockets::SocketProtectionLevel> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ProtectionLevel)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-networking")] #[inline] pub fn set_protection_level(&self, value: super::super::networking::sockets::SocketProtectionLevel) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ProtectionLevel)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-networking")] #[inline] pub fn get_remote_host_name(&self) -> Result<Option<ComPtr<super::super::networking::HostName>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_RemoteHostName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-networking")] #[inline] pub fn set_remote_host_name(&self, value: &super::super::networking::HostName) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_RemoteHostName)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class RfcommConnectionTrigger: IRfcommConnectionTrigger}
+impl RtActivatable<IActivationFactory> for RfcommConnectionTrigger {}
+DEFINE_CLSID!(RfcommConnectionTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,82,102,99,111,109,109,67,111,110,110,101,99,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_RfcommConnectionTrigger]);
+DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationTrigger, 4063752999, 20865, 20260, 150, 167, 112, 10, 78, 95, 172, 98);
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationTrigger(ISecondaryAuthenticationFactorAuthenticationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationTrigger] {
+    
+}}
+RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationTrigger: ISecondaryAuthenticationFactorAuthenticationTrigger}
+impl RtActivatable<IActivationFactory> for SecondaryAuthenticationFactorAuthenticationTrigger {}
+DEFINE_CLSID!(SecondaryAuthenticationFactorAuthenticationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_SecondaryAuthenticationFactorAuthenticationTrigger]);
+DEFINE_IID!(IID_ISensorDataThresholdTrigger, 1539371890, 54411, 19327, 171, 236, 21, 249, 186, 204, 18, 226);
+RT_INTERFACE!{interface ISensorDataThresholdTrigger(ISensorDataThresholdTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISensorDataThresholdTrigger] {
+    
+}}
+RT_CLASS!{class SensorDataThresholdTrigger: ISensorDataThresholdTrigger}
+impl RtActivatable<ISensorDataThresholdTriggerFactory> for SensorDataThresholdTrigger {}
+impl SensorDataThresholdTrigger {
+    #[cfg(feature="windows-devices")] #[inline] pub fn create(threshold: &super::super::devices::sensors::ISensorDataThreshold) -> Result<ComPtr<SensorDataThresholdTrigger>> {
+        <Self as RtActivatable<ISensorDataThresholdTriggerFactory>>::get_activation_factory().create(threshold)
+    }
+}
+DEFINE_CLSID!(SensorDataThresholdTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,101,110,115,111,114,68,97,116,97,84,104,114,101,115,104,111,108,100,84,114,105,103,103,101,114,0]) [CLSID_SensorDataThresholdTrigger]);
+DEFINE_IID!(IID_ISensorDataThresholdTriggerFactory, 2451564149, 32240, 19875, 151, 179, 229, 68, 238, 133, 127, 230);
+RT_INTERFACE!{static interface ISensorDataThresholdTriggerFactory(ISensorDataThresholdTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISensorDataThresholdTriggerFactory] {
+    #[cfg(feature="windows-devices")] fn Create(&self, threshold: *mut super::super::devices::sensors::ISensorDataThreshold, out: *mut *mut SensorDataThresholdTrigger) -> HRESULT
+}}
+impl ISensorDataThresholdTriggerFactory {
+    #[cfg(feature="windows-devices")] #[inline] pub fn create(&self, threshold: &super::super::devices::sensors::ISensorDataThreshold) -> Result<ComPtr<SensorDataThresholdTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, threshold as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISmartCardTrigger, 4114335148, 33994, 18802, 140, 233, 229, 143, 151, 179, 122, 80);
+RT_INTERFACE!{interface ISmartCardTrigger(ISmartCardTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardTrigger] {
+    #[cfg(feature="windows-devices")] fn get_TriggerType(&self, out: *mut super::super::devices::smartcards::SmartCardTriggerType) -> HRESULT
+}}
+impl ISmartCardTrigger {
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_trigger_type(&self) -> Result<super::super::devices::smartcards::SmartCardTriggerType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TriggerType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmartCardTrigger: ISmartCardTrigger}
+impl RtActivatable<ISmartCardTriggerFactory> for SmartCardTrigger {}
+impl SmartCardTrigger {
+    #[cfg(feature="windows-devices")] #[inline] pub fn create(triggerType: super::super::devices::smartcards::SmartCardTriggerType) -> Result<ComPtr<SmartCardTrigger>> {
+        <Self as RtActivatable<ISmartCardTriggerFactory>>::get_activation_factory().create(triggerType)
+    }
+}
+DEFINE_CLSID!(SmartCardTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,109,97,114,116,67,97,114,100,84,114,105,103,103,101,114,0]) [CLSID_SmartCardTrigger]);
+DEFINE_IID!(IID_ISmartCardTriggerFactory, 1673483459, 35265, 19968, 169, 211, 151, 198, 41, 38, 157, 173);
+RT_INTERFACE!{static interface ISmartCardTriggerFactory(ISmartCardTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardTriggerFactory] {
+    #[cfg(feature="windows-devices")] fn Create(&self, triggerType: super::super::devices::smartcards::SmartCardTriggerType, out: *mut *mut SmartCardTrigger) -> HRESULT
+}}
+impl ISmartCardTriggerFactory {
+    #[cfg(feature="windows-devices")] #[inline] pub fn create(&self, triggerType: super::super::devices::smartcards::SmartCardTriggerType) -> Result<ComPtr<SmartCardTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, triggerType, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SmsMessageReceivedTrigger: IBackgroundTrigger}
+impl RtActivatable<ISmsMessageReceivedTriggerFactory> for SmsMessageReceivedTrigger {}
+impl SmsMessageReceivedTrigger {
+    #[cfg(feature="windows-devices")] #[inline] pub fn create(filterRules: &super::super::devices::sms::SmsFilterRules) -> Result<ComPtr<SmsMessageReceivedTrigger>> {
+        <Self as RtActivatable<ISmsMessageReceivedTriggerFactory>>::get_activation_factory().create(filterRules)
+    }
+}
+DEFINE_CLSID!(SmsMessageReceivedTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,109,115,77,101,115,115,97,103,101,82,101,99,101,105,118,101,100,84,114,105,103,103,101,114,0]) [CLSID_SmsMessageReceivedTrigger]);
+DEFINE_IID!(IID_ISmsMessageReceivedTriggerFactory, 3929725128, 27556, 19122, 141, 33, 188, 107, 9, 199, 117, 100);
+RT_INTERFACE!{static interface ISmsMessageReceivedTriggerFactory(ISmsMessageReceivedTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmsMessageReceivedTriggerFactory] {
+    #[cfg(feature="windows-devices")] fn Create(&self, filterRules: *mut super::super::devices::sms::SmsFilterRules, out: *mut *mut SmsMessageReceivedTrigger) -> HRESULT
+}}
+impl ISmsMessageReceivedTriggerFactory {
+    #[cfg(feature="windows-devices")] #[inline] pub fn create(&self, filterRules: &super::super::devices::sms::SmsFilterRules) -> Result<ComPtr<SmsMessageReceivedTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, filterRules as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISocketActivityTrigger, 2847668240, 40414, 20362, 131, 227, 176, 224, 231, 165, 13, 112);
+RT_INTERFACE!{interface ISocketActivityTrigger(ISocketActivityTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISocketActivityTrigger] {
+    fn get_IsWakeFromLowPowerSupported(&self, out: *mut bool) -> HRESULT
+}}
+impl ISocketActivityTrigger {
+    #[inline] pub fn get_is_wake_from_low_power_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsWakeFromLowPowerSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SocketActivityTrigger: IBackgroundTrigger}
+impl RtActivatable<IActivationFactory> for SocketActivityTrigger {}
+DEFINE_CLSID!(SocketActivityTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,111,99,107,101,116,65,99,116,105,118,105,116,121,84,114,105,103,103,101,114,0]) [CLSID_SocketActivityTrigger]);
+RT_CLASS!{class StorageLibraryChangeTrackerTrigger: IBackgroundTrigger}
+impl RtActivatable<IStorageLibraryChangeTrackerTriggerFactory> for StorageLibraryChangeTrackerTrigger {}
+impl StorageLibraryChangeTrackerTrigger {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(tracker: &super::super::storage::StorageLibraryChangeTracker) -> Result<ComPtr<StorageLibraryChangeTrackerTrigger>> {
+        <Self as RtActivatable<IStorageLibraryChangeTrackerTriggerFactory>>::get_activation_factory().create(tracker)
+    }
+}
+DEFINE_CLSID!(StorageLibraryChangeTrackerTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,116,111,114,97,103,101,76,105,98,114,97,114,121,67,104,97,110,103,101,84,114,97,99,107,101,114,84,114,105,103,103,101,114,0]) [CLSID_StorageLibraryChangeTrackerTrigger]);
+DEFINE_IID!(IID_IStorageLibraryChangeTrackerTriggerFactory, 514916304, 23173, 18846, 168, 136, 130, 70, 7, 18, 79, 80);
+RT_INTERFACE!{static interface IStorageLibraryChangeTrackerTriggerFactory(IStorageLibraryChangeTrackerTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryChangeTrackerTriggerFactory] {
+    #[cfg(feature="windows-storage")] fn Create(&self, tracker: *mut super::super::storage::StorageLibraryChangeTracker, out: *mut *mut StorageLibraryChangeTrackerTrigger) -> HRESULT
+}}
+impl IStorageLibraryChangeTrackerTriggerFactory {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, tracker: &super::super::storage::StorageLibraryChangeTracker) -> Result<ComPtr<StorageLibraryChangeTrackerTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, tracker as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IStorageLibraryContentChangedTrigger, 372760743, 33436, 17852, 146, 155, 161, 231, 234, 120, 216, 155);
+RT_INTERFACE!{interface IStorageLibraryContentChangedTrigger(IStorageLibraryContentChangedTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryContentChangedTrigger] {
+    
+}}
+RT_CLASS!{class StorageLibraryContentChangedTrigger: IStorageLibraryContentChangedTrigger}
+impl RtActivatable<IStorageLibraryContentChangedTriggerStatics> for StorageLibraryContentChangedTrigger {}
+impl StorageLibraryContentChangedTrigger {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(storageLibrary: &super::super::storage::StorageLibrary) -> Result<Option<ComPtr<StorageLibraryContentChangedTrigger>>> {
+        <Self as RtActivatable<IStorageLibraryContentChangedTriggerStatics>>::get_activation_factory().create(storageLibrary)
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_libraries(storageLibraries: &foundation::collections::IIterable<super::super::storage::StorageLibrary>) -> Result<Option<ComPtr<StorageLibraryContentChangedTrigger>>> {
+        <Self as RtActivatable<IStorageLibraryContentChangedTriggerStatics>>::get_activation_factory().create_from_libraries(storageLibraries)
+    }
+}
+DEFINE_CLSID!(StorageLibraryContentChangedTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,116,111,114,97,103,101,76,105,98,114,97,114,121,67,111,110,116,101,110,116,67,104,97,110,103,101,100,84,114,105,103,103,101,114,0]) [CLSID_StorageLibraryContentChangedTrigger]);
+DEFINE_IID!(IID_IStorageLibraryContentChangedTriggerStatics, 2141133625, 24464, 19986, 145, 78, 167, 216, 224, 187, 251, 24);
+RT_INTERFACE!{static interface IStorageLibraryContentChangedTriggerStatics(IStorageLibraryContentChangedTriggerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryContentChangedTriggerStatics] {
+    #[cfg(feature="windows-storage")] fn Create(&self, storageLibrary: *mut super::super::storage::StorageLibrary, out: *mut *mut StorageLibraryContentChangedTrigger) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn CreateFromLibraries(&self, storageLibraries: *mut foundation::collections::IIterable<super::super::storage::StorageLibrary>, out: *mut *mut StorageLibraryContentChangedTrigger) -> HRESULT
+}}
+impl IStorageLibraryContentChangedTriggerStatics {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, storageLibrary: &super::super::storage::StorageLibrary) -> Result<Option<ComPtr<StorageLibraryContentChangedTrigger>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, storageLibrary as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_libraries(&self, storageLibraries: &foundation::collections::IIterable<super::super::storage::StorageLibrary>) -> Result<Option<ComPtr<StorageLibraryContentChangedTrigger>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFromLibraries)(self as *const _ as *mut _, storageLibraries as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISystemCondition, 3244274806, 35269, 16907, 171, 211, 251, 48, 48, 71, 33, 40);
+RT_INTERFACE!{interface ISystemCondition(ISystemConditionVtbl): IInspectable(IInspectableVtbl) [IID_ISystemCondition] {
+    fn get_ConditionType(&self, out: *mut SystemConditionType) -> HRESULT
+}}
+impl ISystemCondition {
+    #[inline] pub fn get_condition_type(&self) -> Result<SystemConditionType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ConditionType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SystemCondition: ISystemCondition}
+impl RtActivatable<ISystemConditionFactory> for SystemCondition {}
+impl SystemCondition {
+    #[inline] pub fn create(conditionType: SystemConditionType) -> Result<ComPtr<SystemCondition>> {
+        <Self as RtActivatable<ISystemConditionFactory>>::get_activation_factory().create(conditionType)
+    }
+}
+DEFINE_CLSID!(SystemCondition(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,121,115,116,101,109,67,111,110,100,105,116,105,111,110,0]) [CLSID_SystemCondition]);
+DEFINE_IID!(IID_ISystemConditionFactory, 3530150385, 1447, 18862, 135, 215, 22, 178, 184, 185, 165, 83);
+RT_INTERFACE!{static interface ISystemConditionFactory(ISystemConditionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISystemConditionFactory] {
+    fn Create(&self, conditionType: SystemConditionType, out: *mut *mut SystemCondition) -> HRESULT
+}}
+impl ISystemConditionFactory {
+    #[inline] pub fn create(&self, conditionType: SystemConditionType) -> Result<ComPtr<SystemCondition>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, conditionType, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum SystemConditionType: i32 {
+    Invalid (SystemConditionType_Invalid) = 0, UserPresent (SystemConditionType_UserPresent) = 1, UserNotPresent (SystemConditionType_UserNotPresent) = 2, InternetAvailable (SystemConditionType_InternetAvailable) = 3, InternetNotAvailable (SystemConditionType_InternetNotAvailable) = 4, SessionConnected (SystemConditionType_SessionConnected) = 5, SessionDisconnected (SystemConditionType_SessionDisconnected) = 6, FreeNetworkAvailable (SystemConditionType_FreeNetworkAvailable) = 7, BackgroundWorkCostNotHigh (SystemConditionType_BackgroundWorkCostNotHigh) = 8,
+}}
+DEFINE_IID!(IID_ISystemTrigger, 494978934, 14152, 17507, 141, 126, 39, 109, 193, 57, 172, 28);
+RT_INTERFACE!{interface ISystemTrigger(ISystemTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISystemTrigger] {
+    fn get_OneShot(&self, out: *mut bool) -> HRESULT,
+    fn get_TriggerType(&self, out: *mut SystemTriggerType) -> HRESULT
+}}
+impl ISystemTrigger {
+    #[inline] pub fn get_one_shot(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OneShot)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_trigger_type(&self) -> Result<SystemTriggerType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TriggerType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SystemTrigger: ISystemTrigger}
+impl RtActivatable<ISystemTriggerFactory> for SystemTrigger {}
+impl SystemTrigger {
+    #[inline] pub fn create(triggerType: SystemTriggerType, oneShot: bool) -> Result<ComPtr<SystemTrigger>> {
+        <Self as RtActivatable<ISystemTriggerFactory>>::get_activation_factory().create(triggerType, oneShot)
+    }
+}
+DEFINE_CLSID!(SystemTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,121,115,116,101,109,84,114,105,103,103,101,114,0]) [CLSID_SystemTrigger]);
+DEFINE_IID!(IID_ISystemTriggerFactory, 3892585428, 34705, 17785, 129, 38, 135, 236, 138, 170, 64, 122);
+RT_INTERFACE!{static interface ISystemTriggerFactory(ISystemTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISystemTriggerFactory] {
+    fn Create(&self, triggerType: SystemTriggerType, oneShot: bool, out: *mut *mut SystemTrigger) -> HRESULT
+}}
+impl ISystemTriggerFactory {
+    #[inline] pub fn create(&self, triggerType: SystemTriggerType, oneShot: bool) -> Result<ComPtr<SystemTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, triggerType, oneShot, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum SystemTriggerType: i32 {
+    Invalid (SystemTriggerType_Invalid) = 0, SmsReceived (SystemTriggerType_SmsReceived) = 1, UserPresent (SystemTriggerType_UserPresent) = 2, UserAway (SystemTriggerType_UserAway) = 3, NetworkStateChange (SystemTriggerType_NetworkStateChange) = 4, ControlChannelReset (SystemTriggerType_ControlChannelReset) = 5, InternetAvailable (SystemTriggerType_InternetAvailable) = 6, SessionConnected (SystemTriggerType_SessionConnected) = 7, ServicingComplete (SystemTriggerType_ServicingComplete) = 8, LockScreenApplicationAdded (SystemTriggerType_LockScreenApplicationAdded) = 9, LockScreenApplicationRemoved (SystemTriggerType_LockScreenApplicationRemoved) = 10, TimeZoneChange (SystemTriggerType_TimeZoneChange) = 11, OnlineIdConnectedStateChange (SystemTriggerType_OnlineIdConnectedStateChange) = 12, BackgroundWorkCostChange (SystemTriggerType_BackgroundWorkCostChange) = 13, PowerStateChange (SystemTriggerType_PowerStateChange) = 14, DefaultSignInAccountChange (SystemTriggerType_DefaultSignInAccountChange) = 15,
+}}
+RT_CLASS!{class TetheringEntitlementCheckTrigger: IBackgroundTrigger}
+impl RtActivatable<IActivationFactory> for TetheringEntitlementCheckTrigger {}
+DEFINE_CLSID!(TetheringEntitlementCheckTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,84,101,116,104,101,114,105,110,103,69,110,116,105,116,108,101,109,101,110,116,67,104,101,99,107,84,114,105,103,103,101,114,0]) [CLSID_TetheringEntitlementCheckTrigger]);
+DEFINE_IID!(IID_ITimeTrigger, 1701729622, 2858, 17271, 186, 112, 59, 69, 169, 53, 84, 127);
+RT_INTERFACE!{interface ITimeTrigger(ITimeTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ITimeTrigger] {
+    fn get_FreshnessTime(&self, out: *mut u32) -> HRESULT,
+    fn get_OneShot(&self, out: *mut bool) -> HRESULT
+}}
+impl ITimeTrigger {
+    #[inline] pub fn get_freshness_time(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_FreshnessTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_one_shot(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OneShot)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class TimeTrigger: ITimeTrigger}
+impl RtActivatable<ITimeTriggerFactory> for TimeTrigger {}
+impl TimeTrigger {
+    #[inline] pub fn create(freshnessTime: u32, oneShot: bool) -> Result<ComPtr<TimeTrigger>> {
+        <Self as RtActivatable<ITimeTriggerFactory>>::get_activation_factory().create(freshnessTime, oneShot)
+    }
+}
+DEFINE_CLSID!(TimeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,84,105,109,101,84,114,105,103,103,101,114,0]) [CLSID_TimeTrigger]);
+DEFINE_IID!(IID_ITimeTriggerFactory, 952533758, 39764, 17894, 178, 243, 38, 155, 135, 166, 247, 52);
+RT_INTERFACE!{static interface ITimeTriggerFactory(ITimeTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITimeTriggerFactory] {
+    fn Create(&self, freshnessTime: u32, oneShot: bool, out: *mut *mut TimeTrigger) -> HRESULT
+}}
+impl ITimeTriggerFactory {
+    #[inline] pub fn create(&self, freshnessTime: u32, oneShot: bool) -> Result<ComPtr<TimeTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, freshnessTime, oneShot, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ToastNotificationActionTrigger: IBackgroundTrigger}
+impl RtActivatable<IToastNotificationActionTriggerFactory> for ToastNotificationActionTrigger {}
+impl RtActivatable<IActivationFactory> for ToastNotificationActionTrigger {}
+impl ToastNotificationActionTrigger {
+    #[inline] pub fn create(applicationId: &HStringArg) -> Result<ComPtr<ToastNotificationActionTrigger>> {
+        <Self as RtActivatable<IToastNotificationActionTriggerFactory>>::get_activation_factory().create(applicationId)
+    }
+}
+DEFINE_CLSID!(ToastNotificationActionTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,84,111,97,115,116,78,111,116,105,102,105,99,97,116,105,111,110,65,99,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ToastNotificationActionTrigger]);
+DEFINE_IID!(IID_IToastNotificationActionTriggerFactory, 2963143719, 25728, 17225, 129, 37, 151, 179, 239, 170, 10, 58);
+RT_INTERFACE!{static interface IToastNotificationActionTriggerFactory(IToastNotificationActionTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IToastNotificationActionTriggerFactory] {
+    fn Create(&self, applicationId: HSTRING, out: *mut *mut ToastNotificationActionTrigger) -> HRESULT
+}}
+impl IToastNotificationActionTriggerFactory {
+    #[inline] pub fn create(&self, applicationId: &HStringArg) -> Result<ComPtr<ToastNotificationActionTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, applicationId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ToastNotificationHistoryChangedTrigger: IBackgroundTrigger}
+impl RtActivatable<IToastNotificationHistoryChangedTriggerFactory> for ToastNotificationHistoryChangedTrigger {}
+impl RtActivatable<IActivationFactory> for ToastNotificationHistoryChangedTrigger {}
+impl ToastNotificationHistoryChangedTrigger {
+    #[inline] pub fn create(applicationId: &HStringArg) -> Result<ComPtr<ToastNotificationHistoryChangedTrigger>> {
+        <Self as RtActivatable<IToastNotificationHistoryChangedTriggerFactory>>::get_activation_factory().create(applicationId)
+    }
+}
+DEFINE_CLSID!(ToastNotificationHistoryChangedTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,84,111,97,115,116,78,111,116,105,102,105,99,97,116,105,111,110,72,105,115,116,111,114,121,67,104,97,110,103,101,100,84,114,105,103,103,101,114,0]) [CLSID_ToastNotificationHistoryChangedTrigger]);
+DEFINE_IID!(IID_IToastNotificationHistoryChangedTriggerFactory, 2177301165, 34711, 18309, 129, 180, 176, 204, 203, 115, 209, 217);
+RT_INTERFACE!{static interface IToastNotificationHistoryChangedTriggerFactory(IToastNotificationHistoryChangedTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IToastNotificationHistoryChangedTriggerFactory] {
+    fn Create(&self, applicationId: HSTRING, out: *mut *mut ToastNotificationHistoryChangedTrigger) -> HRESULT
+}}
+impl IToastNotificationHistoryChangedTriggerFactory {
+    #[inline] pub fn create(&self, applicationId: &HStringArg) -> Result<ComPtr<ToastNotificationHistoryChangedTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, applicationId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class UserNotificationChangedTrigger: IBackgroundTrigger}
+impl RtActivatable<IUserNotificationChangedTriggerFactory> for UserNotificationChangedTrigger {}
+impl UserNotificationChangedTrigger {
+    #[cfg(feature="windows-ui")] #[inline] pub fn create(notificationKinds: super::super::ui::notifications::NotificationKinds) -> Result<ComPtr<UserNotificationChangedTrigger>> {
+        <Self as RtActivatable<IUserNotificationChangedTriggerFactory>>::get_activation_factory().create(notificationKinds)
+    }
+}
+DEFINE_CLSID!(UserNotificationChangedTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,85,115,101,114,78,111,116,105,102,105,99,97,116,105,111,110,67,104,97,110,103,101,100,84,114,105,103,103,101,114,0]) [CLSID_UserNotificationChangedTrigger]);
+DEFINE_IID!(IID_IUserNotificationChangedTriggerFactory, 3402908524, 27051, 19992, 164, 138, 94, 210, 172, 67, 89, 87);
+RT_INTERFACE!{static interface IUserNotificationChangedTriggerFactory(IUserNotificationChangedTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUserNotificationChangedTriggerFactory] {
+    #[cfg(feature="windows-ui")] fn Create(&self, notificationKinds: super::super::ui::notifications::NotificationKinds, out: *mut *mut UserNotificationChangedTrigger) -> HRESULT
+}}
+impl IUserNotificationChangedTriggerFactory {
+    #[cfg(feature="windows-ui")] #[inline] pub fn create(&self, notificationKinds: super::super::ui::notifications::NotificationKinds) -> Result<ComPtr<UserNotificationChangedTrigger>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, notificationKinds, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+} // Windows.ApplicationModel.Background
 pub mod calls { // Windows.ApplicationModel.Calls
 use ::prelude::*;
 DEFINE_IID!(IID_ICallAnswerEventArgs, 4252538391, 11735, 19596, 178, 189, 149, 209, 122, 91, 183, 51);
@@ -1699,6 +3674,23 @@ impl IVoipCallCoordinator2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IVoipCallCoordinator3, 864881855, 39765, 16417, 135, 202, 230, 75, 155, 214, 102, 199);
+RT_INTERFACE!{interface IVoipCallCoordinator3(IVoipCallCoordinator3Vtbl): IInspectable(IInspectableVtbl) [IID_IVoipCallCoordinator3] {
+    fn RequestNewAppInitiatedCall(&self, context: HSTRING, contactName: HSTRING, contactNumber: HSTRING, serviceName: HSTRING, media: VoipPhoneCallMedia, out: *mut *mut VoipPhoneCall) -> HRESULT,
+    fn RequestNewIncomingCallWithContactRemoteId(&self, context: HSTRING, contactName: HSTRING, contactNumber: HSTRING, contactImage: *mut foundation::Uri, serviceName: HSTRING, brandingImage: *mut foundation::Uri, callDetails: HSTRING, ringtone: *mut foundation::Uri, media: VoipPhoneCallMedia, ringTimeout: foundation::TimeSpan, contactRemoteId: HSTRING, out: *mut *mut VoipPhoneCall) -> HRESULT
+}}
+impl IVoipCallCoordinator3 {
+    #[inline] pub fn request_new_app_initiated_call(&self, context: &HStringArg, contactName: &HStringArg, contactNumber: &HStringArg, serviceName: &HStringArg, media: VoipPhoneCallMedia) -> Result<Option<ComPtr<VoipPhoneCall>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestNewAppInitiatedCall)(self as *const _ as *mut _, context.get(), contactName.get(), contactNumber.get(), serviceName.get(), media, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_new_incoming_call_with_contact_remote_id(&self, context: &HStringArg, contactName: &HStringArg, contactNumber: &HStringArg, contactImage: &foundation::Uri, serviceName: &HStringArg, brandingImage: &foundation::Uri, callDetails: &HStringArg, ringtone: &foundation::Uri, media: VoipPhoneCallMedia, ringTimeout: foundation::TimeSpan, contactRemoteId: &HStringArg) -> Result<Option<ComPtr<VoipPhoneCall>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestNewIncomingCallWithContactRemoteId)(self as *const _ as *mut _, context.get(), contactName.get(), contactNumber.get(), contactImage as *const _ as *mut _, serviceName.get(), brandingImage as *const _ as *mut _, callDetails.get(), ringtone as *const _ as *mut _, media, ringTimeout, contactRemoteId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IVoipCallCoordinatorStatics, 2136809259, 57418, 19728, 179, 26, 165, 92, 146, 44, 194, 251);
 RT_INTERFACE!{static interface IVoipCallCoordinatorStatics(IVoipCallCoordinatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVoipCallCoordinatorStatics] {
     fn GetDefault(&self, out: *mut *mut VoipCallCoordinator) -> HRESULT
@@ -1831,6 +3823,16 @@ RT_INTERFACE!{interface IVoipPhoneCall2(IVoipPhoneCall2Vtbl): IInspectable(IInsp
 impl IVoipPhoneCall2 {
     #[inline] pub fn try_show_app_ui(&self) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).TryShowAppUI)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IVoipPhoneCall3, 227087650, 57944, 19113, 144, 122, 26, 164, 19, 194, 85, 35);
+RT_INTERFACE!{interface IVoipPhoneCall3(IVoipPhoneCall3Vtbl): IInspectable(IInspectableVtbl) [IID_IVoipPhoneCall3] {
+    fn NotifyCallAccepted(&self, media: VoipPhoneCallMedia) -> HRESULT
+}}
+impl IVoipPhoneCall3 {
+    #[inline] pub fn notify_call_accepted(&self, media: VoipPhoneCallMedia) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).NotifyCallAccepted)(self as *const _ as *mut _, media);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3157,1755 +5159,6 @@ impl ISearchSuggestionsRequestedEventArgs {
 RT_CLASS!{class SearchSuggestionsRequestedEventArgs: ISearchSuggestionsRequestedEventArgs}
 } // Windows.ApplicationModel.Search.Core
 } // Windows.ApplicationModel.Search
-pub mod background { // Windows.ApplicationModel.Background
-use ::prelude::*;
-DEFINE_IID!(IID_IActivitySensorTrigger, 3504161602, 58235, 18467, 165, 254, 107, 49, 223, 239, 222, 176);
-RT_INTERFACE!{interface IActivitySensorTrigger(IActivitySensorTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IActivitySensorTrigger] {
-    #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_SubscribedActivities(&self, out: *mut *mut foundation::collections::IVector<super::super::devices::sensors::ActivityType>) -> HRESULT,
-    fn get_ReportInterval(&self, out: *mut u32) -> HRESULT,
-    #[cfg(not(feature="windows-devices"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_SupportedActivities(&self, out: *mut *mut foundation::collections::IVectorView<super::super::devices::sensors::ActivityType>) -> HRESULT,
-    fn get_MinimumReportInterval(&self, out: *mut u32) -> HRESULT
-}}
-impl IActivitySensorTrigger {
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_subscribed_activities(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::devices::sensors::ActivityType>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SubscribedActivities)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_report_interval(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ReportInterval)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_supported_activities(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::devices::sensors::ActivityType>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SupportedActivities)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_minimum_report_interval(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MinimumReportInterval)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ActivitySensorTrigger: IActivitySensorTrigger}
-impl RtActivatable<IActivitySensorTriggerFactory> for ActivitySensorTrigger {}
-impl ActivitySensorTrigger {
-    #[inline] pub fn create(reportIntervalInMilliseconds: u32) -> Result<ComPtr<ActivitySensorTrigger>> {
-        <Self as RtActivatable<IActivitySensorTriggerFactory>>::get_activation_factory().create(reportIntervalInMilliseconds)
-    }
-}
-DEFINE_CLSID!(ActivitySensorTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,99,116,105,118,105,116,121,83,101,110,115,111,114,84,114,105,103,103,101,114,0]) [CLSID_ActivitySensorTrigger]);
-DEFINE_IID!(IID_IActivitySensorTriggerFactory, 2804322755, 14391, 17655, 131, 27, 1, 50, 204, 135, 43, 195);
-RT_INTERFACE!{static interface IActivitySensorTriggerFactory(IActivitySensorTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IActivitySensorTriggerFactory] {
-    fn Create(&self, reportIntervalInMilliseconds: u32, out: *mut *mut ActivitySensorTrigger) -> HRESULT
-}}
-impl IActivitySensorTriggerFactory {
-    #[inline] pub fn create(&self, reportIntervalInMilliseconds: u32) -> Result<ComPtr<ActivitySensorTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, reportIntervalInMilliseconds, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum AlarmAccessStatus: i32 {
-    Unspecified (AlarmAccessStatus_Unspecified) = 0, AllowedWithWakeupCapability (AlarmAccessStatus_AllowedWithWakeupCapability) = 1, AllowedWithoutWakeupCapability (AlarmAccessStatus_AllowedWithoutWakeupCapability) = 2, Denied (AlarmAccessStatus_Denied) = 3,
-}}
-RT_CLASS!{static class AlarmApplicationManager}
-impl RtActivatable<IAlarmApplicationManagerStatics> for AlarmApplicationManager {}
-impl AlarmApplicationManager {
-    #[inline] pub fn request_access_async() -> Result<ComPtr<foundation::IAsyncOperation<AlarmAccessStatus>>> {
-        <Self as RtActivatable<IAlarmApplicationManagerStatics>>::get_activation_factory().request_access_async()
-    }
-    #[inline] pub fn get_access_status() -> Result<AlarmAccessStatus> {
-        <Self as RtActivatable<IAlarmApplicationManagerStatics>>::get_activation_factory().get_access_status()
-    }
-}
-DEFINE_CLSID!(AlarmApplicationManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,108,97,114,109,65,112,112,108,105,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_AlarmApplicationManager]);
-DEFINE_IID!(IID_IAlarmApplicationManagerStatics, 3389258299, 52454, 19938, 176, 155, 150, 40, 189, 51, 187, 190);
-RT_INTERFACE!{static interface IAlarmApplicationManagerStatics(IAlarmApplicationManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAlarmApplicationManagerStatics] {
-    fn RequestAccessAsync(&self, out: *mut *mut foundation::IAsyncOperation<AlarmAccessStatus>) -> HRESULT,
-    fn GetAccessStatus(&self, out: *mut AlarmAccessStatus) -> HRESULT
-}}
-impl IAlarmApplicationManagerStatics {
-    #[inline] pub fn request_access_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<AlarmAccessStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAccessAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_access_status(&self) -> Result<AlarmAccessStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetAccessStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IAppBroadcastTrigger, 1960113302, 36151, 17644, 148, 129, 42, 11, 152, 84, 235, 72);
-RT_INTERFACE!{interface IAppBroadcastTrigger(IAppBroadcastTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastTrigger] {
-    fn put_ProviderInfo(&self, value: *mut AppBroadcastTriggerProviderInfo) -> HRESULT,
-    fn get_ProviderInfo(&self, out: *mut *mut AppBroadcastTriggerProviderInfo) -> HRESULT
-}}
-impl IAppBroadcastTrigger {
-    #[inline] pub fn set_provider_info(&self, value: &AppBroadcastTriggerProviderInfo) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ProviderInfo)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_provider_info(&self) -> Result<Option<ComPtr<AppBroadcastTriggerProviderInfo>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProviderInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class AppBroadcastTrigger: IAppBroadcastTrigger}
-impl RtActivatable<IAppBroadcastTriggerFactory> for AppBroadcastTrigger {}
-impl AppBroadcastTrigger {
-    #[inline] pub fn create_app_broadcast_trigger(providerKey: &HStringArg) -> Result<ComPtr<AppBroadcastTrigger>> {
-        <Self as RtActivatable<IAppBroadcastTriggerFactory>>::get_activation_factory().create_app_broadcast_trigger(providerKey)
-    }
-}
-DEFINE_CLSID!(AppBroadcastTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,112,112,66,114,111,97,100,99,97,115,116,84,114,105,103,103,101,114,0]) [CLSID_AppBroadcastTrigger]);
-DEFINE_IID!(IID_IAppBroadcastTriggerFactory, 671850308, 8948, 17944, 160, 46, 231, 228, 17, 235, 114, 56);
-RT_INTERFACE!{static interface IAppBroadcastTriggerFactory(IAppBroadcastTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastTriggerFactory] {
-    fn CreateAppBroadcastTrigger(&self, providerKey: HSTRING, out: *mut *mut AppBroadcastTrigger) -> HRESULT
-}}
-impl IAppBroadcastTriggerFactory {
-    #[inline] pub fn create_app_broadcast_trigger(&self, providerKey: &HStringArg) -> Result<ComPtr<AppBroadcastTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateAppBroadcastTrigger)(self as *const _ as *mut _, providerKey.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IAppBroadcastTriggerProviderInfo, 4061738285, 40424, 17440, 156, 226, 94, 255, 143, 23, 55, 107);
-RT_INTERFACE!{interface IAppBroadcastTriggerProviderInfo(IAppBroadcastTriggerProviderInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastTriggerProviderInfo] {
-    fn put_DisplayNameResource(&self, value: HSTRING) -> HRESULT,
-    fn get_DisplayNameResource(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_LogoResource(&self, value: HSTRING) -> HRESULT,
-    fn get_LogoResource(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_VideoKeyFrameInterval(&self, value: foundation::TimeSpan) -> HRESULT,
-    fn get_VideoKeyFrameInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn put_MaxVideoBitrate(&self, value: u32) -> HRESULT,
-    fn get_MaxVideoBitrate(&self, out: *mut u32) -> HRESULT,
-    fn put_MaxVideoWidth(&self, value: u32) -> HRESULT,
-    fn get_MaxVideoWidth(&self, out: *mut u32) -> HRESULT,
-    fn put_MaxVideoHeight(&self, value: u32) -> HRESULT,
-    fn get_MaxVideoHeight(&self, out: *mut u32) -> HRESULT
-}}
-impl IAppBroadcastTriggerProviderInfo {
-    #[inline] pub fn set_display_name_resource(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DisplayNameResource)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_display_name_resource(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayNameResource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_logo_resource(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_LogoResource)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_logo_resource(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LogoResource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_video_key_frame_interval(&self, value: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_VideoKeyFrameInterval)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_video_key_frame_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_VideoKeyFrameInterval)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_max_video_bitrate(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MaxVideoBitrate)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_max_video_bitrate(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaxVideoBitrate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_max_video_width(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MaxVideoWidth)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_max_video_width(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaxVideoWidth)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_max_video_height(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MaxVideoHeight)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_max_video_height(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaxVideoHeight)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class AppBroadcastTriggerProviderInfo: IAppBroadcastTriggerProviderInfo}
-DEFINE_IID!(IID_IApplicationTrigger, 189171248, 38260, 18732, 158, 147, 26, 58, 230, 51, 95, 233);
-RT_INTERFACE!{interface IApplicationTrigger(IApplicationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationTrigger] {
-    fn RequestAsync(&self, out: *mut *mut foundation::IAsyncOperation<ApplicationTriggerResult>) -> HRESULT,
-    fn RequestAsyncWithArguments(&self, arguments: *mut foundation::collections::ValueSet, out: *mut *mut foundation::IAsyncOperation<ApplicationTriggerResult>) -> HRESULT
-}}
-impl IApplicationTrigger {
-    #[inline] pub fn request_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ApplicationTriggerResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn request_async_with_arguments(&self, arguments: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<ApplicationTriggerResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAsyncWithArguments)(self as *const _ as *mut _, arguments as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ApplicationTrigger: IApplicationTrigger}
-impl RtActivatable<IActivationFactory> for ApplicationTrigger {}
-DEFINE_CLSID!(ApplicationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,112,112,108,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ApplicationTrigger]);
-DEFINE_IID!(IID_IApplicationTriggerDetails, 2547804850, 8729, 19102, 156, 94, 65, 208, 71, 247, 110, 130);
-RT_INTERFACE!{interface IApplicationTriggerDetails(IApplicationTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationTriggerDetails] {
-    fn get_Arguments(&self, out: *mut *mut foundation::collections::ValueSet) -> HRESULT
-}}
-impl IApplicationTriggerDetails {
-    #[inline] pub fn get_arguments(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Arguments)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ApplicationTriggerDetails: IApplicationTriggerDetails}
-RT_ENUM! { enum ApplicationTriggerResult: i32 {
-    Allowed (ApplicationTriggerResult_Allowed) = 0, CurrentlyRunning (ApplicationTriggerResult_CurrentlyRunning) = 1, DisabledByPolicy (ApplicationTriggerResult_DisabledByPolicy) = 2, UnknownError (ApplicationTriggerResult_UnknownError) = 3,
-}}
-DEFINE_IID!(IID_IAppointmentStoreNotificationTrigger, 1691616268, 49665, 17069, 170, 42, 226, 27, 163, 66, 91, 109);
-RT_INTERFACE!{interface IAppointmentStoreNotificationTrigger(IAppointmentStoreNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStoreNotificationTrigger] {
-    
-}}
-RT_CLASS!{class AppointmentStoreNotificationTrigger: IAppointmentStoreNotificationTrigger}
-impl RtActivatable<IActivationFactory> for AppointmentStoreNotificationTrigger {}
-DEFINE_CLSID!(AppointmentStoreNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,112,112,111,105,110,116,109,101,110,116,83,116,111,114,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_AppointmentStoreNotificationTrigger]);
-RT_ENUM! { enum BackgroundAccessStatus: i32 {
-    Unspecified (BackgroundAccessStatus_Unspecified) = 0, AllowedWithAlwaysOnRealTimeConnectivity (BackgroundAccessStatus_AllowedWithAlwaysOnRealTimeConnectivity) = 1, AllowedMayUseActiveRealTimeConnectivity (BackgroundAccessStatus_AllowedMayUseActiveRealTimeConnectivity) = 2, Denied (BackgroundAccessStatus_Denied) = 3, AlwaysAllowed (BackgroundAccessStatus_AlwaysAllowed) = 4, AllowedSubjectToSystemPolicy (BackgroundAccessStatus_AllowedSubjectToSystemPolicy) = 5, DeniedBySystemPolicy (BackgroundAccessStatus_DeniedBySystemPolicy) = 6, DeniedByUser (BackgroundAccessStatus_DeniedByUser) = 7,
-}}
-DEFINE_IID!(IID_IBackgroundCondition, 2923995630, 35153, 16394, 131, 2, 156, 156, 154, 42, 58, 59);
-RT_INTERFACE!{interface IBackgroundCondition(IBackgroundConditionVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundCondition] {
-    
-}}
-RT_CLASS!{static class BackgroundExecutionManager}
-impl RtActivatable<IBackgroundExecutionManagerStatics> for BackgroundExecutionManager {}
-impl BackgroundExecutionManager {
-    #[inline] pub fn request_access_async() -> Result<ComPtr<foundation::IAsyncOperation<BackgroundAccessStatus>>> {
-        <Self as RtActivatable<IBackgroundExecutionManagerStatics>>::get_activation_factory().request_access_async()
-    }
-    #[inline] pub fn request_access_for_application_async(applicationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<BackgroundAccessStatus>>> {
-        <Self as RtActivatable<IBackgroundExecutionManagerStatics>>::get_activation_factory().request_access_for_application_async(applicationId)
-    }
-    #[inline] pub fn remove_access() -> Result<()> {
-        <Self as RtActivatable<IBackgroundExecutionManagerStatics>>::get_activation_factory().remove_access()
-    }
-    #[inline] pub fn remove_access_for_application(applicationId: &HStringArg) -> Result<()> {
-        <Self as RtActivatable<IBackgroundExecutionManagerStatics>>::get_activation_factory().remove_access_for_application(applicationId)
-    }
-    #[inline] pub fn get_access_status() -> Result<BackgroundAccessStatus> {
-        <Self as RtActivatable<IBackgroundExecutionManagerStatics>>::get_activation_factory().get_access_status()
-    }
-    #[inline] pub fn get_access_status_for_application(applicationId: &HStringArg) -> Result<BackgroundAccessStatus> {
-        <Self as RtActivatable<IBackgroundExecutionManagerStatics>>::get_activation_factory().get_access_status_for_application(applicationId)
-    }
-}
-DEFINE_CLSID!(BackgroundExecutionManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,69,120,101,99,117,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_BackgroundExecutionManager]);
-DEFINE_IID!(IID_IBackgroundExecutionManagerStatics, 3894864472, 26281, 19777, 131, 212, 180, 193, 140, 135, 184, 70);
-RT_INTERFACE!{static interface IBackgroundExecutionManagerStatics(IBackgroundExecutionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundExecutionManagerStatics] {
-    fn RequestAccessAsync(&self, out: *mut *mut foundation::IAsyncOperation<BackgroundAccessStatus>) -> HRESULT,
-    fn RequestAccessForApplicationAsync(&self, applicationId: HSTRING, out: *mut *mut foundation::IAsyncOperation<BackgroundAccessStatus>) -> HRESULT,
-    fn RemoveAccess(&self) -> HRESULT,
-    fn RemoveAccessForApplication(&self, applicationId: HSTRING) -> HRESULT,
-    fn GetAccessStatus(&self, out: *mut BackgroundAccessStatus) -> HRESULT,
-    fn GetAccessStatusForApplication(&self, applicationId: HSTRING, out: *mut BackgroundAccessStatus) -> HRESULT
-}}
-impl IBackgroundExecutionManagerStatics {
-    #[inline] pub fn request_access_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<BackgroundAccessStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAccessAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn request_access_for_application_async(&self, applicationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<BackgroundAccessStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAccessForApplicationAsync)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_access(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveAccess)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_access_for_application(&self, applicationId: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveAccessForApplication)(self as *const _ as *mut _, applicationId.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_access_status(&self) -> Result<BackgroundAccessStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetAccessStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_access_status_for_application(&self, applicationId: &HStringArg) -> Result<BackgroundAccessStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetAccessStatusForApplication)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTask, 2098451764, 64786, 17358, 140, 34, 234, 31, 241, 60, 6, 223);
-RT_INTERFACE!{interface IBackgroundTask(IBackgroundTaskVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTask] {
-    fn Run(&self, taskInstance: *mut IBackgroundTaskInstance) -> HRESULT
-}}
-impl IBackgroundTask {
-    #[inline] pub fn run(&self, taskInstance: &IBackgroundTaskInstance) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Run)(self as *const _ as *mut _, taskInstance as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTaskBuilder, 55661838, 15972, 17778, 169, 58, 132, 7, 90, 55, 201, 23);
-RT_INTERFACE!{interface IBackgroundTaskBuilder(IBackgroundTaskBuilderVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskBuilder] {
-    fn put_TaskEntryPoint(&self, value: HSTRING) -> HRESULT,
-    fn get_TaskEntryPoint(&self, out: *mut HSTRING) -> HRESULT,
-    fn SetTrigger(&self, trigger: *mut IBackgroundTrigger) -> HRESULT,
-    fn AddCondition(&self, condition: *mut IBackgroundCondition) -> HRESULT,
-    fn put_Name(&self, value: HSTRING) -> HRESULT,
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn Register(&self, out: *mut *mut BackgroundTaskRegistration) -> HRESULT
-}}
-impl IBackgroundTaskBuilder {
-    #[inline] pub fn set_task_entry_point(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TaskEntryPoint)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_task_entry_point(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TaskEntryPoint)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_trigger(&self, trigger: &IBackgroundTrigger) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetTrigger)(self as *const _ as *mut _, trigger as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_condition(&self, condition: &IBackgroundCondition) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddCondition)(self as *const _ as *mut _, condition as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Name)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn register(&self) -> Result<Option<ComPtr<BackgroundTaskRegistration>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Register)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BackgroundTaskBuilder: IBackgroundTaskBuilder}
-impl RtActivatable<IActivationFactory> for BackgroundTaskBuilder {}
-DEFINE_CLSID!(BackgroundTaskBuilder(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,84,97,115,107,66,117,105,108,100,101,114,0]) [CLSID_BackgroundTaskBuilder]);
-DEFINE_IID!(IID_IBackgroundTaskBuilder2, 1793576881, 4175, 16493, 141, 182, 132, 74, 87, 15, 66, 187);
-RT_INTERFACE!{interface IBackgroundTaskBuilder2(IBackgroundTaskBuilder2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskBuilder2] {
-    fn put_CancelOnConditionLoss(&self, value: bool) -> HRESULT,
-    fn get_CancelOnConditionLoss(&self, out: *mut bool) -> HRESULT
-}}
-impl IBackgroundTaskBuilder2 {
-    #[inline] pub fn set_cancel_on_condition_loss(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CancelOnConditionLoss)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_cancel_on_condition_loss(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CancelOnConditionLoss)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTaskBuilder3, 684150602, 35753, 19465, 162, 79, 25, 104, 62, 44, 146, 76);
-RT_INTERFACE!{interface IBackgroundTaskBuilder3(IBackgroundTaskBuilder3Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskBuilder3] {
-    fn put_IsNetworkRequested(&self, value: bool) -> HRESULT,
-    fn get_IsNetworkRequested(&self, out: *mut bool) -> HRESULT
-}}
-impl IBackgroundTaskBuilder3 {
-    #[inline] pub fn set_is_network_requested(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IsNetworkRequested)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_network_requested(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsNetworkRequested)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTaskBuilder4, 1196811554, 52130, 20021, 189, 22, 166, 218, 127, 28, 25, 170);
-RT_INTERFACE!{interface IBackgroundTaskBuilder4(IBackgroundTaskBuilder4Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskBuilder4] {
-    fn get_TaskGroup(&self, out: *mut *mut BackgroundTaskRegistrationGroup) -> HRESULT,
-    fn put_TaskGroup(&self, value: *mut BackgroundTaskRegistrationGroup) -> HRESULT
-}}
-impl IBackgroundTaskBuilder4 {
-    #[inline] pub fn get_task_group(&self) -> Result<Option<ComPtr<BackgroundTaskRegistrationGroup>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TaskGroup)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_task_group(&self, value: &BackgroundTaskRegistrationGroup) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TaskGroup)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_BackgroundTaskCanceledEventHandler, 2797910720, 20984, 19543, 172, 63, 21, 109, 209, 104, 12, 79);
-RT_DELEGATE!{delegate BackgroundTaskCanceledEventHandler(BackgroundTaskCanceledEventHandlerVtbl, BackgroundTaskCanceledEventHandlerImpl) [IID_BackgroundTaskCanceledEventHandler] {
-    fn Invoke(&self, sender: *mut IBackgroundTaskInstance, reason: BackgroundTaskCancellationReason) -> HRESULT
-}}
-impl BackgroundTaskCanceledEventHandler {
-    #[inline] pub fn invoke(&self, sender: &IBackgroundTaskInstance, reason: BackgroundTaskCancellationReason) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, reason);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum BackgroundTaskCancellationReason: i32 {
-    Abort (BackgroundTaskCancellationReason_Abort) = 0, Terminating (BackgroundTaskCancellationReason_Terminating) = 1, LoggingOff (BackgroundTaskCancellationReason_LoggingOff) = 2, ServicingUpdate (BackgroundTaskCancellationReason_ServicingUpdate) = 3, IdleTask (BackgroundTaskCancellationReason_IdleTask) = 4, Uninstall (BackgroundTaskCancellationReason_Uninstall) = 5, ConditionLoss (BackgroundTaskCancellationReason_ConditionLoss) = 6, SystemPolicy (BackgroundTaskCancellationReason_SystemPolicy) = 7, QuietHoursEntered (BackgroundTaskCancellationReason_QuietHoursEntered) = 8, ExecutionTimeExceeded (BackgroundTaskCancellationReason_ExecutionTimeExceeded) = 9, ResourceRevocation (BackgroundTaskCancellationReason_ResourceRevocation) = 10, EnergySaver (BackgroundTaskCancellationReason_EnergySaver) = 11,
-}}
-DEFINE_IID!(IID_IBackgroundTaskCompletedEventArgs, 1448945103, 61961, 18676, 153, 103, 43, 24, 79, 123, 251, 240);
-RT_INTERFACE!{interface IBackgroundTaskCompletedEventArgs(IBackgroundTaskCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskCompletedEventArgs] {
-    fn get_InstanceId(&self, out: *mut Guid) -> HRESULT,
-    fn CheckResult(&self) -> HRESULT
-}}
-impl IBackgroundTaskCompletedEventArgs {
-    #[inline] pub fn get_instance_id(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_InstanceId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn check_result(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).CheckResult)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BackgroundTaskCompletedEventArgs: IBackgroundTaskCompletedEventArgs}
-DEFINE_IID!(IID_BackgroundTaskCompletedEventHandler, 1530456361, 41094, 18087, 166, 120, 67, 145, 53, 130, 43, 207);
-RT_DELEGATE!{delegate BackgroundTaskCompletedEventHandler(BackgroundTaskCompletedEventHandlerVtbl, BackgroundTaskCompletedEventHandlerImpl) [IID_BackgroundTaskCompletedEventHandler] {
-    fn Invoke(&self, sender: *mut BackgroundTaskRegistration, args: *mut BackgroundTaskCompletedEventArgs) -> HRESULT
-}}
-impl BackgroundTaskCompletedEventHandler {
-    #[inline] pub fn invoke(&self, sender: &BackgroundTaskRegistration, args: &BackgroundTaskCompletedEventArgs) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, args as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTaskDeferral, 2479625581, 44839, 19923, 132, 110, 36, 238, 64, 202, 221, 37);
-RT_INTERFACE!{interface IBackgroundTaskDeferral(IBackgroundTaskDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskDeferral] {
-    fn Complete(&self) -> HRESULT
-}}
-impl IBackgroundTaskDeferral {
-    #[inline] pub fn complete(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Complete)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BackgroundTaskDeferral: IBackgroundTaskDeferral}
-DEFINE_IID!(IID_IBackgroundTaskInstance, 2254166650, 8664, 17779, 143, 50, 146, 138, 27, 6, 65, 246);
-RT_INTERFACE!{interface IBackgroundTaskInstance(IBackgroundTaskInstanceVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskInstance] {
-    fn get_InstanceId(&self, out: *mut Guid) -> HRESULT,
-    fn get_Task(&self, out: *mut *mut BackgroundTaskRegistration) -> HRESULT,
-    fn get_Progress(&self, out: *mut u32) -> HRESULT,
-    fn put_Progress(&self, value: u32) -> HRESULT,
-    fn get_TriggerDetails(&self, out: *mut *mut IInspectable) -> HRESULT,
-    fn add_Canceled(&self, cancelHandler: *mut BackgroundTaskCanceledEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_Canceled(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn get_SuspendedCount(&self, out: *mut u32) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut BackgroundTaskDeferral) -> HRESULT
-}}
-impl IBackgroundTaskInstance {
-    #[inline] pub fn get_instance_id(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_InstanceId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_task(&self) -> Result<Option<ComPtr<BackgroundTaskRegistration>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Task)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_progress(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_progress(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Progress)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_trigger_details(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TriggerDetails)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_canceled(&self, cancelHandler: &BackgroundTaskCanceledEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Canceled)(self as *const _ as *mut _, cancelHandler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_canceled(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_Canceled)(self as *const _ as *mut _, cookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_suspended_count(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_SuspendedCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<BackgroundTaskDeferral>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTaskInstance2, 1333592438, 3190, 20404, 137, 109, 93, 225, 134, 65, 34, 246);
-RT_INTERFACE!{interface IBackgroundTaskInstance2(IBackgroundTaskInstance2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskInstance2] {
-    fn GetThrottleCount(&self, counter: BackgroundTaskThrottleCounter, out: *mut u32) -> HRESULT
-}}
-impl IBackgroundTaskInstance2 {
-    #[inline] pub fn get_throttle_count(&self, counter: BackgroundTaskThrottleCounter) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetThrottleCount)(self as *const _ as *mut _, counter, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTaskInstance4, 2133455420, 43524, 19208, 151, 176, 6, 216, 116, 205, 171, 245);
-RT_INTERFACE!{interface IBackgroundTaskInstance4(IBackgroundTaskInstance4Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskInstance4] {
-    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
-}}
-impl IBackgroundTaskInstance4 {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTaskProgressEventArgs, 4212418732, 33586, 19722, 149, 50, 3, 234, 230, 132, 218, 49);
-RT_INTERFACE!{interface IBackgroundTaskProgressEventArgs(IBackgroundTaskProgressEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskProgressEventArgs] {
-    fn get_InstanceId(&self, out: *mut Guid) -> HRESULT,
-    fn get_Progress(&self, out: *mut u32) -> HRESULT
-}}
-impl IBackgroundTaskProgressEventArgs {
-    #[inline] pub fn get_instance_id(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_InstanceId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_progress(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BackgroundTaskProgressEventArgs: IBackgroundTaskProgressEventArgs}
-DEFINE_IID!(IID_BackgroundTaskProgressEventHandler, 1189111868, 35464, 19609, 128, 76, 118, 137, 127, 98, 119, 166);
-RT_DELEGATE!{delegate BackgroundTaskProgressEventHandler(BackgroundTaskProgressEventHandlerVtbl, BackgroundTaskProgressEventHandlerImpl) [IID_BackgroundTaskProgressEventHandler] {
-    fn Invoke(&self, sender: *mut BackgroundTaskRegistration, args: *mut BackgroundTaskProgressEventArgs) -> HRESULT
-}}
-impl BackgroundTaskProgressEventHandler {
-    #[inline] pub fn invoke(&self, sender: &BackgroundTaskRegistration, args: &BackgroundTaskProgressEventArgs) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, args as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTaskRegistration, 275074242, 41582, 17343, 140, 18, 31, 180, 13, 191, 191, 160);
-RT_INTERFACE!{interface IBackgroundTaskRegistration(IBackgroundTaskRegistrationVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistration] {
-    fn get_TaskId(&self, out: *mut Guid) -> HRESULT,
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn add_Progress(&self, handler: *mut BackgroundTaskProgressEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_Progress(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_Completed(&self, handler: *mut BackgroundTaskCompletedEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_Completed(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn Unregister(&self, cancelTask: bool) -> HRESULT
-}}
-impl IBackgroundTaskRegistration {
-    #[inline] pub fn get_task_id(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TaskId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_progress(&self, handler: &BackgroundTaskProgressEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Progress)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_progress(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_Progress)(self as *const _ as *mut _, cookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_completed(&self, handler: &BackgroundTaskCompletedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_completed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_Completed)(self as *const _ as *mut _, cookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn unregister(&self, cancelTask: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Unregister)(self as *const _ as *mut _, cancelTask);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BackgroundTaskRegistration: IBackgroundTaskRegistration}
-impl RtActivatable<IBackgroundTaskRegistrationStatics> for BackgroundTaskRegistration {}
-impl RtActivatable<IBackgroundTaskRegistrationStatics2> for BackgroundTaskRegistration {}
-impl BackgroundTaskRegistration {
-    #[inline] pub fn get_all_tasks() -> Result<Option<ComPtr<foundation::collections::IMapView<Guid, IBackgroundTaskRegistration>>>> {
-        <Self as RtActivatable<IBackgroundTaskRegistrationStatics>>::get_activation_factory().get_all_tasks()
-    }
-    #[inline] pub fn get_all_task_groups() -> Result<Option<ComPtr<foundation::collections::IMapView<HString, BackgroundTaskRegistrationGroup>>>> {
-        <Self as RtActivatable<IBackgroundTaskRegistrationStatics2>>::get_activation_factory().get_all_task_groups()
-    }
-    #[inline] pub fn get_task_group(groupId: &HStringArg) -> Result<Option<ComPtr<BackgroundTaskRegistrationGroup>>> {
-        <Self as RtActivatable<IBackgroundTaskRegistrationStatics2>>::get_activation_factory().get_task_group(groupId)
-    }
-}
-DEFINE_CLSID!(BackgroundTaskRegistration(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,84,97,115,107,82,101,103,105,115,116,114,97,116,105,111,110,0]) [CLSID_BackgroundTaskRegistration]);
-DEFINE_IID!(IID_IBackgroundTaskRegistration2, 1631110915, 48006, 16658, 175, 195, 127, 147, 155, 22, 110, 59);
-RT_INTERFACE!{interface IBackgroundTaskRegistration2(IBackgroundTaskRegistration2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistration2] {
-    fn get_Trigger(&self, out: *mut *mut IBackgroundTrigger) -> HRESULT
-}}
-impl IBackgroundTaskRegistration2 {
-    #[inline] pub fn get_trigger(&self) -> Result<Option<ComPtr<IBackgroundTrigger>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Trigger)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTaskRegistration3, 4264788373, 37923, 19851, 131, 13, 177, 221, 44, 123, 173, 213);
-RT_INTERFACE!{interface IBackgroundTaskRegistration3(IBackgroundTaskRegistration3Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistration3] {
-    fn get_TaskGroup(&self, out: *mut *mut BackgroundTaskRegistrationGroup) -> HRESULT
-}}
-impl IBackgroundTaskRegistration3 {
-    #[inline] pub fn get_task_group(&self) -> Result<Option<ComPtr<BackgroundTaskRegistrationGroup>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TaskGroup)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTaskRegistrationGroup, 716280218, 34587, 16743, 138, 118, 5, 92, 214, 123, 91, 35);
-RT_INTERFACE!{interface IBackgroundTaskRegistrationGroup(IBackgroundTaskRegistrationGroupVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistrationGroup] {
-    fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn add_BackgroundActivated(&self, handler: *mut foundation::TypedEventHandler<BackgroundTaskRegistrationGroup, super::activation::BackgroundActivatedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_BackgroundActivated(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn get_AllTasks(&self, out: *mut *mut foundation::collections::IMapView<Guid, BackgroundTaskRegistration>) -> HRESULT
-}}
-impl IBackgroundTaskRegistrationGroup {
-    #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_background_activated(&self, handler: &foundation::TypedEventHandler<BackgroundTaskRegistrationGroup, super::activation::BackgroundActivatedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BackgroundActivated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_background_activated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_BackgroundActivated)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_all_tasks(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<Guid, BackgroundTaskRegistration>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AllTasks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BackgroundTaskRegistrationGroup: IBackgroundTaskRegistrationGroup}
-impl RtActivatable<IBackgroundTaskRegistrationGroupFactory> for BackgroundTaskRegistrationGroup {}
-impl BackgroundTaskRegistrationGroup {
-    #[inline] pub fn create(id: &HStringArg) -> Result<ComPtr<BackgroundTaskRegistrationGroup>> {
-        <Self as RtActivatable<IBackgroundTaskRegistrationGroupFactory>>::get_activation_factory().create(id)
-    }
-    #[inline] pub fn create_with_name(id: &HStringArg, name: &HStringArg) -> Result<ComPtr<BackgroundTaskRegistrationGroup>> {
-        <Self as RtActivatable<IBackgroundTaskRegistrationGroupFactory>>::get_activation_factory().create_with_name(id, name)
-    }
-}
-DEFINE_CLSID!(BackgroundTaskRegistrationGroup(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,84,97,115,107,82,101,103,105,115,116,114,97,116,105,111,110,71,114,111,117,112,0]) [CLSID_BackgroundTaskRegistrationGroup]);
-DEFINE_IID!(IID_IBackgroundTaskRegistrationGroupFactory, 2212047721, 17615, 17969, 151, 64, 3, 199, 216, 116, 27, 197);
-RT_INTERFACE!{static interface IBackgroundTaskRegistrationGroupFactory(IBackgroundTaskRegistrationGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistrationGroupFactory] {
-    fn Create(&self, id: HSTRING, out: *mut *mut BackgroundTaskRegistrationGroup) -> HRESULT,
-    fn CreateWithName(&self, id: HSTRING, name: HSTRING, out: *mut *mut BackgroundTaskRegistrationGroup) -> HRESULT
-}}
-impl IBackgroundTaskRegistrationGroupFactory {
-    #[inline] pub fn create(&self, id: &HStringArg) -> Result<ComPtr<BackgroundTaskRegistrationGroup>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, id.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_with_name(&self, id: &HStringArg, name: &HStringArg) -> Result<ComPtr<BackgroundTaskRegistrationGroup>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithName)(self as *const _ as *mut _, id.get(), name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTaskRegistrationStatics, 1280585577, 45056, 17082, 160, 147, 106, 86, 60, 101, 227, 248);
-RT_INTERFACE!{static interface IBackgroundTaskRegistrationStatics(IBackgroundTaskRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistrationStatics] {
-    fn get_AllTasks(&self, out: *mut *mut foundation::collections::IMapView<Guid, IBackgroundTaskRegistration>) -> HRESULT
-}}
-impl IBackgroundTaskRegistrationStatics {
-    #[inline] pub fn get_all_tasks(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<Guid, IBackgroundTaskRegistration>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AllTasks)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTaskRegistrationStatics2, 390817566, 45581, 20393, 173, 154, 233, 58, 214, 199, 30, 1);
-RT_INTERFACE!{static interface IBackgroundTaskRegistrationStatics2(IBackgroundTaskRegistrationStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskRegistrationStatics2] {
-    fn get_AllTaskGroups(&self, out: *mut *mut foundation::collections::IMapView<HString, BackgroundTaskRegistrationGroup>) -> HRESULT,
-    fn GetTaskGroup(&self, groupId: HSTRING, out: *mut *mut BackgroundTaskRegistrationGroup) -> HRESULT
-}}
-impl IBackgroundTaskRegistrationStatics2 {
-    #[inline] pub fn get_all_task_groups(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, BackgroundTaskRegistrationGroup>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AllTaskGroups)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_task_group(&self, groupId: &HStringArg) -> Result<Option<ComPtr<BackgroundTaskRegistrationGroup>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetTaskGroup)(self as *const _ as *mut _, groupId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum BackgroundTaskThrottleCounter: i32 {
-    All (BackgroundTaskThrottleCounter_All) = 0, Cpu (BackgroundTaskThrottleCounter_Cpu) = 1, Network (BackgroundTaskThrottleCounter_Network) = 2,
-}}
-DEFINE_IID!(IID_IBackgroundTrigger, 2226364504, 24615, 19335, 151, 144, 189, 243, 247, 87, 219, 215);
-RT_INTERFACE!{interface IBackgroundTrigger(IBackgroundTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTrigger] {
-    
-}}
-RT_CLASS!{static class BackgroundWorkCost}
-impl RtActivatable<IBackgroundWorkCostStatics> for BackgroundWorkCost {}
-impl BackgroundWorkCost {
-    #[inline] pub fn get_current_background_work_cost() -> Result<BackgroundWorkCostValue> {
-        <Self as RtActivatable<IBackgroundWorkCostStatics>>::get_activation_factory().get_current_background_work_cost()
-    }
-}
-DEFINE_CLSID!(BackgroundWorkCost(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,87,111,114,107,67,111,115,116,0]) [CLSID_BackgroundWorkCost]);
-DEFINE_IID!(IID_IBackgroundWorkCostStatics, 3342902882, 49936, 19330, 179, 227, 59, 207, 185, 228, 199, 125);
-RT_INTERFACE!{static interface IBackgroundWorkCostStatics(IBackgroundWorkCostStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundWorkCostStatics] {
-    fn get_CurrentBackgroundWorkCost(&self, out: *mut BackgroundWorkCostValue) -> HRESULT
-}}
-impl IBackgroundWorkCostStatics {
-    #[inline] pub fn get_current_background_work_cost(&self) -> Result<BackgroundWorkCostValue> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CurrentBackgroundWorkCost)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum BackgroundWorkCostValue: i32 {
-    Low (BackgroundWorkCostValue_Low) = 0, Medium (BackgroundWorkCostValue_Medium) = 1, High (BackgroundWorkCostValue_High) = 2,
-}}
-DEFINE_IID!(IID_IBluetoothLEAdvertisementPublisherTrigger, 2872976914, 9683, 18606, 135, 36, 216, 24, 119, 174, 97, 41);
-RT_INTERFACE!{interface IBluetoothLEAdvertisementPublisherTrigger(IBluetoothLEAdvertisementPublisherTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementPublisherTrigger] {
-    #[cfg(feature="windows-devices")] fn get_Advertisement(&self, out: *mut *mut super::super::devices::bluetooth::advertisement::BluetoothLEAdvertisement) -> HRESULT
-}}
-impl IBluetoothLEAdvertisementPublisherTrigger {
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_advertisement(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::advertisement::BluetoothLEAdvertisement>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Advertisement)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BluetoothLEAdvertisementPublisherTrigger: IBluetoothLEAdvertisementPublisherTrigger}
-impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementPublisherTrigger {}
-DEFINE_CLSID!(BluetoothLEAdvertisementPublisherTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,80,117,98,108,105,115,104,101,114,84,114,105,103,103,101,114,0]) [CLSID_BluetoothLEAdvertisementPublisherTrigger]);
-DEFINE_IID!(IID_IBluetoothLEAdvertisementWatcherTrigger, 447420441, 48353, 18667, 168, 39, 89, 251, 124, 238, 82, 166);
-RT_INTERFACE!{interface IBluetoothLEAdvertisementWatcherTrigger(IBluetoothLEAdvertisementWatcherTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementWatcherTrigger] {
-    fn get_MinSamplingInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_MaxSamplingInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_MinOutOfRangeTimeout(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_MaxOutOfRangeTimeout(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn get_SignalStrengthFilter(&self, out: *mut *mut super::super::devices::bluetooth::BluetoothSignalStrengthFilter) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn put_SignalStrengthFilter(&self, value: *mut super::super::devices::bluetooth::BluetoothSignalStrengthFilter) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn get_AdvertisementFilter(&self, out: *mut *mut super::super::devices::bluetooth::advertisement::BluetoothLEAdvertisementFilter) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn put_AdvertisementFilter(&self, value: *mut super::super::devices::bluetooth::advertisement::BluetoothLEAdvertisementFilter) -> HRESULT
-}}
-impl IBluetoothLEAdvertisementWatcherTrigger {
-    #[inline] pub fn get_min_sampling_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MinSamplingInterval)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_max_sampling_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaxSamplingInterval)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_min_out_of_range_timeout(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MinOutOfRangeTimeout)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_max_out_of_range_timeout(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaxOutOfRangeTimeout)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_signal_strength_filter(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::BluetoothSignalStrengthFilter>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SignalStrengthFilter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_signal_strength_filter(&self, value: &super::super::devices::bluetooth::BluetoothSignalStrengthFilter) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SignalStrengthFilter)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_advertisement_filter(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::advertisement::BluetoothLEAdvertisementFilter>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AdvertisementFilter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_advertisement_filter(&self, value: &super::super::devices::bluetooth::advertisement::BluetoothLEAdvertisementFilter) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AdvertisementFilter)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BluetoothLEAdvertisementWatcherTrigger: IBluetoothLEAdvertisementWatcherTrigger}
-impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementWatcherTrigger {}
-DEFINE_CLSID!(BluetoothLEAdvertisementWatcherTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,87,97,116,99,104,101,114,84,114,105,103,103,101,114,0]) [CLSID_BluetoothLEAdvertisementWatcherTrigger]);
-DEFINE_IID!(IID_ICachedFileUpdaterTrigger, 3793530603, 13042, 19761, 181, 83, 185, 224, 27, 222, 55, 224);
-RT_INTERFACE!{interface ICachedFileUpdaterTrigger(ICachedFileUpdaterTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterTrigger] {
-    
-}}
-RT_CLASS!{class CachedFileUpdaterTrigger: ICachedFileUpdaterTrigger}
-impl RtActivatable<IActivationFactory> for CachedFileUpdaterTrigger {}
-DEFINE_CLSID!(CachedFileUpdaterTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,97,99,104,101,100,70,105,108,101,85,112,100,97,116,101,114,84,114,105,103,103,101,114,0]) [CLSID_CachedFileUpdaterTrigger]);
-DEFINE_IID!(IID_ICachedFileUpdaterTriggerDetails, 1904446483, 4884, 18356, 149, 151, 220, 126, 36, 140, 23, 204);
-RT_INTERFACE!{interface ICachedFileUpdaterTriggerDetails(ICachedFileUpdaterTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterTriggerDetails] {
-    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_UpdateTarget(&self, out: *mut super::super::storage::provider::CachedFileTarget) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_UpdateRequest(&self, out: *mut *mut super::super::storage::provider::FileUpdateRequest) -> HRESULT,
-    fn get_CanRequestUserInput(&self, out: *mut bool) -> HRESULT
-}}
-impl ICachedFileUpdaterTriggerDetails {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_update_target(&self) -> Result<super::super::storage::provider::CachedFileTarget> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UpdateTarget)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_update_request(&self) -> Result<Option<ComPtr<super::super::storage::provider::FileUpdateRequest>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UpdateRequest)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_can_request_user_input(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CanRequestUserInput)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class CachedFileUpdaterTriggerDetails: ICachedFileUpdaterTriggerDetails}
-DEFINE_IID!(IID_IChatMessageNotificationTrigger, 1362838463, 7488, 23645, 120, 245, 201, 35, 254, 227, 115, 158);
-RT_INTERFACE!{interface IChatMessageNotificationTrigger(IChatMessageNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageNotificationTrigger] {
-    
-}}
-RT_CLASS!{class ChatMessageNotificationTrigger: IChatMessageNotificationTrigger}
-impl RtActivatable<IActivationFactory> for ChatMessageNotificationTrigger {}
-DEFINE_CLSID!(ChatMessageNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,104,97,116,77,101,115,115,97,103,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ChatMessageNotificationTrigger]);
-DEFINE_IID!(IID_IChatMessageReceivedNotificationTrigger, 1050899982, 47861, 16503, 136, 233, 6, 12, 246, 240, 198, 213);
-RT_INTERFACE!{interface IChatMessageReceivedNotificationTrigger(IChatMessageReceivedNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageReceivedNotificationTrigger] {
-    
-}}
-RT_CLASS!{class ChatMessageReceivedNotificationTrigger: IChatMessageReceivedNotificationTrigger}
-impl RtActivatable<IActivationFactory> for ChatMessageReceivedNotificationTrigger {}
-DEFINE_CLSID!(ChatMessageReceivedNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,104,97,116,77,101,115,115,97,103,101,82,101,99,101,105,118,101,100,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ChatMessageReceivedNotificationTrigger]);
-DEFINE_IID!(IID_IContactStoreNotificationTrigger, 3358802331, 18181, 17777, 154, 22, 6, 185, 151, 191, 156, 150);
-RT_INTERFACE!{interface IContactStoreNotificationTrigger(IContactStoreNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IContactStoreNotificationTrigger] {
-    
-}}
-RT_CLASS!{class ContactStoreNotificationTrigger: IContactStoreNotificationTrigger}
-impl RtActivatable<IActivationFactory> for ContactStoreNotificationTrigger {}
-DEFINE_CLSID!(ContactStoreNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,111,110,116,97,99,116,83,116,111,114,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ContactStoreNotificationTrigger]);
-DEFINE_IID!(IID_IContentPrefetchTrigger, 1896228846, 1274, 17419, 128, 192, 23, 50, 2, 25, 158, 93);
-RT_INTERFACE!{interface IContentPrefetchTrigger(IContentPrefetchTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetchTrigger] {
-    fn get_WaitInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT
-}}
-impl IContentPrefetchTrigger {
-    #[inline] pub fn get_wait_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_WaitInterval)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ContentPrefetchTrigger: IContentPrefetchTrigger}
-impl RtActivatable<IContentPrefetchTriggerFactory> for ContentPrefetchTrigger {}
-impl RtActivatable<IActivationFactory> for ContentPrefetchTrigger {}
-impl ContentPrefetchTrigger {
-    #[inline] pub fn create(waitInterval: foundation::TimeSpan) -> Result<ComPtr<ContentPrefetchTrigger>> {
-        <Self as RtActivatable<IContentPrefetchTriggerFactory>>::get_activation_factory().create(waitInterval)
-    }
-}
-DEFINE_CLSID!(ContentPrefetchTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,111,110,116,101,110,116,80,114,101,102,101,116,99,104,84,114,105,103,103,101,114,0]) [CLSID_ContentPrefetchTrigger]);
-DEFINE_IID!(IID_IContentPrefetchTriggerFactory, 3261349594, 35331, 16542, 184, 196, 136, 129, 76, 40, 204, 182);
-RT_INTERFACE!{static interface IContentPrefetchTriggerFactory(IContentPrefetchTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetchTriggerFactory] {
-    fn Create(&self, waitInterval: foundation::TimeSpan, out: *mut *mut ContentPrefetchTrigger) -> HRESULT
-}}
-impl IContentPrefetchTriggerFactory {
-    #[inline] pub fn create(&self, waitInterval: foundation::TimeSpan) -> Result<ComPtr<ContentPrefetchTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, waitInterval, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IDeviceConnectionChangeTrigger, 2424790628, 15581, 20219, 171, 28, 91, 59, 106, 96, 206, 52);
-RT_INTERFACE!{interface IDeviceConnectionChangeTrigger(IDeviceConnectionChangeTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceConnectionChangeTrigger] {
-    fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_CanMaintainConnection(&self, out: *mut bool) -> HRESULT,
-    fn get_MaintainConnection(&self, out: *mut bool) -> HRESULT,
-    fn put_MaintainConnection(&self, value: bool) -> HRESULT
-}}
-impl IDeviceConnectionChangeTrigger {
-    #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DeviceId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_can_maintain_connection(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CanMaintainConnection)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_maintain_connection(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaintainConnection)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_maintain_connection(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MaintainConnection)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class DeviceConnectionChangeTrigger: IDeviceConnectionChangeTrigger}
-impl RtActivatable<IDeviceConnectionChangeTriggerStatics> for DeviceConnectionChangeTrigger {}
-impl DeviceConnectionChangeTrigger {
-    #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DeviceConnectionChangeTrigger>>> {
-        <Self as RtActivatable<IDeviceConnectionChangeTriggerStatics>>::get_activation_factory().from_id_async(deviceId)
-    }
-}
-DEFINE_CLSID!(DeviceConnectionChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,67,111,110,110,101,99,116,105,111,110,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_DeviceConnectionChangeTrigger]);
-DEFINE_IID!(IID_IDeviceConnectionChangeTriggerStatics, 3286901866, 20221, 17560, 170, 96, 164, 228, 227, 177, 122, 185);
-RT_INTERFACE!{static interface IDeviceConnectionChangeTriggerStatics(IDeviceConnectionChangeTriggerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceConnectionChangeTriggerStatics] {
-    fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncOperation<DeviceConnectionChangeTrigger>) -> HRESULT
-}}
-impl IDeviceConnectionChangeTriggerStatics {
-    #[inline] pub fn from_id_async(&self, deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DeviceConnectionChangeTrigger>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FromIdAsync)(self as *const _ as *mut _, deviceId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IDeviceManufacturerNotificationTrigger, 2166852277, 16811, 5850, 134, 194, 127, 123, 240, 145, 47, 91);
-RT_INTERFACE!{interface IDeviceManufacturerNotificationTrigger(IDeviceManufacturerNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceManufacturerNotificationTrigger] {
-    fn get_TriggerQualifier(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_OneShot(&self, out: *mut bool) -> HRESULT
-}}
-impl IDeviceManufacturerNotificationTrigger {
-    #[inline] pub fn get_trigger_qualifier(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TriggerQualifier)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_one_shot(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OneShot)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class DeviceManufacturerNotificationTrigger: IDeviceManufacturerNotificationTrigger}
-impl RtActivatable<IDeviceManufacturerNotificationTriggerFactory> for DeviceManufacturerNotificationTrigger {}
-impl DeviceManufacturerNotificationTrigger {
-    #[inline] pub fn create(triggerQualifier: &HStringArg, oneShot: bool) -> Result<ComPtr<DeviceManufacturerNotificationTrigger>> {
-        <Self as RtActivatable<IDeviceManufacturerNotificationTriggerFactory>>::get_activation_factory().create(triggerQualifier, oneShot)
-    }
-}
-DEFINE_CLSID!(DeviceManufacturerNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,77,97,110,117,102,97,99,116,117,114,101,114,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_DeviceManufacturerNotificationTrigger]);
-DEFINE_IID!(IID_IDeviceManufacturerNotificationTriggerFactory, 2035670645, 9659, 16723, 161, 162, 48, 41, 252, 171, 182, 82);
-RT_INTERFACE!{static interface IDeviceManufacturerNotificationTriggerFactory(IDeviceManufacturerNotificationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceManufacturerNotificationTriggerFactory] {
-    fn Create(&self, triggerQualifier: HSTRING, oneShot: bool, out: *mut *mut DeviceManufacturerNotificationTrigger) -> HRESULT
-}}
-impl IDeviceManufacturerNotificationTriggerFactory {
-    #[inline] pub fn create(&self, triggerQualifier: &HStringArg, oneShot: bool) -> Result<ComPtr<DeviceManufacturerNotificationTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, triggerQualifier.get(), oneShot, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IDeviceServicingTrigger, 447879085, 28212, 18899, 158, 111, 23, 241, 182, 223, 168, 129);
-RT_INTERFACE!{interface IDeviceServicingTrigger(IDeviceServicingTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceServicingTrigger] {
-    fn RequestAsyncSimple(&self, deviceId: HSTRING, expectedDuration: foundation::TimeSpan, out: *mut *mut foundation::IAsyncOperation<DeviceTriggerResult>) -> HRESULT,
-    fn RequestAsyncWithArguments(&self, deviceId: HSTRING, expectedDuration: foundation::TimeSpan, arguments: HSTRING, out: *mut *mut foundation::IAsyncOperation<DeviceTriggerResult>) -> HRESULT
-}}
-impl IDeviceServicingTrigger {
-    #[inline] pub fn request_async_simple(&self, deviceId: &HStringArg, expectedDuration: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<DeviceTriggerResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAsyncSimple)(self as *const _ as *mut _, deviceId.get(), expectedDuration, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn request_async_with_arguments(&self, deviceId: &HStringArg, expectedDuration: foundation::TimeSpan, arguments: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DeviceTriggerResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAsyncWithArguments)(self as *const _ as *mut _, deviceId.get(), expectedDuration, arguments.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class DeviceServicingTrigger: IDeviceServicingTrigger}
-impl RtActivatable<IActivationFactory> for DeviceServicingTrigger {}
-DEFINE_CLSID!(DeviceServicingTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,83,101,114,118,105,99,105,110,103,84,114,105,103,103,101,114,0]) [CLSID_DeviceServicingTrigger]);
-RT_ENUM! { enum DeviceTriggerResult: i32 {
-    Allowed (DeviceTriggerResult_Allowed) = 0, DeniedByUser (DeviceTriggerResult_DeniedByUser) = 1, DeniedBySystem (DeviceTriggerResult_DeniedBySystem) = 2, LowBattery (DeviceTriggerResult_LowBattery) = 3,
-}}
-DEFINE_IID!(IID_IDeviceUseTrigger, 229015569, 13135, 19799, 182, 236, 109, 202, 100, 180, 18, 228);
-RT_INTERFACE!{interface IDeviceUseTrigger(IDeviceUseTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceUseTrigger] {
-    fn RequestAsyncSimple(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncOperation<DeviceTriggerResult>) -> HRESULT,
-    fn RequestAsyncWithArguments(&self, deviceId: HSTRING, arguments: HSTRING, out: *mut *mut foundation::IAsyncOperation<DeviceTriggerResult>) -> HRESULT
-}}
-impl IDeviceUseTrigger {
-    #[inline] pub fn request_async_simple(&self, deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DeviceTriggerResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAsyncSimple)(self as *const _ as *mut _, deviceId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn request_async_with_arguments(&self, deviceId: &HStringArg, arguments: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DeviceTriggerResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAsyncWithArguments)(self as *const _ as *mut _, deviceId.get(), arguments.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class DeviceUseTrigger: IDeviceUseTrigger}
-impl RtActivatable<IActivationFactory> for DeviceUseTrigger {}
-DEFINE_CLSID!(DeviceUseTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,85,115,101,84,114,105,103,103,101,114,0]) [CLSID_DeviceUseTrigger]);
-DEFINE_IID!(IID_IDeviceWatcherTrigger, 2757853149, 34163, 16992, 190, 252, 91, 236, 137, 203, 105, 61);
-RT_INTERFACE!{interface IDeviceWatcherTrigger(IDeviceWatcherTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceWatcherTrigger] {
-    
-}}
-RT_CLASS!{class DeviceWatcherTrigger: IDeviceWatcherTrigger}
-DEFINE_IID!(IID_IEmailStoreNotificationTrigger, 2557282010, 18411, 17000, 164, 242, 243, 247, 113, 136, 56, 138);
-RT_INTERFACE!{interface IEmailStoreNotificationTrigger(IEmailStoreNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IEmailStoreNotificationTrigger] {
-    
-}}
-RT_CLASS!{class EmailStoreNotificationTrigger: IEmailStoreNotificationTrigger}
-impl RtActivatable<IActivationFactory> for EmailStoreNotificationTrigger {}
-DEFINE_CLSID!(EmailStoreNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,69,109,97,105,108,83,116,111,114,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_EmailStoreNotificationTrigger]);
-DEFINE_IID!(IID_IGattCharacteristicNotificationTrigger, 3797913544, 1686, 18255, 167, 50, 242, 146, 176, 206, 188, 93);
-RT_INTERFACE!{interface IGattCharacteristicNotificationTrigger(IGattCharacteristicNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicNotificationTrigger] {
-    #[cfg(feature="windows-devices")] fn get_Characteristic(&self, out: *mut *mut super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic) -> HRESULT
-}}
-impl IGattCharacteristicNotificationTrigger {
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_characteristic(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Characteristic)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GattCharacteristicNotificationTrigger: IGattCharacteristicNotificationTrigger}
-impl RtActivatable<IGattCharacteristicNotificationTriggerFactory> for GattCharacteristicNotificationTrigger {}
-impl RtActivatable<IGattCharacteristicNotificationTriggerFactory2> for GattCharacteristicNotificationTrigger {}
-impl GattCharacteristicNotificationTrigger {
-    #[cfg(feature="windows-devices")] #[inline] pub fn create(characteristic: &super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic) -> Result<ComPtr<GattCharacteristicNotificationTrigger>> {
-        <Self as RtActivatable<IGattCharacteristicNotificationTriggerFactory>>::get_activation_factory().create(characteristic)
-    }
-    #[cfg(feature="windows-devices")] #[inline] pub fn create_with_event_triggering_mode(characteristic: &super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic, eventTriggeringMode: super::super::devices::bluetooth::background::BluetoothEventTriggeringMode) -> Result<ComPtr<GattCharacteristicNotificationTrigger>> {
-        <Self as RtActivatable<IGattCharacteristicNotificationTriggerFactory2>>::get_activation_factory().create_with_event_triggering_mode(characteristic, eventTriggeringMode)
-    }
-}
-DEFINE_CLSID!(GattCharacteristicNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,71,97,116,116,67,104,97,114,97,99,116,101,114,105,115,116,105,99,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_GattCharacteristicNotificationTrigger]);
-DEFINE_IID!(IID_IGattCharacteristicNotificationTrigger2, 2468520644, 44558, 17138, 178, 140, 245, 19, 114, 230, 146, 69);
-RT_INTERFACE!{interface IGattCharacteristicNotificationTrigger2(IGattCharacteristicNotificationTrigger2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicNotificationTrigger2] {
-    #[cfg(feature="windows-devices")] fn get_EventTriggeringMode(&self, out: *mut super::super::devices::bluetooth::background::BluetoothEventTriggeringMode) -> HRESULT
-}}
-impl IGattCharacteristicNotificationTrigger2 {
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_event_triggering_mode(&self) -> Result<super::super::devices::bluetooth::background::BluetoothEventTriggeringMode> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_EventTriggeringMode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IGattCharacteristicNotificationTriggerFactory, 1471814037, 45379, 17781, 159, 107, 253, 89, 217, 58, 206, 26);
-RT_INTERFACE!{static interface IGattCharacteristicNotificationTriggerFactory(IGattCharacteristicNotificationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicNotificationTriggerFactory] {
-    #[cfg(feature="windows-devices")] fn Create(&self, characteristic: *mut super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic, out: *mut *mut GattCharacteristicNotificationTrigger) -> HRESULT
-}}
-impl IGattCharacteristicNotificationTriggerFactory {
-    #[cfg(feature="windows-devices")] #[inline] pub fn create(&self, characteristic: &super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic) -> Result<ComPtr<GattCharacteristicNotificationTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, characteristic as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IGattCharacteristicNotificationTriggerFactory2, 1503193375, 35411, 20127, 163, 44, 35, 205, 51, 102, 76, 238);
-RT_INTERFACE!{static interface IGattCharacteristicNotificationTriggerFactory2(IGattCharacteristicNotificationTriggerFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicNotificationTriggerFactory2] {
-    #[cfg(feature="windows-devices")] fn CreateWithEventTriggeringMode(&self, characteristic: *mut super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic, eventTriggeringMode: super::super::devices::bluetooth::background::BluetoothEventTriggeringMode, out: *mut *mut GattCharacteristicNotificationTrigger) -> HRESULT
-}}
-impl IGattCharacteristicNotificationTriggerFactory2 {
-    #[cfg(feature="windows-devices")] #[inline] pub fn create_with_event_triggering_mode(&self, characteristic: &super::super::devices::bluetooth::genericattributeprofile::GattCharacteristic, eventTriggeringMode: super::super::devices::bluetooth::background::BluetoothEventTriggeringMode) -> Result<ComPtr<GattCharacteristicNotificationTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithEventTriggeringMode)(self as *const _ as *mut _, characteristic as *const _ as *mut _, eventTriggeringMode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IGattServiceProviderTrigger, 3720782825, 5463, 19416, 133, 66, 70, 138, 160, 198, 150, 246);
-RT_INTERFACE!{interface IGattServiceProviderTrigger(IGattServiceProviderTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProviderTrigger] {
-    fn get_TriggerId(&self, out: *mut HSTRING) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn get_Service(&self, out: *mut *mut super::super::devices::bluetooth::genericattributeprofile::GattLocalService) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn put_AdvertisingParameters(&self, value: *mut super::super::devices::bluetooth::genericattributeprofile::GattServiceProviderAdvertisingParameters) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn get_AdvertisingParameters(&self, out: *mut *mut super::super::devices::bluetooth::genericattributeprofile::GattServiceProviderAdvertisingParameters) -> HRESULT
-}}
-impl IGattServiceProviderTrigger {
-    #[inline] pub fn get_trigger_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TriggerId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_service(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::genericattributeprofile::GattLocalService>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Service)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_advertising_parameters(&self, value: &super::super::devices::bluetooth::genericattributeprofile::GattServiceProviderAdvertisingParameters) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AdvertisingParameters)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_advertising_parameters(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::genericattributeprofile::GattServiceProviderAdvertisingParameters>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AdvertisingParameters)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GattServiceProviderTrigger: IGattServiceProviderTrigger}
-impl RtActivatable<IGattServiceProviderTriggerStatics> for GattServiceProviderTrigger {}
-impl GattServiceProviderTrigger {
-    #[inline] pub fn create_async(triggerId: &HStringArg, serviceUuid: Guid) -> Result<ComPtr<foundation::IAsyncOperation<GattServiceProviderTriggerResult>>> {
-        <Self as RtActivatable<IGattServiceProviderTriggerStatics>>::get_activation_factory().create_async(triggerId, serviceUuid)
-    }
-}
-DEFINE_CLSID!(GattServiceProviderTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,71,97,116,116,83,101,114,118,105,99,101,80,114,111,118,105,100,101,114,84,114,105,103,103,101,114,0]) [CLSID_GattServiceProviderTrigger]);
-DEFINE_IID!(IID_IGattServiceProviderTriggerResult, 1011257777, 45464, 20100, 186, 212, 207, 74, 210, 153, 237, 58);
-RT_INTERFACE!{interface IGattServiceProviderTriggerResult(IGattServiceProviderTriggerResultVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProviderTriggerResult] {
-    fn get_Trigger(&self, out: *mut *mut GattServiceProviderTrigger) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn get_Error(&self, out: *mut super::super::devices::bluetooth::BluetoothError) -> HRESULT
-}}
-impl IGattServiceProviderTriggerResult {
-    #[inline] pub fn get_trigger(&self) -> Result<Option<ComPtr<GattServiceProviderTrigger>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Trigger)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_error(&self) -> Result<super::super::devices::bluetooth::BluetoothError> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Error)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GattServiceProviderTriggerResult: IGattServiceProviderTriggerResult}
-DEFINE_IID!(IID_IGattServiceProviderTriggerStatics, 3021185898, 58004, 17809, 165, 166, 100, 137, 26, 130, 129, 83);
-RT_INTERFACE!{static interface IGattServiceProviderTriggerStatics(IGattServiceProviderTriggerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProviderTriggerStatics] {
-    fn CreateAsync(&self, triggerId: HSTRING, serviceUuid: Guid, out: *mut *mut foundation::IAsyncOperation<GattServiceProviderTriggerResult>) -> HRESULT
-}}
-impl IGattServiceProviderTriggerStatics {
-    #[inline] pub fn create_async(&self, triggerId: &HStringArg, serviceUuid: Guid) -> Result<ComPtr<foundation::IAsyncOperation<GattServiceProviderTriggerResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateAsync)(self as *const _ as *mut _, triggerId.get(), serviceUuid, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IGeovisitTrigger, 1209593258, 1249, 16679, 154, 76, 25, 53, 27, 138, 128, 164);
-RT_INTERFACE!{interface IGeovisitTrigger(IGeovisitTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IGeovisitTrigger] {
-    #[cfg(feature="windows-devices")] fn get_MonitoringScope(&self, out: *mut super::super::devices::geolocation::VisitMonitoringScope) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn put_MonitoringScope(&self, value: super::super::devices::geolocation::VisitMonitoringScope) -> HRESULT
-}}
-impl IGeovisitTrigger {
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_monitoring_scope(&self) -> Result<super::super::devices::geolocation::VisitMonitoringScope> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MonitoringScope)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_monitoring_scope(&self, value: super::super::devices::geolocation::VisitMonitoringScope) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MonitoringScope)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GeovisitTrigger: IGeovisitTrigger}
-impl RtActivatable<IActivationFactory> for GeovisitTrigger {}
-DEFINE_CLSID!(GeovisitTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,71,101,111,118,105,115,105,116,84,114,105,103,103,101,114,0]) [CLSID_GeovisitTrigger]);
-DEFINE_IID!(IID_ILocationTrigger, 1197894172, 26743, 18462, 128, 38, 255, 126, 20, 168, 17, 160);
-RT_INTERFACE!{interface ILocationTrigger(ILocationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ILocationTrigger] {
-    fn get_TriggerType(&self, out: *mut LocationTriggerType) -> HRESULT
-}}
-impl ILocationTrigger {
-    #[inline] pub fn get_trigger_type(&self) -> Result<LocationTriggerType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TriggerType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class LocationTrigger: ILocationTrigger}
-impl RtActivatable<ILocationTriggerFactory> for LocationTrigger {}
-impl LocationTrigger {
-    #[inline] pub fn create(triggerType: LocationTriggerType) -> Result<ComPtr<LocationTrigger>> {
-        <Self as RtActivatable<ILocationTriggerFactory>>::get_activation_factory().create(triggerType)
-    }
-}
-DEFINE_CLSID!(LocationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,76,111,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_LocationTrigger]);
-DEFINE_IID!(IID_ILocationTriggerFactory, 285653767, 65385, 19977, 170, 139, 19, 132, 234, 71, 94, 152);
-RT_INTERFACE!{static interface ILocationTriggerFactory(ILocationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILocationTriggerFactory] {
-    fn Create(&self, triggerType: LocationTriggerType, out: *mut *mut LocationTrigger) -> HRESULT
-}}
-impl ILocationTriggerFactory {
-    #[inline] pub fn create(&self, triggerType: LocationTriggerType) -> Result<ComPtr<LocationTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, triggerType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum LocationTriggerType: i32 {
-    Geofence (LocationTriggerType_Geofence) = 0,
-}}
-DEFINE_IID!(IID_IMaintenanceTrigger, 1746422915, 64546, 19685, 132, 26, 114, 57, 169, 129, 0, 71);
-RT_INTERFACE!{interface IMaintenanceTrigger(IMaintenanceTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IMaintenanceTrigger] {
-    fn get_FreshnessTime(&self, out: *mut u32) -> HRESULT,
-    fn get_OneShot(&self, out: *mut bool) -> HRESULT
-}}
-impl IMaintenanceTrigger {
-    #[inline] pub fn get_freshness_time(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_FreshnessTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_one_shot(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OneShot)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class MaintenanceTrigger: IMaintenanceTrigger}
-impl RtActivatable<IMaintenanceTriggerFactory> for MaintenanceTrigger {}
-impl MaintenanceTrigger {
-    #[inline] pub fn create(freshnessTime: u32, oneShot: bool) -> Result<ComPtr<MaintenanceTrigger>> {
-        <Self as RtActivatable<IMaintenanceTriggerFactory>>::get_activation_factory().create(freshnessTime, oneShot)
-    }
-}
-DEFINE_CLSID!(MaintenanceTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,97,105,110,116,101,110,97,110,99,101,84,114,105,103,103,101,114,0]) [CLSID_MaintenanceTrigger]);
-DEFINE_IID!(IID_IMaintenanceTriggerFactory, 1262345006, 38877, 17961, 136, 176, 176, 108, 249, 72, 42, 229);
-RT_INTERFACE!{static interface IMaintenanceTriggerFactory(IMaintenanceTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMaintenanceTriggerFactory] {
-    fn Create(&self, freshnessTime: u32, oneShot: bool, out: *mut *mut MaintenanceTrigger) -> HRESULT
-}}
-impl IMaintenanceTriggerFactory {
-    #[inline] pub fn create(&self, freshnessTime: u32, oneShot: bool) -> Result<ComPtr<MaintenanceTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, freshnessTime, oneShot, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IMediaProcessingTrigger, 2593504869, 35410, 19248, 144, 17, 207, 56, 4, 14, 168, 176);
-RT_INTERFACE!{interface IMediaProcessingTrigger(IMediaProcessingTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaProcessingTrigger] {
-    fn RequestAsync(&self, out: *mut *mut foundation::IAsyncOperation<MediaProcessingTriggerResult>) -> HRESULT,
-    fn RequestAsyncWithArguments(&self, arguments: *mut foundation::collections::ValueSet, out: *mut *mut foundation::IAsyncOperation<MediaProcessingTriggerResult>) -> HRESULT
-}}
-impl IMediaProcessingTrigger {
-    #[inline] pub fn request_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<MediaProcessingTriggerResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn request_async_with_arguments(&self, arguments: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<MediaProcessingTriggerResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAsyncWithArguments)(self as *const _ as *mut _, arguments as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class MediaProcessingTrigger: IMediaProcessingTrigger}
-impl RtActivatable<IActivationFactory> for MediaProcessingTrigger {}
-DEFINE_CLSID!(MediaProcessingTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,101,100,105,97,80,114,111,99,101,115,115,105,110,103,84,114,105,103,103,101,114,0]) [CLSID_MediaProcessingTrigger]);
-RT_ENUM! { enum MediaProcessingTriggerResult: i32 {
-    Allowed (MediaProcessingTriggerResult_Allowed) = 0, CurrentlyRunning (MediaProcessingTriggerResult_CurrentlyRunning) = 1, DisabledByPolicy (MediaProcessingTriggerResult_DisabledByPolicy) = 2, UnknownError (MediaProcessingTriggerResult_UnknownError) = 3,
-}}
-RT_CLASS!{class MobileBroadbandDeviceServiceNotificationTrigger: IBackgroundTrigger}
-impl RtActivatable<IActivationFactory> for MobileBroadbandDeviceServiceNotificationTrigger {}
-DEFINE_CLSID!(MobileBroadbandDeviceServiceNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,68,101,118,105,99,101,83,101,114,118,105,99,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandDeviceServiceNotificationTrigger]);
-RT_CLASS!{class MobileBroadbandPinLockStateChangeTrigger: IBackgroundTrigger}
-impl RtActivatable<IActivationFactory> for MobileBroadbandPinLockStateChangeTrigger {}
-DEFINE_CLSID!(MobileBroadbandPinLockStateChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,80,105,110,76,111,99,107,83,116,97,116,101,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandPinLockStateChangeTrigger]);
-RT_CLASS!{class MobileBroadbandRadioStateChangeTrigger: IBackgroundTrigger}
-impl RtActivatable<IActivationFactory> for MobileBroadbandRadioStateChangeTrigger {}
-DEFINE_CLSID!(MobileBroadbandRadioStateChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,82,97,100,105,111,83,116,97,116,101,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandRadioStateChangeTrigger]);
-RT_CLASS!{class MobileBroadbandRegistrationStateChangeTrigger: IBackgroundTrigger}
-impl RtActivatable<IActivationFactory> for MobileBroadbandRegistrationStateChangeTrigger {}
-DEFINE_CLSID!(MobileBroadbandRegistrationStateChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,82,101,103,105,115,116,114,97,116,105,111,110,83,116,97,116,101,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandRegistrationStateChangeTrigger]);
-DEFINE_IID!(IID_INetworkOperatorHotspotAuthenticationTrigger, 3881224081, 12289, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
-RT_INTERFACE!{interface INetworkOperatorHotspotAuthenticationTrigger(INetworkOperatorHotspotAuthenticationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorHotspotAuthenticationTrigger] {
-    
-}}
-RT_CLASS!{class NetworkOperatorHotspotAuthenticationTrigger: INetworkOperatorHotspotAuthenticationTrigger}
-impl RtActivatable<IActivationFactory> for NetworkOperatorHotspotAuthenticationTrigger {}
-DEFINE_CLSID!(NetworkOperatorHotspotAuthenticationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,72,111,116,115,112,111,116,65,117,116,104,101,110,116,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_NetworkOperatorHotspotAuthenticationTrigger]);
-DEFINE_IID!(IID_INetworkOperatorNotificationTrigger, 2416483526, 25549, 18444, 149, 209, 110, 106, 239, 128, 30, 74);
-RT_INTERFACE!{interface INetworkOperatorNotificationTrigger(INetworkOperatorNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorNotificationTrigger] {
-    fn get_NetworkAccountId(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl INetworkOperatorNotificationTrigger {
-    #[inline] pub fn get_network_account_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_NetworkAccountId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class NetworkOperatorNotificationTrigger: INetworkOperatorNotificationTrigger}
-impl RtActivatable<INetworkOperatorNotificationTriggerFactory> for NetworkOperatorNotificationTrigger {}
-impl NetworkOperatorNotificationTrigger {
-    #[inline] pub fn create(networkAccountId: &HStringArg) -> Result<ComPtr<NetworkOperatorNotificationTrigger>> {
-        <Self as RtActivatable<INetworkOperatorNotificationTriggerFactory>>::get_activation_factory().create(networkAccountId)
-    }
-}
-DEFINE_CLSID!(NetworkOperatorNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_NetworkOperatorNotificationTrigger]);
-DEFINE_IID!(IID_INetworkOperatorNotificationTriggerFactory, 170016256, 10199, 17235, 173, 185, 146, 101, 170, 234, 87, 157);
-RT_INTERFACE!{static interface INetworkOperatorNotificationTriggerFactory(INetworkOperatorNotificationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorNotificationTriggerFactory] {
-    fn Create(&self, networkAccountId: HSTRING, out: *mut *mut NetworkOperatorNotificationTrigger) -> HRESULT
-}}
-impl INetworkOperatorNotificationTriggerFactory {
-    #[inline] pub fn create(&self, networkAccountId: &HStringArg) -> Result<ComPtr<NetworkOperatorNotificationTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, networkAccountId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class PaymentAppCanMakePaymentTrigger: IBackgroundTrigger}
-impl RtActivatable<IActivationFactory> for PaymentAppCanMakePaymentTrigger {}
-DEFINE_CLSID!(PaymentAppCanMakePaymentTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,80,97,121,109,101,110,116,65,112,112,67,97,110,77,97,107,101,80,97,121,109,101,110,116,84,114,105,103,103,101,114,0]) [CLSID_PaymentAppCanMakePaymentTrigger]);
-DEFINE_IID!(IID_IPhoneTrigger, 2379213211, 54469, 18929, 183, 211, 130, 232, 122, 14, 157, 222);
-RT_INTERFACE!{interface IPhoneTrigger(IPhoneTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneTrigger] {
-    fn get_OneShot(&self, out: *mut bool) -> HRESULT,
-    fn get_TriggerType(&self, out: *mut super::calls::background::PhoneTriggerType) -> HRESULT
-}}
-impl IPhoneTrigger {
-    #[inline] pub fn get_one_shot(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OneShot)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_trigger_type(&self) -> Result<super::calls::background::PhoneTriggerType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TriggerType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class PhoneTrigger: IPhoneTrigger}
-impl RtActivatable<IPhoneTriggerFactory> for PhoneTrigger {}
-impl PhoneTrigger {
-    #[inline] pub fn create(type_: super::calls::background::PhoneTriggerType, oneShot: bool) -> Result<ComPtr<PhoneTrigger>> {
-        <Self as RtActivatable<IPhoneTriggerFactory>>::get_activation_factory().create(type_, oneShot)
-    }
-}
-DEFINE_CLSID!(PhoneTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,80,104,111,110,101,84,114,105,103,103,101,114,0]) [CLSID_PhoneTrigger]);
-DEFINE_IID!(IID_IPhoneTriggerFactory, 2698591450, 24513, 18683, 165, 70, 50, 38, 32, 64, 21, 123);
-RT_INTERFACE!{static interface IPhoneTriggerFactory(IPhoneTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneTriggerFactory] {
-    fn Create(&self, type_: super::calls::background::PhoneTriggerType, oneShot: bool, out: *mut *mut PhoneTrigger) -> HRESULT
-}}
-impl IPhoneTriggerFactory {
-    #[inline] pub fn create(&self, type_: super::calls::background::PhoneTriggerType, oneShot: bool) -> Result<ComPtr<PhoneTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, type_, oneShot, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class PushNotificationTrigger: IBackgroundTrigger}
-impl RtActivatable<IPushNotificationTriggerFactory> for PushNotificationTrigger {}
-impl RtActivatable<IActivationFactory> for PushNotificationTrigger {}
-impl PushNotificationTrigger {
-    #[inline] pub fn create(applicationId: &HStringArg) -> Result<ComPtr<PushNotificationTrigger>> {
-        <Self as RtActivatable<IPushNotificationTriggerFactory>>::get_activation_factory().create(applicationId)
-    }
-}
-DEFINE_CLSID!(PushNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,80,117,115,104,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_PushNotificationTrigger]);
-DEFINE_IID!(IID_IPushNotificationTriggerFactory, 1842933019, 17806, 20418, 188, 46, 213, 102, 79, 119, 237, 25);
-RT_INTERFACE!{static interface IPushNotificationTriggerFactory(IPushNotificationTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationTriggerFactory] {
-    fn Create(&self, applicationId: HSTRING, out: *mut *mut PushNotificationTrigger) -> HRESULT
-}}
-impl IPushNotificationTriggerFactory {
-    #[inline] pub fn create(&self, applicationId: &HStringArg) -> Result<ComPtr<PushNotificationTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IRcsEndUserMessageAvailableTrigger, 2557283690, 45814, 18047, 169, 120, 164, 64, 145, 193, 26, 102);
-RT_INTERFACE!{interface IRcsEndUserMessageAvailableTrigger(IRcsEndUserMessageAvailableTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IRcsEndUserMessageAvailableTrigger] {
-    
-}}
-RT_CLASS!{class RcsEndUserMessageAvailableTrigger: IRcsEndUserMessageAvailableTrigger}
-impl RtActivatable<IActivationFactory> for RcsEndUserMessageAvailableTrigger {}
-DEFINE_CLSID!(RcsEndUserMessageAvailableTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,82,99,115,69,110,100,85,115,101,114,77,101,115,115,97,103,101,65,118,97,105,108,97,98,108,101,84,114,105,103,103,101,114,0]) [CLSID_RcsEndUserMessageAvailableTrigger]);
-DEFINE_IID!(IID_IRfcommConnectionTrigger, 3905211106, 2899, 17508, 147, 148, 253, 135, 86, 84, 222, 100);
-RT_INTERFACE!{interface IRfcommConnectionTrigger(IRfcommConnectionTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommConnectionTrigger] {
-    #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_InboundConnection(&self, out: *mut *mut super::super::devices::bluetooth::background::RfcommInboundConnectionInformation) -> HRESULT,
-    #[cfg(not(feature="windows-devices"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_OutboundConnection(&self, out: *mut *mut super::super::devices::bluetooth::background::RfcommOutboundConnectionInformation) -> HRESULT,
-    fn get_AllowMultipleConnections(&self, out: *mut bool) -> HRESULT,
-    fn put_AllowMultipleConnections(&self, value: bool) -> HRESULT,
-    #[cfg(feature="windows-networking")] fn get_ProtectionLevel(&self, out: *mut super::super::networking::sockets::SocketProtectionLevel) -> HRESULT,
-    #[cfg(feature="windows-networking")] fn put_ProtectionLevel(&self, value: super::super::networking::sockets::SocketProtectionLevel) -> HRESULT,
-    #[cfg(feature="windows-networking")] fn get_RemoteHostName(&self, out: *mut *mut super::super::networking::HostName) -> HRESULT,
-    #[cfg(feature="windows-networking")] fn put_RemoteHostName(&self, value: *mut super::super::networking::HostName) -> HRESULT
-}}
-impl IRfcommConnectionTrigger {
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_inbound_connection(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::background::RfcommInboundConnectionInformation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_InboundConnection)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_outbound_connection(&self) -> Result<Option<ComPtr<super::super::devices::bluetooth::background::RfcommOutboundConnectionInformation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_OutboundConnection)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_allow_multiple_connections(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_AllowMultipleConnections)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_allow_multiple_connections(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AllowMultipleConnections)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn get_protection_level(&self) -> Result<super::super::networking::sockets::SocketProtectionLevel> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ProtectionLevel)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn set_protection_level(&self, value: super::super::networking::sockets::SocketProtectionLevel) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ProtectionLevel)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn get_remote_host_name(&self) -> Result<Option<ComPtr<super::super::networking::HostName>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RemoteHostName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn set_remote_host_name(&self, value: &super::super::networking::HostName) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_RemoteHostName)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class RfcommConnectionTrigger: IRfcommConnectionTrigger}
-impl RtActivatable<IActivationFactory> for RfcommConnectionTrigger {}
-DEFINE_CLSID!(RfcommConnectionTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,82,102,99,111,109,109,67,111,110,110,101,99,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_RfcommConnectionTrigger]);
-DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationTrigger, 4063752999, 20865, 20260, 150, 167, 112, 10, 78, 95, 172, 98);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationTrigger(ISecondaryAuthenticationFactorAuthenticationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationTrigger] {
-    
-}}
-RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationTrigger: ISecondaryAuthenticationFactorAuthenticationTrigger}
-impl RtActivatable<IActivationFactory> for SecondaryAuthenticationFactorAuthenticationTrigger {}
-DEFINE_CLSID!(SecondaryAuthenticationFactorAuthenticationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_SecondaryAuthenticationFactorAuthenticationTrigger]);
-DEFINE_IID!(IID_ISensorDataThresholdTrigger, 1539371890, 54411, 19327, 171, 236, 21, 249, 186, 204, 18, 226);
-RT_INTERFACE!{interface ISensorDataThresholdTrigger(ISensorDataThresholdTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISensorDataThresholdTrigger] {
-    
-}}
-RT_CLASS!{class SensorDataThresholdTrigger: ISensorDataThresholdTrigger}
-impl RtActivatable<ISensorDataThresholdTriggerFactory> for SensorDataThresholdTrigger {}
-impl SensorDataThresholdTrigger {
-    #[cfg(feature="windows-devices")] #[inline] pub fn create(threshold: &super::super::devices::sensors::ISensorDataThreshold) -> Result<ComPtr<SensorDataThresholdTrigger>> {
-        <Self as RtActivatable<ISensorDataThresholdTriggerFactory>>::get_activation_factory().create(threshold)
-    }
-}
-DEFINE_CLSID!(SensorDataThresholdTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,101,110,115,111,114,68,97,116,97,84,104,114,101,115,104,111,108,100,84,114,105,103,103,101,114,0]) [CLSID_SensorDataThresholdTrigger]);
-DEFINE_IID!(IID_ISensorDataThresholdTriggerFactory, 2451564149, 32240, 19875, 151, 179, 229, 68, 238, 133, 127, 230);
-RT_INTERFACE!{static interface ISensorDataThresholdTriggerFactory(ISensorDataThresholdTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISensorDataThresholdTriggerFactory] {
-    #[cfg(feature="windows-devices")] fn Create(&self, threshold: *mut super::super::devices::sensors::ISensorDataThreshold, out: *mut *mut SensorDataThresholdTrigger) -> HRESULT
-}}
-impl ISensorDataThresholdTriggerFactory {
-    #[cfg(feature="windows-devices")] #[inline] pub fn create(&self, threshold: &super::super::devices::sensors::ISensorDataThreshold) -> Result<ComPtr<SensorDataThresholdTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, threshold as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISmartCardTrigger, 4114335148, 33994, 18802, 140, 233, 229, 143, 151, 179, 122, 80);
-RT_INTERFACE!{interface ISmartCardTrigger(ISmartCardTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardTrigger] {
-    #[cfg(feature="windows-devices")] fn get_TriggerType(&self, out: *mut super::super::devices::smartcards::SmartCardTriggerType) -> HRESULT
-}}
-impl ISmartCardTrigger {
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_trigger_type(&self) -> Result<super::super::devices::smartcards::SmartCardTriggerType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TriggerType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmartCardTrigger: ISmartCardTrigger}
-impl RtActivatable<ISmartCardTriggerFactory> for SmartCardTrigger {}
-impl SmartCardTrigger {
-    #[cfg(feature="windows-devices")] #[inline] pub fn create(triggerType: super::super::devices::smartcards::SmartCardTriggerType) -> Result<ComPtr<SmartCardTrigger>> {
-        <Self as RtActivatable<ISmartCardTriggerFactory>>::get_activation_factory().create(triggerType)
-    }
-}
-DEFINE_CLSID!(SmartCardTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,109,97,114,116,67,97,114,100,84,114,105,103,103,101,114,0]) [CLSID_SmartCardTrigger]);
-DEFINE_IID!(IID_ISmartCardTriggerFactory, 1673483459, 35265, 19968, 169, 211, 151, 198, 41, 38, 157, 173);
-RT_INTERFACE!{static interface ISmartCardTriggerFactory(ISmartCardTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardTriggerFactory] {
-    #[cfg(feature="windows-devices")] fn Create(&self, triggerType: super::super::devices::smartcards::SmartCardTriggerType, out: *mut *mut SmartCardTrigger) -> HRESULT
-}}
-impl ISmartCardTriggerFactory {
-    #[cfg(feature="windows-devices")] #[inline] pub fn create(&self, triggerType: super::super::devices::smartcards::SmartCardTriggerType) -> Result<ComPtr<SmartCardTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, triggerType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SmsMessageReceivedTrigger: IBackgroundTrigger}
-impl RtActivatable<ISmsMessageReceivedTriggerFactory> for SmsMessageReceivedTrigger {}
-impl SmsMessageReceivedTrigger {
-    #[cfg(feature="windows-devices")] #[inline] pub fn create(filterRules: &super::super::devices::sms::SmsFilterRules) -> Result<ComPtr<SmsMessageReceivedTrigger>> {
-        <Self as RtActivatable<ISmsMessageReceivedTriggerFactory>>::get_activation_factory().create(filterRules)
-    }
-}
-DEFINE_CLSID!(SmsMessageReceivedTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,109,115,77,101,115,115,97,103,101,82,101,99,101,105,118,101,100,84,114,105,103,103,101,114,0]) [CLSID_SmsMessageReceivedTrigger]);
-DEFINE_IID!(IID_ISmsMessageReceivedTriggerFactory, 3929725128, 27556, 19122, 141, 33, 188, 107, 9, 199, 117, 100);
-RT_INTERFACE!{static interface ISmsMessageReceivedTriggerFactory(ISmsMessageReceivedTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmsMessageReceivedTriggerFactory] {
-    #[cfg(feature="windows-devices")] fn Create(&self, filterRules: *mut super::super::devices::sms::SmsFilterRules, out: *mut *mut SmsMessageReceivedTrigger) -> HRESULT
-}}
-impl ISmsMessageReceivedTriggerFactory {
-    #[cfg(feature="windows-devices")] #[inline] pub fn create(&self, filterRules: &super::super::devices::sms::SmsFilterRules) -> Result<ComPtr<SmsMessageReceivedTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, filterRules as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISocketActivityTrigger, 2847668240, 40414, 20362, 131, 227, 176, 224, 231, 165, 13, 112);
-RT_INTERFACE!{interface ISocketActivityTrigger(ISocketActivityTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISocketActivityTrigger] {
-    fn get_IsWakeFromLowPowerSupported(&self, out: *mut bool) -> HRESULT
-}}
-impl ISocketActivityTrigger {
-    #[inline] pub fn get_is_wake_from_low_power_supported(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsWakeFromLowPowerSupported)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SocketActivityTrigger: IBackgroundTrigger}
-impl RtActivatable<IActivationFactory> for SocketActivityTrigger {}
-DEFINE_CLSID!(SocketActivityTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,111,99,107,101,116,65,99,116,105,118,105,116,121,84,114,105,103,103,101,114,0]) [CLSID_SocketActivityTrigger]);
-DEFINE_IID!(IID_IStorageLibraryContentChangedTrigger, 372760743, 33436, 17852, 146, 155, 161, 231, 234, 120, 216, 155);
-RT_INTERFACE!{interface IStorageLibraryContentChangedTrigger(IStorageLibraryContentChangedTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryContentChangedTrigger] {
-    
-}}
-RT_CLASS!{class StorageLibraryContentChangedTrigger: IStorageLibraryContentChangedTrigger}
-impl RtActivatable<IStorageLibraryContentChangedTriggerStatics> for StorageLibraryContentChangedTrigger {}
-impl StorageLibraryContentChangedTrigger {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(storageLibrary: &super::super::storage::StorageLibrary) -> Result<Option<ComPtr<StorageLibraryContentChangedTrigger>>> {
-        <Self as RtActivatable<IStorageLibraryContentChangedTriggerStatics>>::get_activation_factory().create(storageLibrary)
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_libraries(storageLibraries: &foundation::collections::IIterable<super::super::storage::StorageLibrary>) -> Result<Option<ComPtr<StorageLibraryContentChangedTrigger>>> {
-        <Self as RtActivatable<IStorageLibraryContentChangedTriggerStatics>>::get_activation_factory().create_from_libraries(storageLibraries)
-    }
-}
-DEFINE_CLSID!(StorageLibraryContentChangedTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,116,111,114,97,103,101,76,105,98,114,97,114,121,67,111,110,116,101,110,116,67,104,97,110,103,101,100,84,114,105,103,103,101,114,0]) [CLSID_StorageLibraryContentChangedTrigger]);
-DEFINE_IID!(IID_IStorageLibraryContentChangedTriggerStatics, 2141133625, 24464, 19986, 145, 78, 167, 216, 224, 187, 251, 24);
-RT_INTERFACE!{static interface IStorageLibraryContentChangedTriggerStatics(IStorageLibraryContentChangedTriggerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryContentChangedTriggerStatics] {
-    #[cfg(feature="windows-storage")] fn Create(&self, storageLibrary: *mut super::super::storage::StorageLibrary, out: *mut *mut StorageLibraryContentChangedTrigger) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn CreateFromLibraries(&self, storageLibraries: *mut foundation::collections::IIterable<super::super::storage::StorageLibrary>, out: *mut *mut StorageLibraryContentChangedTrigger) -> HRESULT
-}}
-impl IStorageLibraryContentChangedTriggerStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, storageLibrary: &super::super::storage::StorageLibrary) -> Result<Option<ComPtr<StorageLibraryContentChangedTrigger>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, storageLibrary as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_libraries(&self, storageLibraries: &foundation::collections::IIterable<super::super::storage::StorageLibrary>) -> Result<Option<ComPtr<StorageLibraryContentChangedTrigger>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromLibraries)(self as *const _ as *mut _, storageLibraries as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISystemCondition, 3244274806, 35269, 16907, 171, 211, 251, 48, 48, 71, 33, 40);
-RT_INTERFACE!{interface ISystemCondition(ISystemConditionVtbl): IInspectable(IInspectableVtbl) [IID_ISystemCondition] {
-    fn get_ConditionType(&self, out: *mut SystemConditionType) -> HRESULT
-}}
-impl ISystemCondition {
-    #[inline] pub fn get_condition_type(&self) -> Result<SystemConditionType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ConditionType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SystemCondition: ISystemCondition}
-impl RtActivatable<ISystemConditionFactory> for SystemCondition {}
-impl SystemCondition {
-    #[inline] pub fn create(conditionType: SystemConditionType) -> Result<ComPtr<SystemCondition>> {
-        <Self as RtActivatable<ISystemConditionFactory>>::get_activation_factory().create(conditionType)
-    }
-}
-DEFINE_CLSID!(SystemCondition(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,121,115,116,101,109,67,111,110,100,105,116,105,111,110,0]) [CLSID_SystemCondition]);
-DEFINE_IID!(IID_ISystemConditionFactory, 3530150385, 1447, 18862, 135, 215, 22, 178, 184, 185, 165, 83);
-RT_INTERFACE!{static interface ISystemConditionFactory(ISystemConditionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISystemConditionFactory] {
-    fn Create(&self, conditionType: SystemConditionType, out: *mut *mut SystemCondition) -> HRESULT
-}}
-impl ISystemConditionFactory {
-    #[inline] pub fn create(&self, conditionType: SystemConditionType) -> Result<ComPtr<SystemCondition>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, conditionType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum SystemConditionType: i32 {
-    Invalid (SystemConditionType_Invalid) = 0, UserPresent (SystemConditionType_UserPresent) = 1, UserNotPresent (SystemConditionType_UserNotPresent) = 2, InternetAvailable (SystemConditionType_InternetAvailable) = 3, InternetNotAvailable (SystemConditionType_InternetNotAvailable) = 4, SessionConnected (SystemConditionType_SessionConnected) = 5, SessionDisconnected (SystemConditionType_SessionDisconnected) = 6, FreeNetworkAvailable (SystemConditionType_FreeNetworkAvailable) = 7, BackgroundWorkCostNotHigh (SystemConditionType_BackgroundWorkCostNotHigh) = 8,
-}}
-DEFINE_IID!(IID_ISystemTrigger, 494978934, 14152, 17507, 141, 126, 39, 109, 193, 57, 172, 28);
-RT_INTERFACE!{interface ISystemTrigger(ISystemTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISystemTrigger] {
-    fn get_OneShot(&self, out: *mut bool) -> HRESULT,
-    fn get_TriggerType(&self, out: *mut SystemTriggerType) -> HRESULT
-}}
-impl ISystemTrigger {
-    #[inline] pub fn get_one_shot(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OneShot)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_trigger_type(&self) -> Result<SystemTriggerType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TriggerType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SystemTrigger: ISystemTrigger}
-impl RtActivatable<ISystemTriggerFactory> for SystemTrigger {}
-impl SystemTrigger {
-    #[inline] pub fn create(triggerType: SystemTriggerType, oneShot: bool) -> Result<ComPtr<SystemTrigger>> {
-        <Self as RtActivatable<ISystemTriggerFactory>>::get_activation_factory().create(triggerType, oneShot)
-    }
-}
-DEFINE_CLSID!(SystemTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,121,115,116,101,109,84,114,105,103,103,101,114,0]) [CLSID_SystemTrigger]);
-DEFINE_IID!(IID_ISystemTriggerFactory, 3892585428, 34705, 17785, 129, 38, 135, 236, 138, 170, 64, 122);
-RT_INTERFACE!{static interface ISystemTriggerFactory(ISystemTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISystemTriggerFactory] {
-    fn Create(&self, triggerType: SystemTriggerType, oneShot: bool, out: *mut *mut SystemTrigger) -> HRESULT
-}}
-impl ISystemTriggerFactory {
-    #[inline] pub fn create(&self, triggerType: SystemTriggerType, oneShot: bool) -> Result<ComPtr<SystemTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, triggerType, oneShot, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum SystemTriggerType: i32 {
-    Invalid (SystemTriggerType_Invalid) = 0, SmsReceived (SystemTriggerType_SmsReceived) = 1, UserPresent (SystemTriggerType_UserPresent) = 2, UserAway (SystemTriggerType_UserAway) = 3, NetworkStateChange (SystemTriggerType_NetworkStateChange) = 4, ControlChannelReset (SystemTriggerType_ControlChannelReset) = 5, InternetAvailable (SystemTriggerType_InternetAvailable) = 6, SessionConnected (SystemTriggerType_SessionConnected) = 7, ServicingComplete (SystemTriggerType_ServicingComplete) = 8, LockScreenApplicationAdded (SystemTriggerType_LockScreenApplicationAdded) = 9, LockScreenApplicationRemoved (SystemTriggerType_LockScreenApplicationRemoved) = 10, TimeZoneChange (SystemTriggerType_TimeZoneChange) = 11, OnlineIdConnectedStateChange (SystemTriggerType_OnlineIdConnectedStateChange) = 12, BackgroundWorkCostChange (SystemTriggerType_BackgroundWorkCostChange) = 13, PowerStateChange (SystemTriggerType_PowerStateChange) = 14, DefaultSignInAccountChange (SystemTriggerType_DefaultSignInAccountChange) = 15,
-}}
-DEFINE_IID!(IID_ITimeTrigger, 1701729622, 2858, 17271, 186, 112, 59, 69, 169, 53, 84, 127);
-RT_INTERFACE!{interface ITimeTrigger(ITimeTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ITimeTrigger] {
-    fn get_FreshnessTime(&self, out: *mut u32) -> HRESULT,
-    fn get_OneShot(&self, out: *mut bool) -> HRESULT
-}}
-impl ITimeTrigger {
-    #[inline] pub fn get_freshness_time(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_FreshnessTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_one_shot(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OneShot)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class TimeTrigger: ITimeTrigger}
-impl RtActivatable<ITimeTriggerFactory> for TimeTrigger {}
-impl TimeTrigger {
-    #[inline] pub fn create(freshnessTime: u32, oneShot: bool) -> Result<ComPtr<TimeTrigger>> {
-        <Self as RtActivatable<ITimeTriggerFactory>>::get_activation_factory().create(freshnessTime, oneShot)
-    }
-}
-DEFINE_CLSID!(TimeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,84,105,109,101,84,114,105,103,103,101,114,0]) [CLSID_TimeTrigger]);
-DEFINE_IID!(IID_ITimeTriggerFactory, 952533758, 39764, 17894, 178, 243, 38, 155, 135, 166, 247, 52);
-RT_INTERFACE!{static interface ITimeTriggerFactory(ITimeTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITimeTriggerFactory] {
-    fn Create(&self, freshnessTime: u32, oneShot: bool, out: *mut *mut TimeTrigger) -> HRESULT
-}}
-impl ITimeTriggerFactory {
-    #[inline] pub fn create(&self, freshnessTime: u32, oneShot: bool) -> Result<ComPtr<TimeTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, freshnessTime, oneShot, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ToastNotificationActionTrigger: IBackgroundTrigger}
-impl RtActivatable<IToastNotificationActionTriggerFactory> for ToastNotificationActionTrigger {}
-impl RtActivatable<IActivationFactory> for ToastNotificationActionTrigger {}
-impl ToastNotificationActionTrigger {
-    #[inline] pub fn create(applicationId: &HStringArg) -> Result<ComPtr<ToastNotificationActionTrigger>> {
-        <Self as RtActivatable<IToastNotificationActionTriggerFactory>>::get_activation_factory().create(applicationId)
-    }
-}
-DEFINE_CLSID!(ToastNotificationActionTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,84,111,97,115,116,78,111,116,105,102,105,99,97,116,105,111,110,65,99,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ToastNotificationActionTrigger]);
-DEFINE_IID!(IID_IToastNotificationActionTriggerFactory, 2963143719, 25728, 17225, 129, 37, 151, 179, 239, 170, 10, 58);
-RT_INTERFACE!{static interface IToastNotificationActionTriggerFactory(IToastNotificationActionTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IToastNotificationActionTriggerFactory] {
-    fn Create(&self, applicationId: HSTRING, out: *mut *mut ToastNotificationActionTrigger) -> HRESULT
-}}
-impl IToastNotificationActionTriggerFactory {
-    #[inline] pub fn create(&self, applicationId: &HStringArg) -> Result<ComPtr<ToastNotificationActionTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ToastNotificationHistoryChangedTrigger: IBackgroundTrigger}
-impl RtActivatable<IToastNotificationHistoryChangedTriggerFactory> for ToastNotificationHistoryChangedTrigger {}
-impl RtActivatable<IActivationFactory> for ToastNotificationHistoryChangedTrigger {}
-impl ToastNotificationHistoryChangedTrigger {
-    #[inline] pub fn create(applicationId: &HStringArg) -> Result<ComPtr<ToastNotificationHistoryChangedTrigger>> {
-        <Self as RtActivatable<IToastNotificationHistoryChangedTriggerFactory>>::get_activation_factory().create(applicationId)
-    }
-}
-DEFINE_CLSID!(ToastNotificationHistoryChangedTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,84,111,97,115,116,78,111,116,105,102,105,99,97,116,105,111,110,72,105,115,116,111,114,121,67,104,97,110,103,101,100,84,114,105,103,103,101,114,0]) [CLSID_ToastNotificationHistoryChangedTrigger]);
-DEFINE_IID!(IID_IToastNotificationHistoryChangedTriggerFactory, 2177301165, 34711, 18309, 129, 180, 176, 204, 203, 115, 209, 217);
-RT_INTERFACE!{static interface IToastNotificationHistoryChangedTriggerFactory(IToastNotificationHistoryChangedTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IToastNotificationHistoryChangedTriggerFactory] {
-    fn Create(&self, applicationId: HSTRING, out: *mut *mut ToastNotificationHistoryChangedTrigger) -> HRESULT
-}}
-impl IToastNotificationHistoryChangedTriggerFactory {
-    #[inline] pub fn create(&self, applicationId: &HStringArg) -> Result<ComPtr<ToastNotificationHistoryChangedTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class UserNotificationChangedTrigger: IBackgroundTrigger}
-impl RtActivatable<IUserNotificationChangedTriggerFactory> for UserNotificationChangedTrigger {}
-impl UserNotificationChangedTrigger {
-    #[cfg(feature="windows-ui")] #[inline] pub fn create(notificationKinds: super::super::ui::notifications::NotificationKinds) -> Result<ComPtr<UserNotificationChangedTrigger>> {
-        <Self as RtActivatable<IUserNotificationChangedTriggerFactory>>::get_activation_factory().create(notificationKinds)
-    }
-}
-DEFINE_CLSID!(UserNotificationChangedTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,85,115,101,114,78,111,116,105,102,105,99,97,116,105,111,110,67,104,97,110,103,101,100,84,114,105,103,103,101,114,0]) [CLSID_UserNotificationChangedTrigger]);
-DEFINE_IID!(IID_IUserNotificationChangedTriggerFactory, 3402908524, 27051, 19992, 164, 138, 94, 210, 172, 67, 89, 87);
-RT_INTERFACE!{static interface IUserNotificationChangedTriggerFactory(IUserNotificationChangedTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUserNotificationChangedTriggerFactory] {
-    #[cfg(feature="windows-ui")] fn Create(&self, notificationKinds: super::super::ui::notifications::NotificationKinds, out: *mut *mut UserNotificationChangedTrigger) -> HRESULT
-}}
-impl IUserNotificationChangedTriggerFactory {
-    #[cfg(feature="windows-ui")] #[inline] pub fn create(&self, notificationKinds: super::super::ui::notifications::NotificationKinds) -> Result<ComPtr<UserNotificationChangedTrigger>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, notificationKinds, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-} // Windows.ApplicationModel.Background
 pub mod core { // Windows.ApplicationModel.Core
 use ::prelude::*;
 DEFINE_IID!(IID_IAppListEntry, 4009816191, 8456, 18698, 135, 122, 138, 159, 23, 194, 95, 173);
@@ -4935,6 +5188,17 @@ impl IAppListEntry2 {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AppUserModelId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IAppListEntry3, 1620701837, 64562, 18186, 188, 105, 75, 6, 26, 118, 239, 46);
+RT_INTERFACE!{interface IAppListEntry3(IAppListEntry3Vtbl): IInspectable(IInspectableVtbl) [IID_IAppListEntry3] {
+    #[cfg(feature="windows-system")] fn LaunchForUserAsync(&self, user: *mut super::super::system::User, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+}}
+impl IAppListEntry3 {
+    #[cfg(feature="windows-system")] #[inline] pub fn launch_for_user_async(&self, user: &super::super::system::User) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).LaunchForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum AppRestartFailureReason: i32 {
@@ -8249,7 +8513,7 @@ impl IActivatedEventArgsWithUser {
     }}
 }
 RT_ENUM! { enum ActivationKind: i32 {
-    Launch (ActivationKind_Launch) = 0, Search (ActivationKind_Search) = 1, ShareTarget (ActivationKind_ShareTarget) = 2, File (ActivationKind_File) = 3, Protocol (ActivationKind_Protocol) = 4, FileOpenPicker (ActivationKind_FileOpenPicker) = 5, FileSavePicker (ActivationKind_FileSavePicker) = 6, CachedFileUpdater (ActivationKind_CachedFileUpdater) = 7, ContactPicker (ActivationKind_ContactPicker) = 8, Device (ActivationKind_Device) = 9, PrintTaskSettings (ActivationKind_PrintTaskSettings) = 10, CameraSettings (ActivationKind_CameraSettings) = 11, RestrictedLaunch (ActivationKind_RestrictedLaunch) = 12, AppointmentsProvider (ActivationKind_AppointmentsProvider) = 13, Contact (ActivationKind_Contact) = 14, LockScreenCall (ActivationKind_LockScreenCall) = 15, VoiceCommand (ActivationKind_VoiceCommand) = 16, LockScreen (ActivationKind_LockScreen) = 17, PickerReturned (ActivationKind_PickerReturned) = 1000, WalletAction (ActivationKind_WalletAction) = 1001, PickFileContinuation (ActivationKind_PickFileContinuation) = 1002, PickSaveFileContinuation (ActivationKind_PickSaveFileContinuation) = 1003, PickFolderContinuation (ActivationKind_PickFolderContinuation) = 1004, WebAuthenticationBrokerContinuation (ActivationKind_WebAuthenticationBrokerContinuation) = 1005, WebAccountProvider (ActivationKind_WebAccountProvider) = 1006, ComponentUI (ActivationKind_ComponentUI) = 1007, ProtocolForResults (ActivationKind_ProtocolForResults) = 1009, ToastNotification (ActivationKind_ToastNotification) = 1010, Print3DWorkflow (ActivationKind_Print3DWorkflow) = 1011, DialReceiver (ActivationKind_DialReceiver) = 1012, DevicePairing (ActivationKind_DevicePairing) = 1013, UserDataAccountsProvider (ActivationKind_UserDataAccountsProvider) = 1014, FilePickerExperience (ActivationKind_FilePickerExperience) = 1015, LockScreenComponent (ActivationKind_LockScreenComponent) = 1016, ContactPanel (ActivationKind_ContactPanel) = 1017, PrintWorkflowForegroundTask (ActivationKind_PrintWorkflowForegroundTask) = 1018, GameUIProvider (ActivationKind_GameUIProvider) = 1019, StartupTask (ActivationKind_StartupTask) = 1020, CommandLineLaunch (ActivationKind_CommandLineLaunch) = 1021,
+    Launch (ActivationKind_Launch) = 0, Search (ActivationKind_Search) = 1, ShareTarget (ActivationKind_ShareTarget) = 2, File (ActivationKind_File) = 3, Protocol (ActivationKind_Protocol) = 4, FileOpenPicker (ActivationKind_FileOpenPicker) = 5, FileSavePicker (ActivationKind_FileSavePicker) = 6, CachedFileUpdater (ActivationKind_CachedFileUpdater) = 7, ContactPicker (ActivationKind_ContactPicker) = 8, Device (ActivationKind_Device) = 9, PrintTaskSettings (ActivationKind_PrintTaskSettings) = 10, CameraSettings (ActivationKind_CameraSettings) = 11, RestrictedLaunch (ActivationKind_RestrictedLaunch) = 12, AppointmentsProvider (ActivationKind_AppointmentsProvider) = 13, Contact (ActivationKind_Contact) = 14, LockScreenCall (ActivationKind_LockScreenCall) = 15, VoiceCommand (ActivationKind_VoiceCommand) = 16, LockScreen (ActivationKind_LockScreen) = 17, PickerReturned (ActivationKind_PickerReturned) = 1000, WalletAction (ActivationKind_WalletAction) = 1001, PickFileContinuation (ActivationKind_PickFileContinuation) = 1002, PickSaveFileContinuation (ActivationKind_PickSaveFileContinuation) = 1003, PickFolderContinuation (ActivationKind_PickFolderContinuation) = 1004, WebAuthenticationBrokerContinuation (ActivationKind_WebAuthenticationBrokerContinuation) = 1005, WebAccountProvider (ActivationKind_WebAccountProvider) = 1006, ComponentUI (ActivationKind_ComponentUI) = 1007, ProtocolForResults (ActivationKind_ProtocolForResults) = 1009, ToastNotification (ActivationKind_ToastNotification) = 1010, Print3DWorkflow (ActivationKind_Print3DWorkflow) = 1011, DialReceiver (ActivationKind_DialReceiver) = 1012, DevicePairing (ActivationKind_DevicePairing) = 1013, UserDataAccountsProvider (ActivationKind_UserDataAccountsProvider) = 1014, FilePickerExperience (ActivationKind_FilePickerExperience) = 1015, LockScreenComponent (ActivationKind_LockScreenComponent) = 1016, ContactPanel (ActivationKind_ContactPanel) = 1017, PrintWorkflowForegroundTask (ActivationKind_PrintWorkflowForegroundTask) = 1018, GameUIProvider (ActivationKind_GameUIProvider) = 1019, StartupTask (ActivationKind_StartupTask) = 1020, CommandLineLaunch (ActivationKind_CommandLineLaunch) = 1021, BarcodeScannerProvider (ActivationKind_BarcodeScannerProvider) = 1022,
 }}
 RT_ENUM! { enum ApplicationExecutionState: i32 {
     NotRunning (ApplicationExecutionState_NotRunning) = 0, Running (ApplicationExecutionState_Running) = 1, Suspended (ApplicationExecutionState_Suspended) = 2, Terminated (ApplicationExecutionState_Terminated) = 3, ClosedByUser (ApplicationExecutionState_ClosedByUser) = 4,
@@ -8366,6 +8630,18 @@ impl IBackgroundActivatedEventArgs {
     }}
 }
 RT_CLASS!{class BackgroundActivatedEventArgs: IBackgroundActivatedEventArgs}
+DEFINE_IID!(IID_IBarcodeScannerPreviewActivatedEventArgs, 1735555452, 39359, 17225, 175, 34, 228, 18, 53, 96, 55, 28);
+RT_INTERFACE!{interface IBarcodeScannerPreviewActivatedEventArgs(IBarcodeScannerPreviewActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerPreviewActivatedEventArgs] {
+    fn get_ConnectionId(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IBarcodeScannerPreviewActivatedEventArgs {
+    #[inline] pub fn get_connection_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ConnectionId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BarcodeScannerPreviewActivatedEventArgs: IBarcodeScannerPreviewActivatedEventArgs}
 DEFINE_IID!(IID_ICachedFileUpdaterActivatedEventArgs, 3496915399, 14341, 20171, 183, 87, 108, 241, 94, 38, 254, 243);
 RT_INTERFACE!{interface ICachedFileUpdaterActivatedEventArgs(ICachedFileUpdaterActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterActivatedEventArgs] {
     #[cfg(feature="windows-storage")] fn get_CachedFileUpdaterUI(&self, out: *mut *mut super::super::storage::provider::CachedFileUpdaterUI) -> HRESULT
@@ -14780,6 +15056,22 @@ impl IDataPackagePropertySet3 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IDataPackagePropertySet4, 1670441973, 5945, 19572, 178, 47, 134, 95, 171, 94, 133, 69);
+RT_INTERFACE!{interface IDataPackagePropertySet4(IDataPackagePropertySet4Vtbl): IInspectable(IInspectableVtbl) [IID_IDataPackagePropertySet4] {
+    fn get_ContentSourceUserActivityJson(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_ContentSourceUserActivityJson(&self, value: HSTRING) -> HRESULT
+}}
+impl IDataPackagePropertySet4 {
+    #[inline] pub fn get_content_source_user_activity_json(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ContentSourceUserActivityJson)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_content_source_user_activity_json(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ContentSourceUserActivityJson)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IDataPackagePropertySetView, 3108826113, 3098, 19543, 190, 85, 117, 208, 18, 137, 115, 93);
 RT_INTERFACE!{interface IDataPackagePropertySetView(IDataPackagePropertySetViewVtbl): IInspectable(IInspectableVtbl) [IID_IDataPackagePropertySetView] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
@@ -14867,6 +15159,17 @@ impl IDataPackagePropertySetView3 {
     #[inline] pub fn get_enterprise_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EnterpriseId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IDataPackagePropertySetView4, 1148504077, 53615, 16558, 149, 128, 111, 133, 98, 185, 66, 53);
+RT_INTERFACE!{interface IDataPackagePropertySetView4(IDataPackagePropertySetView4Vtbl): IInspectable(IInspectableVtbl) [IID_IDataPackagePropertySetView4] {
+    fn get_ContentSourceUserActivityJson(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IDataPackagePropertySetView4 {
+    #[inline] pub fn get_content_source_user_activity_json(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ContentSourceUserActivityJson)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -15482,6 +15785,7 @@ RT_ENUM! { enum ShareUITheme: i32 {
 RT_CLASS!{static class StandardDataFormats}
 impl RtActivatable<IStandardDataFormatsStatics> for StandardDataFormats {}
 impl RtActivatable<IStandardDataFormatsStatics2> for StandardDataFormats {}
+impl RtActivatable<IStandardDataFormatsStatics3> for StandardDataFormats {}
 impl StandardDataFormats {
     #[inline] pub fn get_text() -> Result<HString> {
         <Self as RtActivatable<IStandardDataFormatsStatics>>::get_activation_factory().get_text()
@@ -15506,6 +15810,9 @@ impl StandardDataFormats {
     }
     #[inline] pub fn get_application_link() -> Result<HString> {
         <Self as RtActivatable<IStandardDataFormatsStatics2>>::get_activation_factory().get_application_link()
+    }
+    #[inline] pub fn get_user_activity_json_array() -> Result<HString> {
+        <Self as RtActivatable<IStandardDataFormatsStatics3>>::get_activation_factory().get_user_activity_json_array()
     }
 }
 DEFINE_CLSID!(StandardDataFormats(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,83,116,97,110,100,97,114,100,68,97,116,97,70,111,114,109,97,116,115,0]) [CLSID_StandardDataFormats]);
@@ -15564,6 +15871,17 @@ impl IStandardDataFormatsStatics2 {
     #[inline] pub fn get_application_link(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ApplicationLink)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IStandardDataFormatsStatics3, 995602537, 468, 18252, 139, 95, 188, 142, 39, 243, 139, 33);
+RT_INTERFACE!{static interface IStandardDataFormatsStatics3(IStandardDataFormatsStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IStandardDataFormatsStatics3] {
+    fn get_UserActivityJsonArray(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IStandardDataFormatsStatics3 {
+    #[inline] pub fn get_user_activity_json_array(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UserActivityJsonArray)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -20859,6 +21177,34 @@ impl IUserActivity {
     }}
 }
 RT_CLASS!{class UserActivity: IUserActivity}
+impl RtActivatable<IUserActivityFactory> for UserActivity {}
+impl RtActivatable<IUserActivityStatics> for UserActivity {}
+impl UserActivity {
+    #[inline] pub fn create_with_activity_id(activityId: &HStringArg) -> Result<ComPtr<UserActivity>> {
+        <Self as RtActivatable<IUserActivityFactory>>::get_activation_factory().create_with_activity_id(activityId)
+    }
+    #[inline] pub fn try_parse_from_json(json: &HStringArg) -> Result<Option<ComPtr<UserActivity>>> {
+        <Self as RtActivatable<IUserActivityStatics>>::get_activation_factory().try_parse_from_json(json)
+    }
+    #[inline] pub fn try_parse_from_json_array(json: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVector<UserActivity>>>> {
+        <Self as RtActivatable<IUserActivityStatics>>::get_activation_factory().try_parse_from_json_array(json)
+    }
+    #[inline] pub fn to_json_array(activities: &foundation::collections::IIterable<UserActivity>) -> Result<HString> {
+        <Self as RtActivatable<IUserActivityStatics>>::get_activation_factory().to_json_array(activities)
+    }
+}
+DEFINE_CLSID!(UserActivity(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,65,99,116,105,118,105,116,105,101,115,46,85,115,101,114,65,99,116,105,118,105,116,121,0]) [CLSID_UserActivity]);
+DEFINE_IID!(IID_IUserActivity2, 2646871138, 2244, 18348, 170, 156, 43, 178, 34, 28, 85, 253);
+RT_INTERFACE!{interface IUserActivity2(IUserActivity2Vtbl): IInspectable(IInspectableVtbl) [IID_IUserActivity2] {
+    fn ToJson(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IUserActivity2 {
+    #[inline] pub fn to_json(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ToJson)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IUserActivityAttribution, 883280053, 34525, 19180, 164, 145, 106, 79, 174, 165, 210, 46);
 RT_INTERFACE!{interface IUserActivityAttribution(IUserActivityAttributionVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityAttribution] {
     fn get_IconUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
@@ -20942,12 +21288,36 @@ impl IUserActivityChannel {
 }
 RT_CLASS!{class UserActivityChannel: IUserActivityChannel}
 impl RtActivatable<IUserActivityChannelStatics> for UserActivityChannel {}
+impl RtActivatable<IUserActivityChannelStatics2> for UserActivityChannel {}
 impl UserActivityChannel {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<UserActivityChannel>>> {
         <Self as RtActivatable<IUserActivityChannelStatics>>::get_activation_factory().get_default()
     }
+    #[inline] pub fn disable_auto_session_creation() -> Result<()> {
+        <Self as RtActivatable<IUserActivityChannelStatics2>>::get_activation_factory().disable_auto_session_creation()
+    }
+    #[cfg(feature="windows-security")] #[inline] pub fn try_get_for_web_account(account: &super::super::security::credentials::WebAccount) -> Result<Option<ComPtr<UserActivityChannel>>> {
+        <Self as RtActivatable<IUserActivityChannelStatics2>>::get_activation_factory().try_get_for_web_account(account)
+    }
 }
 DEFINE_CLSID!(UserActivityChannel(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,65,99,116,105,118,105,116,105,101,115,46,85,115,101,114,65,99,116,105,118,105,116,121,67,104,97,110,110,101,108,0]) [CLSID_UserActivityChannel]);
+DEFINE_IID!(IID_IUserActivityChannel2, 379118427, 60286, 20128, 191, 23, 164, 89, 232, 190, 112, 108);
+RT_INTERFACE!{interface IUserActivityChannel2(IUserActivityChannel2Vtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityChannel2] {
+    fn GetRecentUserActivitiesAsync(&self, maxUniqueActivities: i32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVector<UserActivitySessionHistoryItem>>) -> HRESULT,
+    fn GetSessionHistoryItemsForUserActivityAsync(&self, activityId: HSTRING, startTime: foundation::DateTime, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVector<UserActivitySessionHistoryItem>>) -> HRESULT
+}}
+impl IUserActivityChannel2 {
+    #[inline] pub fn get_recent_user_activities_async(&self, maxUniqueActivities: i32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<UserActivitySessionHistoryItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetRecentUserActivitiesAsync)(self as *const _ as *mut _, maxUniqueActivities, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_session_history_items_for_user_activity_async(&self, activityId: &HStringArg, startTime: foundation::DateTime) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<UserActivitySessionHistoryItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetSessionHistoryItemsForUserActivityAsync)(self as *const _ as *mut _, activityId.get(), startTime, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IUserActivityChannelStatics, 3368027563, 6541, 19840, 171, 178, 201, 119, 94, 196, 167, 41);
 RT_INTERFACE!{static interface IUserActivityChannelStatics(IUserActivityChannelStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityChannelStatics] {
     fn GetDefault(&self, out: *mut *mut UserActivityChannel) -> HRESULT
@@ -20956,6 +21326,22 @@ impl IUserActivityChannelStatics {
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<UserActivityChannel>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IUserActivityChannelStatics2, 2391268912, 43599, 17956, 154, 208, 212, 15, 59, 160, 49, 124);
+RT_INTERFACE!{static interface IUserActivityChannelStatics2(IUserActivityChannelStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityChannelStatics2] {
+    fn DisableAutoSessionCreation(&self) -> HRESULT,
+    #[cfg(feature="windows-security")] fn TryGetForWebAccount(&self, account: *mut super::super::security::credentials::WebAccount, out: *mut *mut UserActivityChannel) -> HRESULT
+}}
+impl IUserActivityChannelStatics2 {
+    #[inline] pub fn disable_auto_session_creation(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).DisableAutoSessionCreation)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-security")] #[inline] pub fn try_get_for_web_account(&self, account: &super::super::security::credentials::WebAccount) -> Result<Option<ComPtr<UserActivityChannel>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryGetForWebAccount)(self as *const _ as *mut _, account as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -20989,6 +21375,81 @@ impl IUserActivityContentInfoStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IUserActivityFactory, 2084067160, 13853, 19047, 138, 59, 52, 202, 41, 120, 249, 163);
+RT_INTERFACE!{static interface IUserActivityFactory(IUserActivityFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityFactory] {
+    fn CreateWithActivityId(&self, activityId: HSTRING, out: *mut *mut UserActivity) -> HRESULT
+}}
+impl IUserActivityFactory {
+    #[inline] pub fn create_with_activity_id(&self, activityId: &HStringArg) -> Result<ComPtr<UserActivity>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithActivityId)(self as *const _ as *mut _, activityId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IUserActivityRequest, 2700043093, 53045, 20464, 136, 51, 80, 203, 75, 114, 224, 109);
+RT_INTERFACE!{interface IUserActivityRequest(IUserActivityRequestVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityRequest] {
+    fn SetUserActivity(&self, activity: *mut UserActivity) -> HRESULT
+}}
+impl IUserActivityRequest {
+    #[inline] pub fn set_user_activity(&self, activity: &UserActivity) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetUserActivity)(self as *const _ as *mut _, activity as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class UserActivityRequest: IUserActivityRequest}
+DEFINE_IID!(IID_IUserActivityRequestedEventArgs, 2764864076, 33321, 19709, 163, 188, 198, 29, 49, 133, 117, 164);
+RT_INTERFACE!{interface IUserActivityRequestedEventArgs(IUserActivityRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityRequestedEventArgs] {
+    fn get_Request(&self, out: *mut *mut UserActivityRequest) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+}}
+impl IUserActivityRequestedEventArgs {
+    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<UserActivityRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class UserActivityRequestedEventArgs: IUserActivityRequestedEventArgs}
+DEFINE_IID!(IID_IUserActivityRequestManager, 204521038, 36925, 18646, 130, 212, 64, 67, 237, 87, 121, 27);
+RT_INTERFACE!{interface IUserActivityRequestManager(IUserActivityRequestManagerVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityRequestManager] {
+    fn add_UserActivityRequested(&self, handler: *mut foundation::TypedEventHandler<UserActivityRequestManager, UserActivityRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_UserActivityRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IUserActivityRequestManager {
+    #[inline] pub fn add_user_activity_requested(&self, handler: &foundation::TypedEventHandler<UserActivityRequestManager, UserActivityRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_UserActivityRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_user_activity_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_UserActivityRequested)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class UserActivityRequestManager: IUserActivityRequestManager}
+impl RtActivatable<IUserActivityRequestManagerStatics> for UserActivityRequestManager {}
+impl UserActivityRequestManager {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<UserActivityRequestManager>>> {
+        <Self as RtActivatable<IUserActivityRequestManagerStatics>>::get_activation_factory().get_for_current_view()
+    }
+}
+DEFINE_CLSID!(UserActivityRequestManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,65,99,116,105,118,105,116,105,101,115,46,85,115,101,114,65,99,116,105,118,105,116,121,82,101,113,117,101,115,116,77,97,110,97,103,101,114,0]) [CLSID_UserActivityRequestManager]);
+DEFINE_IID!(IID_IUserActivityRequestManagerStatics, 3224972785, 8778, 17196, 129, 229, 12, 118, 180, 196, 206, 250);
+RT_INTERFACE!{static interface IUserActivityRequestManagerStatics(IUserActivityRequestManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityRequestManagerStatics] {
+    fn GetForCurrentView(&self, out: *mut *mut UserActivityRequestManager) -> HRESULT
+}}
+impl IUserActivityRequestManagerStatics {
+    #[inline] pub fn get_for_current_view(&self) -> Result<Option<ComPtr<UserActivityRequestManager>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IUserActivitySession, 2923646328, 9466, 17571, 173, 72, 110, 218, 97, 170, 25, 36);
 RT_INTERFACE!{interface IUserActivitySession(IUserActivitySessionVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivitySession] {
     fn get_ActivityId(&self, out: *mut HSTRING) -> HRESULT
@@ -21001,9 +21462,56 @@ impl IUserActivitySession {
     }}
 }
 RT_CLASS!{class UserActivitySession: IUserActivitySession}
+DEFINE_IID!(IID_IUserActivitySessionHistoryItem, 3906313171, 15965, 18941, 152, 215, 109, 169, 117, 33, 226, 85);
+RT_INTERFACE!{interface IUserActivitySessionHistoryItem(IUserActivitySessionHistoryItemVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivitySessionHistoryItem] {
+    fn get_UserActivity(&self, out: *mut *mut UserActivity) -> HRESULT,
+    fn get_StartTime(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn get_EndTime(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT
+}}
+impl IUserActivitySessionHistoryItem {
+    #[inline] pub fn get_user_activity(&self) -> Result<Option<ComPtr<UserActivity>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UserActivity)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_start_time(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_StartTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_end_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_EndTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class UserActivitySessionHistoryItem: IUserActivitySessionHistoryItem}
 RT_ENUM! { enum UserActivityState: i32 {
     New (UserActivityState_New) = 0, Published (UserActivityState_Published) = 1,
 }}
+DEFINE_IID!(IID_IUserActivityStatics, 2358235955, 3593, 18422, 154, 199, 149, 207, 92, 57, 54, 123);
+RT_INTERFACE!{static interface IUserActivityStatics(IUserActivityStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityStatics] {
+    fn TryParseFromJson(&self, json: HSTRING, out: *mut *mut UserActivity) -> HRESULT,
+    fn TryParseFromJsonArray(&self, json: HSTRING, out: *mut *mut foundation::collections::IVector<UserActivity>) -> HRESULT,
+    fn ToJsonArray(&self, activities: *mut foundation::collections::IIterable<UserActivity>, out: *mut HSTRING) -> HRESULT
+}}
+impl IUserActivityStatics {
+    #[inline] pub fn try_parse_from_json(&self, json: &HStringArg) -> Result<Option<ComPtr<UserActivity>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryParseFromJson)(self as *const _ as *mut _, json.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn try_parse_from_json_array(&self, json: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVector<UserActivity>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryParseFromJsonArray)(self as *const _ as *mut _, json.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn to_json_array(&self, activities: &foundation::collections::IIterable<UserActivity>) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ToJsonArray)(self as *const _ as *mut _, activities as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IUserActivityVisualElements, 2490725651, 9775, 18927, 187, 191, 155, 117, 210, 232, 82, 80);
 RT_INTERFACE!{interface IUserActivityVisualElements(IUserActivityVisualElementsVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityVisualElements] {
     fn get_DisplayText(&self, out: *mut HSTRING) -> HRESULT,
@@ -21065,6 +21573,22 @@ impl IUserActivityVisualElements {
     }}
 }
 RT_CLASS!{class UserActivityVisualElements: IUserActivityVisualElements}
+DEFINE_IID!(IID_IUserActivityVisualElements2, 3400433607, 16111, 17241, 130, 92, 157, 81, 185, 34, 13, 227);
+RT_INTERFACE!{interface IUserActivityVisualElements2(IUserActivityVisualElements2Vtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityVisualElements2] {
+    fn get_AttributionDisplayText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_AttributionDisplayText(&self, value: HSTRING) -> HRESULT
+}}
+impl IUserActivityVisualElements2 {
+    #[inline] pub fn get_attribution_display_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AttributionDisplayText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_attribution_display_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AttributionDisplayText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
 pub mod core { // Windows.ApplicationModel.UserActivities.Core
 use ::prelude::*;
 RT_CLASS!{static class CoreUserActivityManager}
@@ -25483,7 +26007,7 @@ impl IStorePreviewSkuInfo {
 }
 RT_CLASS!{class StorePreviewSkuInfo: IStorePreviewSkuInfo}
 RT_ENUM! { enum StoreSystemFeature: i32 {
-    ArchitectureX86 (StoreSystemFeature_ArchitectureX86) = 0, ArchitectureX64 (StoreSystemFeature_ArchitectureX64) = 1, ArchitectureArm (StoreSystemFeature_ArchitectureArm) = 2, DirectX9 (StoreSystemFeature_DirectX9) = 3, DirectX10 (StoreSystemFeature_DirectX10) = 4, DirectX11 (StoreSystemFeature_DirectX11) = 5, D3D12HardwareFL11 (StoreSystemFeature_D3D12HardwareFL11) = 6, D3D12HardwareFL12 (StoreSystemFeature_D3D12HardwareFL12) = 7, Memory300MB (StoreSystemFeature_Memory300MB) = 8, Memory750MB (StoreSystemFeature_Memory750MB) = 9, Memory1GB (StoreSystemFeature_Memory1GB) = 10, Memory2GB (StoreSystemFeature_Memory2GB) = 11, CameraFront (StoreSystemFeature_CameraFront) = 12, CameraRear (StoreSystemFeature_CameraRear) = 13, Gyroscope (StoreSystemFeature_Gyroscope) = 14, Hover (StoreSystemFeature_Hover) = 15, Magnetometer (StoreSystemFeature_Magnetometer) = 16, Nfc (StoreSystemFeature_Nfc) = 17, Resolution720P (StoreSystemFeature_Resolution720P) = 18, ResolutionWvga (StoreSystemFeature_ResolutionWvga) = 19, ResolutionWvgaOr720P (StoreSystemFeature_ResolutionWvgaOr720P) = 20, ResolutionWxga (StoreSystemFeature_ResolutionWxga) = 21, ResolutionWvgaOrWxga (StoreSystemFeature_ResolutionWvgaOrWxga) = 22, ResolutionWxgaOr720P (StoreSystemFeature_ResolutionWxgaOr720P) = 23, Memory4GB (StoreSystemFeature_Memory4GB) = 24, Memory6GB (StoreSystemFeature_Memory6GB) = 25, Memory8GB (StoreSystemFeature_Memory8GB) = 26, Memory12GB (StoreSystemFeature_Memory12GB) = 27, Memory16GB (StoreSystemFeature_Memory16GB) = 28, Memory20GB (StoreSystemFeature_Memory20GB) = 29, VideoMemory2GB (StoreSystemFeature_VideoMemory2GB) = 30, VideoMemory4GB (StoreSystemFeature_VideoMemory4GB) = 31, VideoMemory6GB (StoreSystemFeature_VideoMemory6GB) = 32, VideoMemory1GB (StoreSystemFeature_VideoMemory1GB) = 33,
+    ArchitectureX86 (StoreSystemFeature_ArchitectureX86) = 0, ArchitectureX64 (StoreSystemFeature_ArchitectureX64) = 1, ArchitectureArm (StoreSystemFeature_ArchitectureArm) = 2, DirectX9 (StoreSystemFeature_DirectX9) = 3, DirectX10 (StoreSystemFeature_DirectX10) = 4, DirectX11 (StoreSystemFeature_DirectX11) = 5, D3D12HardwareFL11 (StoreSystemFeature_D3D12HardwareFL11) = 6, D3D12HardwareFL12 (StoreSystemFeature_D3D12HardwareFL12) = 7, Memory300MB (StoreSystemFeature_Memory300MB) = 8, Memory750MB (StoreSystemFeature_Memory750MB) = 9, Memory1GB (StoreSystemFeature_Memory1GB) = 10, Memory2GB (StoreSystemFeature_Memory2GB) = 11, CameraFront (StoreSystemFeature_CameraFront) = 12, CameraRear (StoreSystemFeature_CameraRear) = 13, Gyroscope (StoreSystemFeature_Gyroscope) = 14, Hover (StoreSystemFeature_Hover) = 15, Magnetometer (StoreSystemFeature_Magnetometer) = 16, Nfc (StoreSystemFeature_Nfc) = 17, Resolution720P (StoreSystemFeature_Resolution720P) = 18, ResolutionWvga (StoreSystemFeature_ResolutionWvga) = 19, ResolutionWvgaOr720P (StoreSystemFeature_ResolutionWvgaOr720P) = 20, ResolutionWxga (StoreSystemFeature_ResolutionWxga) = 21, ResolutionWvgaOrWxga (StoreSystemFeature_ResolutionWvgaOrWxga) = 22, ResolutionWxgaOr720P (StoreSystemFeature_ResolutionWxgaOr720P) = 23, Memory4GB (StoreSystemFeature_Memory4GB) = 24, Memory6GB (StoreSystemFeature_Memory6GB) = 25, Memory8GB (StoreSystemFeature_Memory8GB) = 26, Memory12GB (StoreSystemFeature_Memory12GB) = 27, Memory16GB (StoreSystemFeature_Memory16GB) = 28, Memory20GB (StoreSystemFeature_Memory20GB) = 29, VideoMemory2GB (StoreSystemFeature_VideoMemory2GB) = 30, VideoMemory4GB (StoreSystemFeature_VideoMemory4GB) = 31, VideoMemory6GB (StoreSystemFeature_VideoMemory6GB) = 32, VideoMemory1GB (StoreSystemFeature_VideoMemory1GB) = 33, ArchitectureArm64 (StoreSystemFeature_ArchitectureArm64) = 34,
 }}
 DEFINE_IID!(IID_IWebAuthenticationCoreManagerHelper, 111478053, 59157, 16675, 146, 118, 157, 111, 134, 91, 165, 95);
 RT_INTERFACE!{static interface IWebAuthenticationCoreManagerHelper(IWebAuthenticationCoreManagerHelperVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerHelper] {
@@ -25623,6 +26147,22 @@ impl IAppInstallItem3 {
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ItemOperationsMightAffectOtherItems)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IAppInstallItem4, 3268529682, 29183, 20424, 181, 64, 69, 61, 75, 55, 225, 209);
+RT_INTERFACE!{interface IAppInstallItem4(IAppInstallItem4Vtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallItem4] {
+    fn get_LaunchAfterInstall(&self, out: *mut bool) -> HRESULT,
+    fn put_LaunchAfterInstall(&self, value: bool) -> HRESULT
+}}
+impl IAppInstallItem4 {
+    #[inline] pub fn get_launch_after_install(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_LaunchAfterInstall)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_launch_after_install(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_LaunchAfterInstall)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IAppInstallManager, 2471747952, 33857, 19269, 189, 114, 124, 47, 169, 37, 190, 238);
@@ -25884,6 +26424,59 @@ impl IAppInstallManager5 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IAppInstallManager6, 3387413512, 62074, 17521, 178, 244, 231, 110, 252, 190, 188, 202);
+RT_INTERFACE!{interface IAppInstallManager6(IAppInstallManager6Vtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallManager6] {
+    fn SearchForAllUpdatesWithUpdateOptionsAsync(&self, correlationVector: HSTRING, clientId: HSTRING, updateOptions: *mut AppUpdateOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn SearchForAllUpdatesWithUpdateOptionsForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, correlationVector: HSTRING, clientId: HSTRING, updateOptions: *mut AppUpdateOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
+    fn SearchForUpdatesWithUpdateOptionsAsync(&self, productId: HSTRING, skuId: HSTRING, correlationVector: HSTRING, clientId: HSTRING, updateOptions: *mut AppUpdateOptions, out: *mut *mut foundation::IAsyncOperation<AppInstallItem>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn SearchForUpdatesWithUpdateOptionsForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, productId: HSTRING, skuId: HSTRING, correlationVector: HSTRING, clientId: HSTRING, updateOptions: *mut AppUpdateOptions, out: *mut *mut foundation::IAsyncOperation<AppInstallItem>) -> HRESULT,
+    fn StartProductInstallWithOptionsAsync(&self, productId: HSTRING, flightId: HSTRING, clientId: HSTRING, correlationVector: HSTRING, installOptions: *mut AppInstallOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn StartProductInstallWithOptionsForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, productId: HSTRING, flightId: HSTRING, clientId: HSTRING, correlationVector: HSTRING, installOptions: *mut AppInstallOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
+    fn GetIsPackageIdentityAllowedToInstallAsync(&self, correlationVector: HSTRING, packageIdentityName: HSTRING, publisherCertificateName: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn GetIsPackageIdentityAllowedToInstallForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, correlationVector: HSTRING, packageIdentityName: HSTRING, publisherCertificateName: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+}}
+impl IAppInstallManager6 {
+    #[inline] pub fn search_for_all_updates_with_update_options_async(&self, correlationVector: &HStringArg, clientId: &HStringArg, updateOptions: &AppUpdateOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SearchForAllUpdatesWithUpdateOptionsAsync)(self as *const _ as *mut _, correlationVector.get(), clientId.get(), updateOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn search_for_all_updates_with_update_options_for_user_async(&self, user: &::rt::gen::windows::system::User, correlationVector: &HStringArg, clientId: &HStringArg, updateOptions: &AppUpdateOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SearchForAllUpdatesWithUpdateOptionsForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, correlationVector.get(), clientId.get(), updateOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn search_for_updates_with_update_options_async(&self, productId: &HStringArg, skuId: &HStringArg, correlationVector: &HStringArg, clientId: &HStringArg, updateOptions: &AppUpdateOptions) -> Result<ComPtr<foundation::IAsyncOperation<AppInstallItem>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SearchForUpdatesWithUpdateOptionsAsync)(self as *const _ as *mut _, productId.get(), skuId.get(), correlationVector.get(), clientId.get(), updateOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn search_for_updates_with_update_options_for_user_async(&self, user: &::rt::gen::windows::system::User, productId: &HStringArg, skuId: &HStringArg, correlationVector: &HStringArg, clientId: &HStringArg, updateOptions: &AppUpdateOptions) -> Result<ComPtr<foundation::IAsyncOperation<AppInstallItem>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SearchForUpdatesWithUpdateOptionsForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, productId.get(), skuId.get(), correlationVector.get(), clientId.get(), updateOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn start_product_install_with_options_async(&self, productId: &HStringArg, flightId: &HStringArg, clientId: &HStringArg, correlationVector: &HStringArg, installOptions: &AppInstallOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).StartProductInstallWithOptionsAsync)(self as *const _ as *mut _, productId.get(), flightId.get(), clientId.get(), correlationVector.get(), installOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn start_product_install_with_options_for_user_async(&self, user: &::rt::gen::windows::system::User, productId: &HStringArg, flightId: &HStringArg, clientId: &HStringArg, correlationVector: &HStringArg, installOptions: &AppInstallOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).StartProductInstallWithOptionsForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, productId.get(), flightId.get(), clientId.get(), correlationVector.get(), installOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_package_identity_allowed_to_install_async(&self, correlationVector: &HStringArg, packageIdentityName: &HStringArg, publisherCertificateName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetIsPackageIdentityAllowedToInstallAsync)(self as *const _ as *mut _, correlationVector.get(), packageIdentityName.get(), publisherCertificateName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_is_package_identity_allowed_to_install_for_user_async(&self, user: &::rt::gen::windows::system::User, correlationVector: &HStringArg, packageIdentityName: &HStringArg, publisherCertificateName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetIsPackageIdentityAllowedToInstallForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, correlationVector.get(), packageIdentityName.get(), publisherCertificateName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IAppInstallManagerItemEventArgs, 3159381827, 18036, 19921, 149, 126, 194, 86, 130, 8, 106, 20);
 RT_INTERFACE!{interface IAppInstallManagerItemEventArgs(IAppInstallManagerItemEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallManagerItemEventArgs] {
     fn get_Item(&self, out: *mut *mut AppInstallItem) -> HRESULT
@@ -25896,6 +26489,82 @@ impl IAppInstallManagerItemEventArgs {
     }}
 }
 RT_CLASS!{class AppInstallManagerItemEventArgs: IAppInstallManagerItemEventArgs}
+DEFINE_IID!(IID_IAppInstallOptions, 3380642560, 7352, 20150, 140, 159, 106, 48, 198, 74, 91, 81);
+RT_INTERFACE!{interface IAppInstallOptions(IAppInstallOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallOptions] {
+    fn get_CatalogId(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_CatalogId(&self, value: HSTRING) -> HRESULT,
+    fn get_ForceUseOfNonRemovableStorage(&self, out: *mut bool) -> HRESULT,
+    fn put_ForceUseOfNonRemovableStorage(&self, value: bool) -> HRESULT,
+    fn get_AllowForcedAppRestart(&self, out: *mut bool) -> HRESULT,
+    fn put_AllowForcedAppRestart(&self, value: bool) -> HRESULT,
+    fn get_Repair(&self, out: *mut bool) -> HRESULT,
+    fn put_Repair(&self, value: bool) -> HRESULT,
+    #[cfg(not(feature="windows-management"))] fn __Dummy8(&self) -> (),
+    #[cfg(feature="windows-management")] fn get_TargetVolume(&self, out: *mut *mut ::rt::gen::windows::management::deployment::PackageVolume) -> HRESULT,
+    #[cfg(not(feature="windows-management"))] fn __Dummy9(&self) -> (),
+    #[cfg(feature="windows-management")] fn put_TargetVolume(&self, value: *mut ::rt::gen::windows::management::deployment::PackageVolume) -> HRESULT,
+    fn get_LaunchAfterInstall(&self, out: *mut bool) -> HRESULT,
+    fn put_LaunchAfterInstall(&self, value: bool) -> HRESULT
+}}
+impl IAppInstallOptions {
+    #[inline] pub fn get_catalog_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CatalogId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_catalog_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CatalogId)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_force_use_of_non_removable_storage(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ForceUseOfNonRemovableStorage)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_force_use_of_non_removable_storage(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ForceUseOfNonRemovableStorage)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_allow_forced_app_restart(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AllowForcedAppRestart)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_allow_forced_app_restart(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AllowForcedAppRestart)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_repair(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Repair)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_repair(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Repair)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-management")] #[inline] pub fn get_target_volume(&self) -> Result<Option<ComPtr<::rt::gen::windows::management::deployment::PackageVolume>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TargetVolume)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-management")] #[inline] pub fn set_target_volume(&self, value: &::rt::gen::windows::management::deployment::PackageVolume) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TargetVolume)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_launch_after_install(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_LaunchAfterInstall)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_launch_after_install(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_LaunchAfterInstall)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class AppInstallOptions: IAppInstallOptions}
+impl RtActivatable<IActivationFactory> for AppInstallOptions {}
+DEFINE_CLSID!(AppInstallOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,80,114,101,118,105,101,119,46,73,110,115,116,97,108,108,67,111,110,116,114,111,108,46,65,112,112,73,110,115,116,97,108,108,79,112,116,105,111,110,115,0]) [CLSID_AppInstallOptions]);
 RT_ENUM! { enum AppInstallState: i32 {
     Pending (AppInstallState_Pending) = 0, Starting (AppInstallState_Starting) = 1, AcquiringLicense (AppInstallState_AcquiringLicense) = 2, Downloading (AppInstallState_Downloading) = 3, RestoringData (AppInstallState_RestoringData) = 4, Installing (AppInstallState_Installing) = 5, Completed (AppInstallState_Completed) = 6, Canceled (AppInstallState_Canceled) = 7, Paused (AppInstallState_Paused) = 8, Error (AppInstallState_Error) = 9, PausedLowBattery (AppInstallState_PausedLowBattery) = 10, PausedWiFiRecommended (AppInstallState_PausedWiFiRecommended) = 11, PausedWiFiRequired (AppInstallState_PausedWiFiRequired) = 12, ReadyToDownload (AppInstallState_ReadyToDownload) = 13,
 }}
@@ -25953,9 +26622,50 @@ impl IAppInstallStatus2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IAppInstallStatus3, 3414690902, 33659, 19276, 158, 187, 109, 68, 160, 169, 99, 7);
+RT_INTERFACE!{interface IAppInstallStatus3(IAppInstallStatus3Vtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallStatus3] {
+    fn get_IsStaged(&self, out: *mut bool) -> HRESULT
+}}
+impl IAppInstallStatus3 {
+    #[inline] pub fn get_is_staged(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsStaged)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum AppInstallType: i32 {
     Install (AppInstallType_Install) = 0, Update (AppInstallType_Update) = 1, Repair (AppInstallType_Repair) = 2,
 }}
+DEFINE_IID!(IID_IAppUpdateOptions, 653307951, 49907, 19178, 175, 140, 99, 8, 221, 157, 184, 95);
+RT_INTERFACE!{interface IAppUpdateOptions(IAppUpdateOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IAppUpdateOptions] {
+    fn get_CatalogId(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_CatalogId(&self, value: HSTRING) -> HRESULT,
+    fn get_AllowForcedAppRestart(&self, out: *mut bool) -> HRESULT,
+    fn put_AllowForcedAppRestart(&self, value: bool) -> HRESULT
+}}
+impl IAppUpdateOptions {
+    #[inline] pub fn get_catalog_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CatalogId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_catalog_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CatalogId)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_allow_forced_app_restart(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AllowForcedAppRestart)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_allow_forced_app_restart(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AllowForcedAppRestart)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class AppUpdateOptions: IAppUpdateOptions}
+impl RtActivatable<IActivationFactory> for AppUpdateOptions {}
+DEFINE_CLSID!(AppUpdateOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,80,114,101,118,105,101,119,46,73,110,115,116,97,108,108,67,111,110,116,114,111,108,46,65,112,112,85,112,100,97,116,101,79,112,116,105,111,110,115,0]) [CLSID_AppUpdateOptions]);
 RT_ENUM! { enum AutoUpdateSetting: i32 {
     Disabled (AutoUpdateSetting_Disabled) = 0, Enabled (AutoUpdateSetting_Enabled) = 1, DisabledByPolicy (AutoUpdateSetting_DisabledByPolicy) = 2, EnabledByPolicy (AutoUpdateSetting_EnabledByPolicy) = 3,
 }}

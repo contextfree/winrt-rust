@@ -3260,6 +3260,932 @@ impl IHttpDiagnosticSourceLocation {
 RT_CLASS!{class HttpDiagnosticSourceLocation: IHttpDiagnosticSourceLocation}
 } // Windows.Web.Http.Diagnostics
 } // Windows.Web.Http
+pub mod ui { // Windows.Web.UI
+use ::prelude::*;
+DEFINE_IID!(IID_IWebViewControl, 1066537750, 48240, 19418, 145, 54, 201, 67, 112, 137, 159, 171);
+RT_INTERFACE!{interface IWebViewControl(IWebViewControlVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControl] {
+    fn get_Source(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_Source(&self, source: *mut foundation::Uri) -> HRESULT,
+    fn get_DocumentTitle(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_CanGoBack(&self, out: *mut bool) -> HRESULT,
+    fn get_CanGoForward(&self, out: *mut bool) -> HRESULT,
+    #[cfg(not(feature="windows-ui"))] fn __Dummy5(&self) -> (),
+    #[cfg(feature="windows-ui")] fn put_DefaultBackgroundColor(&self, value: super::super::ui::Color) -> HRESULT,
+    #[cfg(not(feature="windows-ui"))] fn __Dummy6(&self) -> (),
+    #[cfg(feature="windows-ui")] fn get_DefaultBackgroundColor(&self, out: *mut super::super::ui::Color) -> HRESULT,
+    fn get_ContainsFullScreenElement(&self, out: *mut bool) -> HRESULT,
+    fn get_Settings(&self, out: *mut *mut WebViewControlSettings) -> HRESULT,
+    fn get_DeferredPermissionRequests(&self, out: *mut *mut foundation::collections::IVectorView<WebViewControlDeferredPermissionRequest>) -> HRESULT,
+    fn GoForward(&self) -> HRESULT,
+    fn GoBack(&self) -> HRESULT,
+    fn Refresh(&self) -> HRESULT,
+    fn Stop(&self) -> HRESULT,
+    fn Navigate(&self, source: *mut foundation::Uri) -> HRESULT,
+    fn NavigateToString(&self, text: HSTRING) -> HRESULT,
+    fn NavigateToLocalStreamUri(&self, source: *mut foundation::Uri, streamResolver: *mut super::IUriToStreamResolver) -> HRESULT,
+    fn NavigateWithHttpRequestMessage(&self, requestMessage: *mut super::http::HttpRequestMessage) -> HRESULT,
+    fn InvokeScriptAsync(&self, scriptName: HSTRING, arguments: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<HString>) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy19(&self) -> (),
+    #[cfg(feature="windows-storage")] fn CapturePreviewToStreamAsync(&self, stream: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy20(&self) -> (),
+    #[cfg(feature="windows-applicationmodel")] fn CaptureSelectedContentToDataPackageAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::super::applicationmodel::datatransfer::DataPackage>) -> HRESULT,
+    fn BuildLocalStreamUri(&self, contentIdentifier: HSTRING, relativePath: HSTRING, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn GetDeferredPermissionRequestById(&self, id: u32, result: *mut *mut WebViewControlDeferredPermissionRequest) -> HRESULT,
+    fn add_NavigationStarting(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlNavigationStartingEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_NavigationStarting(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_ContentLoading(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlContentLoadingEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ContentLoading(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_DOMContentLoaded(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlDOMContentLoadedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_DOMContentLoaded(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_NavigationCompleted(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlNavigationCompletedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_NavigationCompleted(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_FrameNavigationStarting(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlNavigationStartingEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_FrameNavigationStarting(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_FrameContentLoading(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlContentLoadingEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_FrameContentLoading(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_FrameDOMContentLoaded(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlDOMContentLoadedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_FrameDOMContentLoaded(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_FrameNavigationCompleted(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlNavigationCompletedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_FrameNavigationCompleted(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_ScriptNotify(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlScriptNotifyEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ScriptNotify(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_LongRunningScriptDetected(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlLongRunningScriptDetectedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_LongRunningScriptDetected(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_UnsafeContentWarningDisplaying(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_UnsafeContentWarningDisplaying(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_UnviewableContentIdentified(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlUnviewableContentIdentifiedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_UnviewableContentIdentified(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_PermissionRequested(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlPermissionRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_PermissionRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_UnsupportedUriSchemeIdentified(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlUnsupportedUriSchemeIdentifiedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_UnsupportedUriSchemeIdentified(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_NewWindowRequested(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlNewWindowRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_NewWindowRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_ContainsFullScreenElementChanged(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ContainsFullScreenElementChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_WebResourceRequested(&self, handler: *mut foundation::TypedEventHandler<IWebViewControl, WebViewControlWebResourceRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_WebResourceRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IWebViewControl {
+    #[inline] pub fn get_source(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_source(&self, source: &foundation::Uri) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Source)(self as *const _ as *mut _, source as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_document_title(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DocumentTitle)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_can_go_back(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanGoBack)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_can_go_forward(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanGoForward)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_default_background_color(&self, value: super::super::ui::Color) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DefaultBackgroundColor)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_default_background_color(&self) -> Result<super::super::ui::Color> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DefaultBackgroundColor)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_contains_full_screen_element(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ContainsFullScreenElement)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_settings(&self) -> Result<Option<ComPtr<WebViewControlSettings>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Settings)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferred_permission_requests(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<WebViewControlDeferredPermissionRequest>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DeferredPermissionRequests)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn go_forward(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).GoForward)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn go_back(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).GoBack)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn refresh(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Refresh)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Stop)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn navigate(&self, source: &foundation::Uri) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Navigate)(self as *const _ as *mut _, source as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn navigate_to_string(&self, text: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).NavigateToString)(self as *const _ as *mut _, text.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn navigate_to_local_stream_uri(&self, source: &foundation::Uri, streamResolver: &super::IUriToStreamResolver) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).NavigateToLocalStreamUri)(self as *const _ as *mut _, source as *const _ as *mut _, streamResolver as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn navigate_with_http_request_message(&self, requestMessage: &super::http::HttpRequestMessage) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).NavigateWithHttpRequestMessage)(self as *const _ as *mut _, requestMessage as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn invoke_script_async(&self, scriptName: &HStringArg, arguments: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).InvokeScriptAsync)(self as *const _ as *mut _, scriptName.get(), arguments as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn capture_preview_to_stream_async(&self, stream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CapturePreviewToStreamAsync)(self as *const _ as *mut _, stream as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn capture_selected_content_to_data_package_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::super::applicationmodel::datatransfer::DataPackage>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CaptureSelectedContentToDataPackageAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn build_local_stream_uri(&self, contentIdentifier: &HStringArg, relativePath: &HStringArg) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).BuildLocalStreamUri)(self as *const _ as *mut _, contentIdentifier.get(), relativePath.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferred_permission_request_by_id(&self, id: u32) -> Result<Option<ComPtr<WebViewControlDeferredPermissionRequest>>> { unsafe { 
+        let mut result = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferredPermissionRequestById)(self as *const _ as *mut _, id, &mut result);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(result)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_navigation_starting(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlNavigationStartingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_NavigationStarting)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_navigation_starting(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_NavigationStarting)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_content_loading(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlContentLoadingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_ContentLoading)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_content_loading(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_ContentLoading)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_domcontent_loaded(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlDOMContentLoadedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_DOMContentLoaded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_domcontent_loaded(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_DOMContentLoaded)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_navigation_completed(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlNavigationCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_NavigationCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_navigation_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_NavigationCompleted)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_frame_navigation_starting(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlNavigationStartingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_FrameNavigationStarting)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_frame_navigation_starting(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_FrameNavigationStarting)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_frame_content_loading(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlContentLoadingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_FrameContentLoading)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_frame_content_loading(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_FrameContentLoading)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_frame_domcontent_loaded(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlDOMContentLoadedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_FrameDOMContentLoaded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_frame_domcontent_loaded(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_FrameDOMContentLoaded)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_frame_navigation_completed(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlNavigationCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_FrameNavigationCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_frame_navigation_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_FrameNavigationCompleted)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_script_notify(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlScriptNotifyEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_ScriptNotify)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_script_notify(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_ScriptNotify)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_long_running_script_detected(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlLongRunningScriptDetectedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_LongRunningScriptDetected)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_long_running_script_detected(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_LongRunningScriptDetected)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_unsafe_content_warning_displaying(&self, handler: &foundation::TypedEventHandler<IWebViewControl, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_UnsafeContentWarningDisplaying)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_unsafe_content_warning_displaying(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_UnsafeContentWarningDisplaying)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_unviewable_content_identified(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlUnviewableContentIdentifiedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_UnviewableContentIdentified)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_unviewable_content_identified(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_UnviewableContentIdentified)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_permission_requested(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlPermissionRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_PermissionRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_permission_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_PermissionRequested)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_unsupported_uri_scheme_identified(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlUnsupportedUriSchemeIdentifiedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_UnsupportedUriSchemeIdentified)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_unsupported_uri_scheme_identified(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_UnsupportedUriSchemeIdentified)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_new_window_requested(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlNewWindowRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_NewWindowRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_new_window_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_NewWindowRequested)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_contains_full_screen_element_changed(&self, handler: &foundation::TypedEventHandler<IWebViewControl, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_ContainsFullScreenElementChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_contains_full_screen_element_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_ContainsFullScreenElementChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_web_resource_requested(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlWebResourceRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_WebResourceRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_web_resource_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_WebResourceRequested)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebViewControlContentLoadingEventArgs, 2587872434, 47547, 16459, 162, 43, 102, 220, 205, 18, 80, 198);
+RT_INTERFACE!{interface IWebViewControlContentLoadingEventArgs(IWebViewControlContentLoadingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlContentLoadingEventArgs] {
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT
+}}
+impl IWebViewControlContentLoadingEventArgs {
+    #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlContentLoadingEventArgs: IWebViewControlContentLoadingEventArgs}
+DEFINE_IID!(IID_IWebViewControlDeferredPermissionRequest, 753093088, 55129, 17500, 153, 38, 137, 149, 41, 143, 21, 43);
+RT_INTERFACE!{interface IWebViewControlDeferredPermissionRequest(IWebViewControlDeferredPermissionRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlDeferredPermissionRequest] {
+    fn get_Id(&self, out: *mut u32) -> HRESULT,
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_PermissionType(&self, out: *mut WebViewControlPermissionType) -> HRESULT,
+    fn Allow(&self) -> HRESULT,
+    fn Deny(&self) -> HRESULT
+}}
+impl IWebViewControlDeferredPermissionRequest {
+    #[inline] pub fn get_id(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_permission_type(&self) -> Result<WebViewControlPermissionType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PermissionType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn allow(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Allow)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn deny(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Deny)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlDeferredPermissionRequest: IWebViewControlDeferredPermissionRequest}
+DEFINE_IID!(IID_IWebViewControlDOMContentLoadedEventArgs, 3196829704, 38209, 17733, 159, 242, 45, 245, 133, 178, 159, 125);
+RT_INTERFACE!{interface IWebViewControlDOMContentLoadedEventArgs(IWebViewControlDOMContentLoadedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlDOMContentLoadedEventArgs] {
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT
+}}
+impl IWebViewControlDOMContentLoadedEventArgs {
+    #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlDOMContentLoadedEventArgs: IWebViewControlDOMContentLoadedEventArgs}
+DEFINE_IID!(IID_IWebViewControlLongRunningScriptDetectedEventArgs, 711875514, 39092, 17852, 187, 235, 15, 105, 206, 73, 197, 153);
+RT_INTERFACE!{interface IWebViewControlLongRunningScriptDetectedEventArgs(IWebViewControlLongRunningScriptDetectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlLongRunningScriptDetectedEventArgs] {
+    fn get_ExecutionTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_StopPageScriptExecution(&self, out: *mut bool) -> HRESULT,
+    fn put_StopPageScriptExecution(&self, value: bool) -> HRESULT
+}}
+impl IWebViewControlLongRunningScriptDetectedEventArgs {
+    #[inline] pub fn get_execution_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ExecutionTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stop_page_script_execution(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_StopPageScriptExecution)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_stop_page_script_execution(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StopPageScriptExecution)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlLongRunningScriptDetectedEventArgs: IWebViewControlLongRunningScriptDetectedEventArgs}
+DEFINE_IID!(IID_IWebViewControlNavigationCompletedEventArgs, 541104408, 18965, 19526, 165, 93, 247, 158, 219, 11, 222, 139);
+RT_INTERFACE!{interface IWebViewControlNavigationCompletedEventArgs(IWebViewControlNavigationCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlNavigationCompletedEventArgs] {
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_IsSuccess(&self, out: *mut bool) -> HRESULT,
+    fn get_WebErrorStatus(&self, out: *mut super::WebErrorStatus) -> HRESULT
+}}
+impl IWebViewControlNavigationCompletedEventArgs {
+    #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_success(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsSuccess)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_web_error_status(&self) -> Result<super::WebErrorStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_WebErrorStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlNavigationCompletedEventArgs: IWebViewControlNavigationCompletedEventArgs}
+DEFINE_IID!(IID_IWebViewControlNavigationStartingEventArgs, 210786245, 2568, 16839, 134, 59, 113, 227, 169, 84, 145, 55);
+RT_INTERFACE!{interface IWebViewControlNavigationStartingEventArgs(IWebViewControlNavigationStartingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlNavigationStartingEventArgs] {
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_Cancel(&self, out: *mut bool) -> HRESULT,
+    fn put_Cancel(&self, value: bool) -> HRESULT
+}}
+impl IWebViewControlNavigationStartingEventArgs {
+    #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_cancel(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Cancel)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_cancel(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Cancel)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlNavigationStartingEventArgs: IWebViewControlNavigationStartingEventArgs}
+DEFINE_IID!(IID_IWebViewControlNewWindowRequestedEventArgs, 1039420347, 41252, 18133, 160, 131, 208, 44, 172, 223, 245, 173);
+RT_INTERFACE!{interface IWebViewControlNewWindowRequestedEventArgs(IWebViewControlNewWindowRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlNewWindowRequestedEventArgs] {
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_Referrer(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_Handled(&self, out: *mut bool) -> HRESULT,
+    fn put_Handled(&self, value: bool) -> HRESULT
+}}
+impl IWebViewControlNewWindowRequestedEventArgs {
+    #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_referrer(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Referrer)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_handled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Handled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_handled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Handled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlNewWindowRequestedEventArgs: IWebViewControlNewWindowRequestedEventArgs}
+DEFINE_IID!(IID_IWebViewControlPermissionRequest, 3854336876, 61999, 16610, 149, 178, 119, 41, 248, 64, 235, 127);
+RT_INTERFACE!{interface IWebViewControlPermissionRequest(IWebViewControlPermissionRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlPermissionRequest] {
+    fn get_Id(&self, out: *mut u32) -> HRESULT,
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_PermissionType(&self, out: *mut WebViewControlPermissionType) -> HRESULT,
+    fn get_State(&self, out: *mut WebViewControlPermissionState) -> HRESULT,
+    fn Defer(&self) -> HRESULT,
+    fn Allow(&self) -> HRESULT,
+    fn Deny(&self) -> HRESULT
+}}
+impl IWebViewControlPermissionRequest {
+    #[inline] pub fn get_id(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_permission_type(&self) -> Result<WebViewControlPermissionType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PermissionType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_state(&self) -> Result<WebViewControlPermissionState> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn defer(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Defer)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn allow(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Allow)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn deny(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Deny)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlPermissionRequest: IWebViewControlPermissionRequest}
+DEFINE_IID!(IID_IWebViewControlPermissionRequestedEventArgs, 656428369, 9352, 19653, 150, 142, 10, 119, 30, 89, 193, 71);
+RT_INTERFACE!{interface IWebViewControlPermissionRequestedEventArgs(IWebViewControlPermissionRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlPermissionRequestedEventArgs] {
+    fn get_PermissionRequest(&self, out: *mut *mut WebViewControlPermissionRequest) -> HRESULT
+}}
+impl IWebViewControlPermissionRequestedEventArgs {
+    #[inline] pub fn get_permission_request(&self) -> Result<Option<ComPtr<WebViewControlPermissionRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PermissionRequest)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlPermissionRequestedEventArgs: IWebViewControlPermissionRequestedEventArgs}
+RT_ENUM! { enum WebViewControlPermissionState: i32 {
+    Unknown (WebViewControlPermissionState_Unknown) = 0, Defer (WebViewControlPermissionState_Defer) = 1, Allow (WebViewControlPermissionState_Allow) = 2, Deny (WebViewControlPermissionState_Deny) = 3,
+}}
+RT_ENUM! { enum WebViewControlPermissionType: i32 {
+    Geolocation (WebViewControlPermissionType_Geolocation) = 0, UnlimitedIndexedDBQuota (WebViewControlPermissionType_UnlimitedIndexedDBQuota) = 1, Media (WebViewControlPermissionType_Media) = 2, PointerLock (WebViewControlPermissionType_PointerLock) = 3, WebNotifications (WebViewControlPermissionType_WebNotifications) = 4, Screen (WebViewControlPermissionType_Screen) = 5,
+}}
+DEFINE_IID!(IID_IWebViewControlScriptNotifyEventArgs, 1226696059, 28489, 16827, 181, 145, 81, 184, 91, 129, 112, 55);
+RT_INTERFACE!{interface IWebViewControlScriptNotifyEventArgs(IWebViewControlScriptNotifyEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlScriptNotifyEventArgs] {
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_Value(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IWebViewControlScriptNotifyEventArgs {
+    #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlScriptNotifyEventArgs: IWebViewControlScriptNotifyEventArgs}
+DEFINE_IID!(IID_IWebViewControlSettings, 3382083519, 24216, 19709, 140, 206, 39, 176, 145, 30, 61, 232);
+RT_INTERFACE!{interface IWebViewControlSettings(IWebViewControlSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlSettings] {
+    fn put_IsJavaScriptEnabled(&self, value: bool) -> HRESULT,
+    fn get_IsJavaScriptEnabled(&self, out: *mut bool) -> HRESULT,
+    fn put_IsIndexedDBEnabled(&self, value: bool) -> HRESULT,
+    fn get_IsIndexedDBEnabled(&self, out: *mut bool) -> HRESULT,
+    fn put_IsScriptNotifyAllowed(&self, value: bool) -> HRESULT,
+    fn get_IsScriptNotifyAllowed(&self, out: *mut bool) -> HRESULT
+}}
+impl IWebViewControlSettings {
+    #[inline] pub fn set_is_java_script_enabled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsJavaScriptEnabled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_java_script_enabled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsJavaScriptEnabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_indexed_dbenabled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsIndexedDBEnabled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_indexed_dbenabled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsIndexedDBEnabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_script_notify_allowed(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsScriptNotifyAllowed)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_script_notify_allowed(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsScriptNotifyAllowed)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlSettings: IWebViewControlSettings}
+DEFINE_IID!(IID_IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs, 3820493124, 58620, 17372, 148, 202, 249, 128, 243, 11, 197, 29);
+RT_INTERFACE!{interface IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs(IWebViewControlUnsupportedUriSchemeIdentifiedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs] {
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_Handled(&self, out: *mut bool) -> HRESULT,
+    fn put_Handled(&self, value: bool) -> HRESULT
+}}
+impl IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs {
+    #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_handled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Handled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_handled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Handled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlUnsupportedUriSchemeIdentifiedEventArgs: IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs}
+DEFINE_IID!(IID_IWebViewControlUnviewableContentIdentifiedEventArgs, 1251377371, 35058, 20000, 182, 147, 180, 226, 223, 74, 165, 129);
+RT_INTERFACE!{interface IWebViewControlUnviewableContentIdentifiedEventArgs(IWebViewControlUnviewableContentIdentifiedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlUnviewableContentIdentifiedEventArgs] {
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_Referrer(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_MediaType(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IWebViewControlUnviewableContentIdentifiedEventArgs {
+    #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_referrer(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Referrer)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_media_type(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_MediaType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlUnviewableContentIdentifiedEventArgs: IWebViewControlUnviewableContentIdentifiedEventArgs}
+DEFINE_IID!(IID_IWebViewControlWebResourceRequestedEventArgs, 1154896461, 21924, 19851, 137, 28, 147, 29, 142, 37, 212, 46);
+RT_INTERFACE!{interface IWebViewControlWebResourceRequestedEventArgs(IWebViewControlWebResourceRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlWebResourceRequestedEventArgs] {
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT,
+    fn get_Request(&self, out: *mut *mut super::http::HttpRequestMessage) -> HRESULT,
+    fn put_Response(&self, value: *mut super::http::HttpResponseMessage) -> HRESULT,
+    fn get_Response(&self, out: *mut *mut super::http::HttpResponseMessage) -> HRESULT
+}}
+impl IWebViewControlWebResourceRequestedEventArgs {
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<super::http::HttpRequestMessage>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_response(&self, value: &super::http::HttpResponseMessage) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Response)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_response(&self) -> Result<Option<ComPtr<super::http::HttpResponseMessage>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Response)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlWebResourceRequestedEventArgs: IWebViewControlWebResourceRequestedEventArgs}
+pub mod interop { // Windows.Web.UI.Interop
+use ::prelude::*;
+RT_CLASS!{class WebViewControl: super::IWebViewControl}
+DEFINE_IID!(IID_IWebViewControlAcceleratorKeyPressedEventArgs, 2007147838, 31860, 17277, 162, 144, 58, 192, 216, 205, 86, 85);
+RT_INTERFACE!{interface IWebViewControlAcceleratorKeyPressedEventArgs(IWebViewControlAcceleratorKeyPressedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlAcceleratorKeyPressedEventArgs] {
+    #[cfg(not(feature="windows-ui"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-ui")] fn get_EventType(&self, out: *mut ::rt::gen::windows::ui::core::CoreAcceleratorKeyEventType) -> HRESULT,
+    #[cfg(not(feature="windows-system"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-system")] fn get_VirtualKey(&self, out: *mut ::rt::gen::windows::system::VirtualKey) -> HRESULT,
+    #[cfg(not(feature="windows-ui"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-ui")] fn get_KeyStatus(&self, out: *mut ::rt::gen::windows::ui::core::CorePhysicalKeyStatus) -> HRESULT,
+    fn get_RoutingStage(&self, out: *mut WebViewControlAcceleratorKeyRoutingStage) -> HRESULT,
+    fn get_Handled(&self, out: *mut bool) -> HRESULT,
+    fn put_Handled(&self, value: bool) -> HRESULT
+}}
+impl IWebViewControlAcceleratorKeyPressedEventArgs {
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_event_type(&self) -> Result<::rt::gen::windows::ui::core::CoreAcceleratorKeyEventType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_EventType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_virtual_key(&self) -> Result<::rt::gen::windows::system::VirtualKey> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_VirtualKey)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_key_status(&self) -> Result<::rt::gen::windows::ui::core::CorePhysicalKeyStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_KeyStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_routing_stage(&self) -> Result<WebViewControlAcceleratorKeyRoutingStage> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_RoutingStage)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_handled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Handled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_handled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Handled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlAcceleratorKeyPressedEventArgs: IWebViewControlAcceleratorKeyPressedEventArgs}
+RT_ENUM! { enum WebViewControlAcceleratorKeyRoutingStage: i32 {
+    Tunneling (WebViewControlAcceleratorKeyRoutingStage_Tunneling) = 0, Bubbling (WebViewControlAcceleratorKeyRoutingStage_Bubbling) = 1,
+}}
+RT_ENUM! { enum WebViewControlMoveFocusReason: i32 {
+    Programmatic (WebViewControlMoveFocusReason_Programmatic) = 0, Next (WebViewControlMoveFocusReason_Next) = 1, Previous (WebViewControlMoveFocusReason_Previous) = 2,
+}}
+DEFINE_IID!(IID_IWebViewControlMoveFocusRequestedEventArgs, 1797927949, 19408, 16478, 183, 193, 30, 114, 164, 146, 244, 70);
+RT_INTERFACE!{interface IWebViewControlMoveFocusRequestedEventArgs(IWebViewControlMoveFocusRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlMoveFocusRequestedEventArgs] {
+    fn get_Reason(&self, out: *mut WebViewControlMoveFocusReason) -> HRESULT
+}}
+impl IWebViewControlMoveFocusRequestedEventArgs {
+    #[inline] pub fn get_reason(&self) -> Result<WebViewControlMoveFocusReason> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Reason)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlMoveFocusRequestedEventArgs: IWebViewControlMoveFocusRequestedEventArgs}
+DEFINE_IID!(IID_IWebViewControlProcess, 46605292, 39126, 16970, 182, 62, 198, 19, 108, 54, 160, 242);
+RT_INTERFACE!{interface IWebViewControlProcess(IWebViewControlProcessVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlProcess] {
+    fn get_ProcessId(&self, out: *mut u32) -> HRESULT,
+    fn get_EnterpriseId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_IsPrivateNetworkClientServerCapabilityEnabled(&self, out: *mut bool) -> HRESULT,
+    fn CreateWebViewControlAsync(&self, hostWindowHandle: i64, bounds: foundation::Rect, out: *mut *mut foundation::IAsyncOperation<WebViewControl>) -> HRESULT,
+    fn GetWebViewControls(&self, out: *mut *mut foundation::collections::IVectorView<WebViewControl>) -> HRESULT,
+    fn Terminate(&self) -> HRESULT,
+    fn add_ProcessExited(&self, handler: *mut foundation::TypedEventHandler<WebViewControlProcess, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ProcessExited(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IWebViewControlProcess {
+    #[inline] pub fn get_process_id(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ProcessId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_enterprise_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_EnterpriseId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_private_network_client_server_capability_enabled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsPrivateNetworkClientServerCapabilityEnabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn create_web_view_control_async(&self, hostWindowHandle: i64, bounds: foundation::Rect) -> Result<ComPtr<foundation::IAsyncOperation<WebViewControl>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWebViewControlAsync)(self as *const _ as *mut _, hostWindowHandle, bounds, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_web_view_controls(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<WebViewControl>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetWebViewControls)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn terminate(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Terminate)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_process_exited(&self, handler: &foundation::TypedEventHandler<WebViewControlProcess, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_ProcessExited)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_process_exited(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_ProcessExited)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlProcess: IWebViewControlProcess}
+impl RtActivatable<IWebViewControlProcessFactory> for WebViewControlProcess {}
+impl RtActivatable<IActivationFactory> for WebViewControlProcess {}
+impl WebViewControlProcess {
+    #[inline] pub fn create_with_options(processOptions: &WebViewControlProcessOptions) -> Result<ComPtr<WebViewControlProcess>> {
+        <Self as RtActivatable<IWebViewControlProcessFactory>>::get_activation_factory().create_with_options(processOptions)
+    }
+}
+DEFINE_CLSID!(WebViewControlProcess(&[87,105,110,100,111,119,115,46,87,101,98,46,85,73,46,73,110,116,101,114,111,112,46,87,101,98,86,105,101,119,67,111,110,116,114,111,108,80,114,111,99,101,115,115,0]) [CLSID_WebViewControlProcess]);
+RT_ENUM! { enum WebViewControlProcessCapabilityState: i32 {
+    Default (WebViewControlProcessCapabilityState_Default) = 0, Disabled (WebViewControlProcessCapabilityState_Disabled) = 1, Enabled (WebViewControlProcessCapabilityState_Enabled) = 2,
+}}
+DEFINE_IID!(IID_IWebViewControlProcessFactory, 1203133689, 41682, 17724, 176, 151, 246, 119, 157, 75, 142, 2);
+RT_INTERFACE!{static interface IWebViewControlProcessFactory(IWebViewControlProcessFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlProcessFactory] {
+    fn CreateWithOptions(&self, processOptions: *mut WebViewControlProcessOptions, out: *mut *mut WebViewControlProcess) -> HRESULT
+}}
+impl IWebViewControlProcessFactory {
+    #[inline] pub fn create_with_options(&self, processOptions: &WebViewControlProcessOptions) -> Result<ComPtr<WebViewControlProcess>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithOptions)(self as *const _ as *mut _, processOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebViewControlProcessOptions, 483029671, 15318, 18470, 130, 97, 108, 129, 137, 80, 93, 137);
+RT_INTERFACE!{interface IWebViewControlProcessOptions(IWebViewControlProcessOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlProcessOptions] {
+    fn put_EnterpriseId(&self, value: HSTRING) -> HRESULT,
+    fn get_EnterpriseId(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_PrivateNetworkClientServerCapability(&self, value: WebViewControlProcessCapabilityState) -> HRESULT,
+    fn get_PrivateNetworkClientServerCapability(&self, out: *mut WebViewControlProcessCapabilityState) -> HRESULT
+}}
+impl IWebViewControlProcessOptions {
+    #[inline] pub fn set_enterprise_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_EnterpriseId)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_enterprise_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_EnterpriseId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_private_network_client_server_capability(&self, value: WebViewControlProcessCapabilityState) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PrivateNetworkClientServerCapability)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_private_network_client_server_capability(&self) -> Result<WebViewControlProcessCapabilityState> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PrivateNetworkClientServerCapability)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebViewControlProcessOptions: IWebViewControlProcessOptions}
+impl RtActivatable<IActivationFactory> for WebViewControlProcessOptions {}
+DEFINE_CLSID!(WebViewControlProcessOptions(&[87,105,110,100,111,119,115,46,87,101,98,46,85,73,46,73,110,116,101,114,111,112,46,87,101,98,86,105,101,119,67,111,110,116,114,111,108,80,114,111,99,101,115,115,79,112,116,105,111,110,115,0]) [CLSID_WebViewControlProcessOptions]);
+DEFINE_IID!(IID_IWebViewControlSite, 322914246, 4828, 18584, 189, 71, 4, 150, 125, 230, 72, 186);
+RT_INTERFACE!{interface IWebViewControlSite(IWebViewControlSiteVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlSite] {
+    fn get_Process(&self, out: *mut *mut WebViewControlProcess) -> HRESULT,
+    fn put_Scale(&self, value: f64) -> HRESULT,
+    fn get_Scale(&self, out: *mut f64) -> HRESULT,
+    fn put_Bounds(&self, value: foundation::Rect) -> HRESULT,
+    fn get_Bounds(&self, out: *mut foundation::Rect) -> HRESULT,
+    fn put_IsVisible(&self, value: bool) -> HRESULT,
+    fn get_IsVisible(&self, out: *mut bool) -> HRESULT,
+    fn Close(&self) -> HRESULT,
+    fn MoveFocus(&self, reason: WebViewControlMoveFocusReason) -> HRESULT,
+    fn add_MoveFocusRequested(&self, handler: *mut foundation::TypedEventHandler<WebViewControl, WebViewControlMoveFocusRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_MoveFocusRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_AcceleratorKeyPressed(&self, handler: *mut foundation::TypedEventHandler<WebViewControl, WebViewControlAcceleratorKeyPressedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_AcceleratorKeyPressed(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IWebViewControlSite {
+    #[inline] pub fn get_process(&self) -> Result<Option<ComPtr<WebViewControlProcess>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Process)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_scale(&self, value: f64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Scale)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_scale(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Scale)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_bounds(&self, value: foundation::Rect) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Bounds)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_bounds(&self) -> Result<foundation::Rect> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Bounds)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_visible(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsVisible)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_visible(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsVisible)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn close(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Close)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn move_focus(&self, reason: WebViewControlMoveFocusReason) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).MoveFocus)(self as *const _ as *mut _, reason);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_move_focus_requested(&self, handler: &foundation::TypedEventHandler<WebViewControl, WebViewControlMoveFocusRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_MoveFocusRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_move_focus_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_MoveFocusRequested)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_accelerator_key_pressed(&self, handler: &foundation::TypedEventHandler<WebViewControl, WebViewControlAcceleratorKeyPressedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_AcceleratorKeyPressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_accelerator_key_pressed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_AcceleratorKeyPressed)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+} // Windows.Web.UI.Interop
+} // Windows.Web.UI
 pub mod syndication { // Windows.Web.Syndication
 use ::prelude::*;
 RT_STRUCT! { struct RetrievalProgress {
