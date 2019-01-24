@@ -1,3 +1,4 @@
+use std::marker::PhantomData;
 use std::ptr;
 
 use super::{ComInterface, HString, HStringReference, HStringArg, ComPtr, ComArray, ComIid, Guid};
@@ -781,7 +782,7 @@ impl IMemoryBufferByteAccess {
 
 /// Manages initialization and uninitialization of the Windows Runtime.
 pub struct RuntimeContext {
-    token: () // only allow construction from inside this module
+    token: PhantomData<*mut ()> // only allow construction from inside this module, and make it !Send/!Sync.
 }
 
 impl RuntimeContext {
@@ -793,12 +794,9 @@ impl RuntimeContext {
     pub fn init() -> RuntimeContext {
         let hr = unsafe { RoInitialize(RO_INIT_MULTITHREADED) };
         assert!(hr == S_OK || hr == S_FALSE, "failed to call RoInitialize: error {}", hr);
-        /*let mut f: ::w::UINT32 = 0;
-        assert!(RoGetErrorReportingFlags(&mut f) == S_OK);
-        println!("ErrorReportingFlags: {:?}", f);*/
-        RuntimeContext { token: () }
+        RuntimeContext { token: PhantomData }
     }
-    
+
     /// Unitializes the Windows Runtime. This must not be called as long as any Windows Runtime
     /// object is still alive.
     #[inline]
