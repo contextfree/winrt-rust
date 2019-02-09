@@ -17,11 +17,26 @@ impl IPerceptionTimestamp {
     }}
 }
 RT_CLASS!{class PerceptionTimestamp: IPerceptionTimestamp}
+DEFINE_IID!(IID_IPerceptionTimestamp2, 3813980141, 11217, 16823, 158, 208, 116, 161, 92, 53, 69, 55);
+RT_INTERFACE!{interface IPerceptionTimestamp2(IPerceptionTimestamp2Vtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionTimestamp2] {
+    fn get_SystemRelativeTargetTime(&self, out: *mut foundation::TimeSpan) -> HRESULT
+}}
+impl IPerceptionTimestamp2 {
+    #[inline] pub fn get_system_relative_target_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_SystemRelativeTargetTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
 RT_CLASS!{static class PerceptionTimestampHelper}
 impl RtActivatable<IPerceptionTimestampHelperStatics> for PerceptionTimestampHelper {}
+impl RtActivatable<IPerceptionTimestampHelperStatics2> for PerceptionTimestampHelper {}
 impl PerceptionTimestampHelper {
     #[inline] pub fn from_historical_target_time(targetTime: foundation::DateTime) -> Result<Option<ComPtr<PerceptionTimestamp>>> {
         <Self as RtActivatable<IPerceptionTimestampHelperStatics>>::get_activation_factory().from_historical_target_time(targetTime)
+    }
+    #[inline] pub fn from_system_relative_target_time(targetTime: foundation::TimeSpan) -> Result<Option<ComPtr<PerceptionTimestamp>>> {
+        <Self as RtActivatable<IPerceptionTimestampHelperStatics2>>::get_activation_factory().from_system_relative_target_time(targetTime)
     }
 }
 DEFINE_CLSID!(PerceptionTimestampHelper(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,80,101,114,99,101,112,116,105,111,110,84,105,109,101,115,116,97,109,112,72,101,108,112,101,114,0]) [CLSID_PerceptionTimestampHelper]);
@@ -36,6 +51,67 @@ impl IPerceptionTimestampHelperStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_IPerceptionTimestampHelperStatics2, 1943119870, 16313, 17777, 135, 212, 60, 146, 10, 94, 134, 235);
+RT_INTERFACE!{static interface IPerceptionTimestampHelperStatics2(IPerceptionTimestampHelperStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionTimestampHelperStatics2] {
+    fn FromSystemRelativeTargetTime(&self, targetTime: foundation::TimeSpan, out: *mut *mut PerceptionTimestamp) -> HRESULT
+}}
+impl IPerceptionTimestampHelperStatics2 {
+    #[inline] pub fn from_system_relative_target_time(&self, targetTime: foundation::TimeSpan) -> Result<Option<ComPtr<PerceptionTimestamp>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FromSystemRelativeTargetTime)(self as *const _ as *mut _, targetTime, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+pub mod automation { // Windows.Perception.Automation
+pub mod core { // Windows.Perception.Automation.Core
+use ::prelude::*;
+RT_CLASS!{static class CorePerceptionAutomation}
+impl RtActivatable<ICorePerceptionAutomationStatics> for CorePerceptionAutomation {}
+impl CorePerceptionAutomation {
+    #[inline] pub fn set_activation_factory_provider(provider: &foundation::IGetActivationFactory) -> Result<()> {
+        <Self as RtActivatable<ICorePerceptionAutomationStatics>>::get_activation_factory().set_activation_factory_provider(provider)
+    }
+}
+DEFINE_CLSID!(CorePerceptionAutomation(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,65,117,116,111,109,97,116,105,111,110,46,67,111,114,101,46,67,111,114,101,80,101,114,99,101,112,116,105,111,110,65,117,116,111,109,97,116,105,111,110,0]) [CLSID_CorePerceptionAutomation]);
+DEFINE_IID!(IID_ICorePerceptionAutomationStatics, 196101441, 19682, 18723, 154, 118, 129, 135, 236, 197, 145, 18);
+RT_INTERFACE!{static interface ICorePerceptionAutomationStatics(ICorePerceptionAutomationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICorePerceptionAutomationStatics] {
+    fn SetActivationFactoryProvider(&self, provider: *mut foundation::IGetActivationFactory) -> HRESULT
+}}
+impl ICorePerceptionAutomationStatics {
+    #[inline] pub fn set_activation_factory_provider(&self, provider: &foundation::IGetActivationFactory) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetActivationFactoryProvider)(self as *const _ as *mut _, provider as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+} // Windows.Perception.Automation.Core
+} // Windows.Perception.Automation
+pub mod people { // Windows.Perception.People
+use ::prelude::*;
+DEFINE_IID!(IID_IHeadPose, 2136655269, 18907, 14239, 148, 41, 50, 162, 250, 243, 79, 166);
+RT_INTERFACE!{interface IHeadPose(IHeadPoseVtbl): IInspectable(IInspectableVtbl) [IID_IHeadPose] {
+    fn get_Position(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
+    fn get_ForwardDirection(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
+    fn get_UpDirection(&self, out: *mut foundation::numerics::Vector3) -> HRESULT
+}}
+impl IHeadPose {
+    #[inline] pub fn get_position(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_forward_direction(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ForwardDirection)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_up_direction(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_UpDirection)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HeadPose: IHeadPose}
+} // Windows.Perception.People
 pub mod spatial { // Windows.Perception.Spatial
 use ::prelude::*;
 DEFINE_IID!(IID_ISpatialAnchor, 86631886, 7476, 14082, 188, 236, 234, 191, 245, 120, 168, 105);
@@ -91,6 +167,78 @@ impl ISpatialAnchor2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_ISpatialAnchorExporter, 2586460984, 9467, 17001, 137, 197, 136, 48, 74, 238, 242, 15);
+RT_INTERFACE!{interface ISpatialAnchorExporter(ISpatialAnchorExporterVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorExporter] {
+    fn GetAnchorExportSufficiencyAsync(&self, anchor: *mut SpatialAnchor, purpose: SpatialAnchorExportPurpose, out: *mut *mut foundation::IAsyncOperation<SpatialAnchorExportSufficiency>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn TryExportAnchorAsync(&self, anchor: *mut SpatialAnchor, purpose: SpatialAnchorExportPurpose, stream: *mut super::super::storage::streams::IOutputStream, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+}}
+impl ISpatialAnchorExporter {
+    #[inline] pub fn get_anchor_export_sufficiency_async(&self, anchor: &SpatialAnchor, purpose: SpatialAnchorExportPurpose) -> Result<ComPtr<foundation::IAsyncOperation<SpatialAnchorExportSufficiency>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAnchorExportSufficiencyAsync)(self as *const _ as *mut _, anchor as *const _ as *mut _, purpose, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn try_export_anchor_async(&self, anchor: &SpatialAnchor, purpose: SpatialAnchorExportPurpose, stream: &super::super::storage::streams::IOutputStream) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryExportAnchorAsync)(self as *const _ as *mut _, anchor as *const _ as *mut _, purpose, stream as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SpatialAnchorExporter: ISpatialAnchorExporter}
+impl RtActivatable<ISpatialAnchorExporterStatics> for SpatialAnchorExporter {}
+impl SpatialAnchorExporter {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<SpatialAnchorExporter>>> {
+        <Self as RtActivatable<ISpatialAnchorExporterStatics>>::get_activation_factory().get_default()
+    }
+    #[inline] pub fn request_access_async() -> Result<ComPtr<foundation::IAsyncOperation<SpatialPerceptionAccessStatus>>> {
+        <Self as RtActivatable<ISpatialAnchorExporterStatics>>::get_activation_factory().request_access_async()
+    }
+}
+DEFINE_CLSID!(SpatialAnchorExporter(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,65,110,99,104,111,114,69,120,112,111,114,116,101,114,0]) [CLSID_SpatialAnchorExporter]);
+DEFINE_IID!(IID_ISpatialAnchorExporterStatics, 3978627000, 9333, 17308, 133, 255, 127, 237, 52, 31, 220, 136);
+RT_INTERFACE!{static interface ISpatialAnchorExporterStatics(ISpatialAnchorExporterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorExporterStatics] {
+    fn GetDefault(&self, out: *mut *mut SpatialAnchorExporter) -> HRESULT,
+    fn RequestAccessAsync(&self, out: *mut *mut foundation::IAsyncOperation<SpatialPerceptionAccessStatus>) -> HRESULT
+}}
+impl ISpatialAnchorExporterStatics {
+    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<SpatialAnchorExporter>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_access_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SpatialPerceptionAccessStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestAccessAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum SpatialAnchorExportPurpose: i32 {
+    Relocalization (SpatialAnchorExportPurpose_Relocalization) = 0, Sharing (SpatialAnchorExportPurpose_Sharing) = 1,
+}}
+DEFINE_IID!(IID_ISpatialAnchorExportSufficiency, 2009226027, 13321, 16520, 185, 27, 253, 253, 5, 209, 100, 143);
+RT_INTERFACE!{interface ISpatialAnchorExportSufficiency(ISpatialAnchorExportSufficiencyVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorExportSufficiency] {
+    fn get_IsMinimallySufficient(&self, out: *mut bool) -> HRESULT,
+    fn get_SufficiencyLevel(&self, out: *mut f64) -> HRESULT,
+    fn get_RecommendedSufficiencyLevel(&self, out: *mut f64) -> HRESULT
+}}
+impl ISpatialAnchorExportSufficiency {
+    #[inline] pub fn get_is_minimally_sufficient(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsMinimallySufficient)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_sufficiency_level(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_SufficiencyLevel)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_recommended_sufficiency_level(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_RecommendedSufficiencyLevel)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SpatialAnchorExportSufficiency: ISpatialAnchorExportSufficiency}
 RT_CLASS!{static class SpatialAnchorManager}
 impl RtActivatable<ISpatialAnchorManagerStatics> for SpatialAnchorManager {}
 impl SpatialAnchorManager {
@@ -538,6 +686,23 @@ impl ISpatialLocation {
     }}
 }
 RT_CLASS!{class SpatialLocation: ISpatialLocation}
+DEFINE_IID!(IID_ISpatialLocation2, 293544982, 14503, 18968, 180, 4, 171, 143, 171, 225, 215, 139);
+RT_INTERFACE!{interface ISpatialLocation2(ISpatialLocation2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialLocation2] {
+    fn get_AbsoluteAngularVelocityAxisAngle(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
+    fn get_AbsoluteAngularAccelerationAxisAngle(&self, out: *mut foundation::numerics::Vector3) -> HRESULT
+}}
+impl ISpatialLocation2 {
+    #[inline] pub fn get_absolute_angular_velocity_axis_angle(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AbsoluteAngularVelocityAxisAngle)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_absolute_angular_acceleration_axis_angle(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AbsoluteAngularAccelerationAxisAngle)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_ISpatialLocator, 4131883301, 40460, 15286, 153, 126, 182, 78, 204, 162, 76, 244);
 RT_INTERFACE!{interface ISpatialLocator(ISpatialLocatorVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialLocator] {
     fn get_Locatability(&self, out: *mut SpatialLocatability) -> HRESULT,
@@ -807,6 +972,55 @@ impl ISpatialStationaryFrameOfReference {
     }}
 }
 RT_CLASS!{class SpatialStationaryFrameOfReference: ISpatialStationaryFrameOfReference}
+pub mod preview { // Windows.Perception.Spatial.Preview
+use ::prelude::*;
+RT_CLASS!{static class SpatialGraphInteropPreview}
+impl RtActivatable<ISpatialGraphInteropPreviewStatics> for SpatialGraphInteropPreview {}
+impl SpatialGraphInteropPreview {
+    #[inline] pub fn create_coordinate_system_for_node(nodeId: Guid) -> Result<Option<ComPtr<super::SpatialCoordinateSystem>>> {
+        <Self as RtActivatable<ISpatialGraphInteropPreviewStatics>>::get_activation_factory().create_coordinate_system_for_node(nodeId)
+    }
+    #[inline] pub fn create_coordinate_system_for_node_with_position(nodeId: Guid, relativePosition: foundation::numerics::Vector3) -> Result<Option<ComPtr<super::SpatialCoordinateSystem>>> {
+        <Self as RtActivatable<ISpatialGraphInteropPreviewStatics>>::get_activation_factory().create_coordinate_system_for_node_with_position(nodeId, relativePosition)
+    }
+    #[inline] pub fn create_coordinate_system_for_node_with_position_and_orientation(nodeId: Guid, relativePosition: foundation::numerics::Vector3, relativeOrientation: foundation::numerics::Quaternion) -> Result<Option<ComPtr<super::SpatialCoordinateSystem>>> {
+        <Self as RtActivatable<ISpatialGraphInteropPreviewStatics>>::get_activation_factory().create_coordinate_system_for_node_with_position_and_orientation(nodeId, relativePosition, relativeOrientation)
+    }
+    #[inline] pub fn create_locator_for_node(nodeId: Guid) -> Result<Option<ComPtr<super::SpatialLocator>>> {
+        <Self as RtActivatable<ISpatialGraphInteropPreviewStatics>>::get_activation_factory().create_locator_for_node(nodeId)
+    }
+}
+DEFINE_CLSID!(SpatialGraphInteropPreview(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,80,114,101,118,105,101,119,46,83,112,97,116,105,97,108,71,114,97,112,104,73,110,116,101,114,111,112,80,114,101,118,105,101,119,0]) [CLSID_SpatialGraphInteropPreview]);
+DEFINE_IID!(IID_ISpatialGraphInteropPreviewStatics, 3225576524, 8408, 20176, 174, 247, 104, 5, 184, 229, 63, 85);
+RT_INTERFACE!{static interface ISpatialGraphInteropPreviewStatics(ISpatialGraphInteropPreviewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialGraphInteropPreviewStatics] {
+    fn CreateCoordinateSystemForNode(&self, nodeId: Guid, out: *mut *mut super::SpatialCoordinateSystem) -> HRESULT,
+    fn CreateCoordinateSystemForNodeWithPosition(&self, nodeId: Guid, relativePosition: foundation::numerics::Vector3, out: *mut *mut super::SpatialCoordinateSystem) -> HRESULT,
+    fn CreateCoordinateSystemForNodeWithPositionAndOrientation(&self, nodeId: Guid, relativePosition: foundation::numerics::Vector3, relativeOrientation: foundation::numerics::Quaternion, out: *mut *mut super::SpatialCoordinateSystem) -> HRESULT,
+    fn CreateLocatorForNode(&self, nodeId: Guid, out: *mut *mut super::SpatialLocator) -> HRESULT
+}}
+impl ISpatialGraphInteropPreviewStatics {
+    #[inline] pub fn create_coordinate_system_for_node(&self, nodeId: Guid) -> Result<Option<ComPtr<super::SpatialCoordinateSystem>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateCoordinateSystemForNode)(self as *const _ as *mut _, nodeId, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_coordinate_system_for_node_with_position(&self, nodeId: Guid, relativePosition: foundation::numerics::Vector3) -> Result<Option<ComPtr<super::SpatialCoordinateSystem>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateCoordinateSystemForNodeWithPosition)(self as *const _ as *mut _, nodeId, relativePosition, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_coordinate_system_for_node_with_position_and_orientation(&self, nodeId: Guid, relativePosition: foundation::numerics::Vector3, relativeOrientation: foundation::numerics::Quaternion) -> Result<Option<ComPtr<super::SpatialCoordinateSystem>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateCoordinateSystemForNodeWithPositionAndOrientation)(self as *const _ as *mut _, nodeId, relativePosition, relativeOrientation, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_locator_for_node(&self, nodeId: Guid) -> Result<Option<ComPtr<super::SpatialLocator>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateLocatorForNode)(self as *const _ as *mut _, nodeId, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+} // Windows.Perception.Spatial.Preview
 pub mod surfaces { // Windows.Perception.Spatial.Surfaces
 use ::prelude::*;
 DEFINE_IID!(IID_ISpatialSurfaceInfo, 4176079847, 14775, 14690, 187, 3, 87, 245, 110, 31, 176, 161);
@@ -1080,53 +1294,3 @@ impl ISpatialSurfaceObserverStatics2 {
 }
 } // Windows.Perception.Spatial.Surfaces
 } // Windows.Perception.Spatial
-pub mod people { // Windows.Perception.People
-use ::prelude::*;
-DEFINE_IID!(IID_IHeadPose, 2136655269, 18907, 14239, 148, 41, 50, 162, 250, 243, 79, 166);
-RT_INTERFACE!{interface IHeadPose(IHeadPoseVtbl): IInspectable(IInspectableVtbl) [IID_IHeadPose] {
-    fn get_Position(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
-    fn get_ForwardDirection(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
-    fn get_UpDirection(&self, out: *mut foundation::numerics::Vector3) -> HRESULT
-}}
-impl IHeadPose {
-    #[inline] pub fn get_position(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_forward_direction(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ForwardDirection)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_up_direction(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UpDirection)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class HeadPose: IHeadPose}
-} // Windows.Perception.People
-pub mod automation { // Windows.Perception.Automation
-pub mod core { // Windows.Perception.Automation.Core
-use ::prelude::*;
-RT_CLASS!{static class CorePerceptionAutomation}
-impl RtActivatable<ICorePerceptionAutomationStatics> for CorePerceptionAutomation {}
-impl CorePerceptionAutomation {
-    #[inline] pub fn set_activation_factory_provider(provider: &foundation::IGetActivationFactory) -> Result<()> {
-        <Self as RtActivatable<ICorePerceptionAutomationStatics>>::get_activation_factory().set_activation_factory_provider(provider)
-    }
-}
-DEFINE_CLSID!(CorePerceptionAutomation(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,65,117,116,111,109,97,116,105,111,110,46,67,111,114,101,46,67,111,114,101,80,101,114,99,101,112,116,105,111,110,65,117,116,111,109,97,116,105,111,110,0]) [CLSID_CorePerceptionAutomation]);
-DEFINE_IID!(IID_ICorePerceptionAutomationStatics, 196101441, 19682, 18723, 154, 118, 129, 135, 236, 197, 145, 18);
-RT_INTERFACE!{static interface ICorePerceptionAutomationStatics(ICorePerceptionAutomationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICorePerceptionAutomationStatics] {
-    fn SetActivationFactoryProvider(&self, provider: *mut foundation::IGetActivationFactory) -> HRESULT
-}}
-impl ICorePerceptionAutomationStatics {
-    #[inline] pub fn set_activation_factory_provider(&self, provider: &foundation::IGetActivationFactory) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetActivationFactoryProvider)(self as *const _ as *mut _, provider as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-} // Windows.Perception.Automation.Core
-} // Windows.Perception.Automation

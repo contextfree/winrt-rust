@@ -1,3 +1,2181 @@
+pub mod authentication { // Windows.Security.Authentication
+pub mod identity { // Windows.Security.Authentication.Identity
+use ::prelude::*;
+DEFINE_IID!(IID_IEnterpriseKeyCredentialRegistrationInfo, 942807756, 26411, 18467, 182, 3, 107, 60, 117, 61, 175, 151);
+RT_INTERFACE!{interface IEnterpriseKeyCredentialRegistrationInfo(IEnterpriseKeyCredentialRegistrationInfoVtbl): IInspectable(IInspectableVtbl) [IID_IEnterpriseKeyCredentialRegistrationInfo] {
+    fn get_TenantId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_TenantName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Subject(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_KeyId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_KeyName(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IEnterpriseKeyCredentialRegistrationInfo {
+    #[inline] pub fn get_tenant_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TenantId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_tenant_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TenantName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_subject(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Subject)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_key_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_KeyId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_key_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_KeyName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class EnterpriseKeyCredentialRegistrationInfo: IEnterpriseKeyCredentialRegistrationInfo}
+DEFINE_IID!(IID_IEnterpriseKeyCredentialRegistrationManager, 2213789247, 41567, 19642, 187, 142, 189, 195, 45, 3, 194, 151);
+RT_INTERFACE!{interface IEnterpriseKeyCredentialRegistrationManager(IEnterpriseKeyCredentialRegistrationManagerVtbl): IInspectable(IInspectableVtbl) [IID_IEnterpriseKeyCredentialRegistrationManager] {
+    fn GetRegistrationsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<EnterpriseKeyCredentialRegistrationInfo>>) -> HRESULT
+}}
+impl IEnterpriseKeyCredentialRegistrationManager {
+    #[inline] pub fn get_registrations_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<EnterpriseKeyCredentialRegistrationInfo>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetRegistrationsAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class EnterpriseKeyCredentialRegistrationManager: IEnterpriseKeyCredentialRegistrationManager}
+impl RtActivatable<IEnterpriseKeyCredentialRegistrationManagerStatics> for EnterpriseKeyCredentialRegistrationManager {}
+impl EnterpriseKeyCredentialRegistrationManager {
+    #[inline] pub fn get_current() -> Result<Option<ComPtr<EnterpriseKeyCredentialRegistrationManager>>> {
+        <Self as RtActivatable<IEnterpriseKeyCredentialRegistrationManagerStatics>>::get_activation_factory().get_current()
+    }
+}
+DEFINE_CLSID!(EnterpriseKeyCredentialRegistrationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,69,110,116,101,114,112,114,105,115,101,75,101,121,67,114,101,100,101,110,116,105,97,108,82,101,103,105,115,116,114,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_EnterpriseKeyCredentialRegistrationManager]);
+DEFINE_IID!(IID_IEnterpriseKeyCredentialRegistrationManagerStatics, 2008571550, 44276, 19392, 186, 194, 64, 187, 70, 239, 187, 63);
+RT_INTERFACE!{static interface IEnterpriseKeyCredentialRegistrationManagerStatics(IEnterpriseKeyCredentialRegistrationManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IEnterpriseKeyCredentialRegistrationManagerStatics] {
+    fn get_Current(&self, out: *mut *mut EnterpriseKeyCredentialRegistrationManager) -> HRESULT
+}}
+impl IEnterpriseKeyCredentialRegistrationManagerStatics {
+    #[inline] pub fn get_current(&self) -> Result<Option<ComPtr<EnterpriseKeyCredentialRegistrationManager>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+pub mod core { // Windows.Security.Authentication.Identity.Core
+use ::prelude::*;
+DEFINE_IID!(IID_IMicrosoftAccountMultiFactorAuthenticationManager, 265502885, 62836, 17184, 160, 142, 10, 25, 168, 35, 34, 170);
+RT_INTERFACE!{interface IMicrosoftAccountMultiFactorAuthenticationManager(IMicrosoftAccountMultiFactorAuthenticationManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorAuthenticationManager] {
+    fn GetOneTimePassCodeAsync(&self, userAccountId: HSTRING, codeLength: u32, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorOneTimeCodedInfo>) -> HRESULT,
+    fn AddDeviceAsync(&self, userAccountId: HSTRING, authenticationToken: HSTRING, wnsChannelId: HSTRING, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT,
+    fn RemoveDeviceAsync(&self, userAccountId: HSTRING, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT,
+    fn UpdateWnsChannelAsync(&self, userAccountId: HSTRING, channelUri: HSTRING, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT,
+    fn GetSessionsAsync(&self, userAccountIdList: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorGetSessionsResult>) -> HRESULT,
+    fn GetSessionsAndUnregisteredAccountsAsync(&self, userAccountIdList: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo>) -> HRESULT,
+    fn ApproveSessionUsingAuthSessionInfoAsync(&self, sessionAuthentictionStatus: MicrosoftAccountMultiFactorSessionAuthenticationStatus, authenticationSessionInfo: *mut MicrosoftAccountMultiFactorSessionInfo, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT,
+    fn ApproveSessionAsync(&self, sessionAuthentictionStatus: MicrosoftAccountMultiFactorSessionAuthenticationStatus, userAccountId: HSTRING, sessionId: HSTRING, sessionAuthenticationType: MicrosoftAccountMultiFactorAuthenticationType, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT,
+    fn DenySessionUsingAuthSessionInfoAsync(&self, authenticationSessionInfo: *mut MicrosoftAccountMultiFactorSessionInfo, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT,
+    fn DenySessionAsync(&self, userAccountId: HSTRING, sessionId: HSTRING, sessionAuthenticationType: MicrosoftAccountMultiFactorAuthenticationType, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT
+}}
+impl IMicrosoftAccountMultiFactorAuthenticationManager {
+    #[inline] pub fn get_one_time_pass_code_async(&self, userAccountId: &HStringArg, codeLength: u32) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorOneTimeCodedInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetOneTimePassCodeAsync)(self as *const _ as *mut _, userAccountId.get(), codeLength, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_device_async(&self, userAccountId: &HStringArg, authenticationToken: &HStringArg, wnsChannelId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AddDeviceAsync)(self as *const _ as *mut _, userAccountId.get(), authenticationToken.get(), wnsChannelId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_device_async(&self, userAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RemoveDeviceAsync)(self as *const _ as *mut _, userAccountId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn update_wns_channel_async(&self, userAccountId: &HStringArg, channelUri: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).UpdateWnsChannelAsync)(self as *const _ as *mut _, userAccountId.get(), channelUri.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_sessions_async(&self, userAccountIdList: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorGetSessionsResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetSessionsAsync)(self as *const _ as *mut _, userAccountIdList as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_sessions_and_unregistered_accounts_async(&self, userAccountIdList: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetSessionsAndUnregisteredAccountsAsync)(self as *const _ as *mut _, userAccountIdList as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn approve_session_using_auth_session_info_async(&self, sessionAuthentictionStatus: MicrosoftAccountMultiFactorSessionAuthenticationStatus, authenticationSessionInfo: &MicrosoftAccountMultiFactorSessionInfo) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ApproveSessionUsingAuthSessionInfoAsync)(self as *const _ as *mut _, sessionAuthentictionStatus, authenticationSessionInfo as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn approve_session_async(&self, sessionAuthentictionStatus: MicrosoftAccountMultiFactorSessionAuthenticationStatus, userAccountId: &HStringArg, sessionId: &HStringArg, sessionAuthenticationType: MicrosoftAccountMultiFactorAuthenticationType) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ApproveSessionAsync)(self as *const _ as *mut _, sessionAuthentictionStatus, userAccountId.get(), sessionId.get(), sessionAuthenticationType, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn deny_session_using_auth_session_info_async(&self, authenticationSessionInfo: &MicrosoftAccountMultiFactorSessionInfo) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DenySessionUsingAuthSessionInfoAsync)(self as *const _ as *mut _, authenticationSessionInfo as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn deny_session_async(&self, userAccountId: &HStringArg, sessionId: &HStringArg, sessionAuthenticationType: MicrosoftAccountMultiFactorAuthenticationType) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DenySessionAsync)(self as *const _ as *mut _, userAccountId.get(), sessionId.get(), sessionAuthenticationType, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class MicrosoftAccountMultiFactorAuthenticationManager: IMicrosoftAccountMultiFactorAuthenticationManager}
+impl RtActivatable<IMicrosoftAccountMultiFactorAuthenticatorStatics> for MicrosoftAccountMultiFactorAuthenticationManager {}
+impl MicrosoftAccountMultiFactorAuthenticationManager {
+    #[inline] pub fn get_current() -> Result<Option<ComPtr<MicrosoftAccountMultiFactorAuthenticationManager>>> {
+        <Self as RtActivatable<IMicrosoftAccountMultiFactorAuthenticatorStatics>>::get_activation_factory().get_current()
+    }
+}
+DEFINE_CLSID!(MicrosoftAccountMultiFactorAuthenticationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,67,111,114,101,46,77,105,99,114,111,115,111,102,116,65,99,99,111,117,110,116,77,117,108,116,105,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MicrosoftAccountMultiFactorAuthenticationManager]);
+RT_ENUM! { enum MicrosoftAccountMultiFactorAuthenticationType: i32 {
+    User (MicrosoftAccountMultiFactorAuthenticationType_User) = 0, Device (MicrosoftAccountMultiFactorAuthenticationType_Device) = 1,
+}}
+DEFINE_IID!(IID_IMicrosoftAccountMultiFactorAuthenticatorStatics, 3647259366, 62534, 19569, 139, 121, 110, 164, 2, 74, 169, 184);
+RT_INTERFACE!{static interface IMicrosoftAccountMultiFactorAuthenticatorStatics(IMicrosoftAccountMultiFactorAuthenticatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorAuthenticatorStatics] {
+    fn get_Current(&self, out: *mut *mut MicrosoftAccountMultiFactorAuthenticationManager) -> HRESULT
+}}
+impl IMicrosoftAccountMultiFactorAuthenticatorStatics {
+    #[inline] pub fn get_current(&self) -> Result<Option<ComPtr<MicrosoftAccountMultiFactorAuthenticationManager>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IMicrosoftAccountMultiFactorGetSessionsResult, 1310960032, 59898, 18810, 149, 222, 109, 87, 71, 191, 151, 76);
+RT_INTERFACE!{interface IMicrosoftAccountMultiFactorGetSessionsResult(IMicrosoftAccountMultiFactorGetSessionsResultVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorGetSessionsResult] {
+    fn get_Sessions(&self, out: *mut *mut foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>) -> HRESULT,
+    fn get_ServiceResponse(&self, out: *mut MicrosoftAccountMultiFactorServiceResponse) -> HRESULT
+}}
+impl IMicrosoftAccountMultiFactorGetSessionsResult {
+    #[inline] pub fn get_sessions(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Sessions)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_service_response(&self) -> Result<MicrosoftAccountMultiFactorServiceResponse> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ServiceResponse)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class MicrosoftAccountMultiFactorGetSessionsResult: IMicrosoftAccountMultiFactorGetSessionsResult}
+DEFINE_IID!(IID_IMicrosoftAccountMultiFactorOneTimeCodedInfo, 2193237579, 55420, 18024, 169, 118, 64, 207, 174, 84, 125, 8);
+RT_INTERFACE!{interface IMicrosoftAccountMultiFactorOneTimeCodedInfo(IMicrosoftAccountMultiFactorOneTimeCodedInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorOneTimeCodedInfo] {
+    fn get_Code(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_TimeInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_TimeToLive(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_ServiceResponse(&self, out: *mut MicrosoftAccountMultiFactorServiceResponse) -> HRESULT
+}}
+impl IMicrosoftAccountMultiFactorOneTimeCodedInfo {
+    #[inline] pub fn get_code(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Code)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_time_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TimeInterval)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_time_to_live(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TimeToLive)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_service_response(&self) -> Result<MicrosoftAccountMultiFactorServiceResponse> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ServiceResponse)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class MicrosoftAccountMultiFactorOneTimeCodedInfo: IMicrosoftAccountMultiFactorOneTimeCodedInfo}
+RT_ENUM! { enum MicrosoftAccountMultiFactorServiceResponse: i32 {
+    Success (MicrosoftAccountMultiFactorServiceResponse_Success) = 0, Error (MicrosoftAccountMultiFactorServiceResponse_Error) = 1, NoNetworkConnection (MicrosoftAccountMultiFactorServiceResponse_NoNetworkConnection) = 2, ServiceUnavailable (MicrosoftAccountMultiFactorServiceResponse_ServiceUnavailable) = 3, TotpSetupDenied (MicrosoftAccountMultiFactorServiceResponse_TotpSetupDenied) = 4, NgcNotSetup (MicrosoftAccountMultiFactorServiceResponse_NgcNotSetup) = 5, SessionAlreadyDenied (MicrosoftAccountMultiFactorServiceResponse_SessionAlreadyDenied) = 6, SessionAlreadyApproved (MicrosoftAccountMultiFactorServiceResponse_SessionAlreadyApproved) = 7, SessionExpired (MicrosoftAccountMultiFactorServiceResponse_SessionExpired) = 8, NgcNonceExpired (MicrosoftAccountMultiFactorServiceResponse_NgcNonceExpired) = 9, InvalidSessionId (MicrosoftAccountMultiFactorServiceResponse_InvalidSessionId) = 10, InvalidSessionType (MicrosoftAccountMultiFactorServiceResponse_InvalidSessionType) = 11, InvalidOperation (MicrosoftAccountMultiFactorServiceResponse_InvalidOperation) = 12, InvalidStateTransition (MicrosoftAccountMultiFactorServiceResponse_InvalidStateTransition) = 13, DeviceNotFound (MicrosoftAccountMultiFactorServiceResponse_DeviceNotFound) = 14, FlowDisabled (MicrosoftAccountMultiFactorServiceResponse_FlowDisabled) = 15, SessionNotApproved (MicrosoftAccountMultiFactorServiceResponse_SessionNotApproved) = 16, OperationCanceledByUser (MicrosoftAccountMultiFactorServiceResponse_OperationCanceledByUser) = 17, NgcDisabledByServer (MicrosoftAccountMultiFactorServiceResponse_NgcDisabledByServer) = 18, NgcKeyNotFoundOnServer (MicrosoftAccountMultiFactorServiceResponse_NgcKeyNotFoundOnServer) = 19, UIRequired (MicrosoftAccountMultiFactorServiceResponse_UIRequired) = 20, DeviceIdChanged (MicrosoftAccountMultiFactorServiceResponse_DeviceIdChanged) = 21,
+}}
+RT_ENUM! { enum MicrosoftAccountMultiFactorSessionApprovalStatus: i32 {
+    Pending (MicrosoftAccountMultiFactorSessionApprovalStatus_Pending) = 0, Approved (MicrosoftAccountMultiFactorSessionApprovalStatus_Approved) = 1, Denied (MicrosoftAccountMultiFactorSessionApprovalStatus_Denied) = 2,
+}}
+RT_ENUM! { enum MicrosoftAccountMultiFactorSessionAuthenticationStatus: i32 {
+    Authenticated (MicrosoftAccountMultiFactorSessionAuthenticationStatus_Authenticated) = 0, Unauthenticated (MicrosoftAccountMultiFactorSessionAuthenticationStatus_Unauthenticated) = 1,
+}}
+DEFINE_IID!(IID_IMicrosoftAccountMultiFactorSessionInfo, 1602137012, 41592, 17973, 183, 101, 180, 148, 235, 38, 10, 244);
+RT_INTERFACE!{interface IMicrosoftAccountMultiFactorSessionInfo(IMicrosoftAccountMultiFactorSessionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorSessionInfo] {
+    fn get_UserAccountId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_SessionId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_DisplaySessionId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_ApprovalStatus(&self, out: *mut MicrosoftAccountMultiFactorSessionApprovalStatus) -> HRESULT,
+    fn get_AuthenticationType(&self, out: *mut MicrosoftAccountMultiFactorAuthenticationType) -> HRESULT,
+    fn get_RequestTime(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn get_ExpirationTime(&self, out: *mut foundation::DateTime) -> HRESULT
+}}
+impl IMicrosoftAccountMultiFactorSessionInfo {
+    #[inline] pub fn get_user_account_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UserAccountId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_session_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SessionId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_display_session_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplaySessionId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_approval_status(&self) -> Result<MicrosoftAccountMultiFactorSessionApprovalStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ApprovalStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_authentication_type(&self) -> Result<MicrosoftAccountMultiFactorAuthenticationType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AuthenticationType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_request_time(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_RequestTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_expiration_time(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ExpirationTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class MicrosoftAccountMultiFactorSessionInfo: IMicrosoftAccountMultiFactorSessionInfo}
+DEFINE_IID!(IID_IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo, 2860434939, 55871, 16520, 162, 13, 86, 24, 175, 173, 178, 229);
+RT_INTERFACE!{interface IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo(IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo] {
+    fn get_Sessions(&self, out: *mut *mut foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>) -> HRESULT,
+    fn get_UnregisteredAccounts(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
+    fn get_ServiceResponse(&self, out: *mut MicrosoftAccountMultiFactorServiceResponse) -> HRESULT
+}}
+impl IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo {
+    #[inline] pub fn get_sessions(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Sessions)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_unregistered_accounts(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UnregisteredAccounts)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_service_response(&self) -> Result<MicrosoftAccountMultiFactorServiceResponse> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ServiceResponse)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo: IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo}
+} // Windows.Security.Authentication.Identity.Core
+pub mod provider { // Windows.Security.Authentication.Identity.Provider
+use ::prelude::*;
+DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthentication, 34215653, 27173, 16547, 140, 0, 80, 160, 35, 246, 25, 209);
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthentication(ISecondaryAuthenticationFactorAuthenticationVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthentication] {
+    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_ServiceAuthenticationHmac(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_SessionNonce(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_DeviceNonce(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_DeviceConfigurationData(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
+    #[cfg(feature="windows-storage")] fn FinishAuthenticationAsync(&self, deviceHmac: *mut ::rt::gen::windows::storage::streams::IBuffer, sessionHmac: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<SecondaryAuthenticationFactorFinishAuthenticationStatus>) -> HRESULT,
+    fn AbortAuthenticationAsync(&self, errorLogMessage: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl ISecondaryAuthenticationFactorAuthentication {
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_service_authentication_hmac(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ServiceAuthenticationHmac)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_session_nonce(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SessionNonce)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_device_nonce(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DeviceNonce)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_device_configuration_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DeviceConfigurationData)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn finish_authentication_async(&self, deviceHmac: &::rt::gen::windows::storage::streams::IBuffer, sessionHmac: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorFinishAuthenticationStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FinishAuthenticationAsync)(self as *const _ as *mut _, deviceHmac as *const _ as *mut _, sessionHmac as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn abort_authentication_async(&self, errorLogMessage: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AbortAuthenticationAsync)(self as *const _ as *mut _, errorLogMessage.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SecondaryAuthenticationFactorAuthentication: ISecondaryAuthenticationFactorAuthentication}
+impl RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics> for SecondaryAuthenticationFactorAuthentication {}
+impl SecondaryAuthenticationFactorAuthentication {
+    #[inline] pub fn show_notification_message_async(deviceName: &HStringArg, message: SecondaryAuthenticationFactorAuthenticationMessage) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().show_notification_message_async(deviceName, message)
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub fn start_authentication_async(deviceId: &HStringArg, serviceAuthenticationNonce: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationResult>>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().start_authentication_async(deviceId, serviceAuthenticationNonce)
+    }
+    #[inline] pub fn add_authentication_stage_changed(handler: &foundation::EventHandler<SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().add_authentication_stage_changed(handler)
+    }
+    #[inline] pub fn remove_authentication_stage_changed(token: foundation::EventRegistrationToken) -> Result<()> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().remove_authentication_stage_changed(token)
+    }
+    #[inline] pub fn get_authentication_stage_info_async() -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationStageInfo>>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().get_authentication_stage_info_async()
+    }
+}
+DEFINE_CLSID!(SecondaryAuthenticationFactorAuthentication(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,80,114,111,118,105,100,101,114,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,0]) [CLSID_SecondaryAuthenticationFactorAuthentication]);
+RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationMessage: i32 {
+    Invalid (SecondaryAuthenticationFactorAuthenticationMessage_Invalid) = 0, SwipeUpWelcome (SecondaryAuthenticationFactorAuthenticationMessage_SwipeUpWelcome) = 1, TapWelcome (SecondaryAuthenticationFactorAuthenticationMessage_TapWelcome) = 2, DeviceNeedsAttention (SecondaryAuthenticationFactorAuthenticationMessage_DeviceNeedsAttention) = 3, LookingForDevice (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevice) = 4, LookingForDevicePluggedin (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevicePluggedin) = 5, BluetoothIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_BluetoothIsDisabled) = 6, NfcIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_NfcIsDisabled) = 7, WiFiIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_WiFiIsDisabled) = 8, ExtraTapIsRequired (SecondaryAuthenticationFactorAuthenticationMessage_ExtraTapIsRequired) = 9, DisabledByPolicy (SecondaryAuthenticationFactorAuthenticationMessage_DisabledByPolicy) = 10, TapOnDeviceRequired (SecondaryAuthenticationFactorAuthenticationMessage_TapOnDeviceRequired) = 11, HoldFinger (SecondaryAuthenticationFactorAuthenticationMessage_HoldFinger) = 12, ScanFinger (SecondaryAuthenticationFactorAuthenticationMessage_ScanFinger) = 13, UnauthorizedUser (SecondaryAuthenticationFactorAuthenticationMessage_UnauthorizedUser) = 14, ReregisterRequired (SecondaryAuthenticationFactorAuthenticationMessage_ReregisterRequired) = 15, TryAgain (SecondaryAuthenticationFactorAuthenticationMessage_TryAgain) = 16, SayPassphrase (SecondaryAuthenticationFactorAuthenticationMessage_SayPassphrase) = 17, ReadyToSignIn (SecondaryAuthenticationFactorAuthenticationMessage_ReadyToSignIn) = 18, UseAnotherSignInOption (SecondaryAuthenticationFactorAuthenticationMessage_UseAnotherSignInOption) = 19, ConnectionRequired (SecondaryAuthenticationFactorAuthenticationMessage_ConnectionRequired) = 20, TimeLimitExceeded (SecondaryAuthenticationFactorAuthenticationMessage_TimeLimitExceeded) = 21, CanceledByUser (SecondaryAuthenticationFactorAuthenticationMessage_CanceledByUser) = 22, CenterHand (SecondaryAuthenticationFactorAuthenticationMessage_CenterHand) = 23, MoveHandCloser (SecondaryAuthenticationFactorAuthenticationMessage_MoveHandCloser) = 24, MoveHandFarther (SecondaryAuthenticationFactorAuthenticationMessage_MoveHandFarther) = 25, PlaceHandAbove (SecondaryAuthenticationFactorAuthenticationMessage_PlaceHandAbove) = 26, RecognitionFailed (SecondaryAuthenticationFactorAuthenticationMessage_RecognitionFailed) = 27, DeviceUnavailable (SecondaryAuthenticationFactorAuthenticationMessage_DeviceUnavailable) = 28,
+}}
+DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationResult, 2629523847, 61293, 19394, 191, 73, 70, 23, 81, 90, 15, 154);
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationResult(ISecondaryAuthenticationFactorAuthenticationResultVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationResult] {
+    fn get_Status(&self, out: *mut SecondaryAuthenticationFactorAuthenticationStatus) -> HRESULT,
+    fn get_Authentication(&self, out: *mut *mut SecondaryAuthenticationFactorAuthentication) -> HRESULT
+}}
+impl ISecondaryAuthenticationFactorAuthenticationResult {
+    #[inline] pub fn get_status(&self) -> Result<SecondaryAuthenticationFactorAuthenticationStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_authentication(&self) -> Result<Option<ComPtr<SecondaryAuthenticationFactorAuthentication>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Authentication)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationResult: ISecondaryAuthenticationFactorAuthenticationResult}
+RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationScenario: i32 {
+    SignIn (SecondaryAuthenticationFactorAuthenticationScenario_SignIn) = 0, CredentialPrompt (SecondaryAuthenticationFactorAuthenticationScenario_CredentialPrompt) = 1,
+}}
+RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationStage: i32 {
+    NotStarted (SecondaryAuthenticationFactorAuthenticationStage_NotStarted) = 0, WaitingForUserConfirmation (SecondaryAuthenticationFactorAuthenticationStage_WaitingForUserConfirmation) = 1, CollectingCredential (SecondaryAuthenticationFactorAuthenticationStage_CollectingCredential) = 2, SuspendingAuthentication (SecondaryAuthenticationFactorAuthenticationStage_SuspendingAuthentication) = 3, CredentialCollected (SecondaryAuthenticationFactorAuthenticationStage_CredentialCollected) = 4, CredentialAuthenticated (SecondaryAuthenticationFactorAuthenticationStage_CredentialAuthenticated) = 5, StoppingAuthentication (SecondaryAuthenticationFactorAuthenticationStage_StoppingAuthentication) = 6, ReadyForLock (SecondaryAuthenticationFactorAuthenticationStage_ReadyForLock) = 7, CheckingDevicePresence (SecondaryAuthenticationFactorAuthenticationStage_CheckingDevicePresence) = 8,
+}}
+DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs, 3567644246, 29329, 16499, 188, 31, 204, 184, 245, 175, 223, 150);
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs(ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs] {
+    fn get_StageInfo(&self, out: *mut *mut SecondaryAuthenticationFactorAuthenticationStageInfo) -> HRESULT
+}}
+impl ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs {
+    #[inline] pub fn get_stage_info(&self) -> Result<Option<ComPtr<SecondaryAuthenticationFactorAuthenticationStageInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_StageInfo)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs: ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs}
+DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationStageInfo, 1459536523, 59562, 19471, 142, 76, 165, 89, 231, 58, 221, 136);
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationStageInfo(ISecondaryAuthenticationFactorAuthenticationStageInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationStageInfo] {
+    fn get_Stage(&self, out: *mut SecondaryAuthenticationFactorAuthenticationStage) -> HRESULT,
+    fn get_Scenario(&self, out: *mut SecondaryAuthenticationFactorAuthenticationScenario) -> HRESULT,
+    fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl ISecondaryAuthenticationFactorAuthenticationStageInfo {
+    #[inline] pub fn get_stage(&self) -> Result<SecondaryAuthenticationFactorAuthenticationStage> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Stage)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_scenario(&self) -> Result<SecondaryAuthenticationFactorAuthenticationScenario> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Scenario)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DeviceId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationStageInfo: ISecondaryAuthenticationFactorAuthenticationStageInfo}
+DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationStatics, 1062741590, 10488, 19983, 174, 140, 88, 152, 185, 174, 36, 105);
+RT_INTERFACE!{static interface ISecondaryAuthenticationFactorAuthenticationStatics(ISecondaryAuthenticationFactorAuthenticationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationStatics] {
+    fn ShowNotificationMessageAsync(&self, deviceName: HSTRING, message: SecondaryAuthenticationFactorAuthenticationMessage, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-storage")] fn StartAuthenticationAsync(&self, deviceId: HSTRING, serviceAuthenticationNonce: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationResult>) -> HRESULT,
+    fn add_AuthenticationStageChanged(&self, handler: *mut foundation::EventHandler<SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_AuthenticationStageChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn GetAuthenticationStageInfoAsync(&self, out: *mut *mut foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationStageInfo>) -> HRESULT
+}}
+impl ISecondaryAuthenticationFactorAuthenticationStatics {
+    #[inline] pub fn show_notification_message_async(&self, deviceName: &HStringArg, message: SecondaryAuthenticationFactorAuthenticationMessage) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ShowNotificationMessageAsync)(self as *const _ as *mut _, deviceName.get(), message, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn start_authentication_async(&self, deviceId: &HStringArg, serviceAuthenticationNonce: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).StartAuthenticationAsync)(self as *const _ as *mut _, deviceId.get(), serviceAuthenticationNonce as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_authentication_stage_changed(&self, handler: &foundation::EventHandler<SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_AuthenticationStageChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_authentication_stage_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_AuthenticationStageChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_authentication_stage_info_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationStageInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAuthenticationStageInfoAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationStatus: i32 {
+    Failed (SecondaryAuthenticationFactorAuthenticationStatus_Failed) = 0, Started (SecondaryAuthenticationFactorAuthenticationStatus_Started) = 1, UnknownDevice (SecondaryAuthenticationFactorAuthenticationStatus_UnknownDevice) = 2, DisabledByPolicy (SecondaryAuthenticationFactorAuthenticationStatus_DisabledByPolicy) = 3, InvalidAuthenticationStage (SecondaryAuthenticationFactorAuthenticationStatus_InvalidAuthenticationStage) = 4,
+}}
+RT_ENUM! { enum SecondaryAuthenticationFactorDeviceCapabilities: u32 {
+    None (SecondaryAuthenticationFactorDeviceCapabilities_None) = 0, SecureStorage (SecondaryAuthenticationFactorDeviceCapabilities_SecureStorage) = 1, StoreKeys (SecondaryAuthenticationFactorDeviceCapabilities_StoreKeys) = 2, ConfirmUserIntentToAuthenticate (SecondaryAuthenticationFactorDeviceCapabilities_ConfirmUserIntentToAuthenticate) = 4, SupportSecureUserPresenceCheck (SecondaryAuthenticationFactorDeviceCapabilities_SupportSecureUserPresenceCheck) = 8, TransmittedDataIsEncrypted (SecondaryAuthenticationFactorDeviceCapabilities_TransmittedDataIsEncrypted) = 16, HMacSha256 (SecondaryAuthenticationFactorDeviceCapabilities_HMacSha256) = 32, CloseRangeDataTransmission (SecondaryAuthenticationFactorDeviceCapabilities_CloseRangeDataTransmission) = 64,
+}}
+RT_ENUM! { enum SecondaryAuthenticationFactorDeviceFindScope: i32 {
+    User (SecondaryAuthenticationFactorDeviceFindScope_User) = 0, AllUsers (SecondaryAuthenticationFactorDeviceFindScope_AllUsers) = 1,
+}}
+RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresence: i32 {
+    Absent (SecondaryAuthenticationFactorDevicePresence_Absent) = 0, Present (SecondaryAuthenticationFactorDevicePresence_Present) = 1,
+}}
+RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresenceMonitoringMode: i32 {
+    Unsupported (SecondaryAuthenticationFactorDevicePresenceMonitoringMode_Unsupported) = 0, AppManaged (SecondaryAuthenticationFactorDevicePresenceMonitoringMode_AppManaged) = 1, SystemManaged (SecondaryAuthenticationFactorDevicePresenceMonitoringMode_SystemManaged) = 2,
+}}
+DEFINE_IID!(IID_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics, 2420742681, 32498, 17699, 149, 28, 164, 23, 162, 74, 207, 147);
+RT_INTERFACE!{static interface ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics(ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics] {
+    fn RegisterDevicePresenceMonitoringAsync(&self, deviceId: HSTRING, deviceInstancePath: HSTRING, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, out: *mut *mut foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-storage")] fn RegisterDevicePresenceMonitoringWithNewDeviceAsync(&self, deviceId: HSTRING, deviceInstancePath: HSTRING, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, deviceFriendlyName: HSTRING, deviceModelNumber: HSTRING, deviceConfigurationData: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>) -> HRESULT,
+    fn UnregisterDevicePresenceMonitoringAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn IsDevicePresenceMonitoringSupported(&self, out: *mut bool) -> HRESULT
+}}
+impl ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics {
+    #[inline] pub fn register_device_presence_monitoring_async(&self, deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RegisterDevicePresenceMonitoringAsync)(self as *const _ as *mut _, deviceId.get(), deviceInstancePath.get(), monitoringMode, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn register_device_presence_monitoring_with_new_device_async(&self, deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceConfigurationData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RegisterDevicePresenceMonitoringWithNewDeviceAsync)(self as *const _ as *mut _, deviceId.get(), deviceInstancePath.get(), monitoringMode, deviceFriendlyName.get(), deviceModelNumber.get(), deviceConfigurationData as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn unregister_device_presence_monitoring_async(&self, deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).UnregisterDevicePresenceMonitoringAsync)(self as *const _ as *mut _, deviceId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn is_device_presence_monitoring_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsDevicePresenceMonitoringSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus: i32 {
+    Unsupported (SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus_Unsupported) = 0, Succeeded (SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus_Succeeded) = 1, DisabledByPolicy (SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus_DisabledByPolicy) = 2,
+}}
+RT_ENUM! { enum SecondaryAuthenticationFactorFinishAuthenticationStatus: i32 {
+    Failed (SecondaryAuthenticationFactorFinishAuthenticationStatus_Failed) = 0, Completed (SecondaryAuthenticationFactorFinishAuthenticationStatus_Completed) = 1, NonceExpired (SecondaryAuthenticationFactorFinishAuthenticationStatus_NonceExpired) = 2,
+}}
+DEFINE_IID!(IID_ISecondaryAuthenticationFactorInfo, 506177633, 34099, 20430, 131, 155, 236, 183, 36, 16, 172, 20);
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorInfo(ISecondaryAuthenticationFactorInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorInfo] {
+    fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_DeviceFriendlyName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_DeviceModelNumber(&self, out: *mut HSTRING) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_DeviceConfigurationData(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
+}}
+impl ISecondaryAuthenticationFactorInfo {
+    #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DeviceId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_device_friendly_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DeviceFriendlyName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_device_model_number(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DeviceModelNumber)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_device_configuration_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DeviceConfigurationData)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SecondaryAuthenticationFactorInfo: ISecondaryAuthenticationFactorInfo}
+DEFINE_IID!(IID_ISecondaryAuthenticationFactorInfo2, 349798819, 64550, 20471, 171, 195, 72, 232, 42, 81, 42, 10);
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorInfo2(ISecondaryAuthenticationFactorInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorInfo2] {
+    fn get_PresenceMonitoringMode(&self, out: *mut SecondaryAuthenticationFactorDevicePresenceMonitoringMode) -> HRESULT,
+    fn UpdateDevicePresenceAsync(&self, presenceState: SecondaryAuthenticationFactorDevicePresence, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn get_IsAuthenticationSupported(&self, out: *mut bool) -> HRESULT
+}}
+impl ISecondaryAuthenticationFactorInfo2 {
+    #[inline] pub fn get_presence_monitoring_mode(&self) -> Result<SecondaryAuthenticationFactorDevicePresenceMonitoringMode> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PresenceMonitoringMode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn update_device_presence_async(&self, presenceState: SecondaryAuthenticationFactorDevicePresence) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).UpdateDevicePresenceAsync)(self as *const _ as *mut _, presenceState, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_authentication_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsAuthenticationSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISecondaryAuthenticationFactorRegistration, 2672606132, 36026, 18608, 132, 13, 219, 178, 42, 84, 198, 120);
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorRegistration(ISecondaryAuthenticationFactorRegistrationVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorRegistration] {
+    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-storage")] fn FinishRegisteringDeviceAsync(&self, deviceConfigurationData: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn AbortRegisteringDeviceAsync(&self, errorLogMessage: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl ISecondaryAuthenticationFactorRegistration {
+    #[cfg(feature="windows-storage")] #[inline] pub fn finish_registering_device_async(&self, deviceConfigurationData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FinishRegisteringDeviceAsync)(self as *const _ as *mut _, deviceConfigurationData as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn abort_registering_device_async(&self, errorLogMessage: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AbortRegisteringDeviceAsync)(self as *const _ as *mut _, errorLogMessage.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SecondaryAuthenticationFactorRegistration: ISecondaryAuthenticationFactorRegistration}
+impl RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics> for SecondaryAuthenticationFactorRegistration {}
+impl RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics> for SecondaryAuthenticationFactorRegistration {}
+impl SecondaryAuthenticationFactorRegistration {
+    #[inline] pub fn register_device_presence_monitoring_async(deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().register_device_presence_monitoring_async(deviceId, deviceInstancePath, monitoringMode)
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub fn register_device_presence_monitoring_with_new_device_async(deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceConfigurationData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().register_device_presence_monitoring_with_new_device_async(deviceId, deviceInstancePath, monitoringMode, deviceFriendlyName, deviceModelNumber, deviceConfigurationData)
+    }
+    #[inline] pub fn unregister_device_presence_monitoring_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().unregister_device_presence_monitoring_async(deviceId)
+    }
+    #[inline] pub fn is_device_presence_monitoring_supported() -> Result<bool> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().is_device_presence_monitoring_supported()
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_start_registering_device_async(deviceId: &HStringArg, capabilities: SecondaryAuthenticationFactorDeviceCapabilities, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceKey: &::rt::gen::windows::storage::streams::IBuffer, mutualAuthenticationKey: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorRegistrationResult>>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().request_start_registering_device_async(deviceId, capabilities, deviceFriendlyName, deviceModelNumber, deviceKey, mutualAuthenticationKey)
+    }
+    #[inline] pub fn find_all_registered_device_info_async(queryType: SecondaryAuthenticationFactorDeviceFindScope) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<SecondaryAuthenticationFactorInfo>>>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().find_all_registered_device_info_async(queryType)
+    }
+    #[inline] pub fn unregister_device_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().unregister_device_async(deviceId)
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub fn update_device_configuration_data_async(deviceId: &HStringArg, deviceConfigurationData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().update_device_configuration_data_async(deviceId, deviceConfigurationData)
+    }
+}
+DEFINE_CLSID!(SecondaryAuthenticationFactorRegistration(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,80,114,111,118,105,100,101,114,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,82,101,103,105,115,116,114,97,116,105,111,110,0]) [CLSID_SecondaryAuthenticationFactorRegistration]);
+DEFINE_IID!(IID_ISecondaryAuthenticationFactorRegistrationResult, 2768123376, 44515, 18817, 175, 107, 236, 25, 89, 33, 104, 42);
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorRegistrationResult(ISecondaryAuthenticationFactorRegistrationResultVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorRegistrationResult] {
+    fn get_Status(&self, out: *mut SecondaryAuthenticationFactorRegistrationStatus) -> HRESULT,
+    fn get_Registration(&self, out: *mut *mut SecondaryAuthenticationFactorRegistration) -> HRESULT
+}}
+impl ISecondaryAuthenticationFactorRegistrationResult {
+    #[inline] pub fn get_status(&self) -> Result<SecondaryAuthenticationFactorRegistrationStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_registration(&self) -> Result<Option<ComPtr<SecondaryAuthenticationFactorRegistration>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Registration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SecondaryAuthenticationFactorRegistrationResult: ISecondaryAuthenticationFactorRegistrationResult}
+DEFINE_IID!(IID_ISecondaryAuthenticationFactorRegistrationStatics, 450826085, 58295, 16725, 153, 127, 183, 86, 239, 101, 190, 186);
+RT_INTERFACE!{static interface ISecondaryAuthenticationFactorRegistrationStatics(ISecondaryAuthenticationFactorRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorRegistrationStatics] {
+    #[cfg(feature="windows-storage")] fn RequestStartRegisteringDeviceAsync(&self, deviceId: HSTRING, capabilities: SecondaryAuthenticationFactorDeviceCapabilities, deviceFriendlyName: HSTRING, deviceModelNumber: HSTRING, deviceKey: *mut ::rt::gen::windows::storage::streams::IBuffer, mutualAuthenticationKey: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<SecondaryAuthenticationFactorRegistrationResult>) -> HRESULT,
+    fn FindAllRegisteredDeviceInfoAsync(&self, queryType: SecondaryAuthenticationFactorDeviceFindScope, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<SecondaryAuthenticationFactorInfo>>) -> HRESULT,
+    fn UnregisterDeviceAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn UpdateDeviceConfigurationDataAsync(&self, deviceId: HSTRING, deviceConfigurationData: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl ISecondaryAuthenticationFactorRegistrationStatics {
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_start_registering_device_async(&self, deviceId: &HStringArg, capabilities: SecondaryAuthenticationFactorDeviceCapabilities, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceKey: &::rt::gen::windows::storage::streams::IBuffer, mutualAuthenticationKey: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorRegistrationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestStartRegisteringDeviceAsync)(self as *const _ as *mut _, deviceId.get(), capabilities, deviceFriendlyName.get(), deviceModelNumber.get(), deviceKey as *const _ as *mut _, mutualAuthenticationKey as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_all_registered_device_info_async(&self, queryType: SecondaryAuthenticationFactorDeviceFindScope) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<SecondaryAuthenticationFactorInfo>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindAllRegisteredDeviceInfoAsync)(self as *const _ as *mut _, queryType, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn unregister_device_async(&self, deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).UnregisterDeviceAsync)(self as *const _ as *mut _, deviceId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn update_device_configuration_data_async(&self, deviceId: &HStringArg, deviceConfigurationData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).UpdateDeviceConfigurationDataAsync)(self as *const _ as *mut _, deviceId.get(), deviceConfigurationData as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum SecondaryAuthenticationFactorRegistrationStatus: i32 {
+    Failed (SecondaryAuthenticationFactorRegistrationStatus_Failed) = 0, Started (SecondaryAuthenticationFactorRegistrationStatus_Started) = 1, CanceledByUser (SecondaryAuthenticationFactorRegistrationStatus_CanceledByUser) = 2, PinSetupRequired (SecondaryAuthenticationFactorRegistrationStatus_PinSetupRequired) = 3, DisabledByPolicy (SecondaryAuthenticationFactorRegistrationStatus_DisabledByPolicy) = 4,
+}}
+} // Windows.Security.Authentication.Identity.Provider
+} // Windows.Security.Authentication.Identity
+pub mod onlineid { // Windows.Security.Authentication.OnlineId
+use ::prelude::*;
+RT_ENUM! { enum CredentialPromptType: i32 {
+    PromptIfNeeded (CredentialPromptType_PromptIfNeeded) = 0, RetypeCredentials (CredentialPromptType_RetypeCredentials) = 1, DoNotPrompt (CredentialPromptType_DoNotPrompt) = 2,
+}}
+DEFINE_IID!(IID_IOnlineIdAuthenticator, 2684614026, 10667, 18455, 184, 132, 215, 81, 109, 173, 24, 185);
+RT_INTERFACE!{interface IOnlineIdAuthenticator(IOnlineIdAuthenticatorVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdAuthenticator] {
+    fn AuthenticateUserAsync(&self, request: *mut OnlineIdServiceTicketRequest, out: *mut *mut UserAuthenticationOperation) -> HRESULT,
+    fn AuthenticateUserAsyncAdvanced(&self, requests: *mut foundation::collections::IIterable<OnlineIdServiceTicketRequest>, credentialPromptType: CredentialPromptType, out: *mut *mut UserAuthenticationOperation) -> HRESULT,
+    fn SignOutUserAsync(&self, out: *mut *mut SignOutUserOperation) -> HRESULT,
+    fn put_ApplicationId(&self, value: Guid) -> HRESULT,
+    fn get_ApplicationId(&self, out: *mut Guid) -> HRESULT,
+    fn get_CanSignOut(&self, out: *mut bool) -> HRESULT,
+    fn get_AuthenticatedSafeCustomerId(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IOnlineIdAuthenticator {
+    #[inline] pub fn authenticate_user_async(&self, request: &OnlineIdServiceTicketRequest) -> Result<ComPtr<UserAuthenticationOperation>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AuthenticateUserAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn authenticate_user_async_advanced(&self, requests: &foundation::collections::IIterable<OnlineIdServiceTicketRequest>, credentialPromptType: CredentialPromptType) -> Result<ComPtr<UserAuthenticationOperation>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AuthenticateUserAsyncAdvanced)(self as *const _ as *mut _, requests as *const _ as *mut _, credentialPromptType, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn sign_out_user_async(&self) -> Result<ComPtr<SignOutUserOperation>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SignOutUserAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_application_id(&self, value: Guid) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ApplicationId)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_application_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ApplicationId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_can_sign_out(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanSignOut)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_authenticated_safe_customer_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AuthenticatedSafeCustomerId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class OnlineIdAuthenticator: IOnlineIdAuthenticator}
+impl RtActivatable<IActivationFactory> for OnlineIdAuthenticator {}
+DEFINE_CLSID!(OnlineIdAuthenticator(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,65,117,116,104,101,110,116,105,99,97,116,111,114,0]) [CLSID_OnlineIdAuthenticator]);
+DEFINE_IID!(IID_IOnlineIdServiceTicket, 3378271359, 55169, 19092, 172, 184, 197, 152, 116, 35, 140, 38);
+RT_INTERFACE!{interface IOnlineIdServiceTicket(IOnlineIdServiceTicketVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdServiceTicket] {
+    fn get_Value(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Request(&self, out: *mut *mut OnlineIdServiceTicketRequest) -> HRESULT,
+    fn get_ErrorCode(&self, out: *mut i32) -> HRESULT
+}}
+impl IOnlineIdServiceTicket {
+    #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<OnlineIdServiceTicketRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_error_code(&self) -> Result<i32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ErrorCode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class OnlineIdServiceTicket: IOnlineIdServiceTicket}
+DEFINE_IID!(IID_IOnlineIdServiceTicketRequest, 695485907, 64355, 16693, 137, 9, 78, 53, 76, 6, 20, 102);
+RT_INTERFACE!{interface IOnlineIdServiceTicketRequest(IOnlineIdServiceTicketRequestVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdServiceTicketRequest] {
+    fn get_Service(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Policy(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IOnlineIdServiceTicketRequest {
+    #[inline] pub fn get_service(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Service)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_policy(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Policy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class OnlineIdServiceTicketRequest: IOnlineIdServiceTicketRequest}
+impl RtActivatable<IOnlineIdServiceTicketRequestFactory> for OnlineIdServiceTicketRequest {}
+impl OnlineIdServiceTicketRequest {
+    #[inline] pub fn create_online_id_service_ticket_request(service: &HStringArg, policy: &HStringArg) -> Result<ComPtr<OnlineIdServiceTicketRequest>> {
+        <Self as RtActivatable<IOnlineIdServiceTicketRequestFactory>>::get_activation_factory().create_online_id_service_ticket_request(service, policy)
+    }
+    #[inline] pub fn create_online_id_service_ticket_request_advanced(service: &HStringArg) -> Result<ComPtr<OnlineIdServiceTicketRequest>> {
+        <Self as RtActivatable<IOnlineIdServiceTicketRequestFactory>>::get_activation_factory().create_online_id_service_ticket_request_advanced(service)
+    }
+}
+DEFINE_CLSID!(OnlineIdServiceTicketRequest(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,83,101,114,118,105,99,101,84,105,99,107,101,116,82,101,113,117,101,115,116,0]) [CLSID_OnlineIdServiceTicketRequest]);
+DEFINE_IID!(IID_IOnlineIdServiceTicketRequestFactory, 3199928840, 40563, 16503, 150, 20, 8, 97, 76, 11, 194, 69);
+RT_INTERFACE!{static interface IOnlineIdServiceTicketRequestFactory(IOnlineIdServiceTicketRequestFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdServiceTicketRequestFactory] {
+    fn CreateOnlineIdServiceTicketRequest(&self, service: HSTRING, policy: HSTRING, out: *mut *mut OnlineIdServiceTicketRequest) -> HRESULT,
+    fn CreateOnlineIdServiceTicketRequestAdvanced(&self, service: HSTRING, out: *mut *mut OnlineIdServiceTicketRequest) -> HRESULT
+}}
+impl IOnlineIdServiceTicketRequestFactory {
+    #[inline] pub fn create_online_id_service_ticket_request(&self, service: &HStringArg, policy: &HStringArg) -> Result<ComPtr<OnlineIdServiceTicketRequest>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateOnlineIdServiceTicketRequest)(self as *const _ as *mut _, service.get(), policy.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_online_id_service_ticket_request_advanced(&self, service: &HStringArg) -> Result<ComPtr<OnlineIdServiceTicketRequest>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateOnlineIdServiceTicketRequestAdvanced)(self as *const _ as *mut _, service.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{static class OnlineIdSystemAuthenticator}
+impl RtActivatable<IOnlineIdSystemAuthenticatorStatics> for OnlineIdSystemAuthenticator {}
+impl OnlineIdSystemAuthenticator {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> {
+        <Self as RtActivatable<IOnlineIdSystemAuthenticatorStatics>>::get_activation_factory().get_default()
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &::rt::gen::windows::system::User) -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> {
+        <Self as RtActivatable<IOnlineIdSystemAuthenticatorStatics>>::get_activation_factory().get_for_user(user)
+    }
+}
+DEFINE_CLSID!(OnlineIdSystemAuthenticator(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,83,121,115,116,101,109,65,117,116,104,101,110,116,105,99,97,116,111,114,0]) [CLSID_OnlineIdSystemAuthenticator]);
+DEFINE_IID!(IID_IOnlineIdSystemAuthenticatorForUser, 1469628155, 7652, 16774, 162, 230, 181, 99, 248, 106, 175, 68);
+RT_INTERFACE!{interface IOnlineIdSystemAuthenticatorForUser(IOnlineIdSystemAuthenticatorForUserVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemAuthenticatorForUser] {
+    fn GetTicketAsync(&self, request: *mut OnlineIdServiceTicketRequest, out: *mut *mut foundation::IAsyncOperation<OnlineIdSystemTicketResult>) -> HRESULT,
+    fn put_ApplicationId(&self, value: Guid) -> HRESULT,
+    fn get_ApplicationId(&self, out: *mut Guid) -> HRESULT,
+    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut ::rt::gen::windows::system::User) -> HRESULT
+}}
+impl IOnlineIdSystemAuthenticatorForUser {
+    #[inline] pub fn get_ticket_async(&self, request: &OnlineIdServiceTicketRequest) -> Result<ComPtr<foundation::IAsyncOperation<OnlineIdSystemTicketResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetTicketAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_application_id(&self, value: Guid) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ApplicationId)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_application_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ApplicationId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<::rt::gen::windows::system::User>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class OnlineIdSystemAuthenticatorForUser: IOnlineIdSystemAuthenticatorForUser}
+DEFINE_IID!(IID_IOnlineIdSystemAuthenticatorStatics, 2231662482, 63028, 16867, 150, 164, 81, 100, 233, 2, 199, 64);
+RT_INTERFACE!{static interface IOnlineIdSystemAuthenticatorStatics(IOnlineIdSystemAuthenticatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemAuthenticatorStatics] {
+    fn get_Default(&self, out: *mut *mut OnlineIdSystemAuthenticatorForUser) -> HRESULT,
+    #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut ::rt::gen::windows::system::User, out: *mut *mut OnlineIdSystemAuthenticatorForUser) -> HRESULT
+}}
+impl IOnlineIdSystemAuthenticatorStatics {
+    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Default)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &::rt::gen::windows::system::User) -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IOnlineIdSystemIdentity, 1950142989, 46794, 17229, 129, 36, 83, 234, 18, 104, 83, 7);
+RT_INTERFACE!{interface IOnlineIdSystemIdentity(IOnlineIdSystemIdentityVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemIdentity] {
+    fn get_Ticket(&self, out: *mut *mut OnlineIdServiceTicket) -> HRESULT,
+    fn get_Id(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IOnlineIdSystemIdentity {
+    #[inline] pub fn get_ticket(&self) -> Result<Option<ComPtr<OnlineIdServiceTicket>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Ticket)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class OnlineIdSystemIdentity: IOnlineIdSystemIdentity}
+DEFINE_IID!(IID_IOnlineIdSystemTicketResult, 3674890232, 45208, 19149, 157, 19, 158, 100, 6, 82, 181, 182);
+RT_INTERFACE!{interface IOnlineIdSystemTicketResult(IOnlineIdSystemTicketResultVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemTicketResult] {
+    fn get_Identity(&self, out: *mut *mut OnlineIdSystemIdentity) -> HRESULT,
+    fn get_Status(&self, out: *mut OnlineIdSystemTicketStatus) -> HRESULT,
+    fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
+}}
+impl IOnlineIdSystemTicketResult {
+    #[inline] pub fn get_identity(&self) -> Result<Option<ComPtr<OnlineIdSystemIdentity>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Identity)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_status(&self) -> Result<OnlineIdSystemTicketStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ExtendedError)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class OnlineIdSystemTicketResult: IOnlineIdSystemTicketResult}
+RT_ENUM! { enum OnlineIdSystemTicketStatus: i32 {
+    Success (OnlineIdSystemTicketStatus_Success) = 0, Error (OnlineIdSystemTicketStatus_Error) = 1, ServiceConnectionError (OnlineIdSystemTicketStatus_ServiceConnectionError) = 2,
+}}
+RT_CLASS!{class SignOutUserOperation: foundation::IAsyncAction}
+RT_CLASS!{class UserAuthenticationOperation: foundation::IAsyncOperation<UserIdentity>}
+DEFINE_IID!(IID_IUserIdentity, 558291405, 1858, 19427, 138, 28, 124, 122, 230, 121, 170, 136);
+RT_INTERFACE!{interface IUserIdentity(IUserIdentityVtbl): IInspectable(IInspectableVtbl) [IID_IUserIdentity] {
+    fn get_Tickets(&self, out: *mut *mut foundation::collections::IVectorView<OnlineIdServiceTicket>) -> HRESULT,
+    fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_SafeCustomerId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_SignInName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_FirstName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_LastName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_IsBetaAccount(&self, out: *mut bool) -> HRESULT,
+    fn get_IsConfirmedPC(&self, out: *mut bool) -> HRESULT
+}}
+impl IUserIdentity {
+    #[inline] pub fn get_tickets(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<OnlineIdServiceTicket>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Tickets)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_safe_customer_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SafeCustomerId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_sign_in_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SignInName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_first_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_FirstName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_last_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_LastName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_beta_account(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsBetaAccount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_confirmed_pc(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsConfirmedPC)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class UserIdentity: IUserIdentity}
+} // Windows.Security.Authentication.OnlineId
+pub mod web { // Windows.Security.Authentication.Web
+use ::prelude::*;
+RT_ENUM! { enum TokenBindingKeyType: i32 {
+    Rsa2048 (TokenBindingKeyType_Rsa2048) = 0, EcdsaP256 (TokenBindingKeyType_EcdsaP256) = 1, AnyExisting (TokenBindingKeyType_AnyExisting) = 2,
+}}
+RT_CLASS!{static class WebAuthenticationBroker}
+impl RtActivatable<IWebAuthenticationBrokerStatics> for WebAuthenticationBroker {}
+impl RtActivatable<IWebAuthenticationBrokerStatics2> for WebAuthenticationBroker {}
+impl WebAuthenticationBroker {
+    #[inline] pub fn authenticate_with_callback_uri_async(options: WebAuthenticationOptions, requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().authenticate_with_callback_uri_async(options, requestUri, callbackUri)
+    }
+    #[inline] pub fn authenticate_without_callback_uri_async(options: WebAuthenticationOptions, requestUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().authenticate_without_callback_uri_async(options, requestUri)
+    }
+    #[inline] pub fn get_current_application_callback_uri() -> Result<Option<ComPtr<foundation::Uri>>> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().get_current_application_callback_uri()
+    }
+    #[inline] pub fn authenticate_and_continue(requestUri: &foundation::Uri) -> Result<()> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_and_continue(requestUri)
+    }
+    #[inline] pub fn authenticate_with_callback_uri_and_continue(requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<()> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_with_callback_uri_and_continue(requestUri, callbackUri)
+    }
+    #[inline] pub fn authenticate_with_callback_uri_continuation_data_and_options_and_continue(requestUri: &foundation::Uri, callbackUri: &foundation::Uri, continuationData: &foundation::collections::ValueSet, options: WebAuthenticationOptions) -> Result<()> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_with_callback_uri_continuation_data_and_options_and_continue(requestUri, callbackUri, continuationData, options)
+    }
+    #[inline] pub fn authenticate_silently_async(requestUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_silently_async(requestUri)
+    }
+    #[inline] pub fn authenticate_silently_with_options_async(requestUri: &foundation::Uri, options: WebAuthenticationOptions) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_silently_with_options_async(requestUri, options)
+    }
+}
+DEFINE_CLSID!(WebAuthenticationBroker(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,66,114,111,107,101,114,0]) [CLSID_WebAuthenticationBroker]);
+DEFINE_IID!(IID_IWebAuthenticationBrokerStatics, 789880602, 58995, 16565, 188, 34, 32, 26, 104, 100, 163, 123);
+RT_INTERFACE!{static interface IWebAuthenticationBrokerStatics(IWebAuthenticationBrokerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationBrokerStatics] {
+    fn AuthenticateWithCallbackUriAsync(&self, options: WebAuthenticationOptions, requestUri: *mut foundation::Uri, callbackUri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<WebAuthenticationResult>) -> HRESULT,
+    fn AuthenticateWithoutCallbackUriAsync(&self, options: WebAuthenticationOptions, requestUri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<WebAuthenticationResult>) -> HRESULT,
+    fn GetCurrentApplicationCallbackUri(&self, out: *mut *mut foundation::Uri) -> HRESULT
+}}
+impl IWebAuthenticationBrokerStatics {
+    #[inline] pub fn authenticate_with_callback_uri_async(&self, options: WebAuthenticationOptions, requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AuthenticateWithCallbackUriAsync)(self as *const _ as *mut _, options, requestUri as *const _ as *mut _, callbackUri as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn authenticate_without_callback_uri_async(&self, options: WebAuthenticationOptions, requestUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AuthenticateWithoutCallbackUriAsync)(self as *const _ as *mut _, options, requestUri as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_current_application_callback_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCurrentApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAuthenticationBrokerStatics2, 1942879134, 5351, 16858, 169, 113, 170, 244, 65, 11, 98, 30);
+RT_INTERFACE!{static interface IWebAuthenticationBrokerStatics2(IWebAuthenticationBrokerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationBrokerStatics2] {
+    fn AuthenticateAndContinue(&self, requestUri: *mut foundation::Uri) -> HRESULT,
+    fn AuthenticateWithCallbackUriAndContinue(&self, requestUri: *mut foundation::Uri, callbackUri: *mut foundation::Uri) -> HRESULT,
+    fn AuthenticateWithCallbackUriContinuationDataAndOptionsAndContinue(&self, requestUri: *mut foundation::Uri, callbackUri: *mut foundation::Uri, continuationData: *mut foundation::collections::ValueSet, options: WebAuthenticationOptions) -> HRESULT,
+    fn AuthenticateSilentlyAsync(&self, requestUri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<WebAuthenticationResult>) -> HRESULT,
+    fn AuthenticateSilentlyWithOptionsAsync(&self, requestUri: *mut foundation::Uri, options: WebAuthenticationOptions, out: *mut *mut foundation::IAsyncOperation<WebAuthenticationResult>) -> HRESULT
+}}
+impl IWebAuthenticationBrokerStatics2 {
+    #[inline] pub fn authenticate_and_continue(&self, requestUri: &foundation::Uri) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AuthenticateAndContinue)(self as *const _ as *mut _, requestUri as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn authenticate_with_callback_uri_and_continue(&self, requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AuthenticateWithCallbackUriAndContinue)(self as *const _ as *mut _, requestUri as *const _ as *mut _, callbackUri as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn authenticate_with_callback_uri_continuation_data_and_options_and_continue(&self, requestUri: &foundation::Uri, callbackUri: &foundation::Uri, continuationData: &foundation::collections::ValueSet, options: WebAuthenticationOptions) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AuthenticateWithCallbackUriContinuationDataAndOptionsAndContinue)(self as *const _ as *mut _, requestUri as *const _ as *mut _, callbackUri as *const _ as *mut _, continuationData as *const _ as *mut _, options);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn authenticate_silently_async(&self, requestUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AuthenticateSilentlyAsync)(self as *const _ as *mut _, requestUri as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn authenticate_silently_with_options_async(&self, requestUri: &foundation::Uri, options: WebAuthenticationOptions) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AuthenticateSilentlyWithOptionsAsync)(self as *const _ as *mut _, requestUri as *const _ as *mut _, options, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum WebAuthenticationOptions: u32 {
+    None (WebAuthenticationOptions_None) = 0, SilentMode (WebAuthenticationOptions_SilentMode) = 1, UseTitle (WebAuthenticationOptions_UseTitle) = 2, UseHttpPost (WebAuthenticationOptions_UseHttpPost) = 4, UseCorporateNetwork (WebAuthenticationOptions_UseCorporateNetwork) = 8,
+}}
+DEFINE_IID!(IID_IWebAuthenticationResult, 1677732683, 60905, 18186, 165, 205, 3, 35, 250, 246, 226, 98);
+RT_INTERFACE!{interface IWebAuthenticationResult(IWebAuthenticationResultVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationResult] {
+    fn get_ResponseData(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_ResponseStatus(&self, out: *mut WebAuthenticationStatus) -> HRESULT,
+    fn get_ResponseErrorDetail(&self, out: *mut u32) -> HRESULT
+}}
+impl IWebAuthenticationResult {
+    #[inline] pub fn get_response_data(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResponseData)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_response_status(&self) -> Result<WebAuthenticationStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ResponseStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_response_error_detail(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ResponseErrorDetail)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebAuthenticationResult: IWebAuthenticationResult}
+RT_ENUM! { enum WebAuthenticationStatus: i32 {
+    Success (WebAuthenticationStatus_Success) = 0, UserCancel (WebAuthenticationStatus_UserCancel) = 1, ErrorHttp (WebAuthenticationStatus_ErrorHttp) = 2,
+}}
+pub mod core { // Windows.Security.Authentication.Web.Core
+use ::prelude::*;
+DEFINE_IID!(IID_IFindAllAccountsResult, 2776705885, 46894, 16908, 134, 171, 170, 192, 215, 183, 38, 31);
+RT_INTERFACE!{interface IFindAllAccountsResult(IFindAllAccountsResultVtbl): IInspectable(IInspectableVtbl) [IID_IFindAllAccountsResult] {
+    fn get_Accounts(&self, out: *mut *mut foundation::collections::IVectorView<super::super::super::credentials::WebAccount>) -> HRESULT,
+    fn get_Status(&self, out: *mut FindAllWebAccountsStatus) -> HRESULT,
+    fn get_ProviderError(&self, out: *mut *mut WebProviderError) -> HRESULT
+}}
+impl IFindAllAccountsResult {
+    #[inline] pub fn get_accounts(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Accounts)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_status(&self) -> Result<FindAllWebAccountsStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_provider_error(&self) -> Result<Option<ComPtr<WebProviderError>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderError)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class FindAllAccountsResult: IFindAllAccountsResult}
+RT_ENUM! { enum FindAllWebAccountsStatus: i32 {
+    Success (FindAllWebAccountsStatus_Success) = 0, NotAllowedByProvider (FindAllWebAccountsStatus_NotAllowedByProvider) = 1, NotSupportedByProvider (FindAllWebAccountsStatus_NotSupportedByProvider) = 2, ProviderError (FindAllWebAccountsStatus_ProviderError) = 3,
+}}
+DEFINE_IID!(IID_IWebAccountEventArgs, 1874264957, 16974, 17644, 151, 124, 239, 36, 21, 70, 42, 90);
+RT_INTERFACE!{interface IWebAccountEventArgs(IWebAccountEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountEventArgs] {
+    fn get_Account(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT
+}}
+impl IWebAccountEventArgs {
+    #[inline] pub fn get_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Account)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebAccountEventArgs: IWebAccountEventArgs}
+DEFINE_IID!(IID_IWebAccountMonitor, 1950742013, 43677, 17945, 141, 93, 193, 56, 164, 237, 227, 229);
+RT_INTERFACE!{interface IWebAccountMonitor(IWebAccountMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountMonitor] {
+    fn add_Updated(&self, handler: *mut foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Updated(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_Removed(&self, handler: *mut foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Removed(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_DefaultSignInAccountChanged(&self, handler: *mut foundation::TypedEventHandler<WebAccountMonitor, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_DefaultSignInAccountChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IWebAccountMonitor {
+    #[inline] pub fn add_updated(&self, handler: &foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Updated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Updated)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Removed)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_default_sign_in_account_changed(&self, handler: &foundation::TypedEventHandler<WebAccountMonitor, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_DefaultSignInAccountChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_default_sign_in_account_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_DefaultSignInAccountChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebAccountMonitor: IWebAccountMonitor}
+RT_CLASS!{static class WebAuthenticationCoreManager}
+impl RtActivatable<IWebAuthenticationCoreManagerStatics> for WebAuthenticationCoreManager {}
+impl RtActivatable<IWebAuthenticationCoreManagerStatics2> for WebAuthenticationCoreManager {}
+impl RtActivatable<IWebAuthenticationCoreManagerStatics3> for WebAuthenticationCoreManager {}
+impl RtActivatable<IWebAuthenticationCoreManagerStatics4> for WebAuthenticationCoreManager {}
+impl WebAuthenticationCoreManager {
+    #[inline] pub fn get_token_silently_async(request: &WebTokenRequest) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().get_token_silently_async(request)
+    }
+    #[inline] pub fn get_token_silently_with_web_account_async(request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().get_token_silently_with_web_account_async(request, webAccount)
+    }
+    #[inline] pub fn request_token_async(request: &WebTokenRequest) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().request_token_async(request)
+    }
+    #[inline] pub fn request_token_with_web_account_async(request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().request_token_with_web_account_async(request, webAccount)
+    }
+    #[inline] pub fn find_account_async(provider: &super::super::super::credentials::WebAccountProvider, webAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().find_account_async(provider, webAccountId)
+    }
+    #[inline] pub fn find_account_provider_async(webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().find_account_provider_async(webAccountProviderId)
+    }
+    #[inline] pub fn find_account_provider_with_authority_async(webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().find_account_provider_with_authority_async(webAccountProviderId, authority)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn find_account_provider_with_authority_for_user_async(webAccountProviderId: &HStringArg, authority: &HStringArg, user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics2>>::get_activation_factory().find_account_provider_with_authority_for_user_async(webAccountProviderId, authority, user)
+    }
+    #[inline] pub fn create_web_account_monitor(webAccounts: &foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<Option<ComPtr<WebAccountMonitor>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics3>>::get_activation_factory().create_web_account_monitor(webAccounts)
+    }
+    #[inline] pub fn find_all_accounts_async(provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_all_accounts_async(provider)
+    }
+    #[inline] pub fn find_all_accounts_with_client_id_async(provider: &super::super::super::credentials::WebAccountProvider, clientId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_all_accounts_with_client_id_async(provider, clientId)
+    }
+    #[inline] pub fn find_system_account_provider_async(webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_system_account_provider_async(webAccountProviderId)
+    }
+    #[inline] pub fn find_system_account_provider_with_authority_async(webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_system_account_provider_with_authority_async(webAccountProviderId, authority)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn find_system_account_provider_with_authority_for_user_async(webAccountProviderId: &HStringArg, authority: &HStringArg, user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_system_account_provider_with_authority_for_user_async(webAccountProviderId, authority, user)
+    }
+}
+DEFINE_CLSID!(WebAuthenticationCoreManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,67,111,114,101,77,97,110,97,103,101,114,0]) [CLSID_WebAuthenticationCoreManager]);
+DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics, 1791655058, 42369, 17529, 156, 16, 117, 46, 255, 68, 253, 52);
+RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics(IWebAuthenticationCoreManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics] {
+    fn GetTokenSilentlyAsync(&self, request: *mut WebTokenRequest, out: *mut *mut foundation::IAsyncOperation<WebTokenRequestResult>) -> HRESULT,
+    fn GetTokenSilentlyWithWebAccountAsync(&self, request: *mut WebTokenRequest, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncOperation<WebTokenRequestResult>) -> HRESULT,
+    fn RequestTokenAsync(&self, request: *mut WebTokenRequest, out: *mut *mut foundation::IAsyncOperation<WebTokenRequestResult>) -> HRESULT,
+    fn RequestTokenWithWebAccountAsync(&self, request: *mut WebTokenRequest, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncOperation<WebTokenRequestResult>) -> HRESULT,
+    fn FindAccountAsync(&self, provider: *mut super::super::super::credentials::WebAccountProvider, webAccountId: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
+    fn FindAccountProviderAsync(&self, webAccountProviderId: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT,
+    fn FindAccountProviderWithAuthorityAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT
+}}
+impl IWebAuthenticationCoreManagerStatics {
+    #[inline] pub fn get_token_silently_async(&self, request: &WebTokenRequest) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetTokenSilentlyAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_token_silently_with_web_account_async(&self, request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetTokenSilentlyWithWebAccountAsync)(self as *const _ as *mut _, request as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_token_async(&self, request: &WebTokenRequest) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestTokenAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn request_token_with_web_account_async(&self, request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestTokenWithWebAccountAsync)(self as *const _ as *mut _, request as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_account_async(&self, provider: &super::super::super::credentials::WebAccountProvider, webAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindAccountAsync)(self as *const _ as *mut _, provider as *const _ as *mut _, webAccountId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_account_provider_async(&self, webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindAccountProviderAsync)(self as *const _ as *mut _, webAccountProviderId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_account_provider_with_authority_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindAccountProviderWithAuthorityAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics2, 4119074890, 35671, 18464, 182, 164, 112, 165, 182, 252, 244, 74);
+RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics2(IWebAuthenticationCoreManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics2] {
+    #[cfg(feature="windows-system")] fn FindAccountProviderWithAuthorityForUserAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, user: *mut ::rt::gen::windows::system::User, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT
+}}
+impl IWebAuthenticationCoreManagerStatics2 {
+    #[cfg(feature="windows-system")] #[inline] pub fn find_account_provider_with_authority_for_user_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg, user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindAccountProviderWithAuthorityForUserAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), user as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics3, 604303026, 35108, 19859, 171, 58, 153, 104, 139, 65, 157, 86);
+RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics3(IWebAuthenticationCoreManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics3] {
+    fn CreateWebAccountMonitor(&self, webAccounts: *mut foundation::collections::IIterable<super::super::super::credentials::WebAccount>, out: *mut *mut WebAccountMonitor) -> HRESULT
+}}
+impl IWebAuthenticationCoreManagerStatics3 {
+    #[inline] pub fn create_web_account_monitor(&self, webAccounts: &foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<Option<ComPtr<WebAccountMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWebAccountMonitor)(self as *const _ as *mut _, webAccounts as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics4, 1424372734, 38624, 16872, 152, 50, 18, 152, 137, 124, 42, 175);
+RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics4(IWebAuthenticationCoreManagerStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics4] {
+    fn FindAllAccountsAsync(&self, provider: *mut super::super::super::credentials::WebAccountProvider, out: *mut *mut foundation::IAsyncOperation<FindAllAccountsResult>) -> HRESULT,
+    fn FindAllAccountsWithClientIdAsync(&self, provider: *mut super::super::super::credentials::WebAccountProvider, clientId: HSTRING, out: *mut *mut foundation::IAsyncOperation<FindAllAccountsResult>) -> HRESULT,
+    fn FindSystemAccountProviderAsync(&self, webAccountProviderId: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT,
+    fn FindSystemAccountProviderWithAuthorityAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn FindSystemAccountProviderWithAuthorityForUserAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, user: *mut ::rt::gen::windows::system::User, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT
+}}
+impl IWebAuthenticationCoreManagerStatics4 {
+    #[inline] pub fn find_all_accounts_async(&self, provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindAllAccountsAsync)(self as *const _ as *mut _, provider as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_all_accounts_with_client_id_async(&self, provider: &super::super::super::credentials::WebAccountProvider, clientId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindAllAccountsWithClientIdAsync)(self as *const _ as *mut _, provider as *const _ as *mut _, clientId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_system_account_provider_async(&self, webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindSystemAccountProviderAsync)(self as *const _ as *mut _, webAccountProviderId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_system_account_provider_with_authority_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindSystemAccountProviderWithAuthorityAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn find_system_account_provider_with_authority_for_user_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg, user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindSystemAccountProviderWithAuthorityForUserAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), user as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebProviderError, 3675855793, 20677, 18441, 141, 202, 9, 201, 148, 16, 36, 92);
+RT_INTERFACE!{interface IWebProviderError(IWebProviderErrorVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderError] {
+    fn get_ErrorCode(&self, out: *mut u32) -> HRESULT,
+    fn get_ErrorMessage(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Properties(&self, out: *mut *mut foundation::collections::IMap<HString, HString>) -> HRESULT
+}}
+impl IWebProviderError {
+    #[inline] pub fn get_error_code(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ErrorCode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_error_message(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ErrorMessage)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebProviderError: IWebProviderError}
+impl RtActivatable<IWebProviderErrorFactory> for WebProviderError {}
+impl WebProviderError {
+    #[inline] pub fn create(errorCode: u32, errorMessage: &HStringArg) -> Result<ComPtr<WebProviderError>> {
+        <Self as RtActivatable<IWebProviderErrorFactory>>::get_activation_factory().create(errorCode, errorMessage)
+    }
+}
+DEFINE_CLSID!(WebProviderError(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,80,114,111,118,105,100,101,114,69,114,114,111,114,0]) [CLSID_WebProviderError]);
+DEFINE_IID!(IID_IWebProviderErrorFactory, 3821275693, 35311, 20023, 132, 127, 168, 185, 213, 163, 41, 16);
+RT_INTERFACE!{static interface IWebProviderErrorFactory(IWebProviderErrorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderErrorFactory] {
+    fn Create(&self, errorCode: u32, errorMessage: HSTRING, out: *mut *mut WebProviderError) -> HRESULT
+}}
+impl IWebProviderErrorFactory {
+    #[inline] pub fn create(&self, errorCode: u32, errorMessage: &HStringArg) -> Result<ComPtr<WebProviderError>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, errorCode, errorMessage.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebTokenRequest, 3078311272, 44491, 18035, 179, 100, 12, 247, 179, 92, 175, 151);
+RT_INTERFACE!{interface IWebTokenRequest(IWebTokenRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequest] {
+    fn get_WebAccountProvider(&self, out: *mut *mut super::super::super::credentials::WebAccountProvider) -> HRESULT,
+    fn get_Scope(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_ClientId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_PromptType(&self, out: *mut WebTokenRequestPromptType) -> HRESULT,
+    fn get_Properties(&self, out: *mut *mut foundation::collections::IMap<HString, HString>) -> HRESULT
+}}
+impl IWebTokenRequest {
+    #[inline] pub fn get_web_account_provider(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WebAccountProvider)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_scope(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Scope)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_client_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ClientId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_prompt_type(&self) -> Result<WebTokenRequestPromptType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PromptType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebTokenRequest: IWebTokenRequest}
+impl RtActivatable<IWebTokenRequestFactory> for WebTokenRequest {}
+impl WebTokenRequest {
+    #[inline] pub fn create(provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg) -> Result<ComPtr<WebTokenRequest>> {
+        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().create(provider, scope, clientId)
+    }
+    #[inline] pub fn create_with_prompt_type(provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg, promptType: WebTokenRequestPromptType) -> Result<ComPtr<WebTokenRequest>> {
+        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().create_with_prompt_type(provider, scope, clientId, promptType)
+    }
+    #[inline] pub fn create_with_provider(provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<WebTokenRequest>> {
+        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().create_with_provider(provider)
+    }
+    #[inline] pub fn create_with_scope(provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg) -> Result<ComPtr<WebTokenRequest>> {
+        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().create_with_scope(provider, scope)
+    }
+}
+DEFINE_CLSID!(WebTokenRequest(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,84,111,107,101,110,82,101,113,117,101,115,116,0]) [CLSID_WebTokenRequest]);
+DEFINE_IID!(IID_IWebTokenRequest2, 3607150713, 12488, 17303, 150, 84, 150, 28, 59, 232, 184, 85);
+RT_INTERFACE!{interface IWebTokenRequest2(IWebTokenRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequest2] {
+    fn get_AppProperties(&self, out: *mut *mut foundation::collections::IMap<HString, HString>) -> HRESULT
+}}
+impl IWebTokenRequest2 {
+    #[inline] pub fn get_app_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AppProperties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebTokenRequest3, 1517640529, 15281, 16805, 166, 61, 144, 188, 50, 199, 219, 154);
+RT_INTERFACE!{interface IWebTokenRequest3(IWebTokenRequest3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequest3] {
+    fn get_CorrelationId(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_CorrelationId(&self, value: HSTRING) -> HRESULT
+}}
+impl IWebTokenRequest3 {
+    #[inline] pub fn get_correlation_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CorrelationId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_correlation_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CorrelationId)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebTokenRequestFactory, 1827804188, 4080, 19559, 184, 79, 153, 221, 190, 74, 114, 201);
+RT_INTERFACE!{static interface IWebTokenRequestFactory(IWebTokenRequestFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequestFactory] {
+    fn Create(&self, provider: *mut super::super::super::credentials::WebAccountProvider, scope: HSTRING, clientId: HSTRING, out: *mut *mut WebTokenRequest) -> HRESULT,
+    fn CreateWithPromptType(&self, provider: *mut super::super::super::credentials::WebAccountProvider, scope: HSTRING, clientId: HSTRING, promptType: WebTokenRequestPromptType, out: *mut *mut WebTokenRequest) -> HRESULT,
+    fn CreateWithProvider(&self, provider: *mut super::super::super::credentials::WebAccountProvider, out: *mut *mut WebTokenRequest) -> HRESULT,
+    fn CreateWithScope(&self, provider: *mut super::super::super::credentials::WebAccountProvider, scope: HSTRING, out: *mut *mut WebTokenRequest) -> HRESULT
+}}
+impl IWebTokenRequestFactory {
+    #[inline] pub fn create(&self, provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, provider as *const _ as *mut _, scope.get(), clientId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_with_prompt_type(&self, provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg, promptType: WebTokenRequestPromptType) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithPromptType)(self as *const _ as *mut _, provider as *const _ as *mut _, scope.get(), clientId.get(), promptType, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_with_provider(&self, provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithProvider)(self as *const _ as *mut _, provider as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_with_scope(&self, provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithScope)(self as *const _ as *mut _, provider as *const _ as *mut _, scope.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum WebTokenRequestPromptType: i32 {
+    Default (WebTokenRequestPromptType_Default) = 0, ForceAuthentication (WebTokenRequestPromptType_ForceAuthentication) = 1,
+}}
+DEFINE_IID!(IID_IWebTokenRequestResult, 3240788741, 53752, 17539, 141, 84, 56, 254, 41, 39, 132, 255);
+RT_INTERFACE!{interface IWebTokenRequestResult(IWebTokenRequestResultVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequestResult] {
+    fn get_ResponseData(&self, out: *mut *mut foundation::collections::IVectorView<WebTokenResponse>) -> HRESULT,
+    fn get_ResponseStatus(&self, out: *mut WebTokenRequestStatus) -> HRESULT,
+    fn get_ResponseError(&self, out: *mut *mut WebProviderError) -> HRESULT,
+    fn InvalidateCacheAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IWebTokenRequestResult {
+    #[inline] pub fn get_response_data(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<WebTokenResponse>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResponseData)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_response_status(&self) -> Result<WebTokenRequestStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ResponseStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_response_error(&self) -> Result<Option<ComPtr<WebProviderError>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResponseError)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn invalidate_cache_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).InvalidateCacheAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebTokenRequestResult: IWebTokenRequestResult}
+RT_ENUM! { enum WebTokenRequestStatus: i32 {
+    Success (WebTokenRequestStatus_Success) = 0, UserCancel (WebTokenRequestStatus_UserCancel) = 1, AccountSwitch (WebTokenRequestStatus_AccountSwitch) = 2, UserInteractionRequired (WebTokenRequestStatus_UserInteractionRequired) = 3, AccountProviderNotAvailable (WebTokenRequestStatus_AccountProviderNotAvailable) = 4, ProviderError (WebTokenRequestStatus_ProviderError) = 5,
+}}
+DEFINE_IID!(IID_IWebTokenResponse, 1739048394, 33782, 17606, 163, 177, 14, 182, 158, 65, 250, 138);
+RT_INTERFACE!{interface IWebTokenResponse(IWebTokenResponseVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenResponse] {
+    fn get_Token(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_ProviderError(&self, out: *mut *mut WebProviderError) -> HRESULT,
+    fn get_WebAccount(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT,
+    fn get_Properties(&self, out: *mut *mut foundation::collections::IMap<HString, HString>) -> HRESULT
+}}
+impl IWebTokenResponse {
+    #[inline] pub fn get_token(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Token)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_provider_error(&self) -> Result<Option<ComPtr<WebProviderError>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderError)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_web_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WebAccount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebTokenResponse: IWebTokenResponse}
+impl RtActivatable<IWebTokenResponseFactory> for WebTokenResponse {}
+impl RtActivatable<IActivationFactory> for WebTokenResponse {}
+impl WebTokenResponse {
+    #[inline] pub fn create_with_token(token: &HStringArg) -> Result<ComPtr<WebTokenResponse>> {
+        <Self as RtActivatable<IWebTokenResponseFactory>>::get_activation_factory().create_with_token(token)
+    }
+    #[inline] pub fn create_with_token_and_account(token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<WebTokenResponse>> {
+        <Self as RtActivatable<IWebTokenResponseFactory>>::get_activation_factory().create_with_token_and_account(token, webAccount)
+    }
+    #[inline] pub fn create_with_token_account_and_error(token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount, error: &WebProviderError) -> Result<ComPtr<WebTokenResponse>> {
+        <Self as RtActivatable<IWebTokenResponseFactory>>::get_activation_factory().create_with_token_account_and_error(token, webAccount, error)
+    }
+}
+DEFINE_CLSID!(WebTokenResponse(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,84,111,107,101,110,82,101,115,112,111,110,115,101,0]) [CLSID_WebTokenResponse]);
+DEFINE_IID!(IID_IWebTokenResponseFactory, 2875979768, 21584, 20214, 151, 247, 5, 43, 4, 49, 192, 240);
+RT_INTERFACE!{static interface IWebTokenResponseFactory(IWebTokenResponseFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenResponseFactory] {
+    fn CreateWithToken(&self, token: HSTRING, out: *mut *mut WebTokenResponse) -> HRESULT,
+    fn CreateWithTokenAndAccount(&self, token: HSTRING, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut WebTokenResponse) -> HRESULT,
+    fn CreateWithTokenAccountAndError(&self, token: HSTRING, webAccount: *mut super::super::super::credentials::WebAccount, error: *mut WebProviderError, out: *mut *mut WebTokenResponse) -> HRESULT
+}}
+impl IWebTokenResponseFactory {
+    #[inline] pub fn create_with_token(&self, token: &HStringArg) -> Result<ComPtr<WebTokenResponse>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithToken)(self as *const _ as *mut _, token.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_with_token_and_account(&self, token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<WebTokenResponse>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithTokenAndAccount)(self as *const _ as *mut _, token.get(), webAccount as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_with_token_account_and_error(&self, token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount, error: &WebProviderError) -> Result<ComPtr<WebTokenResponse>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithTokenAccountAndError)(self as *const _ as *mut _, token.get(), webAccount as *const _ as *mut _, error as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+} // Windows.Security.Authentication.Web.Core
+pub mod provider { // Windows.Security.Authentication.Web.Provider
+use ::prelude::*;
+DEFINE_IID!(IID_IWebAccountClientView, 3887949498, 3015, 19558, 191, 212, 101, 211, 8, 44, 188, 168);
+RT_INTERFACE!{interface IWebAccountClientView(IWebAccountClientViewVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountClientView] {
+    fn get_ApplicationCallbackUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_Type(&self, out: *mut WebAccountClientViewType) -> HRESULT,
+    fn get_AccountPairwiseId(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IWebAccountClientView {
+    #[inline] pub fn get_application_callback_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_type(&self) -> Result<WebAccountClientViewType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Type)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_account_pairwise_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AccountPairwiseId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebAccountClientView: IWebAccountClientView}
+impl RtActivatable<IWebAccountClientViewFactory> for WebAccountClientView {}
+impl WebAccountClientView {
+    #[inline] pub fn create(viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri) -> Result<ComPtr<WebAccountClientView>> {
+        <Self as RtActivatable<IWebAccountClientViewFactory>>::get_activation_factory().create(viewType, applicationCallbackUri)
+    }
+    #[inline] pub fn create_with_pairwise_id(viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri, accountPairwiseId: &HStringArg) -> Result<ComPtr<WebAccountClientView>> {
+        <Self as RtActivatable<IWebAccountClientViewFactory>>::get_activation_factory().create_with_pairwise_id(viewType, applicationCallbackUri, accountPairwiseId)
+    }
+}
+DEFINE_CLSID!(WebAccountClientView(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,65,99,99,111,117,110,116,67,108,105,101,110,116,86,105,101,119,0]) [CLSID_WebAccountClientView]);
+DEFINE_IID!(IID_IWebAccountClientViewFactory, 1634539172, 56866, 18517, 163, 38, 6, 206, 191, 42, 63, 35);
+RT_INTERFACE!{static interface IWebAccountClientViewFactory(IWebAccountClientViewFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountClientViewFactory] {
+    fn Create(&self, viewType: WebAccountClientViewType, applicationCallbackUri: *mut foundation::Uri, out: *mut *mut WebAccountClientView) -> HRESULT,
+    fn CreateWithPairwiseId(&self, viewType: WebAccountClientViewType, applicationCallbackUri: *mut foundation::Uri, accountPairwiseId: HSTRING, out: *mut *mut WebAccountClientView) -> HRESULT
+}}
+impl IWebAccountClientViewFactory {
+    #[inline] pub fn create(&self, viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri) -> Result<ComPtr<WebAccountClientView>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, viewType, applicationCallbackUri as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_with_pairwise_id(&self, viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri, accountPairwiseId: &HStringArg) -> Result<ComPtr<WebAccountClientView>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithPairwiseId)(self as *const _ as *mut _, viewType, applicationCallbackUri as *const _ as *mut _, accountPairwiseId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum WebAccountClientViewType: i32 {
+    IdOnly (WebAccountClientViewType_IdOnly) = 0, IdAndProperties (WebAccountClientViewType_IdAndProperties) = 1,
+}}
+RT_CLASS!{static class WebAccountManager}
+impl RtActivatable<IWebAccountManagerStatics> for WebAccountManager {}
+impl RtActivatable<IWebAccountManagerStatics2> for WebAccountManager {}
+impl RtActivatable<IWebAccountManagerStatics3> for WebAccountManager {}
+impl RtActivatable<IWebAccountManagerStatics4> for WebAccountManager {}
+impl RtActivatable<IWebAccountMapManagerStatics> for WebAccountManager {}
+impl RtActivatable<IWebAccountScopeManagerStatics> for WebAccountManager {}
+impl WebAccountManager {
+    #[inline] pub fn update_web_account_properties_async(webAccount: &super::super::super::credentials::WebAccount, webAccountUserName: &HStringArg, additionalProperties: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().update_web_account_properties_async(webAccount, webAccountUserName, additionalProperties)
+    }
+    #[inline] pub fn add_web_account_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().add_web_account_async(webAccountId, webAccountUserName, props)
+    }
+    #[inline] pub fn delete_web_account_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().delete_web_account_async(webAccount)
+    }
+    #[inline] pub fn find_all_provider_web_accounts_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().find_all_provider_web_accounts_async()
+    }
+    #[cfg(feature="windows-web")] #[inline] pub fn push_cookies_async(uri: &foundation::Uri, cookies: &foundation::collections::IVectorView<::rt::gen::windows::web::http::HttpCookie>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().push_cookies_async(uri, cookies)
+    }
+    #[inline] pub fn set_view_async(webAccount: &super::super::super::credentials::WebAccount, view: &WebAccountClientView) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().set_view_async(webAccount, view)
+    }
+    #[inline] pub fn clear_view_async(webAccount: &super::super::super::credentials::WebAccount, applicationCallbackUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().clear_view_async(webAccount, applicationCallbackUri)
+    }
+    #[inline] pub fn get_views_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<WebAccountClientView>>>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().get_views_async(webAccount)
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_web_account_picture_async(webAccount: &super::super::super::credentials::WebAccount, webAccountPicture: &::rt::gen::windows::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().set_web_account_picture_async(webAccount, webAccountPicture)
+    }
+    #[inline] pub fn clear_web_account_picture_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().clear_web_account_picture_async(webAccount)
+    }
+    #[inline] pub fn pull_cookies_async(uriString: &HStringArg, callerPFN: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics2>>::get_activation_factory().pull_cookies_async(uriString, callerPFN)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn find_all_provider_web_accounts_for_user_async(user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> {
+        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().find_all_provider_web_accounts_for_user_async(user)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_for_user_async(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_for_user_async(user, webAccountId, webAccountUserName, props)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_for_user_async(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_with_scope_for_user_async(user, webAccountId, webAccountUserName, props, scope)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_and_map_for_user_async(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_with_scope_and_map_for_user_async(user, webAccountId, webAccountUserName, props, scope, perUserWebAccountId)
+    }
+    #[inline] pub fn invalidate_app_cache_for_all_accounts_async() -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics4>>::get_activation_factory().invalidate_app_cache_for_all_accounts_async()
+    }
+    #[inline] pub fn invalidate_app_cache_for_account_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics4>>::get_activation_factory().invalidate_app_cache_for_account_async(webAccount)
+    }
+    #[inline] pub fn add_web_account_with_scope_and_map_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().add_web_account_with_scope_and_map_async(webAccountId, webAccountUserName, props, scope, perUserWebAccountId)
+    }
+    #[inline] pub fn set_per_app_to_per_user_account_async(perAppAccount: &super::super::super::credentials::WebAccount, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().set_per_app_to_per_user_account_async(perAppAccount, perUserWebAccountId)
+    }
+    #[inline] pub fn get_per_user_from_per_app_account_async(perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().get_per_user_from_per_app_account_async(perAppAccount)
+    }
+    #[inline] pub fn clear_per_user_from_per_app_account_async(perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().clear_per_user_from_per_app_account_async(perAppAccount)
+    }
+    #[inline] pub fn add_web_account_with_scope_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().add_web_account_with_scope_async(webAccountId, webAccountUserName, props, scope)
+    }
+    #[inline] pub fn set_scope_async(webAccount: &super::super::super::credentials::WebAccount, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().set_scope_async(webAccount, scope)
+    }
+    #[inline] pub fn get_scope(webAccount: &super::super::super::credentials::WebAccount) -> Result<WebAccountScope> {
+        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().get_scope(webAccount)
+    }
+}
+DEFINE_CLSID!(WebAccountManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,65,99,99,111,117,110,116,77,97,110,97,103,101,114,0]) [CLSID_WebAccountManager]);
+DEFINE_IID!(IID_IWebAccountManagerStatics, 3001606566, 54426, 16434, 132, 191, 26, 40, 71, 116, 123, 241);
+RT_INTERFACE!{static interface IWebAccountManagerStatics(IWebAccountManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountManagerStatics] {
+    fn UpdateWebAccountPropertiesAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, webAccountUserName: HSTRING, additionalProperties: *mut foundation::collections::IMapView<HString, HString>, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn AddWebAccountAsync(&self, webAccountId: HSTRING, webAccountUserName: HSTRING, props: *mut foundation::collections::IMapView<HString, HString>, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
+    fn DeleteWebAccountAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn FindAllProviderWebAccountsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>) -> HRESULT,
+    #[cfg(not(feature="windows-web"))] fn __Dummy4(&self) -> (),
+    #[cfg(feature="windows-web")] fn PushCookiesAsync(&self, uri: *mut foundation::Uri, cookies: *mut foundation::collections::IVectorView<::rt::gen::windows::web::http::HttpCookie>, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn SetViewAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, view: *mut WebAccountClientView, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ClearViewAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, applicationCallbackUri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn GetViewsAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<WebAccountClientView>>) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy8(&self) -> (),
+    #[cfg(feature="windows-storage")] fn SetWebAccountPictureAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, webAccountPicture: *mut ::rt::gen::windows::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ClearWebAccountPictureAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IWebAccountManagerStatics {
+    #[inline] pub fn update_web_account_properties_async(&self, webAccount: &super::super::super::credentials::WebAccount, webAccountUserName: &HStringArg, additionalProperties: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).UpdateWebAccountPropertiesAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, webAccountUserName.get(), additionalProperties as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_web_account_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AddWebAccountAsync)(self as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn delete_web_account_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DeleteWebAccountAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_all_provider_web_accounts_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindAllProviderWebAccountsAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-web")] #[inline] pub fn push_cookies_async(&self, uri: &foundation::Uri, cookies: &foundation::collections::IVectorView<::rt::gen::windows::web::http::HttpCookie>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).PushCookiesAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, cookies as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_view_async(&self, webAccount: &super::super::super::credentials::WebAccount, view: &WebAccountClientView) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SetViewAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, view as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn clear_view_async(&self, webAccount: &super::super::super::credentials::WebAccount, applicationCallbackUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ClearViewAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, applicationCallbackUri as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_views_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<WebAccountClientView>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetViewsAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_web_account_picture_async(&self, webAccount: &super::super::super::credentials::WebAccount, webAccountPicture: &::rt::gen::windows::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SetWebAccountPictureAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, webAccountPicture as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn clear_web_account_picture_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ClearWebAccountPictureAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAccountManagerStatics2, 1755818025, 11615, 18003, 139, 176, 189, 47, 166, 189, 45, 135);
+RT_INTERFACE!{static interface IWebAccountManagerStatics2(IWebAccountManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountManagerStatics2] {
+    fn PullCookiesAsync(&self, uriString: HSTRING, callerPFN: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IWebAccountManagerStatics2 {
+    #[inline] pub fn pull_cookies_async(&self, uriString: &HStringArg, callerPFN: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).PullCookiesAsync)(self as *const _ as *mut _, uriString.get(), callerPFN.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAccountManagerStatics3, 3712295846, 35407, 19106, 177, 94, 3, 245, 80, 175, 19, 89);
+RT_INTERFACE!{static interface IWebAccountManagerStatics3(IWebAccountManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountManagerStatics3] {
+    #[cfg(feature="windows-system")] fn FindAllProviderWebAccountsForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn AddWebAccountForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, webAccountId: HSTRING, webAccountUserName: HSTRING, props: *mut foundation::collections::IMapView<HString, HString>, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn AddWebAccountWithScopeForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, webAccountId: HSTRING, webAccountUserName: HSTRING, props: *mut foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn AddWebAccountWithScopeAndMapForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, webAccountId: HSTRING, webAccountUserName: HSTRING, props: *mut foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT
+}}
+impl IWebAccountManagerStatics3 {
+    #[cfg(feature="windows-system")] #[inline] pub fn find_all_provider_web_accounts_for_user_async(&self, user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindAllProviderWebAccountsForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_for_user_async(&self, user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AddWebAccountForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_for_user_async(&self, user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AddWebAccountWithScopeForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, scope, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_and_map_for_user_async(&self, user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AddWebAccountWithScopeAndMapForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, scope, perUserWebAccountId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAccountManagerStatics4, 1508623058, 63451, 16687, 188, 63, 242, 254, 160, 68, 48, 180);
+RT_INTERFACE!{static interface IWebAccountManagerStatics4(IWebAccountManagerStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountManagerStatics4] {
+    fn InvalidateAppCacheForAllAccountsAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn InvalidateAppCacheForAccountAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IWebAccountManagerStatics4 {
+    #[inline] pub fn invalidate_app_cache_for_all_accounts_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).InvalidateAppCacheForAllAccountsAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn invalidate_app_cache_for_account_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).InvalidateAppCacheForAccountAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAccountMapManagerStatics, 3908715631, 14875, 18596, 142, 144, 30, 89, 202, 111, 84, 219);
+RT_INTERFACE!{static interface IWebAccountMapManagerStatics(IWebAccountMapManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountMapManagerStatics] {
+    fn AddWebAccountWithScopeAndMapAsync(&self, webAccountId: HSTRING, webAccountUserName: HSTRING, props: *mut foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
+    fn SetPerAppToPerUserAccountAsync(&self, perAppAccount: *mut super::super::super::credentials::WebAccount, perUserWebAccountId: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn GetPerUserFromPerAppAccountAsync(&self, perAppAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
+    fn ClearPerUserFromPerAppAccountAsync(&self, perAppAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IWebAccountMapManagerStatics {
+    #[inline] pub fn add_web_account_with_scope_and_map_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AddWebAccountWithScopeAndMapAsync)(self as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, scope, perUserWebAccountId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_per_app_to_per_user_account_async(&self, perAppAccount: &super::super::super::credentials::WebAccount, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SetPerAppToPerUserAccountAsync)(self as *const _ as *mut _, perAppAccount as *const _ as *mut _, perUserWebAccountId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_per_user_from_per_app_account_async(&self, perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetPerUserFromPerAppAccountAsync)(self as *const _ as *mut _, perAppAccount as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn clear_per_user_from_per_app_account_async(&self, perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ClearPerUserFromPerAppAccountAsync)(self as *const _ as *mut _, perAppAccount as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAccountProviderAddAccountOperation, 1944837327, 17272, 19577, 147, 53, 165, 215, 171, 129, 89, 78);
+RT_INTERFACE!{interface IWebAccountProviderAddAccountOperation(IWebAccountProviderAddAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderAddAccountOperation] {
+    fn ReportCompleted(&self) -> HRESULT
+}}
+impl IWebAccountProviderAddAccountOperation {
+    #[inline] pub fn report_completed(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebAccountProviderAddAccountOperation: IWebAccountProviderAddAccountOperation}
+DEFINE_IID!(IID_IWebAccountProviderBaseReportOperation, 3148131515, 39227, 19799, 187, 228, 20, 33, 227, 102, 139, 76);
+RT_INTERFACE!{interface IWebAccountProviderBaseReportOperation(IWebAccountProviderBaseReportOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderBaseReportOperation] {
+    fn ReportCompleted(&self) -> HRESULT,
+    fn ReportError(&self, value: *mut super::core::WebProviderError) -> HRESULT
+}}
+impl IWebAccountProviderBaseReportOperation {
+    #[inline] pub fn report_completed(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn report_error(&self, value: &super::core::WebProviderError) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReportError)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAccountProviderDeleteAccountOperation, 180046008, 40449, 18889, 163, 85, 125, 72, 202, 247, 214, 202);
+RT_INTERFACE!{interface IWebAccountProviderDeleteAccountOperation(IWebAccountProviderDeleteAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderDeleteAccountOperation] {
+    fn get_WebAccount(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT
+}}
+impl IWebAccountProviderDeleteAccountOperation {
+    #[inline] pub fn get_web_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WebAccount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebAccountProviderDeleteAccountOperation: IWebAccountProviderDeleteAccountOperation}
+RT_CLASS!{class WebAccountProviderGetTokenSilentOperation: IWebAccountProviderTokenOperation}
+DEFINE_IID!(IID_IWebAccountProviderManageAccountOperation, 3978353756, 53787, 17982, 169, 183, 193, 253, 14, 218, 233, 120);
+RT_INTERFACE!{interface IWebAccountProviderManageAccountOperation(IWebAccountProviderManageAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderManageAccountOperation] {
+    fn get_WebAccount(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT,
+    fn ReportCompleted(&self) -> HRESULT
+}}
+impl IWebAccountProviderManageAccountOperation {
+    #[inline] pub fn get_web_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WebAccount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_completed(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebAccountProviderManageAccountOperation: IWebAccountProviderManageAccountOperation}
+DEFINE_IID!(IID_IWebAccountProviderOperation, 1834820646, 4273, 16794, 164, 78, 249, 197, 22, 21, 116, 230);
+RT_INTERFACE!{interface IWebAccountProviderOperation(IWebAccountProviderOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderOperation] {
+    fn get_Kind(&self, out: *mut WebAccountProviderOperationKind) -> HRESULT
+}}
+impl IWebAccountProviderOperation {
+    #[inline] pub fn get_kind(&self) -> Result<WebAccountProviderOperationKind> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Kind)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum WebAccountProviderOperationKind: i32 {
+    RequestToken (WebAccountProviderOperationKind_RequestToken) = 0, GetTokenSilently (WebAccountProviderOperationKind_GetTokenSilently) = 1, AddAccount (WebAccountProviderOperationKind_AddAccount) = 2, ManageAccount (WebAccountProviderOperationKind_ManageAccount) = 3, DeleteAccount (WebAccountProviderOperationKind_DeleteAccount) = 4, RetrieveCookies (WebAccountProviderOperationKind_RetrieveCookies) = 5, SignOutAccount (WebAccountProviderOperationKind_SignOutAccount) = 6,
+}}
+RT_CLASS!{class WebAccountProviderRequestTokenOperation: IWebAccountProviderTokenOperation}
+DEFINE_IID!(IID_IWebAccountProviderRetrieveCookiesOperation, 1510212673, 4003, 19121, 160, 28, 32, 177, 16, 53, 133, 148);
+RT_INTERFACE!{interface IWebAccountProviderRetrieveCookiesOperation(IWebAccountProviderRetrieveCookiesOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderRetrieveCookiesOperation] {
+    fn get_Context(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    #[cfg(not(feature="windows-web"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-web")] fn get_Cookies(&self, out: *mut *mut foundation::collections::IVector<::rt::gen::windows::web::http::HttpCookie>) -> HRESULT,
+    fn put_Uri(&self, uri: *mut foundation::Uri) -> HRESULT,
+    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_ApplicationCallbackUri(&self, out: *mut *mut foundation::Uri) -> HRESULT
+}}
+impl IWebAccountProviderRetrieveCookiesOperation {
+    #[inline] pub fn get_context(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Context)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-web")] #[inline] pub fn get_cookies(&self) -> Result<Option<ComPtr<foundation::collections::IVector<::rt::gen::windows::web::http::HttpCookie>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Cookies)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_uri(&self, uri: &foundation::Uri) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Uri)(self as *const _ as *mut _, uri as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_application_callback_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebAccountProviderRetrieveCookiesOperation: IWebAccountProviderRetrieveCookiesOperation}
+DEFINE_IID!(IID_IWebAccountProviderSignOutAccountOperation, 3096502813, 3157, 18364, 140, 114, 4, 166, 252, 124, 172, 7);
+RT_INTERFACE!{interface IWebAccountProviderSignOutAccountOperation(IWebAccountProviderSignOutAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderSignOutAccountOperation] {
+    fn get_WebAccount(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT,
+    fn get_ApplicationCallbackUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_ClientId(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IWebAccountProviderSignOutAccountOperation {
+    #[inline] pub fn get_web_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WebAccount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_application_callback_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_client_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ClientId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebAccountProviderSignOutAccountOperation: IWebAccountProviderSignOutAccountOperation}
+DEFINE_IID!(IID_IWebAccountProviderSilentReportOperation, 3769976312, 15119, 17626, 146, 76, 123, 24, 186, 170, 98, 169);
+RT_INTERFACE!{interface IWebAccountProviderSilentReportOperation(IWebAccountProviderSilentReportOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderSilentReportOperation] {
+    fn ReportUserInteractionRequired(&self) -> HRESULT,
+    fn ReportUserInteractionRequiredWithError(&self, value: *mut super::core::WebProviderError) -> HRESULT
+}}
+impl IWebAccountProviderSilentReportOperation {
+    #[inline] pub fn report_user_interaction_required(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReportUserInteractionRequired)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn report_user_interaction_required_with_error(&self, value: &super::core::WebProviderError) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReportUserInteractionRequiredWithError)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAccountProviderTokenObjects, 1083123787, 4904, 17115, 137, 164, 11, 206, 122, 113, 125, 142);
+RT_INTERFACE!{interface IWebAccountProviderTokenObjects(IWebAccountProviderTokenObjectsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderTokenObjects] {
+    fn get_Operation(&self, out: *mut *mut IWebAccountProviderOperation) -> HRESULT
+}}
+impl IWebAccountProviderTokenObjects {
+    #[inline] pub fn get_operation(&self) -> Result<Option<ComPtr<IWebAccountProviderOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Operation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAccountProviderTokenObjects2, 270579859, 23717, 20479, 149, 251, 184, 32, 39, 63, 195, 149);
+RT_INTERFACE!{interface IWebAccountProviderTokenObjects2(IWebAccountProviderTokenObjects2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderTokenObjects2] {
+    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut ::rt::gen::windows::system::User) -> HRESULT
+}}
+impl IWebAccountProviderTokenObjects2 {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<::rt::gen::windows::system::User>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebAccountProviderTokenOperation, 2512786366, 8244, 19512, 148, 52, 210, 108, 20, 178, 180, 178);
+RT_INTERFACE!{interface IWebAccountProviderTokenOperation(IWebAccountProviderTokenOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderTokenOperation] {
+    fn get_ProviderRequest(&self, out: *mut *mut WebProviderTokenRequest) -> HRESULT,
+    fn get_ProviderResponses(&self, out: *mut *mut foundation::collections::IVector<WebProviderTokenResponse>) -> HRESULT,
+    fn put_CacheExpirationTime(&self, value: foundation::DateTime) -> HRESULT,
+    fn get_CacheExpirationTime(&self, out: *mut foundation::DateTime) -> HRESULT
+}}
+impl IWebAccountProviderTokenOperation {
+    #[inline] pub fn get_provider_request(&self) -> Result<Option<ComPtr<WebProviderTokenRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderRequest)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_provider_responses(&self) -> Result<Option<ComPtr<foundation::collections::IVector<WebProviderTokenResponse>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderResponses)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_cache_expiration_time(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CacheExpirationTime)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_cache_expiration_time(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CacheExpirationTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebAccountProviderTriggerDetails: IWebAccountProviderTokenObjects}
+DEFINE_IID!(IID_IWebAccountProviderUIReportOperation, 687837907, 36736, 17147, 148, 79, 178, 16, 123, 189, 66, 230);
+RT_INTERFACE!{interface IWebAccountProviderUIReportOperation(IWebAccountProviderUIReportOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderUIReportOperation] {
+    fn ReportUserCanceled(&self) -> HRESULT
+}}
+impl IWebAccountProviderUIReportOperation {
+    #[inline] pub fn report_user_canceled(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReportUserCanceled)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum WebAccountScope: i32 {
+    PerUser (WebAccountScope_PerUser) = 0, PerApplication (WebAccountScope_PerApplication) = 1,
+}}
+DEFINE_IID!(IID_IWebAccountScopeManagerStatics, 1550639996, 4786, 16954, 191, 61, 133, 184, 215, 229, 54, 86);
+RT_INTERFACE!{static interface IWebAccountScopeManagerStatics(IWebAccountScopeManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountScopeManagerStatics] {
+    fn AddWebAccountWithScopeAsync(&self, webAccountId: HSTRING, webAccountUserName: HSTRING, props: *mut foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
+    fn SetScopeAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, scope: WebAccountScope, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn GetScope(&self, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut WebAccountScope) -> HRESULT
+}}
+impl IWebAccountScopeManagerStatics {
+    #[inline] pub fn add_web_account_with_scope_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AddWebAccountWithScopeAsync)(self as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, scope, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_scope_async(&self, webAccount: &super::super::super::credentials::WebAccount, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SetScopeAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, scope, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_scope(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<WebAccountScope> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetScope)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum WebAccountSelectionOptions: u32 {
+    Default (WebAccountSelectionOptions_Default) = 0, New (WebAccountSelectionOptions_New) = 1,
+}}
+DEFINE_IID!(IID_IWebProviderTokenRequest, 504919947, 34821, 17739, 159, 17, 70, 141, 42, 241, 9, 90);
+RT_INTERFACE!{interface IWebProviderTokenRequest(IWebProviderTokenRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenRequest] {
+    fn get_ClientRequest(&self, out: *mut *mut super::core::WebTokenRequest) -> HRESULT,
+    fn get_WebAccounts(&self, out: *mut *mut foundation::collections::IVectorView<super::super::super::credentials::WebAccount>) -> HRESULT,
+    fn get_WebAccountSelectionOptions(&self, out: *mut WebAccountSelectionOptions) -> HRESULT,
+    fn get_ApplicationCallbackUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn GetApplicationTokenBindingKeyAsync(&self, keyType: super::TokenBindingKeyType, target: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<super::super::super::cryptography::core::CryptographicKey>) -> HRESULT
+}}
+impl IWebProviderTokenRequest {
+    #[inline] pub fn get_client_request(&self) -> Result<Option<ComPtr<super::core::WebTokenRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ClientRequest)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_web_accounts(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WebAccounts)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_web_account_selection_options(&self) -> Result<WebAccountSelectionOptions> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_WebAccountSelectionOptions)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_application_callback_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_application_token_binding_key_async(&self, keyType: super::TokenBindingKeyType, target: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::cryptography::core::CryptographicKey>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetApplicationTokenBindingKeyAsync)(self as *const _ as *mut _, keyType, target as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebProviderTokenRequest: IWebProviderTokenRequest}
+DEFINE_IID!(IID_IWebProviderTokenRequest2, 3050778188, 4273, 19110, 136, 177, 11, 108, 158, 12, 30, 70);
+RT_INTERFACE!{interface IWebProviderTokenRequest2(IWebProviderTokenRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenRequest2] {
+    #[cfg(feature="windows-storage")] fn GetApplicationTokenBindingKeyIdAsync(&self, keyType: super::TokenBindingKeyType, target: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IBuffer>) -> HRESULT
+}}
+impl IWebProviderTokenRequest2 {
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_application_token_binding_key_id_async(&self, keyType: super::TokenBindingKeyType, target: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetApplicationTokenBindingKeyIdAsync)(self as *const _ as *mut _, keyType, target as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebProviderTokenRequest3, 455546538, 17033, 17518, 146, 86, 218, 251, 111, 102, 165, 30);
+RT_INTERFACE!{interface IWebProviderTokenRequest3(IWebProviderTokenRequest3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenRequest3] {
+    fn get_ApplicationPackageFamilyName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_ApplicationProcessName(&self, out: *mut HSTRING) -> HRESULT,
+    fn CheckApplicationForCapabilityAsync(&self, capabilityName: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+}}
+impl IWebProviderTokenRequest3 {
+    #[inline] pub fn get_application_package_family_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ApplicationPackageFamilyName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_application_process_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ApplicationProcessName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn check_application_for_capability_async(&self, capabilityName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CheckApplicationForCapabilityAsync)(self as *const _ as *mut _, capabilityName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWebProviderTokenResponse, 4011931539, 61269, 16774, 183, 206, 140, 178, 231, 249, 132, 158);
+RT_INTERFACE!{interface IWebProviderTokenResponse(IWebProviderTokenResponseVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenResponse] {
+    fn get_ClientResponse(&self, out: *mut *mut super::core::WebTokenResponse) -> HRESULT
+}}
+impl IWebProviderTokenResponse {
+    #[inline] pub fn get_client_response(&self) -> Result<Option<ComPtr<super::core::WebTokenResponse>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ClientResponse)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WebProviderTokenResponse: IWebProviderTokenResponse}
+impl RtActivatable<IWebProviderTokenResponseFactory> for WebProviderTokenResponse {}
+impl WebProviderTokenResponse {
+    #[inline] pub fn create(webTokenResponse: &super::core::WebTokenResponse) -> Result<ComPtr<WebProviderTokenResponse>> {
+        <Self as RtActivatable<IWebProviderTokenResponseFactory>>::get_activation_factory().create(webTokenResponse)
+    }
+}
+DEFINE_CLSID!(WebProviderTokenResponse(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,80,114,111,118,105,100,101,114,84,111,107,101,110,82,101,115,112,111,110,115,101,0]) [CLSID_WebProviderTokenResponse]);
+DEFINE_IID!(IID_IWebProviderTokenResponseFactory, 4199143834, 9658, 16503, 156, 250, 157, 180, 222, 167, 183, 26);
+RT_INTERFACE!{static interface IWebProviderTokenResponseFactory(IWebProviderTokenResponseFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenResponseFactory] {
+    fn Create(&self, webTokenResponse: *mut super::core::WebTokenResponse, out: *mut *mut WebProviderTokenResponse) -> HRESULT
+}}
+impl IWebProviderTokenResponseFactory {
+    #[inline] pub fn create(&self, webTokenResponse: &super::core::WebTokenResponse) -> Result<ComPtr<WebProviderTokenResponse>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, webTokenResponse as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+} // Windows.Security.Authentication.Web.Provider
+} // Windows.Security.Authentication.Web
+} // Windows.Security.Authentication
 pub mod credentials { // Windows.Security.Credentials
 use ::prelude::*;
 DEFINE_IID!(IID_ICredentialFactory, 1424954273, 48934, 18357, 151, 221, 222, 119, 155, 124, 173, 88);
@@ -695,2184 +2873,6 @@ impl IUserConsentVerifierStatics {
 }
 } // Windows.Security.Credentials.UI
 } // Windows.Security.Credentials
-pub mod authentication { // Windows.Security.Authentication
-pub mod identity { // Windows.Security.Authentication.Identity
-use ::prelude::*;
-DEFINE_IID!(IID_IEnterpriseKeyCredentialRegistrationInfo, 942807756, 26411, 18467, 182, 3, 107, 60, 117, 61, 175, 151);
-RT_INTERFACE!{interface IEnterpriseKeyCredentialRegistrationInfo(IEnterpriseKeyCredentialRegistrationInfoVtbl): IInspectable(IInspectableVtbl) [IID_IEnterpriseKeyCredentialRegistrationInfo] {
-    fn get_TenantId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_TenantName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Subject(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_KeyId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_KeyName(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl IEnterpriseKeyCredentialRegistrationInfo {
-    #[inline] pub fn get_tenant_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TenantId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_tenant_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TenantName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_subject(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Subject)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_key_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_KeyId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_key_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_KeyName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class EnterpriseKeyCredentialRegistrationInfo: IEnterpriseKeyCredentialRegistrationInfo}
-DEFINE_IID!(IID_IEnterpriseKeyCredentialRegistrationManager, 2213789247, 41567, 19642, 187, 142, 189, 195, 45, 3, 194, 151);
-RT_INTERFACE!{interface IEnterpriseKeyCredentialRegistrationManager(IEnterpriseKeyCredentialRegistrationManagerVtbl): IInspectable(IInspectableVtbl) [IID_IEnterpriseKeyCredentialRegistrationManager] {
-    fn GetRegistrationsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<EnterpriseKeyCredentialRegistrationInfo>>) -> HRESULT
-}}
-impl IEnterpriseKeyCredentialRegistrationManager {
-    #[inline] pub fn get_registrations_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<EnterpriseKeyCredentialRegistrationInfo>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetRegistrationsAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class EnterpriseKeyCredentialRegistrationManager: IEnterpriseKeyCredentialRegistrationManager}
-impl RtActivatable<IEnterpriseKeyCredentialRegistrationManagerStatics> for EnterpriseKeyCredentialRegistrationManager {}
-impl EnterpriseKeyCredentialRegistrationManager {
-    #[inline] pub fn get_current() -> Result<Option<ComPtr<EnterpriseKeyCredentialRegistrationManager>>> {
-        <Self as RtActivatable<IEnterpriseKeyCredentialRegistrationManagerStatics>>::get_activation_factory().get_current()
-    }
-}
-DEFINE_CLSID!(EnterpriseKeyCredentialRegistrationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,69,110,116,101,114,112,114,105,115,101,75,101,121,67,114,101,100,101,110,116,105,97,108,82,101,103,105,115,116,114,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_EnterpriseKeyCredentialRegistrationManager]);
-DEFINE_IID!(IID_IEnterpriseKeyCredentialRegistrationManagerStatics, 2008571550, 44276, 19392, 186, 194, 64, 187, 70, 239, 187, 63);
-RT_INTERFACE!{static interface IEnterpriseKeyCredentialRegistrationManagerStatics(IEnterpriseKeyCredentialRegistrationManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IEnterpriseKeyCredentialRegistrationManagerStatics] {
-    fn get_Current(&self, out: *mut *mut EnterpriseKeyCredentialRegistrationManager) -> HRESULT
-}}
-impl IEnterpriseKeyCredentialRegistrationManagerStatics {
-    #[inline] pub fn get_current(&self) -> Result<Option<ComPtr<EnterpriseKeyCredentialRegistrationManager>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-pub mod provider { // Windows.Security.Authentication.Identity.Provider
-use ::prelude::*;
-DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthentication, 34215653, 27173, 16547, 140, 0, 80, 160, 35, 246, 25, 209);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthentication(ISecondaryAuthenticationFactorAuthenticationVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthentication] {
-    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_ServiceAuthenticationHmac(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_SessionNonce(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_DeviceNonce(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_DeviceConfigurationData(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-storage")] fn FinishAuthenticationAsync(&self, deviceHmac: *mut ::rt::gen::windows::storage::streams::IBuffer, sessionHmac: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<SecondaryAuthenticationFactorFinishAuthenticationStatus>) -> HRESULT,
-    fn AbortAuthenticationAsync(&self, errorLogMessage: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT
-}}
-impl ISecondaryAuthenticationFactorAuthentication {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_service_authentication_hmac(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ServiceAuthenticationHmac)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_session_nonce(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SessionNonce)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_device_nonce(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DeviceNonce)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_device_configuration_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DeviceConfigurationData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn finish_authentication_async(&self, deviceHmac: &::rt::gen::windows::storage::streams::IBuffer, sessionHmac: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorFinishAuthenticationStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FinishAuthenticationAsync)(self as *const _ as *mut _, deviceHmac as *const _ as *mut _, sessionHmac as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn abort_authentication_async(&self, errorLogMessage: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AbortAuthenticationAsync)(self as *const _ as *mut _, errorLogMessage.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SecondaryAuthenticationFactorAuthentication: ISecondaryAuthenticationFactorAuthentication}
-impl RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics> for SecondaryAuthenticationFactorAuthentication {}
-impl SecondaryAuthenticationFactorAuthentication {
-    #[inline] pub fn show_notification_message_async(deviceName: &HStringArg, message: SecondaryAuthenticationFactorAuthenticationMessage) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().show_notification_message_async(deviceName, message)
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub fn start_authentication_async(deviceId: &HStringArg, serviceAuthenticationNonce: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationResult>>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().start_authentication_async(deviceId, serviceAuthenticationNonce)
-    }
-    #[inline] pub fn add_authentication_stage_changed(handler: &foundation::EventHandler<SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().add_authentication_stage_changed(handler)
-    }
-    #[inline] pub fn remove_authentication_stage_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().remove_authentication_stage_changed(token)
-    }
-    #[inline] pub fn get_authentication_stage_info_async() -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationStageInfo>>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().get_authentication_stage_info_async()
-    }
-}
-DEFINE_CLSID!(SecondaryAuthenticationFactorAuthentication(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,80,114,111,118,105,100,101,114,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,0]) [CLSID_SecondaryAuthenticationFactorAuthentication]);
-RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationMessage: i32 {
-    Invalid (SecondaryAuthenticationFactorAuthenticationMessage_Invalid) = 0, SwipeUpWelcome (SecondaryAuthenticationFactorAuthenticationMessage_SwipeUpWelcome) = 1, TapWelcome (SecondaryAuthenticationFactorAuthenticationMessage_TapWelcome) = 2, DeviceNeedsAttention (SecondaryAuthenticationFactorAuthenticationMessage_DeviceNeedsAttention) = 3, LookingForDevice (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevice) = 4, LookingForDevicePluggedin (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevicePluggedin) = 5, BluetoothIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_BluetoothIsDisabled) = 6, NfcIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_NfcIsDisabled) = 7, WiFiIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_WiFiIsDisabled) = 8, ExtraTapIsRequired (SecondaryAuthenticationFactorAuthenticationMessage_ExtraTapIsRequired) = 9, DisabledByPolicy (SecondaryAuthenticationFactorAuthenticationMessage_DisabledByPolicy) = 10, TapOnDeviceRequired (SecondaryAuthenticationFactorAuthenticationMessage_TapOnDeviceRequired) = 11, HoldFinger (SecondaryAuthenticationFactorAuthenticationMessage_HoldFinger) = 12, ScanFinger (SecondaryAuthenticationFactorAuthenticationMessage_ScanFinger) = 13, UnauthorizedUser (SecondaryAuthenticationFactorAuthenticationMessage_UnauthorizedUser) = 14, ReregisterRequired (SecondaryAuthenticationFactorAuthenticationMessage_ReregisterRequired) = 15, TryAgain (SecondaryAuthenticationFactorAuthenticationMessage_TryAgain) = 16, SayPassphrase (SecondaryAuthenticationFactorAuthenticationMessage_SayPassphrase) = 17, ReadyToSignIn (SecondaryAuthenticationFactorAuthenticationMessage_ReadyToSignIn) = 18, UseAnotherSignInOption (SecondaryAuthenticationFactorAuthenticationMessage_UseAnotherSignInOption) = 19, ConnectionRequired (SecondaryAuthenticationFactorAuthenticationMessage_ConnectionRequired) = 20, TimeLimitExceeded (SecondaryAuthenticationFactorAuthenticationMessage_TimeLimitExceeded) = 21, CanceledByUser (SecondaryAuthenticationFactorAuthenticationMessage_CanceledByUser) = 22, CenterHand (SecondaryAuthenticationFactorAuthenticationMessage_CenterHand) = 23, MoveHandCloser (SecondaryAuthenticationFactorAuthenticationMessage_MoveHandCloser) = 24, MoveHandFarther (SecondaryAuthenticationFactorAuthenticationMessage_MoveHandFarther) = 25, PlaceHandAbove (SecondaryAuthenticationFactorAuthenticationMessage_PlaceHandAbove) = 26, RecognitionFailed (SecondaryAuthenticationFactorAuthenticationMessage_RecognitionFailed) = 27, DeviceUnavailable (SecondaryAuthenticationFactorAuthenticationMessage_DeviceUnavailable) = 28,
-}}
-DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationResult, 2629523847, 61293, 19394, 191, 73, 70, 23, 81, 90, 15, 154);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationResult(ISecondaryAuthenticationFactorAuthenticationResultVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationResult] {
-    fn get_Status(&self, out: *mut SecondaryAuthenticationFactorAuthenticationStatus) -> HRESULT,
-    fn get_Authentication(&self, out: *mut *mut SecondaryAuthenticationFactorAuthentication) -> HRESULT
-}}
-impl ISecondaryAuthenticationFactorAuthenticationResult {
-    #[inline] pub fn get_status(&self) -> Result<SecondaryAuthenticationFactorAuthenticationStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_authentication(&self) -> Result<Option<ComPtr<SecondaryAuthenticationFactorAuthentication>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Authentication)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationResult: ISecondaryAuthenticationFactorAuthenticationResult}
-RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationScenario: i32 {
-    SignIn (SecondaryAuthenticationFactorAuthenticationScenario_SignIn) = 0, CredentialPrompt (SecondaryAuthenticationFactorAuthenticationScenario_CredentialPrompt) = 1,
-}}
-RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationStage: i32 {
-    NotStarted (SecondaryAuthenticationFactorAuthenticationStage_NotStarted) = 0, WaitingForUserConfirmation (SecondaryAuthenticationFactorAuthenticationStage_WaitingForUserConfirmation) = 1, CollectingCredential (SecondaryAuthenticationFactorAuthenticationStage_CollectingCredential) = 2, SuspendingAuthentication (SecondaryAuthenticationFactorAuthenticationStage_SuspendingAuthentication) = 3, CredentialCollected (SecondaryAuthenticationFactorAuthenticationStage_CredentialCollected) = 4, CredentialAuthenticated (SecondaryAuthenticationFactorAuthenticationStage_CredentialAuthenticated) = 5, StoppingAuthentication (SecondaryAuthenticationFactorAuthenticationStage_StoppingAuthentication) = 6, ReadyForLock (SecondaryAuthenticationFactorAuthenticationStage_ReadyForLock) = 7, CheckingDevicePresence (SecondaryAuthenticationFactorAuthenticationStage_CheckingDevicePresence) = 8,
-}}
-DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs, 3567644246, 29329, 16499, 188, 31, 204, 184, 245, 175, 223, 150);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs(ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs] {
-    fn get_StageInfo(&self, out: *mut *mut SecondaryAuthenticationFactorAuthenticationStageInfo) -> HRESULT
-}}
-impl ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs {
-    #[inline] pub fn get_stage_info(&self) -> Result<Option<ComPtr<SecondaryAuthenticationFactorAuthenticationStageInfo>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_StageInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs: ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs}
-DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationStageInfo, 1459536523, 59562, 19471, 142, 76, 165, 89, 231, 58, 221, 136);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationStageInfo(ISecondaryAuthenticationFactorAuthenticationStageInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationStageInfo] {
-    fn get_Stage(&self, out: *mut SecondaryAuthenticationFactorAuthenticationStage) -> HRESULT,
-    fn get_Scenario(&self, out: *mut SecondaryAuthenticationFactorAuthenticationScenario) -> HRESULT,
-    fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl ISecondaryAuthenticationFactorAuthenticationStageInfo {
-    #[inline] pub fn get_stage(&self) -> Result<SecondaryAuthenticationFactorAuthenticationStage> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Stage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_scenario(&self) -> Result<SecondaryAuthenticationFactorAuthenticationScenario> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Scenario)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DeviceId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationStageInfo: ISecondaryAuthenticationFactorAuthenticationStageInfo}
-DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationStatics, 1062741590, 10488, 19983, 174, 140, 88, 152, 185, 174, 36, 105);
-RT_INTERFACE!{static interface ISecondaryAuthenticationFactorAuthenticationStatics(ISecondaryAuthenticationFactorAuthenticationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationStatics] {
-    fn ShowNotificationMessageAsync(&self, deviceName: HSTRING, message: SecondaryAuthenticationFactorAuthenticationMessage, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn StartAuthenticationAsync(&self, deviceId: HSTRING, serviceAuthenticationNonce: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationResult>) -> HRESULT,
-    fn add_AuthenticationStageChanged(&self, handler: *mut foundation::EventHandler<SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_AuthenticationStageChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn GetAuthenticationStageInfoAsync(&self, out: *mut *mut foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationStageInfo>) -> HRESULT
-}}
-impl ISecondaryAuthenticationFactorAuthenticationStatics {
-    #[inline] pub fn show_notification_message_async(&self, deviceName: &HStringArg, message: SecondaryAuthenticationFactorAuthenticationMessage) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ShowNotificationMessageAsync)(self as *const _ as *mut _, deviceName.get(), message, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn start_authentication_async(&self, deviceId: &HStringArg, serviceAuthenticationNonce: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartAuthenticationAsync)(self as *const _ as *mut _, deviceId.get(), serviceAuthenticationNonce as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_authentication_stage_changed(&self, handler: &foundation::EventHandler<SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AuthenticationStageChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_authentication_stage_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_AuthenticationStageChanged)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_authentication_stage_info_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationStageInfo>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAuthenticationStageInfoAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationStatus: i32 {
-    Failed (SecondaryAuthenticationFactorAuthenticationStatus_Failed) = 0, Started (SecondaryAuthenticationFactorAuthenticationStatus_Started) = 1, UnknownDevice (SecondaryAuthenticationFactorAuthenticationStatus_UnknownDevice) = 2, DisabledByPolicy (SecondaryAuthenticationFactorAuthenticationStatus_DisabledByPolicy) = 3, InvalidAuthenticationStage (SecondaryAuthenticationFactorAuthenticationStatus_InvalidAuthenticationStage) = 4,
-}}
-RT_ENUM! { enum SecondaryAuthenticationFactorDeviceCapabilities: u32 {
-    None (SecondaryAuthenticationFactorDeviceCapabilities_None) = 0, SecureStorage (SecondaryAuthenticationFactorDeviceCapabilities_SecureStorage) = 1, StoreKeys (SecondaryAuthenticationFactorDeviceCapabilities_StoreKeys) = 2, ConfirmUserIntentToAuthenticate (SecondaryAuthenticationFactorDeviceCapabilities_ConfirmUserIntentToAuthenticate) = 4, SupportSecureUserPresenceCheck (SecondaryAuthenticationFactorDeviceCapabilities_SupportSecureUserPresenceCheck) = 8, TransmittedDataIsEncrypted (SecondaryAuthenticationFactorDeviceCapabilities_TransmittedDataIsEncrypted) = 16, HMacSha256 (SecondaryAuthenticationFactorDeviceCapabilities_HMacSha256) = 32, CloseRangeDataTransmission (SecondaryAuthenticationFactorDeviceCapabilities_CloseRangeDataTransmission) = 64,
-}}
-RT_ENUM! { enum SecondaryAuthenticationFactorDeviceFindScope: i32 {
-    User (SecondaryAuthenticationFactorDeviceFindScope_User) = 0, AllUsers (SecondaryAuthenticationFactorDeviceFindScope_AllUsers) = 1,
-}}
-RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresence: i32 {
-    Absent (SecondaryAuthenticationFactorDevicePresence_Absent) = 0, Present (SecondaryAuthenticationFactorDevicePresence_Present) = 1,
-}}
-RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresenceMonitoringMode: i32 {
-    Unsupported (SecondaryAuthenticationFactorDevicePresenceMonitoringMode_Unsupported) = 0, AppManaged (SecondaryAuthenticationFactorDevicePresenceMonitoringMode_AppManaged) = 1, SystemManaged (SecondaryAuthenticationFactorDevicePresenceMonitoringMode_SystemManaged) = 2,
-}}
-DEFINE_IID!(IID_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics, 2420742681, 32498, 17699, 149, 28, 164, 23, 162, 74, 207, 147);
-RT_INTERFACE!{static interface ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics(ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics] {
-    fn RegisterDevicePresenceMonitoringAsync(&self, deviceId: HSTRING, deviceInstancePath: HSTRING, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, out: *mut *mut foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn RegisterDevicePresenceMonitoringWithNewDeviceAsync(&self, deviceId: HSTRING, deviceInstancePath: HSTRING, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, deviceFriendlyName: HSTRING, deviceModelNumber: HSTRING, deviceConfigurationData: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>) -> HRESULT,
-    fn UnregisterDevicePresenceMonitoringAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn IsDevicePresenceMonitoringSupported(&self, out: *mut bool) -> HRESULT
-}}
-impl ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics {
-    #[inline] pub fn register_device_presence_monitoring_async(&self, deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RegisterDevicePresenceMonitoringAsync)(self as *const _ as *mut _, deviceId.get(), deviceInstancePath.get(), monitoringMode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn register_device_presence_monitoring_with_new_device_async(&self, deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceConfigurationData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RegisterDevicePresenceMonitoringWithNewDeviceAsync)(self as *const _ as *mut _, deviceId.get(), deviceInstancePath.get(), monitoringMode, deviceFriendlyName.get(), deviceModelNumber.get(), deviceConfigurationData as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn unregister_device_presence_monitoring_async(&self, deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnregisterDevicePresenceMonitoringAsync)(self as *const _ as *mut _, deviceId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn is_device_presence_monitoring_supported(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsDevicePresenceMonitoringSupported)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus: i32 {
-    Unsupported (SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus_Unsupported) = 0, Succeeded (SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus_Succeeded) = 1, DisabledByPolicy (SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus_DisabledByPolicy) = 2,
-}}
-RT_ENUM! { enum SecondaryAuthenticationFactorFinishAuthenticationStatus: i32 {
-    Failed (SecondaryAuthenticationFactorFinishAuthenticationStatus_Failed) = 0, Completed (SecondaryAuthenticationFactorFinishAuthenticationStatus_Completed) = 1, NonceExpired (SecondaryAuthenticationFactorFinishAuthenticationStatus_NonceExpired) = 2,
-}}
-DEFINE_IID!(IID_ISecondaryAuthenticationFactorInfo, 506177633, 34099, 20430, 131, 155, 236, 183, 36, 16, 172, 20);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorInfo(ISecondaryAuthenticationFactorInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorInfo] {
-    fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_DeviceFriendlyName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_DeviceModelNumber(&self, out: *mut HSTRING) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_DeviceConfigurationData(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
-}}
-impl ISecondaryAuthenticationFactorInfo {
-    #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DeviceId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_device_friendly_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DeviceFriendlyName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_device_model_number(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DeviceModelNumber)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_device_configuration_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DeviceConfigurationData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SecondaryAuthenticationFactorInfo: ISecondaryAuthenticationFactorInfo}
-DEFINE_IID!(IID_ISecondaryAuthenticationFactorInfo2, 349798819, 64550, 20471, 171, 195, 72, 232, 42, 81, 42, 10);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorInfo2(ISecondaryAuthenticationFactorInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorInfo2] {
-    fn get_PresenceMonitoringMode(&self, out: *mut SecondaryAuthenticationFactorDevicePresenceMonitoringMode) -> HRESULT,
-    fn UpdateDevicePresenceAsync(&self, presenceState: SecondaryAuthenticationFactorDevicePresence, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn get_IsAuthenticationSupported(&self, out: *mut bool) -> HRESULT
-}}
-impl ISecondaryAuthenticationFactorInfo2 {
-    #[inline] pub fn get_presence_monitoring_mode(&self) -> Result<SecondaryAuthenticationFactorDevicePresenceMonitoringMode> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_PresenceMonitoringMode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn update_device_presence_async(&self, presenceState: SecondaryAuthenticationFactorDevicePresence) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UpdateDevicePresenceAsync)(self as *const _ as *mut _, presenceState, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_authentication_supported(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsAuthenticationSupported)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISecondaryAuthenticationFactorRegistration, 2672606132, 36026, 18608, 132, 13, 219, 178, 42, 84, 198, 120);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorRegistration(ISecondaryAuthenticationFactorRegistrationVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorRegistration] {
-    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn FinishRegisteringDeviceAsync(&self, deviceConfigurationData: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn AbortRegisteringDeviceAsync(&self, errorLogMessage: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT
-}}
-impl ISecondaryAuthenticationFactorRegistration {
-    #[cfg(feature="windows-storage")] #[inline] pub fn finish_registering_device_async(&self, deviceConfigurationData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FinishRegisteringDeviceAsync)(self as *const _ as *mut _, deviceConfigurationData as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn abort_registering_device_async(&self, errorLogMessage: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AbortRegisteringDeviceAsync)(self as *const _ as *mut _, errorLogMessage.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SecondaryAuthenticationFactorRegistration: ISecondaryAuthenticationFactorRegistration}
-impl RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics> for SecondaryAuthenticationFactorRegistration {}
-impl RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics> for SecondaryAuthenticationFactorRegistration {}
-impl SecondaryAuthenticationFactorRegistration {
-    #[inline] pub fn register_device_presence_monitoring_async(deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().register_device_presence_monitoring_async(deviceId, deviceInstancePath, monitoringMode)
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub fn register_device_presence_monitoring_with_new_device_async(deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceConfigurationData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().register_device_presence_monitoring_with_new_device_async(deviceId, deviceInstancePath, monitoringMode, deviceFriendlyName, deviceModelNumber, deviceConfigurationData)
-    }
-    #[inline] pub fn unregister_device_presence_monitoring_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().unregister_device_presence_monitoring_async(deviceId)
-    }
-    #[inline] pub fn is_device_presence_monitoring_supported() -> Result<bool> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().is_device_presence_monitoring_supported()
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_start_registering_device_async(deviceId: &HStringArg, capabilities: SecondaryAuthenticationFactorDeviceCapabilities, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceKey: &::rt::gen::windows::storage::streams::IBuffer, mutualAuthenticationKey: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorRegistrationResult>>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().request_start_registering_device_async(deviceId, capabilities, deviceFriendlyName, deviceModelNumber, deviceKey, mutualAuthenticationKey)
-    }
-    #[inline] pub fn find_all_registered_device_info_async(queryType: SecondaryAuthenticationFactorDeviceFindScope) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<SecondaryAuthenticationFactorInfo>>>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().find_all_registered_device_info_async(queryType)
-    }
-    #[inline] pub fn unregister_device_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().unregister_device_async(deviceId)
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub fn update_device_configuration_data_async(deviceId: &HStringArg, deviceConfigurationData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().update_device_configuration_data_async(deviceId, deviceConfigurationData)
-    }
-}
-DEFINE_CLSID!(SecondaryAuthenticationFactorRegistration(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,80,114,111,118,105,100,101,114,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,82,101,103,105,115,116,114,97,116,105,111,110,0]) [CLSID_SecondaryAuthenticationFactorRegistration]);
-DEFINE_IID!(IID_ISecondaryAuthenticationFactorRegistrationResult, 2768123376, 44515, 18817, 175, 107, 236, 25, 89, 33, 104, 42);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorRegistrationResult(ISecondaryAuthenticationFactorRegistrationResultVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorRegistrationResult] {
-    fn get_Status(&self, out: *mut SecondaryAuthenticationFactorRegistrationStatus) -> HRESULT,
-    fn get_Registration(&self, out: *mut *mut SecondaryAuthenticationFactorRegistration) -> HRESULT
-}}
-impl ISecondaryAuthenticationFactorRegistrationResult {
-    #[inline] pub fn get_status(&self) -> Result<SecondaryAuthenticationFactorRegistrationStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_registration(&self) -> Result<Option<ComPtr<SecondaryAuthenticationFactorRegistration>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Registration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SecondaryAuthenticationFactorRegistrationResult: ISecondaryAuthenticationFactorRegistrationResult}
-DEFINE_IID!(IID_ISecondaryAuthenticationFactorRegistrationStatics, 450826085, 58295, 16725, 153, 127, 183, 86, 239, 101, 190, 186);
-RT_INTERFACE!{static interface ISecondaryAuthenticationFactorRegistrationStatics(ISecondaryAuthenticationFactorRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorRegistrationStatics] {
-    #[cfg(feature="windows-storage")] fn RequestStartRegisteringDeviceAsync(&self, deviceId: HSTRING, capabilities: SecondaryAuthenticationFactorDeviceCapabilities, deviceFriendlyName: HSTRING, deviceModelNumber: HSTRING, deviceKey: *mut ::rt::gen::windows::storage::streams::IBuffer, mutualAuthenticationKey: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<SecondaryAuthenticationFactorRegistrationResult>) -> HRESULT,
-    fn FindAllRegisteredDeviceInfoAsync(&self, queryType: SecondaryAuthenticationFactorDeviceFindScope, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<SecondaryAuthenticationFactorInfo>>) -> HRESULT,
-    fn UnregisterDeviceAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn UpdateDeviceConfigurationDataAsync(&self, deviceId: HSTRING, deviceConfigurationData: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncAction) -> HRESULT
-}}
-impl ISecondaryAuthenticationFactorRegistrationStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_start_registering_device_async(&self, deviceId: &HStringArg, capabilities: SecondaryAuthenticationFactorDeviceCapabilities, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceKey: &::rt::gen::windows::storage::streams::IBuffer, mutualAuthenticationKey: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorRegistrationResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestStartRegisteringDeviceAsync)(self as *const _ as *mut _, deviceId.get(), capabilities, deviceFriendlyName.get(), deviceModelNumber.get(), deviceKey as *const _ as *mut _, mutualAuthenticationKey as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn find_all_registered_device_info_async(&self, queryType: SecondaryAuthenticationFactorDeviceFindScope) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<SecondaryAuthenticationFactorInfo>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAllRegisteredDeviceInfoAsync)(self as *const _ as *mut _, queryType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn unregister_device_async(&self, deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnregisterDeviceAsync)(self as *const _ as *mut _, deviceId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn update_device_configuration_data_async(&self, deviceId: &HStringArg, deviceConfigurationData: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UpdateDeviceConfigurationDataAsync)(self as *const _ as *mut _, deviceId.get(), deviceConfigurationData as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum SecondaryAuthenticationFactorRegistrationStatus: i32 {
-    Failed (SecondaryAuthenticationFactorRegistrationStatus_Failed) = 0, Started (SecondaryAuthenticationFactorRegistrationStatus_Started) = 1, CanceledByUser (SecondaryAuthenticationFactorRegistrationStatus_CanceledByUser) = 2, PinSetupRequired (SecondaryAuthenticationFactorRegistrationStatus_PinSetupRequired) = 3, DisabledByPolicy (SecondaryAuthenticationFactorRegistrationStatus_DisabledByPolicy) = 4,
-}}
-} // Windows.Security.Authentication.Identity.Provider
-pub mod core { // Windows.Security.Authentication.Identity.Core
-use ::prelude::*;
-DEFINE_IID!(IID_IMicrosoftAccountMultiFactorAuthenticationManager, 265502885, 62836, 17184, 160, 142, 10, 25, 168, 35, 34, 170);
-RT_INTERFACE!{interface IMicrosoftAccountMultiFactorAuthenticationManager(IMicrosoftAccountMultiFactorAuthenticationManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorAuthenticationManager] {
-    fn GetOneTimePassCodeAsync(&self, userAccountId: HSTRING, codeLength: u32, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorOneTimeCodedInfo>) -> HRESULT,
-    fn AddDeviceAsync(&self, userAccountId: HSTRING, authenticationToken: HSTRING, wnsChannelId: HSTRING, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT,
-    fn RemoveDeviceAsync(&self, userAccountId: HSTRING, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT,
-    fn UpdateWnsChannelAsync(&self, userAccountId: HSTRING, channelUri: HSTRING, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT,
-    fn GetSessionsAsync(&self, userAccountIdList: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorGetSessionsResult>) -> HRESULT,
-    fn GetSessionsAndUnregisteredAccountsAsync(&self, userAccountIdList: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo>) -> HRESULT,
-    fn ApproveSessionUsingAuthSessionInfoAsync(&self, sessionAuthentictionStatus: MicrosoftAccountMultiFactorSessionAuthenticationStatus, authenticationSessionInfo: *mut MicrosoftAccountMultiFactorSessionInfo, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT,
-    fn ApproveSessionAsync(&self, sessionAuthentictionStatus: MicrosoftAccountMultiFactorSessionAuthenticationStatus, userAccountId: HSTRING, sessionId: HSTRING, sessionAuthenticationType: MicrosoftAccountMultiFactorAuthenticationType, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT,
-    fn DenySessionUsingAuthSessionInfoAsync(&self, authenticationSessionInfo: *mut MicrosoftAccountMultiFactorSessionInfo, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT,
-    fn DenySessionAsync(&self, userAccountId: HSTRING, sessionId: HSTRING, sessionAuthenticationType: MicrosoftAccountMultiFactorAuthenticationType, out: *mut *mut foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>) -> HRESULT
-}}
-impl IMicrosoftAccountMultiFactorAuthenticationManager {
-    #[inline] pub fn get_one_time_pass_code_async(&self, userAccountId: &HStringArg, codeLength: u32) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorOneTimeCodedInfo>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetOneTimePassCodeAsync)(self as *const _ as *mut _, userAccountId.get(), codeLength, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_device_async(&self, userAccountId: &HStringArg, authenticationToken: &HStringArg, wnsChannelId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddDeviceAsync)(self as *const _ as *mut _, userAccountId.get(), authenticationToken.get(), wnsChannelId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_device_async(&self, userAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RemoveDeviceAsync)(self as *const _ as *mut _, userAccountId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn update_wns_channel_async(&self, userAccountId: &HStringArg, channelUri: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UpdateWnsChannelAsync)(self as *const _ as *mut _, userAccountId.get(), channelUri.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_sessions_async(&self, userAccountIdList: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorGetSessionsResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSessionsAsync)(self as *const _ as *mut _, userAccountIdList as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_sessions_and_unregistered_accounts_async(&self, userAccountIdList: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSessionsAndUnregisteredAccountsAsync)(self as *const _ as *mut _, userAccountIdList as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn approve_session_using_auth_session_info_async(&self, sessionAuthentictionStatus: MicrosoftAccountMultiFactorSessionAuthenticationStatus, authenticationSessionInfo: &MicrosoftAccountMultiFactorSessionInfo) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ApproveSessionUsingAuthSessionInfoAsync)(self as *const _ as *mut _, sessionAuthentictionStatus, authenticationSessionInfo as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn approve_session_async(&self, sessionAuthentictionStatus: MicrosoftAccountMultiFactorSessionAuthenticationStatus, userAccountId: &HStringArg, sessionId: &HStringArg, sessionAuthenticationType: MicrosoftAccountMultiFactorAuthenticationType) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ApproveSessionAsync)(self as *const _ as *mut _, sessionAuthentictionStatus, userAccountId.get(), sessionId.get(), sessionAuthenticationType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn deny_session_using_auth_session_info_async(&self, authenticationSessionInfo: &MicrosoftAccountMultiFactorSessionInfo) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DenySessionUsingAuthSessionInfoAsync)(self as *const _ as *mut _, authenticationSessionInfo as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn deny_session_async(&self, userAccountId: &HStringArg, sessionId: &HStringArg, sessionAuthenticationType: MicrosoftAccountMultiFactorAuthenticationType) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DenySessionAsync)(self as *const _ as *mut _, userAccountId.get(), sessionId.get(), sessionAuthenticationType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class MicrosoftAccountMultiFactorAuthenticationManager: IMicrosoftAccountMultiFactorAuthenticationManager}
-impl RtActivatable<IMicrosoftAccountMultiFactorAuthenticatorStatics> for MicrosoftAccountMultiFactorAuthenticationManager {}
-impl MicrosoftAccountMultiFactorAuthenticationManager {
-    #[inline] pub fn get_current() -> Result<Option<ComPtr<MicrosoftAccountMultiFactorAuthenticationManager>>> {
-        <Self as RtActivatable<IMicrosoftAccountMultiFactorAuthenticatorStatics>>::get_activation_factory().get_current()
-    }
-}
-DEFINE_CLSID!(MicrosoftAccountMultiFactorAuthenticationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,67,111,114,101,46,77,105,99,114,111,115,111,102,116,65,99,99,111,117,110,116,77,117,108,116,105,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MicrosoftAccountMultiFactorAuthenticationManager]);
-RT_ENUM! { enum MicrosoftAccountMultiFactorAuthenticationType: i32 {
-    User (MicrosoftAccountMultiFactorAuthenticationType_User) = 0, Device (MicrosoftAccountMultiFactorAuthenticationType_Device) = 1,
-}}
-DEFINE_IID!(IID_IMicrosoftAccountMultiFactorAuthenticatorStatics, 3647259366, 62534, 19569, 139, 121, 110, 164, 2, 74, 169, 184);
-RT_INTERFACE!{static interface IMicrosoftAccountMultiFactorAuthenticatorStatics(IMicrosoftAccountMultiFactorAuthenticatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorAuthenticatorStatics] {
-    fn get_Current(&self, out: *mut *mut MicrosoftAccountMultiFactorAuthenticationManager) -> HRESULT
-}}
-impl IMicrosoftAccountMultiFactorAuthenticatorStatics {
-    #[inline] pub fn get_current(&self) -> Result<Option<ComPtr<MicrosoftAccountMultiFactorAuthenticationManager>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IMicrosoftAccountMultiFactorGetSessionsResult, 1310960032, 59898, 18810, 149, 222, 109, 87, 71, 191, 151, 76);
-RT_INTERFACE!{interface IMicrosoftAccountMultiFactorGetSessionsResult(IMicrosoftAccountMultiFactorGetSessionsResultVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorGetSessionsResult] {
-    fn get_Sessions(&self, out: *mut *mut foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>) -> HRESULT,
-    fn get_ServiceResponse(&self, out: *mut MicrosoftAccountMultiFactorServiceResponse) -> HRESULT
-}}
-impl IMicrosoftAccountMultiFactorGetSessionsResult {
-    #[inline] pub fn get_sessions(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Sessions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_service_response(&self) -> Result<MicrosoftAccountMultiFactorServiceResponse> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ServiceResponse)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class MicrosoftAccountMultiFactorGetSessionsResult: IMicrosoftAccountMultiFactorGetSessionsResult}
-DEFINE_IID!(IID_IMicrosoftAccountMultiFactorOneTimeCodedInfo, 2193237579, 55420, 18024, 169, 118, 64, 207, 174, 84, 125, 8);
-RT_INTERFACE!{interface IMicrosoftAccountMultiFactorOneTimeCodedInfo(IMicrosoftAccountMultiFactorOneTimeCodedInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorOneTimeCodedInfo] {
-    fn get_Code(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_TimeInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_TimeToLive(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_ServiceResponse(&self, out: *mut MicrosoftAccountMultiFactorServiceResponse) -> HRESULT
-}}
-impl IMicrosoftAccountMultiFactorOneTimeCodedInfo {
-    #[inline] pub fn get_code(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Code)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_time_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TimeInterval)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_time_to_live(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TimeToLive)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_service_response(&self) -> Result<MicrosoftAccountMultiFactorServiceResponse> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ServiceResponse)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class MicrosoftAccountMultiFactorOneTimeCodedInfo: IMicrosoftAccountMultiFactorOneTimeCodedInfo}
-RT_ENUM! { enum MicrosoftAccountMultiFactorServiceResponse: i32 {
-    Success (MicrosoftAccountMultiFactorServiceResponse_Success) = 0, Error (MicrosoftAccountMultiFactorServiceResponse_Error) = 1, NoNetworkConnection (MicrosoftAccountMultiFactorServiceResponse_NoNetworkConnection) = 2, ServiceUnavailable (MicrosoftAccountMultiFactorServiceResponse_ServiceUnavailable) = 3, TotpSetupDenied (MicrosoftAccountMultiFactorServiceResponse_TotpSetupDenied) = 4, NgcNotSetup (MicrosoftAccountMultiFactorServiceResponse_NgcNotSetup) = 5, SessionAlreadyDenied (MicrosoftAccountMultiFactorServiceResponse_SessionAlreadyDenied) = 6, SessionAlreadyApproved (MicrosoftAccountMultiFactorServiceResponse_SessionAlreadyApproved) = 7, SessionExpired (MicrosoftAccountMultiFactorServiceResponse_SessionExpired) = 8, NgcNonceExpired (MicrosoftAccountMultiFactorServiceResponse_NgcNonceExpired) = 9, InvalidSessionId (MicrosoftAccountMultiFactorServiceResponse_InvalidSessionId) = 10, InvalidSessionType (MicrosoftAccountMultiFactorServiceResponse_InvalidSessionType) = 11, InvalidOperation (MicrosoftAccountMultiFactorServiceResponse_InvalidOperation) = 12, InvalidStateTransition (MicrosoftAccountMultiFactorServiceResponse_InvalidStateTransition) = 13, DeviceNotFound (MicrosoftAccountMultiFactorServiceResponse_DeviceNotFound) = 14, FlowDisabled (MicrosoftAccountMultiFactorServiceResponse_FlowDisabled) = 15, SessionNotApproved (MicrosoftAccountMultiFactorServiceResponse_SessionNotApproved) = 16, OperationCanceledByUser (MicrosoftAccountMultiFactorServiceResponse_OperationCanceledByUser) = 17, NgcDisabledByServer (MicrosoftAccountMultiFactorServiceResponse_NgcDisabledByServer) = 18, NgcKeyNotFoundOnServer (MicrosoftAccountMultiFactorServiceResponse_NgcKeyNotFoundOnServer) = 19, UIRequired (MicrosoftAccountMultiFactorServiceResponse_UIRequired) = 20, DeviceIdChanged (MicrosoftAccountMultiFactorServiceResponse_DeviceIdChanged) = 21,
-}}
-RT_ENUM! { enum MicrosoftAccountMultiFactorSessionApprovalStatus: i32 {
-    Pending (MicrosoftAccountMultiFactorSessionApprovalStatus_Pending) = 0, Approved (MicrosoftAccountMultiFactorSessionApprovalStatus_Approved) = 1, Denied (MicrosoftAccountMultiFactorSessionApprovalStatus_Denied) = 2,
-}}
-RT_ENUM! { enum MicrosoftAccountMultiFactorSessionAuthenticationStatus: i32 {
-    Authenticated (MicrosoftAccountMultiFactorSessionAuthenticationStatus_Authenticated) = 0, Unauthenticated (MicrosoftAccountMultiFactorSessionAuthenticationStatus_Unauthenticated) = 1,
-}}
-DEFINE_IID!(IID_IMicrosoftAccountMultiFactorSessionInfo, 1602137012, 41592, 17973, 183, 101, 180, 148, 235, 38, 10, 244);
-RT_INTERFACE!{interface IMicrosoftAccountMultiFactorSessionInfo(IMicrosoftAccountMultiFactorSessionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorSessionInfo] {
-    fn get_UserAccountId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_SessionId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_DisplaySessionId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_ApprovalStatus(&self, out: *mut MicrosoftAccountMultiFactorSessionApprovalStatus) -> HRESULT,
-    fn get_AuthenticationType(&self, out: *mut MicrosoftAccountMultiFactorAuthenticationType) -> HRESULT,
-    fn get_RequestTime(&self, out: *mut foundation::DateTime) -> HRESULT,
-    fn get_ExpirationTime(&self, out: *mut foundation::DateTime) -> HRESULT
-}}
-impl IMicrosoftAccountMultiFactorSessionInfo {
-    #[inline] pub fn get_user_account_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UserAccountId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_session_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SessionId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_display_session_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplaySessionId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_approval_status(&self) -> Result<MicrosoftAccountMultiFactorSessionApprovalStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ApprovalStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_authentication_type(&self) -> Result<MicrosoftAccountMultiFactorAuthenticationType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_AuthenticationType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_request_time(&self) -> Result<foundation::DateTime> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_RequestTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_expiration_time(&self) -> Result<foundation::DateTime> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ExpirationTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class MicrosoftAccountMultiFactorSessionInfo: IMicrosoftAccountMultiFactorSessionInfo}
-DEFINE_IID!(IID_IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo, 2860434939, 55871, 16520, 162, 13, 86, 24, 175, 173, 178, 229);
-RT_INTERFACE!{interface IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo(IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo] {
-    fn get_Sessions(&self, out: *mut *mut foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>) -> HRESULT,
-    fn get_UnregisteredAccounts(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
-    fn get_ServiceResponse(&self, out: *mut MicrosoftAccountMultiFactorServiceResponse) -> HRESULT
-}}
-impl IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo {
-    #[inline] pub fn get_sessions(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Sessions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_unregistered_accounts(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UnregisteredAccounts)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_service_response(&self) -> Result<MicrosoftAccountMultiFactorServiceResponse> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ServiceResponse)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo: IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo}
-} // Windows.Security.Authentication.Identity.Core
-} // Windows.Security.Authentication.Identity
-pub mod onlineid { // Windows.Security.Authentication.OnlineId
-use ::prelude::*;
-RT_ENUM! { enum CredentialPromptType: i32 {
-    PromptIfNeeded (CredentialPromptType_PromptIfNeeded) = 0, RetypeCredentials (CredentialPromptType_RetypeCredentials) = 1, DoNotPrompt (CredentialPromptType_DoNotPrompt) = 2,
-}}
-DEFINE_IID!(IID_IOnlineIdAuthenticator, 2684614026, 10667, 18455, 184, 132, 215, 81, 109, 173, 24, 185);
-RT_INTERFACE!{interface IOnlineIdAuthenticator(IOnlineIdAuthenticatorVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdAuthenticator] {
-    fn AuthenticateUserAsync(&self, request: *mut OnlineIdServiceTicketRequest, out: *mut *mut UserAuthenticationOperation) -> HRESULT,
-    fn AuthenticateUserAsyncAdvanced(&self, requests: *mut foundation::collections::IIterable<OnlineIdServiceTicketRequest>, credentialPromptType: CredentialPromptType, out: *mut *mut UserAuthenticationOperation) -> HRESULT,
-    fn SignOutUserAsync(&self, out: *mut *mut SignOutUserOperation) -> HRESULT,
-    fn put_ApplicationId(&self, value: Guid) -> HRESULT,
-    fn get_ApplicationId(&self, out: *mut Guid) -> HRESULT,
-    fn get_CanSignOut(&self, out: *mut bool) -> HRESULT,
-    fn get_AuthenticatedSafeCustomerId(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl IOnlineIdAuthenticator {
-    #[inline] pub fn authenticate_user_async(&self, request: &OnlineIdServiceTicketRequest) -> Result<ComPtr<UserAuthenticationOperation>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AuthenticateUserAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn authenticate_user_async_advanced(&self, requests: &foundation::collections::IIterable<OnlineIdServiceTicketRequest>, credentialPromptType: CredentialPromptType) -> Result<ComPtr<UserAuthenticationOperation>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AuthenticateUserAsyncAdvanced)(self as *const _ as *mut _, requests as *const _ as *mut _, credentialPromptType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn sign_out_user_async(&self) -> Result<ComPtr<SignOutUserOperation>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SignOutUserAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_application_id(&self, value: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ApplicationId)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_application_id(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ApplicationId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_can_sign_out(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CanSignOut)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_authenticated_safe_customer_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AuthenticatedSafeCustomerId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class OnlineIdAuthenticator: IOnlineIdAuthenticator}
-impl RtActivatable<IActivationFactory> for OnlineIdAuthenticator {}
-DEFINE_CLSID!(OnlineIdAuthenticator(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,65,117,116,104,101,110,116,105,99,97,116,111,114,0]) [CLSID_OnlineIdAuthenticator]);
-DEFINE_IID!(IID_IOnlineIdServiceTicket, 3378271359, 55169, 19092, 172, 184, 197, 152, 116, 35, 140, 38);
-RT_INTERFACE!{interface IOnlineIdServiceTicket(IOnlineIdServiceTicketVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdServiceTicket] {
-    fn get_Value(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Request(&self, out: *mut *mut OnlineIdServiceTicketRequest) -> HRESULT,
-    fn get_ErrorCode(&self, out: *mut i32) -> HRESULT
-}}
-impl IOnlineIdServiceTicket {
-    #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<OnlineIdServiceTicketRequest>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_error_code(&self) -> Result<i32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ErrorCode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class OnlineIdServiceTicket: IOnlineIdServiceTicket}
-DEFINE_IID!(IID_IOnlineIdServiceTicketRequest, 695485907, 64355, 16693, 137, 9, 78, 53, 76, 6, 20, 102);
-RT_INTERFACE!{interface IOnlineIdServiceTicketRequest(IOnlineIdServiceTicketRequestVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdServiceTicketRequest] {
-    fn get_Service(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Policy(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl IOnlineIdServiceTicketRequest {
-    #[inline] pub fn get_service(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Service)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_policy(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Policy)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class OnlineIdServiceTicketRequest: IOnlineIdServiceTicketRequest}
-impl RtActivatable<IOnlineIdServiceTicketRequestFactory> for OnlineIdServiceTicketRequest {}
-impl OnlineIdServiceTicketRequest {
-    #[inline] pub fn create_online_id_service_ticket_request(service: &HStringArg, policy: &HStringArg) -> Result<ComPtr<OnlineIdServiceTicketRequest>> {
-        <Self as RtActivatable<IOnlineIdServiceTicketRequestFactory>>::get_activation_factory().create_online_id_service_ticket_request(service, policy)
-    }
-    #[inline] pub fn create_online_id_service_ticket_request_advanced(service: &HStringArg) -> Result<ComPtr<OnlineIdServiceTicketRequest>> {
-        <Self as RtActivatable<IOnlineIdServiceTicketRequestFactory>>::get_activation_factory().create_online_id_service_ticket_request_advanced(service)
-    }
-}
-DEFINE_CLSID!(OnlineIdServiceTicketRequest(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,83,101,114,118,105,99,101,84,105,99,107,101,116,82,101,113,117,101,115,116,0]) [CLSID_OnlineIdServiceTicketRequest]);
-DEFINE_IID!(IID_IOnlineIdServiceTicketRequestFactory, 3199928840, 40563, 16503, 150, 20, 8, 97, 76, 11, 194, 69);
-RT_INTERFACE!{static interface IOnlineIdServiceTicketRequestFactory(IOnlineIdServiceTicketRequestFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdServiceTicketRequestFactory] {
-    fn CreateOnlineIdServiceTicketRequest(&self, service: HSTRING, policy: HSTRING, out: *mut *mut OnlineIdServiceTicketRequest) -> HRESULT,
-    fn CreateOnlineIdServiceTicketRequestAdvanced(&self, service: HSTRING, out: *mut *mut OnlineIdServiceTicketRequest) -> HRESULT
-}}
-impl IOnlineIdServiceTicketRequestFactory {
-    #[inline] pub fn create_online_id_service_ticket_request(&self, service: &HStringArg, policy: &HStringArg) -> Result<ComPtr<OnlineIdServiceTicketRequest>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateOnlineIdServiceTicketRequest)(self as *const _ as *mut _, service.get(), policy.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_online_id_service_ticket_request_advanced(&self, service: &HStringArg) -> Result<ComPtr<OnlineIdServiceTicketRequest>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateOnlineIdServiceTicketRequestAdvanced)(self as *const _ as *mut _, service.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{static class OnlineIdSystemAuthenticator}
-impl RtActivatable<IOnlineIdSystemAuthenticatorStatics> for OnlineIdSystemAuthenticator {}
-impl OnlineIdSystemAuthenticator {
-    #[inline] pub fn get_default() -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> {
-        <Self as RtActivatable<IOnlineIdSystemAuthenticatorStatics>>::get_activation_factory().get_default()
-    }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &::rt::gen::windows::system::User) -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> {
-        <Self as RtActivatable<IOnlineIdSystemAuthenticatorStatics>>::get_activation_factory().get_for_user(user)
-    }
-}
-DEFINE_CLSID!(OnlineIdSystemAuthenticator(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,83,121,115,116,101,109,65,117,116,104,101,110,116,105,99,97,116,111,114,0]) [CLSID_OnlineIdSystemAuthenticator]);
-DEFINE_IID!(IID_IOnlineIdSystemAuthenticatorForUser, 1469628155, 7652, 16774, 162, 230, 181, 99, 248, 106, 175, 68);
-RT_INTERFACE!{interface IOnlineIdSystemAuthenticatorForUser(IOnlineIdSystemAuthenticatorForUserVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemAuthenticatorForUser] {
-    fn GetTicketAsync(&self, request: *mut OnlineIdServiceTicketRequest, out: *mut *mut foundation::IAsyncOperation<OnlineIdSystemTicketResult>) -> HRESULT,
-    fn put_ApplicationId(&self, value: Guid) -> HRESULT,
-    fn get_ApplicationId(&self, out: *mut Guid) -> HRESULT,
-    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut ::rt::gen::windows::system::User) -> HRESULT
-}}
-impl IOnlineIdSystemAuthenticatorForUser {
-    #[inline] pub fn get_ticket_async(&self, request: &OnlineIdServiceTicketRequest) -> Result<ComPtr<foundation::IAsyncOperation<OnlineIdSystemTicketResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetTicketAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_application_id(&self, value: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ApplicationId)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_application_id(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ApplicationId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<::rt::gen::windows::system::User>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class OnlineIdSystemAuthenticatorForUser: IOnlineIdSystemAuthenticatorForUser}
-DEFINE_IID!(IID_IOnlineIdSystemAuthenticatorStatics, 2231662482, 63028, 16867, 150, 164, 81, 100, 233, 2, 199, 64);
-RT_INTERFACE!{static interface IOnlineIdSystemAuthenticatorStatics(IOnlineIdSystemAuthenticatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemAuthenticatorStatics] {
-    fn get_Default(&self, out: *mut *mut OnlineIdSystemAuthenticatorForUser) -> HRESULT,
-    #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut ::rt::gen::windows::system::User, out: *mut *mut OnlineIdSystemAuthenticatorForUser) -> HRESULT
-}}
-impl IOnlineIdSystemAuthenticatorStatics {
-    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Default)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &::rt::gen::windows::system::User) -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IOnlineIdSystemIdentity, 1950142989, 46794, 17229, 129, 36, 83, 234, 18, 104, 83, 7);
-RT_INTERFACE!{interface IOnlineIdSystemIdentity(IOnlineIdSystemIdentityVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemIdentity] {
-    fn get_Ticket(&self, out: *mut *mut OnlineIdServiceTicket) -> HRESULT,
-    fn get_Id(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl IOnlineIdSystemIdentity {
-    #[inline] pub fn get_ticket(&self) -> Result<Option<ComPtr<OnlineIdServiceTicket>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Ticket)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class OnlineIdSystemIdentity: IOnlineIdSystemIdentity}
-DEFINE_IID!(IID_IOnlineIdSystemTicketResult, 3674890232, 45208, 19149, 157, 19, 158, 100, 6, 82, 181, 182);
-RT_INTERFACE!{interface IOnlineIdSystemTicketResult(IOnlineIdSystemTicketResultVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemTicketResult] {
-    fn get_Identity(&self, out: *mut *mut OnlineIdSystemIdentity) -> HRESULT,
-    fn get_Status(&self, out: *mut OnlineIdSystemTicketStatus) -> HRESULT,
-    fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
-}}
-impl IOnlineIdSystemTicketResult {
-    #[inline] pub fn get_identity(&self) -> Result<Option<ComPtr<OnlineIdSystemIdentity>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Identity)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_status(&self) -> Result<OnlineIdSystemTicketStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ExtendedError)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class OnlineIdSystemTicketResult: IOnlineIdSystemTicketResult}
-RT_ENUM! { enum OnlineIdSystemTicketStatus: i32 {
-    Success (OnlineIdSystemTicketStatus_Success) = 0, Error (OnlineIdSystemTicketStatus_Error) = 1, ServiceConnectionError (OnlineIdSystemTicketStatus_ServiceConnectionError) = 2,
-}}
-RT_CLASS!{class SignOutUserOperation: foundation::IAsyncAction}
-RT_CLASS!{class UserAuthenticationOperation: foundation::IAsyncOperation<UserIdentity>}
-DEFINE_IID!(IID_IUserIdentity, 558291405, 1858, 19427, 138, 28, 124, 122, 230, 121, 170, 136);
-RT_INTERFACE!{interface IUserIdentity(IUserIdentityVtbl): IInspectable(IInspectableVtbl) [IID_IUserIdentity] {
-    fn get_Tickets(&self, out: *mut *mut foundation::collections::IVectorView<OnlineIdServiceTicket>) -> HRESULT,
-    fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_SafeCustomerId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_SignInName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_FirstName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_LastName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_IsBetaAccount(&self, out: *mut bool) -> HRESULT,
-    fn get_IsConfirmedPC(&self, out: *mut bool) -> HRESULT
-}}
-impl IUserIdentity {
-    #[inline] pub fn get_tickets(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<OnlineIdServiceTicket>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Tickets)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_safe_customer_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SafeCustomerId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_sign_in_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SignInName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_first_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FirstName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_last_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LastName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_beta_account(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsBetaAccount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_confirmed_pc(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsConfirmedPC)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class UserIdentity: IUserIdentity}
-} // Windows.Security.Authentication.OnlineId
-pub mod web { // Windows.Security.Authentication.Web
-use ::prelude::*;
-RT_ENUM! { enum TokenBindingKeyType: i32 {
-    Rsa2048 (TokenBindingKeyType_Rsa2048) = 0, EcdsaP256 (TokenBindingKeyType_EcdsaP256) = 1, AnyExisting (TokenBindingKeyType_AnyExisting) = 2,
-}}
-RT_CLASS!{static class WebAuthenticationBroker}
-impl RtActivatable<IWebAuthenticationBrokerStatics> for WebAuthenticationBroker {}
-impl RtActivatable<IWebAuthenticationBrokerStatics2> for WebAuthenticationBroker {}
-impl WebAuthenticationBroker {
-    #[inline] pub fn authenticate_with_callback_uri_async(options: WebAuthenticationOptions, requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().authenticate_with_callback_uri_async(options, requestUri, callbackUri)
-    }
-    #[inline] pub fn authenticate_without_callback_uri_async(options: WebAuthenticationOptions, requestUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().authenticate_without_callback_uri_async(options, requestUri)
-    }
-    #[inline] pub fn get_current_application_callback_uri() -> Result<Option<ComPtr<foundation::Uri>>> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().get_current_application_callback_uri()
-    }
-    #[inline] pub fn authenticate_and_continue(requestUri: &foundation::Uri) -> Result<()> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_and_continue(requestUri)
-    }
-    #[inline] pub fn authenticate_with_callback_uri_and_continue(requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<()> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_with_callback_uri_and_continue(requestUri, callbackUri)
-    }
-    #[inline] pub fn authenticate_with_callback_uri_continuation_data_and_options_and_continue(requestUri: &foundation::Uri, callbackUri: &foundation::Uri, continuationData: &foundation::collections::ValueSet, options: WebAuthenticationOptions) -> Result<()> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_with_callback_uri_continuation_data_and_options_and_continue(requestUri, callbackUri, continuationData, options)
-    }
-    #[inline] pub fn authenticate_silently_async(requestUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_silently_async(requestUri)
-    }
-    #[inline] pub fn authenticate_silently_with_options_async(requestUri: &foundation::Uri, options: WebAuthenticationOptions) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_silently_with_options_async(requestUri, options)
-    }
-}
-DEFINE_CLSID!(WebAuthenticationBroker(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,66,114,111,107,101,114,0]) [CLSID_WebAuthenticationBroker]);
-DEFINE_IID!(IID_IWebAuthenticationBrokerStatics, 789880602, 58995, 16565, 188, 34, 32, 26, 104, 100, 163, 123);
-RT_INTERFACE!{static interface IWebAuthenticationBrokerStatics(IWebAuthenticationBrokerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationBrokerStatics] {
-    fn AuthenticateWithCallbackUriAsync(&self, options: WebAuthenticationOptions, requestUri: *mut foundation::Uri, callbackUri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<WebAuthenticationResult>) -> HRESULT,
-    fn AuthenticateWithoutCallbackUriAsync(&self, options: WebAuthenticationOptions, requestUri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<WebAuthenticationResult>) -> HRESULT,
-    fn GetCurrentApplicationCallbackUri(&self, out: *mut *mut foundation::Uri) -> HRESULT
-}}
-impl IWebAuthenticationBrokerStatics {
-    #[inline] pub fn authenticate_with_callback_uri_async(&self, options: WebAuthenticationOptions, requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AuthenticateWithCallbackUriAsync)(self as *const _ as *mut _, options, requestUri as *const _ as *mut _, callbackUri as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn authenticate_without_callback_uri_async(&self, options: WebAuthenticationOptions, requestUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AuthenticateWithoutCallbackUriAsync)(self as *const _ as *mut _, options, requestUri as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_current_application_callback_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCurrentApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebAuthenticationBrokerStatics2, 1942879134, 5351, 16858, 169, 113, 170, 244, 65, 11, 98, 30);
-RT_INTERFACE!{static interface IWebAuthenticationBrokerStatics2(IWebAuthenticationBrokerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationBrokerStatics2] {
-    fn AuthenticateAndContinue(&self, requestUri: *mut foundation::Uri) -> HRESULT,
-    fn AuthenticateWithCallbackUriAndContinue(&self, requestUri: *mut foundation::Uri, callbackUri: *mut foundation::Uri) -> HRESULT,
-    fn AuthenticateWithCallbackUriContinuationDataAndOptionsAndContinue(&self, requestUri: *mut foundation::Uri, callbackUri: *mut foundation::Uri, continuationData: *mut foundation::collections::ValueSet, options: WebAuthenticationOptions) -> HRESULT,
-    fn AuthenticateSilentlyAsync(&self, requestUri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<WebAuthenticationResult>) -> HRESULT,
-    fn AuthenticateSilentlyWithOptionsAsync(&self, requestUri: *mut foundation::Uri, options: WebAuthenticationOptions, out: *mut *mut foundation::IAsyncOperation<WebAuthenticationResult>) -> HRESULT
-}}
-impl IWebAuthenticationBrokerStatics2 {
-    #[inline] pub fn authenticate_and_continue(&self, requestUri: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AuthenticateAndContinue)(self as *const _ as *mut _, requestUri as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn authenticate_with_callback_uri_and_continue(&self, requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AuthenticateWithCallbackUriAndContinue)(self as *const _ as *mut _, requestUri as *const _ as *mut _, callbackUri as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn authenticate_with_callback_uri_continuation_data_and_options_and_continue(&self, requestUri: &foundation::Uri, callbackUri: &foundation::Uri, continuationData: &foundation::collections::ValueSet, options: WebAuthenticationOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AuthenticateWithCallbackUriContinuationDataAndOptionsAndContinue)(self as *const _ as *mut _, requestUri as *const _ as *mut _, callbackUri as *const _ as *mut _, continuationData as *const _ as *mut _, options);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn authenticate_silently_async(&self, requestUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AuthenticateSilentlyAsync)(self as *const _ as *mut _, requestUri as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn authenticate_silently_with_options_async(&self, requestUri: &foundation::Uri, options: WebAuthenticationOptions) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AuthenticateSilentlyWithOptionsAsync)(self as *const _ as *mut _, requestUri as *const _ as *mut _, options, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum WebAuthenticationOptions: u32 {
-    None (WebAuthenticationOptions_None) = 0, SilentMode (WebAuthenticationOptions_SilentMode) = 1, UseTitle (WebAuthenticationOptions_UseTitle) = 2, UseHttpPost (WebAuthenticationOptions_UseHttpPost) = 4, UseCorporateNetwork (WebAuthenticationOptions_UseCorporateNetwork) = 8,
-}}
-DEFINE_IID!(IID_IWebAuthenticationResult, 1677732683, 60905, 18186, 165, 205, 3, 35, 250, 246, 226, 98);
-RT_INTERFACE!{interface IWebAuthenticationResult(IWebAuthenticationResultVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationResult] {
-    fn get_ResponseData(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_ResponseStatus(&self, out: *mut WebAuthenticationStatus) -> HRESULT,
-    fn get_ResponseErrorDetail(&self, out: *mut u32) -> HRESULT
-}}
-impl IWebAuthenticationResult {
-    #[inline] pub fn get_response_data(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ResponseData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_response_status(&self) -> Result<WebAuthenticationStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ResponseStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_response_error_detail(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ResponseErrorDetail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebAuthenticationResult: IWebAuthenticationResult}
-RT_ENUM! { enum WebAuthenticationStatus: i32 {
-    Success (WebAuthenticationStatus_Success) = 0, UserCancel (WebAuthenticationStatus_UserCancel) = 1, ErrorHttp (WebAuthenticationStatus_ErrorHttp) = 2,
-}}
-pub mod provider { // Windows.Security.Authentication.Web.Provider
-use ::prelude::*;
-DEFINE_IID!(IID_IWebAccountClientView, 3887949498, 3015, 19558, 191, 212, 101, 211, 8, 44, 188, 168);
-RT_INTERFACE!{interface IWebAccountClientView(IWebAccountClientViewVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountClientView] {
-    fn get_ApplicationCallbackUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
-    fn get_Type(&self, out: *mut WebAccountClientViewType) -> HRESULT,
-    fn get_AccountPairwiseId(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl IWebAccountClientView {
-    #[inline] pub fn get_application_callback_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_type(&self) -> Result<WebAccountClientViewType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Type)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_account_pairwise_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AccountPairwiseId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebAccountClientView: IWebAccountClientView}
-impl RtActivatable<IWebAccountClientViewFactory> for WebAccountClientView {}
-impl WebAccountClientView {
-    #[inline] pub fn create(viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri) -> Result<ComPtr<WebAccountClientView>> {
-        <Self as RtActivatable<IWebAccountClientViewFactory>>::get_activation_factory().create(viewType, applicationCallbackUri)
-    }
-    #[inline] pub fn create_with_pairwise_id(viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri, accountPairwiseId: &HStringArg) -> Result<ComPtr<WebAccountClientView>> {
-        <Self as RtActivatable<IWebAccountClientViewFactory>>::get_activation_factory().create_with_pairwise_id(viewType, applicationCallbackUri, accountPairwiseId)
-    }
-}
-DEFINE_CLSID!(WebAccountClientView(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,65,99,99,111,117,110,116,67,108,105,101,110,116,86,105,101,119,0]) [CLSID_WebAccountClientView]);
-DEFINE_IID!(IID_IWebAccountClientViewFactory, 1634539172, 56866, 18517, 163, 38, 6, 206, 191, 42, 63, 35);
-RT_INTERFACE!{static interface IWebAccountClientViewFactory(IWebAccountClientViewFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountClientViewFactory] {
-    fn Create(&self, viewType: WebAccountClientViewType, applicationCallbackUri: *mut foundation::Uri, out: *mut *mut WebAccountClientView) -> HRESULT,
-    fn CreateWithPairwiseId(&self, viewType: WebAccountClientViewType, applicationCallbackUri: *mut foundation::Uri, accountPairwiseId: HSTRING, out: *mut *mut WebAccountClientView) -> HRESULT
-}}
-impl IWebAccountClientViewFactory {
-    #[inline] pub fn create(&self, viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri) -> Result<ComPtr<WebAccountClientView>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, viewType, applicationCallbackUri as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_with_pairwise_id(&self, viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri, accountPairwiseId: &HStringArg) -> Result<ComPtr<WebAccountClientView>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithPairwiseId)(self as *const _ as *mut _, viewType, applicationCallbackUri as *const _ as *mut _, accountPairwiseId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum WebAccountClientViewType: i32 {
-    IdOnly (WebAccountClientViewType_IdOnly) = 0, IdAndProperties (WebAccountClientViewType_IdAndProperties) = 1,
-}}
-RT_CLASS!{static class WebAccountManager}
-impl RtActivatable<IWebAccountManagerStatics> for WebAccountManager {}
-impl RtActivatable<IWebAccountManagerStatics2> for WebAccountManager {}
-impl RtActivatable<IWebAccountManagerStatics3> for WebAccountManager {}
-impl RtActivatable<IWebAccountManagerStatics4> for WebAccountManager {}
-impl RtActivatable<IWebAccountMapManagerStatics> for WebAccountManager {}
-impl RtActivatable<IWebAccountScopeManagerStatics> for WebAccountManager {}
-impl WebAccountManager {
-    #[inline] pub fn update_web_account_properties_async(webAccount: &super::super::super::credentials::WebAccount, webAccountUserName: &HStringArg, additionalProperties: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().update_web_account_properties_async(webAccount, webAccountUserName, additionalProperties)
-    }
-    #[inline] pub fn add_web_account_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().add_web_account_async(webAccountId, webAccountUserName, props)
-    }
-    #[inline] pub fn delete_web_account_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().delete_web_account_async(webAccount)
-    }
-    #[inline] pub fn find_all_provider_web_accounts_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().find_all_provider_web_accounts_async()
-    }
-    #[cfg(feature="windows-web")] #[inline] pub fn push_cookies_async(uri: &foundation::Uri, cookies: &foundation::collections::IVectorView<::rt::gen::windows::web::http::HttpCookie>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().push_cookies_async(uri, cookies)
-    }
-    #[inline] pub fn set_view_async(webAccount: &super::super::super::credentials::WebAccount, view: &WebAccountClientView) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().set_view_async(webAccount, view)
-    }
-    #[inline] pub fn clear_view_async(webAccount: &super::super::super::credentials::WebAccount, applicationCallbackUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().clear_view_async(webAccount, applicationCallbackUri)
-    }
-    #[inline] pub fn get_views_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<WebAccountClientView>>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().get_views_async(webAccount)
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_web_account_picture_async(webAccount: &super::super::super::credentials::WebAccount, webAccountPicture: &::rt::gen::windows::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().set_web_account_picture_async(webAccount, webAccountPicture)
-    }
-    #[inline] pub fn clear_web_account_picture_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().clear_web_account_picture_async(webAccount)
-    }
-    #[inline] pub fn pull_cookies_async(uriString: &HStringArg, callerPFN: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics2>>::get_activation_factory().pull_cookies_async(uriString, callerPFN)
-    }
-    #[cfg(feature="windows-system")] #[inline] pub fn find_all_provider_web_accounts_for_user_async(user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().find_all_provider_web_accounts_for_user_async(user)
-    }
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_for_user_async(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_for_user_async(user, webAccountId, webAccountUserName, props)
-    }
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_for_user_async(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_with_scope_for_user_async(user, webAccountId, webAccountUserName, props, scope)
-    }
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_and_map_for_user_async(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_with_scope_and_map_for_user_async(user, webAccountId, webAccountUserName, props, scope, perUserWebAccountId)
-    }
-    #[inline] pub fn invalidate_app_cache_for_all_accounts_async() -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics4>>::get_activation_factory().invalidate_app_cache_for_all_accounts_async()
-    }
-    #[inline] pub fn invalidate_app_cache_for_account_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics4>>::get_activation_factory().invalidate_app_cache_for_account_async(webAccount)
-    }
-    #[inline] pub fn add_web_account_with_scope_and_map_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().add_web_account_with_scope_and_map_async(webAccountId, webAccountUserName, props, scope, perUserWebAccountId)
-    }
-    #[inline] pub fn set_per_app_to_per_user_account_async(perAppAccount: &super::super::super::credentials::WebAccount, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().set_per_app_to_per_user_account_async(perAppAccount, perUserWebAccountId)
-    }
-    #[inline] pub fn get_per_user_from_per_app_account_async(perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().get_per_user_from_per_app_account_async(perAppAccount)
-    }
-    #[inline] pub fn clear_per_user_from_per_app_account_async(perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().clear_per_user_from_per_app_account_async(perAppAccount)
-    }
-    #[inline] pub fn add_web_account_with_scope_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().add_web_account_with_scope_async(webAccountId, webAccountUserName, props, scope)
-    }
-    #[inline] pub fn set_scope_async(webAccount: &super::super::super::credentials::WebAccount, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().set_scope_async(webAccount, scope)
-    }
-    #[inline] pub fn get_scope(webAccount: &super::super::super::credentials::WebAccount) -> Result<WebAccountScope> {
-        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().get_scope(webAccount)
-    }
-}
-DEFINE_CLSID!(WebAccountManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,65,99,99,111,117,110,116,77,97,110,97,103,101,114,0]) [CLSID_WebAccountManager]);
-DEFINE_IID!(IID_IWebAccountManagerStatics, 3001606566, 54426, 16434, 132, 191, 26, 40, 71, 116, 123, 241);
-RT_INTERFACE!{static interface IWebAccountManagerStatics(IWebAccountManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountManagerStatics] {
-    fn UpdateWebAccountPropertiesAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, webAccountUserName: HSTRING, additionalProperties: *mut foundation::collections::IMapView<HString, HString>, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn AddWebAccountAsync(&self, webAccountId: HSTRING, webAccountUserName: HSTRING, props: *mut foundation::collections::IMapView<HString, HString>, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
-    fn DeleteWebAccountAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn FindAllProviderWebAccountsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>) -> HRESULT,
-    #[cfg(not(feature="windows-web"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-web")] fn PushCookiesAsync(&self, uri: *mut foundation::Uri, cookies: *mut foundation::collections::IVectorView<::rt::gen::windows::web::http::HttpCookie>, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn SetViewAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, view: *mut WebAccountClientView, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn ClearViewAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, applicationCallbackUri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn GetViewsAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<WebAccountClientView>>) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy8(&self) -> (),
-    #[cfg(feature="windows-storage")] fn SetWebAccountPictureAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, webAccountPicture: *mut ::rt::gen::windows::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn ClearWebAccountPictureAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncAction) -> HRESULT
-}}
-impl IWebAccountManagerStatics {
-    #[inline] pub fn update_web_account_properties_async(&self, webAccount: &super::super::super::credentials::WebAccount, webAccountUserName: &HStringArg, additionalProperties: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UpdateWebAccountPropertiesAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, webAccountUserName.get(), additionalProperties as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_web_account_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWebAccountAsync)(self as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn delete_web_account_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteWebAccountAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn find_all_provider_web_accounts_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAllProviderWebAccountsAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-web")] #[inline] pub fn push_cookies_async(&self, uri: &foundation::Uri, cookies: &foundation::collections::IVectorView<::rt::gen::windows::web::http::HttpCookie>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PushCookiesAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, cookies as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_view_async(&self, webAccount: &super::super::super::credentials::WebAccount, view: &WebAccountClientView) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetViewAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, view as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn clear_view_async(&self, webAccount: &super::super::super::credentials::WebAccount, applicationCallbackUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ClearViewAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, applicationCallbackUri as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_views_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<WebAccountClientView>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetViewsAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_web_account_picture_async(&self, webAccount: &super::super::super::credentials::WebAccount, webAccountPicture: &::rt::gen::windows::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetWebAccountPictureAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, webAccountPicture as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn clear_web_account_picture_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ClearWebAccountPictureAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebAccountManagerStatics2, 1755818025, 11615, 18003, 139, 176, 189, 47, 166, 189, 45, 135);
-RT_INTERFACE!{static interface IWebAccountManagerStatics2(IWebAccountManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountManagerStatics2] {
-    fn PullCookiesAsync(&self, uriString: HSTRING, callerPFN: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT
-}}
-impl IWebAccountManagerStatics2 {
-    #[inline] pub fn pull_cookies_async(&self, uriString: &HStringArg, callerPFN: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PullCookiesAsync)(self as *const _ as *mut _, uriString.get(), callerPFN.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebAccountManagerStatics3, 3712295846, 35407, 19106, 177, 94, 3, 245, 80, 175, 19, 89);
-RT_INTERFACE!{static interface IWebAccountManagerStatics3(IWebAccountManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountManagerStatics3] {
-    #[cfg(feature="windows-system")] fn FindAllProviderWebAccountsForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn AddWebAccountForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, webAccountId: HSTRING, webAccountUserName: HSTRING, props: *mut foundation::collections::IMapView<HString, HString>, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn AddWebAccountWithScopeForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, webAccountId: HSTRING, webAccountUserName: HSTRING, props: *mut foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn AddWebAccountWithScopeAndMapForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, webAccountId: HSTRING, webAccountUserName: HSTRING, props: *mut foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT
-}}
-impl IWebAccountManagerStatics3 {
-    #[cfg(feature="windows-system")] #[inline] pub fn find_all_provider_web_accounts_for_user_async(&self, user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAllProviderWebAccountsForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_for_user_async(&self, user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWebAccountForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_for_user_async(&self, user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWebAccountWithScopeForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, scope, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_and_map_for_user_async(&self, user: &::rt::gen::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWebAccountWithScopeAndMapForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, scope, perUserWebAccountId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebAccountManagerStatics4, 1508623058, 63451, 16687, 188, 63, 242, 254, 160, 68, 48, 180);
-RT_INTERFACE!{static interface IWebAccountManagerStatics4(IWebAccountManagerStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountManagerStatics4] {
-    fn InvalidateAppCacheForAllAccountsAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn InvalidateAppCacheForAccountAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncAction) -> HRESULT
-}}
-impl IWebAccountManagerStatics4 {
-    #[inline] pub fn invalidate_app_cache_for_all_accounts_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).InvalidateAppCacheForAllAccountsAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn invalidate_app_cache_for_account_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).InvalidateAppCacheForAccountAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebAccountMapManagerStatics, 3908715631, 14875, 18596, 142, 144, 30, 89, 202, 111, 84, 219);
-RT_INTERFACE!{static interface IWebAccountMapManagerStatics(IWebAccountMapManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountMapManagerStatics] {
-    fn AddWebAccountWithScopeAndMapAsync(&self, webAccountId: HSTRING, webAccountUserName: HSTRING, props: *mut foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
-    fn SetPerAppToPerUserAccountAsync(&self, perAppAccount: *mut super::super::super::credentials::WebAccount, perUserWebAccountId: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn GetPerUserFromPerAppAccountAsync(&self, perAppAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
-    fn ClearPerUserFromPerAppAccountAsync(&self, perAppAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncAction) -> HRESULT
-}}
-impl IWebAccountMapManagerStatics {
-    #[inline] pub fn add_web_account_with_scope_and_map_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWebAccountWithScopeAndMapAsync)(self as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, scope, perUserWebAccountId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_per_app_to_per_user_account_async(&self, perAppAccount: &super::super::super::credentials::WebAccount, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetPerAppToPerUserAccountAsync)(self as *const _ as *mut _, perAppAccount as *const _ as *mut _, perUserWebAccountId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_per_user_from_per_app_account_async(&self, perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPerUserFromPerAppAccountAsync)(self as *const _ as *mut _, perAppAccount as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn clear_per_user_from_per_app_account_async(&self, perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ClearPerUserFromPerAppAccountAsync)(self as *const _ as *mut _, perAppAccount as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebAccountProviderAddAccountOperation, 1944837327, 17272, 19577, 147, 53, 165, 215, 171, 129, 89, 78);
-RT_INTERFACE!{interface IWebAccountProviderAddAccountOperation(IWebAccountProviderAddAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderAddAccountOperation] {
-    fn ReportCompleted(&self) -> HRESULT
-}}
-impl IWebAccountProviderAddAccountOperation {
-    #[inline] pub fn report_completed(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebAccountProviderAddAccountOperation: IWebAccountProviderAddAccountOperation}
-DEFINE_IID!(IID_IWebAccountProviderBaseReportOperation, 3148131515, 39227, 19799, 187, 228, 20, 33, 227, 102, 139, 76);
-RT_INTERFACE!{interface IWebAccountProviderBaseReportOperation(IWebAccountProviderBaseReportOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderBaseReportOperation] {
-    fn ReportCompleted(&self) -> HRESULT,
-    fn ReportError(&self, value: *mut super::core::WebProviderError) -> HRESULT
-}}
-impl IWebAccountProviderBaseReportOperation {
-    #[inline] pub fn report_completed(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn report_error(&self, value: &super::core::WebProviderError) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReportError)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebAccountProviderDeleteAccountOperation, 180046008, 40449, 18889, 163, 85, 125, 72, 202, 247, 214, 202);
-RT_INTERFACE!{interface IWebAccountProviderDeleteAccountOperation(IWebAccountProviderDeleteAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderDeleteAccountOperation] {
-    fn get_WebAccount(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT
-}}
-impl IWebAccountProviderDeleteAccountOperation {
-    #[inline] pub fn get_web_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_WebAccount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebAccountProviderDeleteAccountOperation: IWebAccountProviderDeleteAccountOperation}
-RT_CLASS!{class WebAccountProviderGetTokenSilentOperation: IWebAccountProviderTokenOperation}
-DEFINE_IID!(IID_IWebAccountProviderManageAccountOperation, 3978353756, 53787, 17982, 169, 183, 193, 253, 14, 218, 233, 120);
-RT_INTERFACE!{interface IWebAccountProviderManageAccountOperation(IWebAccountProviderManageAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderManageAccountOperation] {
-    fn get_WebAccount(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT,
-    fn ReportCompleted(&self) -> HRESULT
-}}
-impl IWebAccountProviderManageAccountOperation {
-    #[inline] pub fn get_web_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_WebAccount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn report_completed(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebAccountProviderManageAccountOperation: IWebAccountProviderManageAccountOperation}
-DEFINE_IID!(IID_IWebAccountProviderOperation, 1834820646, 4273, 16794, 164, 78, 249, 197, 22, 21, 116, 230);
-RT_INTERFACE!{interface IWebAccountProviderOperation(IWebAccountProviderOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderOperation] {
-    fn get_Kind(&self, out: *mut WebAccountProviderOperationKind) -> HRESULT
-}}
-impl IWebAccountProviderOperation {
-    #[inline] pub fn get_kind(&self) -> Result<WebAccountProviderOperationKind> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Kind)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum WebAccountProviderOperationKind: i32 {
-    RequestToken (WebAccountProviderOperationKind_RequestToken) = 0, GetTokenSilently (WebAccountProviderOperationKind_GetTokenSilently) = 1, AddAccount (WebAccountProviderOperationKind_AddAccount) = 2, ManageAccount (WebAccountProviderOperationKind_ManageAccount) = 3, DeleteAccount (WebAccountProviderOperationKind_DeleteAccount) = 4, RetrieveCookies (WebAccountProviderOperationKind_RetrieveCookies) = 5, SignOutAccount (WebAccountProviderOperationKind_SignOutAccount) = 6,
-}}
-RT_CLASS!{class WebAccountProviderRequestTokenOperation: IWebAccountProviderTokenOperation}
-DEFINE_IID!(IID_IWebAccountProviderRetrieveCookiesOperation, 1510212673, 4003, 19121, 160, 28, 32, 177, 16, 53, 133, 148);
-RT_INTERFACE!{interface IWebAccountProviderRetrieveCookiesOperation(IWebAccountProviderRetrieveCookiesOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderRetrieveCookiesOperation] {
-    fn get_Context(&self, out: *mut *mut foundation::Uri) -> HRESULT,
-    #[cfg(not(feature="windows-web"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-web")] fn get_Cookies(&self, out: *mut *mut foundation::collections::IVector<::rt::gen::windows::web::http::HttpCookie>) -> HRESULT,
-    fn put_Uri(&self, uri: *mut foundation::Uri) -> HRESULT,
-    fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
-    fn get_ApplicationCallbackUri(&self, out: *mut *mut foundation::Uri) -> HRESULT
-}}
-impl IWebAccountProviderRetrieveCookiesOperation {
-    #[inline] pub fn get_context(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Context)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-web")] #[inline] pub fn get_cookies(&self) -> Result<Option<ComPtr<foundation::collections::IVector<::rt::gen::windows::web::http::HttpCookie>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Cookies)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_uri(&self, uri: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Uri)(self as *const _ as *mut _, uri as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_application_callback_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebAccountProviderRetrieveCookiesOperation: IWebAccountProviderRetrieveCookiesOperation}
-DEFINE_IID!(IID_IWebAccountProviderSignOutAccountOperation, 3096502813, 3157, 18364, 140, 114, 4, 166, 252, 124, 172, 7);
-RT_INTERFACE!{interface IWebAccountProviderSignOutAccountOperation(IWebAccountProviderSignOutAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderSignOutAccountOperation] {
-    fn get_WebAccount(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT,
-    fn get_ApplicationCallbackUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
-    fn get_ClientId(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl IWebAccountProviderSignOutAccountOperation {
-    #[inline] pub fn get_web_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_WebAccount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_application_callback_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_client_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ClientId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebAccountProviderSignOutAccountOperation: IWebAccountProviderSignOutAccountOperation}
-DEFINE_IID!(IID_IWebAccountProviderSilentReportOperation, 3769976312, 15119, 17626, 146, 76, 123, 24, 186, 170, 98, 169);
-RT_INTERFACE!{interface IWebAccountProviderSilentReportOperation(IWebAccountProviderSilentReportOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderSilentReportOperation] {
-    fn ReportUserInteractionRequired(&self) -> HRESULT,
-    fn ReportUserInteractionRequiredWithError(&self, value: *mut super::core::WebProviderError) -> HRESULT
-}}
-impl IWebAccountProviderSilentReportOperation {
-    #[inline] pub fn report_user_interaction_required(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReportUserInteractionRequired)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn report_user_interaction_required_with_error(&self, value: &super::core::WebProviderError) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReportUserInteractionRequiredWithError)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebAccountProviderTokenObjects, 1083123787, 4904, 17115, 137, 164, 11, 206, 122, 113, 125, 142);
-RT_INTERFACE!{interface IWebAccountProviderTokenObjects(IWebAccountProviderTokenObjectsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderTokenObjects] {
-    fn get_Operation(&self, out: *mut *mut IWebAccountProviderOperation) -> HRESULT
-}}
-impl IWebAccountProviderTokenObjects {
-    #[inline] pub fn get_operation(&self) -> Result<Option<ComPtr<IWebAccountProviderOperation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Operation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebAccountProviderTokenObjects2, 270579859, 23717, 20479, 149, 251, 184, 32, 39, 63, 195, 149);
-RT_INTERFACE!{interface IWebAccountProviderTokenObjects2(IWebAccountProviderTokenObjects2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderTokenObjects2] {
-    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut ::rt::gen::windows::system::User) -> HRESULT
-}}
-impl IWebAccountProviderTokenObjects2 {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<::rt::gen::windows::system::User>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebAccountProviderTokenOperation, 2512786366, 8244, 19512, 148, 52, 210, 108, 20, 178, 180, 178);
-RT_INTERFACE!{interface IWebAccountProviderTokenOperation(IWebAccountProviderTokenOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderTokenOperation] {
-    fn get_ProviderRequest(&self, out: *mut *mut WebProviderTokenRequest) -> HRESULT,
-    fn get_ProviderResponses(&self, out: *mut *mut foundation::collections::IVector<WebProviderTokenResponse>) -> HRESULT,
-    fn put_CacheExpirationTime(&self, value: foundation::DateTime) -> HRESULT,
-    fn get_CacheExpirationTime(&self, out: *mut foundation::DateTime) -> HRESULT
-}}
-impl IWebAccountProviderTokenOperation {
-    #[inline] pub fn get_provider_request(&self) -> Result<Option<ComPtr<WebProviderTokenRequest>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProviderRequest)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_provider_responses(&self) -> Result<Option<ComPtr<foundation::collections::IVector<WebProviderTokenResponse>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProviderResponses)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_cache_expiration_time(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CacheExpirationTime)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_cache_expiration_time(&self) -> Result<foundation::DateTime> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CacheExpirationTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebAccountProviderTriggerDetails: IWebAccountProviderTokenObjects}
-DEFINE_IID!(IID_IWebAccountProviderUIReportOperation, 687837907, 36736, 17147, 148, 79, 178, 16, 123, 189, 66, 230);
-RT_INTERFACE!{interface IWebAccountProviderUIReportOperation(IWebAccountProviderUIReportOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderUIReportOperation] {
-    fn ReportUserCanceled(&self) -> HRESULT
-}}
-impl IWebAccountProviderUIReportOperation {
-    #[inline] pub fn report_user_canceled(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReportUserCanceled)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum WebAccountScope: i32 {
-    PerUser (WebAccountScope_PerUser) = 0, PerApplication (WebAccountScope_PerApplication) = 1,
-}}
-DEFINE_IID!(IID_IWebAccountScopeManagerStatics, 1550639996, 4786, 16954, 191, 61, 133, 184, 215, 229, 54, 86);
-RT_INTERFACE!{static interface IWebAccountScopeManagerStatics(IWebAccountScopeManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountScopeManagerStatics] {
-    fn AddWebAccountWithScopeAsync(&self, webAccountId: HSTRING, webAccountUserName: HSTRING, props: *mut foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
-    fn SetScopeAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, scope: WebAccountScope, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn GetScope(&self, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut WebAccountScope) -> HRESULT
-}}
-impl IWebAccountScopeManagerStatics {
-    #[inline] pub fn add_web_account_with_scope_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWebAccountWithScopeAsync)(self as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, scope, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_scope_async(&self, webAccount: &super::super::super::credentials::WebAccount, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetScopeAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, scope, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_scope(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<WebAccountScope> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetScope)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum WebAccountSelectionOptions: u32 {
-    Default (WebAccountSelectionOptions_Default) = 0, New (WebAccountSelectionOptions_New) = 1,
-}}
-DEFINE_IID!(IID_IWebProviderTokenRequest, 504919947, 34821, 17739, 159, 17, 70, 141, 42, 241, 9, 90);
-RT_INTERFACE!{interface IWebProviderTokenRequest(IWebProviderTokenRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenRequest] {
-    fn get_ClientRequest(&self, out: *mut *mut super::core::WebTokenRequest) -> HRESULT,
-    fn get_WebAccounts(&self, out: *mut *mut foundation::collections::IVectorView<super::super::super::credentials::WebAccount>) -> HRESULT,
-    fn get_WebAccountSelectionOptions(&self, out: *mut WebAccountSelectionOptions) -> HRESULT,
-    fn get_ApplicationCallbackUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
-    fn GetApplicationTokenBindingKeyAsync(&self, keyType: super::TokenBindingKeyType, target: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<super::super::super::cryptography::core::CryptographicKey>) -> HRESULT
-}}
-impl IWebProviderTokenRequest {
-    #[inline] pub fn get_client_request(&self) -> Result<Option<ComPtr<super::core::WebTokenRequest>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ClientRequest)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_web_accounts(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_WebAccounts)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_web_account_selection_options(&self) -> Result<WebAccountSelectionOptions> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_WebAccountSelectionOptions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_application_callback_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_application_token_binding_key_async(&self, keyType: super::TokenBindingKeyType, target: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::cryptography::core::CryptographicKey>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetApplicationTokenBindingKeyAsync)(self as *const _ as *mut _, keyType, target as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebProviderTokenRequest: IWebProviderTokenRequest}
-DEFINE_IID!(IID_IWebProviderTokenRequest2, 3050778188, 4273, 19110, 136, 177, 11, 108, 158, 12, 30, 70);
-RT_INTERFACE!{interface IWebProviderTokenRequest2(IWebProviderTokenRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenRequest2] {
-    #[cfg(feature="windows-storage")] fn GetApplicationTokenBindingKeyIdAsync(&self, keyType: super::TokenBindingKeyType, target: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IBuffer>) -> HRESULT
-}}
-impl IWebProviderTokenRequest2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_application_token_binding_key_id_async(&self, keyType: super::TokenBindingKeyType, target: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetApplicationTokenBindingKeyIdAsync)(self as *const _ as *mut _, keyType, target as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebProviderTokenRequest3, 455546538, 17033, 17518, 146, 86, 218, 251, 111, 102, 165, 30);
-RT_INTERFACE!{interface IWebProviderTokenRequest3(IWebProviderTokenRequest3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenRequest3] {
-    fn get_ApplicationPackageFamilyName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_ApplicationProcessName(&self, out: *mut HSTRING) -> HRESULT,
-    fn CheckApplicationForCapabilityAsync(&self, capabilityName: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
-}}
-impl IWebProviderTokenRequest3 {
-    #[inline] pub fn get_application_package_family_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ApplicationPackageFamilyName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_application_process_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ApplicationProcessName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn check_application_for_capability_async(&self, capabilityName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CheckApplicationForCapabilityAsync)(self as *const _ as *mut _, capabilityName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebProviderTokenResponse, 4011931539, 61269, 16774, 183, 206, 140, 178, 231, 249, 132, 158);
-RT_INTERFACE!{interface IWebProviderTokenResponse(IWebProviderTokenResponseVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenResponse] {
-    fn get_ClientResponse(&self, out: *mut *mut super::core::WebTokenResponse) -> HRESULT
-}}
-impl IWebProviderTokenResponse {
-    #[inline] pub fn get_client_response(&self) -> Result<Option<ComPtr<super::core::WebTokenResponse>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ClientResponse)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebProviderTokenResponse: IWebProviderTokenResponse}
-impl RtActivatable<IWebProviderTokenResponseFactory> for WebProviderTokenResponse {}
-impl WebProviderTokenResponse {
-    #[inline] pub fn create(webTokenResponse: &super::core::WebTokenResponse) -> Result<ComPtr<WebProviderTokenResponse>> {
-        <Self as RtActivatable<IWebProviderTokenResponseFactory>>::get_activation_factory().create(webTokenResponse)
-    }
-}
-DEFINE_CLSID!(WebProviderTokenResponse(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,80,114,111,118,105,100,101,114,84,111,107,101,110,82,101,115,112,111,110,115,101,0]) [CLSID_WebProviderTokenResponse]);
-DEFINE_IID!(IID_IWebProviderTokenResponseFactory, 4199143834, 9658, 16503, 156, 250, 157, 180, 222, 167, 183, 26);
-RT_INTERFACE!{static interface IWebProviderTokenResponseFactory(IWebProviderTokenResponseFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenResponseFactory] {
-    fn Create(&self, webTokenResponse: *mut super::core::WebTokenResponse, out: *mut *mut WebProviderTokenResponse) -> HRESULT
-}}
-impl IWebProviderTokenResponseFactory {
-    #[inline] pub fn create(&self, webTokenResponse: &super::core::WebTokenResponse) -> Result<ComPtr<WebProviderTokenResponse>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, webTokenResponse as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-} // Windows.Security.Authentication.Web.Provider
-pub mod core { // Windows.Security.Authentication.Web.Core
-use ::prelude::*;
-DEFINE_IID!(IID_IFindAllAccountsResult, 2776705885, 46894, 16908, 134, 171, 170, 192, 215, 183, 38, 31);
-RT_INTERFACE!{interface IFindAllAccountsResult(IFindAllAccountsResultVtbl): IInspectable(IInspectableVtbl) [IID_IFindAllAccountsResult] {
-    fn get_Accounts(&self, out: *mut *mut foundation::collections::IVectorView<super::super::super::credentials::WebAccount>) -> HRESULT,
-    fn get_Status(&self, out: *mut FindAllWebAccountsStatus) -> HRESULT,
-    fn get_ProviderError(&self, out: *mut *mut WebProviderError) -> HRESULT
-}}
-impl IFindAllAccountsResult {
-    #[inline] pub fn get_accounts(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Accounts)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_status(&self) -> Result<FindAllWebAccountsStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_provider_error(&self) -> Result<Option<ComPtr<WebProviderError>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProviderError)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class FindAllAccountsResult: IFindAllAccountsResult}
-RT_ENUM! { enum FindAllWebAccountsStatus: i32 {
-    Success (FindAllWebAccountsStatus_Success) = 0, NotAllowedByProvider (FindAllWebAccountsStatus_NotAllowedByProvider) = 1, NotSupportedByProvider (FindAllWebAccountsStatus_NotSupportedByProvider) = 2, ProviderError (FindAllWebAccountsStatus_ProviderError) = 3,
-}}
-DEFINE_IID!(IID_IWebAccountEventArgs, 1874264957, 16974, 17644, 151, 124, 239, 36, 21, 70, 42, 90);
-RT_INTERFACE!{interface IWebAccountEventArgs(IWebAccountEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountEventArgs] {
-    fn get_Account(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT
-}}
-impl IWebAccountEventArgs {
-    #[inline] pub fn get_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Account)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebAccountEventArgs: IWebAccountEventArgs}
-DEFINE_IID!(IID_IWebAccountMonitor, 1950742013, 43677, 17945, 141, 93, 193, 56, 164, 237, 227, 229);
-RT_INTERFACE!{interface IWebAccountMonitor(IWebAccountMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountMonitor] {
-    fn add_Updated(&self, handler: *mut foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_Updated(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_Removed(&self, handler: *mut foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_Removed(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_DefaultSignInAccountChanged(&self, handler: *mut foundation::TypedEventHandler<WebAccountMonitor, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_DefaultSignInAccountChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
-}}
-impl IWebAccountMonitor {
-    #[inline] pub fn add_updated(&self, handler: &foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Updated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_Updated)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_Removed)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_default_sign_in_account_changed(&self, handler: &foundation::TypedEventHandler<WebAccountMonitor, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DefaultSignInAccountChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_default_sign_in_account_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_DefaultSignInAccountChanged)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebAccountMonitor: IWebAccountMonitor}
-RT_CLASS!{static class WebAuthenticationCoreManager}
-impl RtActivatable<IWebAuthenticationCoreManagerStatics> for WebAuthenticationCoreManager {}
-impl RtActivatable<IWebAuthenticationCoreManagerStatics2> for WebAuthenticationCoreManager {}
-impl RtActivatable<IWebAuthenticationCoreManagerStatics3> for WebAuthenticationCoreManager {}
-impl RtActivatable<IWebAuthenticationCoreManagerStatics4> for WebAuthenticationCoreManager {}
-impl WebAuthenticationCoreManager {
-    #[inline] pub fn get_token_silently_async(request: &WebTokenRequest) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().get_token_silently_async(request)
-    }
-    #[inline] pub fn get_token_silently_with_web_account_async(request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().get_token_silently_with_web_account_async(request, webAccount)
-    }
-    #[inline] pub fn request_token_async(request: &WebTokenRequest) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().request_token_async(request)
-    }
-    #[inline] pub fn request_token_with_web_account_async(request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().request_token_with_web_account_async(request, webAccount)
-    }
-    #[inline] pub fn find_account_async(provider: &super::super::super::credentials::WebAccountProvider, webAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().find_account_async(provider, webAccountId)
-    }
-    #[inline] pub fn find_account_provider_async(webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().find_account_provider_async(webAccountProviderId)
-    }
-    #[inline] pub fn find_account_provider_with_authority_async(webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().find_account_provider_with_authority_async(webAccountProviderId, authority)
-    }
-    #[cfg(feature="windows-system")] #[inline] pub fn find_account_provider_with_authority_for_user_async(webAccountProviderId: &HStringArg, authority: &HStringArg, user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics2>>::get_activation_factory().find_account_provider_with_authority_for_user_async(webAccountProviderId, authority, user)
-    }
-    #[inline] pub fn create_web_account_monitor(webAccounts: &foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<Option<ComPtr<WebAccountMonitor>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics3>>::get_activation_factory().create_web_account_monitor(webAccounts)
-    }
-    #[inline] pub fn find_all_accounts_async(provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_all_accounts_async(provider)
-    }
-    #[inline] pub fn find_all_accounts_with_client_id_async(provider: &super::super::super::credentials::WebAccountProvider, clientId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_all_accounts_with_client_id_async(provider, clientId)
-    }
-    #[inline] pub fn find_system_account_provider_async(webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_system_account_provider_async(webAccountProviderId)
-    }
-    #[inline] pub fn find_system_account_provider_with_authority_async(webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_system_account_provider_with_authority_async(webAccountProviderId, authority)
-    }
-    #[cfg(feature="windows-system")] #[inline] pub fn find_system_account_provider_with_authority_for_user_async(webAccountProviderId: &HStringArg, authority: &HStringArg, user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_system_account_provider_with_authority_for_user_async(webAccountProviderId, authority, user)
-    }
-}
-DEFINE_CLSID!(WebAuthenticationCoreManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,67,111,114,101,77,97,110,97,103,101,114,0]) [CLSID_WebAuthenticationCoreManager]);
-DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics, 1791655058, 42369, 17529, 156, 16, 117, 46, 255, 68, 253, 52);
-RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics(IWebAuthenticationCoreManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics] {
-    fn GetTokenSilentlyAsync(&self, request: *mut WebTokenRequest, out: *mut *mut foundation::IAsyncOperation<WebTokenRequestResult>) -> HRESULT,
-    fn GetTokenSilentlyWithWebAccountAsync(&self, request: *mut WebTokenRequest, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncOperation<WebTokenRequestResult>) -> HRESULT,
-    fn RequestTokenAsync(&self, request: *mut WebTokenRequest, out: *mut *mut foundation::IAsyncOperation<WebTokenRequestResult>) -> HRESULT,
-    fn RequestTokenWithWebAccountAsync(&self, request: *mut WebTokenRequest, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncOperation<WebTokenRequestResult>) -> HRESULT,
-    fn FindAccountAsync(&self, provider: *mut super::super::super::credentials::WebAccountProvider, webAccountId: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT,
-    fn FindAccountProviderAsync(&self, webAccountProviderId: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT,
-    fn FindAccountProviderWithAuthorityAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT
-}}
-impl IWebAuthenticationCoreManagerStatics {
-    #[inline] pub fn get_token_silently_async(&self, request: &WebTokenRequest) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetTokenSilentlyAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_token_silently_with_web_account_async(&self, request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetTokenSilentlyWithWebAccountAsync)(self as *const _ as *mut _, request as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn request_token_async(&self, request: &WebTokenRequest) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestTokenAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn request_token_with_web_account_async(&self, request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestTokenWithWebAccountAsync)(self as *const _ as *mut _, request as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn find_account_async(&self, provider: &super::super::super::credentials::WebAccountProvider, webAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAccountAsync)(self as *const _ as *mut _, provider as *const _ as *mut _, webAccountId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn find_account_provider_async(&self, webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAccountProviderAsync)(self as *const _ as *mut _, webAccountProviderId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn find_account_provider_with_authority_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAccountProviderWithAuthorityAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics2, 4119074890, 35671, 18464, 182, 164, 112, 165, 182, 252, 244, 74);
-RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics2(IWebAuthenticationCoreManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics2] {
-    #[cfg(feature="windows-system")] fn FindAccountProviderWithAuthorityForUserAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, user: *mut ::rt::gen::windows::system::User, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT
-}}
-impl IWebAuthenticationCoreManagerStatics2 {
-    #[cfg(feature="windows-system")] #[inline] pub fn find_account_provider_with_authority_for_user_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg, user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAccountProviderWithAuthorityForUserAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), user as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics3, 604303026, 35108, 19859, 171, 58, 153, 104, 139, 65, 157, 86);
-RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics3(IWebAuthenticationCoreManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics3] {
-    fn CreateWebAccountMonitor(&self, webAccounts: *mut foundation::collections::IIterable<super::super::super::credentials::WebAccount>, out: *mut *mut WebAccountMonitor) -> HRESULT
-}}
-impl IWebAuthenticationCoreManagerStatics3 {
-    #[inline] pub fn create_web_account_monitor(&self, webAccounts: &foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<Option<ComPtr<WebAccountMonitor>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWebAccountMonitor)(self as *const _ as *mut _, webAccounts as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics4, 1424372734, 38624, 16872, 152, 50, 18, 152, 137, 124, 42, 175);
-RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics4(IWebAuthenticationCoreManagerStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics4] {
-    fn FindAllAccountsAsync(&self, provider: *mut super::super::super::credentials::WebAccountProvider, out: *mut *mut foundation::IAsyncOperation<FindAllAccountsResult>) -> HRESULT,
-    fn FindAllAccountsWithClientIdAsync(&self, provider: *mut super::super::super::credentials::WebAccountProvider, clientId: HSTRING, out: *mut *mut foundation::IAsyncOperation<FindAllAccountsResult>) -> HRESULT,
-    fn FindSystemAccountProviderAsync(&self, webAccountProviderId: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT,
-    fn FindSystemAccountProviderWithAuthorityAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn FindSystemAccountProviderWithAuthorityForUserAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, user: *mut ::rt::gen::windows::system::User, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT
-}}
-impl IWebAuthenticationCoreManagerStatics4 {
-    #[inline] pub fn find_all_accounts_async(&self, provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAllAccountsAsync)(self as *const _ as *mut _, provider as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn find_all_accounts_with_client_id_async(&self, provider: &super::super::super::credentials::WebAccountProvider, clientId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAllAccountsWithClientIdAsync)(self as *const _ as *mut _, provider as *const _ as *mut _, clientId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn find_system_account_provider_async(&self, webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindSystemAccountProviderAsync)(self as *const _ as *mut _, webAccountProviderId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn find_system_account_provider_with_authority_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindSystemAccountProviderWithAuthorityAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn find_system_account_provider_with_authority_for_user_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg, user: &::rt::gen::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindSystemAccountProviderWithAuthorityForUserAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), user as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebProviderError, 3675855793, 20677, 18441, 141, 202, 9, 201, 148, 16, 36, 92);
-RT_INTERFACE!{interface IWebProviderError(IWebProviderErrorVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderError] {
-    fn get_ErrorCode(&self, out: *mut u32) -> HRESULT,
-    fn get_ErrorMessage(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Properties(&self, out: *mut *mut foundation::collections::IMap<HString, HString>) -> HRESULT
-}}
-impl IWebProviderError {
-    #[inline] pub fn get_error_code(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ErrorCode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_error_message(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ErrorMessage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebProviderError: IWebProviderError}
-impl RtActivatable<IWebProviderErrorFactory> for WebProviderError {}
-impl WebProviderError {
-    #[inline] pub fn create(errorCode: u32, errorMessage: &HStringArg) -> Result<ComPtr<WebProviderError>> {
-        <Self as RtActivatable<IWebProviderErrorFactory>>::get_activation_factory().create(errorCode, errorMessage)
-    }
-}
-DEFINE_CLSID!(WebProviderError(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,80,114,111,118,105,100,101,114,69,114,114,111,114,0]) [CLSID_WebProviderError]);
-DEFINE_IID!(IID_IWebProviderErrorFactory, 3821275693, 35311, 20023, 132, 127, 168, 185, 213, 163, 41, 16);
-RT_INTERFACE!{static interface IWebProviderErrorFactory(IWebProviderErrorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderErrorFactory] {
-    fn Create(&self, errorCode: u32, errorMessage: HSTRING, out: *mut *mut WebProviderError) -> HRESULT
-}}
-impl IWebProviderErrorFactory {
-    #[inline] pub fn create(&self, errorCode: u32, errorMessage: &HStringArg) -> Result<ComPtr<WebProviderError>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, errorCode, errorMessage.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebTokenRequest, 3078311272, 44491, 18035, 179, 100, 12, 247, 179, 92, 175, 151);
-RT_INTERFACE!{interface IWebTokenRequest(IWebTokenRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequest] {
-    fn get_WebAccountProvider(&self, out: *mut *mut super::super::super::credentials::WebAccountProvider) -> HRESULT,
-    fn get_Scope(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_ClientId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_PromptType(&self, out: *mut WebTokenRequestPromptType) -> HRESULT,
-    fn get_Properties(&self, out: *mut *mut foundation::collections::IMap<HString, HString>) -> HRESULT
-}}
-impl IWebTokenRequest {
-    #[inline] pub fn get_web_account_provider(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_WebAccountProvider)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_scope(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Scope)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_client_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ClientId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_prompt_type(&self) -> Result<WebTokenRequestPromptType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_PromptType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebTokenRequest: IWebTokenRequest}
-impl RtActivatable<IWebTokenRequestFactory> for WebTokenRequest {}
-impl WebTokenRequest {
-    #[inline] pub fn create(provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg) -> Result<ComPtr<WebTokenRequest>> {
-        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().create(provider, scope, clientId)
-    }
-    #[inline] pub fn create_with_prompt_type(provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg, promptType: WebTokenRequestPromptType) -> Result<ComPtr<WebTokenRequest>> {
-        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().create_with_prompt_type(provider, scope, clientId, promptType)
-    }
-    #[inline] pub fn create_with_provider(provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<WebTokenRequest>> {
-        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().create_with_provider(provider)
-    }
-    #[inline] pub fn create_with_scope(provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg) -> Result<ComPtr<WebTokenRequest>> {
-        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().create_with_scope(provider, scope)
-    }
-}
-DEFINE_CLSID!(WebTokenRequest(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,84,111,107,101,110,82,101,113,117,101,115,116,0]) [CLSID_WebTokenRequest]);
-DEFINE_IID!(IID_IWebTokenRequest2, 3607150713, 12488, 17303, 150, 84, 150, 28, 59, 232, 184, 85);
-RT_INTERFACE!{interface IWebTokenRequest2(IWebTokenRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequest2] {
-    fn get_AppProperties(&self, out: *mut *mut foundation::collections::IMap<HString, HString>) -> HRESULT
-}}
-impl IWebTokenRequest2 {
-    #[inline] pub fn get_app_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AppProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebTokenRequest3, 1517640529, 15281, 16805, 166, 61, 144, 188, 50, 199, 219, 154);
-RT_INTERFACE!{interface IWebTokenRequest3(IWebTokenRequest3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequest3] {
-    fn get_CorrelationId(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_CorrelationId(&self, value: HSTRING) -> HRESULT
-}}
-impl IWebTokenRequest3 {
-    #[inline] pub fn get_correlation_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CorrelationId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_correlation_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CorrelationId)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWebTokenRequestFactory, 1827804188, 4080, 19559, 184, 79, 153, 221, 190, 74, 114, 201);
-RT_INTERFACE!{static interface IWebTokenRequestFactory(IWebTokenRequestFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequestFactory] {
-    fn Create(&self, provider: *mut super::super::super::credentials::WebAccountProvider, scope: HSTRING, clientId: HSTRING, out: *mut *mut WebTokenRequest) -> HRESULT,
-    fn CreateWithPromptType(&self, provider: *mut super::super::super::credentials::WebAccountProvider, scope: HSTRING, clientId: HSTRING, promptType: WebTokenRequestPromptType, out: *mut *mut WebTokenRequest) -> HRESULT,
-    fn CreateWithProvider(&self, provider: *mut super::super::super::credentials::WebAccountProvider, out: *mut *mut WebTokenRequest) -> HRESULT,
-    fn CreateWithScope(&self, provider: *mut super::super::super::credentials::WebAccountProvider, scope: HSTRING, out: *mut *mut WebTokenRequest) -> HRESULT
-}}
-impl IWebTokenRequestFactory {
-    #[inline] pub fn create(&self, provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, provider as *const _ as *mut _, scope.get(), clientId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_with_prompt_type(&self, provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg, promptType: WebTokenRequestPromptType) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithPromptType)(self as *const _ as *mut _, provider as *const _ as *mut _, scope.get(), clientId.get(), promptType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_with_provider(&self, provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithProvider)(self as *const _ as *mut _, provider as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_with_scope(&self, provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithScope)(self as *const _ as *mut _, provider as *const _ as *mut _, scope.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum WebTokenRequestPromptType: i32 {
-    Default (WebTokenRequestPromptType_Default) = 0, ForceAuthentication (WebTokenRequestPromptType_ForceAuthentication) = 1,
-}}
-DEFINE_IID!(IID_IWebTokenRequestResult, 3240788741, 53752, 17539, 141, 84, 56, 254, 41, 39, 132, 255);
-RT_INTERFACE!{interface IWebTokenRequestResult(IWebTokenRequestResultVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequestResult] {
-    fn get_ResponseData(&self, out: *mut *mut foundation::collections::IVectorView<WebTokenResponse>) -> HRESULT,
-    fn get_ResponseStatus(&self, out: *mut WebTokenRequestStatus) -> HRESULT,
-    fn get_ResponseError(&self, out: *mut *mut WebProviderError) -> HRESULT,
-    fn InvalidateCacheAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
-}}
-impl IWebTokenRequestResult {
-    #[inline] pub fn get_response_data(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<WebTokenResponse>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ResponseData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_response_status(&self) -> Result<WebTokenRequestStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ResponseStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_response_error(&self) -> Result<Option<ComPtr<WebProviderError>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ResponseError)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn invalidate_cache_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).InvalidateCacheAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebTokenRequestResult: IWebTokenRequestResult}
-RT_ENUM! { enum WebTokenRequestStatus: i32 {
-    Success (WebTokenRequestStatus_Success) = 0, UserCancel (WebTokenRequestStatus_UserCancel) = 1, AccountSwitch (WebTokenRequestStatus_AccountSwitch) = 2, UserInteractionRequired (WebTokenRequestStatus_UserInteractionRequired) = 3, AccountProviderNotAvailable (WebTokenRequestStatus_AccountProviderNotAvailable) = 4, ProviderError (WebTokenRequestStatus_ProviderError) = 5,
-}}
-DEFINE_IID!(IID_IWebTokenResponse, 1739048394, 33782, 17606, 163, 177, 14, 182, 158, 65, 250, 138);
-RT_INTERFACE!{interface IWebTokenResponse(IWebTokenResponseVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenResponse] {
-    fn get_Token(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_ProviderError(&self, out: *mut *mut WebProviderError) -> HRESULT,
-    fn get_WebAccount(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT,
-    fn get_Properties(&self, out: *mut *mut foundation::collections::IMap<HString, HString>) -> HRESULT
-}}
-impl IWebTokenResponse {
-    #[inline] pub fn get_token(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Token)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_provider_error(&self) -> Result<Option<ComPtr<WebProviderError>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProviderError)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_web_account(&self) -> Result<Option<ComPtr<super::super::super::credentials::WebAccount>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_WebAccount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WebTokenResponse: IWebTokenResponse}
-impl RtActivatable<IWebTokenResponseFactory> for WebTokenResponse {}
-impl RtActivatable<IActivationFactory> for WebTokenResponse {}
-impl WebTokenResponse {
-    #[inline] pub fn create_with_token(token: &HStringArg) -> Result<ComPtr<WebTokenResponse>> {
-        <Self as RtActivatable<IWebTokenResponseFactory>>::get_activation_factory().create_with_token(token)
-    }
-    #[inline] pub fn create_with_token_and_account(token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<WebTokenResponse>> {
-        <Self as RtActivatable<IWebTokenResponseFactory>>::get_activation_factory().create_with_token_and_account(token, webAccount)
-    }
-    #[inline] pub fn create_with_token_account_and_error(token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount, error: &WebProviderError) -> Result<ComPtr<WebTokenResponse>> {
-        <Self as RtActivatable<IWebTokenResponseFactory>>::get_activation_factory().create_with_token_account_and_error(token, webAccount, error)
-    }
-}
-DEFINE_CLSID!(WebTokenResponse(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,84,111,107,101,110,82,101,115,112,111,110,115,101,0]) [CLSID_WebTokenResponse]);
-DEFINE_IID!(IID_IWebTokenResponseFactory, 2875979768, 21584, 20214, 151, 247, 5, 43, 4, 49, 192, 240);
-RT_INTERFACE!{static interface IWebTokenResponseFactory(IWebTokenResponseFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenResponseFactory] {
-    fn CreateWithToken(&self, token: HSTRING, out: *mut *mut WebTokenResponse) -> HRESULT,
-    fn CreateWithTokenAndAccount(&self, token: HSTRING, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut WebTokenResponse) -> HRESULT,
-    fn CreateWithTokenAccountAndError(&self, token: HSTRING, webAccount: *mut super::super::super::credentials::WebAccount, error: *mut WebProviderError, out: *mut *mut WebTokenResponse) -> HRESULT
-}}
-impl IWebTokenResponseFactory {
-    #[inline] pub fn create_with_token(&self, token: &HStringArg) -> Result<ComPtr<WebTokenResponse>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithToken)(self as *const _ as *mut _, token.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_with_token_and_account(&self, token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<WebTokenResponse>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithTokenAndAccount)(self as *const _ as *mut _, token.get(), webAccount as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_with_token_account_and_error(&self, token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount, error: &WebProviderError) -> Result<ComPtr<WebTokenResponse>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithTokenAccountAndError)(self as *const _ as *mut _, token.get(), webAccount as *const _ as *mut _, error as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-} // Windows.Security.Authentication.Web.Core
-} // Windows.Security.Authentication.Web
-} // Windows.Security.Authentication
 pub mod cryptography { // Windows.Security.Cryptography
 use ::prelude::*;
 RT_ENUM! { enum BinaryStringEncoding: i32 {

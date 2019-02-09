@@ -75,6 +75,9 @@ an extension of WinRT, introduced in Windows 10, that allows using additional, m
 
 ## Changelog
 
+#### Version 0.5.1 (2018-09-10)
+- Regenerated bindings from latest Windows SDK
+
 #### Version 0.5.0 (2018-03-30)
 - [Breaking] Wrappers are no longer marked as unsafe 🎉
 - [Breaking] Wrappers for methods that could return `null` will now return `Result<Option<ComPtr<...>>>` instead of `Result<ComPtr<...>>`.

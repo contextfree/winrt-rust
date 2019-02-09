@@ -1,224 +1,3 @@
-pub mod ui { // Windows.Gaming.UI
-use ::prelude::*;
-RT_CLASS!{static class GameBar}
-impl RtActivatable<IGameBarStatics> for GameBar {}
-impl GameBar {
-    #[inline] pub fn add_visibility_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().add_visibility_changed(handler)
-    }
-    #[inline] pub fn remove_visibility_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().remove_visibility_changed(token)
-    }
-    #[inline] pub fn add_is_input_redirected_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().add_is_input_redirected_changed(handler)
-    }
-    #[inline] pub fn remove_is_input_redirected_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().remove_is_input_redirected_changed(token)
-    }
-    #[inline] pub fn get_visible() -> Result<bool> {
-        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().get_visible()
-    }
-    #[inline] pub fn get_is_input_redirected() -> Result<bool> {
-        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().get_is_input_redirected()
-    }
-}
-DEFINE_CLSID!(GameBar(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,66,97,114,0]) [CLSID_GameBar]);
-DEFINE_IID!(IID_IGameBarStatics, 498705042, 52344, 16755, 190, 69, 182, 30, 103, 40, 62, 167);
-RT_INTERFACE!{static interface IGameBarStatics(IGameBarStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarStatics] {
-    fn add_VisibilityChanged(&self, handler: *mut foundation::EventHandler<IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_VisibilityChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_IsInputRedirectedChanged(&self, handler: *mut foundation::EventHandler<IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_IsInputRedirectedChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn get_Visible(&self, out: *mut bool) -> HRESULT,
-    fn get_IsInputRedirected(&self, out: *mut bool) -> HRESULT
-}}
-impl IGameBarStatics {
-    #[inline] pub fn add_visibility_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_VisibilityChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_visibility_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_VisibilityChanged)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_is_input_redirected_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_IsInputRedirectedChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_is_input_redirected_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_IsInputRedirectedChanged)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_visible(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Visible)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_input_redirected(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsInputRedirected)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum GameChatMessageOrigin: i32 {
-    Voice (GameChatMessageOrigin_Voice) = 0, Text (GameChatMessageOrigin_Text) = 1,
-}}
-DEFINE_IID!(IID_IGameChatMessageReceivedEventArgs, 2726429169, 16313, 20034, 164, 3, 122, 252, 226, 2, 59, 30);
-RT_INTERFACE!{interface IGameChatMessageReceivedEventArgs(IGameChatMessageReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatMessageReceivedEventArgs] {
-    fn get_AppId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_AppDisplayName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_SenderName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Message(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Origin(&self, out: *mut GameChatMessageOrigin) -> HRESULT
-}}
-impl IGameChatMessageReceivedEventArgs {
-    #[inline] pub fn get_app_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AppId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_app_display_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AppDisplayName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_sender_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SenderName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_message(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Message)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_origin(&self) -> Result<GameChatMessageOrigin> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Origin)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameChatMessageReceivedEventArgs: IGameChatMessageReceivedEventArgs}
-DEFINE_IID!(IID_IGameChatOverlay, 4224075877, 63228, 19016, 174, 7, 3, 172, 110, 212, 55, 4);
-RT_INTERFACE!{interface IGameChatOverlay(IGameChatOverlayVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatOverlay] {
-    fn get_DesiredPosition(&self, out: *mut GameChatOverlayPosition) -> HRESULT,
-    fn put_DesiredPosition(&self, value: GameChatOverlayPosition) -> HRESULT,
-    fn AddMessage(&self, sender: HSTRING, message: HSTRING, origin: GameChatMessageOrigin) -> HRESULT
-}}
-impl IGameChatOverlay {
-    #[inline] pub fn get_desired_position(&self) -> Result<GameChatOverlayPosition> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_DesiredPosition)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_desired_position(&self, value: GameChatOverlayPosition) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DesiredPosition)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_message(&self, sender: &HStringArg, message: &HStringArg, origin: GameChatMessageOrigin) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddMessage)(self as *const _ as *mut _, sender.get(), message.get(), origin);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameChatOverlay: IGameChatOverlay}
-impl RtActivatable<IGameChatOverlayStatics> for GameChatOverlay {}
-impl GameChatOverlay {
-    #[inline] pub fn get_default() -> Result<Option<ComPtr<GameChatOverlay>>> {
-        <Self as RtActivatable<IGameChatOverlayStatics>>::get_activation_factory().get_default()
-    }
-}
-DEFINE_CLSID!(GameChatOverlay(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,67,104,97,116,79,118,101,114,108,97,121,0]) [CLSID_GameChatOverlay]);
-DEFINE_IID!(IID_IGameChatOverlayMessageSource, 504853399, 23035, 20303, 142, 154, 128, 172, 248, 23, 116, 60);
-RT_INTERFACE!{interface IGameChatOverlayMessageSource(IGameChatOverlayMessageSourceVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatOverlayMessageSource] {
-    fn add_MessageReceived(&self, handler: *mut foundation::TypedEventHandler<GameChatOverlayMessageSource, GameChatMessageReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_MessageReceived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn SetDelayBeforeClosingAfterMessageReceived(&self, value: foundation::TimeSpan) -> HRESULT
-}}
-impl IGameChatOverlayMessageSource {
-    #[inline] pub fn add_message_received(&self, handler: &foundation::TypedEventHandler<GameChatOverlayMessageSource, GameChatMessageReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MessageReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_message_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_MessageReceived)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn set_delay_before_closing_after_message_received(&self, value: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetDelayBeforeClosingAfterMessageReceived)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameChatOverlayMessageSource: IGameChatOverlayMessageSource}
-impl RtActivatable<IActivationFactory> for GameChatOverlayMessageSource {}
-DEFINE_CLSID!(GameChatOverlayMessageSource(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,67,104,97,116,79,118,101,114,108,97,121,77,101,115,115,97,103,101,83,111,117,114,99,101,0]) [CLSID_GameChatOverlayMessageSource]);
-RT_ENUM! { enum GameChatOverlayPosition: i32 {
-    BottomCenter (GameChatOverlayPosition_BottomCenter) = 0, BottomLeft (GameChatOverlayPosition_BottomLeft) = 1, BottomRight (GameChatOverlayPosition_BottomRight) = 2, MiddleRight (GameChatOverlayPosition_MiddleRight) = 3, MiddleLeft (GameChatOverlayPosition_MiddleLeft) = 4, TopCenter (GameChatOverlayPosition_TopCenter) = 5, TopLeft (GameChatOverlayPosition_TopLeft) = 6, TopRight (GameChatOverlayPosition_TopRight) = 7,
-}}
-DEFINE_IID!(IID_IGameChatOverlayStatics, 2309813780, 30823, 18935, 150, 135, 37, 217, 219, 244, 68, 209);
-RT_INTERFACE!{static interface IGameChatOverlayStatics(IGameChatOverlayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatOverlayStatics] {
-    fn GetDefault(&self, out: *mut *mut GameChatOverlay) -> HRESULT
-}}
-impl IGameChatOverlayStatics {
-    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<GameChatOverlay>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IGameMonitor, 304300888, 56585, 17681, 173, 205, 141, 89, 117, 216, 16, 40);
-RT_INTERFACE!{interface IGameMonitor(IGameMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IGameMonitor] {
-    fn RequestPermissionAsync(&self, out: *mut *mut foundation::IAsyncOperation<GameMonitoringPermission>) -> HRESULT
-}}
-impl IGameMonitor {
-    #[inline] pub fn request_permission_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GameMonitoringPermission>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestPermissionAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameMonitor: IGameMonitor}
-impl RtActivatable<IGameMonitorStatics> for GameMonitor {}
-impl GameMonitor {
-    #[inline] pub fn get_default() -> Result<Option<ComPtr<GameMonitor>>> {
-        <Self as RtActivatable<IGameMonitorStatics>>::get_activation_factory().get_default()
-    }
-}
-DEFINE_CLSID!(GameMonitor(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,77,111,110,105,116,111,114,0]) [CLSID_GameMonitor]);
-RT_ENUM! { enum GameMonitoringPermission: i32 {
-    Allowed (GameMonitoringPermission_Allowed) = 0, DeniedByUser (GameMonitoringPermission_DeniedByUser) = 1, DeniedBySystem (GameMonitoringPermission_DeniedBySystem) = 2,
-}}
-DEFINE_IID!(IID_IGameMonitorStatics, 291982132, 23264, 19380, 185, 31, 138, 203, 72, 21, 154, 113);
-RT_INTERFACE!{static interface IGameMonitorStatics(IGameMonitorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameMonitorStatics] {
-    fn GetDefault(&self, out: *mut *mut GameMonitor) -> HRESULT
-}}
-impl IGameMonitorStatics {
-    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<GameMonitor>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IGameUIProviderActivatedEventArgs, 2813534270, 51959, 19949, 187, 210, 71, 222, 67, 187, 109, 213);
-RT_INTERFACE!{interface IGameUIProviderActivatedEventArgs(IGameUIProviderActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGameUIProviderActivatedEventArgs] {
-    fn get_GameUIArgs(&self, out: *mut *mut foundation::collections::ValueSet) -> HRESULT,
-    fn ReportCompleted(&self, results: *mut foundation::collections::ValueSet) -> HRESULT
-}}
-impl IGameUIProviderActivatedEventArgs {
-    #[inline] pub fn get_game_uiargs(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_GameUIArgs)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn report_completed(&self, results: &foundation::collections::ValueSet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _, results as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameUIProviderActivatedEventArgs: IGameUIProviderActivatedEventArgs}
-} // Windows.Gaming.UI
 pub mod input { // Windows.Gaming.Input
 use ::prelude::*;
 DEFINE_IID!(IID_IArcadeStick, 2974438301, 48891, 19585, 128, 81, 21, 236, 243, 177, 48, 54);
@@ -1518,326 +1297,6 @@ impl IGameControllerProviderInfoStatics {
 }
 } // Windows.Gaming.Input.Preview
 } // Windows.Gaming.Input
-pub mod xboxlive { // Windows.Gaming.XboxLive
-pub mod storage { // Windows.Gaming.XboxLive.Storage
-use ::prelude::*;
-DEFINE_IID!(IID_IGameSaveBlobGetResult, 2440200672, 29185, 18771, 170, 44, 64, 8, 240, 58, 239, 69);
-RT_INTERFACE!{interface IGameSaveBlobGetResult(IGameSaveBlobGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobGetResult] {
-    fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut *mut foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>) -> HRESULT
-}}
-impl IGameSaveBlobGetResult {
-    #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameSaveBlobGetResult: IGameSaveBlobGetResult}
-DEFINE_IID!(IID_IGameSaveBlobInfo, 2916319284, 47856, 17989, 182, 208, 70, 237, 175, 251, 60, 43);
-RT_INTERFACE!{interface IGameSaveBlobInfo(IGameSaveBlobInfoVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobInfo] {
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Size(&self, out: *mut u32) -> HRESULT
-}}
-impl IGameSaveBlobInfo {
-    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_size(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameSaveBlobInfo: IGameSaveBlobInfo}
-DEFINE_IID!(IID_IGameSaveBlobInfoGetResult, 3344401794, 13975, 17087, 152, 156, 102, 93, 146, 59, 82, 49);
-RT_INTERFACE!{interface IGameSaveBlobInfoGetResult(IGameSaveBlobInfoGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobInfoGetResult] {
-    fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
-    fn get_Value(&self, out: *mut *mut foundation::collections::IVectorView<GameSaveBlobInfo>) -> HRESULT
-}}
-impl IGameSaveBlobInfoGetResult {
-    #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<GameSaveBlobInfo>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameSaveBlobInfoGetResult: IGameSaveBlobInfoGetResult}
-DEFINE_IID!(IID_IGameSaveBlobInfoQuery, 2682090674, 61166, 17531, 169, 210, 127, 150, 192, 248, 50, 8);
-RT_INTERFACE!{interface IGameSaveBlobInfoQuery(IGameSaveBlobInfoQueryVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobInfoQuery] {
-    fn GetBlobInfoAsync(&self, out: *mut *mut foundation::IAsyncOperation<GameSaveBlobInfoGetResult>) -> HRESULT,
-    fn GetBlobInfoWithIndexAndMaxAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<GameSaveBlobInfoGetResult>) -> HRESULT,
-    fn GetItemCountAsync(&self, out: *mut *mut foundation::IAsyncOperation<u32>) -> HRESULT
-}}
-impl IGameSaveBlobInfoQuery {
-    #[inline] pub fn get_blob_info_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobInfoGetResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetBlobInfoAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_blob_info_with_index_and_max_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobInfoGetResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetBlobInfoWithIndexAndMaxAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_item_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemCountAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameSaveBlobInfoQuery: IGameSaveBlobInfoQuery}
-DEFINE_IID!(IID_IGameSaveContainer, 3284176777, 22079, 20173, 156, 111, 51, 253, 14, 50, 61, 16);
-RT_INTERFACE!{interface IGameSaveContainer(IGameSaveContainerVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainer] {
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Provider(&self, out: *mut *mut GameSaveProvider) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn SubmitUpdatesAsync(&self, blobsToWrite: *mut foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, blobsToDelete: *mut foundation::collections::IIterable<HString>, displayName: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn ReadAsync(&self, blobsToRead: *mut foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
-    fn GetAsync(&self, blobsToRead: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<GameSaveBlobGetResult>) -> HRESULT,
-    fn SubmitPropertySetUpdatesAsync(&self, blobsToWrite: *mut foundation::collections::IPropertySet, blobsToDelete: *mut foundation::collections::IIterable<HString>, displayName: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
-    fn CreateBlobInfoQuery(&self, blobNamePrefix: HSTRING, out: *mut *mut GameSaveBlobInfoQuery) -> HRESULT
-}}
-impl IGameSaveContainer {
-    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_provider(&self) -> Result<Option<ComPtr<GameSaveProvider>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Provider)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn submit_updates_async(&self, blobsToWrite: &foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, blobsToDelete: &foundation::collections::IIterable<HString>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SubmitUpdatesAsync)(self as *const _ as *mut _, blobsToWrite as *const _ as *mut _, blobsToDelete as *const _ as *mut _, displayName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn read_async(&self, blobsToRead: &foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadAsync)(self as *const _ as *mut _, blobsToRead as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_async(&self, blobsToRead: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobGetResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAsync)(self as *const _ as *mut _, blobsToRead as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn submit_property_set_updates_async(&self, blobsToWrite: &foundation::collections::IPropertySet, blobsToDelete: &foundation::collections::IIterable<HString>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SubmitPropertySetUpdatesAsync)(self as *const _ as *mut _, blobsToWrite as *const _ as *mut _, blobsToDelete as *const _ as *mut _, displayName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_blob_info_query(&self, blobNamePrefix: &HStringArg) -> Result<Option<ComPtr<GameSaveBlobInfoQuery>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateBlobInfoQuery)(self as *const _ as *mut _, blobNamePrefix.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameSaveContainer: IGameSaveContainer}
-DEFINE_IID!(IID_IGameSaveContainerInfo, 3085071104, 5469, 19380, 178, 186, 147, 3, 6, 243, 145, 181);
-RT_INTERFACE!{interface IGameSaveContainerInfo(IGameSaveContainerInfoVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainerInfo] {
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_TotalSize(&self, out: *mut u64) -> HRESULT,
-    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_LastModifiedTime(&self, out: *mut foundation::DateTime) -> HRESULT,
-    fn get_NeedsSync(&self, out: *mut bool) -> HRESULT
-}}
-impl IGameSaveContainerInfo {
-    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_total_size(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TotalSize)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_last_modified_time(&self) -> Result<foundation::DateTime> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_LastModifiedTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_needs_sync(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_NeedsSync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameSaveContainerInfo: IGameSaveContainerInfo}
-DEFINE_IID!(IID_IGameSaveContainerInfoGetResult, 4291104116, 50561, 20381, 158, 57, 48, 161, 12, 30, 76, 80);
-RT_INTERFACE!{interface IGameSaveContainerInfoGetResult(IGameSaveContainerInfoGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainerInfoGetResult] {
-    fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
-    fn get_Value(&self, out: *mut *mut foundation::collections::IVectorView<GameSaveContainerInfo>) -> HRESULT
-}}
-impl IGameSaveContainerInfoGetResult {
-    #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<GameSaveContainerInfo>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameSaveContainerInfoGetResult: IGameSaveContainerInfoGetResult}
-DEFINE_IID!(IID_IGameSaveContainerInfoQuery, 1016391779, 28544, 17191, 147, 39, 255, 193, 26, 253, 66, 179);
-RT_INTERFACE!{interface IGameSaveContainerInfoQuery(IGameSaveContainerInfoQueryVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainerInfoQuery] {
-    fn GetContainerInfoAsync(&self, out: *mut *mut foundation::IAsyncOperation<GameSaveContainerInfoGetResult>) -> HRESULT,
-    fn GetContainerInfoWithIndexAndMaxAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<GameSaveContainerInfoGetResult>) -> HRESULT,
-    fn GetItemCountAsync(&self, out: *mut *mut foundation::IAsyncOperation<u32>) -> HRESULT
-}}
-impl IGameSaveContainerInfoQuery {
-    #[inline] pub fn get_container_info_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveContainerInfoGetResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetContainerInfoAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_container_info_with_index_and_max_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveContainerInfoGetResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetContainerInfoWithIndexAndMaxAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_item_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemCountAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameSaveContainerInfoQuery: IGameSaveContainerInfoQuery}
-RT_ENUM! { enum GameSaveErrorStatus: i32 {
-    Ok (GameSaveErrorStatus_Ok) = 0, Abort (GameSaveErrorStatus_Abort) = -2147467260, InvalidContainerName (GameSaveErrorStatus_InvalidContainerName) = -2138898431, NoAccess (GameSaveErrorStatus_NoAccess) = -2138898430, OutOfLocalStorage (GameSaveErrorStatus_OutOfLocalStorage) = -2138898429, UserCanceled (GameSaveErrorStatus_UserCanceled) = -2138898428, UpdateTooBig (GameSaveErrorStatus_UpdateTooBig) = -2138898427, QuotaExceeded (GameSaveErrorStatus_QuotaExceeded) = -2138898426, ProvidedBufferTooSmall (GameSaveErrorStatus_ProvidedBufferTooSmall) = -2138898425, BlobNotFound (GameSaveErrorStatus_BlobNotFound) = -2138898424, NoXboxLiveInfo (GameSaveErrorStatus_NoXboxLiveInfo) = -2138898423, ContainerNotInSync (GameSaveErrorStatus_ContainerNotInSync) = -2138898422, ContainerSyncFailed (GameSaveErrorStatus_ContainerSyncFailed) = -2138898421, UserHasNoXboxLiveInfo (GameSaveErrorStatus_UserHasNoXboxLiveInfo) = -2138898420, ObjectExpired (GameSaveErrorStatus_ObjectExpired) = -2138898419,
-}}
-DEFINE_IID!(IID_IGameSaveOperationResult, 3473873413, 9376, 17794, 154, 85, 177, 187, 187, 147, 136, 216);
-RT_INTERFACE!{interface IGameSaveOperationResult(IGameSaveOperationResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveOperationResult] {
-    fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT
-}}
-impl IGameSaveOperationResult {
-    #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameSaveOperationResult: IGameSaveOperationResult}
-DEFINE_IID!(IID_IGameSaveProvider, 2426798996, 33022, 16913, 151, 248, 165, 222, 20, 221, 149, 210);
-RT_INTERFACE!{interface IGameSaveProvider(IGameSaveProviderVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProvider] {
-    #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut ::rt::gen::windows::system::User) -> HRESULT,
-    fn CreateContainer(&self, name: HSTRING, out: *mut *mut GameSaveContainer) -> HRESULT,
-    fn DeleteContainerAsync(&self, name: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
-    fn CreateContainerInfoQuery(&self, out: *mut *mut GameSaveContainerInfoQuery) -> HRESULT,
-    fn CreateContainerInfoQueryWithName(&self, containerNamePrefix: HSTRING, out: *mut *mut GameSaveContainerInfoQuery) -> HRESULT,
-    fn GetRemainingBytesInQuotaAsync(&self, out: *mut *mut foundation::IAsyncOperation<i64>) -> HRESULT,
-    fn get_ContainersChangedSinceLastSync(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
-}}
-impl IGameSaveProvider {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<::rt::gen::windows::system::User>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_container(&self, name: &HStringArg) -> Result<Option<ComPtr<GameSaveContainer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateContainer)(self as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn delete_container_async(&self, name: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteContainerAsync)(self as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_container_info_query(&self) -> Result<Option<ComPtr<GameSaveContainerInfoQuery>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateContainerInfoQuery)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_container_info_query_with_name(&self, containerNamePrefix: &HStringArg) -> Result<Option<ComPtr<GameSaveContainerInfoQuery>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateContainerInfoQueryWithName)(self as *const _ as *mut _, containerNamePrefix.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_remaining_bytes_in_quota_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<i64>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetRemainingBytesInQuotaAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_containers_changed_since_last_sync(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ContainersChangedSinceLastSync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameSaveProvider: IGameSaveProvider}
-impl RtActivatable<IGameSaveProviderStatics> for GameSaveProvider {}
-impl GameSaveProvider {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
-        <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().get_for_user_async(user, serviceConfigId)
-    }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
-        <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().get_sync_on_demand_for_user_async(user, serviceConfigId)
-    }
-}
-DEFINE_CLSID!(GameSaveProvider(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,88,98,111,120,76,105,118,101,46,83,116,111,114,97,103,101,46,71,97,109,101,83,97,118,101,80,114,111,118,105,100,101,114,0]) [CLSID_GameSaveProvider]);
-DEFINE_IID!(IID_IGameSaveProviderGetResult, 985204758, 54163, 19813, 172, 22, 65, 195, 230, 122, 185, 69);
-RT_INTERFACE!{interface IGameSaveProviderGetResult(IGameSaveProviderGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProviderGetResult] {
-    fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
-    fn get_Value(&self, out: *mut *mut GameSaveProvider) -> HRESULT
-}}
-impl IGameSaveProviderGetResult {
-    #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<GameSaveProvider>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GameSaveProviderGetResult: IGameSaveProviderGetResult}
-DEFINE_IID!(IID_IGameSaveProviderStatics, 3491577552, 31491, 17565, 140, 189, 52, 2, 132, 42, 16, 72);
-RT_INTERFACE!{static interface IGameSaveProviderStatics(IGameSaveProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProviderStatics] {
-    #[cfg(feature="windows-system")] fn GetForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn GetSyncOnDemandForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT
-}}
-impl IGameSaveProviderStatics {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(&self, user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, serviceConfigId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(&self, user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSyncOnDemandForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, serviceConfigId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-} // Windows.Gaming.XboxLive.Storage
-} // Windows.Gaming.XboxLive
 pub mod preview { // Windows.Gaming.Preview
 pub mod gamesenumeration { // Windows.Gaming.Preview.GamesEnumeration
 use ::prelude::*;
@@ -2207,3 +1666,511 @@ impl IGameModeUserConfigurationStatics {
 }
 } // Windows.Gaming.Preview.GamesEnumeration
 } // Windows.Gaming.Preview
+pub mod ui { // Windows.Gaming.UI
+use ::prelude::*;
+RT_CLASS!{static class GameBar}
+impl RtActivatable<IGameBarStatics> for GameBar {}
+impl GameBar {
+    #[inline] pub fn add_visibility_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().add_visibility_changed(handler)
+    }
+    #[inline] pub fn remove_visibility_changed(token: foundation::EventRegistrationToken) -> Result<()> {
+        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().remove_visibility_changed(token)
+    }
+    #[inline] pub fn add_is_input_redirected_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().add_is_input_redirected_changed(handler)
+    }
+    #[inline] pub fn remove_is_input_redirected_changed(token: foundation::EventRegistrationToken) -> Result<()> {
+        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().remove_is_input_redirected_changed(token)
+    }
+    #[inline] pub fn get_visible() -> Result<bool> {
+        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().get_visible()
+    }
+    #[inline] pub fn get_is_input_redirected() -> Result<bool> {
+        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().get_is_input_redirected()
+    }
+}
+DEFINE_CLSID!(GameBar(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,66,97,114,0]) [CLSID_GameBar]);
+DEFINE_IID!(IID_IGameBarStatics, 498705042, 52344, 16755, 190, 69, 182, 30, 103, 40, 62, 167);
+RT_INTERFACE!{static interface IGameBarStatics(IGameBarStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarStatics] {
+    fn add_VisibilityChanged(&self, handler: *mut foundation::EventHandler<IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_VisibilityChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_IsInputRedirectedChanged(&self, handler: *mut foundation::EventHandler<IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_IsInputRedirectedChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn get_Visible(&self, out: *mut bool) -> HRESULT,
+    fn get_IsInputRedirected(&self, out: *mut bool) -> HRESULT
+}}
+impl IGameBarStatics {
+    #[inline] pub fn add_visibility_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_VisibilityChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_visibility_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_VisibilityChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_is_input_redirected_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_IsInputRedirectedChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_is_input_redirected_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_IsInputRedirectedChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_visible(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Visible)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_input_redirected(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsInputRedirected)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum GameChatMessageOrigin: i32 {
+    Voice (GameChatMessageOrigin_Voice) = 0, Text (GameChatMessageOrigin_Text) = 1,
+}}
+DEFINE_IID!(IID_IGameChatMessageReceivedEventArgs, 2726429169, 16313, 20034, 164, 3, 122, 252, 226, 2, 59, 30);
+RT_INTERFACE!{interface IGameChatMessageReceivedEventArgs(IGameChatMessageReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatMessageReceivedEventArgs] {
+    fn get_AppId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_AppDisplayName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_SenderName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Message(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Origin(&self, out: *mut GameChatMessageOrigin) -> HRESULT
+}}
+impl IGameChatMessageReceivedEventArgs {
+    #[inline] pub fn get_app_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AppId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_app_display_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AppDisplayName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_sender_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SenderName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_message(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Message)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_origin(&self) -> Result<GameChatMessageOrigin> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Origin)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameChatMessageReceivedEventArgs: IGameChatMessageReceivedEventArgs}
+DEFINE_IID!(IID_IGameChatOverlay, 4224075877, 63228, 19016, 174, 7, 3, 172, 110, 212, 55, 4);
+RT_INTERFACE!{interface IGameChatOverlay(IGameChatOverlayVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatOverlay] {
+    fn get_DesiredPosition(&self, out: *mut GameChatOverlayPosition) -> HRESULT,
+    fn put_DesiredPosition(&self, value: GameChatOverlayPosition) -> HRESULT,
+    fn AddMessage(&self, sender: HSTRING, message: HSTRING, origin: GameChatMessageOrigin) -> HRESULT
+}}
+impl IGameChatOverlay {
+    #[inline] pub fn get_desired_position(&self) -> Result<GameChatOverlayPosition> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DesiredPosition)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_desired_position(&self, value: GameChatOverlayPosition) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DesiredPosition)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_message(&self, sender: &HStringArg, message: &HStringArg, origin: GameChatMessageOrigin) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddMessage)(self as *const _ as *mut _, sender.get(), message.get(), origin);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameChatOverlay: IGameChatOverlay}
+impl RtActivatable<IGameChatOverlayStatics> for GameChatOverlay {}
+impl GameChatOverlay {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<GameChatOverlay>>> {
+        <Self as RtActivatable<IGameChatOverlayStatics>>::get_activation_factory().get_default()
+    }
+}
+DEFINE_CLSID!(GameChatOverlay(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,67,104,97,116,79,118,101,114,108,97,121,0]) [CLSID_GameChatOverlay]);
+DEFINE_IID!(IID_IGameChatOverlayMessageSource, 504853399, 23035, 20303, 142, 154, 128, 172, 248, 23, 116, 60);
+RT_INTERFACE!{interface IGameChatOverlayMessageSource(IGameChatOverlayMessageSourceVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatOverlayMessageSource] {
+    fn add_MessageReceived(&self, handler: *mut foundation::TypedEventHandler<GameChatOverlayMessageSource, GameChatMessageReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_MessageReceived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn SetDelayBeforeClosingAfterMessageReceived(&self, value: foundation::TimeSpan) -> HRESULT
+}}
+impl IGameChatOverlayMessageSource {
+    #[inline] pub fn add_message_received(&self, handler: &foundation::TypedEventHandler<GameChatOverlayMessageSource, GameChatMessageReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_MessageReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_message_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_MessageReceived)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn set_delay_before_closing_after_message_received(&self, value: foundation::TimeSpan) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetDelayBeforeClosingAfterMessageReceived)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameChatOverlayMessageSource: IGameChatOverlayMessageSource}
+impl RtActivatable<IActivationFactory> for GameChatOverlayMessageSource {}
+DEFINE_CLSID!(GameChatOverlayMessageSource(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,67,104,97,116,79,118,101,114,108,97,121,77,101,115,115,97,103,101,83,111,117,114,99,101,0]) [CLSID_GameChatOverlayMessageSource]);
+RT_ENUM! { enum GameChatOverlayPosition: i32 {
+    BottomCenter (GameChatOverlayPosition_BottomCenter) = 0, BottomLeft (GameChatOverlayPosition_BottomLeft) = 1, BottomRight (GameChatOverlayPosition_BottomRight) = 2, MiddleRight (GameChatOverlayPosition_MiddleRight) = 3, MiddleLeft (GameChatOverlayPosition_MiddleLeft) = 4, TopCenter (GameChatOverlayPosition_TopCenter) = 5, TopLeft (GameChatOverlayPosition_TopLeft) = 6, TopRight (GameChatOverlayPosition_TopRight) = 7,
+}}
+DEFINE_IID!(IID_IGameChatOverlayStatics, 2309813780, 30823, 18935, 150, 135, 37, 217, 219, 244, 68, 209);
+RT_INTERFACE!{static interface IGameChatOverlayStatics(IGameChatOverlayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatOverlayStatics] {
+    fn GetDefault(&self, out: *mut *mut GameChatOverlay) -> HRESULT
+}}
+impl IGameChatOverlayStatics {
+    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<GameChatOverlay>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IGameUIProviderActivatedEventArgs, 2813534270, 51959, 19949, 187, 210, 71, 222, 67, 187, 109, 213);
+RT_INTERFACE!{interface IGameUIProviderActivatedEventArgs(IGameUIProviderActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGameUIProviderActivatedEventArgs] {
+    fn get_GameUIArgs(&self, out: *mut *mut foundation::collections::ValueSet) -> HRESULT,
+    fn ReportCompleted(&self, results: *mut foundation::collections::ValueSet) -> HRESULT
+}}
+impl IGameUIProviderActivatedEventArgs {
+    #[inline] pub fn get_game_uiargs(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_GameUIArgs)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn report_completed(&self, results: &foundation::collections::ValueSet) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _, results as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameUIProviderActivatedEventArgs: IGameUIProviderActivatedEventArgs}
+} // Windows.Gaming.UI
+pub mod xboxlive { // Windows.Gaming.XboxLive
+pub mod storage { // Windows.Gaming.XboxLive.Storage
+use ::prelude::*;
+DEFINE_IID!(IID_IGameSaveBlobGetResult, 2440200672, 29185, 18771, 170, 44, 64, 8, 240, 58, 239, 69);
+RT_INTERFACE!{interface IGameSaveBlobGetResult(IGameSaveBlobGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobGetResult] {
+    fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut *mut foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>) -> HRESULT
+}}
+impl IGameSaveBlobGetResult {
+    #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameSaveBlobGetResult: IGameSaveBlobGetResult}
+DEFINE_IID!(IID_IGameSaveBlobInfo, 2916319284, 47856, 17989, 182, 208, 70, 237, 175, 251, 60, 43);
+RT_INTERFACE!{interface IGameSaveBlobInfo(IGameSaveBlobInfoVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobInfo] {
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Size(&self, out: *mut u32) -> HRESULT
+}}
+impl IGameSaveBlobInfo {
+    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_size(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameSaveBlobInfo: IGameSaveBlobInfo}
+DEFINE_IID!(IID_IGameSaveBlobInfoGetResult, 3344401794, 13975, 17087, 152, 156, 102, 93, 146, 59, 82, 49);
+RT_INTERFACE!{interface IGameSaveBlobInfoGetResult(IGameSaveBlobInfoGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobInfoGetResult] {
+    fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
+    fn get_Value(&self, out: *mut *mut foundation::collections::IVectorView<GameSaveBlobInfo>) -> HRESULT
+}}
+impl IGameSaveBlobInfoGetResult {
+    #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<GameSaveBlobInfo>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameSaveBlobInfoGetResult: IGameSaveBlobInfoGetResult}
+DEFINE_IID!(IID_IGameSaveBlobInfoQuery, 2682090674, 61166, 17531, 169, 210, 127, 150, 192, 248, 50, 8);
+RT_INTERFACE!{interface IGameSaveBlobInfoQuery(IGameSaveBlobInfoQueryVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobInfoQuery] {
+    fn GetBlobInfoAsync(&self, out: *mut *mut foundation::IAsyncOperation<GameSaveBlobInfoGetResult>) -> HRESULT,
+    fn GetBlobInfoWithIndexAndMaxAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<GameSaveBlobInfoGetResult>) -> HRESULT,
+    fn GetItemCountAsync(&self, out: *mut *mut foundation::IAsyncOperation<u32>) -> HRESULT
+}}
+impl IGameSaveBlobInfoQuery {
+    #[inline] pub fn get_blob_info_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobInfoGetResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetBlobInfoAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_blob_info_with_index_and_max_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobInfoGetResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetBlobInfoWithIndexAndMaxAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_item_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetItemCountAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameSaveBlobInfoQuery: IGameSaveBlobInfoQuery}
+DEFINE_IID!(IID_IGameSaveContainer, 3284176777, 22079, 20173, 156, 111, 51, 253, 14, 50, 61, 16);
+RT_INTERFACE!{interface IGameSaveContainer(IGameSaveContainerVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainer] {
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Provider(&self, out: *mut *mut GameSaveProvider) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-storage")] fn SubmitUpdatesAsync(&self, blobsToWrite: *mut foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, blobsToDelete: *mut foundation::collections::IIterable<HString>, displayName: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
+    #[cfg(feature="windows-storage")] fn ReadAsync(&self, blobsToRead: *mut foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
+    fn GetAsync(&self, blobsToRead: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<GameSaveBlobGetResult>) -> HRESULT,
+    fn SubmitPropertySetUpdatesAsync(&self, blobsToWrite: *mut foundation::collections::IPropertySet, blobsToDelete: *mut foundation::collections::IIterable<HString>, displayName: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
+    fn CreateBlobInfoQuery(&self, blobNamePrefix: HSTRING, out: *mut *mut GameSaveBlobInfoQuery) -> HRESULT
+}}
+impl IGameSaveContainer {
+    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_provider(&self) -> Result<Option<ComPtr<GameSaveProvider>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Provider)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn submit_updates_async(&self, blobsToWrite: &foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, blobsToDelete: &foundation::collections::IIterable<HString>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SubmitUpdatesAsync)(self as *const _ as *mut _, blobsToWrite as *const _ as *mut _, blobsToDelete as *const _ as *mut _, displayName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn read_async(&self, blobsToRead: &foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReadAsync)(self as *const _ as *mut _, blobsToRead as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_async(&self, blobsToRead: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobGetResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAsync)(self as *const _ as *mut _, blobsToRead as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn submit_property_set_updates_async(&self, blobsToWrite: &foundation::collections::IPropertySet, blobsToDelete: &foundation::collections::IIterable<HString>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SubmitPropertySetUpdatesAsync)(self as *const _ as *mut _, blobsToWrite as *const _ as *mut _, blobsToDelete as *const _ as *mut _, displayName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_blob_info_query(&self, blobNamePrefix: &HStringArg) -> Result<Option<ComPtr<GameSaveBlobInfoQuery>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateBlobInfoQuery)(self as *const _ as *mut _, blobNamePrefix.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameSaveContainer: IGameSaveContainer}
+DEFINE_IID!(IID_IGameSaveContainerInfo, 3085071104, 5469, 19380, 178, 186, 147, 3, 6, 243, 145, 181);
+RT_INTERFACE!{interface IGameSaveContainerInfo(IGameSaveContainerInfoVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainerInfo] {
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_TotalSize(&self, out: *mut u64) -> HRESULT,
+    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_LastModifiedTime(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn get_NeedsSync(&self, out: *mut bool) -> HRESULT
+}}
+impl IGameSaveContainerInfo {
+    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_total_size(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TotalSize)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_last_modified_time(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_LastModifiedTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_needs_sync(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_NeedsSync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameSaveContainerInfo: IGameSaveContainerInfo}
+DEFINE_IID!(IID_IGameSaveContainerInfoGetResult, 4291104116, 50561, 20381, 158, 57, 48, 161, 12, 30, 76, 80);
+RT_INTERFACE!{interface IGameSaveContainerInfoGetResult(IGameSaveContainerInfoGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainerInfoGetResult] {
+    fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
+    fn get_Value(&self, out: *mut *mut foundation::collections::IVectorView<GameSaveContainerInfo>) -> HRESULT
+}}
+impl IGameSaveContainerInfoGetResult {
+    #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<GameSaveContainerInfo>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameSaveContainerInfoGetResult: IGameSaveContainerInfoGetResult}
+DEFINE_IID!(IID_IGameSaveContainerInfoQuery, 1016391779, 28544, 17191, 147, 39, 255, 193, 26, 253, 66, 179);
+RT_INTERFACE!{interface IGameSaveContainerInfoQuery(IGameSaveContainerInfoQueryVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainerInfoQuery] {
+    fn GetContainerInfoAsync(&self, out: *mut *mut foundation::IAsyncOperation<GameSaveContainerInfoGetResult>) -> HRESULT,
+    fn GetContainerInfoWithIndexAndMaxAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<GameSaveContainerInfoGetResult>) -> HRESULT,
+    fn GetItemCountAsync(&self, out: *mut *mut foundation::IAsyncOperation<u32>) -> HRESULT
+}}
+impl IGameSaveContainerInfoQuery {
+    #[inline] pub fn get_container_info_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveContainerInfoGetResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetContainerInfoAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_container_info_with_index_and_max_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveContainerInfoGetResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetContainerInfoWithIndexAndMaxAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_item_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetItemCountAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameSaveContainerInfoQuery: IGameSaveContainerInfoQuery}
+RT_ENUM! { enum GameSaveErrorStatus: i32 {
+    Ok (GameSaveErrorStatus_Ok) = 0, Abort (GameSaveErrorStatus_Abort) = -2147467260, InvalidContainerName (GameSaveErrorStatus_InvalidContainerName) = -2138898431, NoAccess (GameSaveErrorStatus_NoAccess) = -2138898430, OutOfLocalStorage (GameSaveErrorStatus_OutOfLocalStorage) = -2138898429, UserCanceled (GameSaveErrorStatus_UserCanceled) = -2138898428, UpdateTooBig (GameSaveErrorStatus_UpdateTooBig) = -2138898427, QuotaExceeded (GameSaveErrorStatus_QuotaExceeded) = -2138898426, ProvidedBufferTooSmall (GameSaveErrorStatus_ProvidedBufferTooSmall) = -2138898425, BlobNotFound (GameSaveErrorStatus_BlobNotFound) = -2138898424, NoXboxLiveInfo (GameSaveErrorStatus_NoXboxLiveInfo) = -2138898423, ContainerNotInSync (GameSaveErrorStatus_ContainerNotInSync) = -2138898422, ContainerSyncFailed (GameSaveErrorStatus_ContainerSyncFailed) = -2138898421, UserHasNoXboxLiveInfo (GameSaveErrorStatus_UserHasNoXboxLiveInfo) = -2138898420, ObjectExpired (GameSaveErrorStatus_ObjectExpired) = -2138898419,
+}}
+DEFINE_IID!(IID_IGameSaveOperationResult, 3473873413, 9376, 17794, 154, 85, 177, 187, 187, 147, 136, 216);
+RT_INTERFACE!{interface IGameSaveOperationResult(IGameSaveOperationResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveOperationResult] {
+    fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT
+}}
+impl IGameSaveOperationResult {
+    #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameSaveOperationResult: IGameSaveOperationResult}
+DEFINE_IID!(IID_IGameSaveProvider, 2426798996, 33022, 16913, 151, 248, 165, 222, 20, 221, 149, 210);
+RT_INTERFACE!{interface IGameSaveProvider(IGameSaveProviderVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProvider] {
+    #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut ::rt::gen::windows::system::User) -> HRESULT,
+    fn CreateContainer(&self, name: HSTRING, out: *mut *mut GameSaveContainer) -> HRESULT,
+    fn DeleteContainerAsync(&self, name: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
+    fn CreateContainerInfoQuery(&self, out: *mut *mut GameSaveContainerInfoQuery) -> HRESULT,
+    fn CreateContainerInfoQueryWithName(&self, containerNamePrefix: HSTRING, out: *mut *mut GameSaveContainerInfoQuery) -> HRESULT,
+    fn GetRemainingBytesInQuotaAsync(&self, out: *mut *mut foundation::IAsyncOperation<i64>) -> HRESULT,
+    fn get_ContainersChangedSinceLastSync(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
+}}
+impl IGameSaveProvider {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<::rt::gen::windows::system::User>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_container(&self, name: &HStringArg) -> Result<Option<ComPtr<GameSaveContainer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateContainer)(self as *const _ as *mut _, name.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn delete_container_async(&self, name: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DeleteContainerAsync)(self as *const _ as *mut _, name.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_container_info_query(&self) -> Result<Option<ComPtr<GameSaveContainerInfoQuery>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateContainerInfoQuery)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_container_info_query_with_name(&self, containerNamePrefix: &HStringArg) -> Result<Option<ComPtr<GameSaveContainerInfoQuery>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateContainerInfoQueryWithName)(self as *const _ as *mut _, containerNamePrefix.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_remaining_bytes_in_quota_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<i64>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetRemainingBytesInQuotaAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_containers_changed_since_last_sync(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ContainersChangedSinceLastSync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameSaveProvider: IGameSaveProvider}
+impl RtActivatable<IGameSaveProviderStatics> for GameSaveProvider {}
+impl GameSaveProvider {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
+        <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().get_for_user_async(user, serviceConfigId)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
+        <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().get_sync_on_demand_for_user_async(user, serviceConfigId)
+    }
+}
+DEFINE_CLSID!(GameSaveProvider(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,88,98,111,120,76,105,118,101,46,83,116,111,114,97,103,101,46,71,97,109,101,83,97,118,101,80,114,111,118,105,100,101,114,0]) [CLSID_GameSaveProvider]);
+DEFINE_IID!(IID_IGameSaveProviderGetResult, 985204758, 54163, 19813, 172, 22, 65, 195, 230, 122, 185, 69);
+RT_INTERFACE!{interface IGameSaveProviderGetResult(IGameSaveProviderGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProviderGetResult] {
+    fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
+    fn get_Value(&self, out: *mut *mut GameSaveProvider) -> HRESULT
+}}
+impl IGameSaveProviderGetResult {
+    #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<GameSaveProvider>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GameSaveProviderGetResult: IGameSaveProviderGetResult}
+DEFINE_IID!(IID_IGameSaveProviderStatics, 3491577552, 31491, 17565, 140, 189, 52, 2, 132, 42, 16, 72);
+RT_INTERFACE!{static interface IGameSaveProviderStatics(IGameSaveProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProviderStatics] {
+    #[cfg(feature="windows-system")] fn GetForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn GetSyncOnDemandForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT
+}}
+impl IGameSaveProviderStatics {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(&self, user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, serviceConfigId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(&self, user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetSyncOnDemandForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, serviceConfigId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+} // Windows.Gaming.XboxLive.Storage
+} // Windows.Gaming.XboxLive

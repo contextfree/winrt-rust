@@ -857,6 +857,7 @@ impl IClockIdentifiersStatics {
 RT_CLASS!{static class CurrencyIdentifiers}
 impl RtActivatable<ICurrencyIdentifiersStatics> for CurrencyIdentifiers {}
 impl RtActivatable<ICurrencyIdentifiersStatics2> for CurrencyIdentifiers {}
+impl RtActivatable<ICurrencyIdentifiersStatics3> for CurrencyIdentifiers {}
 impl CurrencyIdentifiers {
     #[inline] pub fn get_aed() -> Result<HString> {
         <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_aed()
@@ -1331,6 +1332,18 @@ impl CurrencyIdentifiers {
     }
     #[inline] pub fn get_byn() -> Result<HString> {
         <Self as RtActivatable<ICurrencyIdentifiersStatics2>>::get_activation_factory().get_byn()
+    }
+    #[inline] pub fn get_mru() -> Result<HString> {
+        <Self as RtActivatable<ICurrencyIdentifiersStatics3>>::get_activation_factory().get_mru()
+    }
+    #[inline] pub fn get_ssp() -> Result<HString> {
+        <Self as RtActivatable<ICurrencyIdentifiersStatics3>>::get_activation_factory().get_ssp()
+    }
+    #[inline] pub fn get_stn() -> Result<HString> {
+        <Self as RtActivatable<ICurrencyIdentifiersStatics3>>::get_activation_factory().get_stn()
+    }
+    #[inline] pub fn get_ves() -> Result<HString> {
+        <Self as RtActivatable<ICurrencyIdentifiersStatics3>>::get_activation_factory().get_ves()
     }
 }
 DEFINE_CLSID!(CurrencyIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,117,114,114,101,110,99,121,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_CurrencyIdentifiers]);
@@ -2292,6 +2305,35 @@ impl ICurrencyIdentifiersStatics2 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
+DEFINE_IID!(IID_ICurrencyIdentifiersStatics3, 1337080826, 60709, 20301, 133, 127, 35, 127, 23, 72, 194, 28);
+RT_INTERFACE!{static interface ICurrencyIdentifiersStatics3(ICurrencyIdentifiersStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyIdentifiersStatics3] {
+    fn get_MRU(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_SSP(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_STN(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_VES(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl ICurrencyIdentifiersStatics3 {
+    #[inline] pub fn get_mru(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_MRU)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_ssp(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SSP)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stn(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_STN)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_ves(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_VES)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum DayOfWeek: i32 {
     Sunday (DayOfWeek_Sunday) = 0, Monday (DayOfWeek_Monday) = 1, Tuesday (DayOfWeek_Tuesday) = 2, Wednesday (DayOfWeek_Wednesday) = 3, Thursday (DayOfWeek_Thursday) = 4, Friday (DayOfWeek_Friday) = 5, Saturday (DayOfWeek_Saturday) = 6,
 }}
@@ -3017,331 +3059,58 @@ impl ITimeZoneOnCalendar {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-pub mod fonts { // Windows.Globalization.Fonts
+pub mod collation { // Windows.Globalization.Collation
 use ::prelude::*;
-DEFINE_IID!(IID_ILanguageFont, 2972605498, 46957, 17819, 190, 235, 144, 17, 81, 205, 119, 209);
-RT_INTERFACE!{interface ILanguageFont(ILanguageFontVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFont] {
-    fn get_FontFamily(&self, out: *mut HSTRING) -> HRESULT,
-    #[cfg(not(feature="windows-ui"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_FontWeight(&self, out: *mut super::super::ui::text::FontWeight) -> HRESULT,
-    #[cfg(not(feature="windows-ui"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_FontStretch(&self, out: *mut super::super::ui::text::FontStretch) -> HRESULT,
-    #[cfg(not(feature="windows-ui"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_FontStyle(&self, out: *mut super::super::ui::text::FontStyle) -> HRESULT,
-    fn get_ScaleFactor(&self, out: *mut f64) -> HRESULT
+DEFINE_IID!(IID_ICharacterGrouping, 4209467835, 32861, 19376, 149, 187, 193, 247, 195, 232, 235, 142);
+RT_INTERFACE!{interface ICharacterGrouping(ICharacterGroupingVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGrouping] {
+    fn get_First(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Label(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ILanguageFont {
-    #[inline] pub fn get_font_family(&self) -> Result<HString> { unsafe { 
+impl ICharacterGrouping {
+    #[inline] pub fn get_first(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FontFamily)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_First)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_font_weight(&self) -> Result<super::super::ui::text::FontWeight> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_FontWeight)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_font_stretch(&self) -> Result<super::super::ui::text::FontStretch> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_FontStretch)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_font_style(&self) -> Result<super::super::ui::text::FontStyle> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_FontStyle)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_scale_factor(&self) -> Result<f64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ScaleFactor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
+    #[inline] pub fn get_label(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Label)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LanguageFont: ILanguageFont}
-DEFINE_IID!(IID_ILanguageFontGroup, 4080697283, 14940, 19178, 185, 255, 179, 159, 178, 66, 247, 246);
-RT_INTERFACE!{interface ILanguageFontGroup(ILanguageFontGroupVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroup] {
-    fn get_UITextFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_UIHeadingFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_UITitleFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_UICaptionFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_UINotificationHeadingFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_TraditionalDocumentFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_ModernDocumentFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_DocumentHeadingFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_FixedWidthTextFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_DocumentAlternate1Font(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_DocumentAlternate2Font(&self, out: *mut *mut LanguageFont) -> HRESULT
+RT_CLASS!{class CharacterGrouping: ICharacterGrouping}
+DEFINE_IID!(IID_ICharacterGroupings, 3100772981, 54479, 16469, 128, 229, 206, 22, 156, 34, 100, 150);
+RT_INTERFACE!{interface ICharacterGroupings(ICharacterGroupingsVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGroupings] {
+    fn Lookup(&self, text: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
-impl ILanguageFontGroup {
-    #[inline] pub fn get_uitext_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+impl ICharacterGroupings {
+    #[inline] pub fn lookup(&self, text: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UITextFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_uiheading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UIHeadingFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_uititle_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UITitleFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_uicaption_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UICaptionFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_uinotification_heading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UINotificationHeadingFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_traditional_document_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TraditionalDocumentFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_modern_document_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ModernDocumentFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_document_heading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DocumentHeadingFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_fixed_width_text_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FixedWidthTextFont)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_document_alternate1_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DocumentAlternate1Font)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_document_alternate2_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DocumentAlternate2Font)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        let hr = ((*self.lpVtbl).Lookup)(self as *const _ as *mut _, text.get(), &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LanguageFontGroup: ILanguageFontGroup}
-impl RtActivatable<ILanguageFontGroupFactory> for LanguageFontGroup {}
-impl LanguageFontGroup {
-    #[inline] pub fn create_language_font_group(languageTag: &HStringArg) -> Result<ComPtr<LanguageFontGroup>> {
-        <Self as RtActivatable<ILanguageFontGroupFactory>>::get_activation_factory().create_language_font_group(languageTag)
+RT_CLASS!{class CharacterGroupings: ICharacterGroupings}
+impl RtActivatable<ICharacterGroupingsFactory> for CharacterGroupings {}
+impl RtActivatable<IActivationFactory> for CharacterGroupings {}
+impl CharacterGroupings {
+    #[inline] pub fn create(language: &HStringArg) -> Result<ComPtr<CharacterGroupings>> {
+        <Self as RtActivatable<ICharacterGroupingsFactory>>::get_activation_factory().create(language)
     }
 }
-DEFINE_CLSID!(LanguageFontGroup(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,70,111,110,116,115,46,76,97,110,103,117,97,103,101,70,111,110,116,71,114,111,117,112,0]) [CLSID_LanguageFontGroup]);
-DEFINE_IID!(IID_ILanguageFontGroupFactory, 4239305831, 20087, 18887, 184, 86, 221, 233, 52, 252, 115, 91);
-RT_INTERFACE!{static interface ILanguageFontGroupFactory(ILanguageFontGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroupFactory] {
-    fn CreateLanguageFontGroup(&self, languageTag: HSTRING, out: *mut *mut LanguageFontGroup) -> HRESULT
+DEFINE_CLSID!(CharacterGroupings(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,111,108,108,97,116,105,111,110,46,67,104,97,114,97,99,116,101,114,71,114,111,117,112,105,110,103,115,0]) [CLSID_CharacterGroupings]);
+DEFINE_IID!(IID_ICharacterGroupingsFactory, 2582290393, 34925, 17409, 159, 152, 105, 200, 45, 76, 47, 120);
+RT_INTERFACE!{static interface ICharacterGroupingsFactory(ICharacterGroupingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGroupingsFactory] {
+    fn Create(&self, language: HSTRING, out: *mut *mut CharacterGroupings) -> HRESULT
 }}
-impl ILanguageFontGroupFactory {
-    #[inline] pub fn create_language_font_group(&self, languageTag: &HStringArg) -> Result<ComPtr<LanguageFontGroup>> { unsafe { 
+impl ICharacterGroupingsFactory {
+    #[inline] pub fn create(&self, language: &HStringArg) -> Result<ComPtr<CharacterGroupings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateLanguageFontGroup)(self as *const _ as *mut _, languageTag.get(), &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, language.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-} // Windows.Globalization.Fonts
-pub mod phonenumberformatting { // Windows.Globalization.PhoneNumberFormatting
-use ::prelude::*;
-RT_ENUM! { enum PhoneNumberFormat: i32 {
-    E164 (PhoneNumberFormat_E164) = 0, International (PhoneNumberFormat_International) = 1, National (PhoneNumberFormat_National) = 2, Rfc3966 (PhoneNumberFormat_Rfc3966) = 3,
-}}
-DEFINE_IID!(IID_IPhoneNumberFormatter, 358003870, 47828, 19274, 144, 13, 68, 7, 173, 183, 201, 129);
-RT_INTERFACE!{interface IPhoneNumberFormatter(IPhoneNumberFormatterVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatter] {
-    fn Format(&self, number: *mut PhoneNumberInfo, out: *mut HSTRING) -> HRESULT,
-    fn FormatWithOutputFormat(&self, number: *mut PhoneNumberInfo, numberFormat: PhoneNumberFormat, out: *mut HSTRING) -> HRESULT,
-    fn FormatPartialString(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT,
-    fn FormatString(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT,
-    fn FormatStringWithLeftToRightMarkers(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT
-}}
-impl IPhoneNumberFormatter {
-    #[inline] pub fn format(&self, number: &PhoneNumberInfo) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Format)(self as *const _ as *mut _, number as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn format_with_output_format(&self, number: &PhoneNumberInfo, numberFormat: PhoneNumberFormat) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FormatWithOutputFormat)(self as *const _ as *mut _, number as *const _ as *mut _, numberFormat, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn format_partial_string(&self, number: &HStringArg) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FormatPartialString)(self as *const _ as *mut _, number.get(), &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn format_string(&self, number: &HStringArg) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FormatString)(self as *const _ as *mut _, number.get(), &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn format_string_with_left_to_right_markers(&self, number: &HStringArg) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FormatStringWithLeftToRightMarkers)(self as *const _ as *mut _, number.get(), &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class PhoneNumberFormatter: IPhoneNumberFormatter}
-impl RtActivatable<IPhoneNumberFormatterStatics> for PhoneNumberFormatter {}
-impl RtActivatable<IActivationFactory> for PhoneNumberFormatter {}
-impl PhoneNumberFormatter {
-    #[inline] pub fn try_create(regionCode: &HStringArg) -> Result<Option<ComPtr<PhoneNumberFormatter>>> {
-        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().try_create(regionCode)
-    }
-    #[inline] pub fn get_country_code_for_region(regionCode: &HStringArg) -> Result<i32> {
-        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().get_country_code_for_region(regionCode)
-    }
-    #[inline] pub fn get_national_direct_dialing_prefix_for_region(regionCode: &HStringArg, stripNonDigit: bool) -> Result<HString> {
-        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().get_national_direct_dialing_prefix_for_region(regionCode, stripNonDigit)
-    }
-    #[inline] pub fn wrap_with_left_to_right_markers(number: &HStringArg) -> Result<HString> {
-        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().wrap_with_left_to_right_markers(number)
-    }
-}
-DEFINE_CLSID!(PhoneNumberFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,101,114,0]) [CLSID_PhoneNumberFormatter]);
-DEFINE_IID!(IID_IPhoneNumberFormatterStatics, 1554446641, 34009, 16715, 171, 78, 160, 85, 44, 135, 134, 2);
-RT_INTERFACE!{static interface IPhoneNumberFormatterStatics(IPhoneNumberFormatterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatterStatics] {
-    fn TryCreate(&self, regionCode: HSTRING, phoneNumber: *mut *mut PhoneNumberFormatter) -> HRESULT,
-    fn GetCountryCodeForRegion(&self, regionCode: HSTRING, out: *mut i32) -> HRESULT,
-    fn GetNationalDirectDialingPrefixForRegion(&self, regionCode: HSTRING, stripNonDigit: bool, out: *mut HSTRING) -> HRESULT,
-    fn WrapWithLeftToRightMarkers(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT
-}}
-impl IPhoneNumberFormatterStatics {
-    #[inline] pub fn try_create(&self, regionCode: &HStringArg) -> Result<Option<ComPtr<PhoneNumberFormatter>>> { unsafe { 
-        let mut phoneNumber = null_mut();
-        let hr = ((*self.lpVtbl).TryCreate)(self as *const _ as *mut _, regionCode.get(), &mut phoneNumber);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(phoneNumber)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_country_code_for_region(&self, regionCode: &HStringArg) -> Result<i32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetCountryCodeForRegion)(self as *const _ as *mut _, regionCode.get(), &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_national_direct_dialing_prefix_for_region(&self, regionCode: &HStringArg, stripNonDigit: bool) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetNationalDirectDialingPrefixForRegion)(self as *const _ as *mut _, regionCode.get(), stripNonDigit, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn wrap_with_left_to_right_markers(&self, number: &HStringArg) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WrapWithLeftToRightMarkers)(self as *const _ as *mut _, number.get(), &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPhoneNumberInfo, 477947101, 51380, 20131, 154, 239, 179, 66, 226, 197, 180, 23);
-RT_INTERFACE!{interface IPhoneNumberInfo(IPhoneNumberInfoVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfo] {
-    fn get_CountryCode(&self, out: *mut i32) -> HRESULT,
-    fn get_PhoneNumber(&self, out: *mut HSTRING) -> HRESULT,
-    fn GetLengthOfGeographicalAreaCode(&self, out: *mut i32) -> HRESULT,
-    fn GetNationalSignificantNumber(&self, out: *mut HSTRING) -> HRESULT,
-    fn GetLengthOfNationalDestinationCode(&self, out: *mut i32) -> HRESULT,
-    fn PredictNumberKind(&self, out: *mut PredictedPhoneNumberKind) -> HRESULT,
-    fn GetGeographicRegionCode(&self, out: *mut HSTRING) -> HRESULT,
-    fn CheckNumberMatch(&self, otherNumber: *mut PhoneNumberInfo, out: *mut PhoneNumberMatchResult) -> HRESULT
-}}
-impl IPhoneNumberInfo {
-    #[inline] pub fn get_country_code(&self) -> Result<i32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CountryCode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_phone_number(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PhoneNumber)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_length_of_geographical_area_code(&self) -> Result<i32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetLengthOfGeographicalAreaCode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_national_significant_number(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetNationalSignificantNumber)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_length_of_national_destination_code(&self) -> Result<i32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetLengthOfNationalDestinationCode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn predict_number_kind(&self) -> Result<PredictedPhoneNumberKind> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).PredictNumberKind)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_geographic_region_code(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetGeographicRegionCode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn check_number_match(&self, otherNumber: &PhoneNumberInfo) -> Result<PhoneNumberMatchResult> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).CheckNumberMatch)(self as *const _ as *mut _, otherNumber as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class PhoneNumberInfo: IPhoneNumberInfo}
-impl RtActivatable<IPhoneNumberInfoFactory> for PhoneNumberInfo {}
-impl RtActivatable<IPhoneNumberInfoStatics> for PhoneNumberInfo {}
-impl PhoneNumberInfo {
-    #[inline] pub fn create(number: &HStringArg) -> Result<ComPtr<PhoneNumberInfo>> {
-        <Self as RtActivatable<IPhoneNumberInfoFactory>>::get_activation_factory().create(number)
-    }
-    #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> {
-        <Self as RtActivatable<IPhoneNumberInfoStatics>>::get_activation_factory().try_parse(input)
-    }
-    #[inline] pub fn try_parse_with_region(input: &HStringArg, regionCode: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> {
-        <Self as RtActivatable<IPhoneNumberInfoStatics>>::get_activation_factory().try_parse_with_region(input, regionCode)
-    }
-}
-DEFINE_CLSID!(PhoneNumberInfo(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,73,110,102,111,0]) [CLSID_PhoneNumberInfo]);
-DEFINE_IID!(IID_IPhoneNumberInfoFactory, 2181216612, 44458, 19711, 143, 207, 23, 231, 81, 106, 40, 255);
-RT_INTERFACE!{static interface IPhoneNumberInfoFactory(IPhoneNumberInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfoFactory] {
-    fn Create(&self, number: HSTRING, out: *mut *mut PhoneNumberInfo) -> HRESULT
-}}
-impl IPhoneNumberInfoFactory {
-    #[inline] pub fn create(&self, number: &HStringArg) -> Result<ComPtr<PhoneNumberInfo>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, number.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPhoneNumberInfoStatics, 1530875754, 34473, 16617, 134, 73, 109, 97, 22, 25, 40, 212);
-RT_INTERFACE!{static interface IPhoneNumberInfoStatics(IPhoneNumberInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfoStatics] {
-    fn TryParse(&self, input: HSTRING, phoneNumber: *mut *mut PhoneNumberInfo, out: *mut PhoneNumberParseResult) -> HRESULT,
-    fn TryParseWithRegion(&self, input: HSTRING, regionCode: HSTRING, phoneNumber: *mut *mut PhoneNumberInfo, out: *mut PhoneNumberParseResult) -> HRESULT
-}}
-impl IPhoneNumberInfoStatics {
-    #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> { unsafe { 
-        let mut phoneNumber = null_mut(); let mut out = zeroed();
-        let hr = ((*self.lpVtbl).TryParse)(self as *const _ as *mut _, input.get(), &mut phoneNumber, &mut out);
-        if hr == S_OK { Ok((ComPtr::wrap_optional(phoneNumber), out)) } else { err(hr) }
-    }}
-    #[inline] pub fn try_parse_with_region(&self, input: &HStringArg, regionCode: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> { unsafe { 
-        let mut phoneNumber = null_mut(); let mut out = zeroed();
-        let hr = ((*self.lpVtbl).TryParseWithRegion)(self as *const _ as *mut _, input.get(), regionCode.get(), &mut phoneNumber, &mut out);
-        if hr == S_OK { Ok((ComPtr::wrap_optional(phoneNumber), out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum PhoneNumberMatchResult: i32 {
-    NoMatch (PhoneNumberMatchResult_NoMatch) = 0, ShortNationalSignificantNumberMatch (PhoneNumberMatchResult_ShortNationalSignificantNumberMatch) = 1, NationalSignificantNumberMatch (PhoneNumberMatchResult_NationalSignificantNumberMatch) = 2, ExactMatch (PhoneNumberMatchResult_ExactMatch) = 3,
-}}
-RT_ENUM! { enum PhoneNumberParseResult: i32 {
-    Valid (PhoneNumberParseResult_Valid) = 0, NotANumber (PhoneNumberParseResult_NotANumber) = 1, InvalidCountryCode (PhoneNumberParseResult_InvalidCountryCode) = 2, TooShort (PhoneNumberParseResult_TooShort) = 3, TooLong (PhoneNumberParseResult_TooLong) = 4,
-}}
-RT_ENUM! { enum PredictedPhoneNumberKind: i32 {
-    FixedLine (PredictedPhoneNumberKind_FixedLine) = 0, Mobile (PredictedPhoneNumberKind_Mobile) = 1, FixedLineOrMobile (PredictedPhoneNumberKind_FixedLineOrMobile) = 2, TollFree (PredictedPhoneNumberKind_TollFree) = 3, PremiumRate (PredictedPhoneNumberKind_PremiumRate) = 4, SharedCost (PredictedPhoneNumberKind_SharedCost) = 5, Voip (PredictedPhoneNumberKind_Voip) = 6, PersonalNumber (PredictedPhoneNumberKind_PersonalNumber) = 7, Pager (PredictedPhoneNumberKind_Pager) = 8, UniversalAccountNumber (PredictedPhoneNumberKind_UniversalAccountNumber) = 9, Voicemail (PredictedPhoneNumberKind_Voicemail) = 10, Unknown (PredictedPhoneNumberKind_Unknown) = 11,
-}}
-} // Windows.Globalization.PhoneNumberFormatting
+} // Windows.Globalization.Collation
 pub mod datetimeformatting { // Windows.Globalization.DateTimeFormatting
 use ::prelude::*;
 DEFINE_IID!(IID_IDateTimeFormatter, 2515454480, 29664, 20043, 161, 131, 61, 106, 208, 186, 53, 236);
@@ -3604,6 +3373,138 @@ RT_ENUM! { enum YearFormat: i32 {
     None (YearFormat_None) = 0, Default (YearFormat_Default) = 1, Abbreviated (YearFormat_Abbreviated) = 2, Full (YearFormat_Full) = 3,
 }}
 } // Windows.Globalization.DateTimeFormatting
+pub mod fonts { // Windows.Globalization.Fonts
+use ::prelude::*;
+DEFINE_IID!(IID_ILanguageFont, 2972605498, 46957, 17819, 190, 235, 144, 17, 81, 205, 119, 209);
+RT_INTERFACE!{interface ILanguageFont(ILanguageFontVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFont] {
+    fn get_FontFamily(&self, out: *mut HSTRING) -> HRESULT,
+    #[cfg(not(feature="windows-ui"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-ui")] fn get_FontWeight(&self, out: *mut super::super::ui::text::FontWeight) -> HRESULT,
+    #[cfg(not(feature="windows-ui"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-ui")] fn get_FontStretch(&self, out: *mut super::super::ui::text::FontStretch) -> HRESULT,
+    #[cfg(not(feature="windows-ui"))] fn __Dummy3(&self) -> (),
+    #[cfg(feature="windows-ui")] fn get_FontStyle(&self, out: *mut super::super::ui::text::FontStyle) -> HRESULT,
+    fn get_ScaleFactor(&self, out: *mut f64) -> HRESULT
+}}
+impl ILanguageFont {
+    #[inline] pub fn get_font_family(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_FontFamily)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_font_weight(&self) -> Result<super::super::ui::text::FontWeight> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_FontWeight)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_font_stretch(&self) -> Result<super::super::ui::text::FontStretch> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_FontStretch)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_font_style(&self) -> Result<super::super::ui::text::FontStyle> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_FontStyle)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_scale_factor(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ScaleFactor)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class LanguageFont: ILanguageFont}
+DEFINE_IID!(IID_ILanguageFontGroup, 4080697283, 14940, 19178, 185, 255, 179, 159, 178, 66, 247, 246);
+RT_INTERFACE!{interface ILanguageFontGroup(ILanguageFontGroupVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroup] {
+    fn get_UITextFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
+    fn get_UIHeadingFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
+    fn get_UITitleFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
+    fn get_UICaptionFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
+    fn get_UINotificationHeadingFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
+    fn get_TraditionalDocumentFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
+    fn get_ModernDocumentFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
+    fn get_DocumentHeadingFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
+    fn get_FixedWidthTextFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
+    fn get_DocumentAlternate1Font(&self, out: *mut *mut LanguageFont) -> HRESULT,
+    fn get_DocumentAlternate2Font(&self, out: *mut *mut LanguageFont) -> HRESULT
+}}
+impl ILanguageFontGroup {
+    #[inline] pub fn get_uitext_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UITextFont)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_uiheading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UIHeadingFont)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_uititle_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UITitleFont)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_uicaption_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UICaptionFont)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_uinotification_heading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UINotificationHeadingFont)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_traditional_document_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TraditionalDocumentFont)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_modern_document_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ModernDocumentFont)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_document_heading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DocumentHeadingFont)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_fixed_width_text_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_FixedWidthTextFont)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_document_alternate1_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DocumentAlternate1Font)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_document_alternate2_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DocumentAlternate2Font)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class LanguageFontGroup: ILanguageFontGroup}
+impl RtActivatable<ILanguageFontGroupFactory> for LanguageFontGroup {}
+impl LanguageFontGroup {
+    #[inline] pub fn create_language_font_group(languageTag: &HStringArg) -> Result<ComPtr<LanguageFontGroup>> {
+        <Self as RtActivatable<ILanguageFontGroupFactory>>::get_activation_factory().create_language_font_group(languageTag)
+    }
+}
+DEFINE_CLSID!(LanguageFontGroup(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,70,111,110,116,115,46,76,97,110,103,117,97,103,101,70,111,110,116,71,114,111,117,112,0]) [CLSID_LanguageFontGroup]);
+DEFINE_IID!(IID_ILanguageFontGroupFactory, 4239305831, 20087, 18887, 184, 86, 221, 233, 52, 252, 115, 91);
+RT_INTERFACE!{static interface ILanguageFontGroupFactory(ILanguageFontGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroupFactory] {
+    fn CreateLanguageFontGroup(&self, languageTag: HSTRING, out: *mut *mut LanguageFontGroup) -> HRESULT
+}}
+impl ILanguageFontGroupFactory {
+    #[inline] pub fn create_language_font_group(&self, languageTag: &HStringArg) -> Result<ComPtr<LanguageFontGroup>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateLanguageFontGroup)(self as *const _ as *mut _, languageTag.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+} // Windows.Globalization.Fonts
 pub mod numberformatting { // Windows.Globalization.NumberFormatting
 use ::prelude::*;
 DEFINE_IID!(IID_ICurrencyFormatter, 292752549, 19200, 16818, 179, 50, 115, 177, 42, 73, 125, 84);
@@ -4094,55 +3995,196 @@ impl ISignificantDigitsOption {
     }}
 }
 } // Windows.Globalization.NumberFormatting
-pub mod collation { // Windows.Globalization.Collation
+pub mod phonenumberformatting { // Windows.Globalization.PhoneNumberFormatting
 use ::prelude::*;
-DEFINE_IID!(IID_ICharacterGrouping, 4209467835, 32861, 19376, 149, 187, 193, 247, 195, 232, 235, 142);
-RT_INTERFACE!{interface ICharacterGrouping(ICharacterGroupingVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGrouping] {
-    fn get_First(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Label(&self, out: *mut HSTRING) -> HRESULT
+RT_ENUM! { enum PhoneNumberFormat: i32 {
+    E164 (PhoneNumberFormat_E164) = 0, International (PhoneNumberFormat_International) = 1, National (PhoneNumberFormat_National) = 2, Rfc3966 (PhoneNumberFormat_Rfc3966) = 3,
 }}
-impl ICharacterGrouping {
-    #[inline] pub fn get_first(&self) -> Result<HString> { unsafe { 
+DEFINE_IID!(IID_IPhoneNumberFormatter, 358003870, 47828, 19274, 144, 13, 68, 7, 173, 183, 201, 129);
+RT_INTERFACE!{interface IPhoneNumberFormatter(IPhoneNumberFormatterVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatter] {
+    fn Format(&self, number: *mut PhoneNumberInfo, out: *mut HSTRING) -> HRESULT,
+    fn FormatWithOutputFormat(&self, number: *mut PhoneNumberInfo, numberFormat: PhoneNumberFormat, out: *mut HSTRING) -> HRESULT,
+    fn FormatPartialString(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT,
+    fn FormatString(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT,
+    fn FormatStringWithLeftToRightMarkers(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT
+}}
+impl IPhoneNumberFormatter {
+    #[inline] pub fn format(&self, number: &PhoneNumberInfo) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_First)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Format)(self as *const _ as *mut _, number as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_label(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn format_with_output_format(&self, number: &PhoneNumberInfo, numberFormat: PhoneNumberFormat) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Label)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FormatWithOutputFormat)(self as *const _ as *mut _, number as *const _ as *mut _, numberFormat, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn format_partial_string(&self, number: &HStringArg) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FormatPartialString)(self as *const _ as *mut _, number.get(), &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn format_string(&self, number: &HStringArg) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FormatString)(self as *const _ as *mut _, number.get(), &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn format_string_with_left_to_right_markers(&self, number: &HStringArg) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FormatStringWithLeftToRightMarkers)(self as *const _ as *mut _, number.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CharacterGrouping: ICharacterGrouping}
-DEFINE_IID!(IID_ICharacterGroupings, 3100772981, 54479, 16469, 128, 229, 206, 22, 156, 34, 100, 150);
-RT_INTERFACE!{interface ICharacterGroupings(ICharacterGroupingsVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGroupings] {
-    fn Lookup(&self, text: HSTRING, out: *mut HSTRING) -> HRESULT
-}}
-impl ICharacterGroupings {
-    #[inline] pub fn lookup(&self, text: &HStringArg) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Lookup)(self as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class CharacterGroupings: ICharacterGroupings}
-impl RtActivatable<ICharacterGroupingsFactory> for CharacterGroupings {}
-impl RtActivatable<IActivationFactory> for CharacterGroupings {}
-impl CharacterGroupings {
-    #[inline] pub fn create(language: &HStringArg) -> Result<ComPtr<CharacterGroupings>> {
-        <Self as RtActivatable<ICharacterGroupingsFactory>>::get_activation_factory().create(language)
+RT_CLASS!{class PhoneNumberFormatter: IPhoneNumberFormatter}
+impl RtActivatable<IPhoneNumberFormatterStatics> for PhoneNumberFormatter {}
+impl RtActivatable<IActivationFactory> for PhoneNumberFormatter {}
+impl PhoneNumberFormatter {
+    #[inline] pub fn try_create(regionCode: &HStringArg) -> Result<Option<ComPtr<PhoneNumberFormatter>>> {
+        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().try_create(regionCode)
+    }
+    #[inline] pub fn get_country_code_for_region(regionCode: &HStringArg) -> Result<i32> {
+        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().get_country_code_for_region(regionCode)
+    }
+    #[inline] pub fn get_national_direct_dialing_prefix_for_region(regionCode: &HStringArg, stripNonDigit: bool) -> Result<HString> {
+        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().get_national_direct_dialing_prefix_for_region(regionCode, stripNonDigit)
+    }
+    #[inline] pub fn wrap_with_left_to_right_markers(number: &HStringArg) -> Result<HString> {
+        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().wrap_with_left_to_right_markers(number)
     }
 }
-DEFINE_CLSID!(CharacterGroupings(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,111,108,108,97,116,105,111,110,46,67,104,97,114,97,99,116,101,114,71,114,111,117,112,105,110,103,115,0]) [CLSID_CharacterGroupings]);
-DEFINE_IID!(IID_ICharacterGroupingsFactory, 2582290393, 34925, 17409, 159, 152, 105, 200, 45, 76, 47, 120);
-RT_INTERFACE!{static interface ICharacterGroupingsFactory(ICharacterGroupingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGroupingsFactory] {
-    fn Create(&self, language: HSTRING, out: *mut *mut CharacterGroupings) -> HRESULT
+DEFINE_CLSID!(PhoneNumberFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,101,114,0]) [CLSID_PhoneNumberFormatter]);
+DEFINE_IID!(IID_IPhoneNumberFormatterStatics, 1554446641, 34009, 16715, 171, 78, 160, 85, 44, 135, 134, 2);
+RT_INTERFACE!{static interface IPhoneNumberFormatterStatics(IPhoneNumberFormatterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatterStatics] {
+    fn TryCreate(&self, regionCode: HSTRING, phoneNumber: *mut *mut PhoneNumberFormatter) -> HRESULT,
+    fn GetCountryCodeForRegion(&self, regionCode: HSTRING, out: *mut i32) -> HRESULT,
+    fn GetNationalDirectDialingPrefixForRegion(&self, regionCode: HSTRING, stripNonDigit: bool, out: *mut HSTRING) -> HRESULT,
+    fn WrapWithLeftToRightMarkers(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
-impl ICharacterGroupingsFactory {
-    #[inline] pub fn create(&self, language: &HStringArg) -> Result<ComPtr<CharacterGroupings>> { unsafe { 
+impl IPhoneNumberFormatterStatics {
+    #[inline] pub fn try_create(&self, regionCode: &HStringArg) -> Result<Option<ComPtr<PhoneNumberFormatter>>> { unsafe { 
+        let mut phoneNumber = null_mut();
+        let hr = ((*self.lpVtbl).TryCreate)(self as *const _ as *mut _, regionCode.get(), &mut phoneNumber);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(phoneNumber)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_country_code_for_region(&self, regionCode: &HStringArg) -> Result<i32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetCountryCodeForRegion)(self as *const _ as *mut _, regionCode.get(), &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_national_direct_dialing_prefix_for_region(&self, regionCode: &HStringArg, stripNonDigit: bool) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, language.get(), &mut out);
+        let hr = ((*self.lpVtbl).GetNationalDirectDialingPrefixForRegion)(self as *const _ as *mut _, regionCode.get(), stripNonDigit, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn wrap_with_left_to_right_markers(&self, number: &HStringArg) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).WrapWithLeftToRightMarkers)(self as *const _ as *mut _, number.get(), &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPhoneNumberInfo, 477947101, 51380, 20131, 154, 239, 179, 66, 226, 197, 180, 23);
+RT_INTERFACE!{interface IPhoneNumberInfo(IPhoneNumberInfoVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfo] {
+    fn get_CountryCode(&self, out: *mut i32) -> HRESULT,
+    fn get_PhoneNumber(&self, out: *mut HSTRING) -> HRESULT,
+    fn GetLengthOfGeographicalAreaCode(&self, out: *mut i32) -> HRESULT,
+    fn GetNationalSignificantNumber(&self, out: *mut HSTRING) -> HRESULT,
+    fn GetLengthOfNationalDestinationCode(&self, out: *mut i32) -> HRESULT,
+    fn PredictNumberKind(&self, out: *mut PredictedPhoneNumberKind) -> HRESULT,
+    fn GetGeographicRegionCode(&self, out: *mut HSTRING) -> HRESULT,
+    fn CheckNumberMatch(&self, otherNumber: *mut PhoneNumberInfo, out: *mut PhoneNumberMatchResult) -> HRESULT
+}}
+impl IPhoneNumberInfo {
+    #[inline] pub fn get_country_code(&self) -> Result<i32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CountryCode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_phone_number(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PhoneNumber)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_length_of_geographical_area_code(&self) -> Result<i32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetLengthOfGeographicalAreaCode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_national_significant_number(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetNationalSignificantNumber)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_length_of_national_destination_code(&self) -> Result<i32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetLengthOfNationalDestinationCode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn predict_number_kind(&self) -> Result<PredictedPhoneNumberKind> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).PredictNumberKind)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_geographic_region_code(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetGeographicRegionCode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn check_number_match(&self, otherNumber: &PhoneNumberInfo) -> Result<PhoneNumberMatchResult> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).CheckNumberMatch)(self as *const _ as *mut _, otherNumber as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PhoneNumberInfo: IPhoneNumberInfo}
+impl RtActivatable<IPhoneNumberInfoFactory> for PhoneNumberInfo {}
+impl RtActivatable<IPhoneNumberInfoStatics> for PhoneNumberInfo {}
+impl PhoneNumberInfo {
+    #[inline] pub fn create(number: &HStringArg) -> Result<ComPtr<PhoneNumberInfo>> {
+        <Self as RtActivatable<IPhoneNumberInfoFactory>>::get_activation_factory().create(number)
+    }
+    #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> {
+        <Self as RtActivatable<IPhoneNumberInfoStatics>>::get_activation_factory().try_parse(input)
+    }
+    #[inline] pub fn try_parse_with_region(input: &HStringArg, regionCode: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> {
+        <Self as RtActivatable<IPhoneNumberInfoStatics>>::get_activation_factory().try_parse_with_region(input, regionCode)
+    }
+}
+DEFINE_CLSID!(PhoneNumberInfo(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,73,110,102,111,0]) [CLSID_PhoneNumberInfo]);
+DEFINE_IID!(IID_IPhoneNumberInfoFactory, 2181216612, 44458, 19711, 143, 207, 23, 231, 81, 106, 40, 255);
+RT_INTERFACE!{static interface IPhoneNumberInfoFactory(IPhoneNumberInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfoFactory] {
+    fn Create(&self, number: HSTRING, out: *mut *mut PhoneNumberInfo) -> HRESULT
+}}
+impl IPhoneNumberInfoFactory {
+    #[inline] pub fn create(&self, number: &HStringArg) -> Result<ComPtr<PhoneNumberInfo>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, number.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-} // Windows.Globalization.Collation
+DEFINE_IID!(IID_IPhoneNumberInfoStatics, 1530875754, 34473, 16617, 134, 73, 109, 97, 22, 25, 40, 212);
+RT_INTERFACE!{static interface IPhoneNumberInfoStatics(IPhoneNumberInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfoStatics] {
+    fn TryParse(&self, input: HSTRING, phoneNumber: *mut *mut PhoneNumberInfo, out: *mut PhoneNumberParseResult) -> HRESULT,
+    fn TryParseWithRegion(&self, input: HSTRING, regionCode: HSTRING, phoneNumber: *mut *mut PhoneNumberInfo, out: *mut PhoneNumberParseResult) -> HRESULT
+}}
+impl IPhoneNumberInfoStatics {
+    #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> { unsafe { 
+        let mut phoneNumber = null_mut(); let mut out = zeroed();
+        let hr = ((*self.lpVtbl).TryParse)(self as *const _ as *mut _, input.get(), &mut phoneNumber, &mut out);
+        if hr == S_OK { Ok((ComPtr::wrap_optional(phoneNumber), out)) } else { err(hr) }
+    }}
+    #[inline] pub fn try_parse_with_region(&self, input: &HStringArg, regionCode: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> { unsafe { 
+        let mut phoneNumber = null_mut(); let mut out = zeroed();
+        let hr = ((*self.lpVtbl).TryParseWithRegion)(self as *const _ as *mut _, input.get(), regionCode.get(), &mut phoneNumber, &mut out);
+        if hr == S_OK { Ok((ComPtr::wrap_optional(phoneNumber), out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum PhoneNumberMatchResult: i32 {
+    NoMatch (PhoneNumberMatchResult_NoMatch) = 0, ShortNationalSignificantNumberMatch (PhoneNumberMatchResult_ShortNationalSignificantNumberMatch) = 1, NationalSignificantNumberMatch (PhoneNumberMatchResult_NationalSignificantNumberMatch) = 2, ExactMatch (PhoneNumberMatchResult_ExactMatch) = 3,
+}}
+RT_ENUM! { enum PhoneNumberParseResult: i32 {
+    Valid (PhoneNumberParseResult_Valid) = 0, NotANumber (PhoneNumberParseResult_NotANumber) = 1, InvalidCountryCode (PhoneNumberParseResult_InvalidCountryCode) = 2, TooShort (PhoneNumberParseResult_TooShort) = 3, TooLong (PhoneNumberParseResult_TooLong) = 4,
+}}
+RT_ENUM! { enum PredictedPhoneNumberKind: i32 {
+    FixedLine (PredictedPhoneNumberKind_FixedLine) = 0, Mobile (PredictedPhoneNumberKind_Mobile) = 1, FixedLineOrMobile (PredictedPhoneNumberKind_FixedLineOrMobile) = 2, TollFree (PredictedPhoneNumberKind_TollFree) = 3, PremiumRate (PredictedPhoneNumberKind_PremiumRate) = 4, SharedCost (PredictedPhoneNumberKind_SharedCost) = 5, Voip (PredictedPhoneNumberKind_Voip) = 6, PersonalNumber (PredictedPhoneNumberKind_PersonalNumber) = 7, Pager (PredictedPhoneNumberKind_Pager) = 8, UniversalAccountNumber (PredictedPhoneNumberKind_UniversalAccountNumber) = 9, Voicemail (PredictedPhoneNumberKind_Voicemail) = 10, Unknown (PredictedPhoneNumberKind_Unknown) = 11,
+}}
+} // Windows.Globalization.PhoneNumberFormatting

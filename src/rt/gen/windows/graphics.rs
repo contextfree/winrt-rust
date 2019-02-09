@@ -15,1238 +15,244 @@ RT_STRUCT! { struct RectInt32 {
 RT_STRUCT! { struct SizeInt32 {
     Width: i32, Height: i32,
 }}
-pub mod printing3d { // Windows.Graphics.Printing3D
+pub mod capture { // Windows.Graphics.Capture
 use ::prelude::*;
-DEFINE_IID!(IID_IPrint3DManager, 1294977802, 29542, 18801, 139, 213, 23, 196, 227, 232, 198, 192);
-RT_INTERFACE!{interface IPrint3DManager(IPrint3DManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DManager] {
-    fn add_TaskRequested(&self, eventHandler: *mut foundation::TypedEventHandler<Print3DManager, Print3DTaskRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_TaskRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT
+DEFINE_IID!(IID_IDirect3D11CaptureFrame, 4199597603, 14554, 19250, 172, 243, 250, 151, 52, 173, 128, 14);
+RT_INTERFACE!{interface IDirect3D11CaptureFrame(IDirect3D11CaptureFrameVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFrame] {
+    fn get_Surface(&self, out: *mut *mut super::directx::direct3d11::IDirect3DSurface) -> HRESULT,
+    fn get_SystemRelativeTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_ContentSize(&self, out: *mut super::SizeInt32) -> HRESULT
 }}
-impl IPrint3DManager {
-    #[inline] pub fn add_task_requested(&self, eventHandler: &foundation::TypedEventHandler<Print3DManager, Print3DTaskRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+impl IDirect3D11CaptureFrame {
+    #[inline] pub fn get_surface(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Surface)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_system_relative_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_TaskRequested)(self as *const _ as *mut _, eventHandler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_SystemRelativeTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn remove_task_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_TaskRequested)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
+    #[inline] pub fn get_content_size(&self) -> Result<super::SizeInt32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ContentSize)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Print3DManager: IPrint3DManager}
-impl RtActivatable<IPrint3DManagerStatics> for Print3DManager {}
-impl Print3DManager {
-    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<Print3DManager>>> {
-        <Self as RtActivatable<IPrint3DManagerStatics>>::get_activation_factory().get_for_current_view()
+RT_CLASS!{class Direct3D11CaptureFrame: IDirect3D11CaptureFrame}
+DEFINE_IID!(IID_IDirect3D11CaptureFramePool, 619408674, 6517, 16942, 130, 231, 120, 13, 189, 141, 223, 36);
+RT_INTERFACE!{interface IDirect3D11CaptureFramePool(IDirect3D11CaptureFramePoolVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePool] {
+    fn Recreate(&self, device: *mut super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> HRESULT,
+    fn TryGetNextFrame(&self, out: *mut *mut Direct3D11CaptureFrame) -> HRESULT,
+    fn add_FrameArrived(&self, handler: *mut foundation::TypedEventHandler<Direct3D11CaptureFramePool, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_FrameArrived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn CreateCaptureSession(&self, item: *mut GraphicsCaptureItem, out: *mut *mut GraphicsCaptureSession) -> HRESULT,
+    #[cfg(feature="windows-system")] fn get_DispatcherQueue(&self, out: *mut *mut super::super::system::DispatcherQueue) -> HRESULT
+}}
+impl IDirect3D11CaptureFramePool {
+    #[inline] pub fn recreate(&self, device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Recreate)(self as *const _ as *mut _, device as *const _ as *mut _, pixelFormat, numberOfBuffers, size);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn try_get_next_frame(&self) -> Result<Option<ComPtr<Direct3D11CaptureFrame>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryGetNextFrame)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_frame_arrived(&self, handler: &foundation::TypedEventHandler<Direct3D11CaptureFramePool, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_FrameArrived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_frame_arrived(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_FrameArrived)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn create_capture_session(&self, item: &GraphicsCaptureItem) -> Result<Option<ComPtr<GraphicsCaptureSession>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateCaptureSession)(self as *const _ as *mut _, item as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_dispatcher_queue(&self) -> Result<Option<ComPtr<super::super::system::DispatcherQueue>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DispatcherQueue)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Direct3D11CaptureFramePool: IDirect3D11CaptureFramePool}
+impl RtActivatable<IDirect3D11CaptureFramePoolStatics> for Direct3D11CaptureFramePool {}
+impl RtActivatable<IDirect3D11CaptureFramePoolStatics2> for Direct3D11CaptureFramePool {}
+impl Direct3D11CaptureFramePool {
+    #[inline] pub fn create(device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<ComPtr<Direct3D11CaptureFramePool>>> {
+        <Self as RtActivatable<IDirect3D11CaptureFramePoolStatics>>::get_activation_factory().create(device, pixelFormat, numberOfBuffers, size)
     }
-    #[inline] pub fn show_print_uiasync() -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<IPrint3DManagerStatics>>::get_activation_factory().show_print_uiasync()
-    }
-}
-DEFINE_CLSID!(Print3DManager(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,51,68,77,97,110,97,103,101,114,0]) [CLSID_Print3DManager]);
-DEFINE_IID!(IID_IPrint3DManagerStatics, 250727166, 43437, 19464, 169, 23, 29, 31, 134, 62, 171, 203);
-RT_INTERFACE!{static interface IPrint3DManagerStatics(IPrint3DManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DManagerStatics] {
-    fn GetForCurrentView(&self, out: *mut *mut Print3DManager) -> HRESULT,
-    fn ShowPrintUIAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
-}}
-impl IPrint3DManagerStatics {
-    #[inline] pub fn get_for_current_view(&self) -> Result<Option<ComPtr<Print3DManager>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn show_print_uiasync(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ShowPrintUIAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPrint3DTask, 2363740288, 8472, 19496, 128, 222, 244, 38, 215, 1, 145, 174);
-RT_INTERFACE!{interface IPrint3DTask(IPrint3DTaskVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTask] {
-    fn get_Source(&self, out: *mut *mut Printing3D3MFPackage) -> HRESULT,
-    fn add_Submitting(&self, eventHandler: *mut foundation::TypedEventHandler<Print3DTask, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_Submitting(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_Completed(&self, eventHandler: *mut foundation::TypedEventHandler<Print3DTask, Print3DTaskCompletedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_Completed(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_SourceChanged(&self, eventHandler: *mut foundation::TypedEventHandler<Print3DTask, Print3DTaskSourceChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_SourceChanged(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
-}}
-impl IPrint3DTask {
-    #[inline] pub fn get_source(&self) -> Result<Option<ComPtr<Printing3D3MFPackage>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_submitting(&self, eventHandler: &foundation::TypedEventHandler<Print3DTask, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Submitting)(self as *const _ as *mut _, eventHandler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_submitting(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_Submitting)(self as *const _ as *mut _, eventCookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_completed(&self, eventHandler: &foundation::TypedEventHandler<Print3DTask, Print3DTaskCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Completed)(self as *const _ as *mut _, eventHandler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_completed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_Completed)(self as *const _ as *mut _, eventCookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_source_changed(&self, eventHandler: &foundation::TypedEventHandler<Print3DTask, Print3DTaskSourceChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SourceChanged)(self as *const _ as *mut _, eventHandler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_source_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_SourceChanged)(self as *const _ as *mut _, eventCookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Print3DTask: IPrint3DTask}
-DEFINE_IID!(IID_IPrint3DTaskCompletedEventArgs, 3424195759, 9748, 20253, 172, 204, 214, 252, 79, 218, 84, 85);
-RT_INTERFACE!{interface IPrint3DTaskCompletedEventArgs(IPrint3DTaskCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskCompletedEventArgs] {
-    fn get_Completion(&self, out: *mut Print3DTaskCompletion) -> HRESULT,
-    fn get_ExtendedStatus(&self, out: *mut Print3DTaskDetail) -> HRESULT
-}}
-impl IPrint3DTaskCompletedEventArgs {
-    #[inline] pub fn get_completion(&self) -> Result<Print3DTaskCompletion> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Completion)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_extended_status(&self) -> Result<Print3DTaskDetail> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ExtendedStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Print3DTaskCompletedEventArgs: IPrint3DTaskCompletedEventArgs}
-RT_ENUM! { enum Print3DTaskCompletion: i32 {
-    Abandoned (Print3DTaskCompletion_Abandoned) = 0, Canceled (Print3DTaskCompletion_Canceled) = 1, Failed (Print3DTaskCompletion_Failed) = 2, Slicing (Print3DTaskCompletion_Slicing) = 3, Submitted (Print3DTaskCompletion_Submitted) = 4,
-}}
-RT_ENUM! { enum Print3DTaskDetail: i32 {
-    Unknown (Print3DTaskDetail_Unknown) = 0, ModelExceedsPrintBed (Print3DTaskDetail_ModelExceedsPrintBed) = 1, UploadFailed (Print3DTaskDetail_UploadFailed) = 2, InvalidMaterialSelection (Print3DTaskDetail_InvalidMaterialSelection) = 3, InvalidModel (Print3DTaskDetail_InvalidModel) = 4, ModelNotManifold (Print3DTaskDetail_ModelNotManifold) = 5, InvalidPrintTicket (Print3DTaskDetail_InvalidPrintTicket) = 6,
-}}
-DEFINE_IID!(IID_IPrint3DTaskRequest, 630572143, 8773, 19546, 135, 49, 13, 96, 77, 198, 188, 60);
-RT_INTERFACE!{interface IPrint3DTaskRequest(IPrint3DTaskRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskRequest] {
-    fn CreateTask(&self, title: HSTRING, printerId: HSTRING, handler: *mut Print3DTaskSourceRequestedHandler, out: *mut *mut Print3DTask) -> HRESULT
-}}
-impl IPrint3DTaskRequest {
-    #[inline] pub fn create_task(&self, title: &HStringArg, printerId: &HStringArg, handler: &Print3DTaskSourceRequestedHandler) -> Result<Option<ComPtr<Print3DTask>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateTask)(self as *const _ as *mut _, title.get(), printerId.get(), handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Print3DTaskRequest: IPrint3DTaskRequest}
-DEFINE_IID!(IID_IPrint3DTaskRequestedEventArgs, 353154943, 6341, 16599, 159, 64, 250, 179, 9, 110, 5, 169);
-RT_INTERFACE!{interface IPrint3DTaskRequestedEventArgs(IPrint3DTaskRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskRequestedEventArgs] {
-    fn get_Request(&self, out: *mut *mut Print3DTaskRequest) -> HRESULT
-}}
-impl IPrint3DTaskRequestedEventArgs {
-    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<Print3DTaskRequest>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Print3DTaskRequestedEventArgs: IPrint3DTaskRequestedEventArgs}
-DEFINE_IID!(IID_IPrint3DTaskSourceChangedEventArgs, 1540175023, 9449, 19472, 141, 7, 20, 195, 70, 186, 63, 207);
-RT_INTERFACE!{interface IPrint3DTaskSourceChangedEventArgs(IPrint3DTaskSourceChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskSourceChangedEventArgs] {
-    fn get_Source(&self, out: *mut *mut Printing3D3MFPackage) -> HRESULT
-}}
-impl IPrint3DTaskSourceChangedEventArgs {
-    #[inline] pub fn get_source(&self) -> Result<Option<ComPtr<Printing3D3MFPackage>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Print3DTaskSourceChangedEventArgs: IPrint3DTaskSourceChangedEventArgs}
-DEFINE_IID!(IID_IPrint3DTaskSourceRequestedArgs, 3346832058, 9391, 16973, 163, 191, 146, 37, 12, 53, 86, 2);
-RT_INTERFACE!{interface IPrint3DTaskSourceRequestedArgs(IPrint3DTaskSourceRequestedArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskSourceRequestedArgs] {
-    fn SetSource(&self, source: *mut Printing3D3MFPackage) -> HRESULT
-}}
-impl IPrint3DTaskSourceRequestedArgs {
-    #[inline] pub fn set_source(&self, source: &Printing3D3MFPackage) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetSource)(self as *const _ as *mut _, source as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Print3DTaskSourceRequestedArgs: IPrint3DTaskSourceRequestedArgs}
-DEFINE_IID!(IID_Print3DTaskSourceRequestedHandler, 3910622832, 51479, 18142, 187, 81, 217, 169, 77, 179, 113, 31);
-RT_DELEGATE!{delegate Print3DTaskSourceRequestedHandler(Print3DTaskSourceRequestedHandlerVtbl, Print3DTaskSourceRequestedHandlerImpl) [IID_Print3DTaskSourceRequestedHandler] {
-    fn Invoke(&self, args: *mut Print3DTaskSourceRequestedArgs) -> HRESULT
-}}
-impl Print3DTaskSourceRequestedHandler {
-    #[inline] pub fn invoke(&self, args: &Print3DTaskSourceRequestedArgs) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, args as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPrinting3D3MFPackage, 4132296136, 10935, 17833, 161, 183, 38, 126, 148, 141, 91, 24);
-RT_INTERFACE!{interface IPrinting3D3MFPackage(IPrinting3D3MFPackageVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3D3MFPackage] {
-    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn SaveAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::super::storage::streams::IRandomAccessStream>) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_PrintTicket(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStream) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_PrintTicket(&self, value: *mut super::super::storage::streams::IRandomAccessStream) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_ModelPart(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStream) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_ModelPart(&self, value: *mut super::super::storage::streams::IRandomAccessStream) -> HRESULT,
-    fn get_Thumbnail(&self, out: *mut *mut Printing3DTextureResource) -> HRESULT,
-    fn put_Thumbnail(&self, value: *mut Printing3DTextureResource) -> HRESULT,
-    fn get_Textures(&self, out: *mut *mut foundation::collections::IVector<Printing3DTextureResource>) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy8(&self) -> (),
-    #[cfg(feature="windows-storage")] fn LoadModelFromPackageAsync(&self, value: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncOperation<Printing3DModel>) -> HRESULT,
-    fn SaveModelToPackageAsync(&self, value: *mut Printing3DModel, out: *mut *mut foundation::IAsyncAction) -> HRESULT
-}}
-impl IPrinting3D3MFPackage {
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::streams::IRandomAccessStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_print_ticket(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PrintTicket)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_print_ticket(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PrintTicket)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_model_part(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ModelPart)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_model_part(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ModelPart)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_thumbnail(&self) -> Result<Option<ComPtr<Printing3DTextureResource>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_thumbnail(&self, value: &Printing3DTextureResource) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_textures(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DTextureResource>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Textures)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_package_async(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<Printing3DModel>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadModelFromPackageAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn save_model_to_package_async(&self, value: &Printing3DModel) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveModelToPackageAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3D3MFPackage: IPrinting3D3MFPackage}
-impl RtActivatable<IPrinting3D3MFPackageStatics> for Printing3D3MFPackage {}
-impl RtActivatable<IActivationFactory> for Printing3D3MFPackage {}
-impl Printing3D3MFPackage {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(value: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<Printing3D3MFPackage>>> {
-        <Self as RtActivatable<IPrinting3D3MFPackageStatics>>::get_activation_factory().load_async(value)
+    #[inline] pub fn create_free_threaded(device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<ComPtr<Direct3D11CaptureFramePool>>> {
+        <Self as RtActivatable<IDirect3D11CaptureFramePoolStatics2>>::get_activation_factory().create_free_threaded(device, pixelFormat, numberOfBuffers, size)
     }
 }
-DEFINE_CLSID!(Printing3D3MFPackage(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,51,77,70,80,97,99,107,97,103,101,0]) [CLSID_Printing3D3MFPackage]);
-DEFINE_IID!(IID_IPrinting3D3MFPackage2, 2522643140, 37835, 17456, 146, 184, 120, 156, 212, 84, 248, 131);
-RT_INTERFACE!{interface IPrinting3D3MFPackage2(IPrinting3D3MFPackage2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3D3MFPackage2] {
-    fn get_Compression(&self, out: *mut Printing3DPackageCompression) -> HRESULT,
-    fn put_Compression(&self, value: Printing3DPackageCompression) -> HRESULT
+DEFINE_CLSID!(Direct3D11CaptureFramePool(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,68,105,114,101,99,116,51,68,49,49,67,97,112,116,117,114,101,70,114,97,109,101,80,111,111,108,0]) [CLSID_Direct3D11CaptureFramePool]);
+DEFINE_IID!(IID_IDirect3D11CaptureFramePoolStatics, 2005140842, 26538, 19795, 174, 84, 16, 136, 213, 168, 202, 33);
+RT_INTERFACE!{static interface IDirect3D11CaptureFramePoolStatics(IDirect3D11CaptureFramePoolStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePoolStatics] {
+    fn Create(&self, device: *mut super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32, out: *mut *mut Direct3D11CaptureFramePool) -> HRESULT
 }}
-impl IPrinting3D3MFPackage2 {
-    #[inline] pub fn get_compression(&self) -> Result<Printing3DPackageCompression> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Compression)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_compression(&self, value: Printing3DPackageCompression) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Compression)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
+impl IDirect3D11CaptureFramePoolStatics {
+    #[inline] pub fn create(&self, device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<ComPtr<Direct3D11CaptureFramePool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, device as *const _ as *mut _, pixelFormat, numberOfBuffers, size, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-DEFINE_IID!(IID_IPrinting3D3MFPackageStatics, 1884871087, 31386, 18311, 184, 23, 246, 244, 89, 33, 72, 35);
-RT_INTERFACE!{static interface IPrinting3D3MFPackageStatics(IPrinting3D3MFPackageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3D3MFPackageStatics] {
-    #[cfg(feature="windows-storage")] fn LoadAsync(&self, value: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncOperation<Printing3D3MFPackage>) -> HRESULT
+DEFINE_IID!(IID_IDirect3D11CaptureFramePoolStatics2, 1486557247, 27580, 24053, 169, 145, 2, 226, 139, 59, 102, 213);
+RT_INTERFACE!{static interface IDirect3D11CaptureFramePoolStatics2(IDirect3D11CaptureFramePoolStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePoolStatics2] {
+    fn CreateFreeThreaded(&self, device: *mut super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32, out: *mut *mut Direct3D11CaptureFramePool) -> HRESULT
 }}
-impl IPrinting3D3MFPackageStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<Printing3D3MFPackage>>> { unsafe { 
+impl IDirect3D11CaptureFramePoolStatics2 {
+    #[inline] pub fn create_free_threaded(&self, device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<ComPtr<Direct3D11CaptureFramePool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.lpVtbl).CreateFreeThreaded)(self as *const _ as *mut _, device as *const _ as *mut _, pixelFormat, numberOfBuffers, size, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-DEFINE_IID!(IID_IPrinting3DBaseMaterial, 3505448771, 50444, 19403, 157, 4, 252, 22, 173, 206, 162, 201);
-RT_INTERFACE!{interface IPrinting3DBaseMaterial(IPrinting3DBaseMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterial] {
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Name(&self, value: HSTRING) -> HRESULT,
-    fn get_Color(&self, out: *mut *mut Printing3DColorMaterial) -> HRESULT,
-    fn put_Color(&self, value: *mut Printing3DColorMaterial) -> HRESULT
+DEFINE_IID!(IID_IGraphicsCaptureItem, 2042886491, 12791, 20162, 164, 100, 99, 46, 245, 211, 7, 96);
+RT_INTERFACE!{interface IGraphicsCaptureItem(IGraphicsCaptureItemVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureItem] {
+    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Size(&self, out: *mut super::SizeInt32) -> HRESULT,
+    fn add_Closed(&self, handler: *mut foundation::TypedEventHandler<GraphicsCaptureItem, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Closed(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
-impl IPrinting3DBaseMaterial {
-    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
+impl IGraphicsCaptureItem {
+    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Name)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
+    #[inline] pub fn get_size(&self) -> Result<super::SizeInt32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_color(&self) -> Result<Option<ComPtr<Printing3DColorMaterial>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Color)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    #[inline] pub fn add_closed(&self, handler: &foundation::TypedEventHandler<GraphicsCaptureItem, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_color(&self, value: &Printing3DColorMaterial) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Color)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn remove_closed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Closed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DBaseMaterial: IPrinting3DBaseMaterial}
-impl RtActivatable<IPrinting3DBaseMaterialStatics> for Printing3DBaseMaterial {}
-impl RtActivatable<IActivationFactory> for Printing3DBaseMaterial {}
-impl Printing3DBaseMaterial {
-    #[inline] pub fn get_abs() -> Result<HString> {
-        <Self as RtActivatable<IPrinting3DBaseMaterialStatics>>::get_activation_factory().get_abs()
-    }
-    #[inline] pub fn get_pla() -> Result<HString> {
-        <Self as RtActivatable<IPrinting3DBaseMaterialStatics>>::get_activation_factory().get_pla()
+RT_CLASS!{class GraphicsCaptureItem: IGraphicsCaptureItem}
+impl RtActivatable<IGraphicsCaptureItemStatics> for GraphicsCaptureItem {}
+impl GraphicsCaptureItem {
+    #[cfg(feature="windows-ui")] #[inline] pub fn create_from_visual(visual: &super::super::ui::composition::Visual) -> Result<Option<ComPtr<GraphicsCaptureItem>>> {
+        <Self as RtActivatable<IGraphicsCaptureItemStatics>>::get_activation_factory().create_from_visual(visual)
     }
 }
-DEFINE_CLSID!(Printing3DBaseMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,66,97,115,101,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DBaseMaterial]);
-DEFINE_IID!(IID_IPrinting3DBaseMaterialGroup, 2498785464, 9493, 19085, 161, 240, 208, 252, 19, 208, 96, 33);
-RT_INTERFACE!{interface IPrinting3DBaseMaterialGroup(IPrinting3DBaseMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterialGroup] {
-    fn get_Bases(&self, out: *mut *mut foundation::collections::IVector<Printing3DBaseMaterial>) -> HRESULT,
-    fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT
+DEFINE_CLSID!(GraphicsCaptureItem(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,71,114,97,112,104,105,99,115,67,97,112,116,117,114,101,73,116,101,109,0]) [CLSID_GraphicsCaptureItem]);
+DEFINE_IID!(IID_IGraphicsCaptureItemStatics, 2826878629, 17788, 22408, 171, 71, 12, 241, 211, 99, 126, 116);
+RT_INTERFACE!{static interface IGraphicsCaptureItemStatics(IGraphicsCaptureItemStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureItemStatics] {
+    #[cfg(feature="windows-ui")] fn CreateFromVisual(&self, visual: *mut super::super::ui::composition::Visual, out: *mut *mut GraphicsCaptureItem) -> HRESULT
 }}
-impl IPrinting3DBaseMaterialGroup {
-    #[inline] pub fn get_bases(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DBaseMaterial>>>> { unsafe { 
+impl IGraphicsCaptureItemStatics {
+    #[cfg(feature="windows-ui")] #[inline] pub fn create_from_visual(&self, visual: &super::super::ui::composition::Visual) -> Result<Option<ComPtr<GraphicsCaptureItem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Bases)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromVisual)(self as *const _ as *mut _, visual as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaterialGroupId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
+}
+DEFINE_IID!(IID_IGraphicsCapturePicker, 1511461299, 44409, 19274, 147, 54, 19, 24, 253, 222, 53, 57);
+RT_INTERFACE!{interface IGraphicsCapturePicker(IGraphicsCapturePickerVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCapturePicker] {
+    fn PickSingleItemAsync(&self, out: *mut *mut foundation::IAsyncOperation<GraphicsCaptureItem>) -> HRESULT
+}}
+impl IGraphicsCapturePicker {
+    #[inline] pub fn pick_single_item_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GraphicsCaptureItem>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).PickSingleItemAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DBaseMaterialGroup: IPrinting3DBaseMaterialGroup}
-impl RtActivatable<IPrinting3DBaseMaterialGroupFactory> for Printing3DBaseMaterialGroup {}
-impl Printing3DBaseMaterialGroup {
-    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DBaseMaterialGroup>> {
-        <Self as RtActivatable<IPrinting3DBaseMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
+RT_CLASS!{class GraphicsCapturePicker: IGraphicsCapturePicker}
+impl RtActivatable<IActivationFactory> for GraphicsCapturePicker {}
+DEFINE_CLSID!(GraphicsCapturePicker(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,71,114,97,112,104,105,99,115,67,97,112,116,117,114,101,80,105,99,107,101,114,0]) [CLSID_GraphicsCapturePicker]);
+DEFINE_IID!(IID_IGraphicsCaptureSession, 2169389737, 63247, 19159, 147, 155, 253, 220, 198, 235, 136, 13);
+RT_INTERFACE!{interface IGraphicsCaptureSession(IGraphicsCaptureSessionVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureSession] {
+    fn StartCapture(&self) -> HRESULT
+}}
+impl IGraphicsCaptureSession {
+    #[inline] pub fn start_capture(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).StartCapture)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class GraphicsCaptureSession: IGraphicsCaptureSession}
+impl RtActivatable<IGraphicsCaptureSessionStatics> for GraphicsCaptureSession {}
+impl GraphicsCaptureSession {
+    #[inline] pub fn is_supported() -> Result<bool> {
+        <Self as RtActivatable<IGraphicsCaptureSessionStatics>>::get_activation_factory().is_supported()
     }
 }
-DEFINE_CLSID!(Printing3DBaseMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,66,97,115,101,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DBaseMaterialGroup]);
-DEFINE_IID!(IID_IPrinting3DBaseMaterialGroupFactory, 1544898268, 34455, 16787, 151, 107, 132, 187, 65, 22, 229, 191);
-RT_INTERFACE!{static interface IPrinting3DBaseMaterialGroupFactory(IPrinting3DBaseMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterialGroupFactory] {
-    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DBaseMaterialGroup) -> HRESULT
+DEFINE_CLSID!(GraphicsCaptureSession(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,71,114,97,112,104,105,99,115,67,97,112,116,117,114,101,83,101,115,115,105,111,110,0]) [CLSID_GraphicsCaptureSession]);
+DEFINE_IID!(IID_IGraphicsCaptureSessionStatics, 572826944, 22900, 18858, 178, 50, 8, 130, 83, 111, 76, 181);
+RT_INTERFACE!{static interface IGraphicsCaptureSessionStatics(IGraphicsCaptureSessionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureSessionStatics] {
+    fn IsSupported(&self, out: *mut bool) -> HRESULT
 }}
-impl IPrinting3DBaseMaterialGroupFactory {
-    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DBaseMaterialGroup>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, materialGroupId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPrinting3DBaseMaterialStatics, 2170177468, 14154, 18285, 190, 146, 62, 207, 209, 203, 151, 118);
-RT_INTERFACE!{static interface IPrinting3DBaseMaterialStatics(IPrinting3DBaseMaterialStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterialStatics] {
-    fn get_Abs(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Pla(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl IPrinting3DBaseMaterialStatics {
-    #[inline] pub fn get_abs(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Abs)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_pla(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Pla)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_STRUCT! { struct Printing3DBufferDescription {
-    Format: Printing3DBufferFormat, Stride: u32,
-}}
-RT_ENUM! { enum Printing3DBufferFormat: i32 {
-    Unknown (Printing3DBufferFormat_Unknown) = 0, R32G32B32A32Float (Printing3DBufferFormat_R32G32B32A32Float) = 2, R32G32B32A32UInt (Printing3DBufferFormat_R32G32B32A32UInt) = 3, R32G32B32Float (Printing3DBufferFormat_R32G32B32Float) = 6, R32G32B32UInt (Printing3DBufferFormat_R32G32B32UInt) = 7, Printing3DDouble (Printing3DBufferFormat_Printing3DDouble) = 500, Printing3DUInt (Printing3DBufferFormat_Printing3DUInt) = 501,
-}}
-DEFINE_IID!(IID_IPrinting3DColorMaterial, 3783891240, 31975, 17029, 163, 93, 241, 69, 201, 81, 12, 123);
-RT_INTERFACE!{interface IPrinting3DColorMaterial(IPrinting3DColorMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterial] {
-    fn get_Value(&self, out: *mut u32) -> HRESULT,
-    fn put_Value(&self, value: u32) -> HRESULT
-}}
-impl IPrinting3DColorMaterial {
-    #[inline] pub fn get_value(&self) -> Result<u32> { unsafe { 
+impl IGraphicsCaptureSessionStatics {
+    #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_value(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DColorMaterial: IPrinting3DColorMaterial}
-impl RtActivatable<IActivationFactory> for Printing3DColorMaterial {}
-DEFINE_CLSID!(Printing3DColorMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,108,111,114,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DColorMaterial]);
-DEFINE_IID!(IID_IPrinting3DColorMaterial2, 4205897810, 2799, 17641, 157, 221, 54, 238, 234, 90, 205, 68);
-RT_INTERFACE!{interface IPrinting3DColorMaterial2(IPrinting3DColorMaterial2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterial2] {
-    #[cfg(feature="windows-ui")] fn get_Color(&self, out: *mut super::super::ui::Color) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_Color(&self, value: super::super::ui::Color) -> HRESULT
-}}
-impl IPrinting3DColorMaterial2 {
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_color(&self) -> Result<super::super::ui::Color> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Color)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_color(&self, value: super::super::ui::Color) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Color)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPrinting3DColorMaterialGroup, 1731536, 43743, 16934, 175, 233, 243, 105, 160, 180, 80, 4);
-RT_INTERFACE!{interface IPrinting3DColorMaterialGroup(IPrinting3DColorMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterialGroup] {
-    fn get_Colors(&self, out: *mut *mut foundation::collections::IVector<Printing3DColorMaterial>) -> HRESULT,
-    fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT
-}}
-impl IPrinting3DColorMaterialGroup {
-    #[inline] pub fn get_colors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DColorMaterial>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Colors)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaterialGroupId)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).IsSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DColorMaterialGroup: IPrinting3DColorMaterialGroup}
-impl RtActivatable<IPrinting3DColorMaterialGroupFactory> for Printing3DColorMaterialGroup {}
-impl Printing3DColorMaterialGroup {
-    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DColorMaterialGroup>> {
-        <Self as RtActivatable<IPrinting3DColorMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
-    }
-}
-DEFINE_CLSID!(Printing3DColorMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,108,111,114,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DColorMaterialGroup]);
-DEFINE_IID!(IID_IPrinting3DColorMaterialGroupFactory, 1909689709, 45546, 19035, 188, 84, 25, 198, 95, 61, 240, 68);
-RT_INTERFACE!{static interface IPrinting3DColorMaterialGroupFactory(IPrinting3DColorMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterialGroupFactory] {
-    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DColorMaterialGroup) -> HRESULT
+} // Windows.Graphics.Capture
+pub mod directx { // Windows.Graphics.DirectX
+use ::prelude::*;
+RT_ENUM! { enum DirectXAlphaMode: i32 {
+    Unspecified (DirectXAlphaMode_Unspecified) = 0, Premultiplied (DirectXAlphaMode_Premultiplied) = 1, Straight (DirectXAlphaMode_Straight) = 2, Ignore (DirectXAlphaMode_Ignore) = 3,
 }}
-impl IPrinting3DColorMaterialGroupFactory {
-    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DColorMaterialGroup>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, materialGroupId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPrinting3DComponent, 2116581445, 49023, 19675, 162, 127, 48, 160, 20, 55, 254, 222);
-RT_INTERFACE!{interface IPrinting3DComponent(IPrinting3DComponentVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DComponent] {
-    fn get_Mesh(&self, out: *mut *mut Printing3DMesh) -> HRESULT,
-    fn put_Mesh(&self, value: *mut Printing3DMesh) -> HRESULT,
-    fn get_Components(&self, out: *mut *mut foundation::collections::IVector<Printing3DComponentWithMatrix>) -> HRESULT,
-    fn get_Thumbnail(&self, out: *mut *mut Printing3DTextureResource) -> HRESULT,
-    fn put_Thumbnail(&self, value: *mut Printing3DTextureResource) -> HRESULT,
-    fn get_Type(&self, out: *mut Printing3DObjectType) -> HRESULT,
-    fn put_Type(&self, value: Printing3DObjectType) -> HRESULT,
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Name(&self, value: HSTRING) -> HRESULT,
-    fn get_PartNumber(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_PartNumber(&self, value: HSTRING) -> HRESULT
+RT_ENUM! { enum DirectXColorSpace: i32 {
+    RgbFullG22NoneP709 (DirectXColorSpace_RgbFullG22NoneP709) = 0, RgbFullG10NoneP709 (DirectXColorSpace_RgbFullG10NoneP709) = 1, RgbStudioG22NoneP709 (DirectXColorSpace_RgbStudioG22NoneP709) = 2, RgbStudioG22NoneP2020 (DirectXColorSpace_RgbStudioG22NoneP2020) = 3, Reserved (DirectXColorSpace_Reserved) = 4, YccFullG22NoneP709X601 (DirectXColorSpace_YccFullG22NoneP709X601) = 5, YccStudioG22LeftP601 (DirectXColorSpace_YccStudioG22LeftP601) = 6, YccFullG22LeftP601 (DirectXColorSpace_YccFullG22LeftP601) = 7, YccStudioG22LeftP709 (DirectXColorSpace_YccStudioG22LeftP709) = 8, YccFullG22LeftP709 (DirectXColorSpace_YccFullG22LeftP709) = 9, YccStudioG22LeftP2020 (DirectXColorSpace_YccStudioG22LeftP2020) = 10, YccFullG22LeftP2020 (DirectXColorSpace_YccFullG22LeftP2020) = 11, RgbFullG2084NoneP2020 (DirectXColorSpace_RgbFullG2084NoneP2020) = 12, YccStudioG2084LeftP2020 (DirectXColorSpace_YccStudioG2084LeftP2020) = 13, RgbStudioG2084NoneP2020 (DirectXColorSpace_RgbStudioG2084NoneP2020) = 14, YccStudioG22TopLeftP2020 (DirectXColorSpace_YccStudioG22TopLeftP2020) = 15, YccStudioG2084TopLeftP2020 (DirectXColorSpace_YccStudioG2084TopLeftP2020) = 16, RgbFullG22NoneP2020 (DirectXColorSpace_RgbFullG22NoneP2020) = 17, YccStudioGHlgTopLeftP2020 (DirectXColorSpace_YccStudioGHlgTopLeftP2020) = 18, YccFullGHlgTopLeftP2020 (DirectXColorSpace_YccFullGHlgTopLeftP2020) = 19, RgbStudioG24NoneP709 (DirectXColorSpace_RgbStudioG24NoneP709) = 20, RgbStudioG24NoneP2020 (DirectXColorSpace_RgbStudioG24NoneP2020) = 21, YccStudioG24LeftP709 (DirectXColorSpace_YccStudioG24LeftP709) = 22, YccStudioG24LeftP2020 (DirectXColorSpace_YccStudioG24LeftP2020) = 23, YccStudioG24TopLeftP2020 (DirectXColorSpace_YccStudioG24TopLeftP2020) = 24,
 }}
-impl IPrinting3DComponent {
-    #[inline] pub fn get_mesh(&self) -> Result<Option<ComPtr<Printing3DMesh>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Mesh)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_mesh(&self, value: &Printing3DMesh) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Mesh)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_components(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DComponentWithMatrix>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Components)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_thumbnail(&self) -> Result<Option<ComPtr<Printing3DTextureResource>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_thumbnail(&self, value: &Printing3DTextureResource) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_type(&self) -> Result<Printing3DObjectType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Type)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_type(&self, value: Printing3DObjectType) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Type)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Name)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_part_number(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PartNumber)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_part_number(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PartNumber)(self as *const _ as *mut _, value.get());
+RT_ENUM! { enum DirectXPixelFormat: i32 {
+    Unknown (DirectXPixelFormat_Unknown) = 0, R32G32B32A32Typeless (DirectXPixelFormat_R32G32B32A32Typeless) = 1, R32G32B32A32Float (DirectXPixelFormat_R32G32B32A32Float) = 2, R32G32B32A32UInt (DirectXPixelFormat_R32G32B32A32UInt) = 3, R32G32B32A32Int (DirectXPixelFormat_R32G32B32A32Int) = 4, R32G32B32Typeless (DirectXPixelFormat_R32G32B32Typeless) = 5, R32G32B32Float (DirectXPixelFormat_R32G32B32Float) = 6, R32G32B32UInt (DirectXPixelFormat_R32G32B32UInt) = 7, R32G32B32Int (DirectXPixelFormat_R32G32B32Int) = 8, R16G16B16A16Typeless (DirectXPixelFormat_R16G16B16A16Typeless) = 9, R16G16B16A16Float (DirectXPixelFormat_R16G16B16A16Float) = 10, R16G16B16A16UIntNormalized (DirectXPixelFormat_R16G16B16A16UIntNormalized) = 11, R16G16B16A16UInt (DirectXPixelFormat_R16G16B16A16UInt) = 12, R16G16B16A16IntNormalized (DirectXPixelFormat_R16G16B16A16IntNormalized) = 13, R16G16B16A16Int (DirectXPixelFormat_R16G16B16A16Int) = 14, R32G32Typeless (DirectXPixelFormat_R32G32Typeless) = 15, R32G32Float (DirectXPixelFormat_R32G32Float) = 16, R32G32UInt (DirectXPixelFormat_R32G32UInt) = 17, R32G32Int (DirectXPixelFormat_R32G32Int) = 18, R32G8X24Typeless (DirectXPixelFormat_R32G8X24Typeless) = 19, D32FloatS8X24UInt (DirectXPixelFormat_D32FloatS8X24UInt) = 20, R32FloatX8X24Typeless (DirectXPixelFormat_R32FloatX8X24Typeless) = 21, X32TypelessG8X24UInt (DirectXPixelFormat_X32TypelessG8X24UInt) = 22, R10G10B10A2Typeless (DirectXPixelFormat_R10G10B10A2Typeless) = 23, R10G10B10A2UIntNormalized (DirectXPixelFormat_R10G10B10A2UIntNormalized) = 24, R10G10B10A2UInt (DirectXPixelFormat_R10G10B10A2UInt) = 25, R11G11B10Float (DirectXPixelFormat_R11G11B10Float) = 26, R8G8B8A8Typeless (DirectXPixelFormat_R8G8B8A8Typeless) = 27, R8G8B8A8UIntNormalized (DirectXPixelFormat_R8G8B8A8UIntNormalized) = 28, R8G8B8A8UIntNormalizedSrgb (DirectXPixelFormat_R8G8B8A8UIntNormalizedSrgb) = 29, R8G8B8A8UInt (DirectXPixelFormat_R8G8B8A8UInt) = 30, R8G8B8A8IntNormalized (DirectXPixelFormat_R8G8B8A8IntNormalized) = 31, R8G8B8A8Int (DirectXPixelFormat_R8G8B8A8Int) = 32, R16G16Typeless (DirectXPixelFormat_R16G16Typeless) = 33, R16G16Float (DirectXPixelFormat_R16G16Float) = 34, R16G16UIntNormalized (DirectXPixelFormat_R16G16UIntNormalized) = 35, R16G16UInt (DirectXPixelFormat_R16G16UInt) = 36, R16G16IntNormalized (DirectXPixelFormat_R16G16IntNormalized) = 37, R16G16Int (DirectXPixelFormat_R16G16Int) = 38, R32Typeless (DirectXPixelFormat_R32Typeless) = 39, D32Float (DirectXPixelFormat_D32Float) = 40, R32Float (DirectXPixelFormat_R32Float) = 41, R32UInt (DirectXPixelFormat_R32UInt) = 42, R32Int (DirectXPixelFormat_R32Int) = 43, R24G8Typeless (DirectXPixelFormat_R24G8Typeless) = 44, D24UIntNormalizedS8UInt (DirectXPixelFormat_D24UIntNormalizedS8UInt) = 45, R24UIntNormalizedX8Typeless (DirectXPixelFormat_R24UIntNormalizedX8Typeless) = 46, X24TypelessG8UInt (DirectXPixelFormat_X24TypelessG8UInt) = 47, R8G8Typeless (DirectXPixelFormat_R8G8Typeless) = 48, R8G8UIntNormalized (DirectXPixelFormat_R8G8UIntNormalized) = 49, R8G8UInt (DirectXPixelFormat_R8G8UInt) = 50, R8G8IntNormalized (DirectXPixelFormat_R8G8IntNormalized) = 51, R8G8Int (DirectXPixelFormat_R8G8Int) = 52, R16Typeless (DirectXPixelFormat_R16Typeless) = 53, R16Float (DirectXPixelFormat_R16Float) = 54, D16UIntNormalized (DirectXPixelFormat_D16UIntNormalized) = 55, R16UIntNormalized (DirectXPixelFormat_R16UIntNormalized) = 56, R16UInt (DirectXPixelFormat_R16UInt) = 57, R16IntNormalized (DirectXPixelFormat_R16IntNormalized) = 58, R16Int (DirectXPixelFormat_R16Int) = 59, R8Typeless (DirectXPixelFormat_R8Typeless) = 60, R8UIntNormalized (DirectXPixelFormat_R8UIntNormalized) = 61, R8UInt (DirectXPixelFormat_R8UInt) = 62, R8IntNormalized (DirectXPixelFormat_R8IntNormalized) = 63, R8Int (DirectXPixelFormat_R8Int) = 64, A8UIntNormalized (DirectXPixelFormat_A8UIntNormalized) = 65, R1UIntNormalized (DirectXPixelFormat_R1UIntNormalized) = 66, R9G9B9E5SharedExponent (DirectXPixelFormat_R9G9B9E5SharedExponent) = 67, R8G8B8G8UIntNormalized (DirectXPixelFormat_R8G8B8G8UIntNormalized) = 68, G8R8G8B8UIntNormalized (DirectXPixelFormat_G8R8G8B8UIntNormalized) = 69, BC1Typeless (DirectXPixelFormat_BC1Typeless) = 70, BC1UIntNormalized (DirectXPixelFormat_BC1UIntNormalized) = 71, BC1UIntNormalizedSrgb (DirectXPixelFormat_BC1UIntNormalizedSrgb) = 72, BC2Typeless (DirectXPixelFormat_BC2Typeless) = 73, BC2UIntNormalized (DirectXPixelFormat_BC2UIntNormalized) = 74, BC2UIntNormalizedSrgb (DirectXPixelFormat_BC2UIntNormalizedSrgb) = 75, BC3Typeless (DirectXPixelFormat_BC3Typeless) = 76, BC3UIntNormalized (DirectXPixelFormat_BC3UIntNormalized) = 77, BC3UIntNormalizedSrgb (DirectXPixelFormat_BC3UIntNormalizedSrgb) = 78, BC4Typeless (DirectXPixelFormat_BC4Typeless) = 79, BC4UIntNormalized (DirectXPixelFormat_BC4UIntNormalized) = 80, BC4IntNormalized (DirectXPixelFormat_BC4IntNormalized) = 81, BC5Typeless (DirectXPixelFormat_BC5Typeless) = 82, BC5UIntNormalized (DirectXPixelFormat_BC5UIntNormalized) = 83, BC5IntNormalized (DirectXPixelFormat_BC5IntNormalized) = 84, B5G6R5UIntNormalized (DirectXPixelFormat_B5G6R5UIntNormalized) = 85, B5G5R5A1UIntNormalized (DirectXPixelFormat_B5G5R5A1UIntNormalized) = 86, B8G8R8A8UIntNormalized (DirectXPixelFormat_B8G8R8A8UIntNormalized) = 87, B8G8R8X8UIntNormalized (DirectXPixelFormat_B8G8R8X8UIntNormalized) = 88, R10G10B10XRBiasA2UIntNormalized (DirectXPixelFormat_R10G10B10XRBiasA2UIntNormalized) = 89, B8G8R8A8Typeless (DirectXPixelFormat_B8G8R8A8Typeless) = 90, B8G8R8A8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8A8UIntNormalizedSrgb) = 91, B8G8R8X8Typeless (DirectXPixelFormat_B8G8R8X8Typeless) = 92, B8G8R8X8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8X8UIntNormalizedSrgb) = 93, BC6HTypeless (DirectXPixelFormat_BC6HTypeless) = 94, BC6H16UnsignedFloat (DirectXPixelFormat_BC6H16UnsignedFloat) = 95, BC6H16Float (DirectXPixelFormat_BC6H16Float) = 96, BC7Typeless (DirectXPixelFormat_BC7Typeless) = 97, BC7UIntNormalized (DirectXPixelFormat_BC7UIntNormalized) = 98, BC7UIntNormalizedSrgb (DirectXPixelFormat_BC7UIntNormalizedSrgb) = 99, Ayuv (DirectXPixelFormat_Ayuv) = 100, Y410 (DirectXPixelFormat_Y410) = 101, Y416 (DirectXPixelFormat_Y416) = 102, NV12 (DirectXPixelFormat_NV12) = 103, P010 (DirectXPixelFormat_P010) = 104, P016 (DirectXPixelFormat_P016) = 105, Opaque420 (DirectXPixelFormat_Opaque420) = 106, Yuy2 (DirectXPixelFormat_Yuy2) = 107, Y210 (DirectXPixelFormat_Y210) = 108, Y216 (DirectXPixelFormat_Y216) = 109, NV11 (DirectXPixelFormat_NV11) = 110, AI44 (DirectXPixelFormat_AI44) = 111, IA44 (DirectXPixelFormat_IA44) = 112, P8 (DirectXPixelFormat_P8) = 113, A8P8 (DirectXPixelFormat_A8P8) = 114, B4G4R4A4UIntNormalized (DirectXPixelFormat_B4G4R4A4UIntNormalized) = 115, P208 (DirectXPixelFormat_P208) = 130, V208 (DirectXPixelFormat_V208) = 131, V408 (DirectXPixelFormat_V408) = 132,
+}}
+pub mod direct3d11 { // Windows.Graphics.DirectX.Direct3D11
+use ::prelude::*;
+RT_ENUM! { enum Direct3DBindings: u32 {
+    VertexBuffer (Direct3DBindings_VertexBuffer) = 1, IndexBuffer (Direct3DBindings_IndexBuffer) = 2, ConstantBuffer (Direct3DBindings_ConstantBuffer) = 4, ShaderResource (Direct3DBindings_ShaderResource) = 8, StreamOutput (Direct3DBindings_StreamOutput) = 16, RenderTarget (Direct3DBindings_RenderTarget) = 32, DepthStencil (Direct3DBindings_DepthStencil) = 64, UnorderedAccess (Direct3DBindings_UnorderedAccess) = 128, Decoder (Direct3DBindings_Decoder) = 512, VideoEncoder (Direct3DBindings_VideoEncoder) = 1024,
+}}
+DEFINE_IID!(IID_IDirect3DDevice, 2742428843, 36191, 18000, 157, 62, 158, 174, 61, 155, 198, 112);
+RT_INTERFACE!{interface IDirect3DDevice(IDirect3DDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3DDevice] {
+    fn Trim(&self) -> HRESULT
+}}
+impl IDirect3DDevice {
+    #[inline] pub fn trim(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Trim)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DComponent: IPrinting3DComponent}
-impl RtActivatable<IActivationFactory> for Printing3DComponent {}
-DEFINE_CLSID!(Printing3DComponent(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,110,101,110,116,0]) [CLSID_Printing3DComponent]);
-DEFINE_IID!(IID_IPrinting3DComponentWithMatrix, 846852917, 3824, 17771, 154, 33, 73, 190, 190, 139, 81, 194);
-RT_INTERFACE!{interface IPrinting3DComponentWithMatrix(IPrinting3DComponentWithMatrixVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DComponentWithMatrix] {
-    fn get_Component(&self, out: *mut *mut Printing3DComponent) -> HRESULT,
-    fn put_Component(&self, value: *mut Printing3DComponent) -> HRESULT,
-    fn get_Matrix(&self, out: *mut foundation::numerics::Matrix4x4) -> HRESULT,
-    fn put_Matrix(&self, value: foundation::numerics::Matrix4x4) -> HRESULT
+RT_STRUCT! { struct Direct3DMultisampleDescription {
+    Count: i32, Quality: i32,
 }}
-impl IPrinting3DComponentWithMatrix {
-    #[inline] pub fn get_component(&self) -> Result<Option<ComPtr<Printing3DComponent>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Component)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_component(&self, value: &Printing3DComponent) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Component)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_matrix(&self) -> Result<foundation::numerics::Matrix4x4> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Matrix)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_matrix(&self, value: foundation::numerics::Matrix4x4) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Matrix)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DComponentWithMatrix: IPrinting3DComponentWithMatrix}
-impl RtActivatable<IActivationFactory> for Printing3DComponentWithMatrix {}
-DEFINE_CLSID!(Printing3DComponentWithMatrix(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,110,101,110,116,87,105,116,104,77,97,116,114,105,120,0]) [CLSID_Printing3DComponentWithMatrix]);
-DEFINE_IID!(IID_IPrinting3DCompositeMaterial, 1176647901, 22062, 20332, 136, 45, 244, 216, 65, 253, 99, 199);
-RT_INTERFACE!{interface IPrinting3DCompositeMaterial(IPrinting3DCompositeMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterial] {
-    fn get_Values(&self, out: *mut *mut foundation::collections::IVector<f64>) -> HRESULT
+DEFINE_IID!(IID_IDirect3DSurface, 200581446, 5057, 18068, 190, 227, 122, 191, 21, 234, 245, 134);
+RT_INTERFACE!{interface IDirect3DSurface(IDirect3DSurfaceVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3DSurface] {
+    fn get_Description(&self, out: *mut Direct3DSurfaceDescription) -> HRESULT
 }}
-impl IPrinting3DCompositeMaterial {
-    #[inline] pub fn get_values(&self) -> Result<Option<ComPtr<foundation::collections::IVector<f64>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Values)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DCompositeMaterial: IPrinting3DCompositeMaterial}
-impl RtActivatable<IActivationFactory> for Printing3DCompositeMaterial {}
-DEFINE_CLSID!(Printing3DCompositeMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,115,105,116,101,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DCompositeMaterial]);
-DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroup, 2375314011, 16625, 18797, 165, 251, 52, 10, 90, 103, 142, 48);
-RT_INTERFACE!{interface IPrinting3DCompositeMaterialGroup(IPrinting3DCompositeMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterialGroup] {
-    fn get_Composites(&self, out: *mut *mut foundation::collections::IVector<Printing3DCompositeMaterial>) -> HRESULT,
-    fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT,
-    fn get_MaterialIndices(&self, out: *mut *mut foundation::collections::IVector<u32>) -> HRESULT
-}}
-impl IPrinting3DCompositeMaterialGroup {
-    #[inline] pub fn get_composites(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DCompositeMaterial>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Composites)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
+impl IDirect3DSurface {
+    #[inline] pub fn get_description(&self) -> Result<Direct3DSurfaceDescription> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaterialGroupId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_material_indices(&self) -> Result<Option<ComPtr<foundation::collections::IVector<u32>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_MaterialIndices)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DCompositeMaterialGroup: IPrinting3DCompositeMaterialGroup}
-impl RtActivatable<IPrinting3DCompositeMaterialGroupFactory> for Printing3DCompositeMaterialGroup {}
-impl Printing3DCompositeMaterialGroup {
-    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DCompositeMaterialGroup>> {
-        <Self as RtActivatable<IPrinting3DCompositeMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
-    }
-}
-DEFINE_CLSID!(Printing3DCompositeMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,115,105,116,101,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DCompositeMaterialGroup]);
-DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroup2, 115895650, 32059, 16865, 148, 76, 186, 253, 228, 85, 84, 131);
-RT_INTERFACE!{interface IPrinting3DCompositeMaterialGroup2(IPrinting3DCompositeMaterialGroup2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterialGroup2] {
-    fn get_BaseMaterialGroup(&self, out: *mut *mut Printing3DBaseMaterialGroup) -> HRESULT,
-    fn put_BaseMaterialGroup(&self, value: *mut Printing3DBaseMaterialGroup) -> HRESULT
-}}
-impl IPrinting3DCompositeMaterialGroup2 {
-    #[inline] pub fn get_base_material_group(&self) -> Result<Option<ComPtr<Printing3DBaseMaterialGroup>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_BaseMaterialGroup)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_base_material_group(&self, value: &Printing3DBaseMaterialGroup) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_BaseMaterialGroup)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroupFactory, 3499019539, 37631, 17322, 166, 39, 141, 67, 194, 44, 129, 126);
-RT_INTERFACE!{static interface IPrinting3DCompositeMaterialGroupFactory(IPrinting3DCompositeMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterialGroupFactory] {
-    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DCompositeMaterialGroup) -> HRESULT
-}}
-impl IPrinting3DCompositeMaterialGroupFactory {
-    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DCompositeMaterialGroup>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, materialGroupId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPrinting3DFaceReductionOptions, 3154039703, 11636, 18167, 190, 133, 153, 166, 123, 187, 102, 41);
-RT_INTERFACE!{interface IPrinting3DFaceReductionOptions(IPrinting3DFaceReductionOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DFaceReductionOptions] {
-    fn get_MaxReductionArea(&self, out: *mut f64) -> HRESULT,
-    fn put_MaxReductionArea(&self, value: f64) -> HRESULT,
-    fn get_TargetTriangleCount(&self, out: *mut u32) -> HRESULT,
-    fn put_TargetTriangleCount(&self, value: u32) -> HRESULT,
-    fn get_MaxEdgeLength(&self, out: *mut f64) -> HRESULT,
-    fn put_MaxEdgeLength(&self, value: f64) -> HRESULT
-}}
-impl IPrinting3DFaceReductionOptions {
-    #[inline] pub fn get_max_reduction_area(&self) -> Result<f64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaxReductionArea)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_max_reduction_area(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MaxReductionArea)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_target_triangle_count(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TargetTriangleCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_target_triangle_count(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TargetTriangleCount)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_max_edge_length(&self) -> Result<f64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaxEdgeLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_max_edge_length(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MaxEdgeLength)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DFaceReductionOptions: IPrinting3DFaceReductionOptions}
-impl RtActivatable<IActivationFactory> for Printing3DFaceReductionOptions {}
-DEFINE_CLSID!(Printing3DFaceReductionOptions(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,70,97,99,101,82,101,100,117,99,116,105,111,110,79,112,116,105,111,110,115,0]) [CLSID_Printing3DFaceReductionOptions]);
-DEFINE_IID!(IID_IPrinting3DMaterial, 932033110, 60770, 18770, 184, 91, 3, 86, 125, 124, 70, 94);
-RT_INTERFACE!{interface IPrinting3DMaterial(IPrinting3DMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMaterial] {
-    fn get_BaseGroups(&self, out: *mut *mut foundation::collections::IVector<Printing3DBaseMaterialGroup>) -> HRESULT,
-    fn get_ColorGroups(&self, out: *mut *mut foundation::collections::IVector<Printing3DColorMaterialGroup>) -> HRESULT,
-    fn get_Texture2CoordGroups(&self, out: *mut *mut foundation::collections::IVector<Printing3DTexture2CoordMaterialGroup>) -> HRESULT,
-    fn get_CompositeGroups(&self, out: *mut *mut foundation::collections::IVector<Printing3DCompositeMaterialGroup>) -> HRESULT,
-    fn get_MultiplePropertyGroups(&self, out: *mut *mut foundation::collections::IVector<Printing3DMultiplePropertyMaterialGroup>) -> HRESULT
-}}
-impl IPrinting3DMaterial {
-    #[inline] pub fn get_base_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DBaseMaterialGroup>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_BaseGroups)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_color_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DColorMaterialGroup>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ColorGroups)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_texture2_coord_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DTexture2CoordMaterialGroup>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Texture2CoordGroups)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_composite_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DCompositeMaterialGroup>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CompositeGroups)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_multiple_property_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DMultiplePropertyMaterialGroup>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_MultiplePropertyGroups)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DMaterial: IPrinting3DMaterial}
-impl RtActivatable<IActivationFactory> for Printing3DMaterial {}
-DEFINE_CLSID!(Printing3DMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DMaterial]);
-DEFINE_IID!(IID_IPrinting3DMesh, 422482140, 552, 11777, 188, 32, 197, 41, 12, 191, 50, 196);
-RT_INTERFACE!{interface IPrinting3DMesh(IPrinting3DMeshVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMesh] {
-    fn get_VertexCount(&self, out: *mut u32) -> HRESULT,
-    fn put_VertexCount(&self, value: u32) -> HRESULT,
-    fn get_IndexCount(&self, out: *mut u32) -> HRESULT,
-    fn put_IndexCount(&self, value: u32) -> HRESULT,
-    fn get_VertexPositionsDescription(&self, out: *mut Printing3DBufferDescription) -> HRESULT,
-    fn put_VertexPositionsDescription(&self, value: Printing3DBufferDescription) -> HRESULT,
-    fn get_VertexNormalsDescription(&self, out: *mut Printing3DBufferDescription) -> HRESULT,
-    fn put_VertexNormalsDescription(&self, value: Printing3DBufferDescription) -> HRESULT,
-    fn get_TriangleIndicesDescription(&self, out: *mut Printing3DBufferDescription) -> HRESULT,
-    fn put_TriangleIndicesDescription(&self, value: Printing3DBufferDescription) -> HRESULT,
-    fn get_TriangleMaterialIndicesDescription(&self, out: *mut Printing3DBufferDescription) -> HRESULT,
-    fn put_TriangleMaterialIndicesDescription(&self, value: Printing3DBufferDescription) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy12(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetVertexPositions(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    fn CreateVertexPositions(&self, value: u32) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy14(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetVertexNormals(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    fn CreateVertexNormals(&self, value: u32) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy16(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetTriangleIndices(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    fn CreateTriangleIndices(&self, value: u32) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy18(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetTriangleMaterialIndices(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    fn CreateTriangleMaterialIndices(&self, value: u32) -> HRESULT,
-    fn get_BufferDescriptionSet(&self, out: *mut *mut foundation::collections::IPropertySet) -> HRESULT,
-    fn get_BufferSet(&self, out: *mut *mut foundation::collections::IPropertySet) -> HRESULT,
-    fn VerifyAsync(&self, value: Printing3DMeshVerificationMode, out: *mut *mut foundation::IAsyncOperation<Printing3DMeshVerificationResult>) -> HRESULT
-}}
-impl IPrinting3DMesh {
-    #[inline] pub fn get_vertex_count(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_VertexCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_vertex_count(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_VertexCount)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_index_count(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IndexCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_index_count(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IndexCount)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_vertex_positions_description(&self) -> Result<Printing3DBufferDescription> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_VertexPositionsDescription)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_vertex_positions_description(&self, value: Printing3DBufferDescription) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_VertexPositionsDescription)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_vertex_normals_description(&self) -> Result<Printing3DBufferDescription> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_VertexNormalsDescription)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_vertex_normals_description(&self, value: Printing3DBufferDescription) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_VertexNormalsDescription)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_triangle_indices_description(&self) -> Result<Printing3DBufferDescription> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TriangleIndicesDescription)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_triangle_indices_description(&self, value: Printing3DBufferDescription) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TriangleIndicesDescription)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_triangle_material_indices_description(&self) -> Result<Printing3DBufferDescription> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TriangleMaterialIndicesDescription)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_triangle_material_indices_description(&self, value: Printing3DBufferDescription) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TriangleMaterialIndicesDescription)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_vertex_positions(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetVertexPositions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_vertex_positions(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).CreateVertexPositions)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_vertex_normals(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetVertexNormals)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_vertex_normals(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).CreateVertexNormals)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_triangle_indices(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetTriangleIndices)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_triangle_indices(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).CreateTriangleIndices)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_triangle_material_indices(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetTriangleMaterialIndices)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_triangle_material_indices(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).CreateTriangleMaterialIndices)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_buffer_description_set(&self) -> Result<Option<ComPtr<foundation::collections::IPropertySet>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_BufferDescriptionSet)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_buffer_set(&self) -> Result<Option<ComPtr<foundation::collections::IPropertySet>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_BufferSet)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn verify_async(&self, value: Printing3DMeshVerificationMode) -> Result<ComPtr<foundation::IAsyncOperation<Printing3DMeshVerificationResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).VerifyAsync)(self as *const _ as *mut _, value, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DMesh: IPrinting3DMesh}
-impl RtActivatable<IActivationFactory> for Printing3DMesh {}
-DEFINE_CLSID!(Printing3DMesh(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,101,115,104,0]) [CLSID_Printing3DMesh]);
-RT_ENUM! { enum Printing3DMeshVerificationMode: i32 {
-    FindFirstError (Printing3DMeshVerificationMode_FindFirstError) = 0, FindAllErrors (Printing3DMeshVerificationMode_FindAllErrors) = 1,
-}}
-DEFINE_IID!(IID_IPrinting3DMeshVerificationResult, 425095610, 59706, 20106, 164, 111, 222, 168, 232, 82, 25, 126);
-RT_INTERFACE!{interface IPrinting3DMeshVerificationResult(IPrinting3DMeshVerificationResultVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMeshVerificationResult] {
-    fn get_IsValid(&self, out: *mut bool) -> HRESULT,
-    fn get_NonmanifoldTriangles(&self, out: *mut *mut foundation::collections::IVectorView<u32>) -> HRESULT,
-    fn get_ReversedNormalTriangles(&self, out: *mut *mut foundation::collections::IVectorView<u32>) -> HRESULT
-}}
-impl IPrinting3DMeshVerificationResult {
-    #[inline] pub fn get_is_valid(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsValid)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_nonmanifold_triangles(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_NonmanifoldTriangles)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_reversed_normal_triangles(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ReversedNormalTriangles)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DMeshVerificationResult: IPrinting3DMeshVerificationResult}
-DEFINE_IID!(IID_IPrinting3DModel, 755052272, 21243, 37274, 119, 176, 75, 26, 59, 128, 50, 79);
-RT_INTERFACE!{interface IPrinting3DModel(IPrinting3DModelVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DModel] {
-    fn get_Unit(&self, out: *mut Printing3DModelUnit) -> HRESULT,
-    fn put_Unit(&self, value: Printing3DModelUnit) -> HRESULT,
-    fn get_Textures(&self, out: *mut *mut foundation::collections::IVector<Printing3DModelTexture>) -> HRESULT,
-    fn get_Meshes(&self, out: *mut *mut foundation::collections::IVector<Printing3DMesh>) -> HRESULT,
-    fn get_Components(&self, out: *mut *mut foundation::collections::IVector<Printing3DComponent>) -> HRESULT,
-    fn get_Material(&self, out: *mut *mut Printing3DMaterial) -> HRESULT,
-    fn put_Material(&self, value: *mut Printing3DMaterial) -> HRESULT,
-    fn get_Build(&self, out: *mut *mut Printing3DComponent) -> HRESULT,
-    fn put_Build(&self, value: *mut Printing3DComponent) -> HRESULT,
-    fn get_Version(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Version(&self, value: HSTRING) -> HRESULT,
-    fn get_RequiredExtensions(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_Metadata(&self, out: *mut *mut foundation::collections::IMap<HString, HString>) -> HRESULT,
-    fn RepairAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn Clone(&self, out: *mut *mut Printing3DModel) -> HRESULT
-}}
-impl IPrinting3DModel {
-    #[inline] pub fn get_unit(&self) -> Result<Printing3DModelUnit> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Unit)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_unit(&self, value: Printing3DModelUnit) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Unit)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_textures(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DModelTexture>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Textures)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_meshes(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DMesh>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Meshes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_components(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DComponent>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Components)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_material(&self) -> Result<Option<ComPtr<Printing3DMaterial>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Material)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_material(&self, value: &Printing3DMaterial) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Material)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_build(&self) -> Result<Option<ComPtr<Printing3DComponent>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Build)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_build(&self, value: &Printing3DComponent) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Build)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_version(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Version)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_version(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Version)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_required_extensions(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RequiredExtensions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_metadata(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Metadata)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn repair_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RepairAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn clone(&self) -> Result<Option<ComPtr<Printing3DModel>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Clone)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DModel: IPrinting3DModel}
-impl RtActivatable<IActivationFactory> for Printing3DModel {}
-DEFINE_CLSID!(Printing3DModel(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,111,100,101,108,0]) [CLSID_Printing3DModel]);
-DEFINE_IID!(IID_IPrinting3DModel2, 3374344647, 51265, 18419, 168, 78, 161, 73, 253, 8, 182, 87);
-RT_INTERFACE!{interface IPrinting3DModel2(IPrinting3DModel2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DModel2] {
-    fn TryPartialRepairAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
-    fn TryPartialRepairWithTimeAsync(&self, maxWaitTime: foundation::TimeSpan, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
-    fn TryReduceFacesAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT,
-    fn TryReduceFacesWithOptionsAsync(&self, printing3DFaceReductionOptions: *mut Printing3DFaceReductionOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT,
-    fn TryReduceFacesWithOptionsAndTimeAsync(&self, printing3DFaceReductionOptions: *mut Printing3DFaceReductionOptions, maxWait: foundation::TimeSpan, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT,
-    fn RepairWithProgressAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT
-}}
-impl IPrinting3DModel2 {
-    #[inline] pub fn try_partial_repair_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryPartialRepairAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn try_partial_repair_with_time_async(&self, maxWaitTime: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryPartialRepairWithTimeAsync)(self as *const _ as *mut _, maxWaitTime, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn try_reduce_faces_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryReduceFacesAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn try_reduce_faces_with_options_async(&self, printing3DFaceReductionOptions: &Printing3DFaceReductionOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryReduceFacesWithOptionsAsync)(self as *const _ as *mut _, printing3DFaceReductionOptions as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn try_reduce_faces_with_options_and_time_async(&self, printing3DFaceReductionOptions: &Printing3DFaceReductionOptions, maxWait: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryReduceFacesWithOptionsAndTimeAsync)(self as *const _ as *mut _, printing3DFaceReductionOptions as *const _ as *mut _, maxWait, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn repair_with_progress_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RepairWithProgressAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPrinting3DModelTexture, 1571802881, 46493, 18492, 151, 187, 164, 213, 70, 209, 199, 92);
-RT_INTERFACE!{interface IPrinting3DModelTexture(IPrinting3DModelTextureVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DModelTexture] {
-    fn get_TextureResource(&self, out: *mut *mut Printing3DTextureResource) -> HRESULT,
-    fn put_TextureResource(&self, value: *mut Printing3DTextureResource) -> HRESULT,
-    fn get_TileStyleU(&self, out: *mut Printing3DTextureEdgeBehavior) -> HRESULT,
-    fn put_TileStyleU(&self, value: Printing3DTextureEdgeBehavior) -> HRESULT,
-    fn get_TileStyleV(&self, out: *mut Printing3DTextureEdgeBehavior) -> HRESULT,
-    fn put_TileStyleV(&self, value: Printing3DTextureEdgeBehavior) -> HRESULT
-}}
-impl IPrinting3DModelTexture {
-    #[inline] pub fn get_texture_resource(&self) -> Result<Option<ComPtr<Printing3DTextureResource>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TextureResource)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_texture_resource(&self, value: &Printing3DTextureResource) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TextureResource)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_tile_style_u(&self) -> Result<Printing3DTextureEdgeBehavior> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TileStyleU)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_tile_style_u(&self, value: Printing3DTextureEdgeBehavior) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TileStyleU)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_tile_style_v(&self) -> Result<Printing3DTextureEdgeBehavior> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TileStyleV)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_tile_style_v(&self, value: Printing3DTextureEdgeBehavior) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TileStyleV)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DModelTexture: IPrinting3DModelTexture}
-impl RtActivatable<IActivationFactory> for Printing3DModelTexture {}
-DEFINE_CLSID!(Printing3DModelTexture(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,111,100,101,108,84,101,120,116,117,114,101,0]) [CLSID_Printing3DModelTexture]);
-RT_ENUM! { enum Printing3DModelUnit: i32 {
-    Meter (Printing3DModelUnit_Meter) = 0, Micron (Printing3DModelUnit_Micron) = 1, Millimeter (Printing3DModelUnit_Millimeter) = 2, Centimeter (Printing3DModelUnit_Centimeter) = 3, Inch (Printing3DModelUnit_Inch) = 4, Foot (Printing3DModelUnit_Foot) = 5,
-}}
-DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterial, 631645515, 50921, 18509, 162, 20, 162, 94, 87, 118, 186, 98);
-RT_INTERFACE!{interface IPrinting3DMultiplePropertyMaterial(IPrinting3DMultiplePropertyMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMultiplePropertyMaterial] {
-    fn get_MaterialIndices(&self, out: *mut *mut foundation::collections::IVector<u32>) -> HRESULT
-}}
-impl IPrinting3DMultiplePropertyMaterial {
-    #[inline] pub fn get_material_indices(&self) -> Result<Option<ComPtr<foundation::collections::IVector<u32>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_MaterialIndices)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DMultiplePropertyMaterial: IPrinting3DMultiplePropertyMaterial}
-impl RtActivatable<IActivationFactory> for Printing3DMultiplePropertyMaterial {}
-DEFINE_CLSID!(Printing3DMultiplePropertyMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,117,108,116,105,112,108,101,80,114,111,112,101,114,116,121,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DMultiplePropertyMaterial]);
-DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterialGroup, 4036298009, 44729, 17685, 163, 155, 160, 136, 251, 187, 39, 124);
-RT_INTERFACE!{interface IPrinting3DMultiplePropertyMaterialGroup(IPrinting3DMultiplePropertyMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMultiplePropertyMaterialGroup] {
-    fn get_MultipleProperties(&self, out: *mut *mut foundation::collections::IVector<Printing3DMultiplePropertyMaterial>) -> HRESULT,
-    fn get_MaterialGroupIndices(&self, out: *mut *mut foundation::collections::IVector<u32>) -> HRESULT,
-    fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT
-}}
-impl IPrinting3DMultiplePropertyMaterialGroup {
-    #[inline] pub fn get_multiple_properties(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DMultiplePropertyMaterial>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_MultipleProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_material_group_indices(&self) -> Result<Option<ComPtr<foundation::collections::IVector<u32>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_MaterialGroupIndices)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaterialGroupId)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DMultiplePropertyMaterialGroup: IPrinting3DMultiplePropertyMaterialGroup}
-impl RtActivatable<IPrinting3DMultiplePropertyMaterialGroupFactory> for Printing3DMultiplePropertyMaterialGroup {}
-impl Printing3DMultiplePropertyMaterialGroup {
-    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DMultiplePropertyMaterialGroup>> {
-        <Self as RtActivatable<IPrinting3DMultiplePropertyMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
-    }
-}
-DEFINE_CLSID!(Printing3DMultiplePropertyMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,117,108,116,105,112,108,101,80,114,111,112,101,114,116,121,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DMultiplePropertyMaterialGroup]);
-DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterialGroupFactory, 842930542, 54470, 17694, 168, 20, 77, 120, 162, 16, 254, 83);
-RT_INTERFACE!{static interface IPrinting3DMultiplePropertyMaterialGroupFactory(IPrinting3DMultiplePropertyMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMultiplePropertyMaterialGroupFactory] {
-    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DMultiplePropertyMaterialGroup) -> HRESULT
+RT_STRUCT! { struct Direct3DSurfaceDescription {
+    Width: i32, Height: i32, Format: super::DirectXPixelFormat, MultisampleDescription: Direct3DMultisampleDescription,
 }}
-impl IPrinting3DMultiplePropertyMaterialGroupFactory {
-    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DMultiplePropertyMaterialGroup>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, materialGroupId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum Printing3DObjectType: i32 {
-    Model (Printing3DObjectType_Model) = 0, Support (Printing3DObjectType_Support) = 1, Others (Printing3DObjectType_Others) = 2,
+RT_ENUM! { enum Direct3DUsage: i32 {
+    Default (Direct3DUsage_Default) = 0, Immutable (Direct3DUsage_Immutable) = 1, Dynamic (Direct3DUsage_Dynamic) = 2, Staging (Direct3DUsage_Staging) = 3,
 }}
-RT_ENUM! { enum Printing3DPackageCompression: i32 {
-    Low (Printing3DPackageCompression_Low) = 0, Medium (Printing3DPackageCompression_Medium) = 1, High (Printing3DPackageCompression_High) = 2,
-}}
-DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterial, 2374257659, 2025, 18822, 152, 51, 141, 211, 212, 140, 104, 89);
-RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterial(IPrinting3DTexture2CoordMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterial] {
-    fn get_Texture(&self, out: *mut *mut Printing3DModelTexture) -> HRESULT,
-    fn put_Texture(&self, value: *mut Printing3DModelTexture) -> HRESULT,
-    fn get_U(&self, out: *mut f64) -> HRESULT,
-    fn put_U(&self, value: f64) -> HRESULT,
-    fn get_V(&self, out: *mut f64) -> HRESULT,
-    fn put_V(&self, value: f64) -> HRESULT
-}}
-impl IPrinting3DTexture2CoordMaterial {
-    #[inline] pub fn get_texture(&self) -> Result<Option<ComPtr<Printing3DModelTexture>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Texture)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_texture(&self, value: &Printing3DModelTexture) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Texture)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_u(&self) -> Result<f64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_U)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_u(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_U)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_v(&self) -> Result<f64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_V)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_v(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_V)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DTexture2CoordMaterial: IPrinting3DTexture2CoordMaterial}
-impl RtActivatable<IActivationFactory> for Printing3DTexture2CoordMaterial {}
-DEFINE_CLSID!(Printing3DTexture2CoordMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,50,67,111,111,114,100,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DTexture2CoordMaterial]);
-DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroup, 1652391079, 28048, 20409, 159, 196, 159, 239, 243, 223, 168, 146);
-RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterialGroup(IPrinting3DTexture2CoordMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterialGroup] {
-    fn get_Texture2Coords(&self, out: *mut *mut foundation::collections::IVector<Printing3DTexture2CoordMaterial>) -> HRESULT,
-    fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT
-}}
-impl IPrinting3DTexture2CoordMaterialGroup {
-    #[inline] pub fn get_texture2_coords(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DTexture2CoordMaterial>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Texture2Coords)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaterialGroupId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DTexture2CoordMaterialGroup: IPrinting3DTexture2CoordMaterialGroup}
-impl RtActivatable<IPrinting3DTexture2CoordMaterialGroupFactory> for Printing3DTexture2CoordMaterialGroup {}
-impl Printing3DTexture2CoordMaterialGroup {
-    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DTexture2CoordMaterialGroup>> {
-        <Self as RtActivatable<IPrinting3DTexture2CoordMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
-    }
-}
-DEFINE_CLSID!(Printing3DTexture2CoordMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,50,67,111,111,114,100,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DTexture2CoordMaterialGroup]);
-DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroup2, 1778113466, 45358, 17051, 131, 134, 223, 82, 132, 246, 232, 15);
-RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterialGroup2(IPrinting3DTexture2CoordMaterialGroup2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterialGroup2] {
-    fn get_Texture(&self, out: *mut *mut Printing3DModelTexture) -> HRESULT,
-    fn put_Texture(&self, value: *mut Printing3DModelTexture) -> HRESULT
-}}
-impl IPrinting3DTexture2CoordMaterialGroup2 {
-    #[inline] pub fn get_texture(&self) -> Result<Option<ComPtr<Printing3DModelTexture>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Texture)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_texture(&self, value: &Printing3DModelTexture) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Texture)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroupFactory, 3417328048, 18058, 19567, 178, 162, 142, 184, 186, 141, 234, 72);
-RT_INTERFACE!{static interface IPrinting3DTexture2CoordMaterialGroupFactory(IPrinting3DTexture2CoordMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterialGroupFactory] {
-    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DTexture2CoordMaterialGroup) -> HRESULT
-}}
-impl IPrinting3DTexture2CoordMaterialGroupFactory {
-    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DTexture2CoordMaterialGroup>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, materialGroupId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum Printing3DTextureEdgeBehavior: i32 {
-    None (Printing3DTextureEdgeBehavior_None) = 0, Wrap (Printing3DTextureEdgeBehavior_Wrap) = 1, Mirror (Printing3DTextureEdgeBehavior_Mirror) = 2, Clamp (Printing3DTextureEdgeBehavior_Clamp) = 3,
-}}
-DEFINE_IID!(IID_IPrinting3DTextureResource, 2802709293, 27313, 17582, 188, 69, 162, 115, 130, 192, 211, 140);
-RT_INTERFACE!{interface IPrinting3DTextureResource(IPrinting3DTextureResourceVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTextureResource] {
-    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_TextureData(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStreamWithContentType) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_TextureData(&self, value: *mut super::super::storage::streams::IRandomAccessStreamWithContentType) -> HRESULT,
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Name(&self, value: HSTRING) -> HRESULT
-}}
-impl IPrinting3DTextureResource {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_texture_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamWithContentType>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TextureData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_texture_data(&self, value: &super::super::storage::streams::IRandomAccessStreamWithContentType) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TextureData)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Name)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Printing3DTextureResource: IPrinting3DTextureResource}
-impl RtActivatable<IActivationFactory> for Printing3DTextureResource {}
-DEFINE_CLSID!(Printing3DTextureResource(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,82,101,115,111,117,114,99,101,0]) [CLSID_Printing3DTextureResource]);
-} // Windows.Graphics.Printing3D
+} // Windows.Graphics.DirectX.Direct3D11
+} // Windows.Graphics.DirectX
 pub mod display { // Windows.Graphics.Display
 use ::prelude::*;
 DEFINE_IID!(IID_IAdvancedColorInfo, 2274876667, 45609, 16513, 174, 154, 44, 200, 94, 52, 173, 106);
@@ -2092,7 +1098,7 @@ RT_STRUCT! { struct HdmiDisplayHdr2086Metadata {
     RedPrimaryX: u16, RedPrimaryY: u16, GreenPrimaryX: u16, GreenPrimaryY: u16, BluePrimaryX: u16, BluePrimaryY: u16, WhitePointX: u16, WhitePointY: u16, MaxMasteringLuminance: u16, MinMasteringLuminance: u16, MaxContentLightLevel: u16, MaxFrameAverageLightLevel: u16,
 }}
 RT_ENUM! { enum HdmiDisplayHdrOption: i32 {
-    None (HdmiDisplayHdrOption_None) = 0, EotfSdr (HdmiDisplayHdrOption_EotfSdr) = 1, Eotf2084 (HdmiDisplayHdrOption_Eotf2084) = 2,
+    None (HdmiDisplayHdrOption_None) = 0, EotfSdr (HdmiDisplayHdrOption_EotfSdr) = 1, Eotf2084 (HdmiDisplayHdrOption_Eotf2084) = 2, DolbyVisionLowLatency (HdmiDisplayHdrOption_DolbyVisionLowLatency) = 3,
 }}
 DEFINE_IID!(IID_IHdmiDisplayInformation, 319503370, 62821, 18286, 171, 213, 234, 5, 174, 231, 76, 105);
 RT_INTERFACE!{interface IHdmiDisplayInformation(IHdmiDisplayInformationVtbl): IInspectable(IInspectableVtbl) [IID_IHdmiDisplayInformation] {
@@ -2237,11 +1243,857 @@ impl IHdmiDisplayMode {
     }}
 }
 RT_CLASS!{class HdmiDisplayMode: IHdmiDisplayMode}
+DEFINE_IID!(IID_IHdmiDisplayMode2, 130895519, 19260, 17080, 132, 231, 137, 83, 104, 113, 138, 242);
+RT_INTERFACE!{interface IHdmiDisplayMode2(IHdmiDisplayMode2Vtbl): IInspectable(IInspectableVtbl) [IID_IHdmiDisplayMode2] {
+    fn get_IsDolbyVisionLowLatencySupported(&self, out: *mut bool) -> HRESULT
+}}
+impl IHdmiDisplayMode2 {
+    #[inline] pub fn get_is_dolby_vision_low_latency_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsDolbyVisionLowLatencySupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum HdmiDisplayPixelEncoding: i32 {
     Rgb444 (HdmiDisplayPixelEncoding_Rgb444) = 0, Ycc444 (HdmiDisplayPixelEncoding_Ycc444) = 1, Ycc422 (HdmiDisplayPixelEncoding_Ycc422) = 2, Ycc420 (HdmiDisplayPixelEncoding_Ycc420) = 3,
 }}
 } // Windows.Graphics.Display.Core
 } // Windows.Graphics.Display
+pub mod effects { // Windows.Graphics.Effects
+use ::prelude::*;
+DEFINE_IID!(IID_IGraphicsEffect, 3411132622, 36838, 17974, 178, 2, 134, 31, 170, 7, 216, 243);
+RT_INTERFACE!{interface IGraphicsEffect(IGraphicsEffectVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsEffect] {
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Name(&self, name: HSTRING) -> HRESULT
+}}
+impl IGraphicsEffect {
+    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_name(&self, name: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Name)(self as *const _ as *mut _, name.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IGraphicsEffectSource, 764386780, 17209, 20153, 146, 22, 249, 222, 183, 86, 88, 162);
+RT_INTERFACE!{interface IGraphicsEffectSource(IGraphicsEffectSourceVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsEffectSource] {
+    
+}}
+} // Windows.Graphics.Effects
+pub mod holographic { // Windows.Graphics.Holographic
+use ::prelude::*;
+RT_STRUCT! { struct HolographicAdapterId {
+    LowPart: u32, HighPart: i32,
+}}
+DEFINE_IID!(IID_IHolographicCamera, 3840508997, 39917, 18816, 155, 160, 232, 118, 128, 209, 203, 116);
+RT_INTERFACE!{interface IHolographicCamera(IHolographicCameraVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera] {
+    fn get_RenderTargetSize(&self, out: *mut foundation::Size) -> HRESULT,
+    fn get_ViewportScaleFactor(&self, out: *mut f64) -> HRESULT,
+    fn put_ViewportScaleFactor(&self, value: f64) -> HRESULT,
+    fn get_IsStereo(&self, out: *mut bool) -> HRESULT,
+    fn get_Id(&self, out: *mut u32) -> HRESULT,
+    fn SetNearPlaneDistance(&self, value: f64) -> HRESULT,
+    fn SetFarPlaneDistance(&self, value: f64) -> HRESULT
+}}
+impl IHolographicCamera {
+    #[inline] pub fn get_render_target_size(&self) -> Result<foundation::Size> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_RenderTargetSize)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_viewport_scale_factor(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ViewportScaleFactor)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_viewport_scale_factor(&self, value: f64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ViewportScaleFactor)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_stereo(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsStereo)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_id(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_near_plane_distance(&self, value: f64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetNearPlaneDistance)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn set_far_plane_distance(&self, value: f64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetFarPlaneDistance)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicCamera: IHolographicCamera}
+DEFINE_IID!(IID_IHolographicCamera2, 3042680602, 47756, 20356, 173, 121, 46, 126, 30, 36, 80, 243);
+RT_INTERFACE!{interface IHolographicCamera2(IHolographicCamera2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera2] {
+    fn get_LeftViewportParameters(&self, out: *mut *mut HolographicCameraViewportParameters) -> HRESULT,
+    fn get_RightViewportParameters(&self, out: *mut *mut HolographicCameraViewportParameters) -> HRESULT,
+    fn get_Display(&self, out: *mut *mut HolographicDisplay) -> HRESULT
+}}
+impl IHolographicCamera2 {
+    #[inline] pub fn get_left_viewport_parameters(&self) -> Result<Option<ComPtr<HolographicCameraViewportParameters>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_LeftViewportParameters)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_right_viewport_parameters(&self) -> Result<Option<ComPtr<HolographicCameraViewportParameters>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_RightViewportParameters)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_display(&self) -> Result<Option<ComPtr<HolographicDisplay>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Display)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicCamera3, 1168789427, 31577, 21070, 74, 63, 74, 106, 214, 101, 4, 119);
+RT_INTERFACE!{interface IHolographicCamera3(IHolographicCamera3Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera3] {
+    fn get_IsPrimaryLayerEnabled(&self, out: *mut bool) -> HRESULT,
+    fn put_IsPrimaryLayerEnabled(&self, value: bool) -> HRESULT,
+    fn get_MaxQuadLayerCount(&self, out: *mut u32) -> HRESULT,
+    fn get_QuadLayers(&self, out: *mut *mut foundation::collections::IVector<HolographicQuadLayer>) -> HRESULT
+}}
+impl IHolographicCamera3 {
+    #[inline] pub fn get_is_primary_layer_enabled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsPrimaryLayerEnabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_primary_layer_enabled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsPrimaryLayerEnabled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_quad_layer_count(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxQuadLayerCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_quad_layers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HolographicQuadLayer>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_QuadLayers)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicCamera4, 2586128854, 18211, 20281, 169, 165, 157, 5, 24, 29, 155, 68);
+RT_INTERFACE!{interface IHolographicCamera4(IHolographicCamera4Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera4] {
+    fn get_CanOverrideViewport(&self, out: *mut bool) -> HRESULT
+}}
+impl IHolographicCamera4 {
+    #[inline] pub fn get_can_override_viewport(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanOverrideViewport)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicCamera5, 580323058, 25229, 20213, 156, 8, 166, 63, 221, 119, 135, 198);
+RT_INTERFACE!{interface IHolographicCamera5(IHolographicCamera5Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera5] {
+    fn get_IsHardwareContentProtectionSupported(&self, out: *mut bool) -> HRESULT,
+    fn get_IsHardwareContentProtectionEnabled(&self, out: *mut bool) -> HRESULT,
+    fn put_IsHardwareContentProtectionEnabled(&self, value: bool) -> HRESULT
+}}
+impl IHolographicCamera5 {
+    #[inline] pub fn get_is_hardware_content_protection_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsHardwareContentProtectionSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_hardware_content_protection_enabled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsHardwareContentProtectionEnabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_hardware_content_protection_enabled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsHardwareContentProtectionEnabled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicCameraPose, 226328112, 4830, 17853, 145, 43, 199, 246, 86, 21, 153, 209);
+RT_INTERFACE!{interface IHolographicCameraPose(IHolographicCameraPoseVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraPose] {
+    fn get_HolographicCamera(&self, out: *mut *mut HolographicCamera) -> HRESULT,
+    fn get_Viewport(&self, out: *mut foundation::Rect) -> HRESULT,
+    #[cfg(not(feature="windows-perception"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-perception")] fn TryGetViewTransform(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, out: *mut *mut foundation::IReference<HolographicStereoTransform>) -> HRESULT,
+    fn get_ProjectionTransform(&self, out: *mut HolographicStereoTransform) -> HRESULT,
+    #[cfg(not(feature="windows-perception"))] fn __Dummy4(&self) -> (),
+    #[cfg(feature="windows-perception")] fn TryGetCullingFrustum(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, out: *mut *mut foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>) -> HRESULT,
+    #[cfg(not(feature="windows-perception"))] fn __Dummy5(&self) -> (),
+    #[cfg(feature="windows-perception")] fn TryGetVisibleFrustum(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, out: *mut *mut foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>) -> HRESULT,
+    fn get_NearPlaneDistance(&self, out: *mut f64) -> HRESULT,
+    fn get_FarPlaneDistance(&self, out: *mut f64) -> HRESULT
+}}
+impl IHolographicCameraPose {
+    #[inline] pub fn get_holographic_camera(&self) -> Result<Option<ComPtr<HolographicCamera>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_HolographicCamera)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_viewport(&self) -> Result<foundation::Rect> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Viewport)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_view_transform(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<foundation::IReference<HolographicStereoTransform>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryGetViewTransform)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_projection_transform(&self) -> Result<HolographicStereoTransform> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ProjectionTransform)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_culling_frustum(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryGetCullingFrustum)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_visible_frustum(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryGetVisibleFrustum)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_near_plane_distance(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_NearPlaneDistance)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_far_plane_distance(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_FarPlaneDistance)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicCameraPose: IHolographicCameraPose}
+DEFINE_IID!(IID_IHolographicCameraPose2, 590078067, 23853, 17760, 129, 78, 38, 151, 196, 252, 225, 107);
+RT_INTERFACE!{interface IHolographicCameraPose2(IHolographicCameraPose2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraPose2] {
+    #[cfg(not(feature="windows-perception"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-perception")] fn OverrideViewTransform(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, coordinateSystemToViewTransform: HolographicStereoTransform) -> HRESULT,
+    fn OverrideProjectionTransform(&self, projectionTransform: HolographicStereoTransform) -> HRESULT,
+    fn OverrideViewport(&self, leftViewport: foundation::Rect, rightViewport: foundation::Rect) -> HRESULT
+}}
+impl IHolographicCameraPose2 {
+    #[cfg(feature="windows-perception")] #[inline] pub fn override_view_transform(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, coordinateSystemToViewTransform: HolographicStereoTransform) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).OverrideViewTransform)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, coordinateSystemToViewTransform);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn override_projection_transform(&self, projectionTransform: HolographicStereoTransform) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).OverrideProjectionTransform)(self as *const _ as *mut _, projectionTransform);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn override_viewport(&self, leftViewport: foundation::Rect, rightViewport: foundation::Rect) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).OverrideViewport)(self as *const _ as *mut _, leftViewport, rightViewport);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicCameraRenderingParameters, 2393648849, 23540, 19990, 130, 54, 174, 8, 0, 193, 29, 13);
+RT_INTERFACE!{interface IHolographicCameraRenderingParameters(IHolographicCameraRenderingParametersVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraRenderingParameters] {
+    #[cfg(not(feature="windows-perception"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-perception")] fn SetFocusPoint(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3) -> HRESULT,
+    #[cfg(not(feature="windows-perception"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-perception")] fn SetFocusPointWithNormal(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3) -> HRESULT,
+    #[cfg(not(feature="windows-perception"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-perception")] fn SetFocusPointWithNormalLinearVelocity(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3, linearVelocity: foundation::numerics::Vector3) -> HRESULT,
+    fn get_Direct3D11Device(&self, out: *mut *mut super::directx::direct3d11::IDirect3DDevice) -> HRESULT,
+    fn get_Direct3D11BackBuffer(&self, out: *mut *mut super::directx::direct3d11::IDirect3DSurface) -> HRESULT
+}}
+impl IHolographicCameraRenderingParameters {
+    #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetFocusPoint)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, position);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point_with_normal(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetFocusPointWithNormal)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, position, normal);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point_with_normal_linear_velocity(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3, linearVelocity: foundation::numerics::Vector3) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetFocusPointWithNormalLinearVelocity)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, position, normal, linearVelocity);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_direct3_d11_device(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DDevice>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Direct3D11Device)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_direct3_d11_back_buffer(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Direct3D11BackBuffer)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicCameraRenderingParameters: IHolographicCameraRenderingParameters}
+DEFINE_IID!(IID_IHolographicCameraRenderingParameters2, 638742755, 46742, 17972, 148, 214, 190, 6, 129, 100, 53, 153);
+RT_INTERFACE!{interface IHolographicCameraRenderingParameters2(IHolographicCameraRenderingParameters2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraRenderingParameters2] {
+    fn get_ReprojectionMode(&self, out: *mut HolographicReprojectionMode) -> HRESULT,
+    fn put_ReprojectionMode(&self, value: HolographicReprojectionMode) -> HRESULT,
+    fn CommitDirect3D11DepthBuffer(&self, value: *mut super::directx::direct3d11::IDirect3DSurface) -> HRESULT
+}}
+impl IHolographicCameraRenderingParameters2 {
+    #[inline] pub fn get_reprojection_mode(&self) -> Result<HolographicReprojectionMode> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ReprojectionMode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_reprojection_mode(&self, value: HolographicReprojectionMode) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ReprojectionMode)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn commit_direct3_d11_depth_buffer(&self, value: &super::directx::direct3d11::IDirect3DSurface) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).CommitDirect3D11DepthBuffer)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicCameraRenderingParameters3, 2980729151, 4973, 19206, 185, 212, 228, 185, 20, 205, 6, 131);
+RT_INTERFACE!{interface IHolographicCameraRenderingParameters3(IHolographicCameraRenderingParameters3Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraRenderingParameters3] {
+    fn get_IsContentProtectionEnabled(&self, out: *mut bool) -> HRESULT,
+    fn put_IsContentProtectionEnabled(&self, value: bool) -> HRESULT
+}}
+impl IHolographicCameraRenderingParameters3 {
+    #[inline] pub fn get_is_content_protection_enabled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsContentProtectionEnabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_content_protection_enabled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsContentProtectionEnabled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicCameraViewportParameters, 2160980983, 33834, 16865, 147, 237, 86, 146, 171, 31, 187, 16);
+RT_INTERFACE!{interface IHolographicCameraViewportParameters(IHolographicCameraViewportParametersVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraViewportParameters] {
+    fn get_HiddenAreaMesh(&self, outSize: *mut u32, out: *mut *mut foundation::numerics::Vector2) -> HRESULT,
+    fn get_VisibleAreaMesh(&self, outSize: *mut u32, out: *mut *mut foundation::numerics::Vector2) -> HRESULT
+}}
+impl IHolographicCameraViewportParameters {
+    #[inline] pub fn get_hidden_area_mesh(&self) -> Result<ComArray<foundation::numerics::Vector2>> { unsafe { 
+        let mut outSize = 0; let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_HiddenAreaMesh)(self as *const _ as *mut _, &mut outSize, &mut out);
+        if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_visible_area_mesh(&self) -> Result<ComArray<foundation::numerics::Vector2>> { unsafe { 
+        let mut outSize = 0; let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_VisibleAreaMesh)(self as *const _ as *mut _, &mut outSize, &mut out);
+        if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicCameraViewportParameters: IHolographicCameraViewportParameters}
+DEFINE_IID!(IID_IHolographicDisplay, 2597233684, 7583, 16528, 163, 136, 144, 192, 111, 110, 174, 156);
+RT_INTERFACE!{interface IHolographicDisplay(IHolographicDisplayVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicDisplay] {
+    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_MaxViewportSize(&self, out: *mut foundation::Size) -> HRESULT,
+    fn get_IsStereo(&self, out: *mut bool) -> HRESULT,
+    fn get_IsOpaque(&self, out: *mut bool) -> HRESULT,
+    fn get_AdapterId(&self, out: *mut HolographicAdapterId) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn get_SpatialLocator(&self, out: *mut *mut super::super::perception::spatial::SpatialLocator) -> HRESULT
+}}
+impl IHolographicDisplay {
+    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_viewport_size(&self) -> Result<foundation::Size> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxViewportSize)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_stereo(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsStereo)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_opaque(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsOpaque)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_adapter_id(&self) -> Result<HolographicAdapterId> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AdapterId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-perception")] #[inline] pub fn get_spatial_locator(&self) -> Result<Option<ComPtr<super::super::perception::spatial::SpatialLocator>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SpatialLocator)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicDisplay: IHolographicDisplay}
+impl RtActivatable<IHolographicDisplayStatics> for HolographicDisplay {}
+impl HolographicDisplay {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<HolographicDisplay>>> {
+        <Self as RtActivatable<IHolographicDisplayStatics>>::get_activation_factory().get_default()
+    }
+}
+DEFINE_CLSID!(HolographicDisplay(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,68,105,115,112,108,97,121,0]) [CLSID_HolographicDisplay]);
+DEFINE_IID!(IID_IHolographicDisplay2, 1974222722, 59221, 17260, 141, 150, 77, 50, 209, 49, 71, 62);
+RT_INTERFACE!{interface IHolographicDisplay2(IHolographicDisplay2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicDisplay2] {
+    fn get_RefreshRate(&self, out: *mut f64) -> HRESULT
+}}
+impl IHolographicDisplay2 {
+    #[inline] pub fn get_refresh_rate(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_RefreshRate)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicDisplayStatics, 3409398147, 59312, 18497, 131, 85, 58, 229, 181, 54, 233, 164);
+RT_INTERFACE!{static interface IHolographicDisplayStatics(IHolographicDisplayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicDisplayStatics] {
+    fn GetDefault(&self, out: *mut *mut HolographicDisplay) -> HRESULT
+}}
+impl IHolographicDisplayStatics {
+    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<HolographicDisplay>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicFrame, 3331886774, 43193, 12372, 166, 235, 214, 36, 182, 83, 99, 117);
+RT_INTERFACE!{interface IHolographicFrame(IHolographicFrameVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFrame] {
+    fn get_AddedCameras(&self, out: *mut *mut foundation::collections::IVectorView<HolographicCamera>) -> HRESULT,
+    fn get_RemovedCameras(&self, out: *mut *mut foundation::collections::IVectorView<HolographicCamera>) -> HRESULT,
+    fn GetRenderingParameters(&self, cameraPose: *mut HolographicCameraPose, out: *mut *mut HolographicCameraRenderingParameters) -> HRESULT,
+    fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_CurrentPrediction(&self, out: *mut *mut HolographicFramePrediction) -> HRESULT,
+    fn UpdateCurrentPrediction(&self) -> HRESULT,
+    fn PresentUsingCurrentPrediction(&self, out: *mut HolographicFramePresentResult) -> HRESULT,
+    fn PresentUsingCurrentPredictionWithBehavior(&self, waitBehavior: HolographicFramePresentWaitBehavior, out: *mut HolographicFramePresentResult) -> HRESULT,
+    fn WaitForFrameToFinish(&self) -> HRESULT
+}}
+impl IHolographicFrame {
+    #[inline] pub fn get_added_cameras(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HolographicCamera>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AddedCameras)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_removed_cameras(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HolographicCamera>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_RemovedCameras)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_rendering_parameters(&self, cameraPose: &HolographicCameraPose) -> Result<Option<ComPtr<HolographicCameraRenderingParameters>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetRenderingParameters)(self as *const _ as *mut _, cameraPose as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_current_prediction(&self) -> Result<Option<ComPtr<HolographicFramePrediction>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CurrentPrediction)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn update_current_prediction(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).UpdateCurrentPrediction)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn present_using_current_prediction(&self) -> Result<HolographicFramePresentResult> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).PresentUsingCurrentPrediction)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn present_using_current_prediction_with_behavior(&self, waitBehavior: HolographicFramePresentWaitBehavior) -> Result<HolographicFramePresentResult> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).PresentUsingCurrentPredictionWithBehavior)(self as *const _ as *mut _, waitBehavior, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn wait_for_frame_to_finish(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WaitForFrameToFinish)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicFrame: IHolographicFrame}
+DEFINE_IID!(IID_IHolographicFrame2, 675231679, 15346, 24209, 102, 51, 135, 5, 116, 230, 242, 23);
+RT_INTERFACE!{interface IHolographicFrame2(IHolographicFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFrame2] {
+    fn GetQuadLayerUpdateParameters(&self, layer: *mut HolographicQuadLayer, out: *mut *mut HolographicQuadLayerUpdateParameters) -> HRESULT
+}}
+impl IHolographicFrame2 {
+    #[inline] pub fn get_quad_layer_update_parameters(&self, layer: &HolographicQuadLayer) -> Result<Option<ComPtr<HolographicQuadLayerUpdateParameters>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetQuadLayerUpdateParameters)(self as *const _ as *mut _, layer as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicFramePrediction, 1376734689, 23562, 20089, 168, 30, 106, 190, 2, 187, 39, 57);
+RT_INTERFACE!{interface IHolographicFramePrediction(IHolographicFramePredictionVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePrediction] {
+    fn get_CameraPoses(&self, out: *mut *mut foundation::collections::IVectorView<HolographicCameraPose>) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn get_Timestamp(&self, out: *mut *mut super::super::perception::PerceptionTimestamp) -> HRESULT
+}}
+impl IHolographicFramePrediction {
+    #[inline] pub fn get_camera_poses(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HolographicCameraPose>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CameraPoses)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-perception")] #[inline] pub fn get_timestamp(&self) -> Result<Option<ComPtr<super::super::perception::PerceptionTimestamp>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Timestamp)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicFramePrediction: IHolographicFramePrediction}
+DEFINE_IID!(IID_IHolographicFramePresentationMonitor, 3397854572, 28590, 17038, 187, 131, 37, 223, 238, 81, 19, 107);
+RT_INTERFACE!{interface IHolographicFramePresentationMonitor(IHolographicFramePresentationMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePresentationMonitor] {
+    fn ReadReports(&self, out: *mut *mut foundation::collections::IVectorView<HolographicFramePresentationReport>) -> HRESULT
+}}
+impl IHolographicFramePresentationMonitor {
+    #[inline] pub fn read_reports(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HolographicFramePresentationReport>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReadReports)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicFramePresentationMonitor: IHolographicFramePresentationMonitor}
+DEFINE_IID!(IID_IHolographicFramePresentationReport, 2159736340, 62196, 19594, 141, 227, 6, 92, 120, 246, 213, 222);
+RT_INTERFACE!{interface IHolographicFramePresentationReport(IHolographicFramePresentationReportVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePresentationReport] {
+    fn get_CompositorGpuDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_AppGpuDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_AppGpuOverrun(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_MissedPresentationOpportunityCount(&self, out: *mut u32) -> HRESULT,
+    fn get_PresentationCount(&self, out: *mut u32) -> HRESULT
+}}
+impl IHolographicFramePresentationReport {
+    #[inline] pub fn get_compositor_gpu_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CompositorGpuDuration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_app_gpu_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AppGpuDuration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_app_gpu_overrun(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AppGpuOverrun)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_missed_presentation_opportunity_count(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MissedPresentationOpportunityCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_presentation_count(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PresentationCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicFramePresentationReport: IHolographicFramePresentationReport}
+RT_ENUM! { enum HolographicFramePresentResult: i32 {
+    Success (HolographicFramePresentResult_Success) = 0, DeviceRemoved (HolographicFramePresentResult_DeviceRemoved) = 1,
+}}
+RT_ENUM! { enum HolographicFramePresentWaitBehavior: i32 {
+    WaitForFrameToFinish (HolographicFramePresentWaitBehavior_WaitForFrameToFinish) = 0, DoNotWaitForFrameToFinish (HolographicFramePresentWaitBehavior_DoNotWaitForFrameToFinish) = 1,
+}}
+DEFINE_IID!(IID_IHolographicQuadLayer, 2419351753, 51673, 23900, 65, 172, 162, 213, 171, 15, 211, 49);
+RT_INTERFACE!{interface IHolographicQuadLayer(IHolographicQuadLayerVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayer] {
+    fn get_PixelFormat(&self, out: *mut super::directx::DirectXPixelFormat) -> HRESULT,
+    fn get_Size(&self, out: *mut foundation::Size) -> HRESULT
+}}
+impl IHolographicQuadLayer {
+    #[inline] pub fn get_pixel_format(&self) -> Result<super::directx::DirectXPixelFormat> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PixelFormat)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_size(&self) -> Result<foundation::Size> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicQuadLayer: IHolographicQuadLayer}
+impl RtActivatable<IHolographicQuadLayerFactory> for HolographicQuadLayer {}
+impl HolographicQuadLayer {
+    #[inline] pub fn create(size: foundation::Size) -> Result<ComPtr<HolographicQuadLayer>> {
+        <Self as RtActivatable<IHolographicQuadLayerFactory>>::get_activation_factory().create(size)
+    }
+    #[inline] pub fn create_with_pixel_format(size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat) -> Result<ComPtr<HolographicQuadLayer>> {
+        <Self as RtActivatable<IHolographicQuadLayerFactory>>::get_activation_factory().create_with_pixel_format(size, pixelFormat)
+    }
+}
+DEFINE_CLSID!(HolographicQuadLayer(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,81,117,97,100,76,97,121,101,114,0]) [CLSID_HolographicQuadLayer]);
+DEFINE_IID!(IID_IHolographicQuadLayerFactory, 2792700147, 23060, 23056, 72, 154, 69, 80, 101, 179, 123, 118);
+RT_INTERFACE!{static interface IHolographicQuadLayerFactory(IHolographicQuadLayerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayerFactory] {
+    fn Create(&self, size: foundation::Size, out: *mut *mut HolographicQuadLayer) -> HRESULT,
+    fn CreateWithPixelFormat(&self, size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat, out: *mut *mut HolographicQuadLayer) -> HRESULT
+}}
+impl IHolographicQuadLayerFactory {
+    #[inline] pub fn create(&self, size: foundation::Size) -> Result<ComPtr<HolographicQuadLayer>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, size, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_with_pixel_format(&self, size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat) -> Result<ComPtr<HolographicQuadLayer>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithPixelFormat)(self as *const _ as *mut _, size, pixelFormat, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicQuadLayerUpdateParameters, 722379696, 31117, 23498, 85, 194, 44, 12, 118, 46, 187, 8);
+RT_INTERFACE!{interface IHolographicQuadLayerUpdateParameters(IHolographicQuadLayerUpdateParametersVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayerUpdateParameters] {
+    fn AcquireBufferToUpdateContent(&self, out: *mut *mut super::directx::direct3d11::IDirect3DSurface) -> HRESULT,
+    fn UpdateViewport(&self, value: foundation::Rect) -> HRESULT,
+    fn UpdateContentProtectionEnabled(&self, value: bool) -> HRESULT,
+    fn UpdateExtents(&self, value: foundation::numerics::Vector2) -> HRESULT,
+    #[cfg(not(feature="windows-perception"))] fn __Dummy4(&self) -> (),
+    #[cfg(feature="windows-perception")] fn UpdateLocationWithStationaryMode(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> HRESULT,
+    fn UpdateLocationWithDisplayRelativeMode(&self, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> HRESULT
+}}
+impl IHolographicQuadLayerUpdateParameters {
+    #[inline] pub fn acquire_buffer_to_update_content(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AcquireBufferToUpdateContent)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn update_viewport(&self, value: foundation::Rect) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).UpdateViewport)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn update_content_protection_enabled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).UpdateContentProtectionEnabled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn update_extents(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).UpdateExtents)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-perception")] #[inline] pub fn update_location_with_stationary_mode(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).UpdateLocationWithStationaryMode)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, position, orientation);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn update_location_with_display_relative_mode(&self, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).UpdateLocationWithDisplayRelativeMode)(self as *const _ as *mut _, position, orientation);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicQuadLayerUpdateParameters: IHolographicQuadLayerUpdateParameters}
+DEFINE_IID!(IID_IHolographicQuadLayerUpdateParameters2, 1328796461, 33473, 18113, 137, 128, 60, 183, 13, 152, 24, 43);
+RT_INTERFACE!{interface IHolographicQuadLayerUpdateParameters2(IHolographicQuadLayerUpdateParameters2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayerUpdateParameters2] {
+    fn get_CanAcquireWithHardwareProtection(&self, out: *mut bool) -> HRESULT,
+    fn AcquireBufferToUpdateContentWithHardwareProtection(&self, out: *mut *mut super::directx::direct3d11::IDirect3DSurface) -> HRESULT
+}}
+impl IHolographicQuadLayerUpdateParameters2 {
+    #[inline] pub fn get_can_acquire_with_hardware_protection(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanAcquireWithHardwareProtection)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn acquire_buffer_to_update_content_with_hardware_protection(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AcquireBufferToUpdateContentWithHardwareProtection)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum HolographicReprojectionMode: i32 {
+    PositionAndOrientation (HolographicReprojectionMode_PositionAndOrientation) = 0, OrientationOnly (HolographicReprojectionMode_OrientationOnly) = 1, Disabled (HolographicReprojectionMode_Disabled) = 2,
+}}
+DEFINE_IID!(IID_IHolographicSpace, 1132518310, 24184, 17231, 128, 124, 52, 51, 209, 239, 232, 183);
+RT_INTERFACE!{interface IHolographicSpace(IHolographicSpaceVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpace] {
+    fn get_PrimaryAdapterId(&self, out: *mut HolographicAdapterId) -> HRESULT,
+    fn SetDirect3D11Device(&self, value: *mut super::directx::direct3d11::IDirect3DDevice) -> HRESULT,
+    fn add_CameraAdded(&self, handler: *mut foundation::TypedEventHandler<HolographicSpace, HolographicSpaceCameraAddedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_CameraAdded(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_CameraRemoved(&self, handler: *mut foundation::TypedEventHandler<HolographicSpace, HolographicSpaceCameraRemovedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_CameraRemoved(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
+    fn CreateNextFrame(&self, out: *mut *mut HolographicFrame) -> HRESULT
+}}
+impl IHolographicSpace {
+    #[inline] pub fn get_primary_adapter_id(&self) -> Result<HolographicAdapterId> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PrimaryAdapterId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_direct3_d11_device(&self, value: &super::directx::direct3d11::IDirect3DDevice) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetDirect3D11Device)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_camera_added(&self, handler: &foundation::TypedEventHandler<HolographicSpace, HolographicSpaceCameraAddedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_CameraAdded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_camera_added(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_CameraAdded)(self as *const _ as *mut _, cookie);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_camera_removed(&self, handler: &foundation::TypedEventHandler<HolographicSpace, HolographicSpaceCameraRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_CameraRemoved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_camera_removed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_CameraRemoved)(self as *const _ as *mut _, cookie);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn create_next_frame(&self) -> Result<Option<ComPtr<HolographicFrame>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateNextFrame)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicSpace: IHolographicSpace}
+impl RtActivatable<IHolographicSpaceStatics> for HolographicSpace {}
+impl RtActivatable<IHolographicSpaceStatics2> for HolographicSpace {}
+impl RtActivatable<IHolographicSpaceStatics3> for HolographicSpace {}
+impl HolographicSpace {
+    #[cfg(feature="windows-ui")] #[inline] pub fn create_for_core_window(window: &super::super::ui::core::CoreWindow) -> Result<Option<ComPtr<HolographicSpace>>> {
+        <Self as RtActivatable<IHolographicSpaceStatics>>::get_activation_factory().create_for_core_window(window)
+    }
+    #[inline] pub fn get_is_supported() -> Result<bool> {
+        <Self as RtActivatable<IHolographicSpaceStatics2>>::get_activation_factory().get_is_supported()
+    }
+    #[inline] pub fn get_is_available() -> Result<bool> {
+        <Self as RtActivatable<IHolographicSpaceStatics2>>::get_activation_factory().get_is_available()
+    }
+    #[inline] pub fn add_is_available_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IHolographicSpaceStatics2>>::get_activation_factory().add_is_available_changed(handler)
+    }
+    #[inline] pub fn remove_is_available_changed(token: foundation::EventRegistrationToken) -> Result<()> {
+        <Self as RtActivatable<IHolographicSpaceStatics2>>::get_activation_factory().remove_is_available_changed(token)
+    }
+    #[inline] pub fn get_is_configured() -> Result<bool> {
+        <Self as RtActivatable<IHolographicSpaceStatics3>>::get_activation_factory().get_is_configured()
+    }
+}
+DEFINE_CLSID!(HolographicSpace(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,83,112,97,99,101,0]) [CLSID_HolographicSpace]);
+DEFINE_IID!(IID_IHolographicSpace2, 1333897640, 47103, 18563, 152, 39, 125, 103, 114, 135, 234, 112);
+RT_INTERFACE!{interface IHolographicSpace2(IHolographicSpace2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpace2] {
+    fn get_UserPresence(&self, out: *mut HolographicSpaceUserPresence) -> HRESULT,
+    fn add_UserPresenceChanged(&self, handler: *mut foundation::TypedEventHandler<HolographicSpace, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_UserPresenceChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn WaitForNextFrameReady(&self) -> HRESULT,
+    fn WaitForNextFrameReadyWithHeadStart(&self, requestedHeadStartDuration: foundation::TimeSpan) -> HRESULT,
+    fn CreateFramePresentationMonitor(&self, maxQueuedReports: u32, out: *mut *mut HolographicFramePresentationMonitor) -> HRESULT
+}}
+impl IHolographicSpace2 {
+    #[inline] pub fn get_user_presence(&self) -> Result<HolographicSpaceUserPresence> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_UserPresence)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn add_user_presence_changed(&self, handler: &foundation::TypedEventHandler<HolographicSpace, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_UserPresenceChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_user_presence_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_UserPresenceChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn wait_for_next_frame_ready(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WaitForNextFrameReady)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn wait_for_next_frame_ready_with_head_start(&self, requestedHeadStartDuration: foundation::TimeSpan) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WaitForNextFrameReadyWithHeadStart)(self as *const _ as *mut _, requestedHeadStartDuration);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn create_frame_presentation_monitor(&self, maxQueuedReports: u32) -> Result<Option<ComPtr<HolographicFramePresentationMonitor>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFramePresentationMonitor)(self as *const _ as *mut _, maxQueuedReports, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicSpaceCameraAddedEventArgs, 1492245045, 48051, 15503, 153, 61, 108, 128, 231, 254, 185, 159);
+RT_INTERFACE!{interface IHolographicSpaceCameraAddedEventArgs(IHolographicSpaceCameraAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceCameraAddedEventArgs] {
+    fn get_Camera(&self, out: *mut *mut HolographicCamera) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+}}
+impl IHolographicSpaceCameraAddedEventArgs {
+    #[inline] pub fn get_camera(&self) -> Result<Option<ComPtr<HolographicCamera>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Camera)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicSpaceCameraAddedEventArgs: IHolographicSpaceCameraAddedEventArgs}
+DEFINE_IID!(IID_IHolographicSpaceCameraRemovedEventArgs, 2153006248, 62126, 12846, 141, 169, 131, 106, 10, 149, 164, 193);
+RT_INTERFACE!{interface IHolographicSpaceCameraRemovedEventArgs(IHolographicSpaceCameraRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceCameraRemovedEventArgs] {
+    fn get_Camera(&self, out: *mut *mut HolographicCamera) -> HRESULT
+}}
+impl IHolographicSpaceCameraRemovedEventArgs {
+    #[inline] pub fn get_camera(&self) -> Result<Option<ComPtr<HolographicCamera>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Camera)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class HolographicSpaceCameraRemovedEventArgs: IHolographicSpaceCameraRemovedEventArgs}
+DEFINE_IID!(IID_IHolographicSpaceStatics, 911106148, 51442, 15265, 131, 145, 102, 184, 72, 158, 103, 253);
+RT_INTERFACE!{static interface IHolographicSpaceStatics(IHolographicSpaceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceStatics] {
+    #[cfg(feature="windows-ui")] fn CreateForCoreWindow(&self, window: *mut super::super::ui::core::CoreWindow, out: *mut *mut HolographicSpace) -> HRESULT
+}}
+impl IHolographicSpaceStatics {
+    #[cfg(feature="windows-ui")] #[inline] pub fn create_for_core_window(&self, window: &super::super::ui::core::CoreWindow) -> Result<Option<ComPtr<HolographicSpace>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateForCoreWindow)(self as *const _ as *mut _, window as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicSpaceStatics2, 242708616, 30204, 18607, 135, 88, 6, 82, 246, 240, 124, 89);
+RT_INTERFACE!{static interface IHolographicSpaceStatics2(IHolographicSpaceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceStatics2] {
+    fn get_IsSupported(&self, out: *mut bool) -> HRESULT,
+    fn get_IsAvailable(&self, out: *mut bool) -> HRESULT,
+    fn add_IsAvailableChanged(&self, handler: *mut foundation::EventHandler<IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_IsAvailableChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IHolographicSpaceStatics2 {
+    #[inline] pub fn get_is_supported(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsSupported)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_available(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsAvailable)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn add_is_available_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_IsAvailableChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_is_available_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_IsAvailableChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IHolographicSpaceStatics3, 989912637, 45475, 19966, 142, 121, 254, 197, 144, 158, 109, 248);
+RT_INTERFACE!{static interface IHolographicSpaceStatics3(IHolographicSpaceStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceStatics3] {
+    fn get_IsConfigured(&self, out: *mut bool) -> HRESULT
+}}
+impl IHolographicSpaceStatics3 {
+    #[inline] pub fn get_is_configured(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsConfigured)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum HolographicSpaceUserPresence: i32 {
+    Absent (HolographicSpaceUserPresence_Absent) = 0, PresentPassive (HolographicSpaceUserPresence_PresentPassive) = 1, PresentActive (HolographicSpaceUserPresence_PresentActive) = 2,
+}}
+RT_STRUCT! { struct HolographicStereoTransform {
+    Left: foundation::numerics::Matrix4x4, Right: foundation::numerics::Matrix4x4,
+}}
+} // Windows.Graphics.Holographic
 pub mod imaging { // Windows.Graphics.Imaging
 use ::prelude::*;
 RT_ENUM! { enum BitmapAlphaMode: i32 {
@@ -2338,6 +2190,7 @@ impl IBitmapDecoder {
 }
 RT_CLASS!{class BitmapDecoder: IBitmapDecoder}
 impl RtActivatable<IBitmapDecoderStatics> for BitmapDecoder {}
+impl RtActivatable<IBitmapDecoderStatics2> for BitmapDecoder {}
 impl BitmapDecoder {
     #[inline] pub fn get_bmp_decoder_id() -> Result<Guid> {
         <Self as RtActivatable<IBitmapDecoderStatics>>::get_activation_factory().get_bmp_decoder_id()
@@ -2368,6 +2221,12 @@ impl BitmapDecoder {
     }
     #[cfg(feature="windows-storage")] #[inline] pub fn create_with_id_async(decoderId: Guid, stream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<BitmapDecoder>>> {
         <Self as RtActivatable<IBitmapDecoderStatics>>::get_activation_factory().create_with_id_async(decoderId, stream)
+    }
+    #[inline] pub fn get_heif_decoder_id() -> Result<Guid> {
+        <Self as RtActivatable<IBitmapDecoderStatics2>>::get_activation_factory().get_heif_decoder_id()
+    }
+    #[inline] pub fn get_webp_decoder_id() -> Result<Guid> {
+        <Self as RtActivatable<IBitmapDecoderStatics2>>::get_activation_factory().get_webp_decoder_id()
     }
 }
 DEFINE_CLSID!(BitmapDecoder(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,68,101,99,111,100,101,114,0]) [CLSID_BitmapDecoder]);
@@ -2434,6 +2293,23 @@ impl IBitmapDecoderStatics {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateWithIdAsync)(self as *const _ as *mut _, decoderId, stream as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBitmapDecoderStatics2, 1354393834, 39329, 16580, 128, 217, 174, 240, 218, 250, 108, 63);
+RT_INTERFACE!{static interface IBitmapDecoderStatics2(IBitmapDecoderStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IBitmapDecoderStatics2] {
+    fn get_HeifDecoderId(&self, out: *mut Guid) -> HRESULT,
+    fn get_WebpDecoderId(&self, out: *mut Guid) -> HRESULT
+}}
+impl IBitmapDecoderStatics2 {
+    #[inline] pub fn get_heif_decoder_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_HeifDecoderId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_webp_decoder_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_WebpDecoderId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBitmapEncoder, 734292195, 57848, 19284, 149, 232, 50, 145, 149, 81, 206, 98);
@@ -2523,6 +2399,7 @@ impl IBitmapEncoder {
 }
 RT_CLASS!{class BitmapEncoder: IBitmapEncoder}
 impl RtActivatable<IBitmapEncoderStatics> for BitmapEncoder {}
+impl RtActivatable<IBitmapEncoderStatics2> for BitmapEncoder {}
 impl BitmapEncoder {
     #[inline] pub fn get_bmp_encoder_id() -> Result<Guid> {
         <Self as RtActivatable<IBitmapEncoderStatics>>::get_activation_factory().get_bmp_encoder_id()
@@ -2556,6 +2433,9 @@ impl BitmapEncoder {
     }
     #[inline] pub fn create_for_in_place_property_encoding_async(bitmapDecoder: &BitmapDecoder) -> Result<ComPtr<foundation::IAsyncOperation<BitmapEncoder>>> {
         <Self as RtActivatable<IBitmapEncoderStatics>>::get_activation_factory().create_for_in_place_property_encoding_async(bitmapDecoder)
+    }
+    #[inline] pub fn get_heif_encoder_id() -> Result<Guid> {
+        <Self as RtActivatable<IBitmapEncoderStatics2>>::get_activation_factory().get_heif_encoder_id()
     }
 }
 DEFINE_CLSID!(BitmapEncoder(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,69,110,99,111,100,101,114,0]) [CLSID_BitmapEncoder]);
@@ -2631,6 +2511,17 @@ impl IBitmapEncoderStatics {
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateForInPlacePropertyEncodingAsync)(self as *const _ as *mut _, bitmapDecoder as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBitmapEncoderStatics2, 868991577, 65073, 16817, 184, 18, 8, 109, 33, 232, 126, 22);
+RT_INTERFACE!{static interface IBitmapEncoderStatics2(IBitmapEncoderStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IBitmapEncoderStatics2] {
+    fn get_HeifEncoderId(&self, out: *mut Guid) -> HRESULT
+}}
+impl IBitmapEncoderStatics2 {
+    #[inline] pub fn get_heif_encoder_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_HeifEncoderId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBitmapEncoderWithSoftwareBitmap, 1751962177, 17200, 19575, 172, 228, 3, 52, 150, 139, 23, 104);
@@ -3114,186 +3005,6 @@ RT_ENUM! { enum TiffCompressionMode: i32 {
     Automatic (TiffCompressionMode_Automatic) = 0, None (TiffCompressionMode_None) = 1, Ccitt3 (TiffCompressionMode_Ccitt3) = 2, Ccitt4 (TiffCompressionMode_Ccitt4) = 3, Lzw (TiffCompressionMode_Lzw) = 4, Rle (TiffCompressionMode_Rle) = 5, Zip (TiffCompressionMode_Zip) = 6, LzwhDifferencing (TiffCompressionMode_LzwhDifferencing) = 7,
 }}
 } // Windows.Graphics.Imaging
-pub mod capture { // Windows.Graphics.Capture
-use ::prelude::*;
-DEFINE_IID!(IID_IDirect3D11CaptureFrame, 4199597603, 14554, 19250, 172, 243, 250, 151, 52, 173, 128, 14);
-RT_INTERFACE!{interface IDirect3D11CaptureFrame(IDirect3D11CaptureFrameVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFrame] {
-    fn get_Surface(&self, out: *mut *mut super::directx::direct3d11::IDirect3DSurface) -> HRESULT,
-    fn get_SystemRelativeTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_ContentSize(&self, out: *mut super::SizeInt32) -> HRESULT
-}}
-impl IDirect3D11CaptureFrame {
-    #[inline] pub fn get_surface(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Surface)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_system_relative_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_SystemRelativeTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_content_size(&self) -> Result<super::SizeInt32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ContentSize)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Direct3D11CaptureFrame: IDirect3D11CaptureFrame}
-DEFINE_IID!(IID_IDirect3D11CaptureFramePool, 619408674, 6517, 16942, 130, 231, 120, 13, 189, 141, 223, 36);
-RT_INTERFACE!{interface IDirect3D11CaptureFramePool(IDirect3D11CaptureFramePoolVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePool] {
-    fn Recreate(&self, device: *mut super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> HRESULT,
-    fn TryGetNextFrame(&self, out: *mut *mut Direct3D11CaptureFrame) -> HRESULT,
-    fn add_FrameArrived(&self, handler: *mut foundation::TypedEventHandler<Direct3D11CaptureFramePool, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_FrameArrived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn CreateCaptureSession(&self, item: *mut GraphicsCaptureItem, out: *mut *mut GraphicsCaptureSession) -> HRESULT,
-    #[cfg(feature="windows-system")] fn get_DispatcherQueue(&self, out: *mut *mut super::super::system::DispatcherQueue) -> HRESULT
-}}
-impl IDirect3D11CaptureFramePool {
-    #[inline] pub fn recreate(&self, device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Recreate)(self as *const _ as *mut _, device as *const _ as *mut _, pixelFormat, numberOfBuffers, size);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn try_get_next_frame(&self) -> Result<Option<ComPtr<Direct3D11CaptureFrame>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryGetNextFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_frame_arrived(&self, handler: &foundation::TypedEventHandler<Direct3D11CaptureFramePool, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FrameArrived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_frame_arrived(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_FrameArrived)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn create_capture_session(&self, item: &GraphicsCaptureItem) -> Result<Option<ComPtr<GraphicsCaptureSession>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCaptureSession)(self as *const _ as *mut _, item as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_dispatcher_queue(&self) -> Result<Option<ComPtr<super::super::system::DispatcherQueue>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DispatcherQueue)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class Direct3D11CaptureFramePool: IDirect3D11CaptureFramePool}
-impl RtActivatable<IDirect3D11CaptureFramePoolStatics> for Direct3D11CaptureFramePool {}
-impl Direct3D11CaptureFramePool {
-    #[inline] pub fn create(device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<ComPtr<Direct3D11CaptureFramePool>>> {
-        <Self as RtActivatable<IDirect3D11CaptureFramePoolStatics>>::get_activation_factory().create(device, pixelFormat, numberOfBuffers, size)
-    }
-}
-DEFINE_CLSID!(Direct3D11CaptureFramePool(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,68,105,114,101,99,116,51,68,49,49,67,97,112,116,117,114,101,70,114,97,109,101,80,111,111,108,0]) [CLSID_Direct3D11CaptureFramePool]);
-DEFINE_IID!(IID_IDirect3D11CaptureFramePoolStatics, 2005140842, 26538, 19795, 174, 84, 16, 136, 213, 168, 202, 33);
-RT_INTERFACE!{static interface IDirect3D11CaptureFramePoolStatics(IDirect3D11CaptureFramePoolStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePoolStatics] {
-    fn Create(&self, device: *mut super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32, out: *mut *mut Direct3D11CaptureFramePool) -> HRESULT
-}}
-impl IDirect3D11CaptureFramePoolStatics {
-    #[inline] pub fn create(&self, device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<ComPtr<Direct3D11CaptureFramePool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, device as *const _ as *mut _, pixelFormat, numberOfBuffers, size, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IGraphicsCaptureItem, 2042886491, 12791, 20162, 164, 100, 99, 46, 245, 211, 7, 96);
-RT_INTERFACE!{interface IGraphicsCaptureItem(IGraphicsCaptureItemVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureItem] {
-    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Size(&self, out: *mut super::SizeInt32) -> HRESULT,
-    fn add_Closed(&self, handler: *mut foundation::TypedEventHandler<GraphicsCaptureItem, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_Closed(&self, token: foundation::EventRegistrationToken) -> HRESULT
-}}
-impl IGraphicsCaptureItem {
-    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_size(&self) -> Result<super::SizeInt32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn add_closed(&self, handler: &foundation::TypedEventHandler<GraphicsCaptureItem, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_closed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_Closed)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GraphicsCaptureItem: IGraphicsCaptureItem}
-DEFINE_IID!(IID_IGraphicsCapturePicker, 1511461299, 44409, 19274, 147, 54, 19, 24, 253, 222, 53, 57);
-RT_INTERFACE!{interface IGraphicsCapturePicker(IGraphicsCapturePickerVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCapturePicker] {
-    fn PickSingleItemAsync(&self, out: *mut *mut foundation::IAsyncOperation<GraphicsCaptureItem>) -> HRESULT
-}}
-impl IGraphicsCapturePicker {
-    #[inline] pub fn pick_single_item_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GraphicsCaptureItem>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PickSingleItemAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GraphicsCapturePicker: IGraphicsCapturePicker}
-impl RtActivatable<IActivationFactory> for GraphicsCapturePicker {}
-DEFINE_CLSID!(GraphicsCapturePicker(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,71,114,97,112,104,105,99,115,67,97,112,116,117,114,101,80,105,99,107,101,114,0]) [CLSID_GraphicsCapturePicker]);
-DEFINE_IID!(IID_IGraphicsCaptureSession, 2169389737, 63247, 19159, 147, 155, 253, 220, 198, 235, 136, 13);
-RT_INTERFACE!{interface IGraphicsCaptureSession(IGraphicsCaptureSessionVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureSession] {
-    fn StartCapture(&self) -> HRESULT
-}}
-impl IGraphicsCaptureSession {
-    #[inline] pub fn start_capture(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).StartCapture)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class GraphicsCaptureSession: IGraphicsCaptureSession}
-impl RtActivatable<IGraphicsCaptureSessionStatics> for GraphicsCaptureSession {}
-impl GraphicsCaptureSession {
-    #[inline] pub fn is_supported() -> Result<bool> {
-        <Self as RtActivatable<IGraphicsCaptureSessionStatics>>::get_activation_factory().is_supported()
-    }
-}
-DEFINE_CLSID!(GraphicsCaptureSession(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,71,114,97,112,104,105,99,115,67,97,112,116,117,114,101,83,101,115,115,105,111,110,0]) [CLSID_GraphicsCaptureSession]);
-DEFINE_IID!(IID_IGraphicsCaptureSessionStatics, 572826944, 22900, 18858, 178, 50, 8, 130, 83, 111, 76, 181);
-RT_INTERFACE!{static interface IGraphicsCaptureSessionStatics(IGraphicsCaptureSessionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureSessionStatics] {
-    fn IsSupported(&self, out: *mut bool) -> HRESULT
-}}
-impl IGraphicsCaptureSessionStatics {
-    #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsSupported)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-} // Windows.Graphics.Capture
-pub mod effects { // Windows.Graphics.Effects
-use ::prelude::*;
-DEFINE_IID!(IID_IGraphicsEffect, 3411132622, 36838, 17974, 178, 2, 134, 31, 170, 7, 216, 243);
-RT_INTERFACE!{interface IGraphicsEffect(IGraphicsEffectVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsEffect] {
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Name(&self, name: HSTRING) -> HRESULT
-}}
-impl IGraphicsEffect {
-    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_name(&self, name: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Name)(self as *const _ as *mut _, name.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IGraphicsEffectSource, 764386780, 17209, 20153, 146, 22, 249, 222, 183, 86, 88, 162);
-RT_INTERFACE!{interface IGraphicsEffectSource(IGraphicsEffectSourceVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsEffectSource] {
-    
-}}
-} // Windows.Graphics.Effects
 pub mod printing { // Windows.Graphics.Printing
 use ::prelude::*;
 RT_ENUM! { enum PrintBinding: i32 {
@@ -5714,824 +5425,1235 @@ impl IPrintWorkflowXpsDataAvailableEventArgs {
 RT_CLASS!{class PrintWorkflowXpsDataAvailableEventArgs: IPrintWorkflowXpsDataAvailableEventArgs}
 } // Windows.Graphics.Printing.Workflow
 } // Windows.Graphics.Printing
-pub mod holographic { // Windows.Graphics.Holographic
+pub mod printing3d { // Windows.Graphics.Printing3D
 use ::prelude::*;
-RT_STRUCT! { struct HolographicAdapterId {
-    LowPart: u32, HighPart: i32,
+DEFINE_IID!(IID_IPrint3DManager, 1294977802, 29542, 18801, 139, 213, 23, 196, 227, 232, 198, 192);
+RT_INTERFACE!{interface IPrint3DManager(IPrint3DManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DManager] {
+    fn add_TaskRequested(&self, eventHandler: *mut foundation::TypedEventHandler<Print3DManager, Print3DTaskRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_TaskRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
-DEFINE_IID!(IID_IHolographicCamera, 3840508997, 39917, 18816, 155, 160, 232, 118, 128, 209, 203, 116);
-RT_INTERFACE!{interface IHolographicCamera(IHolographicCameraVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera] {
-    fn get_RenderTargetSize(&self, out: *mut foundation::Size) -> HRESULT,
-    fn get_ViewportScaleFactor(&self, out: *mut f64) -> HRESULT,
-    fn put_ViewportScaleFactor(&self, value: f64) -> HRESULT,
-    fn get_IsStereo(&self, out: *mut bool) -> HRESULT,
-    fn get_Id(&self, out: *mut u32) -> HRESULT,
-    fn SetNearPlaneDistance(&self, value: f64) -> HRESULT,
-    fn SetFarPlaneDistance(&self, value: f64) -> HRESULT
-}}
-impl IHolographicCamera {
-    #[inline] pub fn get_render_target_size(&self) -> Result<foundation::Size> { unsafe { 
+impl IPrint3DManager {
+    #[inline] pub fn add_task_requested(&self, eventHandler: &foundation::TypedEventHandler<Print3DManager, Print3DTaskRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_RenderTargetSize)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_TaskRequested)(self as *const _ as *mut _, eventHandler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_viewport_scale_factor(&self) -> Result<f64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ViewportScaleFactor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_viewport_scale_factor(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ViewportScaleFactor)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_stereo(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsStereo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_id(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_near_plane_distance(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetNearPlaneDistance)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn set_far_plane_distance(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetFarPlaneDistance)(self as *const _ as *mut _, value);
+    #[inline] pub fn remove_task_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_TaskRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicCamera: IHolographicCamera}
-DEFINE_IID!(IID_IHolographicCamera2, 3042680602, 47756, 20356, 173, 121, 46, 126, 30, 36, 80, 243);
-RT_INTERFACE!{interface IHolographicCamera2(IHolographicCamera2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera2] {
-    fn get_LeftViewportParameters(&self, out: *mut *mut HolographicCameraViewportParameters) -> HRESULT,
-    fn get_RightViewportParameters(&self, out: *mut *mut HolographicCameraViewportParameters) -> HRESULT,
-    fn get_Display(&self, out: *mut *mut HolographicDisplay) -> HRESULT
+RT_CLASS!{class Print3DManager: IPrint3DManager}
+impl RtActivatable<IPrint3DManagerStatics> for Print3DManager {}
+impl Print3DManager {
+    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<Print3DManager>>> {
+        <Self as RtActivatable<IPrint3DManagerStatics>>::get_activation_factory().get_for_current_view()
+    }
+    #[inline] pub fn show_print_uiasync() -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<IPrint3DManagerStatics>>::get_activation_factory().show_print_uiasync()
+    }
+}
+DEFINE_CLSID!(Print3DManager(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,51,68,77,97,110,97,103,101,114,0]) [CLSID_Print3DManager]);
+DEFINE_IID!(IID_IPrint3DManagerStatics, 250727166, 43437, 19464, 169, 23, 29, 31, 134, 62, 171, 203);
+RT_INTERFACE!{static interface IPrint3DManagerStatics(IPrint3DManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DManagerStatics] {
+    fn GetForCurrentView(&self, out: *mut *mut Print3DManager) -> HRESULT,
+    fn ShowPrintUIAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
-impl IHolographicCamera2 {
-    #[inline] pub fn get_left_viewport_parameters(&self) -> Result<Option<ComPtr<HolographicCameraViewportParameters>>> { unsafe { 
+impl IPrint3DManagerStatics {
+    #[inline] pub fn get_for_current_view(&self) -> Result<Option<ComPtr<Print3DManager>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LeftViewportParameters)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_right_viewport_parameters(&self) -> Result<Option<ComPtr<HolographicCameraViewportParameters>>> { unsafe { 
+    #[inline] pub fn show_print_uiasync(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RightViewportParameters)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_display(&self) -> Result<Option<ComPtr<HolographicDisplay>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Display)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        let hr = ((*self.lpVtbl).ShowPrintUIAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-DEFINE_IID!(IID_IHolographicCamera3, 1168789427, 31577, 21070, 74, 63, 74, 106, 214, 101, 4, 119);
-RT_INTERFACE!{interface IHolographicCamera3(IHolographicCamera3Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera3] {
-    fn get_IsPrimaryLayerEnabled(&self, out: *mut bool) -> HRESULT,
-    fn put_IsPrimaryLayerEnabled(&self, value: bool) -> HRESULT,
-    fn get_MaxQuadLayerCount(&self, out: *mut u32) -> HRESULT,
-    fn get_QuadLayers(&self, out: *mut *mut foundation::collections::IVector<HolographicQuadLayer>) -> HRESULT
+DEFINE_IID!(IID_IPrint3DTask, 2363740288, 8472, 19496, 128, 222, 244, 38, 215, 1, 145, 174);
+RT_INTERFACE!{interface IPrint3DTask(IPrint3DTaskVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTask] {
+    fn get_Source(&self, out: *mut *mut Printing3D3MFPackage) -> HRESULT,
+    fn add_Submitting(&self, eventHandler: *mut foundation::TypedEventHandler<Print3DTask, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Submitting(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_Completed(&self, eventHandler: *mut foundation::TypedEventHandler<Print3DTask, Print3DTaskCompletedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_Completed(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_SourceChanged(&self, eventHandler: *mut foundation::TypedEventHandler<Print3DTask, Print3DTaskSourceChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_SourceChanged(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
-impl IHolographicCamera3 {
-    #[inline] pub fn get_is_primary_layer_enabled(&self) -> Result<bool> { unsafe { 
+impl IPrint3DTask {
+    #[inline] pub fn get_source(&self) -> Result<Option<ComPtr<Printing3D3MFPackage>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_submitting(&self, eventHandler: &foundation::TypedEventHandler<Print3DTask, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsPrimaryLayerEnabled)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Submitting)(self as *const _ as *mut _, eventHandler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_is_primary_layer_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IsPrimaryLayerEnabled)(self as *const _ as *mut _, value);
+    #[inline] pub fn remove_submitting(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Submitting)(self as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_max_quad_layer_count(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn add_completed(&self, eventHandler: &foundation::TypedEventHandler<Print3DTask, Print3DTaskCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaxQuadLayerCount)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Completed)(self as *const _ as *mut _, eventHandler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_quad_layers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HolographicQuadLayer>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_QuadLayers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IHolographicCamera4, 2586128854, 18211, 20281, 169, 165, 157, 5, 24, 29, 155, 68);
-RT_INTERFACE!{interface IHolographicCamera4(IHolographicCamera4Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera4] {
-    fn get_CanOverrideViewport(&self, out: *mut bool) -> HRESULT
-}}
-impl IHolographicCamera4 {
-    #[inline] pub fn get_can_override_viewport(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CanOverrideViewport)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IHolographicCameraPose, 226328112, 4830, 17853, 145, 43, 199, 246, 86, 21, 153, 209);
-RT_INTERFACE!{interface IHolographicCameraPose(IHolographicCameraPoseVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraPose] {
-    fn get_HolographicCamera(&self, out: *mut *mut HolographicCamera) -> HRESULT,
-    fn get_Viewport(&self, out: *mut foundation::Rect) -> HRESULT,
-    #[cfg(not(feature="windows-perception"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-perception")] fn TryGetViewTransform(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, out: *mut *mut foundation::IReference<HolographicStereoTransform>) -> HRESULT,
-    fn get_ProjectionTransform(&self, out: *mut HolographicStereoTransform) -> HRESULT,
-    #[cfg(not(feature="windows-perception"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-perception")] fn TryGetCullingFrustum(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, out: *mut *mut foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>) -> HRESULT,
-    #[cfg(not(feature="windows-perception"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-perception")] fn TryGetVisibleFrustum(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, out: *mut *mut foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>) -> HRESULT,
-    fn get_NearPlaneDistance(&self, out: *mut f64) -> HRESULT,
-    fn get_FarPlaneDistance(&self, out: *mut f64) -> HRESULT
-}}
-impl IHolographicCameraPose {
-    #[inline] pub fn get_holographic_camera(&self) -> Result<Option<ComPtr<HolographicCamera>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_HolographicCamera)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_viewport(&self) -> Result<foundation::Rect> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Viewport)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_view_transform(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<foundation::IReference<HolographicStereoTransform>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryGetViewTransform)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_projection_transform(&self) -> Result<HolographicStereoTransform> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ProjectionTransform)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_culling_frustum(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryGetCullingFrustum)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_visible_frustum(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryGetVisibleFrustum)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_near_plane_distance(&self) -> Result<f64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_NearPlaneDistance)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_far_plane_distance(&self) -> Result<f64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_FarPlaneDistance)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class HolographicCameraPose: IHolographicCameraPose}
-DEFINE_IID!(IID_IHolographicCameraPose2, 590078067, 23853, 17760, 129, 78, 38, 151, 196, 252, 225, 107);
-RT_INTERFACE!{interface IHolographicCameraPose2(IHolographicCameraPose2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraPose2] {
-    #[cfg(not(feature="windows-perception"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-perception")] fn OverrideViewTransform(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, coordinateSystemToViewTransform: HolographicStereoTransform) -> HRESULT,
-    fn OverrideProjectionTransform(&self, projectionTransform: HolographicStereoTransform) -> HRESULT,
-    fn OverrideViewport(&self, leftViewport: foundation::Rect, rightViewport: foundation::Rect) -> HRESULT
-}}
-impl IHolographicCameraPose2 {
-    #[cfg(feature="windows-perception")] #[inline] pub fn override_view_transform(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, coordinateSystemToViewTransform: HolographicStereoTransform) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).OverrideViewTransform)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, coordinateSystemToViewTransform);
+    #[inline] pub fn remove_completed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_Completed)(self as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn override_projection_transform(&self, projectionTransform: HolographicStereoTransform) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).OverrideProjectionTransform)(self as *const _ as *mut _, projectionTransform);
-        if hr == S_OK { Ok(()) } else { err(hr) }
+    #[inline] pub fn add_source_changed(&self, eventHandler: &foundation::TypedEventHandler<Print3DTask, Print3DTaskSourceChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_SourceChanged)(self as *const _ as *mut _, eventHandler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn override_viewport(&self, leftViewport: foundation::Rect, rightViewport: foundation::Rect) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).OverrideViewport)(self as *const _ as *mut _, leftViewport, rightViewport);
+    #[inline] pub fn remove_source_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_SourceChanged)(self as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-DEFINE_IID!(IID_IHolographicCameraRenderingParameters, 2393648849, 23540, 19990, 130, 54, 174, 8, 0, 193, 29, 13);
-RT_INTERFACE!{interface IHolographicCameraRenderingParameters(IHolographicCameraRenderingParametersVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraRenderingParameters] {
-    #[cfg(not(feature="windows-perception"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-perception")] fn SetFocusPoint(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3) -> HRESULT,
-    #[cfg(not(feature="windows-perception"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-perception")] fn SetFocusPointWithNormal(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3) -> HRESULT,
-    #[cfg(not(feature="windows-perception"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-perception")] fn SetFocusPointWithNormalLinearVelocity(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3, linearVelocity: foundation::numerics::Vector3) -> HRESULT,
-    fn get_Direct3D11Device(&self, out: *mut *mut super::directx::direct3d11::IDirect3DDevice) -> HRESULT,
-    fn get_Direct3D11BackBuffer(&self, out: *mut *mut super::directx::direct3d11::IDirect3DSurface) -> HRESULT
+RT_CLASS!{class Print3DTask: IPrint3DTask}
+DEFINE_IID!(IID_IPrint3DTaskCompletedEventArgs, 3424195759, 9748, 20253, 172, 204, 214, 252, 79, 218, 84, 85);
+RT_INTERFACE!{interface IPrint3DTaskCompletedEventArgs(IPrint3DTaskCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskCompletedEventArgs] {
+    fn get_Completion(&self, out: *mut Print3DTaskCompletion) -> HRESULT,
+    fn get_ExtendedStatus(&self, out: *mut Print3DTaskDetail) -> HRESULT
 }}
-impl IHolographicCameraRenderingParameters {
-    #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetFocusPoint)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, position);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point_with_normal(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetFocusPointWithNormal)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, position, normal);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point_with_normal_linear_velocity(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3, linearVelocity: foundation::numerics::Vector3) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetFocusPointWithNormalLinearVelocity)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, position, normal, linearVelocity);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_direct3_d11_device(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DDevice>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Direct3D11Device)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_direct3_d11_back_buffer(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Direct3D11BackBuffer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class HolographicCameraRenderingParameters: IHolographicCameraRenderingParameters}
-DEFINE_IID!(IID_IHolographicCameraRenderingParameters2, 638742755, 46742, 17972, 148, 214, 190, 6, 129, 100, 53, 153);
-RT_INTERFACE!{interface IHolographicCameraRenderingParameters2(IHolographicCameraRenderingParameters2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraRenderingParameters2] {
-    fn get_ReprojectionMode(&self, out: *mut HolographicReprojectionMode) -> HRESULT,
-    fn put_ReprojectionMode(&self, value: HolographicReprojectionMode) -> HRESULT,
-    fn CommitDirect3D11DepthBuffer(&self, value: *mut super::directx::direct3d11::IDirect3DSurface) -> HRESULT
-}}
-impl IHolographicCameraRenderingParameters2 {
-    #[inline] pub fn get_reprojection_mode(&self) -> Result<HolographicReprojectionMode> { unsafe { 
+impl IPrint3DTaskCompletedEventArgs {
+    #[inline] pub fn get_completion(&self) -> Result<Print3DTaskCompletion> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ReprojectionMode)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_Completion)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_reprojection_mode(&self, value: HolographicReprojectionMode) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ReprojectionMode)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn commit_direct3_d11_depth_buffer(&self, value: &super::directx::direct3d11::IDirect3DSurface) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).CommitDirect3D11DepthBuffer)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IHolographicCameraRenderingParameters3, 2980729151, 4973, 19206, 185, 212, 228, 185, 20, 205, 6, 131);
-RT_INTERFACE!{interface IHolographicCameraRenderingParameters3(IHolographicCameraRenderingParameters3Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraRenderingParameters3] {
-    fn get_IsContentProtectionEnabled(&self, out: *mut bool) -> HRESULT,
-    fn put_IsContentProtectionEnabled(&self, value: bool) -> HRESULT
-}}
-impl IHolographicCameraRenderingParameters3 {
-    #[inline] pub fn get_is_content_protection_enabled(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_extended_status(&self) -> Result<Print3DTaskDetail> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsContentProtectionEnabled)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_ExtendedStatus)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_is_content_protection_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IsContentProtectionEnabled)(self as *const _ as *mut _, value);
+}
+RT_CLASS!{class Print3DTaskCompletedEventArgs: IPrint3DTaskCompletedEventArgs}
+RT_ENUM! { enum Print3DTaskCompletion: i32 {
+    Abandoned (Print3DTaskCompletion_Abandoned) = 0, Canceled (Print3DTaskCompletion_Canceled) = 1, Failed (Print3DTaskCompletion_Failed) = 2, Slicing (Print3DTaskCompletion_Slicing) = 3, Submitted (Print3DTaskCompletion_Submitted) = 4,
+}}
+RT_ENUM! { enum Print3DTaskDetail: i32 {
+    Unknown (Print3DTaskDetail_Unknown) = 0, ModelExceedsPrintBed (Print3DTaskDetail_ModelExceedsPrintBed) = 1, UploadFailed (Print3DTaskDetail_UploadFailed) = 2, InvalidMaterialSelection (Print3DTaskDetail_InvalidMaterialSelection) = 3, InvalidModel (Print3DTaskDetail_InvalidModel) = 4, ModelNotManifold (Print3DTaskDetail_ModelNotManifold) = 5, InvalidPrintTicket (Print3DTaskDetail_InvalidPrintTicket) = 6,
+}}
+DEFINE_IID!(IID_IPrint3DTaskRequest, 630572143, 8773, 19546, 135, 49, 13, 96, 77, 198, 188, 60);
+RT_INTERFACE!{interface IPrint3DTaskRequest(IPrint3DTaskRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskRequest] {
+    fn CreateTask(&self, title: HSTRING, printerId: HSTRING, handler: *mut Print3DTaskSourceRequestedHandler, out: *mut *mut Print3DTask) -> HRESULT
+}}
+impl IPrint3DTaskRequest {
+    #[inline] pub fn create_task(&self, title: &HStringArg, printerId: &HStringArg, handler: &Print3DTaskSourceRequestedHandler) -> Result<Option<ComPtr<Print3DTask>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateTask)(self as *const _ as *mut _, title.get(), printerId.get(), handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Print3DTaskRequest: IPrint3DTaskRequest}
+DEFINE_IID!(IID_IPrint3DTaskRequestedEventArgs, 353154943, 6341, 16599, 159, 64, 250, 179, 9, 110, 5, 169);
+RT_INTERFACE!{interface IPrint3DTaskRequestedEventArgs(IPrint3DTaskRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskRequestedEventArgs] {
+    fn get_Request(&self, out: *mut *mut Print3DTaskRequest) -> HRESULT
+}}
+impl IPrint3DTaskRequestedEventArgs {
+    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<Print3DTaskRequest>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Print3DTaskRequestedEventArgs: IPrint3DTaskRequestedEventArgs}
+DEFINE_IID!(IID_IPrint3DTaskSourceChangedEventArgs, 1540175023, 9449, 19472, 141, 7, 20, 195, 70, 186, 63, 207);
+RT_INTERFACE!{interface IPrint3DTaskSourceChangedEventArgs(IPrint3DTaskSourceChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskSourceChangedEventArgs] {
+    fn get_Source(&self, out: *mut *mut Printing3D3MFPackage) -> HRESULT
+}}
+impl IPrint3DTaskSourceChangedEventArgs {
+    #[inline] pub fn get_source(&self) -> Result<Option<ComPtr<Printing3D3MFPackage>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Print3DTaskSourceChangedEventArgs: IPrint3DTaskSourceChangedEventArgs}
+DEFINE_IID!(IID_IPrint3DTaskSourceRequestedArgs, 3346832058, 9391, 16973, 163, 191, 146, 37, 12, 53, 86, 2);
+RT_INTERFACE!{interface IPrint3DTaskSourceRequestedArgs(IPrint3DTaskSourceRequestedArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskSourceRequestedArgs] {
+    fn SetSource(&self, source: *mut Printing3D3MFPackage) -> HRESULT
+}}
+impl IPrint3DTaskSourceRequestedArgs {
+    #[inline] pub fn set_source(&self, source: &Printing3D3MFPackage) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetSource)(self as *const _ as *mut _, source as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-DEFINE_IID!(IID_IHolographicCameraViewportParameters, 2160980983, 33834, 16865, 147, 237, 86, 146, 171, 31, 187, 16);
-RT_INTERFACE!{interface IHolographicCameraViewportParameters(IHolographicCameraViewportParametersVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraViewportParameters] {
-    fn get_HiddenAreaMesh(&self, outSize: *mut u32, out: *mut *mut foundation::numerics::Vector2) -> HRESULT,
-    fn get_VisibleAreaMesh(&self, outSize: *mut u32, out: *mut *mut foundation::numerics::Vector2) -> HRESULT
+RT_CLASS!{class Print3DTaskSourceRequestedArgs: IPrint3DTaskSourceRequestedArgs}
+DEFINE_IID!(IID_Print3DTaskSourceRequestedHandler, 3910622832, 51479, 18142, 187, 81, 217, 169, 77, 179, 113, 31);
+RT_DELEGATE!{delegate Print3DTaskSourceRequestedHandler(Print3DTaskSourceRequestedHandlerVtbl, Print3DTaskSourceRequestedHandlerImpl) [IID_Print3DTaskSourceRequestedHandler] {
+    fn Invoke(&self, args: *mut Print3DTaskSourceRequestedArgs) -> HRESULT
 }}
-impl IHolographicCameraViewportParameters {
-    #[inline] pub fn get_hidden_area_mesh(&self) -> Result<ComArray<foundation::numerics::Vector2>> { unsafe { 
-        let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_HiddenAreaMesh)(self as *const _ as *mut _, &mut outSize, &mut out);
-        if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_visible_area_mesh(&self) -> Result<ComArray<foundation::numerics::Vector2>> { unsafe { 
-        let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_VisibleAreaMesh)(self as *const _ as *mut _, &mut outSize, &mut out);
-        if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
+impl Print3DTaskSourceRequestedHandler {
+    #[inline] pub fn invoke(&self, args: &Print3DTaskSourceRequestedArgs) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, args as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicCameraViewportParameters: IHolographicCameraViewportParameters}
-DEFINE_IID!(IID_IHolographicDisplay, 2597233684, 7583, 16528, 163, 136, 144, 192, 111, 110, 174, 156);
-RT_INTERFACE!{interface IHolographicDisplay(IHolographicDisplayVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicDisplay] {
-    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_MaxViewportSize(&self, out: *mut foundation::Size) -> HRESULT,
-    fn get_IsStereo(&self, out: *mut bool) -> HRESULT,
-    fn get_IsOpaque(&self, out: *mut bool) -> HRESULT,
-    fn get_AdapterId(&self, out: *mut HolographicAdapterId) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn get_SpatialLocator(&self, out: *mut *mut super::super::perception::spatial::SpatialLocator) -> HRESULT
+DEFINE_IID!(IID_IPrinting3D3MFPackage, 4132296136, 10935, 17833, 161, 183, 38, 126, 148, 141, 91, 24);
+RT_INTERFACE!{interface IPrinting3D3MFPackage(IPrinting3D3MFPackageVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3D3MFPackage] {
+    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-storage")] fn SaveAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::super::storage::streams::IRandomAccessStream>) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_PrintTicket(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStream) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-storage")] fn put_PrintTicket(&self, value: *mut super::super::storage::streams::IRandomAccessStream) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_ModelPart(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStream) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
+    #[cfg(feature="windows-storage")] fn put_ModelPart(&self, value: *mut super::super::storage::streams::IRandomAccessStream) -> HRESULT,
+    fn get_Thumbnail(&self, out: *mut *mut Printing3DTextureResource) -> HRESULT,
+    fn put_Thumbnail(&self, value: *mut Printing3DTextureResource) -> HRESULT,
+    fn get_Textures(&self, out: *mut *mut foundation::collections::IVector<Printing3DTextureResource>) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy8(&self) -> (),
+    #[cfg(feature="windows-storage")] fn LoadModelFromPackageAsync(&self, value: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncOperation<Printing3DModel>) -> HRESULT,
+    fn SaveModelToPackageAsync(&self, value: *mut Printing3DModel, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
-impl IHolographicDisplay {
-    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
+impl IPrinting3D3MFPackage {
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::streams::IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SaveAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_print_ticket(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PrintTicket)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_print_ticket(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PrintTicket)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_model_part(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ModelPart)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_model_part(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ModelPart)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_thumbnail(&self) -> Result<Option<ComPtr<Printing3DTextureResource>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_thumbnail(&self, value: &Printing3DTextureResource) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_textures(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DTextureResource>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Textures)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_package_async(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<Printing3DModel>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).LoadModelFromPackageAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn save_model_to_package_async(&self, value: &Printing3DModel) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SaveModelToPackageAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3D3MFPackage: IPrinting3D3MFPackage}
+impl RtActivatable<IPrinting3D3MFPackageStatics> for Printing3D3MFPackage {}
+impl RtActivatable<IActivationFactory> for Printing3D3MFPackage {}
+impl Printing3D3MFPackage {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(value: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<Printing3D3MFPackage>>> {
+        <Self as RtActivatable<IPrinting3D3MFPackageStatics>>::get_activation_factory().load_async(value)
+    }
+}
+DEFINE_CLSID!(Printing3D3MFPackage(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,51,77,70,80,97,99,107,97,103,101,0]) [CLSID_Printing3D3MFPackage]);
+DEFINE_IID!(IID_IPrinting3D3MFPackage2, 2522643140, 37835, 17456, 146, 184, 120, 156, 212, 84, 248, 131);
+RT_INTERFACE!{interface IPrinting3D3MFPackage2(IPrinting3D3MFPackage2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3D3MFPackage2] {
+    fn get_Compression(&self, out: *mut Printing3DPackageCompression) -> HRESULT,
+    fn put_Compression(&self, value: Printing3DPackageCompression) -> HRESULT
+}}
+impl IPrinting3D3MFPackage2 {
+    #[inline] pub fn get_compression(&self) -> Result<Printing3DPackageCompression> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Compression)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_compression(&self, value: Printing3DPackageCompression) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Compression)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPrinting3D3MFPackageStatics, 1884871087, 31386, 18311, 184, 23, 246, 244, 89, 33, 72, 35);
+RT_INTERFACE!{static interface IPrinting3D3MFPackageStatics(IPrinting3D3MFPackageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3D3MFPackageStatics] {
+    #[cfg(feature="windows-storage")] fn LoadAsync(&self, value: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncOperation<Printing3D3MFPackage>) -> HRESULT
+}}
+impl IPrinting3D3MFPackageStatics {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<Printing3D3MFPackage>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).LoadAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPrinting3DBaseMaterial, 3505448771, 50444, 19403, 157, 4, 252, 22, 173, 206, 162, 201);
+RT_INTERFACE!{interface IPrinting3DBaseMaterial(IPrinting3DBaseMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterial] {
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Name(&self, value: HSTRING) -> HRESULT,
+    fn get_Color(&self, out: *mut *mut Printing3DColorMaterial) -> HRESULT,
+    fn put_Color(&self, value: *mut Printing3DColorMaterial) -> HRESULT
+}}
+impl IPrinting3DBaseMaterial {
+    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_max_viewport_size(&self) -> Result<foundation::Size> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaxViewportSize)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_stereo(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsStereo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_opaque(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsOpaque)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_adapter_id(&self) -> Result<HolographicAdapterId> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_AdapterId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn get_spatial_locator(&self) -> Result<Option<ComPtr<super::super::perception::spatial::SpatialLocator>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SpatialLocator)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class HolographicDisplay: IHolographicDisplay}
-impl RtActivatable<IHolographicDisplayStatics> for HolographicDisplay {}
-impl HolographicDisplay {
-    #[inline] pub fn get_default() -> Result<Option<ComPtr<HolographicDisplay>>> {
-        <Self as RtActivatable<IHolographicDisplayStatics>>::get_activation_factory().get_default()
-    }
-}
-DEFINE_CLSID!(HolographicDisplay(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,68,105,115,112,108,97,121,0]) [CLSID_HolographicDisplay]);
-DEFINE_IID!(IID_IHolographicDisplay2, 1974222722, 59221, 17260, 141, 150, 77, 50, 209, 49, 71, 62);
-RT_INTERFACE!{interface IHolographicDisplay2(IHolographicDisplay2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicDisplay2] {
-    fn get_RefreshRate(&self, out: *mut f64) -> HRESULT
-}}
-impl IHolographicDisplay2 {
-    #[inline] pub fn get_refresh_rate(&self) -> Result<f64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_RefreshRate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IHolographicDisplayStatics, 3409398147, 59312, 18497, 131, 85, 58, 229, 181, 54, 233, 164);
-RT_INTERFACE!{static interface IHolographicDisplayStatics(IHolographicDisplayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicDisplayStatics] {
-    fn GetDefault(&self, out: *mut *mut HolographicDisplay) -> HRESULT
-}}
-impl IHolographicDisplayStatics {
-    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<HolographicDisplay>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IHolographicFrame, 3331886774, 43193, 12372, 166, 235, 214, 36, 182, 83, 99, 117);
-RT_INTERFACE!{interface IHolographicFrame(IHolographicFrameVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFrame] {
-    fn get_AddedCameras(&self, out: *mut *mut foundation::collections::IVectorView<HolographicCamera>) -> HRESULT,
-    fn get_RemovedCameras(&self, out: *mut *mut foundation::collections::IVectorView<HolographicCamera>) -> HRESULT,
-    fn GetRenderingParameters(&self, cameraPose: *mut HolographicCameraPose, out: *mut *mut HolographicCameraRenderingParameters) -> HRESULT,
-    fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_CurrentPrediction(&self, out: *mut *mut HolographicFramePrediction) -> HRESULT,
-    fn UpdateCurrentPrediction(&self) -> HRESULT,
-    fn PresentUsingCurrentPrediction(&self, out: *mut HolographicFramePresentResult) -> HRESULT,
-    fn PresentUsingCurrentPredictionWithBehavior(&self, waitBehavior: HolographicFramePresentWaitBehavior, out: *mut HolographicFramePresentResult) -> HRESULT,
-    fn WaitForFrameToFinish(&self) -> HRESULT
-}}
-impl IHolographicFrame {
-    #[inline] pub fn get_added_cameras(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HolographicCamera>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AddedCameras)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_removed_cameras(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HolographicCamera>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RemovedCameras)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_rendering_parameters(&self, cameraPose: &HolographicCameraPose) -> Result<Option<ComPtr<HolographicCameraRenderingParameters>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetRenderingParameters)(self as *const _ as *mut _, cameraPose as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_current_prediction(&self) -> Result<Option<ComPtr<HolographicFramePrediction>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CurrentPrediction)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn update_current_prediction(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).UpdateCurrentPrediction)(self as *const _ as *mut _);
+    #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Name)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn present_using_current_prediction(&self) -> Result<HolographicFramePresentResult> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).PresentUsingCurrentPrediction)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
+    #[inline] pub fn get_color(&self) -> Result<Option<ComPtr<Printing3DColorMaterial>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Color)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn present_using_current_prediction_with_behavior(&self, waitBehavior: HolographicFramePresentWaitBehavior) -> Result<HolographicFramePresentResult> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).PresentUsingCurrentPredictionWithBehavior)(self as *const _ as *mut _, waitBehavior, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn wait_for_frame_to_finish(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WaitForFrameToFinish)(self as *const _ as *mut _);
+    #[inline] pub fn set_color(&self, value: &Printing3DColorMaterial) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Color)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicFrame: IHolographicFrame}
-DEFINE_IID!(IID_IHolographicFrame2, 675231679, 15346, 24209, 102, 51, 135, 5, 116, 230, 242, 23);
-RT_INTERFACE!{interface IHolographicFrame2(IHolographicFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFrame2] {
-    fn GetQuadLayerUpdateParameters(&self, layer: *mut HolographicQuadLayer, out: *mut *mut HolographicQuadLayerUpdateParameters) -> HRESULT
-}}
-impl IHolographicFrame2 {
-    #[inline] pub fn get_quad_layer_update_parameters(&self, layer: &HolographicQuadLayer) -> Result<Option<ComPtr<HolographicQuadLayerUpdateParameters>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetQuadLayerUpdateParameters)(self as *const _ as *mut _, layer as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IHolographicFramePrediction, 1376734689, 23562, 20089, 168, 30, 106, 190, 2, 187, 39, 57);
-RT_INTERFACE!{interface IHolographicFramePrediction(IHolographicFramePredictionVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePrediction] {
-    fn get_CameraPoses(&self, out: *mut *mut foundation::collections::IVectorView<HolographicCameraPose>) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn get_Timestamp(&self, out: *mut *mut super::super::perception::PerceptionTimestamp) -> HRESULT
-}}
-impl IHolographicFramePrediction {
-    #[inline] pub fn get_camera_poses(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HolographicCameraPose>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CameraPoses)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn get_timestamp(&self) -> Result<Option<ComPtr<super::super::perception::PerceptionTimestamp>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Timestamp)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class HolographicFramePrediction: IHolographicFramePrediction}
-DEFINE_IID!(IID_IHolographicFramePresentationMonitor, 3397854572, 28590, 17038, 187, 131, 37, 223, 238, 81, 19, 107);
-RT_INTERFACE!{interface IHolographicFramePresentationMonitor(IHolographicFramePresentationMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePresentationMonitor] {
-    fn ReadReports(&self, out: *mut *mut foundation::collections::IVectorView<HolographicFramePresentationReport>) -> HRESULT
-}}
-impl IHolographicFramePresentationMonitor {
-    #[inline] pub fn read_reports(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HolographicFramePresentationReport>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadReports)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class HolographicFramePresentationMonitor: IHolographicFramePresentationMonitor}
-DEFINE_IID!(IID_IHolographicFramePresentationReport, 2159736340, 62196, 19594, 141, 227, 6, 92, 120, 246, 213, 222);
-RT_INTERFACE!{interface IHolographicFramePresentationReport(IHolographicFramePresentationReportVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePresentationReport] {
-    fn get_CompositorGpuDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_AppGpuDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_AppGpuOverrun(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_MissedPresentationOpportunityCount(&self, out: *mut u32) -> HRESULT,
-    fn get_PresentationCount(&self, out: *mut u32) -> HRESULT
-}}
-impl IHolographicFramePresentationReport {
-    #[inline] pub fn get_compositor_gpu_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CompositorGpuDuration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_app_gpu_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_AppGpuDuration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_app_gpu_overrun(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_AppGpuOverrun)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_missed_presentation_opportunity_count(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MissedPresentationOpportunityCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_presentation_count(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_PresentationCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class HolographicFramePresentationReport: IHolographicFramePresentationReport}
-RT_ENUM! { enum HolographicFramePresentResult: i32 {
-    Success (HolographicFramePresentResult_Success) = 0, DeviceRemoved (HolographicFramePresentResult_DeviceRemoved) = 1,
-}}
-RT_ENUM! { enum HolographicFramePresentWaitBehavior: i32 {
-    WaitForFrameToFinish (HolographicFramePresentWaitBehavior_WaitForFrameToFinish) = 0, DoNotWaitForFrameToFinish (HolographicFramePresentWaitBehavior_DoNotWaitForFrameToFinish) = 1,
-}}
-DEFINE_IID!(IID_IHolographicQuadLayer, 2419351753, 51673, 23900, 65, 172, 162, 213, 171, 15, 211, 49);
-RT_INTERFACE!{interface IHolographicQuadLayer(IHolographicQuadLayerVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayer] {
-    fn get_PixelFormat(&self, out: *mut super::directx::DirectXPixelFormat) -> HRESULT,
-    fn get_Size(&self, out: *mut foundation::Size) -> HRESULT
-}}
-impl IHolographicQuadLayer {
-    #[inline] pub fn get_pixel_format(&self) -> Result<super::directx::DirectXPixelFormat> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_PixelFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_size(&self) -> Result<foundation::Size> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class HolographicQuadLayer: IHolographicQuadLayer}
-impl RtActivatable<IHolographicQuadLayerFactory> for HolographicQuadLayer {}
-impl HolographicQuadLayer {
-    #[inline] pub fn create(size: foundation::Size) -> Result<ComPtr<HolographicQuadLayer>> {
-        <Self as RtActivatable<IHolographicQuadLayerFactory>>::get_activation_factory().create(size)
+RT_CLASS!{class Printing3DBaseMaterial: IPrinting3DBaseMaterial}
+impl RtActivatable<IPrinting3DBaseMaterialStatics> for Printing3DBaseMaterial {}
+impl RtActivatable<IActivationFactory> for Printing3DBaseMaterial {}
+impl Printing3DBaseMaterial {
+    #[inline] pub fn get_abs() -> Result<HString> {
+        <Self as RtActivatable<IPrinting3DBaseMaterialStatics>>::get_activation_factory().get_abs()
     }
-    #[inline] pub fn create_with_pixel_format(size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat) -> Result<ComPtr<HolographicQuadLayer>> {
-        <Self as RtActivatable<IHolographicQuadLayerFactory>>::get_activation_factory().create_with_pixel_format(size, pixelFormat)
+    #[inline] pub fn get_pla() -> Result<HString> {
+        <Self as RtActivatable<IPrinting3DBaseMaterialStatics>>::get_activation_factory().get_pla()
     }
 }
-DEFINE_CLSID!(HolographicQuadLayer(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,81,117,97,100,76,97,121,101,114,0]) [CLSID_HolographicQuadLayer]);
-DEFINE_IID!(IID_IHolographicQuadLayerFactory, 2792700147, 23060, 23056, 72, 154, 69, 80, 101, 179, 123, 118);
-RT_INTERFACE!{static interface IHolographicQuadLayerFactory(IHolographicQuadLayerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayerFactory] {
-    fn Create(&self, size: foundation::Size, out: *mut *mut HolographicQuadLayer) -> HRESULT,
-    fn CreateWithPixelFormat(&self, size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat, out: *mut *mut HolographicQuadLayer) -> HRESULT
+DEFINE_CLSID!(Printing3DBaseMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,66,97,115,101,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DBaseMaterial]);
+DEFINE_IID!(IID_IPrinting3DBaseMaterialGroup, 2498785464, 9493, 19085, 161, 240, 208, 252, 19, 208, 96, 33);
+RT_INTERFACE!{interface IPrinting3DBaseMaterialGroup(IPrinting3DBaseMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterialGroup] {
+    fn get_Bases(&self, out: *mut *mut foundation::collections::IVector<Printing3DBaseMaterial>) -> HRESULT,
+    fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT
 }}
-impl IHolographicQuadLayerFactory {
-    #[inline] pub fn create(&self, size: foundation::Size) -> Result<ComPtr<HolographicQuadLayer>> { unsafe { 
+impl IPrinting3DBaseMaterialGroup {
+    #[inline] pub fn get_bases(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DBaseMaterial>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, size, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.lpVtbl).get_Bases)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_pixel_format(&self, size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat) -> Result<ComPtr<HolographicQuadLayer>> { unsafe { 
+    #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaterialGroupId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DBaseMaterialGroup: IPrinting3DBaseMaterialGroup}
+impl RtActivatable<IPrinting3DBaseMaterialGroupFactory> for Printing3DBaseMaterialGroup {}
+impl Printing3DBaseMaterialGroup {
+    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DBaseMaterialGroup>> {
+        <Self as RtActivatable<IPrinting3DBaseMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
+    }
+}
+DEFINE_CLSID!(Printing3DBaseMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,66,97,115,101,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DBaseMaterialGroup]);
+DEFINE_IID!(IID_IPrinting3DBaseMaterialGroupFactory, 1544898268, 34455, 16787, 151, 107, 132, 187, 65, 22, 229, 191);
+RT_INTERFACE!{static interface IPrinting3DBaseMaterialGroupFactory(IPrinting3DBaseMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterialGroupFactory] {
+    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DBaseMaterialGroup) -> HRESULT
+}}
+impl IPrinting3DBaseMaterialGroupFactory {
+    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DBaseMaterialGroup>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithPixelFormat)(self as *const _ as *mut _, size, pixelFormat, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, materialGroupId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-DEFINE_IID!(IID_IHolographicQuadLayerUpdateParameters, 722379696, 31117, 23498, 85, 194, 44, 12, 118, 46, 187, 8);
-RT_INTERFACE!{interface IHolographicQuadLayerUpdateParameters(IHolographicQuadLayerUpdateParametersVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayerUpdateParameters] {
-    fn AcquireBufferToUpdateContent(&self, out: *mut *mut super::directx::direct3d11::IDirect3DSurface) -> HRESULT,
-    fn UpdateViewport(&self, value: foundation::Rect) -> HRESULT,
-    fn UpdateContentProtectionEnabled(&self, value: bool) -> HRESULT,
-    fn UpdateExtents(&self, value: foundation::numerics::Vector2) -> HRESULT,
-    #[cfg(not(feature="windows-perception"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-perception")] fn UpdateLocationWithStationaryMode(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> HRESULT,
-    fn UpdateLocationWithDisplayRelativeMode(&self, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> HRESULT
+DEFINE_IID!(IID_IPrinting3DBaseMaterialStatics, 2170177468, 14154, 18285, 190, 146, 62, 207, 209, 203, 151, 118);
+RT_INTERFACE!{static interface IPrinting3DBaseMaterialStatics(IPrinting3DBaseMaterialStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterialStatics] {
+    fn get_Abs(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Pla(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl IHolographicQuadLayerUpdateParameters {
-    #[inline] pub fn acquire_buffer_to_update_content(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
+impl IPrinting3DBaseMaterialStatics {
+    #[inline] pub fn get_abs(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AcquireBufferToUpdateContent)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        let hr = ((*self.lpVtbl).get_Abs)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn update_viewport(&self, value: foundation::Rect) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).UpdateViewport)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
+    #[inline] pub fn get_pla(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Pla)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn update_content_protection_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).UpdateContentProtectionEnabled)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
+}
+RT_STRUCT! { struct Printing3DBufferDescription {
+    Format: Printing3DBufferFormat, Stride: u32,
+}}
+RT_ENUM! { enum Printing3DBufferFormat: i32 {
+    Unknown (Printing3DBufferFormat_Unknown) = 0, R32G32B32A32Float (Printing3DBufferFormat_R32G32B32A32Float) = 2, R32G32B32A32UInt (Printing3DBufferFormat_R32G32B32A32UInt) = 3, R32G32B32Float (Printing3DBufferFormat_R32G32B32Float) = 6, R32G32B32UInt (Printing3DBufferFormat_R32G32B32UInt) = 7, Printing3DDouble (Printing3DBufferFormat_Printing3DDouble) = 500, Printing3DUInt (Printing3DBufferFormat_Printing3DUInt) = 501,
+}}
+DEFINE_IID!(IID_IPrinting3DColorMaterial, 3783891240, 31975, 17029, 163, 93, 241, 69, 201, 81, 12, 123);
+RT_INTERFACE!{interface IPrinting3DColorMaterial(IPrinting3DColorMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterial] {
+    fn get_Value(&self, out: *mut u32) -> HRESULT,
+    fn put_Value(&self, value: u32) -> HRESULT
+}}
+impl IPrinting3DColorMaterial {
+    #[inline] pub fn get_value(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn update_extents(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).UpdateExtents)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn update_location_with_stationary_mode(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).UpdateLocationWithStationaryMode)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, position, orientation);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn update_location_with_display_relative_mode(&self, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).UpdateLocationWithDisplayRelativeMode)(self as *const _ as *mut _, position, orientation);
+    #[inline] pub fn set_value(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicQuadLayerUpdateParameters: IHolographicQuadLayerUpdateParameters}
-RT_ENUM! { enum HolographicReprojectionMode: i32 {
-    PositionAndOrientation (HolographicReprojectionMode_PositionAndOrientation) = 0, OrientationOnly (HolographicReprojectionMode_OrientationOnly) = 1, Disabled (HolographicReprojectionMode_Disabled) = 2,
+RT_CLASS!{class Printing3DColorMaterial: IPrinting3DColorMaterial}
+impl RtActivatable<IActivationFactory> for Printing3DColorMaterial {}
+DEFINE_CLSID!(Printing3DColorMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,108,111,114,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DColorMaterial]);
+DEFINE_IID!(IID_IPrinting3DColorMaterial2, 4205897810, 2799, 17641, 157, 221, 54, 238, 234, 90, 205, 68);
+RT_INTERFACE!{interface IPrinting3DColorMaterial2(IPrinting3DColorMaterial2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterial2] {
+    #[cfg(feature="windows-ui")] fn get_Color(&self, out: *mut super::super::ui::Color) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_Color(&self, value: super::super::ui::Color) -> HRESULT
 }}
-DEFINE_IID!(IID_IHolographicSpace, 1132518310, 24184, 17231, 128, 124, 52, 51, 209, 239, 232, 183);
-RT_INTERFACE!{interface IHolographicSpace(IHolographicSpaceVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpace] {
-    fn get_PrimaryAdapterId(&self, out: *mut HolographicAdapterId) -> HRESULT,
-    fn SetDirect3D11Device(&self, value: *mut super::directx::direct3d11::IDirect3DDevice) -> HRESULT,
-    fn add_CameraAdded(&self, handler: *mut foundation::TypedEventHandler<HolographicSpace, HolographicSpaceCameraAddedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_CameraAdded(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_CameraRemoved(&self, handler: *mut foundation::TypedEventHandler<HolographicSpace, HolographicSpaceCameraRemovedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_CameraRemoved(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn CreateNextFrame(&self, out: *mut *mut HolographicFrame) -> HRESULT
-}}
-impl IHolographicSpace {
-    #[inline] pub fn get_primary_adapter_id(&self) -> Result<HolographicAdapterId> { unsafe { 
+impl IPrinting3DColorMaterial2 {
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_color(&self) -> Result<super::super::ui::Color> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_PrimaryAdapterId)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_Color)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_direct3_d11_device(&self, value: &super::directx::direct3d11::IDirect3DDevice) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetDirect3D11Device)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_color(&self, value: super::super::ui::Color) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Color)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_camera_added(&self, handler: &foundation::TypedEventHandler<HolographicSpace, HolographicSpaceCameraAddedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CameraAdded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_camera_added(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_CameraAdded)(self as *const _ as *mut _, cookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_camera_removed(&self, handler: &foundation::TypedEventHandler<HolographicSpace, HolographicSpaceCameraRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CameraRemoved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_camera_removed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_CameraRemoved)(self as *const _ as *mut _, cookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn create_next_frame(&self) -> Result<Option<ComPtr<HolographicFrame>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateNextFrame)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicSpace: IHolographicSpace}
-impl RtActivatable<IHolographicSpaceStatics> for HolographicSpace {}
-impl RtActivatable<IHolographicSpaceStatics2> for HolographicSpace {}
-impl RtActivatable<IHolographicSpaceStatics3> for HolographicSpace {}
-impl HolographicSpace {
-    #[cfg(feature="windows-ui")] #[inline] pub fn create_for_core_window(window: &super::super::ui::core::CoreWindow) -> Result<Option<ComPtr<HolographicSpace>>> {
-        <Self as RtActivatable<IHolographicSpaceStatics>>::get_activation_factory().create_for_core_window(window)
-    }
-    #[inline] pub fn get_is_supported() -> Result<bool> {
-        <Self as RtActivatable<IHolographicSpaceStatics2>>::get_activation_factory().get_is_supported()
-    }
-    #[inline] pub fn get_is_available() -> Result<bool> {
-        <Self as RtActivatable<IHolographicSpaceStatics2>>::get_activation_factory().get_is_available()
-    }
-    #[inline] pub fn add_is_available_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IHolographicSpaceStatics2>>::get_activation_factory().add_is_available_changed(handler)
-    }
-    #[inline] pub fn remove_is_available_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IHolographicSpaceStatics2>>::get_activation_factory().remove_is_available_changed(token)
-    }
-    #[inline] pub fn get_is_configured() -> Result<bool> {
-        <Self as RtActivatable<IHolographicSpaceStatics3>>::get_activation_factory().get_is_configured()
+DEFINE_IID!(IID_IPrinting3DColorMaterialGroup, 1731536, 43743, 16934, 175, 233, 243, 105, 160, 180, 80, 4);
+RT_INTERFACE!{interface IPrinting3DColorMaterialGroup(IPrinting3DColorMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterialGroup] {
+    fn get_Colors(&self, out: *mut *mut foundation::collections::IVector<Printing3DColorMaterial>) -> HRESULT,
+    fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT
+}}
+impl IPrinting3DColorMaterialGroup {
+    #[inline] pub fn get_colors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DColorMaterial>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Colors)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaterialGroupId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DColorMaterialGroup: IPrinting3DColorMaterialGroup}
+impl RtActivatable<IPrinting3DColorMaterialGroupFactory> for Printing3DColorMaterialGroup {}
+impl Printing3DColorMaterialGroup {
+    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DColorMaterialGroup>> {
+        <Self as RtActivatable<IPrinting3DColorMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
     }
 }
-DEFINE_CLSID!(HolographicSpace(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,83,112,97,99,101,0]) [CLSID_HolographicSpace]);
-DEFINE_IID!(IID_IHolographicSpace2, 1333897640, 47103, 18563, 152, 39, 125, 103, 114, 135, 234, 112);
-RT_INTERFACE!{interface IHolographicSpace2(IHolographicSpace2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpace2] {
-    fn get_UserPresence(&self, out: *mut HolographicSpaceUserPresence) -> HRESULT,
-    fn add_UserPresenceChanged(&self, handler: *mut foundation::TypedEventHandler<HolographicSpace, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_UserPresenceChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn WaitForNextFrameReady(&self) -> HRESULT,
-    fn WaitForNextFrameReadyWithHeadStart(&self, requestedHeadStartDuration: foundation::TimeSpan) -> HRESULT,
-    fn CreateFramePresentationMonitor(&self, maxQueuedReports: u32, out: *mut *mut HolographicFramePresentationMonitor) -> HRESULT
+DEFINE_CLSID!(Printing3DColorMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,108,111,114,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DColorMaterialGroup]);
+DEFINE_IID!(IID_IPrinting3DColorMaterialGroupFactory, 1909689709, 45546, 19035, 188, 84, 25, 198, 95, 61, 240, 68);
+RT_INTERFACE!{static interface IPrinting3DColorMaterialGroupFactory(IPrinting3DColorMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterialGroupFactory] {
+    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DColorMaterialGroup) -> HRESULT
 }}
-impl IHolographicSpace2 {
-    #[inline] pub fn get_user_presence(&self) -> Result<HolographicSpaceUserPresence> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UserPresence)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
+impl IPrinting3DColorMaterialGroupFactory {
+    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DColorMaterialGroup>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, materialGroupId, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_user_presence_changed(&self, handler: &foundation::TypedEventHandler<HolographicSpace, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_UserPresenceChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
+}
+DEFINE_IID!(IID_IPrinting3DComponent, 2116581445, 49023, 19675, 162, 127, 48, 160, 20, 55, 254, 222);
+RT_INTERFACE!{interface IPrinting3DComponent(IPrinting3DComponentVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DComponent] {
+    fn get_Mesh(&self, out: *mut *mut Printing3DMesh) -> HRESULT,
+    fn put_Mesh(&self, value: *mut Printing3DMesh) -> HRESULT,
+    fn get_Components(&self, out: *mut *mut foundation::collections::IVector<Printing3DComponentWithMatrix>) -> HRESULT,
+    fn get_Thumbnail(&self, out: *mut *mut Printing3DTextureResource) -> HRESULT,
+    fn put_Thumbnail(&self, value: *mut Printing3DTextureResource) -> HRESULT,
+    fn get_Type(&self, out: *mut Printing3DObjectType) -> HRESULT,
+    fn put_Type(&self, value: Printing3DObjectType) -> HRESULT,
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Name(&self, value: HSTRING) -> HRESULT,
+    fn get_PartNumber(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_PartNumber(&self, value: HSTRING) -> HRESULT
+}}
+impl IPrinting3DComponent {
+    #[inline] pub fn get_mesh(&self) -> Result<Option<ComPtr<Printing3DMesh>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Mesh)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn remove_user_presence_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_UserPresenceChanged)(self as *const _ as *mut _, token);
+    #[inline] pub fn set_mesh(&self, value: &Printing3DMesh) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Mesh)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn wait_for_next_frame_ready(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WaitForNextFrameReady)(self as *const _ as *mut _);
+    #[inline] pub fn get_components(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DComponentWithMatrix>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Components)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_thumbnail(&self) -> Result<Option<ComPtr<Printing3DTextureResource>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_thumbnail(&self, value: &Printing3DTextureResource) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn wait_for_next_frame_ready_with_head_start(&self, requestedHeadStartDuration: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WaitForNextFrameReadyWithHeadStart)(self as *const _ as *mut _, requestedHeadStartDuration);
+    #[inline] pub fn get_type(&self) -> Result<Printing3DObjectType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Type)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_type(&self, value: Printing3DObjectType) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Type)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn create_frame_presentation_monitor(&self, maxQueuedReports: u32) -> Result<Option<ComPtr<HolographicFramePresentationMonitor>>> { unsafe { 
+    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFramePresentationMonitor)(self as *const _ as *mut _, maxQueuedReports, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-}
-DEFINE_IID!(IID_IHolographicSpaceCameraAddedEventArgs, 1492245045, 48051, 15503, 153, 61, 108, 128, 231, 254, 185, 159);
-RT_INTERFACE!{interface IHolographicSpaceCameraAddedEventArgs(IHolographicSpaceCameraAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceCameraAddedEventArgs] {
-    fn get_Camera(&self, out: *mut *mut HolographicCamera) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
-}}
-impl IHolographicSpaceCameraAddedEventArgs {
-    #[inline] pub fn get_camera(&self) -> Result<Option<ComPtr<HolographicCamera>>> { unsafe { 
+    #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Name)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_part_number(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Camera)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        let hr = ((*self.lpVtbl).get_PartNumber)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class HolographicSpaceCameraAddedEventArgs: IHolographicSpaceCameraAddedEventArgs}
-DEFINE_IID!(IID_IHolographicSpaceCameraRemovedEventArgs, 2153006248, 62126, 12846, 141, 169, 131, 106, 10, 149, 164, 193);
-RT_INTERFACE!{interface IHolographicSpaceCameraRemovedEventArgs(IHolographicSpaceCameraRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceCameraRemovedEventArgs] {
-    fn get_Camera(&self, out: *mut *mut HolographicCamera) -> HRESULT
-}}
-impl IHolographicSpaceCameraRemovedEventArgs {
-    #[inline] pub fn get_camera(&self) -> Result<Option<ComPtr<HolographicCamera>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Camera)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class HolographicSpaceCameraRemovedEventArgs: IHolographicSpaceCameraRemovedEventArgs}
-DEFINE_IID!(IID_IHolographicSpaceStatics, 911106148, 51442, 15265, 131, 145, 102, 184, 72, 158, 103, 253);
-RT_INTERFACE!{static interface IHolographicSpaceStatics(IHolographicSpaceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceStatics] {
-    #[cfg(feature="windows-ui")] fn CreateForCoreWindow(&self, window: *mut super::super::ui::core::CoreWindow, out: *mut *mut HolographicSpace) -> HRESULT
-}}
-impl IHolographicSpaceStatics {
-    #[cfg(feature="windows-ui")] #[inline] pub fn create_for_core_window(&self, window: &super::super::ui::core::CoreWindow) -> Result<Option<ComPtr<HolographicSpace>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateForCoreWindow)(self as *const _ as *mut _, window as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IHolographicSpaceStatics2, 242708616, 30204, 18607, 135, 88, 6, 82, 246, 240, 124, 89);
-RT_INTERFACE!{static interface IHolographicSpaceStatics2(IHolographicSpaceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceStatics2] {
-    fn get_IsSupported(&self, out: *mut bool) -> HRESULT,
-    fn get_IsAvailable(&self, out: *mut bool) -> HRESULT,
-    fn add_IsAvailableChanged(&self, handler: *mut foundation::EventHandler<IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_IsAvailableChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
-}}
-impl IHolographicSpaceStatics2 {
-    #[inline] pub fn get_is_supported(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsSupported)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_available(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsAvailable)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn add_is_available_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_IsAvailableChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_is_available_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_IsAvailableChanged)(self as *const _ as *mut _, token);
+    #[inline] pub fn set_part_number(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PartNumber)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-DEFINE_IID!(IID_IHolographicSpaceStatics3, 989912637, 45475, 19966, 142, 121, 254, 197, 144, 158, 109, 248);
-RT_INTERFACE!{static interface IHolographicSpaceStatics3(IHolographicSpaceStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceStatics3] {
-    fn get_IsConfigured(&self, out: *mut bool) -> HRESULT
+RT_CLASS!{class Printing3DComponent: IPrinting3DComponent}
+impl RtActivatable<IActivationFactory> for Printing3DComponent {}
+DEFINE_CLSID!(Printing3DComponent(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,110,101,110,116,0]) [CLSID_Printing3DComponent]);
+DEFINE_IID!(IID_IPrinting3DComponentWithMatrix, 846852917, 3824, 17771, 154, 33, 73, 190, 190, 139, 81, 194);
+RT_INTERFACE!{interface IPrinting3DComponentWithMatrix(IPrinting3DComponentWithMatrixVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DComponentWithMatrix] {
+    fn get_Component(&self, out: *mut *mut Printing3DComponent) -> HRESULT,
+    fn put_Component(&self, value: *mut Printing3DComponent) -> HRESULT,
+    fn get_Matrix(&self, out: *mut foundation::numerics::Matrix4x4) -> HRESULT,
+    fn put_Matrix(&self, value: foundation::numerics::Matrix4x4) -> HRESULT
 }}
-impl IHolographicSpaceStatics3 {
-    #[inline] pub fn get_is_configured(&self) -> Result<bool> { unsafe { 
+impl IPrinting3DComponentWithMatrix {
+    #[inline] pub fn get_component(&self) -> Result<Option<ComPtr<Printing3DComponent>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Component)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_component(&self, value: &Printing3DComponent) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Component)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_matrix(&self) -> Result<foundation::numerics::Matrix4x4> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsConfigured)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_Matrix)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-}
-RT_ENUM! { enum HolographicSpaceUserPresence: i32 {
-    Absent (HolographicSpaceUserPresence_Absent) = 0, PresentPassive (HolographicSpaceUserPresence_PresentPassive) = 1, PresentActive (HolographicSpaceUserPresence_PresentActive) = 2,
-}}
-RT_STRUCT! { struct HolographicStereoTransform {
-    Left: foundation::numerics::Matrix4x4, Right: foundation::numerics::Matrix4x4,
-}}
-} // Windows.Graphics.Holographic
-pub mod directx { // Windows.Graphics.DirectX
-use ::prelude::*;
-RT_ENUM! { enum DirectXAlphaMode: i32 {
-    Unspecified (DirectXAlphaMode_Unspecified) = 0, Premultiplied (DirectXAlphaMode_Premultiplied) = 1, Straight (DirectXAlphaMode_Straight) = 2, Ignore (DirectXAlphaMode_Ignore) = 3,
-}}
-RT_ENUM! { enum DirectXColorSpace: i32 {
-    RgbFullG22NoneP709 (DirectXColorSpace_RgbFullG22NoneP709) = 0, RgbFullG10NoneP709 (DirectXColorSpace_RgbFullG10NoneP709) = 1, RgbStudioG22NoneP709 (DirectXColorSpace_RgbStudioG22NoneP709) = 2, RgbStudioG22NoneP2020 (DirectXColorSpace_RgbStudioG22NoneP2020) = 3, Reserved (DirectXColorSpace_Reserved) = 4, YccFullG22NoneP709X601 (DirectXColorSpace_YccFullG22NoneP709X601) = 5, YccStudioG22LeftP601 (DirectXColorSpace_YccStudioG22LeftP601) = 6, YccFullG22LeftP601 (DirectXColorSpace_YccFullG22LeftP601) = 7, YccStudioG22LeftP709 (DirectXColorSpace_YccStudioG22LeftP709) = 8, YccFullG22LeftP709 (DirectXColorSpace_YccFullG22LeftP709) = 9, YccStudioG22LeftP2020 (DirectXColorSpace_YccStudioG22LeftP2020) = 10, YccFullG22LeftP2020 (DirectXColorSpace_YccFullG22LeftP2020) = 11, RgbFullG2084NoneP2020 (DirectXColorSpace_RgbFullG2084NoneP2020) = 12, YccStudioG2084LeftP2020 (DirectXColorSpace_YccStudioG2084LeftP2020) = 13, RgbStudioG2084NoneP2020 (DirectXColorSpace_RgbStudioG2084NoneP2020) = 14, YccStudioG22TopLeftP2020 (DirectXColorSpace_YccStudioG22TopLeftP2020) = 15, YccStudioG2084TopLeftP2020 (DirectXColorSpace_YccStudioG2084TopLeftP2020) = 16, RgbFullG22NoneP2020 (DirectXColorSpace_RgbFullG22NoneP2020) = 17, YccStudioGHlgTopLeftP2020 (DirectXColorSpace_YccStudioGHlgTopLeftP2020) = 18, YccFullGHlgTopLeftP2020 (DirectXColorSpace_YccFullGHlgTopLeftP2020) = 19, RgbStudioG24NoneP709 (DirectXColorSpace_RgbStudioG24NoneP709) = 20, RgbStudioG24NoneP2020 (DirectXColorSpace_RgbStudioG24NoneP2020) = 21, YccStudioG24LeftP709 (DirectXColorSpace_YccStudioG24LeftP709) = 22, YccStudioG24LeftP2020 (DirectXColorSpace_YccStudioG24LeftP2020) = 23, YccStudioG24TopLeftP2020 (DirectXColorSpace_YccStudioG24TopLeftP2020) = 24,
-}}
-RT_ENUM! { enum DirectXPixelFormat: i32 {
-    Unknown (DirectXPixelFormat_Unknown) = 0, R32G32B32A32Typeless (DirectXPixelFormat_R32G32B32A32Typeless) = 1, R32G32B32A32Float (DirectXPixelFormat_R32G32B32A32Float) = 2, R32G32B32A32UInt (DirectXPixelFormat_R32G32B32A32UInt) = 3, R32G32B32A32Int (DirectXPixelFormat_R32G32B32A32Int) = 4, R32G32B32Typeless (DirectXPixelFormat_R32G32B32Typeless) = 5, R32G32B32Float (DirectXPixelFormat_R32G32B32Float) = 6, R32G32B32UInt (DirectXPixelFormat_R32G32B32UInt) = 7, R32G32B32Int (DirectXPixelFormat_R32G32B32Int) = 8, R16G16B16A16Typeless (DirectXPixelFormat_R16G16B16A16Typeless) = 9, R16G16B16A16Float (DirectXPixelFormat_R16G16B16A16Float) = 10, R16G16B16A16UIntNormalized (DirectXPixelFormat_R16G16B16A16UIntNormalized) = 11, R16G16B16A16UInt (DirectXPixelFormat_R16G16B16A16UInt) = 12, R16G16B16A16IntNormalized (DirectXPixelFormat_R16G16B16A16IntNormalized) = 13, R16G16B16A16Int (DirectXPixelFormat_R16G16B16A16Int) = 14, R32G32Typeless (DirectXPixelFormat_R32G32Typeless) = 15, R32G32Float (DirectXPixelFormat_R32G32Float) = 16, R32G32UInt (DirectXPixelFormat_R32G32UInt) = 17, R32G32Int (DirectXPixelFormat_R32G32Int) = 18, R32G8X24Typeless (DirectXPixelFormat_R32G8X24Typeless) = 19, D32FloatS8X24UInt (DirectXPixelFormat_D32FloatS8X24UInt) = 20, R32FloatX8X24Typeless (DirectXPixelFormat_R32FloatX8X24Typeless) = 21, X32TypelessG8X24UInt (DirectXPixelFormat_X32TypelessG8X24UInt) = 22, R10G10B10A2Typeless (DirectXPixelFormat_R10G10B10A2Typeless) = 23, R10G10B10A2UIntNormalized (DirectXPixelFormat_R10G10B10A2UIntNormalized) = 24, R10G10B10A2UInt (DirectXPixelFormat_R10G10B10A2UInt) = 25, R11G11B10Float (DirectXPixelFormat_R11G11B10Float) = 26, R8G8B8A8Typeless (DirectXPixelFormat_R8G8B8A8Typeless) = 27, R8G8B8A8UIntNormalized (DirectXPixelFormat_R8G8B8A8UIntNormalized) = 28, R8G8B8A8UIntNormalizedSrgb (DirectXPixelFormat_R8G8B8A8UIntNormalizedSrgb) = 29, R8G8B8A8UInt (DirectXPixelFormat_R8G8B8A8UInt) = 30, R8G8B8A8IntNormalized (DirectXPixelFormat_R8G8B8A8IntNormalized) = 31, R8G8B8A8Int (DirectXPixelFormat_R8G8B8A8Int) = 32, R16G16Typeless (DirectXPixelFormat_R16G16Typeless) = 33, R16G16Float (DirectXPixelFormat_R16G16Float) = 34, R16G16UIntNormalized (DirectXPixelFormat_R16G16UIntNormalized) = 35, R16G16UInt (DirectXPixelFormat_R16G16UInt) = 36, R16G16IntNormalized (DirectXPixelFormat_R16G16IntNormalized) = 37, R16G16Int (DirectXPixelFormat_R16G16Int) = 38, R32Typeless (DirectXPixelFormat_R32Typeless) = 39, D32Float (DirectXPixelFormat_D32Float) = 40, R32Float (DirectXPixelFormat_R32Float) = 41, R32UInt (DirectXPixelFormat_R32UInt) = 42, R32Int (DirectXPixelFormat_R32Int) = 43, R24G8Typeless (DirectXPixelFormat_R24G8Typeless) = 44, D24UIntNormalizedS8UInt (DirectXPixelFormat_D24UIntNormalizedS8UInt) = 45, R24UIntNormalizedX8Typeless (DirectXPixelFormat_R24UIntNormalizedX8Typeless) = 46, X24TypelessG8UInt (DirectXPixelFormat_X24TypelessG8UInt) = 47, R8G8Typeless (DirectXPixelFormat_R8G8Typeless) = 48, R8G8UIntNormalized (DirectXPixelFormat_R8G8UIntNormalized) = 49, R8G8UInt (DirectXPixelFormat_R8G8UInt) = 50, R8G8IntNormalized (DirectXPixelFormat_R8G8IntNormalized) = 51, R8G8Int (DirectXPixelFormat_R8G8Int) = 52, R16Typeless (DirectXPixelFormat_R16Typeless) = 53, R16Float (DirectXPixelFormat_R16Float) = 54, D16UIntNormalized (DirectXPixelFormat_D16UIntNormalized) = 55, R16UIntNormalized (DirectXPixelFormat_R16UIntNormalized) = 56, R16UInt (DirectXPixelFormat_R16UInt) = 57, R16IntNormalized (DirectXPixelFormat_R16IntNormalized) = 58, R16Int (DirectXPixelFormat_R16Int) = 59, R8Typeless (DirectXPixelFormat_R8Typeless) = 60, R8UIntNormalized (DirectXPixelFormat_R8UIntNormalized) = 61, R8UInt (DirectXPixelFormat_R8UInt) = 62, R8IntNormalized (DirectXPixelFormat_R8IntNormalized) = 63, R8Int (DirectXPixelFormat_R8Int) = 64, A8UIntNormalized (DirectXPixelFormat_A8UIntNormalized) = 65, R1UIntNormalized (DirectXPixelFormat_R1UIntNormalized) = 66, R9G9B9E5SharedExponent (DirectXPixelFormat_R9G9B9E5SharedExponent) = 67, R8G8B8G8UIntNormalized (DirectXPixelFormat_R8G8B8G8UIntNormalized) = 68, G8R8G8B8UIntNormalized (DirectXPixelFormat_G8R8G8B8UIntNormalized) = 69, BC1Typeless (DirectXPixelFormat_BC1Typeless) = 70, BC1UIntNormalized (DirectXPixelFormat_BC1UIntNormalized) = 71, BC1UIntNormalizedSrgb (DirectXPixelFormat_BC1UIntNormalizedSrgb) = 72, BC2Typeless (DirectXPixelFormat_BC2Typeless) = 73, BC2UIntNormalized (DirectXPixelFormat_BC2UIntNormalized) = 74, BC2UIntNormalizedSrgb (DirectXPixelFormat_BC2UIntNormalizedSrgb) = 75, BC3Typeless (DirectXPixelFormat_BC3Typeless) = 76, BC3UIntNormalized (DirectXPixelFormat_BC3UIntNormalized) = 77, BC3UIntNormalizedSrgb (DirectXPixelFormat_BC3UIntNormalizedSrgb) = 78, BC4Typeless (DirectXPixelFormat_BC4Typeless) = 79, BC4UIntNormalized (DirectXPixelFormat_BC4UIntNormalized) = 80, BC4IntNormalized (DirectXPixelFormat_BC4IntNormalized) = 81, BC5Typeless (DirectXPixelFormat_BC5Typeless) = 82, BC5UIntNormalized (DirectXPixelFormat_BC5UIntNormalized) = 83, BC5IntNormalized (DirectXPixelFormat_BC5IntNormalized) = 84, B5G6R5UIntNormalized (DirectXPixelFormat_B5G6R5UIntNormalized) = 85, B5G5R5A1UIntNormalized (DirectXPixelFormat_B5G5R5A1UIntNormalized) = 86, B8G8R8A8UIntNormalized (DirectXPixelFormat_B8G8R8A8UIntNormalized) = 87, B8G8R8X8UIntNormalized (DirectXPixelFormat_B8G8R8X8UIntNormalized) = 88, R10G10B10XRBiasA2UIntNormalized (DirectXPixelFormat_R10G10B10XRBiasA2UIntNormalized) = 89, B8G8R8A8Typeless (DirectXPixelFormat_B8G8R8A8Typeless) = 90, B8G8R8A8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8A8UIntNormalizedSrgb) = 91, B8G8R8X8Typeless (DirectXPixelFormat_B8G8R8X8Typeless) = 92, B8G8R8X8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8X8UIntNormalizedSrgb) = 93, BC6HTypeless (DirectXPixelFormat_BC6HTypeless) = 94, BC6H16UnsignedFloat (DirectXPixelFormat_BC6H16UnsignedFloat) = 95, BC6H16Float (DirectXPixelFormat_BC6H16Float) = 96, BC7Typeless (DirectXPixelFormat_BC7Typeless) = 97, BC7UIntNormalized (DirectXPixelFormat_BC7UIntNormalized) = 98, BC7UIntNormalizedSrgb (DirectXPixelFormat_BC7UIntNormalizedSrgb) = 99, Ayuv (DirectXPixelFormat_Ayuv) = 100, Y410 (DirectXPixelFormat_Y410) = 101, Y416 (DirectXPixelFormat_Y416) = 102, NV12 (DirectXPixelFormat_NV12) = 103, P010 (DirectXPixelFormat_P010) = 104, P016 (DirectXPixelFormat_P016) = 105, Opaque420 (DirectXPixelFormat_Opaque420) = 106, Yuy2 (DirectXPixelFormat_Yuy2) = 107, Y210 (DirectXPixelFormat_Y210) = 108, Y216 (DirectXPixelFormat_Y216) = 109, NV11 (DirectXPixelFormat_NV11) = 110, AI44 (DirectXPixelFormat_AI44) = 111, IA44 (DirectXPixelFormat_IA44) = 112, P8 (DirectXPixelFormat_P8) = 113, A8P8 (DirectXPixelFormat_A8P8) = 114, B4G4R4A4UIntNormalized (DirectXPixelFormat_B4G4R4A4UIntNormalized) = 115, P208 (DirectXPixelFormat_P208) = 130, V208 (DirectXPixelFormat_V208) = 131, V408 (DirectXPixelFormat_V408) = 132,
-}}
-pub mod direct3d11 { // Windows.Graphics.DirectX.Direct3D11
-use ::prelude::*;
-RT_ENUM! { enum Direct3DBindings: u32 {
-    VertexBuffer (Direct3DBindings_VertexBuffer) = 1, IndexBuffer (Direct3DBindings_IndexBuffer) = 2, ConstantBuffer (Direct3DBindings_ConstantBuffer) = 4, ShaderResource (Direct3DBindings_ShaderResource) = 8, StreamOutput (Direct3DBindings_StreamOutput) = 16, RenderTarget (Direct3DBindings_RenderTarget) = 32, DepthStencil (Direct3DBindings_DepthStencil) = 64, UnorderedAccess (Direct3DBindings_UnorderedAccess) = 128, Decoder (Direct3DBindings_Decoder) = 512, VideoEncoder (Direct3DBindings_VideoEncoder) = 1024,
-}}
-DEFINE_IID!(IID_IDirect3DDevice, 2742428843, 36191, 18000, 157, 62, 158, 174, 61, 155, 198, 112);
-RT_INTERFACE!{interface IDirect3DDevice(IDirect3DDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3DDevice] {
-    fn Trim(&self) -> HRESULT
-}}
-impl IDirect3DDevice {
-    #[inline] pub fn trim(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Trim)(self as *const _ as *mut _);
+    #[inline] pub fn set_matrix(&self, value: foundation::numerics::Matrix4x4) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Matrix)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct Direct3DMultisampleDescription {
-    Count: i32, Quality: i32,
+RT_CLASS!{class Printing3DComponentWithMatrix: IPrinting3DComponentWithMatrix}
+impl RtActivatable<IActivationFactory> for Printing3DComponentWithMatrix {}
+DEFINE_CLSID!(Printing3DComponentWithMatrix(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,110,101,110,116,87,105,116,104,77,97,116,114,105,120,0]) [CLSID_Printing3DComponentWithMatrix]);
+DEFINE_IID!(IID_IPrinting3DCompositeMaterial, 1176647901, 22062, 20332, 136, 45, 244, 216, 65, 253, 99, 199);
+RT_INTERFACE!{interface IPrinting3DCompositeMaterial(IPrinting3DCompositeMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterial] {
+    fn get_Values(&self, out: *mut *mut foundation::collections::IVector<f64>) -> HRESULT
 }}
-DEFINE_IID!(IID_IDirect3DSurface, 200581446, 5057, 18068, 190, 227, 122, 191, 21, 234, 245, 134);
-RT_INTERFACE!{interface IDirect3DSurface(IDirect3DSurfaceVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3DSurface] {
-    fn get_Description(&self, out: *mut Direct3DSurfaceDescription) -> HRESULT
+impl IPrinting3DCompositeMaterial {
+    #[inline] pub fn get_values(&self) -> Result<Option<ComPtr<foundation::collections::IVector<f64>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Values)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DCompositeMaterial: IPrinting3DCompositeMaterial}
+impl RtActivatable<IActivationFactory> for Printing3DCompositeMaterial {}
+DEFINE_CLSID!(Printing3DCompositeMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,115,105,116,101,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DCompositeMaterial]);
+DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroup, 2375314011, 16625, 18797, 165, 251, 52, 10, 90, 103, 142, 48);
+RT_INTERFACE!{interface IPrinting3DCompositeMaterialGroup(IPrinting3DCompositeMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterialGroup] {
+    fn get_Composites(&self, out: *mut *mut foundation::collections::IVector<Printing3DCompositeMaterial>) -> HRESULT,
+    fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT,
+    fn get_MaterialIndices(&self, out: *mut *mut foundation::collections::IVector<u32>) -> HRESULT
 }}
-impl IDirect3DSurface {
-    #[inline] pub fn get_description(&self) -> Result<Direct3DSurfaceDescription> { unsafe { 
+impl IPrinting3DCompositeMaterialGroup {
+    #[inline] pub fn get_composites(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DCompositeMaterial>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Composites)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_MaterialGroupId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_material_indices(&self) -> Result<Option<ComPtr<foundation::collections::IVector<u32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_MaterialIndices)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DCompositeMaterialGroup: IPrinting3DCompositeMaterialGroup}
+impl RtActivatable<IPrinting3DCompositeMaterialGroupFactory> for Printing3DCompositeMaterialGroup {}
+impl Printing3DCompositeMaterialGroup {
+    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DCompositeMaterialGroup>> {
+        <Self as RtActivatable<IPrinting3DCompositeMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
+    }
+}
+DEFINE_CLSID!(Printing3DCompositeMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,115,105,116,101,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DCompositeMaterialGroup]);
+DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroup2, 115895650, 32059, 16865, 148, 76, 186, 253, 228, 85, 84, 131);
+RT_INTERFACE!{interface IPrinting3DCompositeMaterialGroup2(IPrinting3DCompositeMaterialGroup2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterialGroup2] {
+    fn get_BaseMaterialGroup(&self, out: *mut *mut Printing3DBaseMaterialGroup) -> HRESULT,
+    fn put_BaseMaterialGroup(&self, value: *mut Printing3DBaseMaterialGroup) -> HRESULT
+}}
+impl IPrinting3DCompositeMaterialGroup2 {
+    #[inline] pub fn get_base_material_group(&self) -> Result<Option<ComPtr<Printing3DBaseMaterialGroup>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_BaseMaterialGroup)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_base_material_group(&self, value: &Printing3DBaseMaterialGroup) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_BaseMaterialGroup)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroupFactory, 3499019539, 37631, 17322, 166, 39, 141, 67, 194, 44, 129, 126);
+RT_INTERFACE!{static interface IPrinting3DCompositeMaterialGroupFactory(IPrinting3DCompositeMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterialGroupFactory] {
+    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DCompositeMaterialGroup) -> HRESULT
+}}
+impl IPrinting3DCompositeMaterialGroupFactory {
+    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DCompositeMaterialGroup>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, materialGroupId, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPrinting3DFaceReductionOptions, 3154039703, 11636, 18167, 190, 133, 153, 166, 123, 187, 102, 41);
+RT_INTERFACE!{interface IPrinting3DFaceReductionOptions(IPrinting3DFaceReductionOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DFaceReductionOptions] {
+    fn get_MaxReductionArea(&self, out: *mut f64) -> HRESULT,
+    fn put_MaxReductionArea(&self, value: f64) -> HRESULT,
+    fn get_TargetTriangleCount(&self, out: *mut u32) -> HRESULT,
+    fn put_TargetTriangleCount(&self, value: u32) -> HRESULT,
+    fn get_MaxEdgeLength(&self, out: *mut f64) -> HRESULT,
+    fn put_MaxEdgeLength(&self, value: f64) -> HRESULT
+}}
+impl IPrinting3DFaceReductionOptions {
+    #[inline] pub fn get_max_reduction_area(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxReductionArea)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_max_reduction_area(&self, value: f64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaxReductionArea)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_target_triangle_count(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TargetTriangleCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_target_triangle_count(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TargetTriangleCount)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_edge_length(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaxEdgeLength)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_max_edge_length(&self, value: f64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaxEdgeLength)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DFaceReductionOptions: IPrinting3DFaceReductionOptions}
+impl RtActivatable<IActivationFactory> for Printing3DFaceReductionOptions {}
+DEFINE_CLSID!(Printing3DFaceReductionOptions(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,70,97,99,101,82,101,100,117,99,116,105,111,110,79,112,116,105,111,110,115,0]) [CLSID_Printing3DFaceReductionOptions]);
+DEFINE_IID!(IID_IPrinting3DMaterial, 932033110, 60770, 18770, 184, 91, 3, 86, 125, 124, 70, 94);
+RT_INTERFACE!{interface IPrinting3DMaterial(IPrinting3DMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMaterial] {
+    fn get_BaseGroups(&self, out: *mut *mut foundation::collections::IVector<Printing3DBaseMaterialGroup>) -> HRESULT,
+    fn get_ColorGroups(&self, out: *mut *mut foundation::collections::IVector<Printing3DColorMaterialGroup>) -> HRESULT,
+    fn get_Texture2CoordGroups(&self, out: *mut *mut foundation::collections::IVector<Printing3DTexture2CoordMaterialGroup>) -> HRESULT,
+    fn get_CompositeGroups(&self, out: *mut *mut foundation::collections::IVector<Printing3DCompositeMaterialGroup>) -> HRESULT,
+    fn get_MultiplePropertyGroups(&self, out: *mut *mut foundation::collections::IVector<Printing3DMultiplePropertyMaterialGroup>) -> HRESULT
+}}
+impl IPrinting3DMaterial {
+    #[inline] pub fn get_base_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DBaseMaterialGroup>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_BaseGroups)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_color_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DColorMaterialGroup>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ColorGroups)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_texture2_coord_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DTexture2CoordMaterialGroup>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Texture2CoordGroups)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_composite_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DCompositeMaterialGroup>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CompositeGroups)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_multiple_property_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DMultiplePropertyMaterialGroup>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_MultiplePropertyGroups)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DMaterial: IPrinting3DMaterial}
+impl RtActivatable<IActivationFactory> for Printing3DMaterial {}
+DEFINE_CLSID!(Printing3DMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DMaterial]);
+DEFINE_IID!(IID_IPrinting3DMesh, 422482140, 552, 11777, 188, 32, 197, 41, 12, 191, 50, 196);
+RT_INTERFACE!{interface IPrinting3DMesh(IPrinting3DMeshVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMesh] {
+    fn get_VertexCount(&self, out: *mut u32) -> HRESULT,
+    fn put_VertexCount(&self, value: u32) -> HRESULT,
+    fn get_IndexCount(&self, out: *mut u32) -> HRESULT,
+    fn put_IndexCount(&self, value: u32) -> HRESULT,
+    fn get_VertexPositionsDescription(&self, out: *mut Printing3DBufferDescription) -> HRESULT,
+    fn put_VertexPositionsDescription(&self, value: Printing3DBufferDescription) -> HRESULT,
+    fn get_VertexNormalsDescription(&self, out: *mut Printing3DBufferDescription) -> HRESULT,
+    fn put_VertexNormalsDescription(&self, value: Printing3DBufferDescription) -> HRESULT,
+    fn get_TriangleIndicesDescription(&self, out: *mut Printing3DBufferDescription) -> HRESULT,
+    fn put_TriangleIndicesDescription(&self, value: Printing3DBufferDescription) -> HRESULT,
+    fn get_TriangleMaterialIndicesDescription(&self, out: *mut Printing3DBufferDescription) -> HRESULT,
+    fn put_TriangleMaterialIndicesDescription(&self, value: Printing3DBufferDescription) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy12(&self) -> (),
+    #[cfg(feature="windows-storage")] fn GetVertexPositions(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    fn CreateVertexPositions(&self, value: u32) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy14(&self) -> (),
+    #[cfg(feature="windows-storage")] fn GetVertexNormals(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    fn CreateVertexNormals(&self, value: u32) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy16(&self) -> (),
+    #[cfg(feature="windows-storage")] fn GetTriangleIndices(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    fn CreateTriangleIndices(&self, value: u32) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy18(&self) -> (),
+    #[cfg(feature="windows-storage")] fn GetTriangleMaterialIndices(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
+    fn CreateTriangleMaterialIndices(&self, value: u32) -> HRESULT,
+    fn get_BufferDescriptionSet(&self, out: *mut *mut foundation::collections::IPropertySet) -> HRESULT,
+    fn get_BufferSet(&self, out: *mut *mut foundation::collections::IPropertySet) -> HRESULT,
+    fn VerifyAsync(&self, value: Printing3DMeshVerificationMode, out: *mut *mut foundation::IAsyncOperation<Printing3DMeshVerificationResult>) -> HRESULT
+}}
+impl IPrinting3DMesh {
+    #[inline] pub fn get_vertex_count(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_VertexCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_vertex_count(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_VertexCount)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_index_count(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IndexCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_index_count(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IndexCount)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_vertex_positions_description(&self) -> Result<Printing3DBufferDescription> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_VertexPositionsDescription)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_vertex_positions_description(&self, value: Printing3DBufferDescription) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_VertexPositionsDescription)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_vertex_normals_description(&self) -> Result<Printing3DBufferDescription> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_VertexNormalsDescription)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_vertex_normals_description(&self, value: Printing3DBufferDescription) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_VertexNormalsDescription)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_triangle_indices_description(&self) -> Result<Printing3DBufferDescription> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TriangleIndicesDescription)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_triangle_indices_description(&self, value: Printing3DBufferDescription) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TriangleIndicesDescription)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_triangle_material_indices_description(&self) -> Result<Printing3DBufferDescription> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TriangleMaterialIndicesDescription)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_triangle_material_indices_description(&self, value: Printing3DBufferDescription) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TriangleMaterialIndicesDescription)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_vertex_positions(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetVertexPositions)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_vertex_positions(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).CreateVertexPositions)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_vertex_normals(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetVertexNormals)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_vertex_normals(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).CreateVertexNormals)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_triangle_indices(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetTriangleIndices)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_triangle_indices(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).CreateTriangleIndices)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_triangle_material_indices(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetTriangleMaterialIndices)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_triangle_material_indices(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).CreateTriangleMaterialIndices)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_buffer_description_set(&self) -> Result<Option<ComPtr<foundation::collections::IPropertySet>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_BufferDescriptionSet)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_buffer_set(&self) -> Result<Option<ComPtr<foundation::collections::IPropertySet>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_BufferSet)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn verify_async(&self, value: Printing3DMeshVerificationMode) -> Result<ComPtr<foundation::IAsyncOperation<Printing3DMeshVerificationResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).VerifyAsync)(self as *const _ as *mut _, value, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DMesh: IPrinting3DMesh}
+impl RtActivatable<IActivationFactory> for Printing3DMesh {}
+DEFINE_CLSID!(Printing3DMesh(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,101,115,104,0]) [CLSID_Printing3DMesh]);
+RT_ENUM! { enum Printing3DMeshVerificationMode: i32 {
+    FindFirstError (Printing3DMeshVerificationMode_FindFirstError) = 0, FindAllErrors (Printing3DMeshVerificationMode_FindAllErrors) = 1,
+}}
+DEFINE_IID!(IID_IPrinting3DMeshVerificationResult, 425095610, 59706, 20106, 164, 111, 222, 168, 232, 82, 25, 126);
+RT_INTERFACE!{interface IPrinting3DMeshVerificationResult(IPrinting3DMeshVerificationResultVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMeshVerificationResult] {
+    fn get_IsValid(&self, out: *mut bool) -> HRESULT,
+    fn get_NonmanifoldTriangles(&self, out: *mut *mut foundation::collections::IVectorView<u32>) -> HRESULT,
+    fn get_ReversedNormalTriangles(&self, out: *mut *mut foundation::collections::IVectorView<u32>) -> HRESULT
+}}
+impl IPrinting3DMeshVerificationResult {
+    #[inline] pub fn get_is_valid(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsValid)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_nonmanifold_triangles(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_NonmanifoldTriangles)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_reversed_normal_triangles(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ReversedNormalTriangles)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DMeshVerificationResult: IPrinting3DMeshVerificationResult}
+DEFINE_IID!(IID_IPrinting3DModel, 755052272, 21243, 37274, 119, 176, 75, 26, 59, 128, 50, 79);
+RT_INTERFACE!{interface IPrinting3DModel(IPrinting3DModelVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DModel] {
+    fn get_Unit(&self, out: *mut Printing3DModelUnit) -> HRESULT,
+    fn put_Unit(&self, value: Printing3DModelUnit) -> HRESULT,
+    fn get_Textures(&self, out: *mut *mut foundation::collections::IVector<Printing3DModelTexture>) -> HRESULT,
+    fn get_Meshes(&self, out: *mut *mut foundation::collections::IVector<Printing3DMesh>) -> HRESULT,
+    fn get_Components(&self, out: *mut *mut foundation::collections::IVector<Printing3DComponent>) -> HRESULT,
+    fn get_Material(&self, out: *mut *mut Printing3DMaterial) -> HRESULT,
+    fn put_Material(&self, value: *mut Printing3DMaterial) -> HRESULT,
+    fn get_Build(&self, out: *mut *mut Printing3DComponent) -> HRESULT,
+    fn put_Build(&self, value: *mut Printing3DComponent) -> HRESULT,
+    fn get_Version(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Version(&self, value: HSTRING) -> HRESULT,
+    fn get_RequiredExtensions(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_Metadata(&self, out: *mut *mut foundation::collections::IMap<HString, HString>) -> HRESULT,
+    fn RepairAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn Clone(&self, out: *mut *mut Printing3DModel) -> HRESULT
+}}
+impl IPrinting3DModel {
+    #[inline] pub fn get_unit(&self) -> Result<Printing3DModelUnit> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Unit)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_unit(&self, value: Printing3DModelUnit) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Unit)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_textures(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DModelTexture>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Textures)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_meshes(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DMesh>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Meshes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_components(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DComponent>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Components)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_material(&self) -> Result<Option<ComPtr<Printing3DMaterial>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Material)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_material(&self, value: &Printing3DMaterial) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Material)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_build(&self) -> Result<Option<ComPtr<Printing3DComponent>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Build)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_build(&self, value: &Printing3DComponent) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Build)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_version(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Version)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_version(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Version)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_required_extensions(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_RequiredExtensions)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_metadata(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Metadata)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn repair_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RepairAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn clone(&self) -> Result<Option<ComPtr<Printing3DModel>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Clone)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DModel: IPrinting3DModel}
+impl RtActivatable<IActivationFactory> for Printing3DModel {}
+DEFINE_CLSID!(Printing3DModel(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,111,100,101,108,0]) [CLSID_Printing3DModel]);
+DEFINE_IID!(IID_IPrinting3DModel2, 3374344647, 51265, 18419, 168, 78, 161, 73, 253, 8, 182, 87);
+RT_INTERFACE!{interface IPrinting3DModel2(IPrinting3DModel2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DModel2] {
+    fn TryPartialRepairAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn TryPartialRepairWithTimeAsync(&self, maxWaitTime: foundation::TimeSpan, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn TryReduceFacesAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT,
+    fn TryReduceFacesWithOptionsAsync(&self, printing3DFaceReductionOptions: *mut Printing3DFaceReductionOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT,
+    fn TryReduceFacesWithOptionsAndTimeAsync(&self, printing3DFaceReductionOptions: *mut Printing3DFaceReductionOptions, maxWait: foundation::TimeSpan, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT,
+    fn RepairWithProgressAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT
+}}
+impl IPrinting3DModel2 {
+    #[inline] pub fn try_partial_repair_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryPartialRepairAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn try_partial_repair_with_time_async(&self, maxWaitTime: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryPartialRepairWithTimeAsync)(self as *const _ as *mut _, maxWaitTime, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn try_reduce_faces_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryReduceFacesAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn try_reduce_faces_with_options_async(&self, printing3DFaceReductionOptions: &Printing3DFaceReductionOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryReduceFacesWithOptionsAsync)(self as *const _ as *mut _, printing3DFaceReductionOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn try_reduce_faces_with_options_and_time_async(&self, printing3DFaceReductionOptions: &Printing3DFaceReductionOptions, maxWait: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryReduceFacesWithOptionsAndTimeAsync)(self as *const _ as *mut _, printing3DFaceReductionOptions as *const _ as *mut _, maxWait, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn repair_with_progress_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RepairWithProgressAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPrinting3DModelTexture, 1571802881, 46493, 18492, 151, 187, 164, 213, 70, 209, 199, 92);
+RT_INTERFACE!{interface IPrinting3DModelTexture(IPrinting3DModelTextureVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DModelTexture] {
+    fn get_TextureResource(&self, out: *mut *mut Printing3DTextureResource) -> HRESULT,
+    fn put_TextureResource(&self, value: *mut Printing3DTextureResource) -> HRESULT,
+    fn get_TileStyleU(&self, out: *mut Printing3DTextureEdgeBehavior) -> HRESULT,
+    fn put_TileStyleU(&self, value: Printing3DTextureEdgeBehavior) -> HRESULT,
+    fn get_TileStyleV(&self, out: *mut Printing3DTextureEdgeBehavior) -> HRESULT,
+    fn put_TileStyleV(&self, value: Printing3DTextureEdgeBehavior) -> HRESULT
+}}
+impl IPrinting3DModelTexture {
+    #[inline] pub fn get_texture_resource(&self) -> Result<Option<ComPtr<Printing3DTextureResource>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TextureResource)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_texture_resource(&self, value: &Printing3DTextureResource) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TextureResource)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_tile_style_u(&self) -> Result<Printing3DTextureEdgeBehavior> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TileStyleU)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_tile_style_u(&self, value: Printing3DTextureEdgeBehavior) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TileStyleU)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_tile_style_v(&self) -> Result<Printing3DTextureEdgeBehavior> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TileStyleV)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_tile_style_v(&self, value: Printing3DTextureEdgeBehavior) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TileStyleV)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DModelTexture: IPrinting3DModelTexture}
+impl RtActivatable<IActivationFactory> for Printing3DModelTexture {}
+DEFINE_CLSID!(Printing3DModelTexture(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,111,100,101,108,84,101,120,116,117,114,101,0]) [CLSID_Printing3DModelTexture]);
+RT_ENUM! { enum Printing3DModelUnit: i32 {
+    Meter (Printing3DModelUnit_Meter) = 0, Micron (Printing3DModelUnit_Micron) = 1, Millimeter (Printing3DModelUnit_Millimeter) = 2, Centimeter (Printing3DModelUnit_Centimeter) = 3, Inch (Printing3DModelUnit_Inch) = 4, Foot (Printing3DModelUnit_Foot) = 5,
+}}
+DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterial, 631645515, 50921, 18509, 162, 20, 162, 94, 87, 118, 186, 98);
+RT_INTERFACE!{interface IPrinting3DMultiplePropertyMaterial(IPrinting3DMultiplePropertyMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMultiplePropertyMaterial] {
+    fn get_MaterialIndices(&self, out: *mut *mut foundation::collections::IVector<u32>) -> HRESULT
+}}
+impl IPrinting3DMultiplePropertyMaterial {
+    #[inline] pub fn get_material_indices(&self) -> Result<Option<ComPtr<foundation::collections::IVector<u32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_MaterialIndices)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DMultiplePropertyMaterial: IPrinting3DMultiplePropertyMaterial}
+impl RtActivatable<IActivationFactory> for Printing3DMultiplePropertyMaterial {}
+DEFINE_CLSID!(Printing3DMultiplePropertyMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,117,108,116,105,112,108,101,80,114,111,112,101,114,116,121,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DMultiplePropertyMaterial]);
+DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterialGroup, 4036298009, 44729, 17685, 163, 155, 160, 136, 251, 187, 39, 124);
+RT_INTERFACE!{interface IPrinting3DMultiplePropertyMaterialGroup(IPrinting3DMultiplePropertyMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMultiplePropertyMaterialGroup] {
+    fn get_MultipleProperties(&self, out: *mut *mut foundation::collections::IVector<Printing3DMultiplePropertyMaterial>) -> HRESULT,
+    fn get_MaterialGroupIndices(&self, out: *mut *mut foundation::collections::IVector<u32>) -> HRESULT,
+    fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT
+}}
+impl IPrinting3DMultiplePropertyMaterialGroup {
+    #[inline] pub fn get_multiple_properties(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DMultiplePropertyMaterial>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_MultipleProperties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_material_group_indices(&self) -> Result<Option<ComPtr<foundation::collections::IVector<u32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_MaterialGroupIndices)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaterialGroupId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct Direct3DSurfaceDescription {
-    Width: i32, Height: i32, Format: super::DirectXPixelFormat, MultisampleDescription: Direct3DMultisampleDescription,
+RT_CLASS!{class Printing3DMultiplePropertyMaterialGroup: IPrinting3DMultiplePropertyMaterialGroup}
+impl RtActivatable<IPrinting3DMultiplePropertyMaterialGroupFactory> for Printing3DMultiplePropertyMaterialGroup {}
+impl Printing3DMultiplePropertyMaterialGroup {
+    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DMultiplePropertyMaterialGroup>> {
+        <Self as RtActivatable<IPrinting3DMultiplePropertyMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
+    }
+}
+DEFINE_CLSID!(Printing3DMultiplePropertyMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,117,108,116,105,112,108,101,80,114,111,112,101,114,116,121,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DMultiplePropertyMaterialGroup]);
+DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterialGroupFactory, 842930542, 54470, 17694, 168, 20, 77, 120, 162, 16, 254, 83);
+RT_INTERFACE!{static interface IPrinting3DMultiplePropertyMaterialGroupFactory(IPrinting3DMultiplePropertyMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMultiplePropertyMaterialGroupFactory] {
+    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DMultiplePropertyMaterialGroup) -> HRESULT
 }}
-RT_ENUM! { enum Direct3DUsage: i32 {
-    Default (Direct3DUsage_Default) = 0, Immutable (Direct3DUsage_Immutable) = 1, Dynamic (Direct3DUsage_Dynamic) = 2, Staging (Direct3DUsage_Staging) = 3,
+impl IPrinting3DMultiplePropertyMaterialGroupFactory {
+    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DMultiplePropertyMaterialGroup>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, materialGroupId, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum Printing3DObjectType: i32 {
+    Model (Printing3DObjectType_Model) = 0, Support (Printing3DObjectType_Support) = 1, Others (Printing3DObjectType_Others) = 2,
 }}
-} // Windows.Graphics.DirectX.Direct3D11
-} // Windows.Graphics.DirectX
+RT_ENUM! { enum Printing3DPackageCompression: i32 {
+    Low (Printing3DPackageCompression_Low) = 0, Medium (Printing3DPackageCompression_Medium) = 1, High (Printing3DPackageCompression_High) = 2,
+}}
+DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterial, 2374257659, 2025, 18822, 152, 51, 141, 211, 212, 140, 104, 89);
+RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterial(IPrinting3DTexture2CoordMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterial] {
+    fn get_Texture(&self, out: *mut *mut Printing3DModelTexture) -> HRESULT,
+    fn put_Texture(&self, value: *mut Printing3DModelTexture) -> HRESULT,
+    fn get_U(&self, out: *mut f64) -> HRESULT,
+    fn put_U(&self, value: f64) -> HRESULT,
+    fn get_V(&self, out: *mut f64) -> HRESULT,
+    fn put_V(&self, value: f64) -> HRESULT
+}}
+impl IPrinting3DTexture2CoordMaterial {
+    #[inline] pub fn get_texture(&self) -> Result<Option<ComPtr<Printing3DModelTexture>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Texture)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_texture(&self, value: &Printing3DModelTexture) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Texture)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_u(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_U)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_u(&self, value: f64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_U)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_v(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_V)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_v(&self, value: f64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_V)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DTexture2CoordMaterial: IPrinting3DTexture2CoordMaterial}
+impl RtActivatable<IActivationFactory> for Printing3DTexture2CoordMaterial {}
+DEFINE_CLSID!(Printing3DTexture2CoordMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,50,67,111,111,114,100,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DTexture2CoordMaterial]);
+DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroup, 1652391079, 28048, 20409, 159, 196, 159, 239, 243, 223, 168, 146);
+RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterialGroup(IPrinting3DTexture2CoordMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterialGroup] {
+    fn get_Texture2Coords(&self, out: *mut *mut foundation::collections::IVector<Printing3DTexture2CoordMaterial>) -> HRESULT,
+    fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT
+}}
+impl IPrinting3DTexture2CoordMaterialGroup {
+    #[inline] pub fn get_texture2_coords(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DTexture2CoordMaterial>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Texture2Coords)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MaterialGroupId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DTexture2CoordMaterialGroup: IPrinting3DTexture2CoordMaterialGroup}
+impl RtActivatable<IPrinting3DTexture2CoordMaterialGroupFactory> for Printing3DTexture2CoordMaterialGroup {}
+impl Printing3DTexture2CoordMaterialGroup {
+    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DTexture2CoordMaterialGroup>> {
+        <Self as RtActivatable<IPrinting3DTexture2CoordMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
+    }
+}
+DEFINE_CLSID!(Printing3DTexture2CoordMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,50,67,111,111,114,100,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DTexture2CoordMaterialGroup]);
+DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroup2, 1778113466, 45358, 17051, 131, 134, 223, 82, 132, 246, 232, 15);
+RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterialGroup2(IPrinting3DTexture2CoordMaterialGroup2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterialGroup2] {
+    fn get_Texture(&self, out: *mut *mut Printing3DModelTexture) -> HRESULT,
+    fn put_Texture(&self, value: *mut Printing3DModelTexture) -> HRESULT
+}}
+impl IPrinting3DTexture2CoordMaterialGroup2 {
+    #[inline] pub fn get_texture(&self) -> Result<Option<ComPtr<Printing3DModelTexture>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Texture)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_texture(&self, value: &Printing3DModelTexture) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Texture)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroupFactory, 3417328048, 18058, 19567, 178, 162, 142, 184, 186, 141, 234, 72);
+RT_INTERFACE!{static interface IPrinting3DTexture2CoordMaterialGroupFactory(IPrinting3DTexture2CoordMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterialGroupFactory] {
+    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DTexture2CoordMaterialGroup) -> HRESULT
+}}
+impl IPrinting3DTexture2CoordMaterialGroupFactory {
+    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DTexture2CoordMaterialGroup>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, materialGroupId, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum Printing3DTextureEdgeBehavior: i32 {
+    None (Printing3DTextureEdgeBehavior_None) = 0, Wrap (Printing3DTextureEdgeBehavior_Wrap) = 1, Mirror (Printing3DTextureEdgeBehavior_Mirror) = 2, Clamp (Printing3DTextureEdgeBehavior_Clamp) = 3,
+}}
+DEFINE_IID!(IID_IPrinting3DTextureResource, 2802709293, 27313, 17582, 188, 69, 162, 115, 130, 192, 211, 140);
+RT_INTERFACE!{interface IPrinting3DTextureResource(IPrinting3DTextureResourceVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTextureResource] {
+    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_TextureData(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStreamWithContentType) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-storage")] fn put_TextureData(&self, value: *mut super::super::storage::streams::IRandomAccessStreamWithContentType) -> HRESULT,
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Name(&self, value: HSTRING) -> HRESULT
+}}
+impl IPrinting3DTextureResource {
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_texture_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamWithContentType>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TextureData)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_texture_data(&self, value: &super::super::storage::streams::IRandomAccessStreamWithContentType) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TextureData)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Name)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Printing3DTextureResource: IPrinting3DTextureResource}
+impl RtActivatable<IActivationFactory> for Printing3DTextureResource {}
+DEFINE_CLSID!(Printing3DTextureResource(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,82,101,115,111,117,114,99,101,0]) [CLSID_Printing3DTextureResource]);
+} // Windows.Graphics.Printing3D

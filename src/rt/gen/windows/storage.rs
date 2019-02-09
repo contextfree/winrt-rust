@@ -2225,734 +2225,363 @@ impl IUserDataPathsStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-pub mod streams { // Windows.Storage.Streams
+pub mod accesscache { // Windows.Storage.AccessCache
 use ::prelude::*;
-DEFINE_IID!(IID_IBuffer, 2421821408, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
-RT_INTERFACE!{interface IBuffer(IBufferVtbl): IInspectable(IInspectableVtbl) [IID_IBuffer] {
-    fn get_Capacity(&self, out: *mut u32) -> HRESULT,
-    fn get_Length(&self, out: *mut u32) -> HRESULT,
-    fn put_Length(&self, value: u32) -> HRESULT
+RT_ENUM! { enum AccessCacheOptions: u32 {
+    None (AccessCacheOptions_None) = 0, DisallowUserInput (AccessCacheOptions_DisallowUserInput) = 1, FastLocationsOnly (AccessCacheOptions_FastLocationsOnly) = 2, UseReadOnlyCachedCopy (AccessCacheOptions_UseReadOnlyCachedCopy) = 4, SuppressAccessTimeUpdate (AccessCacheOptions_SuppressAccessTimeUpdate) = 8,
 }}
-impl IBuffer {
-    #[inline] pub fn get_capacity(&self) -> Result<u32> { unsafe { 
+RT_STRUCT! { struct AccessListEntry {
+    Token: HSTRING, Metadata: HSTRING,
+}}
+RT_CLASS!{class AccessListEntryView: foundation::collections::IVectorView<AccessListEntry>}
+DEFINE_IID!(IID_IItemRemovedEventArgs, 1499954780, 21950, 19558, 186, 102, 94, 174, 167, 157, 38, 49);
+RT_INTERFACE!{interface IItemRemovedEventArgs(IItemRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IItemRemovedEventArgs] {
+    fn get_RemovedEntry(&self, out: *mut AccessListEntry) -> HRESULT
+}}
+impl IItemRemovedEventArgs {
+    #[inline] pub fn get_removed_entry(&self) -> Result<AccessListEntry> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Capacity)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_RemovedEntry)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_length(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Length)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_length(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Length)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
 }
-RT_CLASS!{class Buffer: IBuffer}
-impl RtActivatable<IBufferFactory> for Buffer {}
-impl RtActivatable<IBufferStatics> for Buffer {}
-impl Buffer {
-    #[inline] pub fn create(capacity: u32) -> Result<ComPtr<Buffer>> {
-        <Self as RtActivatable<IBufferFactory>>::get_activation_factory().create(capacity)
-    }
-    #[inline] pub fn create_copy_from_memory_buffer(input: &foundation::IMemoryBuffer) -> Result<Option<ComPtr<Buffer>>> {
-        <Self as RtActivatable<IBufferStatics>>::get_activation_factory().create_copy_from_memory_buffer(input)
-    }
-    #[inline] pub fn create_memory_buffer_over_ibuffer(input: &IBuffer) -> Result<Option<ComPtr<foundation::MemoryBuffer>>> {
-        <Self as RtActivatable<IBufferStatics>>::get_activation_factory().create_memory_buffer_over_ibuffer(input)
-    }
-}
-DEFINE_CLSID!(Buffer(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,66,117,102,102,101,114,0]) [CLSID_Buffer]);
-DEFINE_IID!(IID_IBufferFactory, 1907331405, 49423, 18507, 188, 80, 20, 188, 98, 59, 58, 39);
-RT_INTERFACE!{static interface IBufferFactory(IBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBufferFactory] {
-    fn Create(&self, capacity: u32, out: *mut *mut Buffer) -> HRESULT
+RT_CLASS!{class ItemRemovedEventArgs: IItemRemovedEventArgs}
+RT_ENUM! { enum RecentStorageItemVisibility: i32 {
+    AppOnly (RecentStorageItemVisibility_AppOnly) = 0, AppAndSystem (RecentStorageItemVisibility_AppAndSystem) = 1,
 }}
-impl IBufferFactory {
-    #[inline] pub fn create(&self, capacity: u32) -> Result<ComPtr<Buffer>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, capacity, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
+RT_CLASS!{static class StorageApplicationPermissions}
+impl RtActivatable<IStorageApplicationPermissionsStatics> for StorageApplicationPermissions {}
+impl StorageApplicationPermissions {
+    #[inline] pub fn get_future_access_list() -> Result<Option<ComPtr<StorageItemAccessList>>> {
+        <Self as RtActivatable<IStorageApplicationPermissionsStatics>>::get_activation_factory().get_future_access_list()
+    }
+    #[inline] pub fn get_most_recently_used_list() -> Result<Option<ComPtr<StorageItemMostRecentlyUsedList>>> {
+        <Self as RtActivatable<IStorageApplicationPermissionsStatics>>::get_activation_factory().get_most_recently_used_list()
+    }
 }
-DEFINE_IID!(IID_IBufferStatics, 3909215835, 55062, 18266, 169, 10, 175, 114, 41, 177, 231, 65);
-RT_INTERFACE!{static interface IBufferStatics(IBufferStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBufferStatics] {
-    fn CreateCopyFromMemoryBuffer(&self, input: *mut foundation::IMemoryBuffer, out: *mut *mut Buffer) -> HRESULT,
-    fn CreateMemoryBufferOverIBuffer(&self, input: *mut IBuffer, out: *mut *mut foundation::MemoryBuffer) -> HRESULT
+DEFINE_CLSID!(StorageApplicationPermissions(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,99,99,101,115,115,67,97,99,104,101,46,83,116,111,114,97,103,101,65,112,112,108,105,99,97,116,105,111,110,80,101,114,109,105,115,115,105,111,110,115,0]) [CLSID_StorageApplicationPermissions]);
+DEFINE_IID!(IID_IStorageApplicationPermissionsStatics, 1133633450, 53299, 18681, 128, 96, 62, 200, 71, 210, 227, 241);
+RT_INTERFACE!{static interface IStorageApplicationPermissionsStatics(IStorageApplicationPermissionsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageApplicationPermissionsStatics] {
+    fn get_FutureAccessList(&self, out: *mut *mut StorageItemAccessList) -> HRESULT,
+    fn get_MostRecentlyUsedList(&self, out: *mut *mut StorageItemMostRecentlyUsedList) -> HRESULT
 }}
-impl IBufferStatics {
-    #[inline] pub fn create_copy_from_memory_buffer(&self, input: &foundation::IMemoryBuffer) -> Result<Option<ComPtr<Buffer>>> { unsafe { 
+impl IStorageApplicationPermissionsStatics {
+    #[inline] pub fn get_future_access_list(&self) -> Result<Option<ComPtr<StorageItemAccessList>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCopyFromMemoryBuffer)(self as *const _ as *mut _, input as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_FutureAccessList)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_memory_buffer_over_ibuffer(&self, input: &IBuffer) -> Result<Option<ComPtr<foundation::MemoryBuffer>>> { unsafe { 
+    #[inline] pub fn get_most_recently_used_list(&self) -> Result<Option<ComPtr<StorageItemMostRecentlyUsedList>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateMemoryBufferOverIBuffer)(self as *const _ as *mut _, input as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_MostRecentlyUsedList)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ByteOrder: i32 {
-    LittleEndian (ByteOrder_LittleEndian) = 0, BigEndian (ByteOrder_BigEndian) = 1,
+DEFINE_IID!(IID_IStorageItemAccessList, 749729453, 56976, 18421, 178, 195, 221, 54, 201, 253, 212, 83);
+RT_INTERFACE!{interface IStorageItemAccessList(IStorageItemAccessListVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemAccessList] {
+    fn AddOverloadDefaultMetadata(&self, file: *mut super::IStorageItem, out: *mut HSTRING) -> HRESULT,
+    fn Add(&self, file: *mut super::IStorageItem, metadata: HSTRING, out: *mut HSTRING) -> HRESULT,
+    fn AddOrReplaceOverloadDefaultMetadata(&self, token: HSTRING, file: *mut super::IStorageItem) -> HRESULT,
+    fn AddOrReplace(&self, token: HSTRING, file: *mut super::IStorageItem, metadata: HSTRING) -> HRESULT,
+    fn GetItemAsync(&self, token: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::IStorageItem>) -> HRESULT,
+    fn GetFileAsync(&self, token: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::StorageFile>) -> HRESULT,
+    fn GetFolderAsync(&self, token: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::StorageFolder>) -> HRESULT,
+    fn GetItemWithOptionsAsync(&self, token: HSTRING, options: AccessCacheOptions, out: *mut *mut foundation::IAsyncOperation<super::IStorageItem>) -> HRESULT,
+    fn GetFileWithOptionsAsync(&self, token: HSTRING, options: AccessCacheOptions, out: *mut *mut foundation::IAsyncOperation<super::StorageFile>) -> HRESULT,
+    fn GetFolderWithOptionsAsync(&self, token: HSTRING, options: AccessCacheOptions, out: *mut *mut foundation::IAsyncOperation<super::StorageFolder>) -> HRESULT,
+    fn Remove(&self, token: HSTRING) -> HRESULT,
+    fn ContainsItem(&self, token: HSTRING, out: *mut bool) -> HRESULT,
+    fn Clear(&self) -> HRESULT,
+    fn CheckAccess(&self, file: *mut super::IStorageItem, out: *mut bool) -> HRESULT,
+    fn get_Entries(&self, out: *mut *mut AccessListEntryView) -> HRESULT,
+    fn get_MaximumItemsAllowed(&self, out: *mut u32) -> HRESULT
 }}
-DEFINE_IID!(IID_IContentTypeProvider, 2547030181, 15257, 19945, 136, 165, 225, 29, 47, 80, 199, 149);
-RT_INTERFACE!{interface IContentTypeProvider(IContentTypeProviderVtbl): IInspectable(IInspectableVtbl) [IID_IContentTypeProvider] {
-    fn get_ContentType(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl IContentTypeProvider {
-    #[inline] pub fn get_content_type(&self) -> Result<HString> { unsafe { 
+impl IStorageItemAccessList {
+    #[inline] pub fn add_overload_default_metadata(&self, file: &super::IStorageItem) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ContentType)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AddOverloadDefaultMetadata)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-}
-DEFINE_IID!(IID_IDataReader, 3803512873, 46273, 17172, 164, 184, 251, 129, 58, 47, 39, 94);
-RT_INTERFACE!{interface IDataReader(IDataReaderVtbl): IInspectable(IInspectableVtbl) [IID_IDataReader] {
-    fn get_UnconsumedBufferLength(&self, out: *mut u32) -> HRESULT,
-    fn get_UnicodeEncoding(&self, out: *mut UnicodeEncoding) -> HRESULT,
-    fn put_UnicodeEncoding(&self, value: UnicodeEncoding) -> HRESULT,
-    fn get_ByteOrder(&self, out: *mut ByteOrder) -> HRESULT,
-    fn put_ByteOrder(&self, value: ByteOrder) -> HRESULT,
-    fn get_InputStreamOptions(&self, out: *mut InputStreamOptions) -> HRESULT,
-    fn put_InputStreamOptions(&self, value: InputStreamOptions) -> HRESULT,
-    fn ReadByte(&self, out: *mut u8) -> HRESULT,
-    fn ReadBytes(&self, valueSize: u32, value: *mut u8) -> HRESULT,
-    fn ReadBuffer(&self, length: u32, out: *mut *mut IBuffer) -> HRESULT,
-    fn ReadBoolean(&self, out: *mut bool) -> HRESULT,
-    fn ReadGuid(&self, out: *mut Guid) -> HRESULT,
-    fn ReadInt16(&self, out: *mut i16) -> HRESULT,
-    fn ReadInt32(&self, out: *mut i32) -> HRESULT,
-    fn ReadInt64(&self, out: *mut i64) -> HRESULT,
-    fn ReadUInt16(&self, out: *mut u16) -> HRESULT,
-    fn ReadUInt32(&self, out: *mut u32) -> HRESULT,
-    fn ReadUInt64(&self, out: *mut u64) -> HRESULT,
-    fn ReadSingle(&self, out: *mut f32) -> HRESULT,
-    fn ReadDouble(&self, out: *mut f64) -> HRESULT,
-    fn ReadString(&self, codeUnitCount: u32, out: *mut HSTRING) -> HRESULT,
-    fn ReadDateTime(&self, out: *mut foundation::DateTime) -> HRESULT,
-    fn ReadTimeSpan(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn LoadAsync(&self, count: u32, out: *mut *mut DataReaderLoadOperation) -> HRESULT,
-    fn DetachBuffer(&self, out: *mut *mut IBuffer) -> HRESULT,
-    fn DetachStream(&self, out: *mut *mut IInputStream) -> HRESULT
-}}
-impl IDataReader {
-    #[inline] pub fn get_unconsumed_buffer_length(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UnconsumedBufferLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_unicode_encoding(&self) -> Result<UnicodeEncoding> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UnicodeEncoding)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_unicode_encoding(&self, value: UnicodeEncoding) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_UnicodeEncoding)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_byte_order(&self) -> Result<ByteOrder> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ByteOrder)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_byte_order(&self, value: ByteOrder) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ByteOrder)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_input_stream_options(&self) -> Result<InputStreamOptions> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_InputStreamOptions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_input_stream_options(&self, value: InputStreamOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_InputStreamOptions)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn read_byte(&self) -> Result<u8> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadByte)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn read_bytes(&self, value: &mut [u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReadBytes)(self as *const _ as *mut _, value.len() as u32, value.as_mut_ptr() as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn read_buffer(&self, length: u32) -> Result<Option<ComPtr<IBuffer>>> { unsafe { 
+    #[inline] pub fn add(&self, file: &super::IStorageItem, metadata: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadBuffer)(self as *const _ as *mut _, length, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn read_boolean(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadBoolean)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn read_guid(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadGuid)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn read_int16(&self) -> Result<i16> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadInt16)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn read_int32(&self) -> Result<i32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadInt32)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn read_int64(&self) -> Result<i64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadInt64)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn read_uint16(&self) -> Result<u16> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadUInt16)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn read_uint32(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadUInt32)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn read_uint64(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadUInt64)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn read_single(&self) -> Result<f32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadSingle)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn read_double(&self) -> Result<f64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadDouble)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn read_string(&self, codeUnitCount: u32) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadString)(self as *const _ as *mut _, codeUnitCount, &mut out);
+        let hr = ((*self.lpVtbl).Add)(self as *const _ as *mut _, file as *const _ as *mut _, metadata.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn read_date_time(&self) -> Result<foundation::DateTime> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadDateTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
+    #[inline] pub fn add_or_replace_overload_default_metadata(&self, token: &HStringArg, file: &super::IStorageItem) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddOrReplaceOverloadDefaultMetadata)(self as *const _ as *mut _, token.get(), file as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn read_time_span(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadTimeSpan)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
+    #[inline] pub fn add_or_replace(&self, token: &HStringArg, file: &super::IStorageItem, metadata: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddOrReplace)(self as *const _ as *mut _, token.get(), file as *const _ as *mut _, metadata.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn load_async(&self, count: u32) -> Result<ComPtr<DataReaderLoadOperation>> { unsafe { 
+    #[inline] pub fn get_item_async(&self, token: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::IStorageItem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadAsync)(self as *const _ as *mut _, count, &mut out);
+        let hr = ((*self.lpVtbl).GetItemAsync)(self as *const _ as *mut _, token.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn detach_buffer(&self) -> Result<Option<ComPtr<IBuffer>>> { unsafe { 
+    #[inline] pub fn get_file_async(&self, token: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DetachBuffer)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetFileAsync)(self as *const _ as *mut _, token.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_folder_async(&self, token: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFolder>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFolderAsync)(self as *const _ as *mut _, token.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_item_with_options_async(&self, token: &HStringArg, options: AccessCacheOptions) -> Result<ComPtr<foundation::IAsyncOperation<super::IStorageItem>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetItemWithOptionsAsync)(self as *const _ as *mut _, token.get(), options, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_file_with_options_async(&self, token: &HStringArg, options: AccessCacheOptions) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFile>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFileWithOptionsAsync)(self as *const _ as *mut _, token.get(), options, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_folder_with_options_async(&self, token: &HStringArg, options: AccessCacheOptions) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFolder>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFolderWithOptionsAsync)(self as *const _ as *mut _, token.get(), options, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn remove(&self, token: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Remove)(self as *const _ as *mut _, token.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn contains_item(&self, token: &HStringArg) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ContainsItem)(self as *const _ as *mut _, token.get(), &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn clear(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Clear)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn check_access(&self, file: &super::IStorageItem) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).CheckAccess)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_entries(&self) -> Result<Option<ComPtr<AccessListEntryView>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Entries)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn detach_stream(&self) -> Result<Option<ComPtr<IInputStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DetachStream)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class DataReader: IDataReader}
-impl RtActivatable<IDataReaderFactory> for DataReader {}
-impl RtActivatable<IDataReaderStatics> for DataReader {}
-impl DataReader {
-    #[inline] pub fn create_data_reader(inputStream: &IInputStream) -> Result<ComPtr<DataReader>> {
-        <Self as RtActivatable<IDataReaderFactory>>::get_activation_factory().create_data_reader(inputStream)
-    }
-    #[inline] pub fn from_buffer(buffer: &IBuffer) -> Result<Option<ComPtr<DataReader>>> {
-        <Self as RtActivatable<IDataReaderStatics>>::get_activation_factory().from_buffer(buffer)
-    }
-}
-DEFINE_CLSID!(DataReader(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,82,101,97,100,101,114,0]) [CLSID_DataReader]);
-DEFINE_IID!(IID_IDataReaderFactory, 3612506183, 22490, 19989, 145, 76, 6, 128, 102, 153, 160, 152);
-RT_INTERFACE!{static interface IDataReaderFactory(IDataReaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderFactory] {
-    fn CreateDataReader(&self, inputStream: *mut IInputStream, out: *mut *mut DataReader) -> HRESULT
-}}
-impl IDataReaderFactory {
-    #[inline] pub fn create_data_reader(&self, inputStream: &IInputStream) -> Result<ComPtr<DataReader>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDataReader)(self as *const _ as *mut _, inputStream as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class DataReaderLoadOperation: foundation::IAsyncOperation<u32>}
-DEFINE_IID!(IID_IDataReaderStatics, 301776840, 63802, 18203, 177, 33, 243, 121, 227, 73, 49, 60);
-RT_INTERFACE!{static interface IDataReaderStatics(IDataReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderStatics] {
-    fn FromBuffer(&self, buffer: *mut IBuffer, out: *mut *mut DataReader) -> HRESULT
-}}
-impl IDataReaderStatics {
-    #[inline] pub fn from_buffer(&self, buffer: &IBuffer) -> Result<Option<ComPtr<DataReader>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FromBuffer)(self as *const _ as *mut _, buffer as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IDataWriter, 1689817701, 54081, 18722, 179, 138, 221, 74, 248, 128, 140, 78);
-RT_INTERFACE!{interface IDataWriter(IDataWriterVtbl): IInspectable(IInspectableVtbl) [IID_IDataWriter] {
-    fn get_UnstoredBufferLength(&self, out: *mut u32) -> HRESULT,
-    fn get_UnicodeEncoding(&self, out: *mut UnicodeEncoding) -> HRESULT,
-    fn put_UnicodeEncoding(&self, value: UnicodeEncoding) -> HRESULT,
-    fn get_ByteOrder(&self, out: *mut ByteOrder) -> HRESULT,
-    fn put_ByteOrder(&self, value: ByteOrder) -> HRESULT,
-    fn WriteByte(&self, value: u8) -> HRESULT,
-    fn WriteBytes(&self, valueSize: u32, value: *mut u8) -> HRESULT,
-    fn WriteBuffer(&self, buffer: *mut IBuffer) -> HRESULT,
-    fn WriteBufferRange(&self, buffer: *mut IBuffer, start: u32, count: u32) -> HRESULT,
-    fn WriteBoolean(&self, value: bool) -> HRESULT,
-    fn WriteGuid(&self, value: Guid) -> HRESULT,
-    fn WriteInt16(&self, value: i16) -> HRESULT,
-    fn WriteInt32(&self, value: i32) -> HRESULT,
-    fn WriteInt64(&self, value: i64) -> HRESULT,
-    fn WriteUInt16(&self, value: u16) -> HRESULT,
-    fn WriteUInt32(&self, value: u32) -> HRESULT,
-    fn WriteUInt64(&self, value: u64) -> HRESULT,
-    fn WriteSingle(&self, value: f32) -> HRESULT,
-    fn WriteDouble(&self, value: f64) -> HRESULT,
-    fn WriteDateTime(&self, value: foundation::DateTime) -> HRESULT,
-    fn WriteTimeSpan(&self, value: foundation::TimeSpan) -> HRESULT,
-    fn WriteString(&self, value: HSTRING, out: *mut u32) -> HRESULT,
-    fn MeasureString(&self, value: HSTRING, out: *mut u32) -> HRESULT,
-    fn StoreAsync(&self, out: *mut *mut DataWriterStoreOperation) -> HRESULT,
-    fn FlushAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
-    fn DetachBuffer(&self, out: *mut *mut IBuffer) -> HRESULT,
-    fn DetachStream(&self, out: *mut *mut IOutputStream) -> HRESULT
-}}
-impl IDataWriter {
-    #[inline] pub fn get_unstored_buffer_length(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_maximum_items_allowed(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UnstoredBufferLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_unicode_encoding(&self) -> Result<UnicodeEncoding> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UnicodeEncoding)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_unicode_encoding(&self, value: UnicodeEncoding) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_UnicodeEncoding)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_byte_order(&self) -> Result<ByteOrder> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ByteOrder)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_byte_order(&self, value: ByteOrder) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ByteOrder)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_byte(&self, value: u8) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteByte)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_bytes(&self, value: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteBytes)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_buffer(&self, buffer: &IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteBuffer)(self as *const _ as *mut _, buffer as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_buffer_range(&self, buffer: &IBuffer, start: u32, count: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteBufferRange)(self as *const _ as *mut _, buffer as *const _ as *mut _, start, count);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_boolean(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteBoolean)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_guid(&self, value: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteGuid)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_int16(&self, value: i16) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteInt16)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_int32(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteInt32)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_int64(&self, value: i64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteInt64)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_uint16(&self, value: u16) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteUInt16)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_uint32(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteUInt32)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_uint64(&self, value: u64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteUInt64)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_single(&self, value: f32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteSingle)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_double(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteDouble)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_date_time(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteDateTime)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_time_span(&self, value: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteTimeSpan)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn write_string(&self, value: &HStringArg) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).WriteString)(self as *const _ as *mut _, value.get(), &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn measure_string(&self, value: &HStringArg) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).MeasureString)(self as *const _ as *mut _, value.get(), &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn store_async(&self) -> Result<ComPtr<DataWriterStoreOperation>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StoreAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn flush_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FlushAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn detach_buffer(&self) -> Result<Option<ComPtr<IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DetachBuffer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn detach_stream(&self) -> Result<Option<ComPtr<IOutputStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DetachStream)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class DataWriter: IDataWriter}
-impl RtActivatable<IDataWriterFactory> for DataWriter {}
-impl RtActivatable<IActivationFactory> for DataWriter {}
-impl DataWriter {
-    #[inline] pub fn create_data_writer(outputStream: &IOutputStream) -> Result<ComPtr<DataWriter>> {
-        <Self as RtActivatable<IDataWriterFactory>>::get_activation_factory().create_data_writer(outputStream)
-    }
-}
-DEFINE_CLSID!(DataWriter(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,87,114,105,116,101,114,0]) [CLSID_DataWriter]);
-DEFINE_IID!(IID_IDataWriterFactory, 864839618, 35716, 19499, 156, 80, 123, 135, 103, 132, 122, 31);
-RT_INTERFACE!{static interface IDataWriterFactory(IDataWriterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataWriterFactory] {
-    fn CreateDataWriter(&self, outputStream: *mut IOutputStream, out: *mut *mut DataWriter) -> HRESULT
-}}
-impl IDataWriterFactory {
-    #[inline] pub fn create_data_writer(&self, outputStream: &IOutputStream) -> Result<ComPtr<DataWriter>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDataWriter)(self as *const _ as *mut _, outputStream as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class DataWriterStoreOperation: foundation::IAsyncOperation<u32>}
-RT_CLASS!{class FileInputStream: IInputStream}
-RT_ENUM! { enum FileOpenDisposition: i32 {
-    OpenExisting (FileOpenDisposition_OpenExisting) = 0, OpenAlways (FileOpenDisposition_OpenAlways) = 1, CreateNew (FileOpenDisposition_CreateNew) = 2, CreateAlways (FileOpenDisposition_CreateAlways) = 3, TruncateExisting (FileOpenDisposition_TruncateExisting) = 4,
-}}
-RT_CLASS!{class FileOutputStream: IOutputStream}
-RT_CLASS!{class FileRandomAccessStream: IRandomAccessStream}
-impl RtActivatable<IFileRandomAccessStreamStatics> for FileRandomAccessStream {}
-impl FileRandomAccessStream {
-    #[inline] pub fn open_async(filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_async(filePath, accessMode)
-    }
-    #[inline] pub fn open_with_options_async(filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_with_options_async(filePath, accessMode, sharingOptions, openDisposition)
-    }
-    #[inline] pub fn open_transacted_write_async(filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_async(filePath)
-    }
-    #[inline] pub fn open_transacted_write_with_options_async(filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_with_options_async(filePath, openOptions, openDisposition)
-    }
-    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_async(user: &super::super::system::User, filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_for_user_async(user, filePath, accessMode)
-    }
-    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_with_options_async(user: &super::super::system::User, filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_for_user_with_options_async(user, filePath, accessMode, sharingOptions, openDisposition)
-    }
-    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_async(user: &super::super::system::User, filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_for_user_async(user, filePath)
-    }
-    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_with_options_async(user: &super::super::system::User, filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_for_user_with_options_async(user, filePath, openOptions, openDisposition)
-    }
-}
-DEFINE_CLSID!(FileRandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,70,105,108,101,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_FileRandomAccessStream]);
-DEFINE_IID!(IID_IFileRandomAccessStreamStatics, 1934950663, 15191, 19293, 131, 69, 85, 77, 47, 198, 33, 240);
-RT_INTERFACE!{static interface IFileRandomAccessStreamStatics(IFileRandomAccessStreamStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFileRandomAccessStreamStatics] {
-    fn OpenAsync(&self, filePath: HSTRING, accessMode: super::FileAccessMode, out: *mut *mut foundation::IAsyncOperation<IRandomAccessStream>) -> HRESULT,
-    fn OpenWithOptionsAsync(&self, filePath: HSTRING, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition, out: *mut *mut foundation::IAsyncOperation<IRandomAccessStream>) -> HRESULT,
-    fn OpenTransactedWriteAsync(&self, filePath: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::StorageStreamTransaction>) -> HRESULT,
-    fn OpenTransactedWriteWithOptionsAsync(&self, filePath: HSTRING, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition, out: *mut *mut foundation::IAsyncOperation<super::StorageStreamTransaction>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn OpenForUserAsync(&self, user: *mut super::super::system::User, filePath: HSTRING, accessMode: super::FileAccessMode, out: *mut *mut foundation::IAsyncOperation<IRandomAccessStream>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn OpenForUserWithOptionsAsync(&self, user: *mut super::super::system::User, filePath: HSTRING, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition, out: *mut *mut foundation::IAsyncOperation<IRandomAccessStream>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn OpenTransactedWriteForUserAsync(&self, user: *mut super::super::system::User, filePath: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::StorageStreamTransaction>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn OpenTransactedWriteForUserWithOptionsAsync(&self, user: *mut super::super::system::User, filePath: HSTRING, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition, out: *mut *mut foundation::IAsyncOperation<super::StorageStreamTransaction>) -> HRESULT
-}}
-impl IFileRandomAccessStreamStatics {
-    #[inline] pub fn open_async(&self, filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenAsync)(self as *const _ as *mut _, filePath.get(), accessMode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn open_with_options_async(&self, filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenWithOptionsAsync)(self as *const _ as *mut _, filePath.get(), accessMode, sharingOptions, openDisposition, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn open_transacted_write_async(&self, filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenTransactedWriteAsync)(self as *const _ as *mut _, filePath.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn open_transacted_write_with_options_async(&self, filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenTransactedWriteWithOptionsAsync)(self as *const _ as *mut _, filePath.get(), openOptions, openDisposition, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_async(&self, user: &super::super::system::User, filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, filePath.get(), accessMode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_with_options_async(&self, user: &super::super::system::User, filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenForUserWithOptionsAsync)(self as *const _ as *mut _, user as *const _ as *mut _, filePath.get(), accessMode, sharingOptions, openDisposition, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_async(&self, user: &super::super::system::User, filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenTransactedWriteForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, filePath.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_with_options_async(&self, user: &super::super::system::User, filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenTransactedWriteForUserWithOptionsAsync)(self as *const _ as *mut _, user as *const _ as *mut _, filePath.get(), openOptions, openDisposition, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class InMemoryRandomAccessStream: IRandomAccessStream}
-impl RtActivatable<IActivationFactory> for InMemoryRandomAccessStream {}
-DEFINE_CLSID!(InMemoryRandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,73,110,77,101,109,111,114,121,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_InMemoryRandomAccessStream]);
-DEFINE_IID!(IID_IInputStream, 2421821410, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
-RT_INTERFACE!{interface IInputStream(IInputStreamVtbl): IInspectable(IInspectableVtbl) [IID_IInputStream] {
-    fn ReadAsync(&self, buffer: *mut IBuffer, count: u32, options: InputStreamOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<IBuffer, u32>) -> HRESULT
-}}
-impl IInputStream {
-    #[inline] pub fn read_async(&self, buffer: &IBuffer, count: u32, options: InputStreamOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<IBuffer, u32>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadAsync)(self as *const _ as *mut _, buffer as *const _ as *mut _, count, options, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum InputStreamOptions: u32 {
-    None (InputStreamOptions_None) = 0, Partial (InputStreamOptions_Partial) = 1, ReadAhead (InputStreamOptions_ReadAhead) = 2,
-}}
-RT_CLASS!{class InputStreamOverStream: IInputStream}
-DEFINE_IID!(IID_IInputStreamReference, 1133681944, 24265, 19290, 145, 156, 66, 5, 176, 200, 4, 182);
-RT_INTERFACE!{interface IInputStreamReference(IInputStreamReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IInputStreamReference] {
-    fn OpenSequentialReadAsync(&self, out: *mut *mut foundation::IAsyncOperation<IInputStream>) -> HRESULT
-}}
-impl IInputStreamReference {
-    #[inline] pub fn open_sequential_read_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<IInputStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenSequentialReadAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IOutputStream, 2421821414, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
-RT_INTERFACE!{interface IOutputStream(IOutputStreamVtbl): IInspectable(IInspectableVtbl) [IID_IOutputStream] {
-    fn WriteAsync(&self, buffer: *mut IBuffer, out: *mut *mut foundation::IAsyncOperationWithProgress<u32, u32>) -> HRESULT,
-    fn FlushAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
-}}
-impl IOutputStream {
-    #[inline] pub fn write_async(&self, buffer: &IBuffer) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u32, u32>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteAsync)(self as *const _ as *mut _, buffer as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn flush_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FlushAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class OutputStreamOverStream: IOutputStream}
-DEFINE_IID!(IID_IRandomAccessStream, 2421821409, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
-RT_INTERFACE!{interface IRandomAccessStream(IRandomAccessStreamVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStream] {
-    fn get_Size(&self, out: *mut u64) -> HRESULT,
-    fn put_Size(&self, value: u64) -> HRESULT,
-    fn GetInputStreamAt(&self, position: u64, out: *mut *mut IInputStream) -> HRESULT,
-    fn GetOutputStreamAt(&self, position: u64, out: *mut *mut IOutputStream) -> HRESULT,
-    fn get_Position(&self, out: *mut u64) -> HRESULT,
-    fn Seek(&self, position: u64) -> HRESULT,
-    fn CloneStream(&self, out: *mut *mut IRandomAccessStream) -> HRESULT,
-    fn get_CanRead(&self, out: *mut bool) -> HRESULT,
-    fn get_CanWrite(&self, out: *mut bool) -> HRESULT
-}}
-impl IRandomAccessStream {
-    #[inline] pub fn get_size(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_size(&self, value: u64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Size)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_input_stream_at(&self, position: u64) -> Result<Option<ComPtr<IInputStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetInputStreamAt)(self as *const _ as *mut _, position, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_output_stream_at(&self, position: u64) -> Result<Option<ComPtr<IOutputStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetOutputStreamAt)(self as *const _ as *mut _, position, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_position(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn seek(&self, position: u64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Seek)(self as *const _ as *mut _, position);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn clone_stream(&self) -> Result<Option<ComPtr<IRandomAccessStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CloneStream)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_can_read(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CanRead)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_can_write(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CanWrite)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_MaximumItemsAllowed)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{static class RandomAccessStream}
-impl RtActivatable<IRandomAccessStreamStatics> for RandomAccessStream {}
-impl RandomAccessStream {
-    #[inline] pub fn copy_async(source: &IInputStream, destination: &IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
-        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().copy_async(source, destination)
-    }
-    #[inline] pub fn copy_size_async(source: &IInputStream, destination: &IOutputStream, bytesToCopy: u64) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
-        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().copy_size_async(source, destination, bytesToCopy)
-    }
-    #[inline] pub fn copy_and_close_async(source: &IInputStream, destination: &IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
-        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().copy_and_close_async(source, destination)
-    }
-}
-DEFINE_CLSID!(RandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_RandomAccessStream]);
-RT_CLASS!{class RandomAccessStreamOverStream: IRandomAccessStream}
-DEFINE_IID!(IID_IRandomAccessStreamReference, 871248180, 7638, 20026, 128, 103, 209, 193, 98, 232, 100, 43);
-RT_INTERFACE!{interface IRandomAccessStreamReference(IRandomAccessStreamReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamReference] {
-    fn OpenReadAsync(&self, out: *mut *mut foundation::IAsyncOperation<IRandomAccessStreamWithContentType>) -> HRESULT
+RT_CLASS!{class StorageItemAccessList: IStorageItemAccessList}
+DEFINE_IID!(IID_IStorageItemMostRecentlyUsedList, 23214549, 20749, 16670, 140, 241, 195, 209, 239, 250, 76, 51);
+RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList(IStorageItemMostRecentlyUsedListVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemMostRecentlyUsedList] {
+    fn add_ItemRemoved(&self, handler: *mut foundation::TypedEventHandler<StorageItemMostRecentlyUsedList, ItemRemovedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ItemRemoved(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
-impl IRandomAccessStreamReference {
-    #[inline] pub fn open_read_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStreamWithContentType>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenReadAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+impl IStorageItemMostRecentlyUsedList {
+    #[inline] pub fn add_item_removed(&self, handler: &foundation::TypedEventHandler<StorageItemMostRecentlyUsedList, ItemRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_ItemRemoved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_item_removed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_ItemRemoved)(self as *const _ as *mut _, eventCookie);
+        if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RandomAccessStreamReference: IRandomAccessStreamReference}
-impl RtActivatable<IRandomAccessStreamReferenceStatics> for RandomAccessStreamReference {}
-impl RandomAccessStreamReference {
-    #[inline] pub fn create_from_file(file: &super::IStorageFile) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
-        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().create_from_file(file)
-    }
-    #[inline] pub fn create_from_uri(uri: &foundation::Uri) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
-        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().create_from_uri(uri)
-    }
-    #[inline] pub fn create_from_stream(stream: &IRandomAccessStream) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
-        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().create_from_stream(stream)
-    }
-}
-DEFINE_CLSID!(RandomAccessStreamReference(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,82,101,102,101,114,101,110,99,101,0]) [CLSID_RandomAccessStreamReference]);
-DEFINE_IID!(IID_IRandomAccessStreamReferenceStatics, 2238908892, 16319, 20093, 152, 111, 239, 59, 26, 7, 169, 100);
-RT_INTERFACE!{static interface IRandomAccessStreamReferenceStatics(IRandomAccessStreamReferenceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamReferenceStatics] {
-    fn CreateFromFile(&self, file: *mut super::IStorageFile, out: *mut *mut RandomAccessStreamReference) -> HRESULT,
-    fn CreateFromUri(&self, uri: *mut foundation::Uri, out: *mut *mut RandomAccessStreamReference) -> HRESULT,
-    fn CreateFromStream(&self, stream: *mut IRandomAccessStream, out: *mut *mut RandomAccessStreamReference) -> HRESULT
+RT_CLASS!{class StorageItemMostRecentlyUsedList: IStorageItemMostRecentlyUsedList}
+DEFINE_IID!(IID_IStorageItemMostRecentlyUsedList2, 3662159520, 60813, 18225, 161, 219, 228, 78, 226, 32, 64, 147);
+RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList2(IStorageItemMostRecentlyUsedList2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemMostRecentlyUsedList2] {
+    fn AddWithMetadataAndVisibility(&self, file: *mut super::IStorageItem, metadata: HSTRING, visibility: RecentStorageItemVisibility, out: *mut HSTRING) -> HRESULT,
+    fn AddOrReplaceWithMetadataAndVisibility(&self, token: HSTRING, file: *mut super::IStorageItem, metadata: HSTRING, visibility: RecentStorageItemVisibility) -> HRESULT
 }}
-impl IRandomAccessStreamReferenceStatics {
-    #[inline] pub fn create_from_file(&self, file: &super::IStorageFile) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
+impl IStorageItemMostRecentlyUsedList2 {
+    #[inline] pub fn add_with_metadata_and_visibility(&self, file: &super::IStorageItem, metadata: &HStringArg, visibility: RecentStorageItemVisibility) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromFile)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AddWithMetadataAndVisibility)(self as *const _ as *mut _, file as *const _ as *mut _, metadata.get(), visibility, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_or_replace_with_metadata_and_visibility(&self, token: &HStringArg, file: &super::IStorageItem, metadata: &HStringArg, visibility: RecentStorageItemVisibility) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddOrReplaceWithMetadataAndVisibility)(self as *const _ as *mut _, token.get(), file as *const _ as *mut _, metadata.get(), visibility);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+} // Windows.Storage.AccessCache
+pub mod bulkaccess { // Windows.Storage.BulkAccess
+use ::prelude::*;
+RT_CLASS!{class FileInformation: IStorageItemInformation}
+DEFINE_IID!(IID_IFileInformationFactory, 1075677374, 38415, 19821, 167, 208, 26, 56, 97, 231, 108, 131);
+RT_INTERFACE!{interface IFileInformationFactory(IFileInformationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileInformationFactory] {
+    fn GetItemsAsync(&self, startIndex: u32, maxItemsToRetrieve: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItemInformation>>) -> HRESULT,
+    fn GetItemsAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItemInformation>>) -> HRESULT,
+    fn GetFilesAsync(&self, startIndex: u32, maxItemsToRetrieve: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<FileInformation>>) -> HRESULT,
+    fn GetFilesAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<FileInformation>>) -> HRESULT,
+    fn GetFoldersAsync(&self, startIndex: u32, maxItemsToRetrieve: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<FolderInformation>>) -> HRESULT,
+    fn GetFoldersAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<FolderInformation>>) -> HRESULT,
+    fn GetVirtualizedItemsVector(&self, out: *mut *mut IInspectable) -> HRESULT,
+    fn GetVirtualizedFilesVector(&self, out: *mut *mut IInspectable) -> HRESULT,
+    fn GetVirtualizedFoldersVector(&self, out: *mut *mut IInspectable) -> HRESULT
+}}
+impl IFileInformationFactory {
+    #[inline] pub fn get_items_async(&self, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItemInformation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetItemsAsync)(self as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_items_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItemInformation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetItemsAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_files_async(&self, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<FileInformation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFilesAsync)(self as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_files_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<FileInformation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFilesAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_folders_async(&self, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<FolderInformation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFoldersAsync)(self as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_folders_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<FolderInformation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFoldersAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_virtualized_items_vector(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetVirtualizedItemsVector)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_uri(&self, uri: &foundation::Uri) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
+    #[inline] pub fn get_virtualized_files_vector(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromUri)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetVirtualizedFilesVector)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_stream(&self, stream: &IRandomAccessStream) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
+    #[inline] pub fn get_virtualized_folders_vector(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStream)(self as *const _ as *mut _, stream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetVirtualizedFoldersVector)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-DEFINE_IID!(IID_IRandomAccessStreamStatics, 1380773327, 28201, 19685, 149, 115, 107, 117, 61, 182, 108, 58);
-RT_INTERFACE!{static interface IRandomAccessStreamStatics(IRandomAccessStreamStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamStatics] {
-    fn CopyAsync(&self, source: *mut IInputStream, destination: *mut IOutputStream, out: *mut *mut foundation::IAsyncOperationWithProgress<u64, u64>) -> HRESULT,
-    fn CopySizeAsync(&self, source: *mut IInputStream, destination: *mut IOutputStream, bytesToCopy: u64, out: *mut *mut foundation::IAsyncOperationWithProgress<u64, u64>) -> HRESULT,
-    fn CopyAndCloseAsync(&self, source: *mut IInputStream, destination: *mut IOutputStream, out: *mut *mut foundation::IAsyncOperationWithProgress<u64, u64>) -> HRESULT
+RT_CLASS!{class FileInformationFactory: IFileInformationFactory}
+impl RtActivatable<IFileInformationFactoryFactory> for FileInformationFactory {}
+impl FileInformationFactory {
+    #[inline] pub fn create_with_mode(queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode) -> Result<ComPtr<FileInformationFactory>> {
+        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode(queryResult, mode)
+    }
+    #[inline] pub fn create_with_mode_and_size(queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32) -> Result<ComPtr<FileInformationFactory>> {
+        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode_and_size(queryResult, mode, requestedThumbnailSize)
+    }
+    #[inline] pub fn create_with_mode_and_size_and_options(queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions) -> Result<ComPtr<FileInformationFactory>> {
+        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode_and_size_and_options(queryResult, mode, requestedThumbnailSize, thumbnailOptions)
+    }
+    #[inline] pub fn create_with_mode_and_size_and_options_and_flags(queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool) -> Result<ComPtr<FileInformationFactory>> {
+        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode_and_size_and_options_and_flags(queryResult, mode, requestedThumbnailSize, thumbnailOptions, delayLoad)
+    }
+}
+DEFINE_CLSID!(FileInformationFactory(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,66,117,108,107,65,99,99,101,115,115,46,70,105,108,101,73,110,102,111,114,109,97,116,105,111,110,70,97,99,116,111,114,121,0]) [CLSID_FileInformationFactory]);
+DEFINE_IID!(IID_IFileInformationFactoryFactory, 2229931645, 58530, 20224, 138, 250, 175, 94, 15, 130, 107, 213);
+RT_INTERFACE!{static interface IFileInformationFactoryFactory(IFileInformationFactoryFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileInformationFactoryFactory] {
+    fn CreateWithMode(&self, queryResult: *mut super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, out: *mut *mut FileInformationFactory) -> HRESULT,
+    fn CreateWithModeAndSize(&self, queryResult: *mut super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, out: *mut *mut FileInformationFactory) -> HRESULT,
+    fn CreateWithModeAndSizeAndOptions(&self, queryResult: *mut super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, out: *mut *mut FileInformationFactory) -> HRESULT,
+    fn CreateWithModeAndSizeAndOptionsAndFlags(&self, queryResult: *mut super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool, out: *mut *mut FileInformationFactory) -> HRESULT
 }}
-impl IRandomAccessStreamStatics {
-    #[inline] pub fn copy_async(&self, source: &IInputStream, destination: &IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
+impl IFileInformationFactoryFactory {
+    #[inline] pub fn create_with_mode(&self, queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyAsync)(self as *const _ as *mut _, source as *const _ as *mut _, destination as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithMode)(self as *const _ as *mut _, queryResult as *const _ as *mut _, mode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn copy_size_async(&self, source: &IInputStream, destination: &IOutputStream, bytesToCopy: u64) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
+    #[inline] pub fn create_with_mode_and_size(&self, queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopySizeAsync)(self as *const _ as *mut _, source as *const _ as *mut _, destination as *const _ as *mut _, bytesToCopy, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithModeAndSize)(self as *const _ as *mut _, queryResult as *const _ as *mut _, mode, requestedThumbnailSize, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn copy_and_close_async(&self, source: &IInputStream, destination: &IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
+    #[inline] pub fn create_with_mode_and_size_and_options(&self, queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyAndCloseAsync)(self as *const _ as *mut _, source as *const _ as *mut _, destination as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithModeAndSizeAndOptions)(self as *const _ as *mut _, queryResult as *const _ as *mut _, mode, requestedThumbnailSize, thumbnailOptions, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_with_mode_and_size_and_options_and_flags(&self, queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithModeAndSizeAndOptionsAndFlags)(self as *const _ as *mut _, queryResult as *const _ as *mut _, mode, requestedThumbnailSize, thumbnailOptions, delayLoad, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-DEFINE_IID!(IID_IRandomAccessStreamWithContentType, 3424995367, 19261, 17295, 146, 50, 16, 199, 107, 199, 224, 56);
-RT_INTERFACE!{interface IRandomAccessStreamWithContentType(IRandomAccessStreamWithContentTypeVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamWithContentType] {
-    
+RT_CLASS!{class FolderInformation: IStorageItemInformation}
+DEFINE_IID!(IID_IStorageItemInformation, 2275789707, 35186, 20288, 141, 224, 216, 111, 177, 121, 216, 250);
+RT_INTERFACE!{interface IStorageItemInformation(IStorageItemInformationVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemInformation] {
+    fn get_MusicProperties(&self, out: *mut *mut super::fileproperties::MusicProperties) -> HRESULT,
+    fn get_VideoProperties(&self, out: *mut *mut super::fileproperties::VideoProperties) -> HRESULT,
+    fn get_ImageProperties(&self, out: *mut *mut super::fileproperties::ImageProperties) -> HRESULT,
+    fn get_DocumentProperties(&self, out: *mut *mut super::fileproperties::DocumentProperties) -> HRESULT,
+    fn get_BasicProperties(&self, out: *mut *mut super::fileproperties::BasicProperties) -> HRESULT,
+    fn get_Thumbnail(&self, out: *mut *mut super::fileproperties::StorageItemThumbnail) -> HRESULT,
+    fn add_ThumbnailUpdated(&self, changedHandler: *mut foundation::TypedEventHandler<IStorageItemInformation, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ThumbnailUpdated(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_PropertiesUpdated(&self, changedHandler: *mut foundation::TypedEventHandler<IStorageItemInformation, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_PropertiesUpdated(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
-RT_ENUM! { enum UnicodeEncoding: i32 {
-    Utf8 (UnicodeEncoding_Utf8) = 0, Utf16LE (UnicodeEncoding_Utf16LE) = 1, Utf16BE (UnicodeEncoding_Utf16BE) = 2,
-}}
-} // Windows.Storage.Streams
+impl IStorageItemInformation {
+    #[inline] pub fn get_music_properties(&self) -> Result<Option<ComPtr<super::fileproperties::MusicProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_MusicProperties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_video_properties(&self) -> Result<Option<ComPtr<super::fileproperties::VideoProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_VideoProperties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_image_properties(&self) -> Result<Option<ComPtr<super::fileproperties::ImageProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ImageProperties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_document_properties(&self) -> Result<Option<ComPtr<super::fileproperties::DocumentProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DocumentProperties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_basic_properties(&self) -> Result<Option<ComPtr<super::fileproperties::BasicProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_BasicProperties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_thumbnail(&self) -> Result<Option<ComPtr<super::fileproperties::StorageItemThumbnail>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_thumbnail_updated(&self, changedHandler: &foundation::TypedEventHandler<IStorageItemInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_ThumbnailUpdated)(self as *const _ as *mut _, changedHandler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_thumbnail_updated(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_ThumbnailUpdated)(self as *const _ as *mut _, eventCookie);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_properties_updated(&self, changedHandler: &foundation::TypedEventHandler<IStorageItemInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_PropertiesUpdated)(self as *const _ as *mut _, changedHandler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_properties_updated(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_PropertiesUpdated)(self as *const _ as *mut _, eventCookie);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+} // Windows.Storage.BulkAccess
 pub mod compression { // Windows.Storage.Compression
 use ::prelude::*;
 RT_ENUM! { enum CompressAlgorithm: i32 {
@@ -3034,657 +2663,588 @@ impl IDecompressorFactory {
     }}
 }
 } // Windows.Storage.Compression
-pub mod search { // Windows.Storage.Search
+pub mod fileproperties { // Windows.Storage.FileProperties
 use ::prelude::*;
-RT_ENUM! { enum CommonFileQuery: i32 {
-    DefaultQuery (CommonFileQuery_DefaultQuery) = 0, OrderByName (CommonFileQuery_OrderByName) = 1, OrderByTitle (CommonFileQuery_OrderByTitle) = 2, OrderByMusicProperties (CommonFileQuery_OrderByMusicProperties) = 3, OrderBySearchRank (CommonFileQuery_OrderBySearchRank) = 4, OrderByDate (CommonFileQuery_OrderByDate) = 5,
+DEFINE_IID!(IID_IBasicProperties, 3495777755, 30814, 19046, 190, 2, 155, 238, 197, 138, 234, 129);
+RT_INTERFACE!{interface IBasicProperties(IBasicPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IBasicProperties] {
+    fn get_Size(&self, out: *mut u64) -> HRESULT,
+    fn get_DateModified(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn get_ItemDate(&self, out: *mut foundation::DateTime) -> HRESULT
 }}
-RT_ENUM! { enum CommonFolderQuery: i32 {
-    DefaultQuery (CommonFolderQuery_DefaultQuery) = 0, GroupByYear (CommonFolderQuery_GroupByYear) = 100, GroupByMonth (CommonFolderQuery_GroupByMonth) = 101, GroupByArtist (CommonFolderQuery_GroupByArtist) = 102, GroupByAlbum (CommonFolderQuery_GroupByAlbum) = 103, GroupByAlbumArtist (CommonFolderQuery_GroupByAlbumArtist) = 104, GroupByComposer (CommonFolderQuery_GroupByComposer) = 105, GroupByGenre (CommonFolderQuery_GroupByGenre) = 106, GroupByPublishedYear (CommonFolderQuery_GroupByPublishedYear) = 107, GroupByRating (CommonFolderQuery_GroupByRating) = 108, GroupByTag (CommonFolderQuery_GroupByTag) = 109, GroupByAuthor (CommonFolderQuery_GroupByAuthor) = 110, GroupByType (CommonFolderQuery_GroupByType) = 111,
-}}
-DEFINE_IID!(IID_IContentIndexer, 2977333133, 63128, 18818, 176, 95, 58, 110, 140, 171, 1, 162);
-RT_INTERFACE!{interface IContentIndexer(IContentIndexerVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexer] {
-    fn AddAsync(&self, indexableContent: *mut IIndexableContent, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn UpdateAsync(&self, indexableContent: *mut IIndexableContent, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn DeleteAsync(&self, contentId: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn DeleteMultipleAsync(&self, contentIds: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn DeleteAllAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn RetrievePropertiesAsync(&self, contentId: HSTRING, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IMapView<HString, IInspectable>>) -> HRESULT,
-    fn get_Revision(&self, out: *mut u64) -> HRESULT
-}}
-impl IContentIndexer {
-    #[inline] pub fn add_async(&self, indexableContent: &IIndexableContent) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddAsync)(self as *const _ as *mut _, indexableContent as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn update_async(&self, indexableContent: &IIndexableContent) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UpdateAsync)(self as *const _ as *mut _, indexableContent as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn delete_async(&self, contentId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteAsync)(self as *const _ as *mut _, contentId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn delete_multiple_async(&self, contentIds: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteMultipleAsync)(self as *const _ as *mut _, contentIds as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn delete_all_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteAllAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn retrieve_properties_async(&self, contentId: &HStringArg, propertiesToRetrieve: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<HString, IInspectable>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RetrievePropertiesAsync)(self as *const _ as *mut _, contentId.get(), propertiesToRetrieve as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_revision(&self) -> Result<u64> { unsafe { 
+impl IBasicProperties {
+    #[inline] pub fn get_size(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Revision)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_date_modified(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DateModified)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_item_date(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ItemDate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContentIndexer: IContentIndexer}
-impl RtActivatable<IContentIndexerStatics> for ContentIndexer {}
-impl ContentIndexer {
-    #[inline] pub fn get_indexer_with_name(indexName: &HStringArg) -> Result<Option<ComPtr<ContentIndexer>>> {
-        <Self as RtActivatable<IContentIndexerStatics>>::get_activation_factory().get_indexer_with_name(indexName)
+RT_CLASS!{class BasicProperties: IBasicProperties}
+DEFINE_IID!(IID_IDocumentProperties, 2125142460, 6177, 18723, 180, 169, 10, 234, 64, 77, 0, 112);
+RT_INTERFACE!{interface IDocumentProperties(IDocumentPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IDocumentProperties] {
+    fn get_Author(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Title(&self, value: HSTRING) -> HRESULT,
+    fn get_Keywords(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_Comment(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Comment(&self, value: HSTRING) -> HRESULT
+}}
+impl IDocumentProperties {
+    #[inline] pub fn get_author(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Author)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_keywords(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Keywords)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_comment(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Comment)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_comment(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Comment)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DocumentProperties: IDocumentProperties}
+RT_CLASS!{static class GeotagHelper}
+impl RtActivatable<IGeotagHelperStatics> for GeotagHelper {}
+impl GeotagHelper {
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_geotag_async(file: &super::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint>>> {
+        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().get_geotag_async(file)
     }
-    #[inline] pub fn get_indexer() -> Result<Option<ComPtr<ContentIndexer>>> {
-        <Self as RtActivatable<IContentIndexerStatics>>::get_activation_factory().get_indexer()
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_from_geolocator_async(file: &super::IStorageFile, geolocator: &super::super::devices::geolocation::Geolocator) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().set_geotag_from_geolocator_async(file, geolocator)
     }
-}
-DEFINE_CLSID!(ContentIndexer(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,67,111,110,116,101,110,116,73,110,100,101,120,101,114,0]) [CLSID_ContentIndexer]);
-DEFINE_IID!(IID_IContentIndexerQuery, 1893970168, 19452, 17034, 136, 137, 204, 81, 218, 154, 123, 157);
-RT_INTERFACE!{interface IContentIndexerQuery(IContentIndexerQueryVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexerQuery] {
-    fn GetCountAsync(&self, out: *mut *mut foundation::IAsyncOperation<u32>) -> HRESULT,
-    fn GetPropertiesAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<foundation::collections::IMapView<HString, IInspectable>>>) -> HRESULT,
-    fn GetPropertiesRangeAsync(&self, startIndex: u32, maxItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<foundation::collections::IMapView<HString, IInspectable>>>) -> HRESULT,
-    fn GetAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<IIndexableContent>>) -> HRESULT,
-    fn GetRangeAsync(&self, startIndex: u32, maxItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<IIndexableContent>>) -> HRESULT,
-    fn get_QueryFolder(&self, out: *mut *mut super::StorageFolder) -> HRESULT
-}}
-impl IContentIndexerQuery {
-    #[inline] pub fn get_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCountAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<foundation::collections::IMapView<HString, IInspectable>>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPropertiesAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_properties_range_async(&self, startIndex: u32, maxItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<foundation::collections::IMapView<HString, IInspectable>>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPropertiesRangeAsync)(self as *const _ as *mut _, startIndex, maxItems, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IIndexableContent>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_range_async(&self, startIndex: u32, maxItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IIndexableContent>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetRangeAsync)(self as *const _ as *mut _, startIndex, maxItems, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_query_folder(&self) -> Result<Option<ComPtr<super::StorageFolder>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_QueryFolder)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ContentIndexerQuery: IContentIndexerQuery}
-DEFINE_IID!(IID_IContentIndexerQueryOperations, 679624208, 18310, 17137, 151, 48, 121, 43, 53, 102, 177, 80);
-RT_INTERFACE!{interface IContentIndexerQueryOperations(IContentIndexerQueryOperationsVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexerQueryOperations] {
-    fn CreateQueryWithSortOrderAndLanguage(&self, searchFilter: HSTRING, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, sortOrder: *mut foundation::collections::IIterable<SortEntry>, searchFilterLanguage: HSTRING, out: *mut *mut ContentIndexerQuery) -> HRESULT,
-    fn CreateQueryWithSortOrder(&self, searchFilter: HSTRING, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, sortOrder: *mut foundation::collections::IIterable<SortEntry>, out: *mut *mut ContentIndexerQuery) -> HRESULT,
-    fn CreateQuery(&self, searchFilter: HSTRING, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, out: *mut *mut ContentIndexerQuery) -> HRESULT
-}}
-impl IContentIndexerQueryOperations {
-    #[inline] pub fn create_query_with_sort_order_and_language(&self, searchFilter: &HStringArg, propertiesToRetrieve: &foundation::collections::IIterable<HString>, sortOrder: &foundation::collections::IIterable<SortEntry>, searchFilterLanguage: &HStringArg) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateQueryWithSortOrderAndLanguage)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve as *const _ as *mut _, sortOrder as *const _ as *mut _, searchFilterLanguage.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_query_with_sort_order(&self, searchFilter: &HStringArg, propertiesToRetrieve: &foundation::collections::IIterable<HString>, sortOrder: &foundation::collections::IIterable<SortEntry>) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateQueryWithSortOrder)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve as *const _ as *mut _, sortOrder as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_query(&self, searchFilter: &HStringArg, propertiesToRetrieve: &foundation::collections::IIterable<HString>) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateQuery)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IContentIndexerStatics, 2353562485, 45950, 19552, 155, 168, 183, 96, 253, 163, 229, 157);
-RT_INTERFACE!{static interface IContentIndexerStatics(IContentIndexerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexerStatics] {
-    fn GetIndexerWithName(&self, indexName: HSTRING, out: *mut *mut ContentIndexer) -> HRESULT,
-    fn GetIndexer(&self, out: *mut *mut ContentIndexer) -> HRESULT
-}}
-impl IContentIndexerStatics {
-    #[inline] pub fn get_indexer_with_name(&self, indexName: &HStringArg) -> Result<Option<ComPtr<ContentIndexer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetIndexerWithName)(self as *const _ as *mut _, indexName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_indexer(&self) -> Result<Option<ComPtr<ContentIndexer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetIndexer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum DateStackOption: i32 {
-    None (DateStackOption_None) = 0, Year (DateStackOption_Year) = 1, Month (DateStackOption_Month) = 2,
-}}
-RT_ENUM! { enum FolderDepth: i32 {
-    Shallow (FolderDepth_Shallow) = 0, Deep (FolderDepth_Deep) = 1,
-}}
-DEFINE_IID!(IID_IIndexableContent, 3438387295, 54453, 18490, 176, 110, 224, 219, 30, 196, 32, 228);
-RT_INTERFACE!{interface IIndexableContent(IIndexableContentVtbl): IInspectable(IInspectableVtbl) [IID_IIndexableContent] {
-    fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Id(&self, value: HSTRING) -> HRESULT,
-    fn get_Properties(&self, out: *mut *mut foundation::collections::IMap<HString, IInspectable>) -> HRESULT,
-    fn get_Stream(&self, out: *mut *mut super::streams::IRandomAccessStream) -> HRESULT,
-    fn put_Stream(&self, value: *mut super::streams::IRandomAccessStream) -> HRESULT,
-    fn get_StreamContentType(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_StreamContentType(&self, value: HSTRING) -> HRESULT
-}}
-impl IIndexableContent {
-    #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Id)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, IInspectable>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_stream(&self) -> Result<Option<ComPtr<super::streams::IRandomAccessStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Stream)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_stream(&self, value: &super::streams::IRandomAccessStream) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Stream)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_stream_content_type(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_StreamContentType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_stream_content_type(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_StreamContentType)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class IndexableContent: IIndexableContent}
-impl RtActivatable<IActivationFactory> for IndexableContent {}
-DEFINE_CLSID!(IndexableContent(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,73,110,100,101,120,97,98,108,101,67,111,110,116,101,110,116,0]) [CLSID_IndexableContent]);
-RT_ENUM! { enum IndexedState: i32 {
-    Unknown (IndexedState_Unknown) = 0, NotIndexed (IndexedState_NotIndexed) = 1, PartiallyIndexed (IndexedState_PartiallyIndexed) = 2, FullyIndexed (IndexedState_FullyIndexed) = 3,
-}}
-RT_ENUM! { enum IndexerOption: i32 {
-    UseIndexerWhenAvailable (IndexerOption_UseIndexerWhenAvailable) = 0, OnlyUseIndexer (IndexerOption_OnlyUseIndexer) = 1, DoNotUseIndexer (IndexerOption_DoNotUseIndexer) = 2, OnlyUseIndexerAndOptimizeForIndexedProperties (IndexerOption_OnlyUseIndexerAndOptimizeForIndexedProperties) = 3,
-}}
-DEFINE_IID!(IID_IQueryOptions, 509495022, 3909, 18488, 168, 233, 208, 71, 157, 68, 108, 48);
-RT_INTERFACE!{interface IQueryOptions(IQueryOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IQueryOptions] {
-    fn get_FileTypeFilter(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_FolderDepth(&self, out: *mut FolderDepth) -> HRESULT,
-    fn put_FolderDepth(&self, value: FolderDepth) -> HRESULT,
-    fn get_ApplicationSearchFilter(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_ApplicationSearchFilter(&self, value: HSTRING) -> HRESULT,
-    fn get_UserSearchFilter(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_UserSearchFilter(&self, value: HSTRING) -> HRESULT,
-    fn get_Language(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Language(&self, value: HSTRING) -> HRESULT,
-    fn get_IndexerOption(&self, out: *mut IndexerOption) -> HRESULT,
-    fn put_IndexerOption(&self, value: IndexerOption) -> HRESULT,
-    fn get_SortOrder(&self, out: *mut *mut foundation::collections::IVector<SortEntry>) -> HRESULT,
-    fn get_GroupPropertyName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_DateStackOption(&self, out: *mut DateStackOption) -> HRESULT,
-    fn SaveToString(&self, out: *mut HSTRING) -> HRESULT,
-    fn LoadFromString(&self, value: HSTRING) -> HRESULT,
-    fn SetThumbnailPrefetch(&self, mode: super::fileproperties::ThumbnailMode, requestedSize: u32, options: super::fileproperties::ThumbnailOptions) -> HRESULT,
-    fn SetPropertyPrefetch(&self, options: super::fileproperties::PropertyPrefetchOptions, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>) -> HRESULT
-}}
-impl IQueryOptions {
-    #[inline] pub fn get_file_type_filter(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FileTypeFilter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_folder_depth(&self) -> Result<FolderDepth> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_FolderDepth)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_folder_depth(&self, value: FolderDepth) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_FolderDepth)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_application_search_filter(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ApplicationSearchFilter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_application_search_filter(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ApplicationSearchFilter)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_user_search_filter(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UserSearchFilter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_user_search_filter(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_UserSearchFilter)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_language(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Language)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_language(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Language)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_indexer_option(&self) -> Result<IndexerOption> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IndexerOption)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_indexer_option(&self, value: IndexerOption) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IndexerOption)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_sort_order(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SortEntry>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SortOrder)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_group_property_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_GroupPropertyName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_date_stack_option(&self) -> Result<DateStackOption> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_DateStackOption)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn save_to_string(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveToString)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn load_from_string(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LoadFromString)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn set_thumbnail_prefetch(&self, mode: super::fileproperties::ThumbnailMode, requestedSize: u32, options: super::fileproperties::ThumbnailOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetThumbnailPrefetch)(self as *const _ as *mut _, mode, requestedSize, options);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn set_property_prefetch(&self, options: super::fileproperties::PropertyPrefetchOptions, propertiesToRetrieve: &foundation::collections::IIterable<HString>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetPropertyPrefetch)(self as *const _ as *mut _, options, propertiesToRetrieve as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class QueryOptions: IQueryOptions}
-impl RtActivatable<IQueryOptionsFactory> for QueryOptions {}
-impl RtActivatable<IActivationFactory> for QueryOptions {}
-impl QueryOptions {
-    #[inline] pub fn create_common_file_query(query: CommonFileQuery, fileTypeFilter: &foundation::collections::IIterable<HString>) -> Result<ComPtr<QueryOptions>> {
-        <Self as RtActivatable<IQueryOptionsFactory>>::get_activation_factory().create_common_file_query(query, fileTypeFilter)
-    }
-    #[inline] pub fn create_common_folder_query(query: CommonFolderQuery) -> Result<ComPtr<QueryOptions>> {
-        <Self as RtActivatable<IQueryOptionsFactory>>::get_activation_factory().create_common_folder_query(query)
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_async(file: &super::IStorageFile, geopoint: &super::super::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().set_geotag_async(file, geopoint)
     }
 }
-DEFINE_CLSID!(QueryOptions(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_QueryOptions]);
-DEFINE_IID!(IID_IQueryOptionsFactory, 53354380, 43457, 20081, 128, 17, 13, 238, 157, 72, 17, 163);
-RT_INTERFACE!{static interface IQueryOptionsFactory(IQueryOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IQueryOptionsFactory] {
-    fn CreateCommonFileQuery(&self, query: CommonFileQuery, fileTypeFilter: *mut foundation::collections::IIterable<HString>, out: *mut *mut QueryOptions) -> HRESULT,
-    fn CreateCommonFolderQuery(&self, query: CommonFolderQuery, out: *mut *mut QueryOptions) -> HRESULT
+DEFINE_CLSID!(GeotagHelper(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,70,105,108,101,80,114,111,112,101,114,116,105,101,115,46,71,101,111,116,97,103,72,101,108,112,101,114,0]) [CLSID_GeotagHelper]);
+DEFINE_IID!(IID_IGeotagHelperStatics, 1095316036, 9508, 18005, 134, 166, 237, 22, 245, 252, 113, 107);
+RT_INTERFACE!{static interface IGeotagHelperStatics(IGeotagHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeotagHelperStatics] {
+    #[cfg(feature="windows-devices")] fn GetGeotagAsync(&self, file: *mut super::IStorageFile, out: *mut *mut foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint>) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn SetGeotagFromGeolocatorAsync(&self, file: *mut super::IStorageFile, geolocator: *mut super::super::devices::geolocation::Geolocator, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn SetGeotagAsync(&self, file: *mut super::IStorageFile, geopoint: *mut super::super::devices::geolocation::Geopoint, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
-impl IQueryOptionsFactory {
-    #[inline] pub fn create_common_file_query(&self, query: CommonFileQuery, fileTypeFilter: &foundation::collections::IIterable<HString>) -> Result<ComPtr<QueryOptions>> { unsafe { 
+impl IGeotagHelperStatics {
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_geotag_async(&self, file: &super::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCommonFileQuery)(self as *const _ as *mut _, query, fileTypeFilter as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetGeotagAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_common_folder_query(&self, query: CommonFolderQuery) -> Result<ComPtr<QueryOptions>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_from_geolocator_async(&self, file: &super::IStorageFile, geolocator: &super::super::devices::geolocation::Geolocator) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCommonFolderQuery)(self as *const _ as *mut _, query, &mut out);
+        let hr = ((*self.lpVtbl).SetGeotagFromGeolocatorAsync)(self as *const _ as *mut _, file as *const _ as *mut _, geolocator as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_async(&self, file: &super::IStorageFile, geopoint: &super::super::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SetGeotagAsync)(self as *const _ as *mut _, file as *const _ as *mut _, geopoint as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-DEFINE_IID!(IID_IQueryOptionsWithProviderFilter, 1537019942, 5572, 17629, 184, 154, 71, 165, 155, 125, 124, 79);
-RT_INTERFACE!{interface IQueryOptionsWithProviderFilter(IQueryOptionsWithProviderFilterVtbl): IInspectable(IInspectableVtbl) [IID_IQueryOptionsWithProviderFilter] {
-    fn get_StorageProviderIdFilter(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT
+DEFINE_IID!(IID_IImageProperties, 1379701796, 64767, 17013, 175, 238, 236, 219, 154, 180, 121, 115);
+RT_INTERFACE!{interface IImageProperties(IImagePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IImageProperties] {
+    fn get_Rating(&self, out: *mut u32) -> HRESULT,
+    fn put_Rating(&self, value: u32) -> HRESULT,
+    fn get_Keywords(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_DateTaken(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn put_DateTaken(&self, value: foundation::DateTime) -> HRESULT,
+    fn get_Width(&self, out: *mut u32) -> HRESULT,
+    fn get_Height(&self, out: *mut u32) -> HRESULT,
+    fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Title(&self, value: HSTRING) -> HRESULT,
+    fn get_Latitude(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT,
+    fn get_Longitude(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT,
+    fn get_CameraManufacturer(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_CameraManufacturer(&self, value: HSTRING) -> HRESULT,
+    fn get_CameraModel(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_CameraModel(&self, value: HSTRING) -> HRESULT,
+    fn get_Orientation(&self, out: *mut PhotoOrientation) -> HRESULT,
+    fn get_PeopleNames(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
 }}
-impl IQueryOptionsWithProviderFilter {
-    #[inline] pub fn get_storage_provider_id_filter(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_StorageProviderIdFilter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_STRUCT! { struct SortEntry {
-    PropertyName: HSTRING, AscendingOrder: bool,
-}}
-RT_CLASS!{class SortEntryVector: foundation::collections::IVector<SortEntry>}
-DEFINE_IID!(IID_IStorageFileQueryResult, 1392354375, 11178, 16684, 178, 159, 212, 177, 119, 142, 250, 30);
-RT_INTERFACE!{interface IStorageFileQueryResult(IStorageFileQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFileQueryResult] {
-    fn GetFilesAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>) -> HRESULT,
-    fn GetFilesAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>) -> HRESULT
-}}
-impl IStorageFileQueryResult {
-    #[inline] pub fn get_files_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFilesAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_files_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFilesAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class StorageFileQueryResult: IStorageFileQueryResult}
-DEFINE_IID!(IID_IStorageFileQueryResult2, 1314765277, 28993, 18116, 139, 227, 233, 220, 158, 39, 39, 92);
-RT_INTERFACE!{interface IStorageFileQueryResult2(IStorageFileQueryResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageFileQueryResult2] {
-    #[cfg(feature="windows-data")] fn GetMatchingPropertiesWithRanges(&self, file: *mut super::StorageFile, out: *mut *mut foundation::collections::IMap<HString, foundation::collections::IVectorView<super::super::data::text::TextSegment>>) -> HRESULT
-}}
-impl IStorageFileQueryResult2 {
-    #[cfg(feature="windows-data")] #[inline] pub fn get_matching_properties_with_ranges(&self, file: &super::StorageFile) -> Result<Option<ComPtr<foundation::collections::IMap<HString, foundation::collections::IVectorView<super::super::data::text::TextSegment>>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetMatchingPropertiesWithRanges)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IStorageFolderQueryOperations, 3410218185, 17515, 19023, 190, 151, 117, 119, 113, 190, 82, 3);
-RT_INTERFACE!{interface IStorageFolderQueryOperations(IStorageFolderQueryOperationsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolderQueryOperations] {
-    fn GetIndexedStateAsync(&self, out: *mut *mut foundation::IAsyncOperation<IndexedState>) -> HRESULT,
-    fn CreateFileQueryOverloadDefault(&self, out: *mut *mut StorageFileQueryResult) -> HRESULT,
-    fn CreateFileQuery(&self, query: CommonFileQuery, out: *mut *mut StorageFileQueryResult) -> HRESULT,
-    fn CreateFileQueryWithOptions(&self, queryOptions: *mut QueryOptions, out: *mut *mut StorageFileQueryResult) -> HRESULT,
-    fn CreateFolderQueryOverloadDefault(&self, out: *mut *mut StorageFolderQueryResult) -> HRESULT,
-    fn CreateFolderQuery(&self, query: CommonFolderQuery, out: *mut *mut StorageFolderQueryResult) -> HRESULT,
-    fn CreateFolderQueryWithOptions(&self, queryOptions: *mut QueryOptions, out: *mut *mut StorageFolderQueryResult) -> HRESULT,
-    fn CreateItemQuery(&self, out: *mut *mut StorageItemQueryResult) -> HRESULT,
-    fn CreateItemQueryWithOptions(&self, queryOptions: *mut QueryOptions, out: *mut *mut StorageItemQueryResult) -> HRESULT,
-    fn GetFilesAsync(&self, query: CommonFileQuery, startIndex: u32, maxItemsToRetrieve: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>) -> HRESULT,
-    fn GetFilesAsyncOverloadDefaultStartAndCount(&self, query: CommonFileQuery, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>) -> HRESULT,
-    fn GetFoldersAsync(&self, query: CommonFolderQuery, startIndex: u32, maxItemsToRetrieve: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>) -> HRESULT,
-    fn GetFoldersAsyncOverloadDefaultStartAndCount(&self, query: CommonFolderQuery, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>) -> HRESULT,
-    fn GetItemsAsync(&self, startIndex: u32, maxItemsToRetrieve: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>) -> HRESULT,
-    fn AreQueryOptionsSupported(&self, queryOptions: *mut QueryOptions, out: *mut bool) -> HRESULT,
-    fn IsCommonFolderQuerySupported(&self, query: CommonFolderQuery, out: *mut bool) -> HRESULT,
-    fn IsCommonFileQuerySupported(&self, query: CommonFileQuery, out: *mut bool) -> HRESULT
-}}
-impl IStorageFolderQueryOperations {
-    #[inline] pub fn get_indexed_state_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<IndexedState>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetIndexedStateAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_file_query_overload_default(&self) -> Result<Option<ComPtr<StorageFileQueryResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileQueryOverloadDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_file_query(&self, query: CommonFileQuery) -> Result<Option<ComPtr<StorageFileQueryResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileQuery)(self as *const _ as *mut _, query, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_file_query_with_options(&self, queryOptions: &QueryOptions) -> Result<Option<ComPtr<StorageFileQueryResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileQueryWithOptions)(self as *const _ as *mut _, queryOptions as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_folder_query_overload_default(&self) -> Result<Option<ComPtr<StorageFolderQueryResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderQueryOverloadDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_folder_query(&self, query: CommonFolderQuery) -> Result<Option<ComPtr<StorageFolderQueryResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderQuery)(self as *const _ as *mut _, query, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_folder_query_with_options(&self, queryOptions: &QueryOptions) -> Result<Option<ComPtr<StorageFolderQueryResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderQueryWithOptions)(self as *const _ as *mut _, queryOptions as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_item_query(&self) -> Result<Option<ComPtr<StorageItemQueryResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateItemQuery)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_item_query_with_options(&self, queryOptions: &QueryOptions) -> Result<Option<ComPtr<StorageItemQueryResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateItemQueryWithOptions)(self as *const _ as *mut _, queryOptions as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_files_async(&self, query: CommonFileQuery, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFilesAsync)(self as *const _ as *mut _, query, startIndex, maxItemsToRetrieve, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_files_async_overload_default_start_and_count(&self, query: CommonFileQuery) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFilesAsyncOverloadDefaultStartAndCount)(self as *const _ as *mut _, query, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_folders_async(&self, query: CommonFolderQuery, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFoldersAsync)(self as *const _ as *mut _, query, startIndex, maxItemsToRetrieve, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_folders_async_overload_default_start_and_count(&self, query: CommonFolderQuery) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFoldersAsyncOverloadDefaultStartAndCount)(self as *const _ as *mut _, query, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_items_async(&self, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemsAsync)(self as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn are_query_options_supported(&self, queryOptions: &QueryOptions) -> Result<bool> { unsafe { 
+impl IImageProperties {
+    #[inline] pub fn get_rating(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).AreQueryOptionsSupported)(self as *const _ as *mut _, queryOptions as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_Rating)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn is_common_folder_query_supported(&self, query: CommonFolderQuery) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsCommonFolderQuerySupported)(self as *const _ as *mut _, query, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn is_common_file_query_supported(&self, query: CommonFileQuery) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsCommonFileQuerySupported)(self as *const _ as *mut _, query, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IStorageFolderQueryResult, 1716832529, 32102, 18170, 174, 207, 228, 164, 186, 169, 58, 184);
-RT_INTERFACE!{interface IStorageFolderQueryResult(IStorageFolderQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolderQueryResult] {
-    fn GetFoldersAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>) -> HRESULT,
-    fn GetFoldersAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>) -> HRESULT
-}}
-impl IStorageFolderQueryResult {
-    #[inline] pub fn get_folders_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFoldersAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_folders_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFoldersAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class StorageFolderQueryResult: IStorageFolderQueryResult}
-DEFINE_IID!(IID_IStorageItemQueryResult, 3902046329, 40280, 18360, 178, 178, 65, 176, 127, 71, 149, 249);
-RT_INTERFACE!{interface IStorageItemQueryResult(IStorageItemQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemQueryResult] {
-    fn GetItemsAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>) -> HRESULT,
-    fn GetItemsAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>) -> HRESULT
-}}
-impl IStorageItemQueryResult {
-    #[inline] pub fn get_items_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemsAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_items_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemsAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class StorageItemQueryResult: IStorageItemQueryResult}
-DEFINE_IID!(IID_IStorageLibraryChangeTrackerTriggerDetails, 499622761, 47011, 19954, 157, 97, 235, 168, 90, 3, 67, 210);
-RT_INTERFACE!{interface IStorageLibraryChangeTrackerTriggerDetails(IStorageLibraryChangeTrackerTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryChangeTrackerTriggerDetails] {
-    fn get_Folder(&self, out: *mut *mut super::StorageFolder) -> HRESULT,
-    fn get_ChangeTracker(&self, out: *mut *mut super::StorageLibraryChangeTracker) -> HRESULT
-}}
-impl IStorageLibraryChangeTrackerTriggerDetails {
-    #[inline] pub fn get_folder(&self) -> Result<Option<ComPtr<super::StorageFolder>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Folder)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_change_tracker(&self) -> Result<Option<ComPtr<super::StorageLibraryChangeTracker>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ChangeTracker)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class StorageLibraryChangeTrackerTriggerDetails: IStorageLibraryChangeTrackerTriggerDetails}
-DEFINE_IID!(IID_IStorageLibraryContentChangedTriggerDetails, 708254071, 43967, 19997, 138, 165, 99, 133, 216, 136, 71, 153);
-RT_INTERFACE!{interface IStorageLibraryContentChangedTriggerDetails(IStorageLibraryContentChangedTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryContentChangedTriggerDetails] {
-    fn get_Folder(&self, out: *mut *mut super::StorageFolder) -> HRESULT,
-    fn CreateModifiedSinceQuery(&self, lastQueryTime: foundation::DateTime, out: *mut *mut StorageItemQueryResult) -> HRESULT
-}}
-impl IStorageLibraryContentChangedTriggerDetails {
-    #[inline] pub fn get_folder(&self) -> Result<Option<ComPtr<super::StorageFolder>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Folder)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_modified_since_query(&self, lastQueryTime: foundation::DateTime) -> Result<Option<ComPtr<StorageItemQueryResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateModifiedSinceQuery)(self as *const _ as *mut _, lastQueryTime, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class StorageLibraryContentChangedTriggerDetails: IStorageLibraryContentChangedTriggerDetails}
-DEFINE_IID!(IID_IStorageQueryResultBase, 3264730893, 29523, 18347, 186, 88, 140, 97, 66, 93, 197, 75);
-RT_INTERFACE!{interface IStorageQueryResultBase(IStorageQueryResultBaseVtbl): IInspectable(IInspectableVtbl) [IID_IStorageQueryResultBase] {
-    fn GetItemCountAsync(&self, out: *mut *mut foundation::IAsyncOperation<u32>) -> HRESULT,
-    fn get_Folder(&self, out: *mut *mut super::StorageFolder) -> HRESULT,
-    fn add_ContentsChanged(&self, handler: *mut foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_ContentsChanged(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_OptionsChanged(&self, changedHandler: *mut foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_OptionsChanged(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn FindStartIndexAsync(&self, value: *mut IInspectable, out: *mut *mut foundation::IAsyncOperation<u32>) -> HRESULT,
-    fn GetCurrentQueryOptions(&self, out: *mut *mut QueryOptions) -> HRESULT,
-    fn ApplyNewQueryOptions(&self, newQueryOptions: *mut QueryOptions) -> HRESULT
-}}
-impl IStorageQueryResultBase {
-    #[inline] pub fn get_item_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemCountAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_folder(&self) -> Result<Option<ComPtr<super::StorageFolder>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Folder)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_contents_changed(&self, handler: &foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ContentsChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_contents_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_ContentsChanged)(self as *const _ as *mut _, eventCookie);
+    #[inline] pub fn set_rating(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Rating)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_options_changed(&self, changedHandler: &foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_OptionsChanged)(self as *const _ as *mut _, changedHandler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_options_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_OptionsChanged)(self as *const _ as *mut _, eventCookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn find_start_index_async(&self, value: &IInspectable) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
+    #[inline] pub fn get_keywords(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindStartIndexAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_current_query_options(&self) -> Result<Option<ComPtr<QueryOptions>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCurrentQueryOptions)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_Keywords)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn apply_new_query_options(&self, newQueryOptions: &QueryOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ApplyNewQueryOptions)(self as *const _ as *mut _, newQueryOptions as *const _ as *mut _);
+    #[inline] pub fn get_date_taken(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DateTaken)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_date_taken(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DateTaken)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-}
-DEFINE_IID!(IID_IValueAndLanguage, 3113306241, 41454, 19396, 146, 165, 70, 105, 104, 227, 4, 54);
-RT_INTERFACE!{interface IValueAndLanguage(IValueAndLanguageVtbl): IInspectable(IInspectableVtbl) [IID_IValueAndLanguage] {
-    fn get_Language(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Language(&self, value: HSTRING) -> HRESULT,
-    fn get_Value(&self, out: *mut *mut IInspectable) -> HRESULT,
-    fn put_Value(&self, value: *mut IInspectable) -> HRESULT
-}}
-impl IValueAndLanguage {
-    #[inline] pub fn get_language(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_width(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Width)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_height(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Height)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Language)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_language(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Language)(self as *const _ as *mut _, value.get());
+    #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
+    #[inline] pub fn get_latitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_Latitude)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_value(&self, value: &IInspectable) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn get_longitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Longitude)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_camera_manufacturer(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CameraManufacturer)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_camera_manufacturer(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CameraManufacturer)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_camera_model(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CameraModel)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_camera_model(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CameraModel)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_orientation(&self) -> Result<PhotoOrientation> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Orientation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_people_names(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PeopleNames)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ImageProperties: IImageProperties}
+DEFINE_IID!(IID_IMusicProperties, 3163204450, 26348, 16794, 188, 93, 202, 101, 164, 203, 70, 218);
+RT_INTERFACE!{interface IMusicProperties(IMusicPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IMusicProperties] {
+    fn get_Album(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Album(&self, value: HSTRING) -> HRESULT,
+    fn get_Artist(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Artist(&self, value: HSTRING) -> HRESULT,
+    fn get_Genre(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_TrackNumber(&self, out: *mut u32) -> HRESULT,
+    fn put_TrackNumber(&self, value: u32) -> HRESULT,
+    fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Title(&self, value: HSTRING) -> HRESULT,
+    fn get_Rating(&self, out: *mut u32) -> HRESULT,
+    fn put_Rating(&self, value: u32) -> HRESULT,
+    fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_Bitrate(&self, out: *mut u32) -> HRESULT,
+    fn get_AlbumArtist(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_AlbumArtist(&self, value: HSTRING) -> HRESULT,
+    fn get_Composers(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_Conductors(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_Subtitle(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Subtitle(&self, value: HSTRING) -> HRESULT,
+    fn get_Producers(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_Publisher(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Publisher(&self, value: HSTRING) -> HRESULT,
+    fn get_Writers(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_Year(&self, out: *mut u32) -> HRESULT,
+    fn put_Year(&self, value: u32) -> HRESULT
+}}
+impl IMusicProperties {
+    #[inline] pub fn get_album(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Album)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_album(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Album)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_artist(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Artist)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_artist(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Artist)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_genre(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Genre)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_track_number(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TrackNumber)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_track_number(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TrackNumber)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_rating(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Rating)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_rating(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Rating)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_bitrate(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Bitrate)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_album_artist(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AlbumArtist)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_album_artist(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AlbumArtist)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_composers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Composers)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_conductors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Conductors)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_subtitle(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Subtitle)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_subtitle(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Subtitle)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_producers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Producers)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_publisher(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Publisher)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_publisher(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Publisher)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_writers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Writers)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_year(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Year)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_year(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Year)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ValueAndLanguage: IValueAndLanguage}
-impl RtActivatable<IActivationFactory> for ValueAndLanguage {}
-DEFINE_CLSID!(ValueAndLanguage(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,86,97,108,117,101,65,110,100,76,97,110,103,117,97,103,101,0]) [CLSID_ValueAndLanguage]);
-} // Windows.Storage.Search
+RT_CLASS!{class MusicProperties: IMusicProperties}
+RT_ENUM! { enum PhotoOrientation: i32 {
+    Unspecified (PhotoOrientation_Unspecified) = 0, Normal (PhotoOrientation_Normal) = 1, FlipHorizontal (PhotoOrientation_FlipHorizontal) = 2, Rotate180 (PhotoOrientation_Rotate180) = 3, FlipVertical (PhotoOrientation_FlipVertical) = 4, Transpose (PhotoOrientation_Transpose) = 5, Rotate270 (PhotoOrientation_Rotate270) = 6, Transverse (PhotoOrientation_Transverse) = 7, Rotate90 (PhotoOrientation_Rotate90) = 8,
+}}
+RT_ENUM! { enum PropertyPrefetchOptions: u32 {
+    None (PropertyPrefetchOptions_None) = 0, MusicProperties (PropertyPrefetchOptions_MusicProperties) = 1, VideoProperties (PropertyPrefetchOptions_VideoProperties) = 2, ImageProperties (PropertyPrefetchOptions_ImageProperties) = 4, DocumentProperties (PropertyPrefetchOptions_DocumentProperties) = 8, BasicProperties (PropertyPrefetchOptions_BasicProperties) = 16,
+}}
+DEFINE_IID!(IID_IStorageItemContentProperties, 86592429, 48184, 18623, 133, 215, 119, 14, 14, 42, 224, 186);
+RT_INTERFACE!{interface IStorageItemContentProperties(IStorageItemContentPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemContentProperties] {
+    fn GetMusicPropertiesAsync(&self, out: *mut *mut foundation::IAsyncOperation<MusicProperties>) -> HRESULT,
+    fn GetVideoPropertiesAsync(&self, out: *mut *mut foundation::IAsyncOperation<VideoProperties>) -> HRESULT,
+    fn GetImagePropertiesAsync(&self, out: *mut *mut foundation::IAsyncOperation<ImageProperties>) -> HRESULT,
+    fn GetDocumentPropertiesAsync(&self, out: *mut *mut foundation::IAsyncOperation<DocumentProperties>) -> HRESULT
+}}
+impl IStorageItemContentProperties {
+    #[inline] pub fn get_music_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<MusicProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetMusicPropertiesAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_video_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<VideoProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetVideoPropertiesAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_image_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ImageProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetImagePropertiesAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_document_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<DocumentProperties>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDocumentPropertiesAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StorageItemContentProperties: IStorageItemContentProperties}
+DEFINE_IID!(IID_IStorageItemExtraProperties, 3309527474, 21709, 17195, 189, 188, 75, 25, 196, 180, 112, 215);
+RT_INTERFACE!{interface IStorageItemExtraProperties(IStorageItemExtraPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemExtraProperties] {
+    fn RetrievePropertiesAsync(&self, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IMap<HString, IInspectable>>) -> HRESULT,
+    fn SavePropertiesAsync(&self, propertiesToSave: *mut foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, IInspectable>>, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn SavePropertiesAsyncOverloadDefault(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IStorageItemExtraProperties {
+    #[inline] pub fn retrieve_properties_async(&self, propertiesToRetrieve: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMap<HString, IInspectable>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RetrievePropertiesAsync)(self as *const _ as *mut _, propertiesToRetrieve as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn save_properties_async(&self, propertiesToSave: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, IInspectable>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SavePropertiesAsync)(self as *const _ as *mut _, propertiesToSave as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn save_properties_async_overload_default(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SavePropertiesAsyncOverloadDefault)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StorageItemThumbnail: super::streams::IRandomAccessStreamWithContentType}
+RT_ENUM! { enum ThumbnailMode: i32 {
+    PicturesView (ThumbnailMode_PicturesView) = 0, VideosView (ThumbnailMode_VideosView) = 1, MusicView (ThumbnailMode_MusicView) = 2, DocumentsView (ThumbnailMode_DocumentsView) = 3, ListView (ThumbnailMode_ListView) = 4, SingleItem (ThumbnailMode_SingleItem) = 5,
+}}
+RT_ENUM! { enum ThumbnailOptions: u32 {
+    None (ThumbnailOptions_None) = 0, ReturnOnlyIfCached (ThumbnailOptions_ReturnOnlyIfCached) = 1, ResizeThumbnail (ThumbnailOptions_ResizeThumbnail) = 2, UseCurrentScale (ThumbnailOptions_UseCurrentScale) = 4,
+}}
+DEFINE_IID!(IID_IThumbnailProperties, 1765659695, 56295, 18869, 179, 179, 40, 147, 172, 93, 52, 35);
+RT_INTERFACE!{interface IThumbnailProperties(IThumbnailPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IThumbnailProperties] {
+    fn get_OriginalWidth(&self, out: *mut u32) -> HRESULT,
+    fn get_OriginalHeight(&self, out: *mut u32) -> HRESULT,
+    fn get_ReturnedSmallerCachedSize(&self, out: *mut bool) -> HRESULT,
+    fn get_Type(&self, out: *mut ThumbnailType) -> HRESULT
+}}
+impl IThumbnailProperties {
+    #[inline] pub fn get_original_width(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OriginalWidth)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_original_height(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OriginalHeight)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_returned_smaller_cached_size(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ReturnedSmallerCachedSize)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_type(&self) -> Result<ThumbnailType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Type)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum ThumbnailType: i32 {
+    Image (ThumbnailType_Image) = 0, Icon (ThumbnailType_Icon) = 1,
+}}
+RT_ENUM! { enum VideoOrientation: i32 {
+    Normal (VideoOrientation_Normal) = 0, Rotate90 (VideoOrientation_Rotate90) = 90, Rotate180 (VideoOrientation_Rotate180) = 180, Rotate270 (VideoOrientation_Rotate270) = 270,
+}}
+DEFINE_IID!(IID_IVideoProperties, 1905976583, 26846, 19896, 151, 222, 73, 153, 140, 5, 159, 47);
+RT_INTERFACE!{interface IVideoProperties(IVideoPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IVideoProperties] {
+    fn get_Rating(&self, out: *mut u32) -> HRESULT,
+    fn put_Rating(&self, value: u32) -> HRESULT,
+    fn get_Keywords(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_Width(&self, out: *mut u32) -> HRESULT,
+    fn get_Height(&self, out: *mut u32) -> HRESULT,
+    fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_Latitude(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT,
+    fn get_Longitude(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT,
+    fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Title(&self, value: HSTRING) -> HRESULT,
+    fn get_Subtitle(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Subtitle(&self, value: HSTRING) -> HRESULT,
+    fn get_Producers(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_Publisher(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Publisher(&self, value: HSTRING) -> HRESULT,
+    fn get_Writers(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_Year(&self, out: *mut u32) -> HRESULT,
+    fn put_Year(&self, value: u32) -> HRESULT,
+    fn get_Bitrate(&self, out: *mut u32) -> HRESULT,
+    fn get_Directors(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_Orientation(&self, out: *mut VideoOrientation) -> HRESULT
+}}
+impl IVideoProperties {
+    #[inline] pub fn get_rating(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Rating)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_rating(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Rating)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_keywords(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Keywords)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_width(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Width)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_height(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Height)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_latitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Latitude)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_longitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Longitude)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_subtitle(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Subtitle)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_subtitle(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Subtitle)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_producers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Producers)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_publisher(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Publisher)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_publisher(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Publisher)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_writers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Writers)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_year(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Year)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_year(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Year)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_bitrate(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Bitrate)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_directors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Directors)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_orientation(&self) -> Result<VideoOrientation> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Orientation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class VideoProperties: IVideoProperties}
+} // Windows.Storage.FileProperties
 pub mod pickers { // Windows.Storage.Pickers
 use ::prelude::*;
 RT_CLASS!{class FileExtensionVector: foundation::collections::IVector<HString>}
@@ -4531,7 +4091,7 @@ RT_ENUM! { enum StorageProviderHydrationPolicy: i32 {
     Partial (StorageProviderHydrationPolicy_Partial) = 0, Progressive (StorageProviderHydrationPolicy_Progressive) = 1, Full (StorageProviderHydrationPolicy_Full) = 2, AlwaysFull (StorageProviderHydrationPolicy_AlwaysFull) = 3,
 }}
 RT_ENUM! { enum StorageProviderHydrationPolicyModifier: u32 {
-    None (StorageProviderHydrationPolicyModifier_None) = 0, ValidationRequired (StorageProviderHydrationPolicyModifier_ValidationRequired) = 1, StreamingAllowed (StorageProviderHydrationPolicyModifier_StreamingAllowed) = 2,
+    None (StorageProviderHydrationPolicyModifier_None) = 0, ValidationRequired (StorageProviderHydrationPolicyModifier_ValidationRequired) = 1, StreamingAllowed (StorageProviderHydrationPolicyModifier_StreamingAllowed) = 2, AutoDehydrationAllowed (StorageProviderHydrationPolicyModifier_AutoDehydrationAllowed) = 4,
 }}
 RT_ENUM! { enum StorageProviderInSyncPolicy: u32 {
     Default (StorageProviderInSyncPolicy_Default) = 0, FileCreationTime (StorageProviderInSyncPolicy_FileCreationTime) = 1, FileReadOnlyAttribute (StorageProviderInSyncPolicy_FileReadOnlyAttribute) = 2, FileHiddenAttribute (StorageProviderInSyncPolicy_FileHiddenAttribute) = 4, FileSystemAttribute (StorageProviderInSyncPolicy_FileSystemAttribute) = 8, DirectoryCreationTime (StorageProviderInSyncPolicy_DirectoryCreationTime) = 16, DirectoryReadOnlyAttribute (StorageProviderInSyncPolicy_DirectoryReadOnlyAttribute) = 32, DirectoryHiddenAttribute (StorageProviderInSyncPolicy_DirectoryHiddenAttribute) = 64, DirectorySystemAttribute (StorageProviderInSyncPolicy_DirectorySystemAttribute) = 128, FileLastWriteTime (StorageProviderInSyncPolicy_FileLastWriteTime) = 256, DirectoryLastWriteTime (StorageProviderInSyncPolicy_DirectoryLastWriteTime) = 512, PreserveInsyncForSyncEngine (StorageProviderInSyncPolicy_PreserveInsyncForSyncEngine) = 2147483648,
@@ -4661,7 +4221,7 @@ RT_INTERFACE!{interface IStorageProviderSyncRootInfo(IStorageProviderSyncRootInf
     fn get_Context(&self, out: *mut *mut super::streams::IBuffer) -> HRESULT,
     fn put_Context(&self, value: *mut super::streams::IBuffer) -> HRESULT,
     fn get_Path(&self, out: *mut *mut super::IStorageFolder) -> HRESULT,
-    fn put_Path(&self, folder: *mut super::IStorageFolder) -> HRESULT,
+    fn put_Path(&self, value: *mut super::IStorageFolder) -> HRESULT,
     fn get_DisplayNameResource(&self, out: *mut HSTRING) -> HRESULT,
     fn put_DisplayNameResource(&self, value: HSTRING) -> HRESULT,
     fn get_IconResource(&self, out: *mut HSTRING) -> HRESULT,
@@ -4712,8 +4272,8 @@ impl IStorageProviderSyncRootInfo {
         let hr = ((*self.lpVtbl).get_Path)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_path(&self, folder: &super::IStorageFolder) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Path)(self as *const _ as *mut _, folder as *const _ as *mut _);
+    #[inline] pub fn set_path(&self, value: &super::IStorageFolder) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Path)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name_resource(&self) -> Result<HString> { unsafe { 
@@ -4833,6 +4393,22 @@ impl IStorageProviderSyncRootInfo {
 RT_CLASS!{class StorageProviderSyncRootInfo: IStorageProviderSyncRootInfo}
 impl RtActivatable<IActivationFactory> for StorageProviderSyncRootInfo {}
 DEFINE_CLSID!(StorageProviderSyncRootInfo(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,83,121,110,99,82,111,111,116,73,110,102,111,0]) [CLSID_StorageProviderSyncRootInfo]);
+DEFINE_IID!(IID_IStorageProviderSyncRootInfo2, 3478237219, 31985, 20838, 189, 186, 239, 217, 95, 82, 158, 49);
+RT_INTERFACE!{interface IStorageProviderSyncRootInfo2(IStorageProviderSyncRootInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderSyncRootInfo2] {
+    fn get_ProviderId(&self, out: *mut Guid) -> HRESULT,
+    fn put_ProviderId(&self, value: Guid) -> HRESULT
+}}
+impl IStorageProviderSyncRootInfo2 {
+    #[inline] pub fn get_provider_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ProviderId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_provider_id(&self, value: Guid) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ProviderId)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
 RT_CLASS!{static class StorageProviderSyncRootManager}
 impl RtActivatable<IStorageProviderSyncRootManagerStatics> for StorageProviderSyncRootManager {}
 impl StorageProviderSyncRootManager {
@@ -4911,942 +4487,1382 @@ RT_ENUM! { enum WriteActivationMode: i32 {
     ReadOnly (WriteActivationMode_ReadOnly) = 0, NotNeeded (WriteActivationMode_NotNeeded) = 1, AfterWrite (WriteActivationMode_AfterWrite) = 2,
 }}
 } // Windows.Storage.Provider
-pub mod fileproperties { // Windows.Storage.FileProperties
+pub mod search { // Windows.Storage.Search
 use ::prelude::*;
-DEFINE_IID!(IID_IBasicProperties, 3495777755, 30814, 19046, 190, 2, 155, 238, 197, 138, 234, 129);
-RT_INTERFACE!{interface IBasicProperties(IBasicPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IBasicProperties] {
-    fn get_Size(&self, out: *mut u64) -> HRESULT,
-    fn get_DateModified(&self, out: *mut foundation::DateTime) -> HRESULT,
-    fn get_ItemDate(&self, out: *mut foundation::DateTime) -> HRESULT
+RT_ENUM! { enum CommonFileQuery: i32 {
+    DefaultQuery (CommonFileQuery_DefaultQuery) = 0, OrderByName (CommonFileQuery_OrderByName) = 1, OrderByTitle (CommonFileQuery_OrderByTitle) = 2, OrderByMusicProperties (CommonFileQuery_OrderByMusicProperties) = 3, OrderBySearchRank (CommonFileQuery_OrderBySearchRank) = 4, OrderByDate (CommonFileQuery_OrderByDate) = 5,
 }}
-impl IBasicProperties {
+RT_ENUM! { enum CommonFolderQuery: i32 {
+    DefaultQuery (CommonFolderQuery_DefaultQuery) = 0, GroupByYear (CommonFolderQuery_GroupByYear) = 100, GroupByMonth (CommonFolderQuery_GroupByMonth) = 101, GroupByArtist (CommonFolderQuery_GroupByArtist) = 102, GroupByAlbum (CommonFolderQuery_GroupByAlbum) = 103, GroupByAlbumArtist (CommonFolderQuery_GroupByAlbumArtist) = 104, GroupByComposer (CommonFolderQuery_GroupByComposer) = 105, GroupByGenre (CommonFolderQuery_GroupByGenre) = 106, GroupByPublishedYear (CommonFolderQuery_GroupByPublishedYear) = 107, GroupByRating (CommonFolderQuery_GroupByRating) = 108, GroupByTag (CommonFolderQuery_GroupByTag) = 109, GroupByAuthor (CommonFolderQuery_GroupByAuthor) = 110, GroupByType (CommonFolderQuery_GroupByType) = 111,
+}}
+DEFINE_IID!(IID_IContentIndexer, 2977333133, 63128, 18818, 176, 95, 58, 110, 140, 171, 1, 162);
+RT_INTERFACE!{interface IContentIndexer(IContentIndexerVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexer] {
+    fn AddAsync(&self, indexableContent: *mut IIndexableContent, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn UpdateAsync(&self, indexableContent: *mut IIndexableContent, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn DeleteAsync(&self, contentId: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn DeleteMultipleAsync(&self, contentIds: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn DeleteAllAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn RetrievePropertiesAsync(&self, contentId: HSTRING, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IMapView<HString, IInspectable>>) -> HRESULT,
+    fn get_Revision(&self, out: *mut u64) -> HRESULT
+}}
+impl IContentIndexer {
+    #[inline] pub fn add_async(&self, indexableContent: &IIndexableContent) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AddAsync)(self as *const _ as *mut _, indexableContent as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn update_async(&self, indexableContent: &IIndexableContent) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).UpdateAsync)(self as *const _ as *mut _, indexableContent as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn delete_async(&self, contentId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DeleteAsync)(self as *const _ as *mut _, contentId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn delete_multiple_async(&self, contentIds: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DeleteMultipleAsync)(self as *const _ as *mut _, contentIds as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn delete_all_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DeleteAllAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn retrieve_properties_async(&self, contentId: &HStringArg, propertiesToRetrieve: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<HString, IInspectable>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RetrievePropertiesAsync)(self as *const _ as *mut _, contentId.get(), propertiesToRetrieve as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_revision(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Revision)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ContentIndexer: IContentIndexer}
+impl RtActivatable<IContentIndexerStatics> for ContentIndexer {}
+impl ContentIndexer {
+    #[inline] pub fn get_indexer_with_name(indexName: &HStringArg) -> Result<Option<ComPtr<ContentIndexer>>> {
+        <Self as RtActivatable<IContentIndexerStatics>>::get_activation_factory().get_indexer_with_name(indexName)
+    }
+    #[inline] pub fn get_indexer() -> Result<Option<ComPtr<ContentIndexer>>> {
+        <Self as RtActivatable<IContentIndexerStatics>>::get_activation_factory().get_indexer()
+    }
+}
+DEFINE_CLSID!(ContentIndexer(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,67,111,110,116,101,110,116,73,110,100,101,120,101,114,0]) [CLSID_ContentIndexer]);
+DEFINE_IID!(IID_IContentIndexerQuery, 1893970168, 19452, 17034, 136, 137, 204, 81, 218, 154, 123, 157);
+RT_INTERFACE!{interface IContentIndexerQuery(IContentIndexerQueryVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexerQuery] {
+    fn GetCountAsync(&self, out: *mut *mut foundation::IAsyncOperation<u32>) -> HRESULT,
+    fn GetPropertiesAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<foundation::collections::IMapView<HString, IInspectable>>>) -> HRESULT,
+    fn GetPropertiesRangeAsync(&self, startIndex: u32, maxItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<foundation::collections::IMapView<HString, IInspectable>>>) -> HRESULT,
+    fn GetAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<IIndexableContent>>) -> HRESULT,
+    fn GetRangeAsync(&self, startIndex: u32, maxItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<IIndexableContent>>) -> HRESULT,
+    fn get_QueryFolder(&self, out: *mut *mut super::StorageFolder) -> HRESULT
+}}
+impl IContentIndexerQuery {
+    #[inline] pub fn get_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCountAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<foundation::collections::IMapView<HString, IInspectable>>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetPropertiesAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_properties_range_async(&self, startIndex: u32, maxItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<foundation::collections::IMapView<HString, IInspectable>>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetPropertiesRangeAsync)(self as *const _ as *mut _, startIndex, maxItems, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IIndexableContent>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_range_async(&self, startIndex: u32, maxItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IIndexableContent>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetRangeAsync)(self as *const _ as *mut _, startIndex, maxItems, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_query_folder(&self) -> Result<Option<ComPtr<super::StorageFolder>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_QueryFolder)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ContentIndexerQuery: IContentIndexerQuery}
+DEFINE_IID!(IID_IContentIndexerQueryOperations, 679624208, 18310, 17137, 151, 48, 121, 43, 53, 102, 177, 80);
+RT_INTERFACE!{interface IContentIndexerQueryOperations(IContentIndexerQueryOperationsVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexerQueryOperations] {
+    fn CreateQueryWithSortOrderAndLanguage(&self, searchFilter: HSTRING, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, sortOrder: *mut foundation::collections::IIterable<SortEntry>, searchFilterLanguage: HSTRING, out: *mut *mut ContentIndexerQuery) -> HRESULT,
+    fn CreateQueryWithSortOrder(&self, searchFilter: HSTRING, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, sortOrder: *mut foundation::collections::IIterable<SortEntry>, out: *mut *mut ContentIndexerQuery) -> HRESULT,
+    fn CreateQuery(&self, searchFilter: HSTRING, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, out: *mut *mut ContentIndexerQuery) -> HRESULT
+}}
+impl IContentIndexerQueryOperations {
+    #[inline] pub fn create_query_with_sort_order_and_language(&self, searchFilter: &HStringArg, propertiesToRetrieve: &foundation::collections::IIterable<HString>, sortOrder: &foundation::collections::IIterable<SortEntry>, searchFilterLanguage: &HStringArg) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateQueryWithSortOrderAndLanguage)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve as *const _ as *mut _, sortOrder as *const _ as *mut _, searchFilterLanguage.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_query_with_sort_order(&self, searchFilter: &HStringArg, propertiesToRetrieve: &foundation::collections::IIterable<HString>, sortOrder: &foundation::collections::IIterable<SortEntry>) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateQueryWithSortOrder)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve as *const _ as *mut _, sortOrder as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_query(&self, searchFilter: &HStringArg, propertiesToRetrieve: &foundation::collections::IIterable<HString>) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateQuery)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IContentIndexerStatics, 2353562485, 45950, 19552, 155, 168, 183, 96, 253, 163, 229, 157);
+RT_INTERFACE!{static interface IContentIndexerStatics(IContentIndexerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexerStatics] {
+    fn GetIndexerWithName(&self, indexName: HSTRING, out: *mut *mut ContentIndexer) -> HRESULT,
+    fn GetIndexer(&self, out: *mut *mut ContentIndexer) -> HRESULT
+}}
+impl IContentIndexerStatics {
+    #[inline] pub fn get_indexer_with_name(&self, indexName: &HStringArg) -> Result<Option<ComPtr<ContentIndexer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetIndexerWithName)(self as *const _ as *mut _, indexName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_indexer(&self) -> Result<Option<ComPtr<ContentIndexer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetIndexer)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum DateStackOption: i32 {
+    None (DateStackOption_None) = 0, Year (DateStackOption_Year) = 1, Month (DateStackOption_Month) = 2,
+}}
+RT_ENUM! { enum FolderDepth: i32 {
+    Shallow (FolderDepth_Shallow) = 0, Deep (FolderDepth_Deep) = 1,
+}}
+DEFINE_IID!(IID_IIndexableContent, 3438387295, 54453, 18490, 176, 110, 224, 219, 30, 196, 32, 228);
+RT_INTERFACE!{interface IIndexableContent(IIndexableContentVtbl): IInspectable(IInspectableVtbl) [IID_IIndexableContent] {
+    fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Id(&self, value: HSTRING) -> HRESULT,
+    fn get_Properties(&self, out: *mut *mut foundation::collections::IMap<HString, IInspectable>) -> HRESULT,
+    fn get_Stream(&self, out: *mut *mut super::streams::IRandomAccessStream) -> HRESULT,
+    fn put_Stream(&self, value: *mut super::streams::IRandomAccessStream) -> HRESULT,
+    fn get_StreamContentType(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_StreamContentType(&self, value: HSTRING) -> HRESULT
+}}
+impl IIndexableContent {
+    #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Id)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, IInspectable>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stream(&self) -> Result<Option<ComPtr<super::streams::IRandomAccessStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Stream)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_stream(&self, value: &super::streams::IRandomAccessStream) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Stream)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_stream_content_type(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_StreamContentType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_stream_content_type(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StreamContentType)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class IndexableContent: IIndexableContent}
+impl RtActivatable<IActivationFactory> for IndexableContent {}
+DEFINE_CLSID!(IndexableContent(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,73,110,100,101,120,97,98,108,101,67,111,110,116,101,110,116,0]) [CLSID_IndexableContent]);
+RT_ENUM! { enum IndexedState: i32 {
+    Unknown (IndexedState_Unknown) = 0, NotIndexed (IndexedState_NotIndexed) = 1, PartiallyIndexed (IndexedState_PartiallyIndexed) = 2, FullyIndexed (IndexedState_FullyIndexed) = 3,
+}}
+RT_ENUM! { enum IndexerOption: i32 {
+    UseIndexerWhenAvailable (IndexerOption_UseIndexerWhenAvailable) = 0, OnlyUseIndexer (IndexerOption_OnlyUseIndexer) = 1, DoNotUseIndexer (IndexerOption_DoNotUseIndexer) = 2, OnlyUseIndexerAndOptimizeForIndexedProperties (IndexerOption_OnlyUseIndexerAndOptimizeForIndexedProperties) = 3,
+}}
+DEFINE_IID!(IID_IQueryOptions, 509495022, 3909, 18488, 168, 233, 208, 71, 157, 68, 108, 48);
+RT_INTERFACE!{interface IQueryOptions(IQueryOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IQueryOptions] {
+    fn get_FileTypeFilter(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
+    fn get_FolderDepth(&self, out: *mut FolderDepth) -> HRESULT,
+    fn put_FolderDepth(&self, value: FolderDepth) -> HRESULT,
+    fn get_ApplicationSearchFilter(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_ApplicationSearchFilter(&self, value: HSTRING) -> HRESULT,
+    fn get_UserSearchFilter(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_UserSearchFilter(&self, value: HSTRING) -> HRESULT,
+    fn get_Language(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Language(&self, value: HSTRING) -> HRESULT,
+    fn get_IndexerOption(&self, out: *mut IndexerOption) -> HRESULT,
+    fn put_IndexerOption(&self, value: IndexerOption) -> HRESULT,
+    fn get_SortOrder(&self, out: *mut *mut foundation::collections::IVector<SortEntry>) -> HRESULT,
+    fn get_GroupPropertyName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_DateStackOption(&self, out: *mut DateStackOption) -> HRESULT,
+    fn SaveToString(&self, out: *mut HSTRING) -> HRESULT,
+    fn LoadFromString(&self, value: HSTRING) -> HRESULT,
+    fn SetThumbnailPrefetch(&self, mode: super::fileproperties::ThumbnailMode, requestedSize: u32, options: super::fileproperties::ThumbnailOptions) -> HRESULT,
+    fn SetPropertyPrefetch(&self, options: super::fileproperties::PropertyPrefetchOptions, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>) -> HRESULT
+}}
+impl IQueryOptions {
+    #[inline] pub fn get_file_type_filter(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_FileTypeFilter)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_folder_depth(&self) -> Result<FolderDepth> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_FolderDepth)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_folder_depth(&self, value: FolderDepth) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_FolderDepth)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_application_search_filter(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ApplicationSearchFilter)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_application_search_filter(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ApplicationSearchFilter)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_user_search_filter(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UserSearchFilter)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_user_search_filter(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_UserSearchFilter)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_language(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Language)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_language(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Language)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_indexer_option(&self) -> Result<IndexerOption> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IndexerOption)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_indexer_option(&self, value: IndexerOption) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IndexerOption)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_sort_order(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SortEntry>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SortOrder)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_group_property_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_GroupPropertyName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_date_stack_option(&self) -> Result<DateStackOption> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DateStackOption)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn save_to_string(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SaveToString)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn load_from_string(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).LoadFromString)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn set_thumbnail_prefetch(&self, mode: super::fileproperties::ThumbnailMode, requestedSize: u32, options: super::fileproperties::ThumbnailOptions) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetThumbnailPrefetch)(self as *const _ as *mut _, mode, requestedSize, options);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn set_property_prefetch(&self, options: super::fileproperties::PropertyPrefetchOptions, propertiesToRetrieve: &foundation::collections::IIterable<HString>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetPropertyPrefetch)(self as *const _ as *mut _, options, propertiesToRetrieve as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class QueryOptions: IQueryOptions}
+impl RtActivatable<IQueryOptionsFactory> for QueryOptions {}
+impl RtActivatable<IActivationFactory> for QueryOptions {}
+impl QueryOptions {
+    #[inline] pub fn create_common_file_query(query: CommonFileQuery, fileTypeFilter: &foundation::collections::IIterable<HString>) -> Result<ComPtr<QueryOptions>> {
+        <Self as RtActivatable<IQueryOptionsFactory>>::get_activation_factory().create_common_file_query(query, fileTypeFilter)
+    }
+    #[inline] pub fn create_common_folder_query(query: CommonFolderQuery) -> Result<ComPtr<QueryOptions>> {
+        <Self as RtActivatable<IQueryOptionsFactory>>::get_activation_factory().create_common_folder_query(query)
+    }
+}
+DEFINE_CLSID!(QueryOptions(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_QueryOptions]);
+DEFINE_IID!(IID_IQueryOptionsFactory, 53354380, 43457, 20081, 128, 17, 13, 238, 157, 72, 17, 163);
+RT_INTERFACE!{static interface IQueryOptionsFactory(IQueryOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IQueryOptionsFactory] {
+    fn CreateCommonFileQuery(&self, query: CommonFileQuery, fileTypeFilter: *mut foundation::collections::IIterable<HString>, out: *mut *mut QueryOptions) -> HRESULT,
+    fn CreateCommonFolderQuery(&self, query: CommonFolderQuery, out: *mut *mut QueryOptions) -> HRESULT
+}}
+impl IQueryOptionsFactory {
+    #[inline] pub fn create_common_file_query(&self, query: CommonFileQuery, fileTypeFilter: &foundation::collections::IIterable<HString>) -> Result<ComPtr<QueryOptions>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateCommonFileQuery)(self as *const _ as *mut _, query, fileTypeFilter as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_common_folder_query(&self, query: CommonFolderQuery) -> Result<ComPtr<QueryOptions>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateCommonFolderQuery)(self as *const _ as *mut _, query, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IQueryOptionsWithProviderFilter, 1537019942, 5572, 17629, 184, 154, 71, 165, 155, 125, 124, 79);
+RT_INTERFACE!{interface IQueryOptionsWithProviderFilter(IQueryOptionsWithProviderFilterVtbl): IInspectable(IInspectableVtbl) [IID_IQueryOptionsWithProviderFilter] {
+    fn get_StorageProviderIdFilter(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT
+}}
+impl IQueryOptionsWithProviderFilter {
+    #[inline] pub fn get_storage_provider_id_filter(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_StorageProviderIdFilter)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_STRUCT! { struct SortEntry {
+    PropertyName: HSTRING, AscendingOrder: bool,
+}}
+RT_CLASS!{class SortEntryVector: foundation::collections::IVector<SortEntry>}
+DEFINE_IID!(IID_IStorageFileQueryResult, 1392354375, 11178, 16684, 178, 159, 212, 177, 119, 142, 250, 30);
+RT_INTERFACE!{interface IStorageFileQueryResult(IStorageFileQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFileQueryResult] {
+    fn GetFilesAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>) -> HRESULT,
+    fn GetFilesAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>) -> HRESULT
+}}
+impl IStorageFileQueryResult {
+    #[inline] pub fn get_files_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFilesAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_files_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFilesAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StorageFileQueryResult: IStorageFileQueryResult}
+DEFINE_IID!(IID_IStorageFileQueryResult2, 1314765277, 28993, 18116, 139, 227, 233, 220, 158, 39, 39, 92);
+RT_INTERFACE!{interface IStorageFileQueryResult2(IStorageFileQueryResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageFileQueryResult2] {
+    #[cfg(feature="windows-data")] fn GetMatchingPropertiesWithRanges(&self, file: *mut super::StorageFile, out: *mut *mut foundation::collections::IMap<HString, foundation::collections::IVectorView<super::super::data::text::TextSegment>>) -> HRESULT
+}}
+impl IStorageFileQueryResult2 {
+    #[cfg(feature="windows-data")] #[inline] pub fn get_matching_properties_with_ranges(&self, file: &super::StorageFile) -> Result<Option<ComPtr<foundation::collections::IMap<HString, foundation::collections::IVectorView<super::super::data::text::TextSegment>>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetMatchingPropertiesWithRanges)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IStorageFolderQueryOperations, 3410218185, 17515, 19023, 190, 151, 117, 119, 113, 190, 82, 3);
+RT_INTERFACE!{interface IStorageFolderQueryOperations(IStorageFolderQueryOperationsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolderQueryOperations] {
+    fn GetIndexedStateAsync(&self, out: *mut *mut foundation::IAsyncOperation<IndexedState>) -> HRESULT,
+    fn CreateFileQueryOverloadDefault(&self, out: *mut *mut StorageFileQueryResult) -> HRESULT,
+    fn CreateFileQuery(&self, query: CommonFileQuery, out: *mut *mut StorageFileQueryResult) -> HRESULT,
+    fn CreateFileQueryWithOptions(&self, queryOptions: *mut QueryOptions, out: *mut *mut StorageFileQueryResult) -> HRESULT,
+    fn CreateFolderQueryOverloadDefault(&self, out: *mut *mut StorageFolderQueryResult) -> HRESULT,
+    fn CreateFolderQuery(&self, query: CommonFolderQuery, out: *mut *mut StorageFolderQueryResult) -> HRESULT,
+    fn CreateFolderQueryWithOptions(&self, queryOptions: *mut QueryOptions, out: *mut *mut StorageFolderQueryResult) -> HRESULT,
+    fn CreateItemQuery(&self, out: *mut *mut StorageItemQueryResult) -> HRESULT,
+    fn CreateItemQueryWithOptions(&self, queryOptions: *mut QueryOptions, out: *mut *mut StorageItemQueryResult) -> HRESULT,
+    fn GetFilesAsync(&self, query: CommonFileQuery, startIndex: u32, maxItemsToRetrieve: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>) -> HRESULT,
+    fn GetFilesAsyncOverloadDefaultStartAndCount(&self, query: CommonFileQuery, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>) -> HRESULT,
+    fn GetFoldersAsync(&self, query: CommonFolderQuery, startIndex: u32, maxItemsToRetrieve: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>) -> HRESULT,
+    fn GetFoldersAsyncOverloadDefaultStartAndCount(&self, query: CommonFolderQuery, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>) -> HRESULT,
+    fn GetItemsAsync(&self, startIndex: u32, maxItemsToRetrieve: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>) -> HRESULT,
+    fn AreQueryOptionsSupported(&self, queryOptions: *mut QueryOptions, out: *mut bool) -> HRESULT,
+    fn IsCommonFolderQuerySupported(&self, query: CommonFolderQuery, out: *mut bool) -> HRESULT,
+    fn IsCommonFileQuerySupported(&self, query: CommonFileQuery, out: *mut bool) -> HRESULT
+}}
+impl IStorageFolderQueryOperations {
+    #[inline] pub fn get_indexed_state_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<IndexedState>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetIndexedStateAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_file_query_overload_default(&self) -> Result<Option<ComPtr<StorageFileQueryResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFileQueryOverloadDefault)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_file_query(&self, query: CommonFileQuery) -> Result<Option<ComPtr<StorageFileQueryResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFileQuery)(self as *const _ as *mut _, query, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_file_query_with_options(&self, queryOptions: &QueryOptions) -> Result<Option<ComPtr<StorageFileQueryResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFileQueryWithOptions)(self as *const _ as *mut _, queryOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_folder_query_overload_default(&self) -> Result<Option<ComPtr<StorageFolderQueryResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFolderQueryOverloadDefault)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_folder_query(&self, query: CommonFolderQuery) -> Result<Option<ComPtr<StorageFolderQueryResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFolderQuery)(self as *const _ as *mut _, query, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_folder_query_with_options(&self, queryOptions: &QueryOptions) -> Result<Option<ComPtr<StorageFolderQueryResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFolderQueryWithOptions)(self as *const _ as *mut _, queryOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_item_query(&self) -> Result<Option<ComPtr<StorageItemQueryResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateItemQuery)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_item_query_with_options(&self, queryOptions: &QueryOptions) -> Result<Option<ComPtr<StorageItemQueryResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateItemQueryWithOptions)(self as *const _ as *mut _, queryOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_files_async(&self, query: CommonFileQuery, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFilesAsync)(self as *const _ as *mut _, query, startIndex, maxItemsToRetrieve, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_files_async_overload_default_start_and_count(&self, query: CommonFileQuery) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFilesAsyncOverloadDefaultStartAndCount)(self as *const _ as *mut _, query, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_folders_async(&self, query: CommonFolderQuery, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFoldersAsync)(self as *const _ as *mut _, query, startIndex, maxItemsToRetrieve, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_folders_async_overload_default_start_and_count(&self, query: CommonFolderQuery) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFoldersAsyncOverloadDefaultStartAndCount)(self as *const _ as *mut _, query, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_items_async(&self, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetItemsAsync)(self as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn are_query_options_supported(&self, queryOptions: &QueryOptions) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).AreQueryOptionsSupported)(self as *const _ as *mut _, queryOptions as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_common_folder_query_supported(&self, query: CommonFolderQuery) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsCommonFolderQuerySupported)(self as *const _ as *mut _, query, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_common_file_query_supported(&self, query: CommonFileQuery) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsCommonFileQuerySupported)(self as *const _ as *mut _, query, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IStorageFolderQueryResult, 1716832529, 32102, 18170, 174, 207, 228, 164, 186, 169, 58, 184);
+RT_INTERFACE!{interface IStorageFolderQueryResult(IStorageFolderQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolderQueryResult] {
+    fn GetFoldersAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>) -> HRESULT,
+    fn GetFoldersAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>) -> HRESULT
+}}
+impl IStorageFolderQueryResult {
+    #[inline] pub fn get_folders_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFoldersAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_folders_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetFoldersAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StorageFolderQueryResult: IStorageFolderQueryResult}
+DEFINE_IID!(IID_IStorageItemQueryResult, 3902046329, 40280, 18360, 178, 178, 65, 176, 127, 71, 149, 249);
+RT_INTERFACE!{interface IStorageItemQueryResult(IStorageItemQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemQueryResult] {
+    fn GetItemsAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>) -> HRESULT,
+    fn GetItemsAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>) -> HRESULT
+}}
+impl IStorageItemQueryResult {
+    #[inline] pub fn get_items_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetItemsAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_items_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetItemsAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StorageItemQueryResult: IStorageItemQueryResult}
+DEFINE_IID!(IID_IStorageLibraryChangeTrackerTriggerDetails, 499622761, 47011, 19954, 157, 97, 235, 168, 90, 3, 67, 210);
+RT_INTERFACE!{interface IStorageLibraryChangeTrackerTriggerDetails(IStorageLibraryChangeTrackerTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryChangeTrackerTriggerDetails] {
+    fn get_Folder(&self, out: *mut *mut super::StorageFolder) -> HRESULT,
+    fn get_ChangeTracker(&self, out: *mut *mut super::StorageLibraryChangeTracker) -> HRESULT
+}}
+impl IStorageLibraryChangeTrackerTriggerDetails {
+    #[inline] pub fn get_folder(&self) -> Result<Option<ComPtr<super::StorageFolder>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Folder)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_change_tracker(&self) -> Result<Option<ComPtr<super::StorageLibraryChangeTracker>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ChangeTracker)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StorageLibraryChangeTrackerTriggerDetails: IStorageLibraryChangeTrackerTriggerDetails}
+DEFINE_IID!(IID_IStorageLibraryContentChangedTriggerDetails, 708254071, 43967, 19997, 138, 165, 99, 133, 216, 136, 71, 153);
+RT_INTERFACE!{interface IStorageLibraryContentChangedTriggerDetails(IStorageLibraryContentChangedTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryContentChangedTriggerDetails] {
+    fn get_Folder(&self, out: *mut *mut super::StorageFolder) -> HRESULT,
+    fn CreateModifiedSinceQuery(&self, lastQueryTime: foundation::DateTime, out: *mut *mut StorageItemQueryResult) -> HRESULT
+}}
+impl IStorageLibraryContentChangedTriggerDetails {
+    #[inline] pub fn get_folder(&self) -> Result<Option<ComPtr<super::StorageFolder>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Folder)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_modified_since_query(&self, lastQueryTime: foundation::DateTime) -> Result<Option<ComPtr<StorageItemQueryResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateModifiedSinceQuery)(self as *const _ as *mut _, lastQueryTime, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StorageLibraryContentChangedTriggerDetails: IStorageLibraryContentChangedTriggerDetails}
+DEFINE_IID!(IID_IStorageQueryResultBase, 3264730893, 29523, 18347, 186, 88, 140, 97, 66, 93, 197, 75);
+RT_INTERFACE!{interface IStorageQueryResultBase(IStorageQueryResultBaseVtbl): IInspectable(IInspectableVtbl) [IID_IStorageQueryResultBase] {
+    fn GetItemCountAsync(&self, out: *mut *mut foundation::IAsyncOperation<u32>) -> HRESULT,
+    fn get_Folder(&self, out: *mut *mut super::StorageFolder) -> HRESULT,
+    fn add_ContentsChanged(&self, handler: *mut foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_ContentsChanged(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_OptionsChanged(&self, changedHandler: *mut foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_OptionsChanged(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
+    fn FindStartIndexAsync(&self, value: *mut IInspectable, out: *mut *mut foundation::IAsyncOperation<u32>) -> HRESULT,
+    fn GetCurrentQueryOptions(&self, out: *mut *mut QueryOptions) -> HRESULT,
+    fn ApplyNewQueryOptions(&self, newQueryOptions: *mut QueryOptions) -> HRESULT
+}}
+impl IStorageQueryResultBase {
+    #[inline] pub fn get_item_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetItemCountAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_folder(&self) -> Result<Option<ComPtr<super::StorageFolder>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Folder)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_contents_changed(&self, handler: &foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_ContentsChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_contents_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_ContentsChanged)(self as *const _ as *mut _, eventCookie);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_options_changed(&self, changedHandler: &foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_OptionsChanged)(self as *const _ as *mut _, changedHandler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_options_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_OptionsChanged)(self as *const _ as *mut _, eventCookie);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn find_start_index_async(&self, value: &IInspectable) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindStartIndexAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_current_query_options(&self) -> Result<Option<ComPtr<QueryOptions>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCurrentQueryOptions)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn apply_new_query_options(&self, newQueryOptions: &QueryOptions) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ApplyNewQueryOptions)(self as *const _ as *mut _, newQueryOptions as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IValueAndLanguage, 3113306241, 41454, 19396, 146, 165, 70, 105, 104, 227, 4, 54);
+RT_INTERFACE!{interface IValueAndLanguage(IValueAndLanguageVtbl): IInspectable(IInspectableVtbl) [IID_IValueAndLanguage] {
+    fn get_Language(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Language(&self, value: HSTRING) -> HRESULT,
+    fn get_Value(&self, out: *mut *mut IInspectable) -> HRESULT,
+    fn put_Value(&self, value: *mut IInspectable) -> HRESULT
+}}
+impl IValueAndLanguage {
+    #[inline] pub fn get_language(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Language)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_language(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Language)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_value(&self, value: &IInspectable) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ValueAndLanguage: IValueAndLanguage}
+impl RtActivatable<IActivationFactory> for ValueAndLanguage {}
+DEFINE_CLSID!(ValueAndLanguage(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,86,97,108,117,101,65,110,100,76,97,110,103,117,97,103,101,0]) [CLSID_ValueAndLanguage]);
+} // Windows.Storage.Search
+pub mod streams { // Windows.Storage.Streams
+use ::prelude::*;
+DEFINE_IID!(IID_IBuffer, 2421821408, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
+RT_INTERFACE!{interface IBuffer(IBufferVtbl): IInspectable(IInspectableVtbl) [IID_IBuffer] {
+    fn get_Capacity(&self, out: *mut u32) -> HRESULT,
+    fn get_Length(&self, out: *mut u32) -> HRESULT,
+    fn put_Length(&self, value: u32) -> HRESULT
+}}
+impl IBuffer {
+    #[inline] pub fn get_capacity(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Capacity)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_length(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Length)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_length(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Length)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class Buffer: IBuffer}
+impl RtActivatable<IBufferFactory> for Buffer {}
+impl RtActivatable<IBufferStatics> for Buffer {}
+impl Buffer {
+    #[inline] pub fn create(capacity: u32) -> Result<ComPtr<Buffer>> {
+        <Self as RtActivatable<IBufferFactory>>::get_activation_factory().create(capacity)
+    }
+    #[inline] pub fn create_copy_from_memory_buffer(input: &foundation::IMemoryBuffer) -> Result<Option<ComPtr<Buffer>>> {
+        <Self as RtActivatable<IBufferStatics>>::get_activation_factory().create_copy_from_memory_buffer(input)
+    }
+    #[inline] pub fn create_memory_buffer_over_ibuffer(input: &IBuffer) -> Result<Option<ComPtr<foundation::MemoryBuffer>>> {
+        <Self as RtActivatable<IBufferStatics>>::get_activation_factory().create_memory_buffer_over_ibuffer(input)
+    }
+}
+DEFINE_CLSID!(Buffer(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,66,117,102,102,101,114,0]) [CLSID_Buffer]);
+DEFINE_IID!(IID_IBufferFactory, 1907331405, 49423, 18507, 188, 80, 20, 188, 98, 59, 58, 39);
+RT_INTERFACE!{static interface IBufferFactory(IBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBufferFactory] {
+    fn Create(&self, capacity: u32, out: *mut *mut Buffer) -> HRESULT
+}}
+impl IBufferFactory {
+    #[inline] pub fn create(&self, capacity: u32) -> Result<ComPtr<Buffer>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, capacity, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBufferStatics, 3909215835, 55062, 18266, 169, 10, 175, 114, 41, 177, 231, 65);
+RT_INTERFACE!{static interface IBufferStatics(IBufferStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBufferStatics] {
+    fn CreateCopyFromMemoryBuffer(&self, input: *mut foundation::IMemoryBuffer, out: *mut *mut Buffer) -> HRESULT,
+    fn CreateMemoryBufferOverIBuffer(&self, input: *mut IBuffer, out: *mut *mut foundation::MemoryBuffer) -> HRESULT
+}}
+impl IBufferStatics {
+    #[inline] pub fn create_copy_from_memory_buffer(&self, input: &foundation::IMemoryBuffer) -> Result<Option<ComPtr<Buffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateCopyFromMemoryBuffer)(self as *const _ as *mut _, input as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_memory_buffer_over_ibuffer(&self, input: &IBuffer) -> Result<Option<ComPtr<foundation::MemoryBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateMemoryBufferOverIBuffer)(self as *const _ as *mut _, input as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum ByteOrder: i32 {
+    LittleEndian (ByteOrder_LittleEndian) = 0, BigEndian (ByteOrder_BigEndian) = 1,
+}}
+DEFINE_IID!(IID_IContentTypeProvider, 2547030181, 15257, 19945, 136, 165, 225, 29, 47, 80, 199, 149);
+RT_INTERFACE!{interface IContentTypeProvider(IContentTypeProviderVtbl): IInspectable(IInspectableVtbl) [IID_IContentTypeProvider] {
+    fn get_ContentType(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IContentTypeProvider {
+    #[inline] pub fn get_content_type(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ContentType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IDataReader, 3803512873, 46273, 17172, 164, 184, 251, 129, 58, 47, 39, 94);
+RT_INTERFACE!{interface IDataReader(IDataReaderVtbl): IInspectable(IInspectableVtbl) [IID_IDataReader] {
+    fn get_UnconsumedBufferLength(&self, out: *mut u32) -> HRESULT,
+    fn get_UnicodeEncoding(&self, out: *mut UnicodeEncoding) -> HRESULT,
+    fn put_UnicodeEncoding(&self, value: UnicodeEncoding) -> HRESULT,
+    fn get_ByteOrder(&self, out: *mut ByteOrder) -> HRESULT,
+    fn put_ByteOrder(&self, value: ByteOrder) -> HRESULT,
+    fn get_InputStreamOptions(&self, out: *mut InputStreamOptions) -> HRESULT,
+    fn put_InputStreamOptions(&self, value: InputStreamOptions) -> HRESULT,
+    fn ReadByte(&self, out: *mut u8) -> HRESULT,
+    fn ReadBytes(&self, valueSize: u32, value: *mut u8) -> HRESULT,
+    fn ReadBuffer(&self, length: u32, out: *mut *mut IBuffer) -> HRESULT,
+    fn ReadBoolean(&self, out: *mut bool) -> HRESULT,
+    fn ReadGuid(&self, out: *mut Guid) -> HRESULT,
+    fn ReadInt16(&self, out: *mut i16) -> HRESULT,
+    fn ReadInt32(&self, out: *mut i32) -> HRESULT,
+    fn ReadInt64(&self, out: *mut i64) -> HRESULT,
+    fn ReadUInt16(&self, out: *mut u16) -> HRESULT,
+    fn ReadUInt32(&self, out: *mut u32) -> HRESULT,
+    fn ReadUInt64(&self, out: *mut u64) -> HRESULT,
+    fn ReadSingle(&self, out: *mut f32) -> HRESULT,
+    fn ReadDouble(&self, out: *mut f64) -> HRESULT,
+    fn ReadString(&self, codeUnitCount: u32, out: *mut HSTRING) -> HRESULT,
+    fn ReadDateTime(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn ReadTimeSpan(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn LoadAsync(&self, count: u32, out: *mut *mut DataReaderLoadOperation) -> HRESULT,
+    fn DetachBuffer(&self, out: *mut *mut IBuffer) -> HRESULT,
+    fn DetachStream(&self, out: *mut *mut IInputStream) -> HRESULT
+}}
+impl IDataReader {
+    #[inline] pub fn get_unconsumed_buffer_length(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_UnconsumedBufferLength)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_unicode_encoding(&self) -> Result<UnicodeEncoding> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_UnicodeEncoding)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_unicode_encoding(&self, value: UnicodeEncoding) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_UnicodeEncoding)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_byte_order(&self) -> Result<ByteOrder> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ByteOrder)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_byte_order(&self, value: ByteOrder) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ByteOrder)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_input_stream_options(&self) -> Result<InputStreamOptions> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_InputStreamOptions)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_input_stream_options(&self, value: InputStreamOptions) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_InputStreamOptions)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn read_byte(&self) -> Result<u8> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ReadByte)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn read_bytes(&self, value: &mut [u8]) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReadBytes)(self as *const _ as *mut _, value.len() as u32, value.as_mut_ptr() as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn read_buffer(&self, length: u32) -> Result<Option<ComPtr<IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReadBuffer)(self as *const _ as *mut _, length, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn read_boolean(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ReadBoolean)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn read_guid(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ReadGuid)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn read_int16(&self) -> Result<i16> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ReadInt16)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn read_int32(&self) -> Result<i32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ReadInt32)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn read_int64(&self) -> Result<i64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ReadInt64)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn read_uint16(&self) -> Result<u16> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ReadUInt16)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn read_uint32(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ReadUInt32)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn read_uint64(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ReadUInt64)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn read_single(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ReadSingle)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn read_double(&self) -> Result<f64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ReadDouble)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn read_string(&self, codeUnitCount: u32) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReadString)(self as *const _ as *mut _, codeUnitCount, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn read_date_time(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ReadDateTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn read_time_span(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).ReadTimeSpan)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn load_async(&self, count: u32) -> Result<ComPtr<DataReaderLoadOperation>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).LoadAsync)(self as *const _ as *mut _, count, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn detach_buffer(&self) -> Result<Option<ComPtr<IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DetachBuffer)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn detach_stream(&self) -> Result<Option<ComPtr<IInputStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DetachStream)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DataReader: IDataReader}
+impl RtActivatable<IDataReaderFactory> for DataReader {}
+impl RtActivatable<IDataReaderStatics> for DataReader {}
+impl DataReader {
+    #[inline] pub fn create_data_reader(inputStream: &IInputStream) -> Result<ComPtr<DataReader>> {
+        <Self as RtActivatable<IDataReaderFactory>>::get_activation_factory().create_data_reader(inputStream)
+    }
+    #[inline] pub fn from_buffer(buffer: &IBuffer) -> Result<Option<ComPtr<DataReader>>> {
+        <Self as RtActivatable<IDataReaderStatics>>::get_activation_factory().from_buffer(buffer)
+    }
+}
+DEFINE_CLSID!(DataReader(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,82,101,97,100,101,114,0]) [CLSID_DataReader]);
+DEFINE_IID!(IID_IDataReaderFactory, 3612506183, 22490, 19989, 145, 76, 6, 128, 102, 153, 160, 152);
+RT_INTERFACE!{static interface IDataReaderFactory(IDataReaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderFactory] {
+    fn CreateDataReader(&self, inputStream: *mut IInputStream, out: *mut *mut DataReader) -> HRESULT
+}}
+impl IDataReaderFactory {
+    #[inline] pub fn create_data_reader(&self, inputStream: &IInputStream) -> Result<ComPtr<DataReader>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateDataReader)(self as *const _ as *mut _, inputStream as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DataReaderLoadOperation: foundation::IAsyncOperation<u32>}
+DEFINE_IID!(IID_IDataReaderStatics, 301776840, 63802, 18203, 177, 33, 243, 121, 227, 73, 49, 60);
+RT_INTERFACE!{static interface IDataReaderStatics(IDataReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderStatics] {
+    fn FromBuffer(&self, buffer: *mut IBuffer, out: *mut *mut DataReader) -> HRESULT
+}}
+impl IDataReaderStatics {
+    #[inline] pub fn from_buffer(&self, buffer: &IBuffer) -> Result<Option<ComPtr<DataReader>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FromBuffer)(self as *const _ as *mut _, buffer as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IDataWriter, 1689817701, 54081, 18722, 179, 138, 221, 74, 248, 128, 140, 78);
+RT_INTERFACE!{interface IDataWriter(IDataWriterVtbl): IInspectable(IInspectableVtbl) [IID_IDataWriter] {
+    fn get_UnstoredBufferLength(&self, out: *mut u32) -> HRESULT,
+    fn get_UnicodeEncoding(&self, out: *mut UnicodeEncoding) -> HRESULT,
+    fn put_UnicodeEncoding(&self, value: UnicodeEncoding) -> HRESULT,
+    fn get_ByteOrder(&self, out: *mut ByteOrder) -> HRESULT,
+    fn put_ByteOrder(&self, value: ByteOrder) -> HRESULT,
+    fn WriteByte(&self, value: u8) -> HRESULT,
+    fn WriteBytes(&self, valueSize: u32, value: *mut u8) -> HRESULT,
+    fn WriteBuffer(&self, buffer: *mut IBuffer) -> HRESULT,
+    fn WriteBufferRange(&self, buffer: *mut IBuffer, start: u32, count: u32) -> HRESULT,
+    fn WriteBoolean(&self, value: bool) -> HRESULT,
+    fn WriteGuid(&self, value: Guid) -> HRESULT,
+    fn WriteInt16(&self, value: i16) -> HRESULT,
+    fn WriteInt32(&self, value: i32) -> HRESULT,
+    fn WriteInt64(&self, value: i64) -> HRESULT,
+    fn WriteUInt16(&self, value: u16) -> HRESULT,
+    fn WriteUInt32(&self, value: u32) -> HRESULT,
+    fn WriteUInt64(&self, value: u64) -> HRESULT,
+    fn WriteSingle(&self, value: f32) -> HRESULT,
+    fn WriteDouble(&self, value: f64) -> HRESULT,
+    fn WriteDateTime(&self, value: foundation::DateTime) -> HRESULT,
+    fn WriteTimeSpan(&self, value: foundation::TimeSpan) -> HRESULT,
+    fn WriteString(&self, value: HSTRING, out: *mut u32) -> HRESULT,
+    fn MeasureString(&self, value: HSTRING, out: *mut u32) -> HRESULT,
+    fn StoreAsync(&self, out: *mut *mut DataWriterStoreOperation) -> HRESULT,
+    fn FlushAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn DetachBuffer(&self, out: *mut *mut IBuffer) -> HRESULT,
+    fn DetachStream(&self, out: *mut *mut IOutputStream) -> HRESULT
+}}
+impl IDataWriter {
+    #[inline] pub fn get_unstored_buffer_length(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_UnstoredBufferLength)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_unicode_encoding(&self) -> Result<UnicodeEncoding> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_UnicodeEncoding)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_unicode_encoding(&self, value: UnicodeEncoding) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_UnicodeEncoding)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_byte_order(&self) -> Result<ByteOrder> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ByteOrder)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_byte_order(&self, value: ByteOrder) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ByteOrder)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_byte(&self, value: u8) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteByte)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_bytes(&self, value: &[u8]) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteBytes)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_buffer(&self, buffer: &IBuffer) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteBuffer)(self as *const _ as *mut _, buffer as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_buffer_range(&self, buffer: &IBuffer, start: u32, count: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteBufferRange)(self as *const _ as *mut _, buffer as *const _ as *mut _, start, count);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_boolean(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteBoolean)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_guid(&self, value: Guid) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteGuid)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_int16(&self, value: i16) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteInt16)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_int32(&self, value: i32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteInt32)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_int64(&self, value: i64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteInt64)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_uint16(&self, value: u16) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteUInt16)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_uint32(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteUInt32)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_uint64(&self, value: u64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteUInt64)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_single(&self, value: f32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteSingle)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_double(&self, value: f64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteDouble)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_date_time(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteDateTime)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_time_span(&self, value: foundation::TimeSpan) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteTimeSpan)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn write_string(&self, value: &HStringArg) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).WriteString)(self as *const _ as *mut _, value.get(), &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn measure_string(&self, value: &HStringArg) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).MeasureString)(self as *const _ as *mut _, value.get(), &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn store_async(&self) -> Result<ComPtr<DataWriterStoreOperation>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).StoreAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn flush_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FlushAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn detach_buffer(&self) -> Result<Option<ComPtr<IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DetachBuffer)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn detach_stream(&self) -> Result<Option<ComPtr<IOutputStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).DetachStream)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DataWriter: IDataWriter}
+impl RtActivatable<IDataWriterFactory> for DataWriter {}
+impl RtActivatable<IActivationFactory> for DataWriter {}
+impl DataWriter {
+    #[inline] pub fn create_data_writer(outputStream: &IOutputStream) -> Result<ComPtr<DataWriter>> {
+        <Self as RtActivatable<IDataWriterFactory>>::get_activation_factory().create_data_writer(outputStream)
+    }
+}
+DEFINE_CLSID!(DataWriter(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,87,114,105,116,101,114,0]) [CLSID_DataWriter]);
+DEFINE_IID!(IID_IDataWriterFactory, 864839618, 35716, 19499, 156, 80, 123, 135, 103, 132, 122, 31);
+RT_INTERFACE!{static interface IDataWriterFactory(IDataWriterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataWriterFactory] {
+    fn CreateDataWriter(&self, outputStream: *mut IOutputStream, out: *mut *mut DataWriter) -> HRESULT
+}}
+impl IDataWriterFactory {
+    #[inline] pub fn create_data_writer(&self, outputStream: &IOutputStream) -> Result<ComPtr<DataWriter>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateDataWriter)(self as *const _ as *mut _, outputStream as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DataWriterStoreOperation: foundation::IAsyncOperation<u32>}
+RT_CLASS!{class FileInputStream: IInputStream}
+RT_ENUM! { enum FileOpenDisposition: i32 {
+    OpenExisting (FileOpenDisposition_OpenExisting) = 0, OpenAlways (FileOpenDisposition_OpenAlways) = 1, CreateNew (FileOpenDisposition_CreateNew) = 2, CreateAlways (FileOpenDisposition_CreateAlways) = 3, TruncateExisting (FileOpenDisposition_TruncateExisting) = 4,
+}}
+RT_CLASS!{class FileOutputStream: IOutputStream}
+RT_CLASS!{class FileRandomAccessStream: IRandomAccessStream}
+impl RtActivatable<IFileRandomAccessStreamStatics> for FileRandomAccessStream {}
+impl FileRandomAccessStream {
+    #[inline] pub fn open_async(filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_async(filePath, accessMode)
+    }
+    #[inline] pub fn open_with_options_async(filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_with_options_async(filePath, accessMode, sharingOptions, openDisposition)
+    }
+    #[inline] pub fn open_transacted_write_async(filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_async(filePath)
+    }
+    #[inline] pub fn open_transacted_write_with_options_async(filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_with_options_async(filePath, openOptions, openDisposition)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_async(user: &super::super::system::User, filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_for_user_async(user, filePath, accessMode)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_with_options_async(user: &super::super::system::User, filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_for_user_with_options_async(user, filePath, accessMode, sharingOptions, openDisposition)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_async(user: &super::super::system::User, filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_for_user_async(user, filePath)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_with_options_async(user: &super::super::system::User, filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_for_user_with_options_async(user, filePath, openOptions, openDisposition)
+    }
+}
+DEFINE_CLSID!(FileRandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,70,105,108,101,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_FileRandomAccessStream]);
+DEFINE_IID!(IID_IFileRandomAccessStreamStatics, 1934950663, 15191, 19293, 131, 69, 85, 77, 47, 198, 33, 240);
+RT_INTERFACE!{static interface IFileRandomAccessStreamStatics(IFileRandomAccessStreamStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFileRandomAccessStreamStatics] {
+    fn OpenAsync(&self, filePath: HSTRING, accessMode: super::FileAccessMode, out: *mut *mut foundation::IAsyncOperation<IRandomAccessStream>) -> HRESULT,
+    fn OpenWithOptionsAsync(&self, filePath: HSTRING, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition, out: *mut *mut foundation::IAsyncOperation<IRandomAccessStream>) -> HRESULT,
+    fn OpenTransactedWriteAsync(&self, filePath: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::StorageStreamTransaction>) -> HRESULT,
+    fn OpenTransactedWriteWithOptionsAsync(&self, filePath: HSTRING, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition, out: *mut *mut foundation::IAsyncOperation<super::StorageStreamTransaction>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn OpenForUserAsync(&self, user: *mut super::super::system::User, filePath: HSTRING, accessMode: super::FileAccessMode, out: *mut *mut foundation::IAsyncOperation<IRandomAccessStream>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn OpenForUserWithOptionsAsync(&self, user: *mut super::super::system::User, filePath: HSTRING, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition, out: *mut *mut foundation::IAsyncOperation<IRandomAccessStream>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn OpenTransactedWriteForUserAsync(&self, user: *mut super::super::system::User, filePath: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::StorageStreamTransaction>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn OpenTransactedWriteForUserWithOptionsAsync(&self, user: *mut super::super::system::User, filePath: HSTRING, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition, out: *mut *mut foundation::IAsyncOperation<super::StorageStreamTransaction>) -> HRESULT
+}}
+impl IFileRandomAccessStreamStatics {
+    #[inline] pub fn open_async(&self, filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).OpenAsync)(self as *const _ as *mut _, filePath.get(), accessMode, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn open_with_options_async(&self, filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).OpenWithOptionsAsync)(self as *const _ as *mut _, filePath.get(), accessMode, sharingOptions, openDisposition, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn open_transacted_write_async(&self, filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).OpenTransactedWriteAsync)(self as *const _ as *mut _, filePath.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn open_transacted_write_with_options_async(&self, filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).OpenTransactedWriteWithOptionsAsync)(self as *const _ as *mut _, filePath.get(), openOptions, openDisposition, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_async(&self, user: &super::super::system::User, filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).OpenForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, filePath.get(), accessMode, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_with_options_async(&self, user: &super::super::system::User, filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).OpenForUserWithOptionsAsync)(self as *const _ as *mut _, user as *const _ as *mut _, filePath.get(), accessMode, sharingOptions, openDisposition, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_async(&self, user: &super::super::system::User, filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).OpenTransactedWriteForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, filePath.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_with_options_async(&self, user: &super::super::system::User, filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).OpenTransactedWriteForUserWithOptionsAsync)(self as *const _ as *mut _, user as *const _ as *mut _, filePath.get(), openOptions, openDisposition, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class InMemoryRandomAccessStream: IRandomAccessStream}
+impl RtActivatable<IActivationFactory> for InMemoryRandomAccessStream {}
+DEFINE_CLSID!(InMemoryRandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,73,110,77,101,109,111,114,121,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_InMemoryRandomAccessStream]);
+DEFINE_IID!(IID_IInputStream, 2421821410, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
+RT_INTERFACE!{interface IInputStream(IInputStreamVtbl): IInspectable(IInspectableVtbl) [IID_IInputStream] {
+    fn ReadAsync(&self, buffer: *mut IBuffer, count: u32, options: InputStreamOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<IBuffer, u32>) -> HRESULT
+}}
+impl IInputStream {
+    #[inline] pub fn read_async(&self, buffer: &IBuffer, count: u32, options: InputStreamOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<IBuffer, u32>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ReadAsync)(self as *const _ as *mut _, buffer as *const _ as *mut _, count, options, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum InputStreamOptions: u32 {
+    None (InputStreamOptions_None) = 0, Partial (InputStreamOptions_Partial) = 1, ReadAhead (InputStreamOptions_ReadAhead) = 2,
+}}
+RT_CLASS!{class InputStreamOverStream: IInputStream}
+DEFINE_IID!(IID_IInputStreamReference, 1133681944, 24265, 19290, 145, 156, 66, 5, 176, 200, 4, 182);
+RT_INTERFACE!{interface IInputStreamReference(IInputStreamReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IInputStreamReference] {
+    fn OpenSequentialReadAsync(&self, out: *mut *mut foundation::IAsyncOperation<IInputStream>) -> HRESULT
+}}
+impl IInputStreamReference {
+    #[inline] pub fn open_sequential_read_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<IInputStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).OpenSequentialReadAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IOutputStream, 2421821414, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
+RT_INTERFACE!{interface IOutputStream(IOutputStreamVtbl): IInspectable(IInspectableVtbl) [IID_IOutputStream] {
+    fn WriteAsync(&self, buffer: *mut IBuffer, out: *mut *mut foundation::IAsyncOperationWithProgress<u32, u32>) -> HRESULT,
+    fn FlushAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+}}
+impl IOutputStream {
+    #[inline] pub fn write_async(&self, buffer: &IBuffer) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u32, u32>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).WriteAsync)(self as *const _ as *mut _, buffer as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn flush_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FlushAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class OutputStreamOverStream: IOutputStream}
+DEFINE_IID!(IID_IRandomAccessStream, 2421821409, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
+RT_INTERFACE!{interface IRandomAccessStream(IRandomAccessStreamVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStream] {
+    fn get_Size(&self, out: *mut u64) -> HRESULT,
+    fn put_Size(&self, value: u64) -> HRESULT,
+    fn GetInputStreamAt(&self, position: u64, out: *mut *mut IInputStream) -> HRESULT,
+    fn GetOutputStreamAt(&self, position: u64, out: *mut *mut IOutputStream) -> HRESULT,
+    fn get_Position(&self, out: *mut u64) -> HRESULT,
+    fn Seek(&self, position: u64) -> HRESULT,
+    fn CloneStream(&self, out: *mut *mut IRandomAccessStream) -> HRESULT,
+    fn get_CanRead(&self, out: *mut bool) -> HRESULT,
+    fn get_CanWrite(&self, out: *mut bool) -> HRESULT
+}}
+impl IRandomAccessStream {
     #[inline] pub fn get_size(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_date_modified(&self) -> Result<foundation::DateTime> { unsafe { 
+    #[inline] pub fn set_size(&self, value: u64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Size)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_input_stream_at(&self, position: u64) -> Result<Option<ComPtr<IInputStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetInputStreamAt)(self as *const _ as *mut _, position, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_output_stream_at(&self, position: u64) -> Result<Option<ComPtr<IOutputStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetOutputStreamAt)(self as *const _ as *mut _, position, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_position(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_DateModified)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_item_date(&self) -> Result<foundation::DateTime> { unsafe { 
+    #[inline] pub fn seek(&self, position: u64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Seek)(self as *const _ as *mut _, position);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn clone_stream(&self) -> Result<Option<ComPtr<IRandomAccessStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CloneStream)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_can_read(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ItemDate)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).get_CanRead)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_can_write(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanWrite)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BasicProperties: IBasicProperties}
-DEFINE_IID!(IID_IDocumentProperties, 2125142460, 6177, 18723, 180, 169, 10, 234, 64, 77, 0, 112);
-RT_INTERFACE!{interface IDocumentProperties(IDocumentPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IDocumentProperties] {
-    fn get_Author(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Title(&self, value: HSTRING) -> HRESULT,
-    fn get_Keywords(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_Comment(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Comment(&self, value: HSTRING) -> HRESULT
-}}
-impl IDocumentProperties {
-    #[inline] pub fn get_author(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Author)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_keywords(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Keywords)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_comment(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Comment)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_comment(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Comment)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class DocumentProperties: IDocumentProperties}
-RT_CLASS!{static class GeotagHelper}
-impl RtActivatable<IGeotagHelperStatics> for GeotagHelper {}
-impl GeotagHelper {
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_geotag_async(file: &super::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint>>> {
-        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().get_geotag_async(file)
+RT_CLASS!{static class RandomAccessStream}
+impl RtActivatable<IRandomAccessStreamStatics> for RandomAccessStream {}
+impl RandomAccessStream {
+    #[inline] pub fn copy_async(source: &IInputStream, destination: &IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
+        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().copy_async(source, destination)
     }
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_from_geolocator_async(file: &super::IStorageFile, geolocator: &super::super::devices::geolocation::Geolocator) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().set_geotag_from_geolocator_async(file, geolocator)
+    #[inline] pub fn copy_size_async(source: &IInputStream, destination: &IOutputStream, bytesToCopy: u64) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
+        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().copy_size_async(source, destination, bytesToCopy)
     }
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_async(file: &super::IStorageFile, geopoint: &super::super::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().set_geotag_async(file, geopoint)
+    #[inline] pub fn copy_and_close_async(source: &IInputStream, destination: &IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
+        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().copy_and_close_async(source, destination)
     }
 }
-DEFINE_CLSID!(GeotagHelper(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,70,105,108,101,80,114,111,112,101,114,116,105,101,115,46,71,101,111,116,97,103,72,101,108,112,101,114,0]) [CLSID_GeotagHelper]);
-DEFINE_IID!(IID_IGeotagHelperStatics, 1095316036, 9508, 18005, 134, 166, 237, 22, 245, 252, 113, 107);
-RT_INTERFACE!{static interface IGeotagHelperStatics(IGeotagHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeotagHelperStatics] {
-    #[cfg(feature="windows-devices")] fn GetGeotagAsync(&self, file: *mut super::IStorageFile, out: *mut *mut foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint>) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn SetGeotagFromGeolocatorAsync(&self, file: *mut super::IStorageFile, geolocator: *mut super::super::devices::geolocation::Geolocator, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn SetGeotagAsync(&self, file: *mut super::IStorageFile, geopoint: *mut super::super::devices::geolocation::Geopoint, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+DEFINE_CLSID!(RandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_RandomAccessStream]);
+RT_CLASS!{class RandomAccessStreamOverStream: IRandomAccessStream}
+DEFINE_IID!(IID_IRandomAccessStreamReference, 871248180, 7638, 20026, 128, 103, 209, 193, 98, 232, 100, 43);
+RT_INTERFACE!{interface IRandomAccessStreamReference(IRandomAccessStreamReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamReference] {
+    fn OpenReadAsync(&self, out: *mut *mut foundation::IAsyncOperation<IRandomAccessStreamWithContentType>) -> HRESULT
 }}
-impl IGeotagHelperStatics {
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_geotag_async(&self, file: &super::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint>>> { unsafe { 
+impl IRandomAccessStreamReference {
+    #[inline] pub fn open_read_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStreamWithContentType>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetGeotagAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_from_geolocator_async(&self, file: &super::IStorageFile, geolocator: &super::super::devices::geolocation::Geolocator) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetGeotagFromGeolocatorAsync)(self as *const _ as *mut _, file as *const _ as *mut _, geolocator as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_async(&self, file: &super::IStorageFile, geopoint: &super::super::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetGeotagAsync)(self as *const _ as *mut _, file as *const _ as *mut _, geopoint as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).OpenReadAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-DEFINE_IID!(IID_IImageProperties, 1379701796, 64767, 17013, 175, 238, 236, 219, 154, 180, 121, 115);
-RT_INTERFACE!{interface IImageProperties(IImagePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IImageProperties] {
-    fn get_Rating(&self, out: *mut u32) -> HRESULT,
-    fn put_Rating(&self, value: u32) -> HRESULT,
-    fn get_Keywords(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_DateTaken(&self, out: *mut foundation::DateTime) -> HRESULT,
-    fn put_DateTaken(&self, value: foundation::DateTime) -> HRESULT,
-    fn get_Width(&self, out: *mut u32) -> HRESULT,
-    fn get_Height(&self, out: *mut u32) -> HRESULT,
-    fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Title(&self, value: HSTRING) -> HRESULT,
-    fn get_Latitude(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT,
-    fn get_Longitude(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT,
-    fn get_CameraManufacturer(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_CameraManufacturer(&self, value: HSTRING) -> HRESULT,
-    fn get_CameraModel(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_CameraModel(&self, value: HSTRING) -> HRESULT,
-    fn get_Orientation(&self, out: *mut PhotoOrientation) -> HRESULT,
-    fn get_PeopleNames(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
-}}
-impl IImageProperties {
-    #[inline] pub fn get_rating(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Rating)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_rating(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Rating)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_keywords(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Keywords)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_date_taken(&self) -> Result<foundation::DateTime> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_DateTaken)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_date_taken(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DateTaken)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_width(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Width)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_height(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Height)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_latitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Latitude)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_longitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Longitude)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_camera_manufacturer(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CameraManufacturer)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_camera_manufacturer(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CameraManufacturer)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_camera_model(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CameraModel)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_camera_model(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CameraModel)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_orientation(&self) -> Result<PhotoOrientation> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Orientation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_people_names(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PeopleNames)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ImageProperties: IImageProperties}
-DEFINE_IID!(IID_IMusicProperties, 3163204450, 26348, 16794, 188, 93, 202, 101, 164, 203, 70, 218);
-RT_INTERFACE!{interface IMusicProperties(IMusicPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IMusicProperties] {
-    fn get_Album(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Album(&self, value: HSTRING) -> HRESULT,
-    fn get_Artist(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Artist(&self, value: HSTRING) -> HRESULT,
-    fn get_Genre(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_TrackNumber(&self, out: *mut u32) -> HRESULT,
-    fn put_TrackNumber(&self, value: u32) -> HRESULT,
-    fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Title(&self, value: HSTRING) -> HRESULT,
-    fn get_Rating(&self, out: *mut u32) -> HRESULT,
-    fn put_Rating(&self, value: u32) -> HRESULT,
-    fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_Bitrate(&self, out: *mut u32) -> HRESULT,
-    fn get_AlbumArtist(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_AlbumArtist(&self, value: HSTRING) -> HRESULT,
-    fn get_Composers(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_Conductors(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_Subtitle(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Subtitle(&self, value: HSTRING) -> HRESULT,
-    fn get_Producers(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_Publisher(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Publisher(&self, value: HSTRING) -> HRESULT,
-    fn get_Writers(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_Year(&self, out: *mut u32) -> HRESULT,
-    fn put_Year(&self, value: u32) -> HRESULT
-}}
-impl IMusicProperties {
-    #[inline] pub fn get_album(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Album)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_album(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Album)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_artist(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Artist)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_artist(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Artist)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_genre(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Genre)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_track_number(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TrackNumber)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_track_number(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TrackNumber)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_rating(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Rating)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_rating(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Rating)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_bitrate(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Bitrate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_album_artist(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AlbumArtist)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_album_artist(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AlbumArtist)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_composers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Composers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_conductors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Conductors)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_subtitle(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Subtitle)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_subtitle(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Subtitle)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_producers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Producers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_publisher(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Publisher)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_publisher(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Publisher)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_writers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Writers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_year(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Year)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_year(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Year)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class MusicProperties: IMusicProperties}
-RT_ENUM! { enum PhotoOrientation: i32 {
-    Unspecified (PhotoOrientation_Unspecified) = 0, Normal (PhotoOrientation_Normal) = 1, FlipHorizontal (PhotoOrientation_FlipHorizontal) = 2, Rotate180 (PhotoOrientation_Rotate180) = 3, FlipVertical (PhotoOrientation_FlipVertical) = 4, Transpose (PhotoOrientation_Transpose) = 5, Rotate270 (PhotoOrientation_Rotate270) = 6, Transverse (PhotoOrientation_Transverse) = 7, Rotate90 (PhotoOrientation_Rotate90) = 8,
-}}
-RT_ENUM! { enum PropertyPrefetchOptions: u32 {
-    None (PropertyPrefetchOptions_None) = 0, MusicProperties (PropertyPrefetchOptions_MusicProperties) = 1, VideoProperties (PropertyPrefetchOptions_VideoProperties) = 2, ImageProperties (PropertyPrefetchOptions_ImageProperties) = 4, DocumentProperties (PropertyPrefetchOptions_DocumentProperties) = 8, BasicProperties (PropertyPrefetchOptions_BasicProperties) = 16,
-}}
-DEFINE_IID!(IID_IStorageItemContentProperties, 86592429, 48184, 18623, 133, 215, 119, 14, 14, 42, 224, 186);
-RT_INTERFACE!{interface IStorageItemContentProperties(IStorageItemContentPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemContentProperties] {
-    fn GetMusicPropertiesAsync(&self, out: *mut *mut foundation::IAsyncOperation<MusicProperties>) -> HRESULT,
-    fn GetVideoPropertiesAsync(&self, out: *mut *mut foundation::IAsyncOperation<VideoProperties>) -> HRESULT,
-    fn GetImagePropertiesAsync(&self, out: *mut *mut foundation::IAsyncOperation<ImageProperties>) -> HRESULT,
-    fn GetDocumentPropertiesAsync(&self, out: *mut *mut foundation::IAsyncOperation<DocumentProperties>) -> HRESULT
-}}
-impl IStorageItemContentProperties {
-    #[inline] pub fn get_music_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<MusicProperties>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetMusicPropertiesAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_video_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<VideoProperties>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetVideoPropertiesAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_image_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ImageProperties>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetImagePropertiesAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_document_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<DocumentProperties>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDocumentPropertiesAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class StorageItemContentProperties: IStorageItemContentProperties}
-DEFINE_IID!(IID_IStorageItemExtraProperties, 3309527474, 21709, 17195, 189, 188, 75, 25, 196, 180, 112, 215);
-RT_INTERFACE!{interface IStorageItemExtraProperties(IStorageItemExtraPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemExtraProperties] {
-    fn RetrievePropertiesAsync(&self, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IMap<HString, IInspectable>>) -> HRESULT,
-    fn SavePropertiesAsync(&self, propertiesToSave: *mut foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, IInspectable>>, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn SavePropertiesAsyncOverloadDefault(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
-}}
-impl IStorageItemExtraProperties {
-    #[inline] pub fn retrieve_properties_async(&self, propertiesToRetrieve: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMap<HString, IInspectable>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RetrievePropertiesAsync)(self as *const _ as *mut _, propertiesToRetrieve as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn save_properties_async(&self, propertiesToSave: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, IInspectable>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SavePropertiesAsync)(self as *const _ as *mut _, propertiesToSave as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn save_properties_async_overload_default(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SavePropertiesAsyncOverloadDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class StorageItemThumbnail: super::streams::IRandomAccessStreamWithContentType}
-RT_ENUM! { enum ThumbnailMode: i32 {
-    PicturesView (ThumbnailMode_PicturesView) = 0, VideosView (ThumbnailMode_VideosView) = 1, MusicView (ThumbnailMode_MusicView) = 2, DocumentsView (ThumbnailMode_DocumentsView) = 3, ListView (ThumbnailMode_ListView) = 4, SingleItem (ThumbnailMode_SingleItem) = 5,
-}}
-RT_ENUM! { enum ThumbnailOptions: u32 {
-    None (ThumbnailOptions_None) = 0, ReturnOnlyIfCached (ThumbnailOptions_ReturnOnlyIfCached) = 1, ResizeThumbnail (ThumbnailOptions_ResizeThumbnail) = 2, UseCurrentScale (ThumbnailOptions_UseCurrentScale) = 4,
-}}
-DEFINE_IID!(IID_IThumbnailProperties, 1765659695, 56295, 18869, 179, 179, 40, 147, 172, 93, 52, 35);
-RT_INTERFACE!{interface IThumbnailProperties(IThumbnailPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IThumbnailProperties] {
-    fn get_OriginalWidth(&self, out: *mut u32) -> HRESULT,
-    fn get_OriginalHeight(&self, out: *mut u32) -> HRESULT,
-    fn get_ReturnedSmallerCachedSize(&self, out: *mut bool) -> HRESULT,
-    fn get_Type(&self, out: *mut ThumbnailType) -> HRESULT
-}}
-impl IThumbnailProperties {
-    #[inline] pub fn get_original_width(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OriginalWidth)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_original_height(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OriginalHeight)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_returned_smaller_cached_size(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ReturnedSmallerCachedSize)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_type(&self) -> Result<ThumbnailType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Type)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum ThumbnailType: i32 {
-    Image (ThumbnailType_Image) = 0, Icon (ThumbnailType_Icon) = 1,
-}}
-RT_ENUM! { enum VideoOrientation: i32 {
-    Normal (VideoOrientation_Normal) = 0, Rotate90 (VideoOrientation_Rotate90) = 90, Rotate180 (VideoOrientation_Rotate180) = 180, Rotate270 (VideoOrientation_Rotate270) = 270,
-}}
-DEFINE_IID!(IID_IVideoProperties, 1905976583, 26846, 19896, 151, 222, 73, 153, 140, 5, 159, 47);
-RT_INTERFACE!{interface IVideoProperties(IVideoPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IVideoProperties] {
-    fn get_Rating(&self, out: *mut u32) -> HRESULT,
-    fn put_Rating(&self, value: u32) -> HRESULT,
-    fn get_Keywords(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_Width(&self, out: *mut u32) -> HRESULT,
-    fn get_Height(&self, out: *mut u32) -> HRESULT,
-    fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_Latitude(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT,
-    fn get_Longitude(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT,
-    fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Title(&self, value: HSTRING) -> HRESULT,
-    fn get_Subtitle(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Subtitle(&self, value: HSTRING) -> HRESULT,
-    fn get_Producers(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_Publisher(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Publisher(&self, value: HSTRING) -> HRESULT,
-    fn get_Writers(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_Year(&self, out: *mut u32) -> HRESULT,
-    fn put_Year(&self, value: u32) -> HRESULT,
-    fn get_Bitrate(&self, out: *mut u32) -> HRESULT,
-    fn get_Directors(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
-    fn get_Orientation(&self, out: *mut VideoOrientation) -> HRESULT
-}}
-impl IVideoProperties {
-    #[inline] pub fn get_rating(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Rating)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_rating(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Rating)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_keywords(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Keywords)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_width(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Width)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_height(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Height)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_latitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Latitude)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_longitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Longitude)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_subtitle(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Subtitle)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_subtitle(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Subtitle)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_producers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Producers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_publisher(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Publisher)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_publisher(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Publisher)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_writers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Writers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_year(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Year)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_year(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Year)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_bitrate(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Bitrate)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_directors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Directors)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_orientation(&self) -> Result<VideoOrientation> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Orientation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class VideoProperties: IVideoProperties}
-} // Windows.Storage.FileProperties
-pub mod accesscache { // Windows.Storage.AccessCache
-use ::prelude::*;
-RT_ENUM! { enum AccessCacheOptions: u32 {
-    None (AccessCacheOptions_None) = 0, DisallowUserInput (AccessCacheOptions_DisallowUserInput) = 1, FastLocationsOnly (AccessCacheOptions_FastLocationsOnly) = 2, UseReadOnlyCachedCopy (AccessCacheOptions_UseReadOnlyCachedCopy) = 4, SuppressAccessTimeUpdate (AccessCacheOptions_SuppressAccessTimeUpdate) = 8,
-}}
-RT_STRUCT! { struct AccessListEntry {
-    Token: HSTRING, Metadata: HSTRING,
-}}
-RT_CLASS!{class AccessListEntryView: foundation::collections::IVectorView<AccessListEntry>}
-DEFINE_IID!(IID_IItemRemovedEventArgs, 1499954780, 21950, 19558, 186, 102, 94, 174, 167, 157, 38, 49);
-RT_INTERFACE!{interface IItemRemovedEventArgs(IItemRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IItemRemovedEventArgs] {
-    fn get_RemovedEntry(&self, out: *mut AccessListEntry) -> HRESULT
-}}
-impl IItemRemovedEventArgs {
-    #[inline] pub fn get_removed_entry(&self) -> Result<AccessListEntry> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_RemovedEntry)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ItemRemovedEventArgs: IItemRemovedEventArgs}
-RT_ENUM! { enum RecentStorageItemVisibility: i32 {
-    AppOnly (RecentStorageItemVisibility_AppOnly) = 0, AppAndSystem (RecentStorageItemVisibility_AppAndSystem) = 1,
-}}
-RT_CLASS!{static class StorageApplicationPermissions}
-impl RtActivatable<IStorageApplicationPermissionsStatics> for StorageApplicationPermissions {}
-impl StorageApplicationPermissions {
-    #[inline] pub fn get_future_access_list() -> Result<Option<ComPtr<StorageItemAccessList>>> {
-        <Self as RtActivatable<IStorageApplicationPermissionsStatics>>::get_activation_factory().get_future_access_list()
+RT_CLASS!{class RandomAccessStreamReference: IRandomAccessStreamReference}
+impl RtActivatable<IRandomAccessStreamReferenceStatics> for RandomAccessStreamReference {}
+impl RandomAccessStreamReference {
+    #[inline] pub fn create_from_file(file: &super::IStorageFile) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
+        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().create_from_file(file)
     }
-    #[inline] pub fn get_most_recently_used_list() -> Result<Option<ComPtr<StorageItemMostRecentlyUsedList>>> {
-        <Self as RtActivatable<IStorageApplicationPermissionsStatics>>::get_activation_factory().get_most_recently_used_list()
+    #[inline] pub fn create_from_uri(uri: &foundation::Uri) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
+        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().create_from_uri(uri)
+    }
+    #[inline] pub fn create_from_stream(stream: &IRandomAccessStream) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
+        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().create_from_stream(stream)
     }
 }
-DEFINE_CLSID!(StorageApplicationPermissions(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,99,99,101,115,115,67,97,99,104,101,46,83,116,111,114,97,103,101,65,112,112,108,105,99,97,116,105,111,110,80,101,114,109,105,115,115,105,111,110,115,0]) [CLSID_StorageApplicationPermissions]);
-DEFINE_IID!(IID_IStorageApplicationPermissionsStatics, 1133633450, 53299, 18681, 128, 96, 62, 200, 71, 210, 227, 241);
-RT_INTERFACE!{static interface IStorageApplicationPermissionsStatics(IStorageApplicationPermissionsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageApplicationPermissionsStatics] {
-    fn get_FutureAccessList(&self, out: *mut *mut StorageItemAccessList) -> HRESULT,
-    fn get_MostRecentlyUsedList(&self, out: *mut *mut StorageItemMostRecentlyUsedList) -> HRESULT
+DEFINE_CLSID!(RandomAccessStreamReference(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,82,101,102,101,114,101,110,99,101,0]) [CLSID_RandomAccessStreamReference]);
+DEFINE_IID!(IID_IRandomAccessStreamReferenceStatics, 2238908892, 16319, 20093, 152, 111, 239, 59, 26, 7, 169, 100);
+RT_INTERFACE!{static interface IRandomAccessStreamReferenceStatics(IRandomAccessStreamReferenceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamReferenceStatics] {
+    fn CreateFromFile(&self, file: *mut super::IStorageFile, out: *mut *mut RandomAccessStreamReference) -> HRESULT,
+    fn CreateFromUri(&self, uri: *mut foundation::Uri, out: *mut *mut RandomAccessStreamReference) -> HRESULT,
+    fn CreateFromStream(&self, stream: *mut IRandomAccessStream, out: *mut *mut RandomAccessStreamReference) -> HRESULT
 }}
-impl IStorageApplicationPermissionsStatics {
-    #[inline] pub fn get_future_access_list(&self) -> Result<Option<ComPtr<StorageItemAccessList>>> { unsafe { 
+impl IRandomAccessStreamReferenceStatics {
+    #[inline] pub fn create_from_file(&self, file: &super::IStorageFile) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FutureAccessList)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromFile)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_most_recently_used_list(&self) -> Result<Option<ComPtr<StorageItemMostRecentlyUsedList>>> { unsafe { 
+    #[inline] pub fn create_from_uri(&self, uri: &foundation::Uri) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_MostRecentlyUsedList)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromUri)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_from_stream(&self, stream: &IRandomAccessStream) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFromStream)(self as *const _ as *mut _, stream as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-DEFINE_IID!(IID_IStorageItemAccessList, 749729453, 56976, 18421, 178, 195, 221, 54, 201, 253, 212, 83);
-RT_INTERFACE!{interface IStorageItemAccessList(IStorageItemAccessListVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemAccessList] {
-    fn AddOverloadDefaultMetadata(&self, file: *mut super::IStorageItem, out: *mut HSTRING) -> HRESULT,
-    fn Add(&self, file: *mut super::IStorageItem, metadata: HSTRING, out: *mut HSTRING) -> HRESULT,
-    fn AddOrReplaceOverloadDefaultMetadata(&self, token: HSTRING, file: *mut super::IStorageItem) -> HRESULT,
-    fn AddOrReplace(&self, token: HSTRING, file: *mut super::IStorageItem, metadata: HSTRING) -> HRESULT,
-    fn GetItemAsync(&self, token: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::IStorageItem>) -> HRESULT,
-    fn GetFileAsync(&self, token: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::StorageFile>) -> HRESULT,
-    fn GetFolderAsync(&self, token: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::StorageFolder>) -> HRESULT,
-    fn GetItemWithOptionsAsync(&self, token: HSTRING, options: AccessCacheOptions, out: *mut *mut foundation::IAsyncOperation<super::IStorageItem>) -> HRESULT,
-    fn GetFileWithOptionsAsync(&self, token: HSTRING, options: AccessCacheOptions, out: *mut *mut foundation::IAsyncOperation<super::StorageFile>) -> HRESULT,
-    fn GetFolderWithOptionsAsync(&self, token: HSTRING, options: AccessCacheOptions, out: *mut *mut foundation::IAsyncOperation<super::StorageFolder>) -> HRESULT,
-    fn Remove(&self, token: HSTRING) -> HRESULT,
-    fn ContainsItem(&self, token: HSTRING, out: *mut bool) -> HRESULT,
-    fn Clear(&self) -> HRESULT,
-    fn CheckAccess(&self, file: *mut super::IStorageItem, out: *mut bool) -> HRESULT,
-    fn get_Entries(&self, out: *mut *mut AccessListEntryView) -> HRESULT,
-    fn get_MaximumItemsAllowed(&self, out: *mut u32) -> HRESULT
+DEFINE_IID!(IID_IRandomAccessStreamStatics, 1380773327, 28201, 19685, 149, 115, 107, 117, 61, 182, 108, 58);
+RT_INTERFACE!{static interface IRandomAccessStreamStatics(IRandomAccessStreamStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamStatics] {
+    fn CopyAsync(&self, source: *mut IInputStream, destination: *mut IOutputStream, out: *mut *mut foundation::IAsyncOperationWithProgress<u64, u64>) -> HRESULT,
+    fn CopySizeAsync(&self, source: *mut IInputStream, destination: *mut IOutputStream, bytesToCopy: u64, out: *mut *mut foundation::IAsyncOperationWithProgress<u64, u64>) -> HRESULT,
+    fn CopyAndCloseAsync(&self, source: *mut IInputStream, destination: *mut IOutputStream, out: *mut *mut foundation::IAsyncOperationWithProgress<u64, u64>) -> HRESULT
 }}
-impl IStorageItemAccessList {
-    #[inline] pub fn add_overload_default_metadata(&self, file: &super::IStorageItem) -> Result<HString> { unsafe { 
+impl IRandomAccessStreamStatics {
+    #[inline] pub fn copy_async(&self, source: &IInputStream, destination: &IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddOverloadDefaultMetadata)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add(&self, file: &super::IStorageItem, metadata: &HStringArg) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Add)(self as *const _ as *mut _, file as *const _ as *mut _, metadata.get(), &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_or_replace_overload_default_metadata(&self, token: &HStringArg, file: &super::IStorageItem) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddOrReplaceOverloadDefaultMetadata)(self as *const _ as *mut _, token.get(), file as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_or_replace(&self, token: &HStringArg, file: &super::IStorageItem, metadata: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddOrReplace)(self as *const _ as *mut _, token.get(), file as *const _ as *mut _, metadata.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_item_async(&self, token: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::IStorageItem>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemAsync)(self as *const _ as *mut _, token.get(), &mut out);
+        let hr = ((*self.lpVtbl).CopyAsync)(self as *const _ as *mut _, source as *const _ as *mut _, destination as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_file_async(&self, token: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFile>>> { unsafe { 
+    #[inline] pub fn copy_size_async(&self, source: &IInputStream, destination: &IOutputStream, bytesToCopy: u64) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFileAsync)(self as *const _ as *mut _, token.get(), &mut out);
+        let hr = ((*self.lpVtbl).CopySizeAsync)(self as *const _ as *mut _, source as *const _ as *mut _, destination as *const _ as *mut _, bytesToCopy, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_folder_async(&self, token: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFolder>>> { unsafe { 
+    #[inline] pub fn copy_and_close_async(&self, source: &IInputStream, destination: &IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFolderAsync)(self as *const _ as *mut _, token.get(), &mut out);
+        let hr = ((*self.lpVtbl).CopyAndCloseAsync)(self as *const _ as *mut _, source as *const _ as *mut _, destination as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_item_with_options_async(&self, token: &HStringArg, options: AccessCacheOptions) -> Result<ComPtr<foundation::IAsyncOperation<super::IStorageItem>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemWithOptionsAsync)(self as *const _ as *mut _, token.get(), options, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_file_with_options_async(&self, token: &HStringArg, options: AccessCacheOptions) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFile>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFileWithOptionsAsync)(self as *const _ as *mut _, token.get(), options, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_folder_with_options_async(&self, token: &HStringArg, options: AccessCacheOptions) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFolder>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFolderWithOptionsAsync)(self as *const _ as *mut _, token.get(), options, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn remove(&self, token: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Remove)(self as *const _ as *mut _, token.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn contains_item(&self, token: &HStringArg) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ContainsItem)(self as *const _ as *mut _, token.get(), &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn clear(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Clear)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn check_access(&self, file: &super::IStorageItem) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).CheckAccess)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_entries(&self) -> Result<Option<ComPtr<AccessListEntryView>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Entries)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_maximum_items_allowed(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaximumItemsAllowed)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageItemAccessList: IStorageItemAccessList}
-DEFINE_IID!(IID_IStorageItemMostRecentlyUsedList, 23214549, 20749, 16670, 140, 241, 195, 209, 239, 250, 76, 51);
-RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList(IStorageItemMostRecentlyUsedListVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemMostRecentlyUsedList] {
-    fn add_ItemRemoved(&self, handler: *mut foundation::TypedEventHandler<StorageItemMostRecentlyUsedList, ItemRemovedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_ItemRemoved(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
+DEFINE_IID!(IID_IRandomAccessStreamWithContentType, 3424995367, 19261, 17295, 146, 50, 16, 199, 107, 199, 224, 56);
+RT_INTERFACE!{interface IRandomAccessStreamWithContentType(IRandomAccessStreamWithContentTypeVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamWithContentType] {
+    
 }}
-impl IStorageItemMostRecentlyUsedList {
-    #[inline] pub fn add_item_removed(&self, handler: &foundation::TypedEventHandler<StorageItemMostRecentlyUsedList, ItemRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ItemRemoved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_item_removed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_ItemRemoved)(self as *const _ as *mut _, eventCookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class StorageItemMostRecentlyUsedList: IStorageItemMostRecentlyUsedList}
-DEFINE_IID!(IID_IStorageItemMostRecentlyUsedList2, 3662159520, 60813, 18225, 161, 219, 228, 78, 226, 32, 64, 147);
-RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList2(IStorageItemMostRecentlyUsedList2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemMostRecentlyUsedList2] {
-    fn AddWithMetadataAndVisibility(&self, file: *mut super::IStorageItem, metadata: HSTRING, visibility: RecentStorageItemVisibility, out: *mut HSTRING) -> HRESULT,
-    fn AddOrReplaceWithMetadataAndVisibility(&self, token: HSTRING, file: *mut super::IStorageItem, metadata: HSTRING, visibility: RecentStorageItemVisibility) -> HRESULT
+RT_ENUM! { enum UnicodeEncoding: i32 {
+    Utf8 (UnicodeEncoding_Utf8) = 0, Utf16LE (UnicodeEncoding_Utf16LE) = 1, Utf16BE (UnicodeEncoding_Utf16BE) = 2,
 }}
-impl IStorageItemMostRecentlyUsedList2 {
-    #[inline] pub fn add_with_metadata_and_visibility(&self, file: &super::IStorageItem, metadata: &HStringArg, visibility: RecentStorageItemVisibility) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWithMetadataAndVisibility)(self as *const _ as *mut _, file as *const _ as *mut _, metadata.get(), visibility, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_or_replace_with_metadata_and_visibility(&self, token: &HStringArg, file: &super::IStorageItem, metadata: &HStringArg, visibility: RecentStorageItemVisibility) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddOrReplaceWithMetadataAndVisibility)(self as *const _ as *mut _, token.get(), file as *const _ as *mut _, metadata.get(), visibility);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-} // Windows.Storage.AccessCache
-pub mod bulkaccess { // Windows.Storage.BulkAccess
-use ::prelude::*;
-RT_CLASS!{class FileInformation: IStorageItemInformation}
-DEFINE_IID!(IID_IFileInformationFactory, 1075677374, 38415, 19821, 167, 208, 26, 56, 97, 231, 108, 131);
-RT_INTERFACE!{interface IFileInformationFactory(IFileInformationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileInformationFactory] {
-    fn GetItemsAsync(&self, startIndex: u32, maxItemsToRetrieve: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItemInformation>>) -> HRESULT,
-    fn GetItemsAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItemInformation>>) -> HRESULT,
-    fn GetFilesAsync(&self, startIndex: u32, maxItemsToRetrieve: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<FileInformation>>) -> HRESULT,
-    fn GetFilesAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<FileInformation>>) -> HRESULT,
-    fn GetFoldersAsync(&self, startIndex: u32, maxItemsToRetrieve: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<FolderInformation>>) -> HRESULT,
-    fn GetFoldersAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<FolderInformation>>) -> HRESULT,
-    fn GetVirtualizedItemsVector(&self, out: *mut *mut IInspectable) -> HRESULT,
-    fn GetVirtualizedFilesVector(&self, out: *mut *mut IInspectable) -> HRESULT,
-    fn GetVirtualizedFoldersVector(&self, out: *mut *mut IInspectable) -> HRESULT
-}}
-impl IFileInformationFactory {
-    #[inline] pub fn get_items_async(&self, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItemInformation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemsAsync)(self as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_items_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItemInformation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemsAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_files_async(&self, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<FileInformation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFilesAsync)(self as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_files_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<FileInformation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFilesAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_folders_async(&self, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<FolderInformation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFoldersAsync)(self as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_folders_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<FolderInformation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFoldersAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_virtualized_items_vector(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetVirtualizedItemsVector)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_virtualized_files_vector(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetVirtualizedFilesVector)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_virtualized_folders_vector(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetVirtualizedFoldersVector)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class FileInformationFactory: IFileInformationFactory}
-impl RtActivatable<IFileInformationFactoryFactory> for FileInformationFactory {}
-impl FileInformationFactory {
-    #[inline] pub fn create_with_mode(queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode) -> Result<ComPtr<FileInformationFactory>> {
-        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode(queryResult, mode)
-    }
-    #[inline] pub fn create_with_mode_and_size(queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32) -> Result<ComPtr<FileInformationFactory>> {
-        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode_and_size(queryResult, mode, requestedThumbnailSize)
-    }
-    #[inline] pub fn create_with_mode_and_size_and_options(queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions) -> Result<ComPtr<FileInformationFactory>> {
-        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode_and_size_and_options(queryResult, mode, requestedThumbnailSize, thumbnailOptions)
-    }
-    #[inline] pub fn create_with_mode_and_size_and_options_and_flags(queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool) -> Result<ComPtr<FileInformationFactory>> {
-        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode_and_size_and_options_and_flags(queryResult, mode, requestedThumbnailSize, thumbnailOptions, delayLoad)
-    }
-}
-DEFINE_CLSID!(FileInformationFactory(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,66,117,108,107,65,99,99,101,115,115,46,70,105,108,101,73,110,102,111,114,109,97,116,105,111,110,70,97,99,116,111,114,121,0]) [CLSID_FileInformationFactory]);
-DEFINE_IID!(IID_IFileInformationFactoryFactory, 2229931645, 58530, 20224, 138, 250, 175, 94, 15, 130, 107, 213);
-RT_INTERFACE!{static interface IFileInformationFactoryFactory(IFileInformationFactoryFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileInformationFactoryFactory] {
-    fn CreateWithMode(&self, queryResult: *mut super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, out: *mut *mut FileInformationFactory) -> HRESULT,
-    fn CreateWithModeAndSize(&self, queryResult: *mut super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, out: *mut *mut FileInformationFactory) -> HRESULT,
-    fn CreateWithModeAndSizeAndOptions(&self, queryResult: *mut super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, out: *mut *mut FileInformationFactory) -> HRESULT,
-    fn CreateWithModeAndSizeAndOptionsAndFlags(&self, queryResult: *mut super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool, out: *mut *mut FileInformationFactory) -> HRESULT
-}}
-impl IFileInformationFactoryFactory {
-    #[inline] pub fn create_with_mode(&self, queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithMode)(self as *const _ as *mut _, queryResult as *const _ as *mut _, mode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_with_mode_and_size(&self, queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithModeAndSize)(self as *const _ as *mut _, queryResult as *const _ as *mut _, mode, requestedThumbnailSize, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_with_mode_and_size_and_options(&self, queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithModeAndSizeAndOptions)(self as *const _ as *mut _, queryResult as *const _ as *mut _, mode, requestedThumbnailSize, thumbnailOptions, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_with_mode_and_size_and_options_and_flags(&self, queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithModeAndSizeAndOptionsAndFlags)(self as *const _ as *mut _, queryResult as *const _ as *mut _, mode, requestedThumbnailSize, thumbnailOptions, delayLoad, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class FolderInformation: IStorageItemInformation}
-DEFINE_IID!(IID_IStorageItemInformation, 2275789707, 35186, 20288, 141, 224, 216, 111, 177, 121, 216, 250);
-RT_INTERFACE!{interface IStorageItemInformation(IStorageItemInformationVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemInformation] {
-    fn get_MusicProperties(&self, out: *mut *mut super::fileproperties::MusicProperties) -> HRESULT,
-    fn get_VideoProperties(&self, out: *mut *mut super::fileproperties::VideoProperties) -> HRESULT,
-    fn get_ImageProperties(&self, out: *mut *mut super::fileproperties::ImageProperties) -> HRESULT,
-    fn get_DocumentProperties(&self, out: *mut *mut super::fileproperties::DocumentProperties) -> HRESULT,
-    fn get_BasicProperties(&self, out: *mut *mut super::fileproperties::BasicProperties) -> HRESULT,
-    fn get_Thumbnail(&self, out: *mut *mut super::fileproperties::StorageItemThumbnail) -> HRESULT,
-    fn add_ThumbnailUpdated(&self, changedHandler: *mut foundation::TypedEventHandler<IStorageItemInformation, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_ThumbnailUpdated(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_PropertiesUpdated(&self, changedHandler: *mut foundation::TypedEventHandler<IStorageItemInformation, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_PropertiesUpdated(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
-}}
-impl IStorageItemInformation {
-    #[inline] pub fn get_music_properties(&self) -> Result<Option<ComPtr<super::fileproperties::MusicProperties>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_MusicProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_video_properties(&self) -> Result<Option<ComPtr<super::fileproperties::VideoProperties>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_VideoProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_image_properties(&self) -> Result<Option<ComPtr<super::fileproperties::ImageProperties>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ImageProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_document_properties(&self) -> Result<Option<ComPtr<super::fileproperties::DocumentProperties>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DocumentProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_basic_properties(&self) -> Result<Option<ComPtr<super::fileproperties::BasicProperties>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_BasicProperties)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_thumbnail(&self) -> Result<Option<ComPtr<super::fileproperties::StorageItemThumbnail>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_thumbnail_updated(&self, changedHandler: &foundation::TypedEventHandler<IStorageItemInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ThumbnailUpdated)(self as *const _ as *mut _, changedHandler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_thumbnail_updated(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_ThumbnailUpdated)(self as *const _ as *mut _, eventCookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_properties_updated(&self, changedHandler: &foundation::TypedEventHandler<IStorageItemInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PropertiesUpdated)(self as *const _ as *mut _, changedHandler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_properties_updated(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_PropertiesUpdated)(self as *const _ as *mut _, eventCookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-} // Windows.Storage.BulkAccess
+} // Windows.Storage.Streams

@@ -1,3 +1,25 @@
+pub mod html { // Windows.Data.Html
+use ::prelude::*;
+DEFINE_IID!(IID_IHtmlUtilities, 4273998557, 9113, 20396, 181, 167, 5, 233, 172, 215, 24, 29);
+RT_INTERFACE!{static interface IHtmlUtilities(IHtmlUtilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IHtmlUtilities] {
+    fn ConvertToText(&self, html: HSTRING, out: *mut HSTRING) -> HRESULT
+}}
+impl IHtmlUtilities {
+    #[inline] pub fn convert_to_text(&self, html: &HStringArg) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ConvertToText)(self as *const _ as *mut _, html.get(), &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{static class HtmlUtilities}
+impl RtActivatable<IHtmlUtilities> for HtmlUtilities {}
+impl HtmlUtilities {
+    #[inline] pub fn convert_to_text(html: &HStringArg) -> Result<HString> {
+        <Self as RtActivatable<IHtmlUtilities>>::get_activation_factory().convert_to_text(html)
+    }
+}
+DEFINE_CLSID!(HtmlUtilities(&[87,105,110,100,111,119,115,46,68,97,116,97,46,72,116,109,108,46,72,116,109,108,85,116,105,108,105,116,105,101,115,0]) [CLSID_HtmlUtilities]);
+} // Windows.Data.Html
 pub mod json { // Windows.Data.Json
 use ::prelude::*;
 DEFINE_IID!(IID_IJsonArray, 146922934, 3261, 19098, 181, 211, 47, 133, 45, 195, 126, 129);
@@ -323,6 +345,850 @@ RT_ENUM! { enum JsonValueType: i32 {
     Null (JsonValueType_Null) = 0, Boolean (JsonValueType_Boolean) = 1, Number (JsonValueType_Number) = 2, String (JsonValueType_String) = 3, Array (JsonValueType_Array) = 4, Object (JsonValueType_Object) = 5,
 }}
 } // Windows.Data.Json
+pub mod pdf { // Windows.Data.Pdf
+use ::prelude::*;
+DEFINE_IID!(IID_IPdfDocument, 2893987549, 33018, 16521, 132, 110, 129, 183, 127, 245, 168, 108);
+RT_INTERFACE!{interface IPdfDocument(IPdfDocumentVtbl): IInspectable(IInspectableVtbl) [IID_IPdfDocument] {
+    fn GetPage(&self, pageIndex: u32, out: *mut *mut PdfPage) -> HRESULT,
+    fn get_PageCount(&self, out: *mut u32) -> HRESULT,
+    fn get_IsPasswordProtected(&self, out: *mut bool) -> HRESULT
+}}
+impl IPdfDocument {
+    #[inline] pub fn get_page(&self, pageIndex: u32) -> Result<Option<ComPtr<PdfPage>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetPage)(self as *const _ as *mut _, pageIndex, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_page_count(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PageCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_password_protected(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsPasswordProtected)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PdfDocument: IPdfDocument}
+impl RtActivatable<IPdfDocumentStatics> for PdfDocument {}
+impl PdfDocument {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
+        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_file_async(file)
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_password_async(file: &super::super::storage::IStorageFile, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
+        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_file_with_password_async(file, password)
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(inputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
+        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_stream_async(inputStream)
+    }
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_password_async(inputStream: &super::super::storage::streams::IRandomAccessStream, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
+        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_stream_with_password_async(inputStream, password)
+    }
+}
+DEFINE_CLSID!(PdfDocument(&[87,105,110,100,111,119,115,46,68,97,116,97,46,80,100,102,46,80,100,102,68,111,99,117,109,101,110,116,0]) [CLSID_PdfDocument]);
+DEFINE_IID!(IID_IPdfDocumentStatics, 1127877471, 49159, 18312, 144, 242, 8, 20, 61, 146, 37, 153);
+RT_INTERFACE!{static interface IPdfDocumentStatics(IPdfDocumentStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfDocumentStatics] {
+    #[cfg(feature="windows-storage")] fn LoadFromFileAsync(&self, file: *mut super::super::storage::IStorageFile, out: *mut *mut foundation::IAsyncOperation<PdfDocument>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn LoadFromFileWithPasswordAsync(&self, file: *mut super::super::storage::IStorageFile, password: HSTRING, out: *mut *mut foundation::IAsyncOperation<PdfDocument>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn LoadFromStreamAsync(&self, inputStream: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncOperation<PdfDocument>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn LoadFromStreamWithPasswordAsync(&self, inputStream: *mut super::super::storage::streams::IRandomAccessStream, password: HSTRING, out: *mut *mut foundation::IAsyncOperation<PdfDocument>) -> HRESULT
+}}
+impl IPdfDocumentStatics {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).LoadFromFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_password_async(&self, file: &super::super::storage::IStorageFile, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).LoadFromFileWithPasswordAsync)(self as *const _ as *mut _, file as *const _ as *mut _, password.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(&self, inputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).LoadFromStreamAsync)(self as *const _ as *mut _, inputStream as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_password_async(&self, inputStream: &super::super::storage::streams::IRandomAccessStream, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).LoadFromStreamWithPasswordAsync)(self as *const _ as *mut _, inputStream as *const _ as *mut _, password.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPdfPage, 2645864648, 21280, 19708, 173, 118, 73, 63, 218, 208, 229, 148);
+RT_INTERFACE!{interface IPdfPage(IPdfPageVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPage] {
+    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-storage")] fn RenderToStreamAsync(&self, outputStream: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-storage")] fn RenderWithOptionsToStreamAsync(&self, outputStream: *mut super::super::storage::streams::IRandomAccessStream, options: *mut PdfPageRenderOptions, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn PreparePageAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn get_Index(&self, out: *mut u32) -> HRESULT,
+    fn get_Size(&self, out: *mut foundation::Size) -> HRESULT,
+    fn get_Dimensions(&self, out: *mut *mut PdfPageDimensions) -> HRESULT,
+    fn get_Rotation(&self, out: *mut PdfPageRotation) -> HRESULT,
+    fn get_PreferredZoom(&self, out: *mut f32) -> HRESULT
+}}
+impl IPdfPage {
+    #[cfg(feature="windows-storage")] #[inline] pub fn render_to_stream_async(&self, outputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RenderToStreamAsync)(self as *const _ as *mut _, outputStream as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn render_with_options_to_stream_async(&self, outputStream: &super::super::storage::streams::IRandomAccessStream, options: &PdfPageRenderOptions) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RenderWithOptionsToStreamAsync)(self as *const _ as *mut _, outputStream as *const _ as *mut _, options as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn prepare_page_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).PreparePageAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_index(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Index)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_size(&self) -> Result<foundation::Size> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_dimensions(&self) -> Result<Option<ComPtr<PdfPageDimensions>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Dimensions)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_rotation(&self) -> Result<PdfPageRotation> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Rotation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_preferred_zoom(&self) -> Result<f32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_PreferredZoom)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PdfPage: IPdfPage}
+DEFINE_IID!(IID_IPdfPageDimensions, 571933809, 12606, 17640, 131, 93, 99, 163, 231, 98, 74, 16);
+RT_INTERFACE!{interface IPdfPageDimensions(IPdfPageDimensionsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPageDimensions] {
+    fn get_MediaBox(&self, out: *mut foundation::Rect) -> HRESULT,
+    fn get_CropBox(&self, out: *mut foundation::Rect) -> HRESULT,
+    fn get_BleedBox(&self, out: *mut foundation::Rect) -> HRESULT,
+    fn get_TrimBox(&self, out: *mut foundation::Rect) -> HRESULT,
+    fn get_ArtBox(&self, out: *mut foundation::Rect) -> HRESULT
+}}
+impl IPdfPageDimensions {
+    #[inline] pub fn get_media_box(&self) -> Result<foundation::Rect> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MediaBox)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_crop_box(&self) -> Result<foundation::Rect> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CropBox)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_bleed_box(&self) -> Result<foundation::Rect> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BleedBox)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_trim_box(&self) -> Result<foundation::Rect> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TrimBox)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_art_box(&self) -> Result<foundation::Rect> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ArtBox)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PdfPageDimensions: IPdfPageDimensions}
+DEFINE_IID!(IID_IPdfPageRenderOptions, 1016595823, 47055, 19497, 154, 4, 82, 217, 2, 103, 244, 37);
+RT_INTERFACE!{interface IPdfPageRenderOptions(IPdfPageRenderOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPageRenderOptions] {
+    fn get_SourceRect(&self, out: *mut foundation::Rect) -> HRESULT,
+    fn put_SourceRect(&self, value: foundation::Rect) -> HRESULT,
+    fn get_DestinationWidth(&self, out: *mut u32) -> HRESULT,
+    fn put_DestinationWidth(&self, value: u32) -> HRESULT,
+    fn get_DestinationHeight(&self, out: *mut u32) -> HRESULT,
+    fn put_DestinationHeight(&self, value: u32) -> HRESULT,
+    #[cfg(not(feature="windows-ui"))] fn __Dummy6(&self) -> (),
+    #[cfg(feature="windows-ui")] fn get_BackgroundColor(&self, out: *mut super::super::ui::Color) -> HRESULT,
+    #[cfg(not(feature="windows-ui"))] fn __Dummy7(&self) -> (),
+    #[cfg(feature="windows-ui")] fn put_BackgroundColor(&self, value: super::super::ui::Color) -> HRESULT,
+    fn get_IsIgnoringHighContrast(&self, out: *mut bool) -> HRESULT,
+    fn put_IsIgnoringHighContrast(&self, value: bool) -> HRESULT,
+    fn get_BitmapEncoderId(&self, out: *mut Guid) -> HRESULT,
+    fn put_BitmapEncoderId(&self, value: Guid) -> HRESULT
+}}
+impl IPdfPageRenderOptions {
+    #[inline] pub fn get_source_rect(&self) -> Result<foundation::Rect> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_SourceRect)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_source_rect(&self, value: foundation::Rect) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SourceRect)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_destination_width(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DestinationWidth)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_destination_width(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DestinationWidth)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_destination_height(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_DestinationHeight)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_destination_height(&self, value: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DestinationHeight)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_background_color(&self) -> Result<super::super::ui::Color> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BackgroundColor)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_background_color(&self, value: super::super::ui::Color) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_BackgroundColor)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_ignoring_high_contrast(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsIgnoringHighContrast)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_ignoring_high_contrast(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsIgnoringHighContrast)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_bitmap_encoder_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BitmapEncoderId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_bitmap_encoder_id(&self, value: Guid) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_BitmapEncoderId)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PdfPageRenderOptions: IPdfPageRenderOptions}
+impl RtActivatable<IActivationFactory> for PdfPageRenderOptions {}
+DEFINE_CLSID!(PdfPageRenderOptions(&[87,105,110,100,111,119,115,46,68,97,116,97,46,80,100,102,46,80,100,102,80,97,103,101,82,101,110,100,101,114,79,112,116,105,111,110,115,0]) [CLSID_PdfPageRenderOptions]);
+RT_ENUM! { enum PdfPageRotation: i32 {
+    Normal (PdfPageRotation_Normal) = 0, Rotate90 (PdfPageRotation_Rotate90) = 1, Rotate180 (PdfPageRotation_Rotate180) = 2, Rotate270 (PdfPageRotation_Rotate270) = 3,
+}}
+} // Windows.Data.Pdf
+pub mod text { // Windows.Data.Text
+use ::prelude::*;
+RT_ENUM! { enum AlternateNormalizationFormat: i32 {
+    NotNormalized (AlternateNormalizationFormat_NotNormalized) = 0, Number (AlternateNormalizationFormat_Number) = 1, Currency (AlternateNormalizationFormat_Currency) = 3, Date (AlternateNormalizationFormat_Date) = 4, Time (AlternateNormalizationFormat_Time) = 5,
+}}
+DEFINE_IID!(IID_IAlternateWordForm, 1194945566, 20921, 16903, 145, 70, 36, 142, 99, 106, 29, 29);
+RT_INTERFACE!{interface IAlternateWordForm(IAlternateWordFormVtbl): IInspectable(IInspectableVtbl) [IID_IAlternateWordForm] {
+    fn get_SourceTextSegment(&self, out: *mut TextSegment) -> HRESULT,
+    fn get_AlternateText(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_NormalizationFormat(&self, out: *mut AlternateNormalizationFormat) -> HRESULT
+}}
+impl IAlternateWordForm {
+    #[inline] pub fn get_source_text_segment(&self) -> Result<TextSegment> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_SourceTextSegment)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_alternate_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AlternateText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_normalization_format(&self) -> Result<AlternateNormalizationFormat> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_NormalizationFormat)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class AlternateWordForm: IAlternateWordForm}
+DEFINE_IID!(IID_ISelectableWordSegment, 2439662775, 35495, 19576, 179, 116, 93, 237, 183, 82, 230, 11);
+RT_INTERFACE!{interface ISelectableWordSegment(ISelectableWordSegmentVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordSegment] {
+    fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_SourceTextSegment(&self, out: *mut TextSegment) -> HRESULT
+}}
+impl ISelectableWordSegment {
+    #[inline] pub fn get_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Text)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_source_text_segment(&self) -> Result<TextSegment> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_SourceTextSegment)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SelectableWordSegment: ISelectableWordSegment}
+DEFINE_IID!(IID_SelectableWordSegmentsTokenizingHandler, 977140892, 44766, 19911, 158, 108, 65, 192, 68, 189, 53, 146);
+RT_DELEGATE!{delegate SelectableWordSegmentsTokenizingHandler(SelectableWordSegmentsTokenizingHandlerVtbl, SelectableWordSegmentsTokenizingHandlerImpl) [IID_SelectableWordSegmentsTokenizingHandler] {
+    fn Invoke(&self, precedingWords: *mut foundation::collections::IIterable<SelectableWordSegment>, words: *mut foundation::collections::IIterable<SelectableWordSegment>) -> HRESULT
+}}
+impl SelectableWordSegmentsTokenizingHandler {
+    #[inline] pub fn invoke(&self, precedingWords: &foundation::collections::IIterable<SelectableWordSegment>, words: &foundation::collections::IIterable<SelectableWordSegment>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, precedingWords as *const _ as *mut _, words as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISelectableWordsSegmenter, 4141625831, 19219, 17861, 136, 151, 125, 113, 38, 158, 8, 93);
+RT_INTERFACE!{interface ISelectableWordsSegmenter(ISelectableWordsSegmenterVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordsSegmenter] {
+    fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
+    fn GetTokenAt(&self, text: HSTRING, startIndex: u32, out: *mut *mut SelectableWordSegment) -> HRESULT,
+    fn GetTokens(&self, text: HSTRING, out: *mut *mut foundation::collections::IVectorView<SelectableWordSegment>) -> HRESULT,
+    fn Tokenize(&self, text: HSTRING, startIndex: u32, handler: *mut SelectableWordSegmentsTokenizingHandler) -> HRESULT
+}}
+impl ISelectableWordsSegmenter {
+    #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResolvedLanguage)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_token_at(&self, text: &HStringArg, startIndex: u32) -> Result<Option<ComPtr<SelectableWordSegment>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetTokenAt)(self as *const _ as *mut _, text.get(), startIndex, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_tokens(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<SelectableWordSegment>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetTokens)(self as *const _ as *mut _, text.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn tokenize(&self, text: &HStringArg, startIndex: u32, handler: &SelectableWordSegmentsTokenizingHandler) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Tokenize)(self as *const _ as *mut _, text.get(), startIndex, handler as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SelectableWordsSegmenter: ISelectableWordsSegmenter}
+impl RtActivatable<ISelectableWordsSegmenterFactory> for SelectableWordsSegmenter {}
+impl SelectableWordsSegmenter {
+    #[inline] pub fn create_with_language(language: &HStringArg) -> Result<ComPtr<SelectableWordsSegmenter>> {
+        <Self as RtActivatable<ISelectableWordsSegmenterFactory>>::get_activation_factory().create_with_language(language)
+    }
+}
+DEFINE_CLSID!(SelectableWordsSegmenter(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,83,101,108,101,99,116,97,98,108,101,87,111,114,100,115,83,101,103,109,101,110,116,101,114,0]) [CLSID_SelectableWordsSegmenter]);
+DEFINE_IID!(IID_ISelectableWordsSegmenterFactory, 2356835912, 24663, 17209, 188, 112, 242, 16, 1, 10, 65, 80);
+RT_INTERFACE!{static interface ISelectableWordsSegmenterFactory(ISelectableWordsSegmenterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordsSegmenterFactory] {
+    fn CreateWithLanguage(&self, language: HSTRING, out: *mut *mut SelectableWordsSegmenter) -> HRESULT
+}}
+impl ISelectableWordsSegmenterFactory {
+    #[inline] pub fn create_with_language(&self, language: &HStringArg) -> Result<ComPtr<SelectableWordsSegmenter>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithLanguage)(self as *const _ as *mut _, language.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ISemanticTextQuery, 1780263761, 8114, 18697, 128, 184, 53, 115, 26, 43, 62, 127);
+RT_INTERFACE!{interface ISemanticTextQuery(ISemanticTextQueryVtbl): IInspectable(IInspectableVtbl) [IID_ISemanticTextQuery] {
+    fn Find(&self, content: HSTRING, out: *mut *mut foundation::collections::IVectorView<TextSegment>) -> HRESULT,
+    fn FindInProperty(&self, propertyContent: HSTRING, propertyName: HSTRING, out: *mut *mut foundation::collections::IVectorView<TextSegment>) -> HRESULT
+}}
+impl ISemanticTextQuery {
+    #[inline] pub fn find(&self, content: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<TextSegment>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Find)(self as *const _ as *mut _, content.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn find_in_property(&self, propertyContent: &HStringArg, propertyName: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<TextSegment>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindInProperty)(self as *const _ as *mut _, propertyContent.get(), propertyName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class SemanticTextQuery: ISemanticTextQuery}
+impl RtActivatable<ISemanticTextQueryFactory> for SemanticTextQuery {}
+impl SemanticTextQuery {
+    #[inline] pub fn create(aqsFilter: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> {
+        <Self as RtActivatable<ISemanticTextQueryFactory>>::get_activation_factory().create(aqsFilter)
+    }
+    #[inline] pub fn create_with_language(aqsFilter: &HStringArg, filterLanguage: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> {
+        <Self as RtActivatable<ISemanticTextQueryFactory>>::get_activation_factory().create_with_language(aqsFilter, filterLanguage)
+    }
+}
+DEFINE_CLSID!(SemanticTextQuery(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,83,101,109,97,110,116,105,99,84,101,120,116,81,117,101,114,121,0]) [CLSID_SemanticTextQuery]);
+DEFINE_IID!(IID_ISemanticTextQueryFactory, 596378883, 63893, 17799, 135, 119, 162, 183, 216, 10, 207, 239);
+RT_INTERFACE!{static interface ISemanticTextQueryFactory(ISemanticTextQueryFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISemanticTextQueryFactory] {
+    fn Create(&self, aqsFilter: HSTRING, out: *mut *mut SemanticTextQuery) -> HRESULT,
+    fn CreateWithLanguage(&self, aqsFilter: HSTRING, filterLanguage: HSTRING, out: *mut *mut SemanticTextQuery) -> HRESULT
+}}
+impl ISemanticTextQueryFactory {
+    #[inline] pub fn create(&self, aqsFilter: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, aqsFilter.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_with_language(&self, aqsFilter: &HStringArg, filterLanguage: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithLanguage)(self as *const _ as *mut _, aqsFilter.get(), filterLanguage.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ITextConversionGenerator, 56650334, 10921, 19126, 175, 139, 165, 98, 182, 58, 137, 146);
+RT_INTERFACE!{interface ITextConversionGenerator(ITextConversionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextConversionGenerator] {
+    fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_LanguageAvailableButNotInstalled(&self, out: *mut bool) -> HRESULT,
+    fn GetCandidatesAsync(&self, input: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT,
+    fn GetCandidatesWithMaxCountAsync(&self, input: HSTRING, maxCandidates: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT
+}}
+impl ITextConversionGenerator {
+    #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResolvedLanguage)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_language_available_but_not_installed(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_LanguageAvailableButNotInstalled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_candidates_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCandidatesAsync)(self as *const _ as *mut _, input.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_candidates_with_max_count_async(&self, input: &HStringArg, maxCandidates: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCandidatesWithMaxCountAsync)(self as *const _ as *mut _, input.get(), maxCandidates, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class TextConversionGenerator: ITextConversionGenerator}
+impl RtActivatable<ITextConversionGeneratorFactory> for TextConversionGenerator {}
+impl TextConversionGenerator {
+    #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextConversionGenerator>> {
+        <Self as RtActivatable<ITextConversionGeneratorFactory>>::get_activation_factory().create(languageTag)
+    }
+}
+DEFINE_CLSID!(TextConversionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,67,111,110,118,101,114,115,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextConversionGenerator]);
+DEFINE_IID!(IID_ITextConversionGeneratorFactory, 4239013761, 12419, 18859, 190, 21, 86, 223, 187, 183, 77, 111);
+RT_INTERFACE!{static interface ITextConversionGeneratorFactory(ITextConversionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextConversionGeneratorFactory] {
+    fn Create(&self, languageTag: HSTRING, out: *mut *mut TextConversionGenerator) -> HRESULT
+}}
+impl ITextConversionGeneratorFactory {
+    #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<ComPtr<TextConversionGenerator>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, languageTag.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ITextPhoneme, 2472715274, 39802, 17769, 148, 207, 216, 79, 47, 56, 207, 155);
+RT_INTERFACE!{interface ITextPhoneme(ITextPhonemeVtbl): IInspectable(IInspectableVtbl) [IID_ITextPhoneme] {
+    fn get_DisplayText(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_ReadingText(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl ITextPhoneme {
+    #[inline] pub fn get_display_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_reading_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ReadingText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class TextPhoneme: ITextPhoneme}
+DEFINE_IID!(IID_ITextPredictionGenerator, 1588374279, 44017, 19638, 157, 158, 50, 111, 43, 70, 135, 86);
+RT_INTERFACE!{interface ITextPredictionGenerator(ITextPredictionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextPredictionGenerator] {
+    fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_LanguageAvailableButNotInstalled(&self, out: *mut bool) -> HRESULT,
+    fn GetCandidatesAsync(&self, input: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT,
+    fn GetCandidatesWithMaxCountAsync(&self, input: HSTRING, maxCandidates: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT
+}}
+impl ITextPredictionGenerator {
+    #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResolvedLanguage)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_language_available_but_not_installed(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_LanguageAvailableButNotInstalled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_candidates_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCandidatesAsync)(self as *const _ as *mut _, input.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_candidates_with_max_count_async(&self, input: &HStringArg, maxCandidates: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCandidatesWithMaxCountAsync)(self as *const _ as *mut _, input.get(), maxCandidates, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class TextPredictionGenerator: ITextPredictionGenerator}
+impl RtActivatable<ITextPredictionGeneratorFactory> for TextPredictionGenerator {}
+impl TextPredictionGenerator {
+    #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextPredictionGenerator>> {
+        <Self as RtActivatable<ITextPredictionGeneratorFactory>>::get_activation_factory().create(languageTag)
+    }
+}
+DEFINE_CLSID!(TextPredictionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,80,114,101,100,105,99,116,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextPredictionGenerator]);
+DEFINE_IID!(IID_ITextPredictionGenerator2, 3091669944, 11383, 18538, 144, 10, 163, 69, 62, 237, 193, 93);
+RT_INTERFACE!{interface ITextPredictionGenerator2(ITextPredictionGenerator2Vtbl): IInspectable(IInspectableVtbl) [IID_ITextPredictionGenerator2] {
+    fn GetCandidatesWithParametersAsync(&self, input: HSTRING, maxCandidates: u32, predictionOptions: TextPredictionOptions, previousStrings: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT,
+    fn GetNextWordCandidatesAsync(&self, maxCandidates: u32, previousStrings: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_InputScope(&self, out: *mut super::super::ui::text::core::CoreTextInputScope) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_InputScope(&self, value: super::super::ui::text::core::CoreTextInputScope) -> HRESULT
+}}
+impl ITextPredictionGenerator2 {
+    #[inline] pub fn get_candidates_with_parameters_async(&self, input: &HStringArg, maxCandidates: u32, predictionOptions: TextPredictionOptions, previousStrings: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCandidatesWithParametersAsync)(self as *const _ as *mut _, input.get(), maxCandidates, predictionOptions, previousStrings as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_next_word_candidates_async(&self, maxCandidates: u32, previousStrings: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetNextWordCandidatesAsync)(self as *const _ as *mut _, maxCandidates, previousStrings as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_input_scope(&self) -> Result<super::super::ui::text::core::CoreTextInputScope> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_InputScope)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_input_scope(&self, value: super::super::ui::text::core::CoreTextInputScope) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_InputScope)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ITextPredictionGeneratorFactory, 1918350358, 35746, 18257, 157, 48, 157, 133, 67, 86, 83, 162);
+RT_INTERFACE!{static interface ITextPredictionGeneratorFactory(ITextPredictionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextPredictionGeneratorFactory] {
+    fn Create(&self, languageTag: HSTRING, out: *mut *mut TextPredictionGenerator) -> HRESULT
+}}
+impl ITextPredictionGeneratorFactory {
+    #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<ComPtr<TextPredictionGenerator>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, languageTag.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum TextPredictionOptions: u32 {
+    None (TextPredictionOptions_None) = 0, Predictions (TextPredictionOptions_Predictions) = 1, Corrections (TextPredictionOptions_Corrections) = 2,
+}}
+DEFINE_IID!(IID_ITextReverseConversionGenerator, 1374156052, 40017, 19846, 174, 27, 180, 152, 251, 173, 131, 19);
+RT_INTERFACE!{interface ITextReverseConversionGenerator(ITextReverseConversionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGenerator] {
+    fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_LanguageAvailableButNotInstalled(&self, out: *mut bool) -> HRESULT,
+    fn ConvertBackAsync(&self, input: HSTRING, out: *mut *mut foundation::IAsyncOperation<HString>) -> HRESULT
+}}
+impl ITextReverseConversionGenerator {
+    #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResolvedLanguage)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_language_available_but_not_installed(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_LanguageAvailableButNotInstalled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn convert_back_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ConvertBackAsync)(self as *const _ as *mut _, input.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class TextReverseConversionGenerator: ITextReverseConversionGenerator}
+impl RtActivatable<ITextReverseConversionGeneratorFactory> for TextReverseConversionGenerator {}
+impl TextReverseConversionGenerator {
+    #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextReverseConversionGenerator>> {
+        <Self as RtActivatable<ITextReverseConversionGeneratorFactory>>::get_activation_factory().create(languageTag)
+    }
+}
+DEFINE_CLSID!(TextReverseConversionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,82,101,118,101,114,115,101,67,111,110,118,101,114,115,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextReverseConversionGenerator]);
+DEFINE_IID!(IID_ITextReverseConversionGenerator2, 447730412, 34262, 18173, 130, 138, 58, 72, 48, 250, 110, 24);
+RT_INTERFACE!{interface ITextReverseConversionGenerator2(ITextReverseConversionGenerator2Vtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGenerator2] {
+    fn GetPhonemesAsync(&self, input: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<TextPhoneme>>) -> HRESULT
+}}
+impl ITextReverseConversionGenerator2 {
+    #[inline] pub fn get_phonemes_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<TextPhoneme>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetPhonemesAsync)(self as *const _ as *mut _, input.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ITextReverseConversionGeneratorFactory, 1673450278, 8154, 16886, 137, 213, 35, 221, 234, 60, 114, 154);
+RT_INTERFACE!{static interface ITextReverseConversionGeneratorFactory(ITextReverseConversionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGeneratorFactory] {
+    fn Create(&self, languageTag: HSTRING, out: *mut *mut TextReverseConversionGenerator) -> HRESULT
+}}
+impl ITextReverseConversionGeneratorFactory {
+    #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<ComPtr<TextReverseConversionGenerator>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, languageTag.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_STRUCT! { struct TextSegment {
+    StartPosition: u32, Length: u32,
+}}
+RT_CLASS!{static class UnicodeCharacters}
+impl RtActivatable<IUnicodeCharactersStatics> for UnicodeCharacters {}
+impl UnicodeCharacters {
+    #[inline] pub fn get_codepoint_from_surrogate_pair(highSurrogate: u32, lowSurrogate: u32) -> Result<u32> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().get_codepoint_from_surrogate_pair(highSurrogate, lowSurrogate)
+    }
+    #[inline] pub fn get_surrogate_pair_from_codepoint(codepoint: u32) -> Result<(Char, Char)> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().get_surrogate_pair_from_codepoint(codepoint)
+    }
+    #[inline] pub fn is_high_surrogate(codepoint: u32) -> Result<bool> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_high_surrogate(codepoint)
+    }
+    #[inline] pub fn is_low_surrogate(codepoint: u32) -> Result<bool> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_low_surrogate(codepoint)
+    }
+    #[inline] pub fn is_supplementary(codepoint: u32) -> Result<bool> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_supplementary(codepoint)
+    }
+    #[inline] pub fn is_noncharacter(codepoint: u32) -> Result<bool> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_noncharacter(codepoint)
+    }
+    #[inline] pub fn is_whitespace(codepoint: u32) -> Result<bool> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_whitespace(codepoint)
+    }
+    #[inline] pub fn is_alphabetic(codepoint: u32) -> Result<bool> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_alphabetic(codepoint)
+    }
+    #[inline] pub fn is_cased(codepoint: u32) -> Result<bool> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_cased(codepoint)
+    }
+    #[inline] pub fn is_uppercase(codepoint: u32) -> Result<bool> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_uppercase(codepoint)
+    }
+    #[inline] pub fn is_lowercase(codepoint: u32) -> Result<bool> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_lowercase(codepoint)
+    }
+    #[inline] pub fn is_id_start(codepoint: u32) -> Result<bool> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_id_start(codepoint)
+    }
+    #[inline] pub fn is_id_continue(codepoint: u32) -> Result<bool> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_id_continue(codepoint)
+    }
+    #[inline] pub fn is_grapheme_base(codepoint: u32) -> Result<bool> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_grapheme_base(codepoint)
+    }
+    #[inline] pub fn is_grapheme_extend(codepoint: u32) -> Result<bool> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_grapheme_extend(codepoint)
+    }
+    #[inline] pub fn get_numeric_type(codepoint: u32) -> Result<UnicodeNumericType> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().get_numeric_type(codepoint)
+    }
+    #[inline] pub fn get_general_category(codepoint: u32) -> Result<UnicodeGeneralCategory> {
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().get_general_category(codepoint)
+    }
+}
+DEFINE_CLSID!(UnicodeCharacters(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,85,110,105,99,111,100,101,67,104,97,114,97,99,116,101,114,115,0]) [CLSID_UnicodeCharacters]);
+DEFINE_IID!(IID_IUnicodeCharactersStatics, 2542837383, 37521, 20369, 182, 200, 182, 227, 89, 215, 167, 251);
+RT_INTERFACE!{static interface IUnicodeCharactersStatics(IUnicodeCharactersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUnicodeCharactersStatics] {
+    fn GetCodepointFromSurrogatePair(&self, highSurrogate: u32, lowSurrogate: u32, out: *mut u32) -> HRESULT,
+    fn GetSurrogatePairFromCodepoint(&self, codepoint: u32, highSurrogate: *mut Char, lowSurrogate: *mut Char) -> HRESULT,
+    fn IsHighSurrogate(&self, codepoint: u32, out: *mut bool) -> HRESULT,
+    fn IsLowSurrogate(&self, codepoint: u32, out: *mut bool) -> HRESULT,
+    fn IsSupplementary(&self, codepoint: u32, out: *mut bool) -> HRESULT,
+    fn IsNoncharacter(&self, codepoint: u32, out: *mut bool) -> HRESULT,
+    fn IsWhitespace(&self, codepoint: u32, out: *mut bool) -> HRESULT,
+    fn IsAlphabetic(&self, codepoint: u32, out: *mut bool) -> HRESULT,
+    fn IsCased(&self, codepoint: u32, out: *mut bool) -> HRESULT,
+    fn IsUppercase(&self, codepoint: u32, out: *mut bool) -> HRESULT,
+    fn IsLowercase(&self, codepoint: u32, out: *mut bool) -> HRESULT,
+    fn IsIdStart(&self, codepoint: u32, out: *mut bool) -> HRESULT,
+    fn IsIdContinue(&self, codepoint: u32, out: *mut bool) -> HRESULT,
+    fn IsGraphemeBase(&self, codepoint: u32, out: *mut bool) -> HRESULT,
+    fn IsGraphemeExtend(&self, codepoint: u32, out: *mut bool) -> HRESULT,
+    fn GetNumericType(&self, codepoint: u32, out: *mut UnicodeNumericType) -> HRESULT,
+    fn GetGeneralCategory(&self, codepoint: u32, out: *mut UnicodeGeneralCategory) -> HRESULT
+}}
+impl IUnicodeCharactersStatics {
+    #[inline] pub fn get_codepoint_from_surrogate_pair(&self, highSurrogate: u32, lowSurrogate: u32) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetCodepointFromSurrogatePair)(self as *const _ as *mut _, highSurrogate, lowSurrogate, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_surrogate_pair_from_codepoint(&self, codepoint: u32) -> Result<(Char, Char)> { unsafe { 
+        let mut highSurrogate = zeroed(); let mut lowSurrogate = zeroed();
+        let hr = ((*self.lpVtbl).GetSurrogatePairFromCodepoint)(self as *const _ as *mut _, codepoint, &mut highSurrogate, &mut lowSurrogate);
+        if hr == S_OK { Ok((highSurrogate, lowSurrogate)) } else { err(hr) }
+    }}
+    #[inline] pub fn is_high_surrogate(&self, codepoint: u32) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsHighSurrogate)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_low_surrogate(&self, codepoint: u32) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsLowSurrogate)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_supplementary(&self, codepoint: u32) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsSupplementary)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_noncharacter(&self, codepoint: u32) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsNoncharacter)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_whitespace(&self, codepoint: u32) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsWhitespace)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_alphabetic(&self, codepoint: u32) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsAlphabetic)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_cased(&self, codepoint: u32) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsCased)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_uppercase(&self, codepoint: u32) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsUppercase)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_lowercase(&self, codepoint: u32) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsLowercase)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_id_start(&self, codepoint: u32) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsIdStart)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_id_continue(&self, codepoint: u32) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsIdContinue)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_grapheme_base(&self, codepoint: u32) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsGraphemeBase)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn is_grapheme_extend(&self, codepoint: u32) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).IsGraphemeExtend)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_numeric_type(&self, codepoint: u32) -> Result<UnicodeNumericType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetNumericType)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_general_category(&self, codepoint: u32) -> Result<UnicodeGeneralCategory> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetGeneralCategory)(self as *const _ as *mut _, codepoint, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum UnicodeGeneralCategory: i32 {
+    UppercaseLetter (UnicodeGeneralCategory_UppercaseLetter) = 0, LowercaseLetter (UnicodeGeneralCategory_LowercaseLetter) = 1, TitlecaseLetter (UnicodeGeneralCategory_TitlecaseLetter) = 2, ModifierLetter (UnicodeGeneralCategory_ModifierLetter) = 3, OtherLetter (UnicodeGeneralCategory_OtherLetter) = 4, NonspacingMark (UnicodeGeneralCategory_NonspacingMark) = 5, SpacingCombiningMark (UnicodeGeneralCategory_SpacingCombiningMark) = 6, EnclosingMark (UnicodeGeneralCategory_EnclosingMark) = 7, DecimalDigitNumber (UnicodeGeneralCategory_DecimalDigitNumber) = 8, LetterNumber (UnicodeGeneralCategory_LetterNumber) = 9, OtherNumber (UnicodeGeneralCategory_OtherNumber) = 10, SpaceSeparator (UnicodeGeneralCategory_SpaceSeparator) = 11, LineSeparator (UnicodeGeneralCategory_LineSeparator) = 12, ParagraphSeparator (UnicodeGeneralCategory_ParagraphSeparator) = 13, Control (UnicodeGeneralCategory_Control) = 14, Format (UnicodeGeneralCategory_Format) = 15, Surrogate (UnicodeGeneralCategory_Surrogate) = 16, PrivateUse (UnicodeGeneralCategory_PrivateUse) = 17, ConnectorPunctuation (UnicodeGeneralCategory_ConnectorPunctuation) = 18, DashPunctuation (UnicodeGeneralCategory_DashPunctuation) = 19, OpenPunctuation (UnicodeGeneralCategory_OpenPunctuation) = 20, ClosePunctuation (UnicodeGeneralCategory_ClosePunctuation) = 21, InitialQuotePunctuation (UnicodeGeneralCategory_InitialQuotePunctuation) = 22, FinalQuotePunctuation (UnicodeGeneralCategory_FinalQuotePunctuation) = 23, OtherPunctuation (UnicodeGeneralCategory_OtherPunctuation) = 24, MathSymbol (UnicodeGeneralCategory_MathSymbol) = 25, CurrencySymbol (UnicodeGeneralCategory_CurrencySymbol) = 26, ModifierSymbol (UnicodeGeneralCategory_ModifierSymbol) = 27, OtherSymbol (UnicodeGeneralCategory_OtherSymbol) = 28, NotAssigned (UnicodeGeneralCategory_NotAssigned) = 29,
+}}
+RT_ENUM! { enum UnicodeNumericType: i32 {
+    None (UnicodeNumericType_None) = 0, Decimal (UnicodeNumericType_Decimal) = 1, Digit (UnicodeNumericType_Digit) = 2, Numeric (UnicodeNumericType_Numeric) = 3,
+}}
+DEFINE_IID!(IID_IWordSegment, 3537156717, 39036, 19648, 182, 189, 212, 154, 17, 179, 143, 154);
+RT_INTERFACE!{interface IWordSegment(IWordSegmentVtbl): IInspectable(IInspectableVtbl) [IID_IWordSegment] {
+    fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_SourceTextSegment(&self, out: *mut TextSegment) -> HRESULT,
+    fn get_AlternateForms(&self, out: *mut *mut foundation::collections::IVectorView<AlternateWordForm>) -> HRESULT
+}}
+impl IWordSegment {
+    #[inline] pub fn get_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Text)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_source_text_segment(&self) -> Result<TextSegment> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_SourceTextSegment)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_alternate_forms(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<AlternateWordForm>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AlternateForms)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WordSegment: IWordSegment}
+DEFINE_IID!(IID_WordSegmentsTokenizingHandler, 2782749527, 48938, 19535, 163, 31, 41, 231, 28, 111, 139, 53);
+RT_DELEGATE!{delegate WordSegmentsTokenizingHandler(WordSegmentsTokenizingHandlerVtbl, WordSegmentsTokenizingHandlerImpl) [IID_WordSegmentsTokenizingHandler] {
+    fn Invoke(&self, precedingWords: *mut foundation::collections::IIterable<WordSegment>, words: *mut foundation::collections::IIterable<WordSegment>) -> HRESULT
+}}
+impl WordSegmentsTokenizingHandler {
+    #[inline] pub fn invoke(&self, precedingWords: &foundation::collections::IIterable<WordSegment>, words: &foundation::collections::IIterable<WordSegment>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, precedingWords as *const _ as *mut _, words as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IWordsSegmenter, 2259997905, 45822, 20020, 168, 29, 102, 100, 3, 0, 69, 79);
+RT_INTERFACE!{interface IWordsSegmenter(IWordsSegmenterVtbl): IInspectable(IInspectableVtbl) [IID_IWordsSegmenter] {
+    fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
+    fn GetTokenAt(&self, text: HSTRING, startIndex: u32, out: *mut *mut WordSegment) -> HRESULT,
+    fn GetTokens(&self, text: HSTRING, out: *mut *mut foundation::collections::IVectorView<WordSegment>) -> HRESULT,
+    fn Tokenize(&self, text: HSTRING, startIndex: u32, handler: *mut WordSegmentsTokenizingHandler) -> HRESULT
+}}
+impl IWordsSegmenter {
+    #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResolvedLanguage)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_token_at(&self, text: &HStringArg, startIndex: u32) -> Result<Option<ComPtr<WordSegment>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetTokenAt)(self as *const _ as *mut _, text.get(), startIndex, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_tokens(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<WordSegment>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetTokens)(self as *const _ as *mut _, text.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn tokenize(&self, text: &HStringArg, startIndex: u32, handler: &WordSegmentsTokenizingHandler) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Tokenize)(self as *const _ as *mut _, text.get(), startIndex, handler as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WordsSegmenter: IWordsSegmenter}
+impl RtActivatable<IWordsSegmenterFactory> for WordsSegmenter {}
+impl WordsSegmenter {
+    #[inline] pub fn create_with_language(language: &HStringArg) -> Result<ComPtr<WordsSegmenter>> {
+        <Self as RtActivatable<IWordsSegmenterFactory>>::get_activation_factory().create_with_language(language)
+    }
+}
+DEFINE_CLSID!(WordsSegmenter(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,87,111,114,100,115,83,101,103,109,101,110,116,101,114,0]) [CLSID_WordsSegmenter]);
+DEFINE_IID!(IID_IWordsSegmenterFactory, 3868684916, 64565, 17756, 139, 251, 109, 127, 70, 83, 202, 151);
+RT_INTERFACE!{static interface IWordsSegmenterFactory(IWordsSegmenterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWordsSegmenterFactory] {
+    fn CreateWithLanguage(&self, language: HSTRING, out: *mut *mut WordsSegmenter) -> HRESULT
+}}
+impl IWordsSegmenterFactory {
+    #[inline] pub fn create_with_language(&self, language: &HStringArg) -> Result<ComPtr<WordsSegmenter>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithLanguage)(self as *const _ as *mut _, language.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+} // Windows.Data.Text
 pub mod xml { // Windows.Data.Xml
 pub mod dom { // Windows.Data.Xml.Dom
 use ::prelude::*;
@@ -1181,838 +2047,3 @@ impl IXsltProcessorFactory {
 }
 } // Windows.Data.Xml.Xsl
 } // Windows.Data.Xml
-pub mod html { // Windows.Data.Html
-use ::prelude::*;
-DEFINE_IID!(IID_IHtmlUtilities, 4273998557, 9113, 20396, 181, 167, 5, 233, 172, 215, 24, 29);
-RT_INTERFACE!{static interface IHtmlUtilities(IHtmlUtilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IHtmlUtilities] {
-    fn ConvertToText(&self, html: HSTRING, out: *mut HSTRING) -> HRESULT
-}}
-impl IHtmlUtilities {
-    #[inline] pub fn convert_to_text(&self, html: &HStringArg) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ConvertToText)(self as *const _ as *mut _, html.get(), &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{static class HtmlUtilities}
-impl RtActivatable<IHtmlUtilities> for HtmlUtilities {}
-impl HtmlUtilities {
-    #[inline] pub fn convert_to_text(html: &HStringArg) -> Result<HString> {
-        <Self as RtActivatable<IHtmlUtilities>>::get_activation_factory().convert_to_text(html)
-    }
-}
-DEFINE_CLSID!(HtmlUtilities(&[87,105,110,100,111,119,115,46,68,97,116,97,46,72,116,109,108,46,72,116,109,108,85,116,105,108,105,116,105,101,115,0]) [CLSID_HtmlUtilities]);
-} // Windows.Data.Html
-pub mod pdf { // Windows.Data.Pdf
-use ::prelude::*;
-DEFINE_IID!(IID_IPdfDocument, 2893987549, 33018, 16521, 132, 110, 129, 183, 127, 245, 168, 108);
-RT_INTERFACE!{interface IPdfDocument(IPdfDocumentVtbl): IInspectable(IInspectableVtbl) [IID_IPdfDocument] {
-    fn GetPage(&self, pageIndex: u32, out: *mut *mut PdfPage) -> HRESULT,
-    fn get_PageCount(&self, out: *mut u32) -> HRESULT,
-    fn get_IsPasswordProtected(&self, out: *mut bool) -> HRESULT
-}}
-impl IPdfDocument {
-    #[inline] pub fn get_page(&self, pageIndex: u32) -> Result<Option<ComPtr<PdfPage>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPage)(self as *const _ as *mut _, pageIndex, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_page_count(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_PageCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_password_protected(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsPasswordProtected)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class PdfDocument: IPdfDocument}
-impl RtActivatable<IPdfDocumentStatics> for PdfDocument {}
-impl PdfDocument {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
-        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_file_async(file)
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_password_async(file: &super::super::storage::IStorageFile, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
-        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_file_with_password_async(file, password)
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(inputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
-        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_stream_async(inputStream)
-    }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_password_async(inputStream: &super::super::storage::streams::IRandomAccessStream, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
-        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_stream_with_password_async(inputStream, password)
-    }
-}
-DEFINE_CLSID!(PdfDocument(&[87,105,110,100,111,119,115,46,68,97,116,97,46,80,100,102,46,80,100,102,68,111,99,117,109,101,110,116,0]) [CLSID_PdfDocument]);
-DEFINE_IID!(IID_IPdfDocumentStatics, 1127877471, 49159, 18312, 144, 242, 8, 20, 61, 146, 37, 153);
-RT_INTERFACE!{static interface IPdfDocumentStatics(IPdfDocumentStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfDocumentStatics] {
-    #[cfg(feature="windows-storage")] fn LoadFromFileAsync(&self, file: *mut super::super::storage::IStorageFile, out: *mut *mut foundation::IAsyncOperation<PdfDocument>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadFromFileWithPasswordAsync(&self, file: *mut super::super::storage::IStorageFile, password: HSTRING, out: *mut *mut foundation::IAsyncOperation<PdfDocument>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadFromStreamAsync(&self, inputStream: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncOperation<PdfDocument>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadFromStreamWithPasswordAsync(&self, inputStream: *mut super::super::storage::streams::IRandomAccessStream, password: HSTRING, out: *mut *mut foundation::IAsyncOperation<PdfDocument>) -> HRESULT
-}}
-impl IPdfDocumentStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_password_async(&self, file: &super::super::storage::IStorageFile, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromFileWithPasswordAsync)(self as *const _ as *mut _, file as *const _ as *mut _, password.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(&self, inputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromStreamAsync)(self as *const _ as *mut _, inputStream as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_password_async(&self, inputStream: &super::super::storage::streams::IRandomAccessStream, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromStreamWithPasswordAsync)(self as *const _ as *mut _, inputStream as *const _ as *mut _, password.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPdfPage, 2645864648, 21280, 19708, 173, 118, 73, 63, 218, 208, 229, 148);
-RT_INTERFACE!{interface IPdfPage(IPdfPageVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPage] {
-    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn RenderToStreamAsync(&self, outputStream: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn RenderWithOptionsToStreamAsync(&self, outputStream: *mut super::super::storage::streams::IRandomAccessStream, options: *mut PdfPageRenderOptions, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn PreparePageAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn get_Index(&self, out: *mut u32) -> HRESULT,
-    fn get_Size(&self, out: *mut foundation::Size) -> HRESULT,
-    fn get_Dimensions(&self, out: *mut *mut PdfPageDimensions) -> HRESULT,
-    fn get_Rotation(&self, out: *mut PdfPageRotation) -> HRESULT,
-    fn get_PreferredZoom(&self, out: *mut f32) -> HRESULT
-}}
-impl IPdfPage {
-    #[cfg(feature="windows-storage")] #[inline] pub fn render_to_stream_async(&self, outputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RenderToStreamAsync)(self as *const _ as *mut _, outputStream as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn render_with_options_to_stream_async(&self, outputStream: &super::super::storage::streams::IRandomAccessStream, options: &PdfPageRenderOptions) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RenderWithOptionsToStreamAsync)(self as *const _ as *mut _, outputStream as *const _ as *mut _, options as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn prepare_page_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PreparePageAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_index(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Index)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_size(&self) -> Result<foundation::Size> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_dimensions(&self) -> Result<Option<ComPtr<PdfPageDimensions>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Dimensions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_rotation(&self) -> Result<PdfPageRotation> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Rotation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_preferred_zoom(&self) -> Result<f32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_PreferredZoom)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class PdfPage: IPdfPage}
-DEFINE_IID!(IID_IPdfPageDimensions, 571933809, 12606, 17640, 131, 93, 99, 163, 231, 98, 74, 16);
-RT_INTERFACE!{interface IPdfPageDimensions(IPdfPageDimensionsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPageDimensions] {
-    fn get_MediaBox(&self, out: *mut foundation::Rect) -> HRESULT,
-    fn get_CropBox(&self, out: *mut foundation::Rect) -> HRESULT,
-    fn get_BleedBox(&self, out: *mut foundation::Rect) -> HRESULT,
-    fn get_TrimBox(&self, out: *mut foundation::Rect) -> HRESULT,
-    fn get_ArtBox(&self, out: *mut foundation::Rect) -> HRESULT
-}}
-impl IPdfPageDimensions {
-    #[inline] pub fn get_media_box(&self) -> Result<foundation::Rect> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MediaBox)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_crop_box(&self) -> Result<foundation::Rect> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CropBox)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_bleed_box(&self) -> Result<foundation::Rect> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_BleedBox)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_trim_box(&self) -> Result<foundation::Rect> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TrimBox)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_art_box(&self) -> Result<foundation::Rect> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ArtBox)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class PdfPageDimensions: IPdfPageDimensions}
-DEFINE_IID!(IID_IPdfPageRenderOptions, 1016595823, 47055, 19497, 154, 4, 82, 217, 2, 103, 244, 37);
-RT_INTERFACE!{interface IPdfPageRenderOptions(IPdfPageRenderOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPageRenderOptions] {
-    fn get_SourceRect(&self, out: *mut foundation::Rect) -> HRESULT,
-    fn put_SourceRect(&self, value: foundation::Rect) -> HRESULT,
-    fn get_DestinationWidth(&self, out: *mut u32) -> HRESULT,
-    fn put_DestinationWidth(&self, value: u32) -> HRESULT,
-    fn get_DestinationHeight(&self, out: *mut u32) -> HRESULT,
-    fn put_DestinationHeight(&self, value: u32) -> HRESULT,
-    #[cfg(not(feature="windows-ui"))] fn __Dummy6(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_BackgroundColor(&self, out: *mut super::super::ui::Color) -> HRESULT,
-    #[cfg(not(feature="windows-ui"))] fn __Dummy7(&self) -> (),
-    #[cfg(feature="windows-ui")] fn put_BackgroundColor(&self, value: super::super::ui::Color) -> HRESULT,
-    fn get_IsIgnoringHighContrast(&self, out: *mut bool) -> HRESULT,
-    fn put_IsIgnoringHighContrast(&self, value: bool) -> HRESULT,
-    fn get_BitmapEncoderId(&self, out: *mut Guid) -> HRESULT,
-    fn put_BitmapEncoderId(&self, value: Guid) -> HRESULT
-}}
-impl IPdfPageRenderOptions {
-    #[inline] pub fn get_source_rect(&self) -> Result<foundation::Rect> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_SourceRect)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_source_rect(&self, value: foundation::Rect) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SourceRect)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_destination_width(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_DestinationWidth)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_destination_width(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DestinationWidth)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_destination_height(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_DestinationHeight)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_destination_height(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DestinationHeight)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_background_color(&self) -> Result<super::super::ui::Color> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_BackgroundColor)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_background_color(&self, value: super::super::ui::Color) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_BackgroundColor)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_ignoring_high_contrast(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsIgnoringHighContrast)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_is_ignoring_high_contrast(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IsIgnoringHighContrast)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_bitmap_encoder_id(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_BitmapEncoderId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_bitmap_encoder_id(&self, value: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_BitmapEncoderId)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class PdfPageRenderOptions: IPdfPageRenderOptions}
-impl RtActivatable<IActivationFactory> for PdfPageRenderOptions {}
-DEFINE_CLSID!(PdfPageRenderOptions(&[87,105,110,100,111,119,115,46,68,97,116,97,46,80,100,102,46,80,100,102,80,97,103,101,82,101,110,100,101,114,79,112,116,105,111,110,115,0]) [CLSID_PdfPageRenderOptions]);
-RT_ENUM! { enum PdfPageRotation: i32 {
-    Normal (PdfPageRotation_Normal) = 0, Rotate90 (PdfPageRotation_Rotate90) = 1, Rotate180 (PdfPageRotation_Rotate180) = 2, Rotate270 (PdfPageRotation_Rotate270) = 3,
-}}
-} // Windows.Data.Pdf
-pub mod text { // Windows.Data.Text
-use ::prelude::*;
-RT_ENUM! { enum AlternateNormalizationFormat: i32 {
-    NotNormalized (AlternateNormalizationFormat_NotNormalized) = 0, Number (AlternateNormalizationFormat_Number) = 1, Currency (AlternateNormalizationFormat_Currency) = 3, Date (AlternateNormalizationFormat_Date) = 4, Time (AlternateNormalizationFormat_Time) = 5,
-}}
-DEFINE_IID!(IID_IAlternateWordForm, 1194945566, 20921, 16903, 145, 70, 36, 142, 99, 106, 29, 29);
-RT_INTERFACE!{interface IAlternateWordForm(IAlternateWordFormVtbl): IInspectable(IInspectableVtbl) [IID_IAlternateWordForm] {
-    fn get_SourceTextSegment(&self, out: *mut TextSegment) -> HRESULT,
-    fn get_AlternateText(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_NormalizationFormat(&self, out: *mut AlternateNormalizationFormat) -> HRESULT
-}}
-impl IAlternateWordForm {
-    #[inline] pub fn get_source_text_segment(&self) -> Result<TextSegment> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_SourceTextSegment)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_alternate_text(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AlternateText)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_normalization_format(&self) -> Result<AlternateNormalizationFormat> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_NormalizationFormat)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class AlternateWordForm: IAlternateWordForm}
-DEFINE_IID!(IID_ISelectableWordSegment, 2439662775, 35495, 19576, 179, 116, 93, 237, 183, 82, 230, 11);
-RT_INTERFACE!{interface ISelectableWordSegment(ISelectableWordSegmentVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordSegment] {
-    fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_SourceTextSegment(&self, out: *mut TextSegment) -> HRESULT
-}}
-impl ISelectableWordSegment {
-    #[inline] pub fn get_text(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Text)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_source_text_segment(&self) -> Result<TextSegment> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_SourceTextSegment)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SelectableWordSegment: ISelectableWordSegment}
-DEFINE_IID!(IID_SelectableWordSegmentsTokenizingHandler, 977140892, 44766, 19911, 158, 108, 65, 192, 68, 189, 53, 146);
-RT_DELEGATE!{delegate SelectableWordSegmentsTokenizingHandler(SelectableWordSegmentsTokenizingHandlerVtbl, SelectableWordSegmentsTokenizingHandlerImpl) [IID_SelectableWordSegmentsTokenizingHandler] {
-    fn Invoke(&self, precedingWords: *mut foundation::collections::IIterable<SelectableWordSegment>, words: *mut foundation::collections::IIterable<SelectableWordSegment>) -> HRESULT
-}}
-impl SelectableWordSegmentsTokenizingHandler {
-    #[inline] pub fn invoke(&self, precedingWords: &foundation::collections::IIterable<SelectableWordSegment>, words: &foundation::collections::IIterable<SelectableWordSegment>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, precedingWords as *const _ as *mut _, words as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISelectableWordsSegmenter, 4141625831, 19219, 17861, 136, 151, 125, 113, 38, 158, 8, 93);
-RT_INTERFACE!{interface ISelectableWordsSegmenter(ISelectableWordsSegmenterVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordsSegmenter] {
-    fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
-    fn GetTokenAt(&self, text: HSTRING, startIndex: u32, out: *mut *mut SelectableWordSegment) -> HRESULT,
-    fn GetTokens(&self, text: HSTRING, out: *mut *mut foundation::collections::IVectorView<SelectableWordSegment>) -> HRESULT,
-    fn Tokenize(&self, text: HSTRING, startIndex: u32, handler: *mut SelectableWordSegmentsTokenizingHandler) -> HRESULT
-}}
-impl ISelectableWordsSegmenter {
-    #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ResolvedLanguage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_token_at(&self, text: &HStringArg, startIndex: u32) -> Result<Option<ComPtr<SelectableWordSegment>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetTokenAt)(self as *const _ as *mut _, text.get(), startIndex, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_tokens(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<SelectableWordSegment>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetTokens)(self as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn tokenize(&self, text: &HStringArg, startIndex: u32, handler: &SelectableWordSegmentsTokenizingHandler) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Tokenize)(self as *const _ as *mut _, text.get(), startIndex, handler as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SelectableWordsSegmenter: ISelectableWordsSegmenter}
-impl RtActivatable<ISelectableWordsSegmenterFactory> for SelectableWordsSegmenter {}
-impl SelectableWordsSegmenter {
-    #[inline] pub fn create_with_language(language: &HStringArg) -> Result<ComPtr<SelectableWordsSegmenter>> {
-        <Self as RtActivatable<ISelectableWordsSegmenterFactory>>::get_activation_factory().create_with_language(language)
-    }
-}
-DEFINE_CLSID!(SelectableWordsSegmenter(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,83,101,108,101,99,116,97,98,108,101,87,111,114,100,115,83,101,103,109,101,110,116,101,114,0]) [CLSID_SelectableWordsSegmenter]);
-DEFINE_IID!(IID_ISelectableWordsSegmenterFactory, 2356835912, 24663, 17209, 188, 112, 242, 16, 1, 10, 65, 80);
-RT_INTERFACE!{static interface ISelectableWordsSegmenterFactory(ISelectableWordsSegmenterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordsSegmenterFactory] {
-    fn CreateWithLanguage(&self, language: HSTRING, out: *mut *mut SelectableWordsSegmenter) -> HRESULT
-}}
-impl ISelectableWordsSegmenterFactory {
-    #[inline] pub fn create_with_language(&self, language: &HStringArg) -> Result<ComPtr<SelectableWordsSegmenter>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithLanguage)(self as *const _ as *mut _, language.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ISemanticTextQuery, 1780263761, 8114, 18697, 128, 184, 53, 115, 26, 43, 62, 127);
-RT_INTERFACE!{interface ISemanticTextQuery(ISemanticTextQueryVtbl): IInspectable(IInspectableVtbl) [IID_ISemanticTextQuery] {
-    fn Find(&self, content: HSTRING, out: *mut *mut foundation::collections::IVectorView<TextSegment>) -> HRESULT,
-    fn FindInProperty(&self, propertyContent: HSTRING, propertyName: HSTRING, out: *mut *mut foundation::collections::IVectorView<TextSegment>) -> HRESULT
-}}
-impl ISemanticTextQuery {
-    #[inline] pub fn find(&self, content: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<TextSegment>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Find)(self as *const _ as *mut _, content.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn find_in_property(&self, propertyContent: &HStringArg, propertyName: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<TextSegment>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindInProperty)(self as *const _ as *mut _, propertyContent.get(), propertyName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class SemanticTextQuery: ISemanticTextQuery}
-impl RtActivatable<ISemanticTextQueryFactory> for SemanticTextQuery {}
-impl SemanticTextQuery {
-    #[inline] pub fn create(aqsFilter: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> {
-        <Self as RtActivatable<ISemanticTextQueryFactory>>::get_activation_factory().create(aqsFilter)
-    }
-    #[inline] pub fn create_with_language(aqsFilter: &HStringArg, filterLanguage: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> {
-        <Self as RtActivatable<ISemanticTextQueryFactory>>::get_activation_factory().create_with_language(aqsFilter, filterLanguage)
-    }
-}
-DEFINE_CLSID!(SemanticTextQuery(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,83,101,109,97,110,116,105,99,84,101,120,116,81,117,101,114,121,0]) [CLSID_SemanticTextQuery]);
-DEFINE_IID!(IID_ISemanticTextQueryFactory, 596378883, 63893, 17799, 135, 119, 162, 183, 216, 10, 207, 239);
-RT_INTERFACE!{static interface ISemanticTextQueryFactory(ISemanticTextQueryFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISemanticTextQueryFactory] {
-    fn Create(&self, aqsFilter: HSTRING, out: *mut *mut SemanticTextQuery) -> HRESULT,
-    fn CreateWithLanguage(&self, aqsFilter: HSTRING, filterLanguage: HSTRING, out: *mut *mut SemanticTextQuery) -> HRESULT
-}}
-impl ISemanticTextQueryFactory {
-    #[inline] pub fn create(&self, aqsFilter: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, aqsFilter.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_with_language(&self, aqsFilter: &HStringArg, filterLanguage: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithLanguage)(self as *const _ as *mut _, aqsFilter.get(), filterLanguage.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ITextConversionGenerator, 56650334, 10921, 19126, 175, 139, 165, 98, 182, 58, 137, 146);
-RT_INTERFACE!{interface ITextConversionGenerator(ITextConversionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextConversionGenerator] {
-    fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_LanguageAvailableButNotInstalled(&self, out: *mut bool) -> HRESULT,
-    fn GetCandidatesAsync(&self, input: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT,
-    fn GetCandidatesWithMaxCountAsync(&self, input: HSTRING, maxCandidates: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT
-}}
-impl ITextConversionGenerator {
-    #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ResolvedLanguage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_language_available_but_not_installed(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_LanguageAvailableButNotInstalled)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_candidates_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCandidatesAsync)(self as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_candidates_with_max_count_async(&self, input: &HStringArg, maxCandidates: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCandidatesWithMaxCountAsync)(self as *const _ as *mut _, input.get(), maxCandidates, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class TextConversionGenerator: ITextConversionGenerator}
-impl RtActivatable<ITextConversionGeneratorFactory> for TextConversionGenerator {}
-impl TextConversionGenerator {
-    #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextConversionGenerator>> {
-        <Self as RtActivatable<ITextConversionGeneratorFactory>>::get_activation_factory().create(languageTag)
-    }
-}
-DEFINE_CLSID!(TextConversionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,67,111,110,118,101,114,115,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextConversionGenerator]);
-DEFINE_IID!(IID_ITextConversionGeneratorFactory, 4239013761, 12419, 18859, 190, 21, 86, 223, 187, 183, 77, 111);
-RT_INTERFACE!{static interface ITextConversionGeneratorFactory(ITextConversionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextConversionGeneratorFactory] {
-    fn Create(&self, languageTag: HSTRING, out: *mut *mut TextConversionGenerator) -> HRESULT
-}}
-impl ITextConversionGeneratorFactory {
-    #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<ComPtr<TextConversionGenerator>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, languageTag.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ITextPhoneme, 2472715274, 39802, 17769, 148, 207, 216, 79, 47, 56, 207, 155);
-RT_INTERFACE!{interface ITextPhoneme(ITextPhonemeVtbl): IInspectable(IInspectableVtbl) [IID_ITextPhoneme] {
-    fn get_DisplayText(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_ReadingText(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl ITextPhoneme {
-    #[inline] pub fn get_display_text(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayText)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_reading_text(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ReadingText)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class TextPhoneme: ITextPhoneme}
-DEFINE_IID!(IID_ITextPredictionGenerator, 1588374279, 44017, 19638, 157, 158, 50, 111, 43, 70, 135, 86);
-RT_INTERFACE!{interface ITextPredictionGenerator(ITextPredictionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextPredictionGenerator] {
-    fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_LanguageAvailableButNotInstalled(&self, out: *mut bool) -> HRESULT,
-    fn GetCandidatesAsync(&self, input: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT,
-    fn GetCandidatesWithMaxCountAsync(&self, input: HSTRING, maxCandidates: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>) -> HRESULT
-}}
-impl ITextPredictionGenerator {
-    #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ResolvedLanguage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_language_available_but_not_installed(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_LanguageAvailableButNotInstalled)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_candidates_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCandidatesAsync)(self as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_candidates_with_max_count_async(&self, input: &HStringArg, maxCandidates: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCandidatesWithMaxCountAsync)(self as *const _ as *mut _, input.get(), maxCandidates, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class TextPredictionGenerator: ITextPredictionGenerator}
-impl RtActivatable<ITextPredictionGeneratorFactory> for TextPredictionGenerator {}
-impl TextPredictionGenerator {
-    #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextPredictionGenerator>> {
-        <Self as RtActivatable<ITextPredictionGeneratorFactory>>::get_activation_factory().create(languageTag)
-    }
-}
-DEFINE_CLSID!(TextPredictionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,80,114,101,100,105,99,116,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextPredictionGenerator]);
-DEFINE_IID!(IID_ITextPredictionGeneratorFactory, 1918350358, 35746, 18257, 157, 48, 157, 133, 67, 86, 83, 162);
-RT_INTERFACE!{static interface ITextPredictionGeneratorFactory(ITextPredictionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextPredictionGeneratorFactory] {
-    fn Create(&self, languageTag: HSTRING, out: *mut *mut TextPredictionGenerator) -> HRESULT
-}}
-impl ITextPredictionGeneratorFactory {
-    #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<ComPtr<TextPredictionGenerator>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, languageTag.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ITextReverseConversionGenerator, 1374156052, 40017, 19846, 174, 27, 180, 152, 251, 173, 131, 19);
-RT_INTERFACE!{interface ITextReverseConversionGenerator(ITextReverseConversionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGenerator] {
-    fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_LanguageAvailableButNotInstalled(&self, out: *mut bool) -> HRESULT,
-    fn ConvertBackAsync(&self, input: HSTRING, out: *mut *mut foundation::IAsyncOperation<HString>) -> HRESULT
-}}
-impl ITextReverseConversionGenerator {
-    #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ResolvedLanguage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_language_available_but_not_installed(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_LanguageAvailableButNotInstalled)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn convert_back_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ConvertBackAsync)(self as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class TextReverseConversionGenerator: ITextReverseConversionGenerator}
-impl RtActivatable<ITextReverseConversionGeneratorFactory> for TextReverseConversionGenerator {}
-impl TextReverseConversionGenerator {
-    #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextReverseConversionGenerator>> {
-        <Self as RtActivatable<ITextReverseConversionGeneratorFactory>>::get_activation_factory().create(languageTag)
-    }
-}
-DEFINE_CLSID!(TextReverseConversionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,82,101,118,101,114,115,101,67,111,110,118,101,114,115,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextReverseConversionGenerator]);
-DEFINE_IID!(IID_ITextReverseConversionGenerator2, 447730412, 34262, 18173, 130, 138, 58, 72, 48, 250, 110, 24);
-RT_INTERFACE!{interface ITextReverseConversionGenerator2(ITextReverseConversionGenerator2Vtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGenerator2] {
-    fn GetPhonemesAsync(&self, input: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<TextPhoneme>>) -> HRESULT
-}}
-impl ITextReverseConversionGenerator2 {
-    #[inline] pub fn get_phonemes_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<TextPhoneme>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPhonemesAsync)(self as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ITextReverseConversionGeneratorFactory, 1673450278, 8154, 16886, 137, 213, 35, 221, 234, 60, 114, 154);
-RT_INTERFACE!{static interface ITextReverseConversionGeneratorFactory(ITextReverseConversionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGeneratorFactory] {
-    fn Create(&self, languageTag: HSTRING, out: *mut *mut TextReverseConversionGenerator) -> HRESULT
-}}
-impl ITextReverseConversionGeneratorFactory {
-    #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<ComPtr<TextReverseConversionGenerator>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, languageTag.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_STRUCT! { struct TextSegment {
-    StartPosition: u32, Length: u32,
-}}
-RT_CLASS!{static class UnicodeCharacters}
-impl RtActivatable<IUnicodeCharactersStatics> for UnicodeCharacters {}
-impl UnicodeCharacters {
-    #[inline] pub fn get_codepoint_from_surrogate_pair(highSurrogate: u32, lowSurrogate: u32) -> Result<u32> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().get_codepoint_from_surrogate_pair(highSurrogate, lowSurrogate)
-    }
-    #[inline] pub fn get_surrogate_pair_from_codepoint(codepoint: u32) -> Result<(Char, Char)> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().get_surrogate_pair_from_codepoint(codepoint)
-    }
-    #[inline] pub fn is_high_surrogate(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_high_surrogate(codepoint)
-    }
-    #[inline] pub fn is_low_surrogate(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_low_surrogate(codepoint)
-    }
-    #[inline] pub fn is_supplementary(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_supplementary(codepoint)
-    }
-    #[inline] pub fn is_noncharacter(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_noncharacter(codepoint)
-    }
-    #[inline] pub fn is_whitespace(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_whitespace(codepoint)
-    }
-    #[inline] pub fn is_alphabetic(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_alphabetic(codepoint)
-    }
-    #[inline] pub fn is_cased(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_cased(codepoint)
-    }
-    #[inline] pub fn is_uppercase(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_uppercase(codepoint)
-    }
-    #[inline] pub fn is_lowercase(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_lowercase(codepoint)
-    }
-    #[inline] pub fn is_id_start(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_id_start(codepoint)
-    }
-    #[inline] pub fn is_id_continue(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_id_continue(codepoint)
-    }
-    #[inline] pub fn is_grapheme_base(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_grapheme_base(codepoint)
-    }
-    #[inline] pub fn is_grapheme_extend(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_grapheme_extend(codepoint)
-    }
-    #[inline] pub fn get_numeric_type(codepoint: u32) -> Result<UnicodeNumericType> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().get_numeric_type(codepoint)
-    }
-    #[inline] pub fn get_general_category(codepoint: u32) -> Result<UnicodeGeneralCategory> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().get_general_category(codepoint)
-    }
-}
-DEFINE_CLSID!(UnicodeCharacters(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,85,110,105,99,111,100,101,67,104,97,114,97,99,116,101,114,115,0]) [CLSID_UnicodeCharacters]);
-DEFINE_IID!(IID_IUnicodeCharactersStatics, 2542837383, 37521, 20369, 182, 200, 182, 227, 89, 215, 167, 251);
-RT_INTERFACE!{static interface IUnicodeCharactersStatics(IUnicodeCharactersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUnicodeCharactersStatics] {
-    fn GetCodepointFromSurrogatePair(&self, highSurrogate: u32, lowSurrogate: u32, out: *mut u32) -> HRESULT,
-    fn GetSurrogatePairFromCodepoint(&self, codepoint: u32, highSurrogate: *mut Char, lowSurrogate: *mut Char) -> HRESULT,
-    fn IsHighSurrogate(&self, codepoint: u32, out: *mut bool) -> HRESULT,
-    fn IsLowSurrogate(&self, codepoint: u32, out: *mut bool) -> HRESULT,
-    fn IsSupplementary(&self, codepoint: u32, out: *mut bool) -> HRESULT,
-    fn IsNoncharacter(&self, codepoint: u32, out: *mut bool) -> HRESULT,
-    fn IsWhitespace(&self, codepoint: u32, out: *mut bool) -> HRESULT,
-    fn IsAlphabetic(&self, codepoint: u32, out: *mut bool) -> HRESULT,
-    fn IsCased(&self, codepoint: u32, out: *mut bool) -> HRESULT,
-    fn IsUppercase(&self, codepoint: u32, out: *mut bool) -> HRESULT,
-    fn IsLowercase(&self, codepoint: u32, out: *mut bool) -> HRESULT,
-    fn IsIdStart(&self, codepoint: u32, out: *mut bool) -> HRESULT,
-    fn IsIdContinue(&self, codepoint: u32, out: *mut bool) -> HRESULT,
-    fn IsGraphemeBase(&self, codepoint: u32, out: *mut bool) -> HRESULT,
-    fn IsGraphemeExtend(&self, codepoint: u32, out: *mut bool) -> HRESULT,
-    fn GetNumericType(&self, codepoint: u32, out: *mut UnicodeNumericType) -> HRESULT,
-    fn GetGeneralCategory(&self, codepoint: u32, out: *mut UnicodeGeneralCategory) -> HRESULT
-}}
-impl IUnicodeCharactersStatics {
-    #[inline] pub fn get_codepoint_from_surrogate_pair(&self, highSurrogate: u32, lowSurrogate: u32) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetCodepointFromSurrogatePair)(self as *const _ as *mut _, highSurrogate, lowSurrogate, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_surrogate_pair_from_codepoint(&self, codepoint: u32) -> Result<(Char, Char)> { unsafe { 
-        let mut highSurrogate = zeroed(); let mut lowSurrogate = zeroed();
-        let hr = ((*self.lpVtbl).GetSurrogatePairFromCodepoint)(self as *const _ as *mut _, codepoint, &mut highSurrogate, &mut lowSurrogate);
-        if hr == S_OK { Ok((highSurrogate, lowSurrogate)) } else { err(hr) }
-    }}
-    #[inline] pub fn is_high_surrogate(&self, codepoint: u32) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsHighSurrogate)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn is_low_surrogate(&self, codepoint: u32) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsLowSurrogate)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn is_supplementary(&self, codepoint: u32) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsSupplementary)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn is_noncharacter(&self, codepoint: u32) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsNoncharacter)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn is_whitespace(&self, codepoint: u32) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsWhitespace)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn is_alphabetic(&self, codepoint: u32) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsAlphabetic)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn is_cased(&self, codepoint: u32) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsCased)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn is_uppercase(&self, codepoint: u32) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsUppercase)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn is_lowercase(&self, codepoint: u32) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsLowercase)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn is_id_start(&self, codepoint: u32) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsIdStart)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn is_id_continue(&self, codepoint: u32) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsIdContinue)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn is_grapheme_base(&self, codepoint: u32) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsGraphemeBase)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn is_grapheme_extend(&self, codepoint: u32) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsGraphemeExtend)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_numeric_type(&self, codepoint: u32) -> Result<UnicodeNumericType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetNumericType)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_general_category(&self, codepoint: u32) -> Result<UnicodeGeneralCategory> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetGeneralCategory)(self as *const _ as *mut _, codepoint, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum UnicodeGeneralCategory: i32 {
-    UppercaseLetter (UnicodeGeneralCategory_UppercaseLetter) = 0, LowercaseLetter (UnicodeGeneralCategory_LowercaseLetter) = 1, TitlecaseLetter (UnicodeGeneralCategory_TitlecaseLetter) = 2, ModifierLetter (UnicodeGeneralCategory_ModifierLetter) = 3, OtherLetter (UnicodeGeneralCategory_OtherLetter) = 4, NonspacingMark (UnicodeGeneralCategory_NonspacingMark) = 5, SpacingCombiningMark (UnicodeGeneralCategory_SpacingCombiningMark) = 6, EnclosingMark (UnicodeGeneralCategory_EnclosingMark) = 7, DecimalDigitNumber (UnicodeGeneralCategory_DecimalDigitNumber) = 8, LetterNumber (UnicodeGeneralCategory_LetterNumber) = 9, OtherNumber (UnicodeGeneralCategory_OtherNumber) = 10, SpaceSeparator (UnicodeGeneralCategory_SpaceSeparator) = 11, LineSeparator (UnicodeGeneralCategory_LineSeparator) = 12, ParagraphSeparator (UnicodeGeneralCategory_ParagraphSeparator) = 13, Control (UnicodeGeneralCategory_Control) = 14, Format (UnicodeGeneralCategory_Format) = 15, Surrogate (UnicodeGeneralCategory_Surrogate) = 16, PrivateUse (UnicodeGeneralCategory_PrivateUse) = 17, ConnectorPunctuation (UnicodeGeneralCategory_ConnectorPunctuation) = 18, DashPunctuation (UnicodeGeneralCategory_DashPunctuation) = 19, OpenPunctuation (UnicodeGeneralCategory_OpenPunctuation) = 20, ClosePunctuation (UnicodeGeneralCategory_ClosePunctuation) = 21, InitialQuotePunctuation (UnicodeGeneralCategory_InitialQuotePunctuation) = 22, FinalQuotePunctuation (UnicodeGeneralCategory_FinalQuotePunctuation) = 23, OtherPunctuation (UnicodeGeneralCategory_OtherPunctuation) = 24, MathSymbol (UnicodeGeneralCategory_MathSymbol) = 25, CurrencySymbol (UnicodeGeneralCategory_CurrencySymbol) = 26, ModifierSymbol (UnicodeGeneralCategory_ModifierSymbol) = 27, OtherSymbol (UnicodeGeneralCategory_OtherSymbol) = 28, NotAssigned (UnicodeGeneralCategory_NotAssigned) = 29,
-}}
-RT_ENUM! { enum UnicodeNumericType: i32 {
-    None (UnicodeNumericType_None) = 0, Decimal (UnicodeNumericType_Decimal) = 1, Digit (UnicodeNumericType_Digit) = 2, Numeric (UnicodeNumericType_Numeric) = 3,
-}}
-DEFINE_IID!(IID_IWordSegment, 3537156717, 39036, 19648, 182, 189, 212, 154, 17, 179, 143, 154);
-RT_INTERFACE!{interface IWordSegment(IWordSegmentVtbl): IInspectable(IInspectableVtbl) [IID_IWordSegment] {
-    fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_SourceTextSegment(&self, out: *mut TextSegment) -> HRESULT,
-    fn get_AlternateForms(&self, out: *mut *mut foundation::collections::IVectorView<AlternateWordForm>) -> HRESULT
-}}
-impl IWordSegment {
-    #[inline] pub fn get_text(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Text)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_source_text_segment(&self) -> Result<TextSegment> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_SourceTextSegment)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_alternate_forms(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<AlternateWordForm>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AlternateForms)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WordSegment: IWordSegment}
-DEFINE_IID!(IID_WordSegmentsTokenizingHandler, 2782749527, 48938, 19535, 163, 31, 41, 231, 28, 111, 139, 53);
-RT_DELEGATE!{delegate WordSegmentsTokenizingHandler(WordSegmentsTokenizingHandlerVtbl, WordSegmentsTokenizingHandlerImpl) [IID_WordSegmentsTokenizingHandler] {
-    fn Invoke(&self, precedingWords: *mut foundation::collections::IIterable<WordSegment>, words: *mut foundation::collections::IIterable<WordSegment>) -> HRESULT
-}}
-impl WordSegmentsTokenizingHandler {
-    #[inline] pub fn invoke(&self, precedingWords: &foundation::collections::IIterable<WordSegment>, words: &foundation::collections::IIterable<WordSegment>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, precedingWords as *const _ as *mut _, words as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IWordsSegmenter, 2259997905, 45822, 20020, 168, 29, 102, 100, 3, 0, 69, 79);
-RT_INTERFACE!{interface IWordsSegmenter(IWordsSegmenterVtbl): IInspectable(IInspectableVtbl) [IID_IWordsSegmenter] {
-    fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
-    fn GetTokenAt(&self, text: HSTRING, startIndex: u32, out: *mut *mut WordSegment) -> HRESULT,
-    fn GetTokens(&self, text: HSTRING, out: *mut *mut foundation::collections::IVectorView<WordSegment>) -> HRESULT,
-    fn Tokenize(&self, text: HSTRING, startIndex: u32, handler: *mut WordSegmentsTokenizingHandler) -> HRESULT
-}}
-impl IWordsSegmenter {
-    #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ResolvedLanguage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_token_at(&self, text: &HStringArg, startIndex: u32) -> Result<Option<ComPtr<WordSegment>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetTokenAt)(self as *const _ as *mut _, text.get(), startIndex, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_tokens(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<WordSegment>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetTokens)(self as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn tokenize(&self, text: &HStringArg, startIndex: u32, handler: &WordSegmentsTokenizingHandler) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Tokenize)(self as *const _ as *mut _, text.get(), startIndex, handler as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WordsSegmenter: IWordsSegmenter}
-impl RtActivatable<IWordsSegmenterFactory> for WordsSegmenter {}
-impl WordsSegmenter {
-    #[inline] pub fn create_with_language(language: &HStringArg) -> Result<ComPtr<WordsSegmenter>> {
-        <Self as RtActivatable<IWordsSegmenterFactory>>::get_activation_factory().create_with_language(language)
-    }
-}
-DEFINE_CLSID!(WordsSegmenter(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,87,111,114,100,115,83,101,103,109,101,110,116,101,114,0]) [CLSID_WordsSegmenter]);
-DEFINE_IID!(IID_IWordsSegmenterFactory, 3868684916, 64565, 17756, 139, 251, 109, 127, 70, 83, 202, 151);
-RT_INTERFACE!{static interface IWordsSegmenterFactory(IWordsSegmenterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWordsSegmenterFactory] {
-    fn CreateWithLanguage(&self, language: HSTRING, out: *mut *mut WordsSegmenter) -> HRESULT
-}}
-impl IWordsSegmenterFactory {
-    #[inline] pub fn create_with_language(&self, language: &HStringArg) -> Result<ComPtr<WordsSegmenter>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithLanguage)(self as *const _ as *mut _, language.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-} // Windows.Data.Text

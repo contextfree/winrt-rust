@@ -1,5 +1,119 @@
 pub mod cortana { // Windows.Services.Cortana
 use ::prelude::*;
+DEFINE_IID!(IID_ICortanaActionableInsights, 2501822129, 64643, 22637, 139, 132, 36, 82, 200, 152, 22, 37);
+RT_INTERFACE!{interface ICortanaActionableInsights(ICortanaActionableInsightsVtbl): IInspectable(IInspectableVtbl) [IID_ICortanaActionableInsights] {
+    #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT,
+    fn IsAvailableAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-storage")] fn ShowInsightsForImageAsync(&self, imageStream: *mut super::super::storage::streams::IRandomAccessStreamReference, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
+    #[cfg(feature="windows-storage")] fn ShowInsightsForImageWithOptionsAsync(&self, imageStream: *mut super::super::storage::streams::IRandomAccessStreamReference, options: *mut CortanaActionableInsightsOptions, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ShowInsightsForTextAsync(&self, text: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ShowInsightsForTextWithOptionsAsync(&self, text: HSTRING, options: *mut CortanaActionableInsightsOptions, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn ShowInsightsAsync(&self, datapackage: *mut super::super::applicationmodel::datatransfer::DataPackage, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn ShowInsightsWithOptionsAsync(&self, datapackage: *mut super::super::applicationmodel::datatransfer::DataPackage, options: *mut CortanaActionableInsightsOptions, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl ICortanaActionableInsights {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn is_available_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).IsAvailableAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn show_insights_for_image_async(&self, imageStream: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ShowInsightsForImageAsync)(self as *const _ as *mut _, imageStream as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn show_insights_for_image_with_options_async(&self, imageStream: &super::super::storage::streams::IRandomAccessStreamReference, options: &CortanaActionableInsightsOptions) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ShowInsightsForImageWithOptionsAsync)(self as *const _ as *mut _, imageStream as *const _ as *mut _, options as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn show_insights_for_text_async(&self, text: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ShowInsightsForTextAsync)(self as *const _ as *mut _, text.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn show_insights_for_text_with_options_async(&self, text: &HStringArg, options: &CortanaActionableInsightsOptions) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ShowInsightsForTextWithOptionsAsync)(self as *const _ as *mut _, text.get(), options as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn show_insights_async(&self, datapackage: &super::super::applicationmodel::datatransfer::DataPackage) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ShowInsightsAsync)(self as *const _ as *mut _, datapackage as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn show_insights_with_options_async(&self, datapackage: &super::super::applicationmodel::datatransfer::DataPackage, options: &CortanaActionableInsightsOptions) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ShowInsightsWithOptionsAsync)(self as *const _ as *mut _, datapackage as *const _ as *mut _, options as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CortanaActionableInsights: ICortanaActionableInsights}
+impl RtActivatable<ICortanaActionableInsightsStatics> for CortanaActionableInsights {}
+impl CortanaActionableInsights {
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<CortanaActionableInsights>>> {
+        <Self as RtActivatable<ICortanaActionableInsightsStatics>>::get_activation_factory().get_default()
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<Option<ComPtr<CortanaActionableInsights>>> {
+        <Self as RtActivatable<ICortanaActionableInsightsStatics>>::get_activation_factory().get_for_user(user)
+    }
+}
+DEFINE_CLSID!(CortanaActionableInsights(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,67,111,114,116,97,110,97,46,67,111,114,116,97,110,97,65,99,116,105,111,110,97,98,108,101,73,110,115,105,103,104,116,115,0]) [CLSID_CortanaActionableInsights]);
+DEFINE_IID!(IID_ICortanaActionableInsightsOptions, 2864888783, 38786, 21536, 184, 30, 122, 229, 106, 243, 24, 21);
+RT_INTERFACE!{interface ICortanaActionableInsightsOptions(ICortanaActionableInsightsOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ICortanaActionableInsightsOptions] {
+    fn get_ContentSourceWebLink(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn put_ContentSourceWebLink(&self, value: *mut foundation::Uri) -> HRESULT,
+    fn get_SurroundingText(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_SurroundingText(&self, value: HSTRING) -> HRESULT
+}}
+impl ICortanaActionableInsightsOptions {
+    #[inline] pub fn get_content_source_web_link(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ContentSourceWebLink)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_content_source_web_link(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ContentSourceWebLink)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_surrounding_text(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SurroundingText)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_surrounding_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SurroundingText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CortanaActionableInsightsOptions: ICortanaActionableInsightsOptions}
+impl RtActivatable<IActivationFactory> for CortanaActionableInsightsOptions {}
+DEFINE_CLSID!(CortanaActionableInsightsOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,67,111,114,116,97,110,97,46,67,111,114,116,97,110,97,65,99,116,105,111,110,97,98,108,101,73,110,115,105,103,104,116,115,79,112,116,105,111,110,115,0]) [CLSID_CortanaActionableInsightsOptions]);
+DEFINE_IID!(IID_ICortanaActionableInsightsStatics, 3051279378, 40239, 23733, 155, 5, 53, 106, 11, 131, 108, 16);
+RT_INTERFACE!{static interface ICortanaActionableInsightsStatics(ICortanaActionableInsightsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICortanaActionableInsightsStatics] {
+    fn GetDefault(&self, out: *mut *mut CortanaActionableInsights) -> HRESULT,
+    #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut super::super::system::User, out: *mut *mut CortanaActionableInsights) -> HRESULT
+}}
+impl ICortanaActionableInsightsStatics {
+    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<CortanaActionableInsights>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &super::super::system::User) -> Result<Option<ComPtr<CortanaActionableInsights>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
 RT_ENUM! { enum CortanaPermission: i32 {
     BrowsingHistory (CortanaPermission_BrowsingHistory) = 0, Calendar (CortanaPermission_Calendar) = 1, CallHistory (CortanaPermission_CallHistory) = 2, Contacts (CortanaPermission_Contacts) = 3, Email (CortanaPermission_Email) = 4, InputPersonalization (CortanaPermission_InputPersonalization) = 5, Location (CortanaPermission_Location) = 6, Messaging (CortanaPermission_Messaging) = 7, Microphone (CortanaPermission_Microphone) = 8, Personalization (CortanaPermission_Personalization) = 9, PhoneCall (CortanaPermission_PhoneCall) = 10,
 }}
@@ -1130,396 +1244,6 @@ RT_ENUM! { enum TrafficCongestion: i32 {
 RT_ENUM! { enum WaypointKind: i32 {
     Stop (WaypointKind_Stop) = 0, Via (WaypointKind_Via) = 1,
 }}
-pub mod offlinemaps { // Windows.Services.Maps.OfflineMaps
-use ::prelude::*;
-DEFINE_IID!(IID_IOfflineMapPackage, 2811717435, 42421, 16708, 181, 37, 230, 140, 136, 98, 102, 75);
-RT_INTERFACE!{interface IOfflineMapPackage(IOfflineMapPackageVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackage] {
-    fn get_Status(&self, out: *mut OfflineMapPackageStatus) -> HRESULT,
-    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_EnclosingRegionName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_EstimatedSizeInBytes(&self, out: *mut u64) -> HRESULT,
-    fn remove_StatusChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_StatusChanged(&self, value: *mut foundation::TypedEventHandler<OfflineMapPackage, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn RequestStartDownloadAsync(&self, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageStartDownloadResult>) -> HRESULT
-}}
-impl IOfflineMapPackage {
-    #[inline] pub fn get_status(&self) -> Result<OfflineMapPackageStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_enclosing_region_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_EnclosingRegionName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_estimated_size_in_bytes(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_EstimatedSizeInBytes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_StatusChanged)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_status_changed(&self, value: &foundation::TypedEventHandler<OfflineMapPackage, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_StatusChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn request_start_download_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageStartDownloadResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestStartDownloadAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class OfflineMapPackage: IOfflineMapPackage}
-impl RtActivatable<IOfflineMapPackageStatics> for OfflineMapPackage {}
-impl OfflineMapPackage {
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_async(queryPoint: &::rt::gen::windows::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> {
-        <Self as RtActivatable<IOfflineMapPackageStatics>>::get_activation_factory().find_packages_async(queryPoint)
-    }
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_bounding_box_async(queryBoundingBox: &::rt::gen::windows::devices::geolocation::GeoboundingBox) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> {
-        <Self as RtActivatable<IOfflineMapPackageStatics>>::get_activation_factory().find_packages_in_bounding_box_async(queryBoundingBox)
-    }
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_geocircle_async(queryCircle: &::rt::gen::windows::devices::geolocation::Geocircle) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> {
-        <Self as RtActivatable<IOfflineMapPackageStatics>>::get_activation_factory().find_packages_in_geocircle_async(queryCircle)
-    }
-}
-DEFINE_CLSID!(OfflineMapPackage(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,79,102,102,108,105,110,101,77,97,112,115,46,79,102,102,108,105,110,101,77,97,112,80,97,99,107,97,103,101,0]) [CLSID_OfflineMapPackage]);
-DEFINE_IID!(IID_IOfflineMapPackageQueryResult, 1431852049, 14817, 20033, 164, 225, 95, 72, 114, 190, 225, 153);
-RT_INTERFACE!{interface IOfflineMapPackageQueryResult(IOfflineMapPackageQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackageQueryResult] {
-    fn get_Status(&self, out: *mut OfflineMapPackageQueryStatus) -> HRESULT,
-    fn get_Packages(&self, out: *mut *mut foundation::collections::IVectorView<OfflineMapPackage>) -> HRESULT
-}}
-impl IOfflineMapPackageQueryResult {
-    #[inline] pub fn get_status(&self) -> Result<OfflineMapPackageQueryStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_packages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<OfflineMapPackage>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Packages)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class OfflineMapPackageQueryResult: IOfflineMapPackageQueryResult}
-RT_ENUM! { enum OfflineMapPackageQueryStatus: i32 {
-    Success (OfflineMapPackageQueryStatus_Success) = 0, UnknownError (OfflineMapPackageQueryStatus_UnknownError) = 1, InvalidCredentials (OfflineMapPackageQueryStatus_InvalidCredentials) = 2, NetworkFailure (OfflineMapPackageQueryStatus_NetworkFailure) = 3,
-}}
-DEFINE_IID!(IID_IOfflineMapPackageStartDownloadResult, 3647322392, 54486, 19198, 147, 120, 62, 199, 30, 241, 28, 61);
-RT_INTERFACE!{interface IOfflineMapPackageStartDownloadResult(IOfflineMapPackageStartDownloadResultVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackageStartDownloadResult] {
-    fn get_Status(&self, out: *mut OfflineMapPackageStartDownloadStatus) -> HRESULT
-}}
-impl IOfflineMapPackageStartDownloadResult {
-    #[inline] pub fn get_status(&self) -> Result<OfflineMapPackageStartDownloadStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class OfflineMapPackageStartDownloadResult: IOfflineMapPackageStartDownloadResult}
-RT_ENUM! { enum OfflineMapPackageStartDownloadStatus: i32 {
-    Success (OfflineMapPackageStartDownloadStatus_Success) = 0, UnknownError (OfflineMapPackageStartDownloadStatus_UnknownError) = 1, InvalidCredentials (OfflineMapPackageStartDownloadStatus_InvalidCredentials) = 2, DeniedWithoutCapability (OfflineMapPackageStartDownloadStatus_DeniedWithoutCapability) = 3,
-}}
-DEFINE_IID!(IID_IOfflineMapPackageStatics, 408844578, 43057, 19120, 148, 31, 105, 152, 250, 146, 146, 133);
-RT_INTERFACE!{static interface IOfflineMapPackageStatics(IOfflineMapPackageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackageStatics] {
-    #[cfg(feature="windows-devices")] fn FindPackagesAsync(&self, queryPoint: *mut ::rt::gen::windows::devices::geolocation::Geopoint, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageQueryResult>) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn FindPackagesInBoundingBoxAsync(&self, queryBoundingBox: *mut ::rt::gen::windows::devices::geolocation::GeoboundingBox, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageQueryResult>) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn FindPackagesInGeocircleAsync(&self, queryCircle: *mut ::rt::gen::windows::devices::geolocation::Geocircle, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageQueryResult>) -> HRESULT
-}}
-impl IOfflineMapPackageStatics {
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_async(&self, queryPoint: &::rt::gen::windows::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindPackagesAsync)(self as *const _ as *mut _, queryPoint as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_bounding_box_async(&self, queryBoundingBox: &::rt::gen::windows::devices::geolocation::GeoboundingBox) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindPackagesInBoundingBoxAsync)(self as *const _ as *mut _, queryBoundingBox as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_geocircle_async(&self, queryCircle: &::rt::gen::windows::devices::geolocation::Geocircle) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindPackagesInGeocircleAsync)(self as *const _ as *mut _, queryCircle as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum OfflineMapPackageStatus: i32 {
-    NotDownloaded (OfflineMapPackageStatus_NotDownloaded) = 0, Downloading (OfflineMapPackageStatus_Downloading) = 1, Downloaded (OfflineMapPackageStatus_Downloaded) = 2, Deleting (OfflineMapPackageStatus_Deleting) = 3,
-}}
-} // Windows.Services.Maps.OfflineMaps
-pub mod localsearch { // Windows.Services.Maps.LocalSearch
-use ::prelude::*;
-RT_CLASS!{static class LocalCategories}
-impl RtActivatable<ILocalCategoriesStatics> for LocalCategories {}
-impl LocalCategories {
-    #[inline] pub fn get_bank_and_credit_unions() -> Result<HString> {
-        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_bank_and_credit_unions()
-    }
-    #[inline] pub fn get_eat_drink() -> Result<HString> {
-        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_eat_drink()
-    }
-    #[inline] pub fn get_hospitals() -> Result<HString> {
-        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_hospitals()
-    }
-    #[inline] pub fn get_hotels_and_motels() -> Result<HString> {
-        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_hotels_and_motels()
-    }
-    #[inline] pub fn get_all() -> Result<HString> {
-        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_all()
-    }
-    #[inline] pub fn get_parking() -> Result<HString> {
-        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_parking()
-    }
-    #[inline] pub fn get_see_do() -> Result<HString> {
-        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_see_do()
-    }
-    #[inline] pub fn get_shop() -> Result<HString> {
-        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_shop()
-    }
-}
-DEFINE_CLSID!(LocalCategories(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,76,111,99,97,108,83,101,97,114,99,104,46,76,111,99,97,108,67,97,116,101,103,111,114,105,101,115,0]) [CLSID_LocalCategories]);
-DEFINE_IID!(IID_ILocalCategoriesStatics, 4103313909, 33377, 17185, 153, 116, 239, 146, 212, 154, 141, 202);
-RT_INTERFACE!{static interface ILocalCategoriesStatics(ILocalCategoriesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILocalCategoriesStatics] {
-    fn get_BankAndCreditUnions(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_EatDrink(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Hospitals(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_HotelsAndMotels(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_All(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Parking(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_SeeDo(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Shop(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl ILocalCategoriesStatics {
-    #[inline] pub fn get_bank_and_credit_unions(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_BankAndCreditUnions)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_eat_drink(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_EatDrink)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_hospitals(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Hospitals)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_hotels_and_motels(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_HotelsAndMotels)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_all(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_All)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_parking(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Parking)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_see_do(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SeeDo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_shop(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Shop)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ILocalLocation, 3138382251, 17666, 20268, 148, 169, 13, 96, 222, 14, 33, 99);
-RT_INTERFACE!{interface ILocalLocation(ILocalLocationVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocation] {
-    fn get_Address(&self, out: *mut *mut super::MapAddress) -> HRESULT,
-    fn get_Identifier(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Description(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
-    #[cfg(not(feature="windows-devices"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_Point(&self, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geopoint) -> HRESULT,
-    fn get_PhoneNumber(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_DataAttribution(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl ILocalLocation {
-    #[inline] pub fn get_address(&self) -> Result<Option<ComPtr<super::MapAddress>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Address)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_identifier(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Identifier)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_point(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::geolocation::Geopoint>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Point)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_phone_number(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PhoneNumber)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_data_attribution(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DataAttribution)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class LocalLocation: ILocalLocation}
-DEFINE_IID!(IID_ILocalLocation2, 1855860860, 60597, 20476, 187, 140, 186, 80, 186, 140, 45, 198);
-RT_INTERFACE!{interface ILocalLocation2(ILocalLocation2Vtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocation2] {
-    fn get_Category(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_RatingInfo(&self, out: *mut *mut LocalLocationRatingInfo) -> HRESULT,
-    fn get_HoursOfOperation(&self, out: *mut *mut foundation::collections::IVectorView<LocalLocationHoursOfOperationItem>) -> HRESULT
-}}
-impl ILocalLocation2 {
-    #[inline] pub fn get_category(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Category)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_rating_info(&self) -> Result<Option<ComPtr<LocalLocationRatingInfo>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RatingInfo)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_hours_of_operation(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<LocalLocationHoursOfOperationItem>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_HoursOfOperation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{static class LocalLocationFinder}
-impl RtActivatable<ILocalLocationFinderStatics> for LocalLocationFinder {}
-impl LocalLocationFinder {
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_local_locations_async(searchTerm: &HStringArg, searchArea: &::rt::gen::windows::devices::geolocation::Geocircle, localCategory: &HStringArg, maxResults: u32) -> Result<ComPtr<foundation::IAsyncOperation<LocalLocationFinderResult>>> {
-        <Self as RtActivatable<ILocalLocationFinderStatics>>::get_activation_factory().find_local_locations_async(searchTerm, searchArea, localCategory, maxResults)
-    }
-}
-DEFINE_CLSID!(LocalLocationFinder(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,76,111,99,97,108,83,101,97,114,99,104,46,76,111,99,97,108,76,111,99,97,116,105,111,110,70,105,110,100,101,114,0]) [CLSID_LocalLocationFinder]);
-DEFINE_IID!(IID_ILocalLocationFinderResult, 3499846854, 62264, 16785, 159, 216, 84, 64, 185, 166, 143, 82);
-RT_INTERFACE!{interface ILocalLocationFinderResult(ILocalLocationFinderResultVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationFinderResult] {
-    fn get_LocalLocations(&self, out: *mut *mut foundation::collections::IVectorView<LocalLocation>) -> HRESULT,
-    fn get_Status(&self, out: *mut LocalLocationFinderStatus) -> HRESULT
-}}
-impl ILocalLocationFinderResult {
-    #[inline] pub fn get_local_locations(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<LocalLocation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LocalLocations)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_status(&self) -> Result<LocalLocationFinderStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class LocalLocationFinderResult: ILocalLocationFinderResult}
-DEFINE_IID!(IID_ILocalLocationFinderStatics, 3538907972, 41182, 18634, 129, 168, 7, 199, 220, 253, 55, 171);
-RT_INTERFACE!{static interface ILocalLocationFinderStatics(ILocalLocationFinderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationFinderStatics] {
-    #[cfg(feature="windows-devices")] fn FindLocalLocationsAsync(&self, searchTerm: HSTRING, searchArea: *mut ::rt::gen::windows::devices::geolocation::Geocircle, localCategory: HSTRING, maxResults: u32, out: *mut *mut foundation::IAsyncOperation<LocalLocationFinderResult>) -> HRESULT
-}}
-impl ILocalLocationFinderStatics {
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_local_locations_async(&self, searchTerm: &HStringArg, searchArea: &::rt::gen::windows::devices::geolocation::Geocircle, localCategory: &HStringArg, maxResults: u32) -> Result<ComPtr<foundation::IAsyncOperation<LocalLocationFinderResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindLocalLocationsAsync)(self as *const _ as *mut _, searchTerm.get(), searchArea as *const _ as *mut _, localCategory.get(), maxResults, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum LocalLocationFinderStatus: i32 {
-    Success (LocalLocationFinderStatus_Success) = 0, UnknownError (LocalLocationFinderStatus_UnknownError) = 1, InvalidCredentials (LocalLocationFinderStatus_InvalidCredentials) = 2, InvalidCategory (LocalLocationFinderStatus_InvalidCategory) = 3, InvalidSearchTerm (LocalLocationFinderStatus_InvalidSearchTerm) = 4, InvalidSearchArea (LocalLocationFinderStatus_InvalidSearchArea) = 5, NetworkFailure (LocalLocationFinderStatus_NetworkFailure) = 6, NotSupported (LocalLocationFinderStatus_NotSupported) = 7,
-}}
-DEFINE_IID!(IID_ILocalLocationHoursOfOperationItem, 592743538, 41415, 17393, 164, 240, 16, 145, 195, 158, 198, 64);
-RT_INTERFACE!{interface ILocalLocationHoursOfOperationItem(ILocalLocationHoursOfOperationItemVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationHoursOfOperationItem] {
-    #[cfg(not(feature="windows-globalization"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-globalization")] fn get_Day(&self, out: *mut ::rt::gen::windows::globalization::DayOfWeek) -> HRESULT,
-    fn get_Start(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_Span(&self, out: *mut foundation::TimeSpan) -> HRESULT
-}}
-impl ILocalLocationHoursOfOperationItem {
-    #[cfg(feature="windows-globalization")] #[inline] pub fn get_day(&self) -> Result<::rt::gen::windows::globalization::DayOfWeek> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Day)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_start(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Start)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_span(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Span)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class LocalLocationHoursOfOperationItem: ILocalLocationHoursOfOperationItem}
-DEFINE_IID!(IID_ILocalLocationRatingInfo, 3407719254, 13140, 17169, 139, 192, 162, 212, 213, 235, 128, 110);
-RT_INTERFACE!{interface ILocalLocationRatingInfo(ILocalLocationRatingInfoVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationRatingInfo] {
-    fn get_AggregateRating(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT,
-    fn get_RatingCount(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
-    fn get_ProviderIdentifier(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl ILocalLocationRatingInfo {
-    #[inline] pub fn get_aggregate_rating(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AggregateRating)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_rating_count(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RatingCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_provider_identifier(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProviderIdentifier)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class LocalLocationRatingInfo: ILocalLocationRatingInfo}
-RT_CLASS!{static class PlaceInfoHelper}
-impl RtActivatable<IPlaceInfoHelperStatics> for PlaceInfoHelper {}
-impl PlaceInfoHelper {
-    #[inline] pub fn create_from_local_location(location: &LocalLocation) -> Result<Option<ComPtr<super::PlaceInfo>>> {
-        <Self as RtActivatable<IPlaceInfoHelperStatics>>::get_activation_factory().create_from_local_location(location)
-    }
-}
-DEFINE_CLSID!(PlaceInfoHelper(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,76,111,99,97,108,83,101,97,114,99,104,46,80,108,97,99,101,73,110,102,111,72,101,108,112,101,114,0]) [CLSID_PlaceInfoHelper]);
-DEFINE_IID!(IID_IPlaceInfoHelperStatics, 3709643175, 43462, 18715, 188, 9, 232, 15, 206, 164, 142, 230);
-RT_INTERFACE!{static interface IPlaceInfoHelperStatics(IPlaceInfoHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaceInfoHelperStatics] {
-    fn CreateFromLocalLocation(&self, location: *mut LocalLocation, out: *mut *mut super::PlaceInfo) -> HRESULT
-}}
-impl IPlaceInfoHelperStatics {
-    #[inline] pub fn create_from_local_location(&self, location: &LocalLocation) -> Result<Option<ComPtr<super::PlaceInfo>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromLocalLocation)(self as *const _ as *mut _, location as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-} // Windows.Services.Maps.LocalSearch
 pub mod guidance { // Windows.Services.Maps.Guidance
 use ::prelude::*;
 RT_ENUM! { enum GuidanceAudioMeasurementSystem: i32 {
@@ -2265,6 +1989,396 @@ impl IGuidanceUpdatedEventArgs {
 }
 RT_CLASS!{class GuidanceUpdatedEventArgs: IGuidanceUpdatedEventArgs}
 } // Windows.Services.Maps.Guidance
+pub mod localsearch { // Windows.Services.Maps.LocalSearch
+use ::prelude::*;
+RT_CLASS!{static class LocalCategories}
+impl RtActivatable<ILocalCategoriesStatics> for LocalCategories {}
+impl LocalCategories {
+    #[inline] pub fn get_bank_and_credit_unions() -> Result<HString> {
+        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_bank_and_credit_unions()
+    }
+    #[inline] pub fn get_eat_drink() -> Result<HString> {
+        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_eat_drink()
+    }
+    #[inline] pub fn get_hospitals() -> Result<HString> {
+        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_hospitals()
+    }
+    #[inline] pub fn get_hotels_and_motels() -> Result<HString> {
+        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_hotels_and_motels()
+    }
+    #[inline] pub fn get_all() -> Result<HString> {
+        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_all()
+    }
+    #[inline] pub fn get_parking() -> Result<HString> {
+        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_parking()
+    }
+    #[inline] pub fn get_see_do() -> Result<HString> {
+        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_see_do()
+    }
+    #[inline] pub fn get_shop() -> Result<HString> {
+        <Self as RtActivatable<ILocalCategoriesStatics>>::get_activation_factory().get_shop()
+    }
+}
+DEFINE_CLSID!(LocalCategories(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,76,111,99,97,108,83,101,97,114,99,104,46,76,111,99,97,108,67,97,116,101,103,111,114,105,101,115,0]) [CLSID_LocalCategories]);
+DEFINE_IID!(IID_ILocalCategoriesStatics, 4103313909, 33377, 17185, 153, 116, 239, 146, 212, 154, 141, 202);
+RT_INTERFACE!{static interface ILocalCategoriesStatics(ILocalCategoriesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILocalCategoriesStatics] {
+    fn get_BankAndCreditUnions(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_EatDrink(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Hospitals(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_HotelsAndMotels(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_All(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Parking(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_SeeDo(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Shop(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl ILocalCategoriesStatics {
+    #[inline] pub fn get_bank_and_credit_unions(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_BankAndCreditUnions)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_eat_drink(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_EatDrink)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_hospitals(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Hospitals)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_hotels_and_motels(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_HotelsAndMotels)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_all(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_All)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_parking(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Parking)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_see_do(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SeeDo)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_shop(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Shop)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ILocalLocation, 3138382251, 17666, 20268, 148, 169, 13, 96, 222, 14, 33, 99);
+RT_INTERFACE!{interface ILocalLocation(ILocalLocationVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocation] {
+    fn get_Address(&self, out: *mut *mut super::MapAddress) -> HRESULT,
+    fn get_Identifier(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Description(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
+    #[cfg(not(feature="windows-devices"))] fn __Dummy4(&self) -> (),
+    #[cfg(feature="windows-devices")] fn get_Point(&self, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geopoint) -> HRESULT,
+    fn get_PhoneNumber(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_DataAttribution(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl ILocalLocation {
+    #[inline] pub fn get_address(&self) -> Result<Option<ComPtr<super::MapAddress>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Address)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_identifier(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Identifier)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_point(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::geolocation::Geopoint>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Point)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_phone_number(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PhoneNumber)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_data_attribution(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DataAttribution)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class LocalLocation: ILocalLocation}
+DEFINE_IID!(IID_ILocalLocation2, 1855860860, 60597, 20476, 187, 140, 186, 80, 186, 140, 45, 198);
+RT_INTERFACE!{interface ILocalLocation2(ILocalLocation2Vtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocation2] {
+    fn get_Category(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_RatingInfo(&self, out: *mut *mut LocalLocationRatingInfo) -> HRESULT,
+    fn get_HoursOfOperation(&self, out: *mut *mut foundation::collections::IVectorView<LocalLocationHoursOfOperationItem>) -> HRESULT
+}}
+impl ILocalLocation2 {
+    #[inline] pub fn get_category(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Category)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_rating_info(&self) -> Result<Option<ComPtr<LocalLocationRatingInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_RatingInfo)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_hours_of_operation(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<LocalLocationHoursOfOperationItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_HoursOfOperation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{static class LocalLocationFinder}
+impl RtActivatable<ILocalLocationFinderStatics> for LocalLocationFinder {}
+impl LocalLocationFinder {
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_local_locations_async(searchTerm: &HStringArg, searchArea: &::rt::gen::windows::devices::geolocation::Geocircle, localCategory: &HStringArg, maxResults: u32) -> Result<ComPtr<foundation::IAsyncOperation<LocalLocationFinderResult>>> {
+        <Self as RtActivatable<ILocalLocationFinderStatics>>::get_activation_factory().find_local_locations_async(searchTerm, searchArea, localCategory, maxResults)
+    }
+}
+DEFINE_CLSID!(LocalLocationFinder(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,76,111,99,97,108,83,101,97,114,99,104,46,76,111,99,97,108,76,111,99,97,116,105,111,110,70,105,110,100,101,114,0]) [CLSID_LocalLocationFinder]);
+DEFINE_IID!(IID_ILocalLocationFinderResult, 3499846854, 62264, 16785, 159, 216, 84, 64, 185, 166, 143, 82);
+RT_INTERFACE!{interface ILocalLocationFinderResult(ILocalLocationFinderResultVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationFinderResult] {
+    fn get_LocalLocations(&self, out: *mut *mut foundation::collections::IVectorView<LocalLocation>) -> HRESULT,
+    fn get_Status(&self, out: *mut LocalLocationFinderStatus) -> HRESULT
+}}
+impl ILocalLocationFinderResult {
+    #[inline] pub fn get_local_locations(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<LocalLocation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_LocalLocations)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_status(&self) -> Result<LocalLocationFinderStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class LocalLocationFinderResult: ILocalLocationFinderResult}
+DEFINE_IID!(IID_ILocalLocationFinderStatics, 3538907972, 41182, 18634, 129, 168, 7, 199, 220, 253, 55, 171);
+RT_INTERFACE!{static interface ILocalLocationFinderStatics(ILocalLocationFinderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationFinderStatics] {
+    #[cfg(feature="windows-devices")] fn FindLocalLocationsAsync(&self, searchTerm: HSTRING, searchArea: *mut ::rt::gen::windows::devices::geolocation::Geocircle, localCategory: HSTRING, maxResults: u32, out: *mut *mut foundation::IAsyncOperation<LocalLocationFinderResult>) -> HRESULT
+}}
+impl ILocalLocationFinderStatics {
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_local_locations_async(&self, searchTerm: &HStringArg, searchArea: &::rt::gen::windows::devices::geolocation::Geocircle, localCategory: &HStringArg, maxResults: u32) -> Result<ComPtr<foundation::IAsyncOperation<LocalLocationFinderResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindLocalLocationsAsync)(self as *const _ as *mut _, searchTerm.get(), searchArea as *const _ as *mut _, localCategory.get(), maxResults, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum LocalLocationFinderStatus: i32 {
+    Success (LocalLocationFinderStatus_Success) = 0, UnknownError (LocalLocationFinderStatus_UnknownError) = 1, InvalidCredentials (LocalLocationFinderStatus_InvalidCredentials) = 2, InvalidCategory (LocalLocationFinderStatus_InvalidCategory) = 3, InvalidSearchTerm (LocalLocationFinderStatus_InvalidSearchTerm) = 4, InvalidSearchArea (LocalLocationFinderStatus_InvalidSearchArea) = 5, NetworkFailure (LocalLocationFinderStatus_NetworkFailure) = 6, NotSupported (LocalLocationFinderStatus_NotSupported) = 7,
+}}
+DEFINE_IID!(IID_ILocalLocationHoursOfOperationItem, 592743538, 41415, 17393, 164, 240, 16, 145, 195, 158, 198, 64);
+RT_INTERFACE!{interface ILocalLocationHoursOfOperationItem(ILocalLocationHoursOfOperationItemVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationHoursOfOperationItem] {
+    #[cfg(not(feature="windows-globalization"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-globalization")] fn get_Day(&self, out: *mut ::rt::gen::windows::globalization::DayOfWeek) -> HRESULT,
+    fn get_Start(&self, out: *mut foundation::TimeSpan) -> HRESULT,
+    fn get_Span(&self, out: *mut foundation::TimeSpan) -> HRESULT
+}}
+impl ILocalLocationHoursOfOperationItem {
+    #[cfg(feature="windows-globalization")] #[inline] pub fn get_day(&self) -> Result<::rt::gen::windows::globalization::DayOfWeek> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Day)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_start(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Start)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_span(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Span)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class LocalLocationHoursOfOperationItem: ILocalLocationHoursOfOperationItem}
+DEFINE_IID!(IID_ILocalLocationRatingInfo, 3407719254, 13140, 17169, 139, 192, 162, 212, 213, 235, 128, 110);
+RT_INTERFACE!{interface ILocalLocationRatingInfo(ILocalLocationRatingInfoVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationRatingInfo] {
+    fn get_AggregateRating(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT,
+    fn get_RatingCount(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
+    fn get_ProviderIdentifier(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl ILocalLocationRatingInfo {
+    #[inline] pub fn get_aggregate_rating(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AggregateRating)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_rating_count(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_RatingCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_provider_identifier(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderIdentifier)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class LocalLocationRatingInfo: ILocalLocationRatingInfo}
+RT_CLASS!{static class PlaceInfoHelper}
+impl RtActivatable<IPlaceInfoHelperStatics> for PlaceInfoHelper {}
+impl PlaceInfoHelper {
+    #[inline] pub fn create_from_local_location(location: &LocalLocation) -> Result<Option<ComPtr<super::PlaceInfo>>> {
+        <Self as RtActivatable<IPlaceInfoHelperStatics>>::get_activation_factory().create_from_local_location(location)
+    }
+}
+DEFINE_CLSID!(PlaceInfoHelper(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,76,111,99,97,108,83,101,97,114,99,104,46,80,108,97,99,101,73,110,102,111,72,101,108,112,101,114,0]) [CLSID_PlaceInfoHelper]);
+DEFINE_IID!(IID_IPlaceInfoHelperStatics, 3709643175, 43462, 18715, 188, 9, 232, 15, 206, 164, 142, 230);
+RT_INTERFACE!{static interface IPlaceInfoHelperStatics(IPlaceInfoHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaceInfoHelperStatics] {
+    fn CreateFromLocalLocation(&self, location: *mut LocalLocation, out: *mut *mut super::PlaceInfo) -> HRESULT
+}}
+impl IPlaceInfoHelperStatics {
+    #[inline] pub fn create_from_local_location(&self, location: &LocalLocation) -> Result<Option<ComPtr<super::PlaceInfo>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateFromLocalLocation)(self as *const _ as *mut _, location as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+} // Windows.Services.Maps.LocalSearch
+pub mod offlinemaps { // Windows.Services.Maps.OfflineMaps
+use ::prelude::*;
+DEFINE_IID!(IID_IOfflineMapPackage, 2811717435, 42421, 16708, 181, 37, 230, 140, 136, 98, 102, 75);
+RT_INTERFACE!{interface IOfflineMapPackage(IOfflineMapPackageVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackage] {
+    fn get_Status(&self, out: *mut OfflineMapPackageStatus) -> HRESULT,
+    fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_EnclosingRegionName(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_EstimatedSizeInBytes(&self, out: *mut u64) -> HRESULT,
+    fn remove_StatusChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
+    fn add_StatusChanged(&self, value: *mut foundation::TypedEventHandler<OfflineMapPackage, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn RequestStartDownloadAsync(&self, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageStartDownloadResult>) -> HRESULT
+}}
+impl IOfflineMapPackage {
+    #[inline] pub fn get_status(&self) -> Result<OfflineMapPackageStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_enclosing_region_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_EnclosingRegionName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_estimated_size_in_bytes(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_EstimatedSizeInBytes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_StatusChanged)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_status_changed(&self, value: &foundation::TypedEventHandler<OfflineMapPackage, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_StatusChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn request_start_download_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageStartDownloadResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestStartDownloadAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class OfflineMapPackage: IOfflineMapPackage}
+impl RtActivatable<IOfflineMapPackageStatics> for OfflineMapPackage {}
+impl OfflineMapPackage {
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_async(queryPoint: &::rt::gen::windows::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> {
+        <Self as RtActivatable<IOfflineMapPackageStatics>>::get_activation_factory().find_packages_async(queryPoint)
+    }
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_bounding_box_async(queryBoundingBox: &::rt::gen::windows::devices::geolocation::GeoboundingBox) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> {
+        <Self as RtActivatable<IOfflineMapPackageStatics>>::get_activation_factory().find_packages_in_bounding_box_async(queryBoundingBox)
+    }
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_geocircle_async(queryCircle: &::rt::gen::windows::devices::geolocation::Geocircle) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> {
+        <Self as RtActivatable<IOfflineMapPackageStatics>>::get_activation_factory().find_packages_in_geocircle_async(queryCircle)
+    }
+}
+DEFINE_CLSID!(OfflineMapPackage(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,79,102,102,108,105,110,101,77,97,112,115,46,79,102,102,108,105,110,101,77,97,112,80,97,99,107,97,103,101,0]) [CLSID_OfflineMapPackage]);
+DEFINE_IID!(IID_IOfflineMapPackageQueryResult, 1431852049, 14817, 20033, 164, 225, 95, 72, 114, 190, 225, 153);
+RT_INTERFACE!{interface IOfflineMapPackageQueryResult(IOfflineMapPackageQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackageQueryResult] {
+    fn get_Status(&self, out: *mut OfflineMapPackageQueryStatus) -> HRESULT,
+    fn get_Packages(&self, out: *mut *mut foundation::collections::IVectorView<OfflineMapPackage>) -> HRESULT
+}}
+impl IOfflineMapPackageQueryResult {
+    #[inline] pub fn get_status(&self) -> Result<OfflineMapPackageQueryStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_packages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<OfflineMapPackage>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Packages)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class OfflineMapPackageQueryResult: IOfflineMapPackageQueryResult}
+RT_ENUM! { enum OfflineMapPackageQueryStatus: i32 {
+    Success (OfflineMapPackageQueryStatus_Success) = 0, UnknownError (OfflineMapPackageQueryStatus_UnknownError) = 1, InvalidCredentials (OfflineMapPackageQueryStatus_InvalidCredentials) = 2, NetworkFailure (OfflineMapPackageQueryStatus_NetworkFailure) = 3,
+}}
+DEFINE_IID!(IID_IOfflineMapPackageStartDownloadResult, 3647322392, 54486, 19198, 147, 120, 62, 199, 30, 241, 28, 61);
+RT_INTERFACE!{interface IOfflineMapPackageStartDownloadResult(IOfflineMapPackageStartDownloadResultVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackageStartDownloadResult] {
+    fn get_Status(&self, out: *mut OfflineMapPackageStartDownloadStatus) -> HRESULT
+}}
+impl IOfflineMapPackageStartDownloadResult {
+    #[inline] pub fn get_status(&self) -> Result<OfflineMapPackageStartDownloadStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class OfflineMapPackageStartDownloadResult: IOfflineMapPackageStartDownloadResult}
+RT_ENUM! { enum OfflineMapPackageStartDownloadStatus: i32 {
+    Success (OfflineMapPackageStartDownloadStatus_Success) = 0, UnknownError (OfflineMapPackageStartDownloadStatus_UnknownError) = 1, InvalidCredentials (OfflineMapPackageStartDownloadStatus_InvalidCredentials) = 2, DeniedWithoutCapability (OfflineMapPackageStartDownloadStatus_DeniedWithoutCapability) = 3,
+}}
+DEFINE_IID!(IID_IOfflineMapPackageStatics, 408844578, 43057, 19120, 148, 31, 105, 152, 250, 146, 146, 133);
+RT_INTERFACE!{static interface IOfflineMapPackageStatics(IOfflineMapPackageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackageStatics] {
+    #[cfg(feature="windows-devices")] fn FindPackagesAsync(&self, queryPoint: *mut ::rt::gen::windows::devices::geolocation::Geopoint, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageQueryResult>) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn FindPackagesInBoundingBoxAsync(&self, queryBoundingBox: *mut ::rt::gen::windows::devices::geolocation::GeoboundingBox, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageQueryResult>) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn FindPackagesInGeocircleAsync(&self, queryCircle: *mut ::rt::gen::windows::devices::geolocation::Geocircle, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageQueryResult>) -> HRESULT
+}}
+impl IOfflineMapPackageStatics {
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_async(&self, queryPoint: &::rt::gen::windows::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindPackagesAsync)(self as *const _ as *mut _, queryPoint as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_bounding_box_async(&self, queryBoundingBox: &::rt::gen::windows::devices::geolocation::GeoboundingBox) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindPackagesInBoundingBoxAsync)(self as *const _ as *mut _, queryBoundingBox as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_geocircle_async(&self, queryCircle: &::rt::gen::windows::devices::geolocation::Geocircle) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindPackagesInGeocircleAsync)(self as *const _ as *mut _, queryCircle as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum OfflineMapPackageStatus: i32 {
+    NotDownloaded (OfflineMapPackageStatus_NotDownloaded) = 0, Downloading (OfflineMapPackageStatus_Downloading) = 1, Downloaded (OfflineMapPackageStatus_Downloaded) = 2, Deleting (OfflineMapPackageStatus_Deleting) = 3,
+}}
+} // Windows.Services.Maps.OfflineMaps
 } // Windows.Services.Maps
 pub mod store { // Windows.Services.Store
 use ::prelude::*;
@@ -2346,6 +2460,17 @@ impl IStoreAppLicense {
     }}
 }
 RT_CLASS!{class StoreAppLicense: IStoreAppLicense}
+DEFINE_IID!(IID_IStoreAppLicense2, 3026611857, 17475, 16563, 153, 63, 40, 144, 68, 53, 189, 198);
+RT_INTERFACE!{interface IStoreAppLicense2(IStoreAppLicense2Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreAppLicense2] {
+    fn get_IsDiscLicense(&self, out: *mut bool) -> HRESULT
+}}
+impl IStoreAppLicense2 {
+    #[inline] pub fn get_is_disc_license(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsDiscLicense)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IStoreAvailability, 4194698021, 4093, 17555, 173, 67, 241, 249, 145, 143, 105, 250);
 RT_INTERFACE!{interface IStoreAvailability(IStoreAvailabilityVtbl): IInspectable(IInspectableVtbl) [IID_IStoreAvailability] {
     fn get_StoreId(&self, out: *mut HSTRING) -> HRESULT,
@@ -2745,6 +2870,23 @@ impl IStoreContext3 {
     #[inline] pub fn uninstall_store_package_by_store_id_async(&self, storeId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StoreUninstallStorePackageResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).UninstallStorePackageByStoreIdAsync)(self as *const _ as *mut _, storeId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IStoreContext4, 2946264937, 48801, 19444, 142, 116, 174, 3, 226, 6, 198, 176);
+RT_INTERFACE!{interface IStoreContext4(IStoreContext4Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreContext4] {
+    fn RequestRateAndReviewAppAsync(&self, out: *mut *mut foundation::IAsyncOperation<StoreRateAndReviewResult>) -> HRESULT,
+    fn SetInstallOrderForAssociatedStoreQueueItemsAsync(&self, items: *mut foundation::collections::IIterable<StoreQueueItem>, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<StoreQueueItem>>) -> HRESULT
+}}
+impl IStoreContext4 {
+    #[inline] pub fn request_rate_and_review_app_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<StoreRateAndReviewResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestRateAndReviewAppAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_install_order_for_associated_store_queue_items_async(&self, items: &foundation::collections::IIterable<StoreQueueItem>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<StoreQueueItem>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).SetInstallOrderForAssociatedStoreQueueItemsAsync)(self as *const _ as *mut _, items as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3304,6 +3446,29 @@ impl IStoreQueueItem {
     }}
 }
 RT_CLASS!{class StoreQueueItem: IStoreQueueItem}
+DEFINE_IID!(IID_IStoreQueueItem2, 1766399144, 6868, 17532, 173, 140, 169, 80, 53, 246, 77, 130);
+RT_INTERFACE!{interface IStoreQueueItem2(IStoreQueueItem2Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreQueueItem2] {
+    fn CancelInstallAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn PauseInstallAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ResumeInstallAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+}}
+impl IStoreQueueItem2 {
+    #[inline] pub fn cancel_install_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CancelInstallAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn pause_install_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).PauseInstallAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn resume_install_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).ResumeInstallAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
 DEFINE_IID!(IID_IStoreQueueItemCompletedEventArgs, 306700140, 46154, 17307, 187, 7, 29, 48, 3, 208, 5, 194);
 RT_INTERFACE!{interface IStoreQueueItemCompletedEventArgs(IStoreQueueItemCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IStoreQueueItemCompletedEventArgs] {
     fn get_Status(&self, out: *mut *mut StoreQueueItemStatus) -> HRESULT
@@ -3355,6 +3520,39 @@ impl IStoreQueueItemStatus {
     }}
 }
 RT_CLASS!{class StoreQueueItemStatus: IStoreQueueItemStatus}
+DEFINE_IID!(IID_IStoreRateAndReviewResult, 2636160342, 42677, 16673, 155, 97, 238, 109, 15, 189, 189, 187);
+RT_INTERFACE!{interface IStoreRateAndReviewResult(IStoreRateAndReviewResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreRateAndReviewResult] {
+    fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
+    fn get_ExtendedJsonData(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_WasUpdated(&self, out: *mut bool) -> HRESULT,
+    fn get_Status(&self, out: *mut StoreRateAndReviewStatus) -> HRESULT
+}}
+impl IStoreRateAndReviewResult {
+    #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ExtendedError)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_extended_json_data(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ExtendedJsonData)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_was_updated(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_WasUpdated)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_status(&self) -> Result<StoreRateAndReviewStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class StoreRateAndReviewResult: IStoreRateAndReviewResult}
+RT_ENUM! { enum StoreRateAndReviewStatus: i32 {
+    Succeeded (StoreRateAndReviewStatus_Succeeded) = 0, CanceledByUser (StoreRateAndReviewStatus_CanceledByUser) = 1, NetworkError (StoreRateAndReviewStatus_NetworkError) = 2, Error (StoreRateAndReviewStatus_Error) = 3,
+}}
 RT_CLASS!{static class StoreRequestHelper}
 impl RtActivatable<IStoreRequestHelperStatics> for StoreRequestHelper {}
 impl StoreRequestHelper {

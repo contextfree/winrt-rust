@@ -1,4 +1,4 @@
-extern crate winapi as w;
+extern crate winapi;
 extern crate winrt;
 
 use std::ptr;
@@ -36,8 +36,8 @@ fn run() {
     println!("{}", device_selector);
     
     unsafe {
-        use w::shared::winerror::S_OK;
-        use w::winrt::roerrorapi::GetRestrictedErrorInfo;
+        use winapi::shared::winerror::S_OK;
+        use winapi::winrt::roerrorapi::GetRestrictedErrorInfo;
 
         // Test some error reporting by using an invalid device selector
         let wrong_deviceselector: FastHString = "Foobar".into();
@@ -175,4 +175,12 @@ fn run() {
         // the following won't compile (iterator invalidation):
         //lines.remove_at(0).expect("remove_at failed");
     }
+    println!("=== Guid test ===");
+    let new_guid = GuidHelper::create_new_guid().unwrap();
+    println!("create_new_guid -> {:?}", new_guid);
+    let empty_guid = GuidHelper::get_empty().unwrap();
+    println!("get_empty -> {:?}", empty_guid);
+    let empty_guid2 = GuidHelper::get_empty().unwrap();
+    assert!(!GuidHelper::equals(&empty_guid, &new_guid).unwrap());
+    assert!(GuidHelper::equals(&empty_guid, &empty_guid2).unwrap());
 }

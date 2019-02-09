@@ -151,6 +151,2068 @@ impl IHostNameStatics {
 RT_ENUM! { enum HostNameType: i32 {
     DomainName (HostNameType_DomainName) = 0, Ipv4 (HostNameType_Ipv4) = 1, Ipv6 (HostNameType_Ipv6) = 2, Bluetooth (HostNameType_Bluetooth) = 3,
 }}
+pub mod backgroundtransfer { // Windows.Networking.BackgroundTransfer
+use ::prelude::*;
+DEFINE_IID!(IID_IBackgroundDownloader, 3251082035, 26185, 19229, 168, 38, 164, 179, 221, 35, 77, 11);
+RT_INTERFACE!{interface IBackgroundDownloader(IBackgroundDownloaderVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader] {
+    #[cfg(feature="windows-storage")] fn CreateDownload(&self, uri: *mut foundation::Uri, resultFile: *mut super::super::storage::IStorageFile, out: *mut *mut DownloadOperation) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn CreateDownloadFromFile(&self, uri: *mut foundation::Uri, resultFile: *mut super::super::storage::IStorageFile, requestBodyFile: *mut super::super::storage::IStorageFile, out: *mut *mut DownloadOperation) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn CreateDownloadAsync(&self, uri: *mut foundation::Uri, resultFile: *mut super::super::storage::IStorageFile, requestBodyStream: *mut super::super::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncOperation<DownloadOperation>) -> HRESULT
+}}
+impl IBackgroundDownloader {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_download(&self, uri: &foundation::Uri, resultFile: &super::super::storage::IStorageFile) -> Result<Option<ComPtr<DownloadOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateDownload)(self as *const _ as *mut _, uri as *const _ as *mut _, resultFile as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_download_from_file(&self, uri: &foundation::Uri, resultFile: &super::super::storage::IStorageFile, requestBodyFile: &super::super::storage::IStorageFile) -> Result<Option<ComPtr<DownloadOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateDownloadFromFile)(self as *const _ as *mut _, uri as *const _ as *mut _, resultFile as *const _ as *mut _, requestBodyFile as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_download_async(&self, uri: &foundation::Uri, resultFile: &super::super::storage::IStorageFile, requestBodyStream: &super::super::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncOperation<DownloadOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateDownloadAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, resultFile as *const _ as *mut _, requestBodyStream as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BackgroundDownloader: IBackgroundDownloader}
+impl RtActivatable<IBackgroundDownloaderFactory> for BackgroundDownloader {}
+impl RtActivatable<IBackgroundDownloaderStaticMethods> for BackgroundDownloader {}
+impl RtActivatable<IBackgroundDownloaderStaticMethods2> for BackgroundDownloader {}
+impl RtActivatable<IBackgroundDownloaderUserConsent> for BackgroundDownloader {}
+impl RtActivatable<IActivationFactory> for BackgroundDownloader {}
+impl BackgroundDownloader {
+    #[inline] pub fn create_with_completion_group(completionGroup: &BackgroundTransferCompletionGroup) -> Result<ComPtr<BackgroundDownloader>> {
+        <Self as RtActivatable<IBackgroundDownloaderFactory>>::get_activation_factory().create_with_completion_group(completionGroup)
+    }
+    #[inline] pub fn get_current_downloads_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> {
+        <Self as RtActivatable<IBackgroundDownloaderStaticMethods>>::get_activation_factory().get_current_downloads_async()
+    }
+    #[inline] pub fn get_current_downloads_for_group_async(group: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> {
+        <Self as RtActivatable<IBackgroundDownloaderStaticMethods>>::get_activation_factory().get_current_downloads_for_group_async(group)
+    }
+    #[inline] pub fn get_current_downloads_for_transfer_group_async(group: &BackgroundTransferGroup) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> {
+        <Self as RtActivatable<IBackgroundDownloaderStaticMethods2>>::get_activation_factory().get_current_downloads_for_transfer_group_async(group)
+    }
+    #[inline] pub fn request_unconstrained_downloads_async(operations: &foundation::collections::IIterable<DownloadOperation>) -> Result<ComPtr<foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> {
+        <Self as RtActivatable<IBackgroundDownloaderUserConsent>>::get_activation_factory().request_unconstrained_downloads_async(operations)
+    }
+}
+DEFINE_CLSID!(BackgroundDownloader(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,68,111,119,110,108,111,97,100,101,114,0]) [CLSID_BackgroundDownloader]);
+DEFINE_IID!(IID_IBackgroundDownloader2, 2840221767, 13453, 18997, 137, 14, 138, 30, 243, 121, 132, 121);
+RT_INTERFACE!{interface IBackgroundDownloader2(IBackgroundDownloader2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader2] {
+    fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT,
+    fn put_TransferGroup(&self, value: *mut BackgroundTransferGroup) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_SuccessToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_SuccessToastNotification(&self, value: *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_FailureToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_FailureToastNotification(&self, value: *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_SuccessTileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_SuccessTileNotification(&self, value: *mut super::super::ui::notifications::TileNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_FailureTileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_FailureTileNotification(&self, value: *mut super::super::ui::notifications::TileNotification) -> HRESULT
+}}
+impl IBackgroundDownloader2 {
+    #[inline] pub fn get_transfer_group(&self) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TransferGroup)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_transfer_group(&self, value: &BackgroundTransferGroup) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TransferGroup)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SuccessToastNotification)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_toast_notification(&self, value: &super::super::ui::notifications::ToastNotification) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SuccessToastNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_FailureToastNotification)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_toast_notification(&self, value: &super::super::ui::notifications::ToastNotification) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_FailureToastNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SuccessTileNotification)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_tile_notification(&self, value: &super::super::ui::notifications::TileNotification) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SuccessTileNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_FailureTileNotification)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_tile_notification(&self, value: &super::super::ui::notifications::TileNotification) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_FailureTileNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundDownloader3, 3508177992, 34536, 18658, 182, 21, 105, 118, 170, 191, 134, 29);
+RT_INTERFACE!{interface IBackgroundDownloader3(IBackgroundDownloader3Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader3] {
+    fn get_CompletionGroup(&self, out: *mut *mut BackgroundTransferCompletionGroup) -> HRESULT
+}}
+impl IBackgroundDownloader3 {
+    #[inline] pub fn get_completion_group(&self) -> Result<Option<ComPtr<BackgroundTransferCompletionGroup>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CompletionGroup)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundDownloaderFactory, 646147108, 55454, 18164, 162, 154, 79, 77, 79, 20, 65, 85);
+RT_INTERFACE!{static interface IBackgroundDownloaderFactory(IBackgroundDownloaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderFactory] {
+    fn CreateWithCompletionGroup(&self, completionGroup: *mut BackgroundTransferCompletionGroup, out: *mut *mut BackgroundDownloader) -> HRESULT
+}}
+impl IBackgroundDownloaderFactory {
+    #[inline] pub fn create_with_completion_group(&self, completionGroup: &BackgroundTransferCompletionGroup) -> Result<ComPtr<BackgroundDownloader>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithCompletionGroup)(self as *const _ as *mut _, completionGroup as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundDownloaderStaticMethods, 1386633781, 50766, 17004, 153, 25, 84, 13, 13, 33, 166, 80);
+RT_INTERFACE!{static interface IBackgroundDownloaderStaticMethods(IBackgroundDownloaderStaticMethodsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderStaticMethods] {
+    fn GetCurrentDownloadsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>) -> HRESULT,
+    fn GetCurrentDownloadsForGroupAsync(&self, group: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>) -> HRESULT
+}}
+impl IBackgroundDownloaderStaticMethods {
+    #[inline] pub fn get_current_downloads_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCurrentDownloadsAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_current_downloads_for_group_async(&self, group: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCurrentDownloadsForGroupAsync)(self as *const _ as *mut _, group.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundDownloaderStaticMethods2, 799675175, 6868, 19621, 178, 205, 8, 219, 240, 116, 106, 254);
+RT_INTERFACE!{static interface IBackgroundDownloaderStaticMethods2(IBackgroundDownloaderStaticMethods2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderStaticMethods2] {
+    fn GetCurrentDownloadsForTransferGroupAsync(&self, group: *mut BackgroundTransferGroup, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>) -> HRESULT
+}}
+impl IBackgroundDownloaderStaticMethods2 {
+    #[inline] pub fn get_current_downloads_for_transfer_group_async(&self, group: &BackgroundTransferGroup) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCurrentDownloadsForTransferGroupAsync)(self as *const _ as *mut _, group as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundDownloaderUserConsent, 1561651462, 37478, 18440, 189, 113, 89, 37, 242, 163, 19, 10);
+RT_INTERFACE!{static interface IBackgroundDownloaderUserConsent(IBackgroundDownloaderUserConsentVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderUserConsent] {
+    fn RequestUnconstrainedDownloadsAsync(&self, operations: *mut foundation::collections::IIterable<DownloadOperation>, out: *mut *mut foundation::IAsyncOperation<UnconstrainedTransferRequestResult>) -> HRESULT
+}}
+impl IBackgroundDownloaderUserConsent {
+    #[inline] pub fn request_unconstrained_downloads_async(&self, operations: &foundation::collections::IIterable<DownloadOperation>) -> Result<ComPtr<foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestUnconstrainedDownloadsAsync)(self as *const _ as *mut _, operations as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_STRUCT! { struct BackgroundDownloadProgress {
+    BytesReceived: u64, TotalBytesToReceive: u64, Status: BackgroundTransferStatus, HasResponseChanged: bool, HasRestarted: bool,
+}}
+DEFINE_IID!(IID_IBackgroundTransferBase, 714973776, 51049, 17804, 175, 232, 254, 184, 212, 211, 178, 239);
+RT_INTERFACE!{interface IBackgroundTransferBase(IBackgroundTransferBaseVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferBase] {
+    fn SetRequestHeader(&self, headerName: HSTRING, headerValue: HSTRING) -> HRESULT,
+    #[cfg(not(feature="windows-security"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-security")] fn get_ServerCredential(&self, out: *mut *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(not(feature="windows-security"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-security")] fn put_ServerCredential(&self, credential: *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(not(feature="windows-security"))] fn __Dummy3(&self) -> (),
+    #[cfg(feature="windows-security")] fn get_ProxyCredential(&self, out: *mut *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(not(feature="windows-security"))] fn __Dummy4(&self) -> (),
+    #[cfg(feature="windows-security")] fn put_ProxyCredential(&self, credential: *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
+    fn get_Method(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Method(&self, value: HSTRING) -> HRESULT,
+    fn get_Group(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Group(&self, value: HSTRING) -> HRESULT,
+    fn get_CostPolicy(&self, out: *mut BackgroundTransferCostPolicy) -> HRESULT,
+    fn put_CostPolicy(&self, value: BackgroundTransferCostPolicy) -> HRESULT
+}}
+impl IBackgroundTransferBase {
+    #[inline] pub fn set_request_header(&self, headerName: &HStringArg, headerValue: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetRequestHeader)(self as *const _ as *mut _, headerName.get(), headerValue.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-security")] #[inline] pub fn get_server_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ServerCredential)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-security")] #[inline] pub fn set_server_credential(&self, credential: &super::super::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ServerCredential)(self as *const _ as *mut _, credential as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-security")] #[inline] pub fn get_proxy_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProxyCredential)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-security")] #[inline] pub fn set_proxy_credential(&self, credential: &super::super::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ProxyCredential)(self as *const _ as *mut _, credential as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_method(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Method)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_method(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Method)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_group(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Group)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_group(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Group)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_cost_policy(&self) -> Result<BackgroundTransferCostPolicy> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CostPolicy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_cost_policy(&self, value: BackgroundTransferCostPolicy) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CostPolicy)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum BackgroundTransferBehavior: i32 {
+    Parallel (BackgroundTransferBehavior_Parallel) = 0, Serialized (BackgroundTransferBehavior_Serialized) = 1,
+}}
+DEFINE_IID!(IID_IBackgroundTransferCompletionGroup, 764609061, 39019, 22349, 121, 80, 10, 221, 71, 245, 215, 6);
+RT_INTERFACE!{interface IBackgroundTransferCompletionGroup(IBackgroundTransferCompletionGroupVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferCompletionGroup] {
+    #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-applicationmodel")] fn get_Trigger(&self, out: *mut *mut super::super::applicationmodel::background::IBackgroundTrigger) -> HRESULT,
+    fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
+    fn Enable(&self) -> HRESULT
+}}
+impl IBackgroundTransferCompletionGroup {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_trigger(&self) -> Result<Option<ComPtr<super::super::applicationmodel::background::IBackgroundTrigger>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Trigger)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_enabled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsEnabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn enable(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Enable)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BackgroundTransferCompletionGroup: IBackgroundTransferCompletionGroup}
+impl RtActivatable<IActivationFactory> for BackgroundTransferCompletionGroup {}
+DEFINE_CLSID!(BackgroundTransferCompletionGroup(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,67,111,109,112,108,101,116,105,111,110,71,114,111,117,112,0]) [CLSID_BackgroundTransferCompletionGroup]);
+DEFINE_IID!(IID_IBackgroundTransferCompletionGroupTriggerDetails, 2070667910, 28231, 20790, 127, 203, 250, 67, 137, 244, 111, 91);
+RT_INTERFACE!{interface IBackgroundTransferCompletionGroupTriggerDetails(IBackgroundTransferCompletionGroupTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferCompletionGroupTriggerDetails] {
+    fn get_Downloads(&self, out: *mut *mut foundation::collections::IVectorView<DownloadOperation>) -> HRESULT,
+    fn get_Uploads(&self, out: *mut *mut foundation::collections::IVectorView<UploadOperation>) -> HRESULT
+}}
+impl IBackgroundTransferCompletionGroupTriggerDetails {
+    #[inline] pub fn get_downloads(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<DownloadOperation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Downloads)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_uploads(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<UploadOperation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uploads)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BackgroundTransferCompletionGroupTriggerDetails: IBackgroundTransferCompletionGroupTriggerDetails}
+DEFINE_IID!(IID_IBackgroundTransferContentPart, 3907081815, 55249, 20184, 131, 142, 103, 74, 194, 23, 172, 230);
+RT_INTERFACE!{interface IBackgroundTransferContentPart(IBackgroundTransferContentPartVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferContentPart] {
+    fn SetHeader(&self, headerName: HSTRING, headerValue: HSTRING) -> HRESULT,
+    fn SetText(&self, value: HSTRING) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn SetFile(&self, value: *mut super::super::storage::IStorageFile) -> HRESULT
+}}
+impl IBackgroundTransferContentPart {
+    #[inline] pub fn set_header(&self, headerName: &HStringArg, headerValue: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetHeader)(self as *const _ as *mut _, headerName.get(), headerValue.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn set_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetText)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_file(&self, value: &super::super::storage::IStorageFile) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetFile)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BackgroundTransferContentPart: IBackgroundTransferContentPart}
+impl RtActivatable<IBackgroundTransferContentPartFactory> for BackgroundTransferContentPart {}
+impl RtActivatable<IActivationFactory> for BackgroundTransferContentPart {}
+impl BackgroundTransferContentPart {
+    #[inline] pub fn create_with_name(name: &HStringArg) -> Result<ComPtr<BackgroundTransferContentPart>> {
+        <Self as RtActivatable<IBackgroundTransferContentPartFactory>>::get_activation_factory().create_with_name(name)
+    }
+    #[inline] pub fn create_with_name_and_file_name(name: &HStringArg, fileName: &HStringArg) -> Result<ComPtr<BackgroundTransferContentPart>> {
+        <Self as RtActivatable<IBackgroundTransferContentPartFactory>>::get_activation_factory().create_with_name_and_file_name(name, fileName)
+    }
+}
+DEFINE_CLSID!(BackgroundTransferContentPart(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,67,111,110,116,101,110,116,80,97,114,116,0]) [CLSID_BackgroundTransferContentPart]);
+DEFINE_IID!(IID_IBackgroundTransferContentPartFactory, 2431621289, 31233, 18955, 159, 128, 160, 176, 187, 55, 15, 141);
+RT_INTERFACE!{static interface IBackgroundTransferContentPartFactory(IBackgroundTransferContentPartFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferContentPartFactory] {
+    fn CreateWithName(&self, name: HSTRING, out: *mut *mut BackgroundTransferContentPart) -> HRESULT,
+    fn CreateWithNameAndFileName(&self, name: HSTRING, fileName: HSTRING, out: *mut *mut BackgroundTransferContentPart) -> HRESULT
+}}
+impl IBackgroundTransferContentPartFactory {
+    #[inline] pub fn create_with_name(&self, name: &HStringArg) -> Result<ComPtr<BackgroundTransferContentPart>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithName)(self as *const _ as *mut _, name.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_with_name_and_file_name(&self, name: &HStringArg, fileName: &HStringArg) -> Result<ComPtr<BackgroundTransferContentPart>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithNameAndFileName)(self as *const _ as *mut _, name.get(), fileName.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum BackgroundTransferCostPolicy: i32 {
+    Default (BackgroundTransferCostPolicy_Default) = 0, UnrestrictedOnly (BackgroundTransferCostPolicy_UnrestrictedOnly) = 1, Always (BackgroundTransferCostPolicy_Always) = 2,
+}}
+RT_CLASS!{static class BackgroundTransferError}
+impl RtActivatable<IBackgroundTransferErrorStaticMethods> for BackgroundTransferError {}
+impl BackgroundTransferError {
+    #[cfg(feature="windows-web")] #[inline] pub fn get_status(hresult: i32) -> Result<super::super::web::WebErrorStatus> {
+        <Self as RtActivatable<IBackgroundTransferErrorStaticMethods>>::get_activation_factory().get_status(hresult)
+    }
+}
+DEFINE_CLSID!(BackgroundTransferError(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,69,114,114,111,114,0]) [CLSID_BackgroundTransferError]);
+DEFINE_IID!(IID_IBackgroundTransferErrorStaticMethods, 2865969924, 4498, 19444, 139, 104, 57, 197, 173, 210, 68, 226);
+RT_INTERFACE!{static interface IBackgroundTransferErrorStaticMethods(IBackgroundTransferErrorStaticMethodsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferErrorStaticMethods] {
+    #[cfg(feature="windows-web")] fn GetStatus(&self, hresult: i32, out: *mut super::super::web::WebErrorStatus) -> HRESULT
+}}
+impl IBackgroundTransferErrorStaticMethods {
+    #[cfg(feature="windows-web")] #[inline] pub fn get_status(&self, hresult: i32) -> Result<super::super::web::WebErrorStatus> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetStatus)(self as *const _ as *mut _, hresult, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_STRUCT! { struct BackgroundTransferFileRange {
+    Offset: u64, Length: u64,
+}}
+DEFINE_IID!(IID_IBackgroundTransferGroup, 3636716516, 25689, 17728, 133, 235, 170, 161, 200, 144, 54, 119);
+RT_INTERFACE!{interface IBackgroundTransferGroup(IBackgroundTransferGroupVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferGroup] {
+    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_TransferBehavior(&self, out: *mut BackgroundTransferBehavior) -> HRESULT,
+    fn put_TransferBehavior(&self, value: BackgroundTransferBehavior) -> HRESULT
+}}
+impl IBackgroundTransferGroup {
+    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_transfer_behavior(&self) -> Result<BackgroundTransferBehavior> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_TransferBehavior)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_transfer_behavior(&self, value: BackgroundTransferBehavior) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TransferBehavior)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BackgroundTransferGroup: IBackgroundTransferGroup}
+impl RtActivatable<IBackgroundTransferGroupStatics> for BackgroundTransferGroup {}
+impl BackgroundTransferGroup {
+    #[inline] pub fn create_group(name: &HStringArg) -> Result<Option<ComPtr<BackgroundTransferGroup>>> {
+        <Self as RtActivatable<IBackgroundTransferGroupStatics>>::get_activation_factory().create_group(name)
+    }
+}
+DEFINE_CLSID!(BackgroundTransferGroup(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,71,114,111,117,112,0]) [CLSID_BackgroundTransferGroup]);
+DEFINE_IID!(IID_IBackgroundTransferGroupStatics, 49041586, 32024, 18779, 170, 34, 50, 169, 125, 69, 211, 226);
+RT_INTERFACE!{static interface IBackgroundTransferGroupStatics(IBackgroundTransferGroupStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferGroupStatics] {
+    fn CreateGroup(&self, name: HSTRING, out: *mut *mut BackgroundTransferGroup) -> HRESULT
+}}
+impl IBackgroundTransferGroupStatics {
+    #[inline] pub fn create_group(&self, name: &HStringArg) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateGroup)(self as *const _ as *mut _, name.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTransferOperation, 3738200134, 37066, 17659, 143, 177, 18, 65, 84, 192, 213, 57);
+RT_INTERFACE!{interface IBackgroundTransferOperation(IBackgroundTransferOperationVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferOperation] {
+    fn get_Guid(&self, out: *mut Guid) -> HRESULT,
+    fn get_RequestedUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_Method(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_Group(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_CostPolicy(&self, out: *mut BackgroundTransferCostPolicy) -> HRESULT,
+    fn put_CostPolicy(&self, value: BackgroundTransferCostPolicy) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy6(&self) -> (),
+    #[cfg(feature="windows-storage")] fn GetResultStreamAt(&self, position: u64, out: *mut *mut super::super::storage::streams::IInputStream) -> HRESULT,
+    fn GetResponseInformation(&self, out: *mut *mut ResponseInformation) -> HRESULT
+}}
+impl IBackgroundTransferOperation {
+    #[inline] pub fn get_guid(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Guid)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_requested_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_RequestedUri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_method(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Method)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_group(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Group)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_cost_policy(&self) -> Result<BackgroundTransferCostPolicy> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CostPolicy)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_cost_policy(&self, value: BackgroundTransferCostPolicy) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CostPolicy)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_result_stream_at(&self, position: u64) -> Result<Option<ComPtr<super::super::storage::streams::IInputStream>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetResultStreamAt)(self as *const _ as *mut _, position, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_response_information(&self) -> Result<Option<ComPtr<ResponseInformation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetResponseInformation)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundTransferOperationPriority, 75842343, 21076, 19258, 145, 94, 10, 164, 146, 117, 192, 249);
+RT_INTERFACE!{interface IBackgroundTransferOperationPriority(IBackgroundTransferOperationPriorityVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferOperationPriority] {
+    fn get_Priority(&self, out: *mut BackgroundTransferPriority) -> HRESULT,
+    fn put_Priority(&self, value: BackgroundTransferPriority) -> HRESULT
+}}
+impl IBackgroundTransferOperationPriority {
+    #[inline] pub fn get_priority(&self) -> Result<BackgroundTransferPriority> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Priority)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_priority(&self, value: BackgroundTransferPriority) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Priority)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum BackgroundTransferPriority: i32 {
+    Default (BackgroundTransferPriority_Default) = 0, High (BackgroundTransferPriority_High) = 1, Low (BackgroundTransferPriority_Low) = 2,
+}}
+DEFINE_IID!(IID_IBackgroundTransferRangesDownloadedEventArgs, 1052537939, 48968, 19080, 146, 72, 176, 193, 101, 24, 79, 92);
+RT_INTERFACE!{interface IBackgroundTransferRangesDownloadedEventArgs(IBackgroundTransferRangesDownloadedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferRangesDownloadedEventArgs] {
+    fn get_WasDownloadRestarted(&self, out: *mut bool) -> HRESULT,
+    fn get_AddedRanges(&self, out: *mut *mut foundation::collections::IVector<BackgroundTransferFileRange>) -> HRESULT,
+    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+}}
+impl IBackgroundTransferRangesDownloadedEventArgs {
+    #[inline] pub fn get_was_download_restarted(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_WasDownloadRestarted)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_added_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVector<BackgroundTransferFileRange>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AddedRanges)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BackgroundTransferRangesDownloadedEventArgs: IBackgroundTransferRangesDownloadedEventArgs}
+RT_ENUM! { enum BackgroundTransferStatus: i32 {
+    Idle (BackgroundTransferStatus_Idle) = 0, Running (BackgroundTransferStatus_Running) = 1, PausedByApplication (BackgroundTransferStatus_PausedByApplication) = 2, PausedCostedNetwork (BackgroundTransferStatus_PausedCostedNetwork) = 3, PausedNoNetwork (BackgroundTransferStatus_PausedNoNetwork) = 4, Completed (BackgroundTransferStatus_Completed) = 5, Canceled (BackgroundTransferStatus_Canceled) = 6, Error (BackgroundTransferStatus_Error) = 7, PausedRecoverableWebErrorStatus (BackgroundTransferStatus_PausedRecoverableWebErrorStatus) = 8, PausedSystemPolicy (BackgroundTransferStatus_PausedSystemPolicy) = 32,
+}}
+DEFINE_IID!(IID_IBackgroundUploader, 3314928046, 52909, 18011, 136, 1, 197, 90, 201, 10, 1, 206);
+RT_INTERFACE!{interface IBackgroundUploader(IBackgroundUploaderVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader] {
+    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-storage")] fn CreateUpload(&self, uri: *mut foundation::Uri, sourceFile: *mut super::super::storage::IStorageFile, out: *mut *mut UploadOperation) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
+    #[cfg(feature="windows-storage")] fn CreateUploadFromStreamAsync(&self, uri: *mut foundation::Uri, sourceStream: *mut super::super::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT,
+    fn CreateUploadWithFormDataAndAutoBoundaryAsync(&self, uri: *mut foundation::Uri, parts: *mut foundation::collections::IIterable<BackgroundTransferContentPart>, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT,
+    fn CreateUploadWithSubTypeAsync(&self, uri: *mut foundation::Uri, parts: *mut foundation::collections::IIterable<BackgroundTransferContentPart>, subType: HSTRING, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT,
+    fn CreateUploadWithSubTypeAndBoundaryAsync(&self, uri: *mut foundation::Uri, parts: *mut foundation::collections::IIterable<BackgroundTransferContentPart>, subType: HSTRING, boundary: HSTRING, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT
+}}
+impl IBackgroundUploader {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_upload(&self, uri: &foundation::Uri, sourceFile: &super::super::storage::IStorageFile) -> Result<Option<ComPtr<UploadOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateUpload)(self as *const _ as *mut _, uri as *const _ as *mut _, sourceFile as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_upload_from_stream_async(&self, uri: &foundation::Uri, sourceStream: &super::super::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateUploadFromStreamAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, sourceStream as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_upload_with_form_data_and_auto_boundary_async(&self, uri: &foundation::Uri, parts: &foundation::collections::IIterable<BackgroundTransferContentPart>) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateUploadWithFormDataAndAutoBoundaryAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, parts as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_upload_with_sub_type_async(&self, uri: &foundation::Uri, parts: &foundation::collections::IIterable<BackgroundTransferContentPart>, subType: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateUploadWithSubTypeAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, parts as *const _ as *mut _, subType.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_upload_with_sub_type_and_boundary_async(&self, uri: &foundation::Uri, parts: &foundation::collections::IIterable<BackgroundTransferContentPart>, subType: &HStringArg, boundary: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateUploadWithSubTypeAndBoundaryAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, parts as *const _ as *mut _, subType.get(), boundary.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class BackgroundUploader: IBackgroundUploader}
+impl RtActivatable<IBackgroundUploaderFactory> for BackgroundUploader {}
+impl RtActivatable<IBackgroundUploaderStaticMethods> for BackgroundUploader {}
+impl RtActivatable<IBackgroundUploaderStaticMethods2> for BackgroundUploader {}
+impl RtActivatable<IBackgroundUploaderUserConsent> for BackgroundUploader {}
+impl RtActivatable<IActivationFactory> for BackgroundUploader {}
+impl BackgroundUploader {
+    #[inline] pub fn create_with_completion_group(completionGroup: &BackgroundTransferCompletionGroup) -> Result<ComPtr<BackgroundUploader>> {
+        <Self as RtActivatable<IBackgroundUploaderFactory>>::get_activation_factory().create_with_completion_group(completionGroup)
+    }
+    #[inline] pub fn get_current_uploads_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> {
+        <Self as RtActivatable<IBackgroundUploaderStaticMethods>>::get_activation_factory().get_current_uploads_async()
+    }
+    #[inline] pub fn get_current_uploads_for_group_async(group: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> {
+        <Self as RtActivatable<IBackgroundUploaderStaticMethods>>::get_activation_factory().get_current_uploads_for_group_async(group)
+    }
+    #[inline] pub fn get_current_uploads_for_transfer_group_async(group: &BackgroundTransferGroup) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> {
+        <Self as RtActivatable<IBackgroundUploaderStaticMethods2>>::get_activation_factory().get_current_uploads_for_transfer_group_async(group)
+    }
+    #[inline] pub fn request_unconstrained_uploads_async(operations: &foundation::collections::IIterable<UploadOperation>) -> Result<ComPtr<foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> {
+        <Self as RtActivatable<IBackgroundUploaderUserConsent>>::get_activation_factory().request_unconstrained_uploads_async(operations)
+    }
+}
+DEFINE_CLSID!(BackgroundUploader(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,85,112,108,111,97,100,101,114,0]) [CLSID_BackgroundUploader]);
+DEFINE_IID!(IID_IBackgroundUploader2, 2382762702, 3124, 17507, 128, 127, 25, 138, 27, 139, 212, 173);
+RT_INTERFACE!{interface IBackgroundUploader2(IBackgroundUploader2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader2] {
+    fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT,
+    fn put_TransferGroup(&self, value: *mut BackgroundTransferGroup) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_SuccessToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_SuccessToastNotification(&self, value: *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_FailureToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_FailureToastNotification(&self, value: *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_SuccessTileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_SuccessTileNotification(&self, value: *mut super::super::ui::notifications::TileNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_FailureTileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_FailureTileNotification(&self, value: *mut super::super::ui::notifications::TileNotification) -> HRESULT
+}}
+impl IBackgroundUploader2 {
+    #[inline] pub fn get_transfer_group(&self) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TransferGroup)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_transfer_group(&self, value: &BackgroundTransferGroup) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TransferGroup)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SuccessToastNotification)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_toast_notification(&self, value: &super::super::ui::notifications::ToastNotification) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SuccessToastNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_FailureToastNotification)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_toast_notification(&self, value: &super::super::ui::notifications::ToastNotification) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_FailureToastNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SuccessTileNotification)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_tile_notification(&self, value: &super::super::ui::notifications::TileNotification) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SuccessTileNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_FailureTileNotification)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_tile_notification(&self, value: &super::super::ui::notifications::TileNotification) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_FailureTileNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundUploader3, 3109983289, 23536, 19258, 140, 71, 44, 97, 153, 168, 84, 185);
+RT_INTERFACE!{interface IBackgroundUploader3(IBackgroundUploader3Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader3] {
+    fn get_CompletionGroup(&self, out: *mut *mut BackgroundTransferCompletionGroup) -> HRESULT
+}}
+impl IBackgroundUploader3 {
+    #[inline] pub fn get_completion_group(&self) -> Result<Option<ComPtr<BackgroundTransferCompletionGroup>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CompletionGroup)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundUploaderFactory, 1935803335, 4327, 18592, 172, 60, 26, 199, 16, 149, 236, 87);
+RT_INTERFACE!{static interface IBackgroundUploaderFactory(IBackgroundUploaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderFactory] {
+    fn CreateWithCompletionGroup(&self, completionGroup: *mut BackgroundTransferCompletionGroup, out: *mut *mut BackgroundUploader) -> HRESULT
+}}
+impl IBackgroundUploaderFactory {
+    #[inline] pub fn create_with_completion_group(&self, completionGroup: &BackgroundTransferCompletionGroup) -> Result<ComPtr<BackgroundUploader>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateWithCompletionGroup)(self as *const _ as *mut _, completionGroup as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundUploaderStaticMethods, 4068957435, 39685, 18241, 145, 33, 116, 10, 131, 226, 71, 223);
+RT_INTERFACE!{static interface IBackgroundUploaderStaticMethods(IBackgroundUploaderStaticMethodsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderStaticMethods] {
+    fn GetCurrentUploadsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>) -> HRESULT,
+    fn GetCurrentUploadsForGroupAsync(&self, group: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>) -> HRESULT
+}}
+impl IBackgroundUploaderStaticMethods {
+    #[inline] pub fn get_current_uploads_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCurrentUploadsAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_current_uploads_for_group_async(&self, group: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCurrentUploadsForGroupAsync)(self as *const _ as *mut _, group.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundUploaderStaticMethods2, 3910773858, 59912, 17136, 162, 172, 7, 228, 103, 84, 144, 128);
+RT_INTERFACE!{static interface IBackgroundUploaderStaticMethods2(IBackgroundUploaderStaticMethods2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderStaticMethods2] {
+    fn GetCurrentUploadsForTransferGroupAsync(&self, group: *mut BackgroundTransferGroup, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>) -> HRESULT
+}}
+impl IBackgroundUploaderStaticMethods2 {
+    #[inline] pub fn get_current_uploads_for_transfer_group_async(&self, group: &BackgroundTransferGroup) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetCurrentUploadsForTransferGroupAsync)(self as *const _ as *mut _, group as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IBackgroundUploaderUserConsent, 1001620683, 1888, 17949, 144, 127, 81, 56, 248, 77, 68, 193);
+RT_INTERFACE!{static interface IBackgroundUploaderUserConsent(IBackgroundUploaderUserConsentVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderUserConsent] {
+    fn RequestUnconstrainedUploadsAsync(&self, operations: *mut foundation::collections::IIterable<UploadOperation>, out: *mut *mut foundation::IAsyncOperation<UnconstrainedTransferRequestResult>) -> HRESULT
+}}
+impl IBackgroundUploaderUserConsent {
+    #[inline] pub fn request_unconstrained_uploads_async(&self, operations: &foundation::collections::IIterable<UploadOperation>) -> Result<ComPtr<foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).RequestUnconstrainedUploadsAsync)(self as *const _ as *mut _, operations as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_STRUCT! { struct BackgroundUploadProgress {
+    BytesReceived: u64, BytesSent: u64, TotalBytesToReceive: u64, TotalBytesToSend: u64, Status: BackgroundTransferStatus, HasResponseChanged: bool, HasRestarted: bool,
+}}
+DEFINE_IID!(IID_IContentPrefetcher, 2832660308, 32193, 19673, 136, 16, 42, 106, 169, 65, 126, 17);
+RT_INTERFACE!{static interface IContentPrefetcher(IContentPrefetcherVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetcher] {
+    fn get_ContentUris(&self, out: *mut *mut foundation::collections::IVector<foundation::Uri>) -> HRESULT,
+    fn put_IndirectContentUri(&self, value: *mut foundation::Uri) -> HRESULT,
+    fn get_IndirectContentUri(&self, out: *mut *mut foundation::Uri) -> HRESULT
+}}
+impl IContentPrefetcher {
+    #[inline] pub fn get_content_uris(&self) -> Result<Option<ComPtr<foundation::collections::IVector<foundation::Uri>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ContentUris)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_indirect_content_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IndirectContentUri)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_indirect_content_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_IndirectContentUri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{static class ContentPrefetcher}
+impl RtActivatable<IContentPrefetcher> for ContentPrefetcher {}
+impl RtActivatable<IContentPrefetcherTime> for ContentPrefetcher {}
+impl ContentPrefetcher {
+    #[inline] pub fn get_content_uris() -> Result<Option<ComPtr<foundation::collections::IVector<foundation::Uri>>>> {
+        <Self as RtActivatable<IContentPrefetcher>>::get_activation_factory().get_content_uris()
+    }
+    #[inline] pub fn set_indirect_content_uri(value: &foundation::Uri) -> Result<()> {
+        <Self as RtActivatable<IContentPrefetcher>>::get_activation_factory().set_indirect_content_uri(value)
+    }
+    #[inline] pub fn get_indirect_content_uri() -> Result<Option<ComPtr<foundation::Uri>>> {
+        <Self as RtActivatable<IContentPrefetcher>>::get_activation_factory().get_indirect_content_uri()
+    }
+    #[inline] pub fn get_last_successful_prefetch_time() -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
+        <Self as RtActivatable<IContentPrefetcherTime>>::get_activation_factory().get_last_successful_prefetch_time()
+    }
+}
+DEFINE_CLSID!(ContentPrefetcher(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,67,111,110,116,101,110,116,80,114,101,102,101,116,99,104,101,114,0]) [CLSID_ContentPrefetcher]);
+DEFINE_IID!(IID_IContentPrefetcherTime, 3814849800, 4906, 20446, 167, 204, 252, 176, 230, 101, 35, 175);
+RT_INTERFACE!{static interface IContentPrefetcherTime(IContentPrefetcherTimeVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetcherTime] {
+    fn get_LastSuccessfulPrefetchTime(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT
+}}
+impl IContentPrefetcherTime {
+    #[inline] pub fn get_last_successful_prefetch_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_LastSuccessfulPrefetchTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IDownloadOperation, 3179801520, 22292, 19977, 186, 104, 190, 247, 57, 3, 176, 215);
+RT_INTERFACE!{interface IDownloadOperation(IDownloadOperationVtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation] {
+    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_ResultFile(&self, out: *mut *mut super::super::storage::IStorageFile) -> HRESULT,
+    fn get_Progress(&self, out: *mut BackgroundDownloadProgress) -> HRESULT,
+    fn StartAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<DownloadOperation, DownloadOperation>) -> HRESULT,
+    fn AttachAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<DownloadOperation, DownloadOperation>) -> HRESULT,
+    fn Pause(&self) -> HRESULT,
+    fn Resume(&self) -> HRESULT
+}}
+impl IDownloadOperation {
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_result_file(&self) -> Result<Option<ComPtr<super::super::storage::IStorageFile>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ResultFile)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_progress(&self) -> Result<BackgroundDownloadProgress> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn start_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DownloadOperation, DownloadOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).StartAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn attach_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DownloadOperation, DownloadOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AttachAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn pause(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Pause)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn resume(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Resume)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DownloadOperation: IDownloadOperation}
+DEFINE_IID!(IID_IDownloadOperation2, 2748116288, 36764, 17235, 156, 212, 41, 13, 238, 56, 124, 56);
+RT_INTERFACE!{interface IDownloadOperation2(IDownloadOperation2Vtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation2] {
+    fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT
+}}
+impl IDownloadOperation2 {
+    #[inline] pub fn get_transfer_group(&self) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TransferGroup)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IDownloadOperation3, 1344746780, 32094, 19164, 184, 211, 223, 92, 96, 49, 185, 204);
+RT_INTERFACE!{interface IDownloadOperation3(IDownloadOperation3Vtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation3] {
+    fn get_IsRandomAccessRequired(&self, out: *mut bool) -> HRESULT,
+    fn put_IsRandomAccessRequired(&self, value: bool) -> HRESULT,
+    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
+    #[cfg(feature="windows-storage")] fn GetResultRandomAccessStreamReference(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStreamReference) -> HRESULT,
+    fn GetDownloadedRanges(&self, out: *mut *mut foundation::collections::IVector<BackgroundTransferFileRange>) -> HRESULT,
+    fn add_RangesDownloaded(&self, eventHandler: *mut foundation::TypedEventHandler<DownloadOperation, BackgroundTransferRangesDownloadedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_RangesDownloaded(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
+    fn put_RequestedUri(&self, value: *mut foundation::Uri) -> HRESULT,
+    #[cfg(feature="windows-web")] fn get_RecoverableWebErrorStatuses(&self, out: *mut *mut foundation::collections::IVector<super::super::web::WebErrorStatus>) -> HRESULT,
+    #[cfg(feature="windows-web")] fn get_CurrentWebErrorStatus(&self, out: *mut *mut foundation::IReference<super::super::web::WebErrorStatus>) -> HRESULT
+}}
+impl IDownloadOperation3 {
+    #[inline] pub fn get_is_random_access_required(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsRandomAccessRequired)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_random_access_required(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsRandomAccessRequired)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_result_random_access_stream_reference(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetResultRandomAccessStreamReference)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_downloaded_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVector<BackgroundTransferFileRange>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDownloadedRanges)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_ranges_downloaded(&self, eventHandler: &foundation::TypedEventHandler<DownloadOperation, BackgroundTransferRangesDownloadedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_RangesDownloaded)(self as *const _ as *mut _, eventHandler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_ranges_downloaded(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_RangesDownloaded)(self as *const _ as *mut _, eventCookie);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn set_requested_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_RequestedUri)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-web")] #[inline] pub fn get_recoverable_web_error_statuses(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::web::WebErrorStatus>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_RecoverableWebErrorStatuses)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-web")] #[inline] pub fn get_current_web_error_status(&self) -> Result<Option<ComPtr<foundation::IReference<super::super::web::WebErrorStatus>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_CurrentWebErrorStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IDownloadOperation4, 215658228, 36079, 16458, 150, 109, 240, 88, 64, 11, 237, 128);
+RT_INTERFACE!{interface IDownloadOperation4(IDownloadOperation4Vtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation4] {
+    fn MakeCurrentInTransferGroup(&self) -> HRESULT
+}}
+impl IDownloadOperation4 {
+    #[inline] pub fn make_current_in_transfer_group(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).MakeCurrentInTransferGroup)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IResponseInformation, 4173044242, 63251, 18322, 139, 104, 217, 210, 151, 249, 29, 46);
+RT_INTERFACE!{interface IResponseInformation(IResponseInformationVtbl): IInspectable(IInspectableVtbl) [IID_IResponseInformation] {
+    fn get_IsResumable(&self, out: *mut bool) -> HRESULT,
+    fn get_ActualUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_StatusCode(&self, out: *mut u32) -> HRESULT,
+    fn get_Headers(&self, out: *mut *mut foundation::collections::IMapView<HString, HString>) -> HRESULT
+}}
+impl IResponseInformation {
+    #[inline] pub fn get_is_resumable(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsResumable)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_actual_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ActualUri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_status_code(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_StatusCode)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_headers(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Headers)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ResponseInformation: IResponseInformation}
+DEFINE_IID!(IID_IUnconstrainedTransferRequestResult, 1277474847, 55620, 16658, 169, 142, 106, 105, 82, 43, 126, 187);
+RT_INTERFACE!{interface IUnconstrainedTransferRequestResult(IUnconstrainedTransferRequestResultVtbl): IInspectable(IInspectableVtbl) [IID_IUnconstrainedTransferRequestResult] {
+    fn get_IsUnconstrained(&self, out: *mut bool) -> HRESULT
+}}
+impl IUnconstrainedTransferRequestResult {
+    #[inline] pub fn get_is_unconstrained(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsUnconstrained)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class UnconstrainedTransferRequestResult: IUnconstrainedTransferRequestResult}
+DEFINE_IID!(IID_IUploadOperation, 1045832928, 29577, 17228, 139, 53, 66, 127, 211, 107, 189, 174);
+RT_INTERFACE!{interface IUploadOperation(IUploadOperationVtbl): IInspectable(IInspectableVtbl) [IID_IUploadOperation] {
+    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
+    #[cfg(feature="windows-storage")] fn get_SourceFile(&self, out: *mut *mut super::super::storage::IStorageFile) -> HRESULT,
+    fn get_Progress(&self, out: *mut BackgroundUploadProgress) -> HRESULT,
+    fn StartAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<UploadOperation, UploadOperation>) -> HRESULT,
+    fn AttachAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<UploadOperation, UploadOperation>) -> HRESULT
+}}
+impl IUploadOperation {
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_source_file(&self) -> Result<Option<ComPtr<super::super::storage::IStorageFile>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_SourceFile)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_progress(&self) -> Result<BackgroundUploadProgress> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn start_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<UploadOperation, UploadOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).StartAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn attach_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<UploadOperation, UploadOperation>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AttachAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class UploadOperation: IUploadOperation}
+DEFINE_IID!(IID_IUploadOperation2, 1432455666, 10100, 19958, 159, 165, 32, 159, 43, 251, 18, 247);
+RT_INTERFACE!{interface IUploadOperation2(IUploadOperation2Vtbl): IInspectable(IInspectableVtbl) [IID_IUploadOperation2] {
+    fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT
+}}
+impl IUploadOperation2 {
+    #[inline] pub fn get_transfer_group(&self) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TransferGroup)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IUploadOperation3, 1120480419, 56889, 17734, 188, 98, 55, 116, 180, 41, 77, 227);
+RT_INTERFACE!{interface IUploadOperation3(IUploadOperation3Vtbl): IInspectable(IInspectableVtbl) [IID_IUploadOperation3] {
+    fn MakeCurrentInTransferGroup(&self) -> HRESULT
+}}
+impl IUploadOperation3 {
+    #[inline] pub fn make_current_in_transfer_group(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).MakeCurrentInTransferGroup)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+} // Windows.Networking.BackgroundTransfer
+pub mod connectivity { // Windows.Networking.Connectivity
+use ::prelude::*;
+DEFINE_IID!(IID_IAttributedNetworkUsage, 4150898745, 60578, 17899, 173, 225, 176, 54, 139, 117, 108, 73);
+RT_INTERFACE!{interface IAttributedNetworkUsage(IAttributedNetworkUsageVtbl): IInspectable(IInspectableVtbl) [IID_IAttributedNetworkUsage] {
+    fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
+    fn get_BytesReceived(&self, out: *mut u64) -> HRESULT,
+    fn get_AttributionId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_AttributionName(&self, out: *mut HSTRING) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_AttributionThumbnail(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStreamReference) -> HRESULT
+}}
+impl IAttributedNetworkUsage {
+    #[inline] pub fn get_bytes_sent(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BytesSent)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_bytes_received(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BytesReceived)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_attribution_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AttributionId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_attribution_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AttributionName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_attribution_thumbnail(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AttributionThumbnail)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class AttributedNetworkUsage: IAttributedNetworkUsage}
+RT_ENUM! { enum CellularApnAuthenticationType: i32 {
+    None (CellularApnAuthenticationType_None) = 0, Pap (CellularApnAuthenticationType_Pap) = 1, Chap (CellularApnAuthenticationType_Chap) = 2, Mschapv2 (CellularApnAuthenticationType_Mschapv2) = 3,
+}}
+DEFINE_IID!(IID_ICellularApnContext, 1873095156, 61437, 17730, 154, 178, 112, 91, 191, 148, 148, 58);
+RT_INTERFACE!{interface ICellularApnContext(ICellularApnContextVtbl): IInspectable(IInspectableVtbl) [IID_ICellularApnContext] {
+    fn get_ProviderId(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_ProviderId(&self, value: HSTRING) -> HRESULT,
+    fn get_AccessPointName(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_AccessPointName(&self, value: HSTRING) -> HRESULT,
+    fn get_UserName(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_UserName(&self, value: HSTRING) -> HRESULT,
+    fn get_Password(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_Password(&self, value: HSTRING) -> HRESULT,
+    fn get_IsCompressionEnabled(&self, out: *mut bool) -> HRESULT,
+    fn put_IsCompressionEnabled(&self, value: bool) -> HRESULT,
+    fn get_AuthenticationType(&self, out: *mut CellularApnAuthenticationType) -> HRESULT,
+    fn put_AuthenticationType(&self, value: CellularApnAuthenticationType) -> HRESULT
+}}
+impl ICellularApnContext {
+    #[inline] pub fn get_provider_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_provider_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ProviderId)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_access_point_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AccessPointName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_access_point_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AccessPointName)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_user_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_UserName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_user_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_UserName)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_password(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Password)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_password(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Password)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_compression_enabled(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsCompressionEnabled)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_compression_enabled(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsCompressionEnabled)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_authentication_type(&self) -> Result<CellularApnAuthenticationType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_AuthenticationType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_authentication_type(&self, value: CellularApnAuthenticationType) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AuthenticationType)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class CellularApnContext: ICellularApnContext}
+impl RtActivatable<IActivationFactory> for CellularApnContext {}
+DEFINE_CLSID!(CellularApnContext(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,101,108,108,117,108,97,114,65,112,110,67,111,110,116,101,120,116,0]) [CLSID_CellularApnContext]);
+DEFINE_IID!(IID_ICellularApnContext2, 1991306010, 44105, 17232, 177, 229, 220, 71, 99, 188, 105, 199);
+RT_INTERFACE!{interface ICellularApnContext2(ICellularApnContext2Vtbl): IInspectable(IInspectableVtbl) [IID_ICellularApnContext2] {
+    fn get_ProfileName(&self, out: *mut HSTRING) -> HRESULT,
+    fn put_ProfileName(&self, value: HSTRING) -> HRESULT
+}}
+impl ICellularApnContext2 {
+    #[inline] pub fn get_profile_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProfileName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_profile_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ProfileName)(self as *const _ as *mut _, value.get());
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IConnectionCost, 3134707753, 13334, 19216, 162, 2, 186, 192, 176, 117, 189, 174);
+RT_INTERFACE!{interface IConnectionCost(IConnectionCostVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionCost] {
+    fn get_NetworkCostType(&self, out: *mut NetworkCostType) -> HRESULT,
+    fn get_Roaming(&self, out: *mut bool) -> HRESULT,
+    fn get_OverDataLimit(&self, out: *mut bool) -> HRESULT,
+    fn get_ApproachingDataLimit(&self, out: *mut bool) -> HRESULT
+}}
+impl IConnectionCost {
+    #[inline] pub fn get_network_cost_type(&self) -> Result<NetworkCostType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_NetworkCostType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_roaming(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Roaming)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_over_data_limit(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OverDataLimit)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_approaching_data_limit(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ApproachingDataLimit)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ConnectionCost: IConnectionCost}
+DEFINE_IID!(IID_IConnectionCost2, 2383493637, 57865, 17737, 187, 37, 94, 13, 182, 145, 203, 5);
+RT_INTERFACE!{interface IConnectionCost2(IConnectionCost2Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionCost2] {
+    fn get_BackgroundDataUsageRestricted(&self, out: *mut bool) -> HRESULT
+}}
+impl IConnectionCost2 {
+    #[inline] pub fn get_background_data_usage_restricted(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BackgroundDataUsageRestricted)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IConnectionProfile, 1908020284, 22926, 18896, 132, 235, 143, 235, 174, 220, 193, 149);
+RT_INTERFACE!{interface IConnectionProfile(IConnectionProfileVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile] {
+    fn get_ProfileName(&self, out: *mut HSTRING) -> HRESULT,
+    fn GetNetworkConnectivityLevel(&self, out: *mut NetworkConnectivityLevel) -> HRESULT,
+    fn GetNetworkNames(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
+    fn GetConnectionCost(&self, out: *mut *mut ConnectionCost) -> HRESULT,
+    fn GetDataPlanStatus(&self, out: *mut *mut DataPlanStatus) -> HRESULT,
+    fn get_NetworkAdapter(&self, out: *mut *mut NetworkAdapter) -> HRESULT,
+    fn GetLocalUsage(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, out: *mut *mut DataUsage) -> HRESULT,
+    fn GetLocalUsagePerRoamingStates(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: RoamingStates, out: *mut *mut DataUsage) -> HRESULT,
+    fn get_NetworkSecuritySettings(&self, out: *mut *mut NetworkSecuritySettings) -> HRESULT
+}}
+impl IConnectionProfile {
+    #[inline] pub fn get_profile_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProfileName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_network_connectivity_level(&self) -> Result<NetworkConnectivityLevel> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetNetworkConnectivityLevel)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_network_names(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetNetworkNames)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_connection_cost(&self) -> Result<Option<ComPtr<ConnectionCost>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetConnectionCost)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_data_plan_status(&self) -> Result<Option<ComPtr<DataPlanStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDataPlanStatus)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_network_adapter(&self) -> Result<Option<ComPtr<NetworkAdapter>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_NetworkAdapter)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_local_usage(&self, startTime: foundation::DateTime, endTime: foundation::DateTime) -> Result<Option<ComPtr<DataUsage>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetLocalUsage)(self as *const _ as *mut _, startTime, endTime, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_local_usage_per_roaming_states(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: RoamingStates) -> Result<Option<ComPtr<DataUsage>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetLocalUsagePerRoamingStates)(self as *const _ as *mut _, startTime, endTime, states, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_network_security_settings(&self) -> Result<Option<ComPtr<NetworkSecuritySettings>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_NetworkSecuritySettings)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ConnectionProfile: IConnectionProfile}
+DEFINE_IID!(IID_IConnectionProfile2, 3791933765, 19615, 16396, 145, 80, 126, 199, 214, 226, 136, 138);
+RT_INTERFACE!{interface IConnectionProfile2(IConnectionProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile2] {
+    fn get_IsWwanConnectionProfile(&self, out: *mut bool) -> HRESULT,
+    fn get_IsWlanConnectionProfile(&self, out: *mut bool) -> HRESULT,
+    fn get_WwanConnectionProfileDetails(&self, out: *mut *mut WwanConnectionProfileDetails) -> HRESULT,
+    fn get_WlanConnectionProfileDetails(&self, out: *mut *mut WlanConnectionProfileDetails) -> HRESULT,
+    fn get_ServiceProviderGuid(&self, out: *mut *mut foundation::IReference<Guid>) -> HRESULT,
+    fn GetSignalBars(&self, out: *mut *mut foundation::IReference<u8>) -> HRESULT,
+    fn GetDomainConnectivityLevel(&self, out: *mut DomainConnectivityLevel) -> HRESULT,
+    fn GetNetworkUsageAsync(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, granularity: DataUsageGranularity, states: NetworkUsageStates, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<NetworkUsage>>) -> HRESULT,
+    fn GetConnectivityIntervalsAsync(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectivityInterval>>) -> HRESULT
+}}
+impl IConnectionProfile2 {
+    #[inline] pub fn get_is_wwan_connection_profile(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsWwanConnectionProfile)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_wlan_connection_profile(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsWlanConnectionProfile)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_wwan_connection_profile_details(&self) -> Result<Option<ComPtr<WwanConnectionProfileDetails>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WwanConnectionProfileDetails)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_wlan_connection_profile_details(&self) -> Result<Option<ComPtr<WlanConnectionProfileDetails>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_WlanConnectionProfileDetails)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_service_provider_guid(&self) -> Result<Option<ComPtr<foundation::IReference<Guid>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ServiceProviderGuid)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_signal_bars(&self) -> Result<Option<ComPtr<foundation::IReference<u8>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetSignalBars)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_domain_connectivity_level(&self) -> Result<DomainConnectivityLevel> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetDomainConnectivityLevel)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_network_usage_async(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, granularity: DataUsageGranularity, states: NetworkUsageStates) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<NetworkUsage>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetNetworkUsageAsync)(self as *const _ as *mut _, startTime, endTime, granularity, states, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_connectivity_intervals_async(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectivityInterval>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetConnectivityIntervalsAsync)(self as *const _ as *mut _, startTime, endTime, states, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IConnectionProfile3, 1468802344, 19673, 16737, 128, 69, 32, 28, 253, 91, 17, 92);
+RT_INTERFACE!{interface IConnectionProfile3(IConnectionProfile3Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile3] {
+    fn GetAttributedNetworkUsageAsync(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AttributedNetworkUsage>>) -> HRESULT
+}}
+impl IConnectionProfile3 {
+    #[inline] pub fn get_attributed_network_usage_async(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AttributedNetworkUsage>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetAttributedNetworkUsageAsync)(self as *const _ as *mut _, startTime, endTime, states, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IConnectionProfile4, 2049786573, 33248, 19174, 171, 237, 171, 156, 161, 62, 183, 20);
+RT_INTERFACE!{interface IConnectionProfile4(IConnectionProfile4Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile4] {
+    fn GetProviderNetworkUsageAsync(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<ProviderNetworkUsage>>) -> HRESULT
+}}
+impl IConnectionProfile4 {
+    #[inline] pub fn get_provider_network_usage_async(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ProviderNetworkUsage>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetProviderNetworkUsageAsync)(self as *const _ as *mut _, startTime, endTime, states, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IConnectionProfile5, 2234916551, 40051, 19424, 143, 20, 87, 142, 236, 113, 238, 14);
+RT_INTERFACE!{interface IConnectionProfile5(IConnectionProfile5Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile5] {
+    fn get_CanDelete(&self, out: *mut bool) -> HRESULT,
+    fn TryDeleteAsync(&self, out: *mut *mut foundation::IAsyncOperation<ConnectionProfileDeleteStatus>) -> HRESULT
+}}
+impl IConnectionProfile5 {
+    #[inline] pub fn get_can_delete(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanDelete)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn try_delete_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ConnectionProfileDeleteStatus>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).TryDeleteAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum ConnectionProfileDeleteStatus: i32 {
+    Success (ConnectionProfileDeleteStatus_Success) = 0, DeniedByUser (ConnectionProfileDeleteStatus_DeniedByUser) = 1, DeniedBySystem (ConnectionProfileDeleteStatus_DeniedBySystem) = 2, UnknownError (ConnectionProfileDeleteStatus_UnknownError) = 3,
+}}
+DEFINE_IID!(IID_IConnectionProfileFilter, 541883592, 48429, 20109, 164, 179, 69, 94, 195, 55, 56, 138);
+RT_INTERFACE!{interface IConnectionProfileFilter(IConnectionProfileFilterVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfileFilter] {
+    fn put_IsConnected(&self, value: bool) -> HRESULT,
+    fn get_IsConnected(&self, out: *mut bool) -> HRESULT,
+    fn put_IsWwanConnectionProfile(&self, value: bool) -> HRESULT,
+    fn get_IsWwanConnectionProfile(&self, out: *mut bool) -> HRESULT,
+    fn put_IsWlanConnectionProfile(&self, value: bool) -> HRESULT,
+    fn get_IsWlanConnectionProfile(&self, out: *mut bool) -> HRESULT,
+    fn put_NetworkCostType(&self, value: NetworkCostType) -> HRESULT,
+    fn get_NetworkCostType(&self, out: *mut NetworkCostType) -> HRESULT,
+    fn put_ServiceProviderGuid(&self, value: *mut foundation::IReference<Guid>) -> HRESULT,
+    fn get_ServiceProviderGuid(&self, out: *mut *mut foundation::IReference<Guid>) -> HRESULT
+}}
+impl IConnectionProfileFilter {
+    #[inline] pub fn set_is_connected(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsConnected)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_connected(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsConnected)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_wwan_connection_profile(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsWwanConnectionProfile)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_wwan_connection_profile(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsWwanConnectionProfile)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_wlan_connection_profile(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsWlanConnectionProfile)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_wlan_connection_profile(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IsWlanConnectionProfile)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_network_cost_type(&self, value: NetworkCostType) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_NetworkCostType)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_network_cost_type(&self) -> Result<NetworkCostType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_NetworkCostType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn set_service_provider_guid(&self, value: &foundation::IReference<Guid>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ServiceProviderGuid)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_service_provider_guid(&self) -> Result<Option<ComPtr<foundation::IReference<Guid>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ServiceProviderGuid)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ConnectionProfileFilter: IConnectionProfileFilter}
+impl RtActivatable<IActivationFactory> for ConnectionProfileFilter {}
+DEFINE_CLSID!(ConnectionProfileFilter(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,111,110,110,101,99,116,105,111,110,80,114,111,102,105,108,101,70,105,108,116,101,114,0]) [CLSID_ConnectionProfileFilter]);
+DEFINE_IID!(IID_IConnectionProfileFilter2, 3439759073, 50172, 20397, 157, 220, 89, 63, 170, 75, 120, 133);
+RT_INTERFACE!{interface IConnectionProfileFilter2(IConnectionProfileFilter2Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfileFilter2] {
+    fn put_IsRoaming(&self, value: *mut foundation::IReference<bool>) -> HRESULT,
+    fn get_IsRoaming(&self, out: *mut *mut foundation::IReference<bool>) -> HRESULT,
+    fn put_IsOverDataLimit(&self, value: *mut foundation::IReference<bool>) -> HRESULT,
+    fn get_IsOverDataLimit(&self, out: *mut *mut foundation::IReference<bool>) -> HRESULT,
+    fn put_IsBackgroundDataUsageRestricted(&self, value: *mut foundation::IReference<bool>) -> HRESULT,
+    fn get_IsBackgroundDataUsageRestricted(&self, out: *mut *mut foundation::IReference<bool>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_RawData(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
+}}
+impl IConnectionProfileFilter2 {
+    #[inline] pub fn set_is_roaming(&self, value: &foundation::IReference<bool>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsRoaming)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_roaming(&self) -> Result<Option<ComPtr<foundation::IReference<bool>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_IsRoaming)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_over_data_limit(&self, value: &foundation::IReference<bool>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsOverDataLimit)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_over_data_limit(&self) -> Result<Option<ComPtr<foundation::IReference<bool>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_IsOverDataLimit)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn set_is_background_data_usage_restricted(&self, value: &foundation::IReference<bool>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_IsBackgroundDataUsageRestricted)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_is_background_data_usage_restricted(&self) -> Result<Option<ComPtr<foundation::IReference<bool>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_IsBackgroundDataUsageRestricted)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_raw_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_RawData)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IConnectionProfileFilter3, 178915776, 20500, 17532, 136, 9, 174, 228, 203, 10, 249, 74);
+RT_INTERFACE!{interface IConnectionProfileFilter3(IConnectionProfileFilter3Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfileFilter3] {
+    fn put_PurposeGuid(&self, value: *mut foundation::IReference<Guid>) -> HRESULT,
+    fn get_PurposeGuid(&self, out: *mut *mut foundation::IReference<Guid>) -> HRESULT
+}}
+impl IConnectionProfileFilter3 {
+    #[inline] pub fn set_purpose_guid(&self, value: &foundation::IReference<Guid>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PurposeGuid)(self as *const _ as *mut _, value as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_purpose_guid(&self) -> Result<Option<ComPtr<foundation::IReference<Guid>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PurposeGuid)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IConnectionSession, 4287651148, 63547, 16816, 138, 12, 20, 98, 217, 197, 107, 115);
+RT_INTERFACE!{interface IConnectionSession(IConnectionSessionVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionSession] {
+    fn get_ConnectionProfile(&self, out: *mut *mut ConnectionProfile) -> HRESULT
+}}
+impl IConnectionSession {
+    #[inline] pub fn get_connection_profile(&self) -> Result<Option<ComPtr<ConnectionProfile>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ConnectionProfile)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ConnectionSession: IConnectionSession}
+DEFINE_IID!(IID_IConnectivityInterval, 1336557567, 26438, 18468, 169, 100, 238, 216, 232, 127, 135, 9);
+RT_INTERFACE!{interface IConnectivityInterval(IConnectivityIntervalVtbl): IInspectable(IInspectableVtbl) [IID_IConnectivityInterval] {
+    fn get_StartTime(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn get_ConnectionDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT
+}}
+impl IConnectivityInterval {
+    #[inline] pub fn get_start_time(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_StartTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_connection_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ConnectionDuration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ConnectivityInterval: IConnectivityInterval}
+RT_CLASS!{static class ConnectivityManager}
+impl RtActivatable<IConnectivityManagerStatics> for ConnectivityManager {}
+impl ConnectivityManager {
+    #[inline] pub fn acquire_connection_async(cellularApnContext: &CellularApnContext) -> Result<ComPtr<foundation::IAsyncOperation<ConnectionSession>>> {
+        <Self as RtActivatable<IConnectivityManagerStatics>>::get_activation_factory().acquire_connection_async(cellularApnContext)
+    }
+    #[inline] pub fn add_http_route_policy(routePolicy: &RoutePolicy) -> Result<()> {
+        <Self as RtActivatable<IConnectivityManagerStatics>>::get_activation_factory().add_http_route_policy(routePolicy)
+    }
+    #[inline] pub fn remove_http_route_policy(routePolicy: &RoutePolicy) -> Result<()> {
+        <Self as RtActivatable<IConnectivityManagerStatics>>::get_activation_factory().remove_http_route_policy(routePolicy)
+    }
+}
+DEFINE_CLSID!(ConnectivityManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,111,110,110,101,99,116,105,118,105,116,121,77,97,110,97,103,101,114,0]) [CLSID_ConnectivityManager]);
+DEFINE_IID!(IID_IConnectivityManagerStatics, 1361106097, 20401, 18608, 175, 201, 66, 224, 9, 42, 129, 100);
+RT_INTERFACE!{static interface IConnectivityManagerStatics(IConnectivityManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IConnectivityManagerStatics] {
+    fn AcquireConnectionAsync(&self, cellularApnContext: *mut CellularApnContext, out: *mut *mut foundation::IAsyncOperation<ConnectionSession>) -> HRESULT,
+    fn AddHttpRoutePolicy(&self, routePolicy: *mut RoutePolicy) -> HRESULT,
+    fn RemoveHttpRoutePolicy(&self, routePolicy: *mut RoutePolicy) -> HRESULT
+}}
+impl IConnectivityManagerStatics {
+    #[inline] pub fn acquire_connection_async(&self, cellularApnContext: &CellularApnContext) -> Result<ComPtr<foundation::IAsyncOperation<ConnectionSession>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).AcquireConnectionAsync)(self as *const _ as *mut _, cellularApnContext as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_http_route_policy(&self, routePolicy: &RoutePolicy) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddHttpRoutePolicy)(self as *const _ as *mut _, routePolicy as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_http_route_policy(&self, routePolicy: &RoutePolicy) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RemoveHttpRoutePolicy)(self as *const _ as *mut _, routePolicy as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IDataPlanStatus, 2541390732, 14469, 16627, 136, 81, 66, 205, 43, 213, 104, 187);
+RT_INTERFACE!{interface IDataPlanStatus(IDataPlanStatusVtbl): IInspectable(IInspectableVtbl) [IID_IDataPlanStatus] {
+    fn get_DataPlanUsage(&self, out: *mut *mut DataPlanUsage) -> HRESULT,
+    fn get_DataLimitInMegabytes(&self, out: *mut *mut foundation::IReference<u32>) -> HRESULT,
+    fn get_InboundBitsPerSecond(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
+    fn get_OutboundBitsPerSecond(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
+    fn get_NextBillingCycle(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
+    fn get_MaxTransferSizeInMegabytes(&self, out: *mut *mut foundation::IReference<u32>) -> HRESULT
+}}
+impl IDataPlanStatus {
+    #[inline] pub fn get_data_plan_usage(&self) -> Result<Option<ComPtr<DataPlanUsage>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DataPlanUsage)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_data_limit_in_megabytes(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_DataLimitInMegabytes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_inbound_bits_per_second(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_InboundBitsPerSecond)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_outbound_bits_per_second(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_OutboundBitsPerSecond)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_next_billing_cycle(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_NextBillingCycle)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_max_transfer_size_in_megabytes(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_MaxTransferSizeInMegabytes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DataPlanStatus: IDataPlanStatus}
+DEFINE_IID!(IID_IDataPlanUsage, 3105966381, 15172, 18431, 179, 97, 190, 89, 230, 158, 209, 176);
+RT_INTERFACE!{interface IDataPlanUsage(IDataPlanUsageVtbl): IInspectable(IInspectableVtbl) [IID_IDataPlanUsage] {
+    fn get_MegabytesUsed(&self, out: *mut u32) -> HRESULT,
+    fn get_LastSyncTime(&self, out: *mut foundation::DateTime) -> HRESULT
+}}
+impl IDataPlanUsage {
+    #[inline] pub fn get_megabytes_used(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_MegabytesUsed)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_last_sync_time(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_LastSyncTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DataPlanUsage: IDataPlanUsage}
+DEFINE_IID!(IID_IDataUsage, 3242401235, 45382, 19769, 185, 89, 12, 105, 176, 150, 197, 18);
+RT_INTERFACE!{interface IDataUsage(IDataUsageVtbl): IInspectable(IInspectableVtbl) [IID_IDataUsage] {
+    fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
+    fn get_BytesReceived(&self, out: *mut u64) -> HRESULT
+}}
+impl IDataUsage {
+    #[inline] pub fn get_bytes_sent(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BytesSent)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_bytes_received(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BytesReceived)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class DataUsage: IDataUsage}
+RT_ENUM! { enum DataUsageGranularity: i32 {
+    PerMinute (DataUsageGranularity_PerMinute) = 0, PerHour (DataUsageGranularity_PerHour) = 1, PerDay (DataUsageGranularity_PerDay) = 2, Total (DataUsageGranularity_Total) = 3,
+}}
+RT_ENUM! { enum DomainConnectivityLevel: i32 {
+    None (DomainConnectivityLevel_None) = 0, Unauthenticated (DomainConnectivityLevel_Unauthenticated) = 1, Authenticated (DomainConnectivityLevel_Authenticated) = 2,
+}}
+DEFINE_IID!(IID_IIPInformation, 3629204960, 5007, 18391, 155, 58, 54, 187, 72, 140, 239, 51);
+RT_INTERFACE!{interface IIPInformation(IIPInformationVtbl): IInspectable(IInspectableVtbl) [IID_IIPInformation] {
+    fn get_NetworkAdapter(&self, out: *mut *mut NetworkAdapter) -> HRESULT,
+    fn get_PrefixLength(&self, out: *mut *mut foundation::IReference<u8>) -> HRESULT
+}}
+impl IIPInformation {
+    #[inline] pub fn get_network_adapter(&self) -> Result<Option<ComPtr<NetworkAdapter>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_NetworkAdapter)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_prefix_length(&self) -> Result<Option<ComPtr<foundation::IReference<u8>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PrefixLength)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_ILanIdentifier, 1219122090, 4360, 17734, 166, 203, 154, 116, 218, 75, 123, 160);
+RT_INTERFACE!{interface ILanIdentifier(ILanIdentifierVtbl): IInspectable(IInspectableVtbl) [IID_ILanIdentifier] {
+    fn get_InfrastructureId(&self, out: *mut *mut LanIdentifierData) -> HRESULT,
+    fn get_PortId(&self, out: *mut *mut LanIdentifierData) -> HRESULT,
+    fn get_NetworkAdapterId(&self, out: *mut Guid) -> HRESULT
+}}
+impl ILanIdentifier {
+    #[inline] pub fn get_infrastructure_id(&self) -> Result<Option<ComPtr<LanIdentifierData>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_InfrastructureId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_port_id(&self) -> Result<Option<ComPtr<LanIdentifierData>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PortId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_network_adapter_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_NetworkAdapterId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class LanIdentifier: ILanIdentifier}
+DEFINE_IID!(IID_ILanIdentifierData, 2806940611, 54841, 17854, 163, 106, 196, 228, 174, 175, 109, 155);
+RT_INTERFACE!{interface ILanIdentifierData(ILanIdentifierDataVtbl): IInspectable(IInspectableVtbl) [IID_ILanIdentifierData] {
+    fn get_Type(&self, out: *mut u32) -> HRESULT,
+    fn get_Value(&self, out: *mut *mut foundation::collections::IVectorView<u8>) -> HRESULT
+}}
+impl ILanIdentifierData {
+    #[inline] pub fn get_type(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Type)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u8>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class LanIdentifierData: ILanIdentifierData}
+DEFINE_IID!(IID_INetworkAdapter, 995372547, 21384, 18796, 168, 163, 175, 253, 57, 174, 194, 230);
+RT_INTERFACE!{interface INetworkAdapter(INetworkAdapterVtbl): IInspectable(IInspectableVtbl) [IID_INetworkAdapter] {
+    fn get_OutboundMaxBitsPerSecond(&self, out: *mut u64) -> HRESULT,
+    fn get_InboundMaxBitsPerSecond(&self, out: *mut u64) -> HRESULT,
+    fn get_IanaInterfaceType(&self, out: *mut u32) -> HRESULT,
+    fn get_NetworkItem(&self, out: *mut *mut NetworkItem) -> HRESULT,
+    fn get_NetworkAdapterId(&self, out: *mut Guid) -> HRESULT,
+    fn GetConnectedProfileAsync(&self, out: *mut *mut foundation::IAsyncOperation<ConnectionProfile>) -> HRESULT
+}}
+impl INetworkAdapter {
+    #[inline] pub fn get_outbound_max_bits_per_second(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_OutboundMaxBitsPerSecond)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_inbound_max_bits_per_second(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_InboundMaxBitsPerSecond)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_iana_interface_type(&self) -> Result<u32> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IanaInterfaceType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_network_item(&self) -> Result<Option<ComPtr<NetworkItem>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_NetworkItem)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_network_adapter_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_NetworkAdapterId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_connected_profile_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ConnectionProfile>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetConnectedProfileAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class NetworkAdapter: INetworkAdapter}
+RT_ENUM! { enum NetworkAuthenticationType: i32 {
+    None (NetworkAuthenticationType_None) = 0, Unknown (NetworkAuthenticationType_Unknown) = 1, Open80211 (NetworkAuthenticationType_Open80211) = 2, SharedKey80211 (NetworkAuthenticationType_SharedKey80211) = 3, Wpa (NetworkAuthenticationType_Wpa) = 4, WpaPsk (NetworkAuthenticationType_WpaPsk) = 5, WpaNone (NetworkAuthenticationType_WpaNone) = 6, Rsna (NetworkAuthenticationType_Rsna) = 7, RsnaPsk (NetworkAuthenticationType_RsnaPsk) = 8, Ihv (NetworkAuthenticationType_Ihv) = 9,
+}}
+RT_ENUM! { enum NetworkConnectivityLevel: i32 {
+    None (NetworkConnectivityLevel_None) = 0, LocalAccess (NetworkConnectivityLevel_LocalAccess) = 1, ConstrainedInternetAccess (NetworkConnectivityLevel_ConstrainedInternetAccess) = 2, InternetAccess (NetworkConnectivityLevel_InternetAccess) = 3,
+}}
+RT_ENUM! { enum NetworkCostType: i32 {
+    Unknown (NetworkCostType_Unknown) = 0, Unrestricted (NetworkCostType_Unrestricted) = 1, Fixed (NetworkCostType_Fixed) = 2, Variable (NetworkCostType_Variable) = 3,
+}}
+RT_ENUM! { enum NetworkEncryptionType: i32 {
+    None (NetworkEncryptionType_None) = 0, Unknown (NetworkEncryptionType_Unknown) = 1, Wep (NetworkEncryptionType_Wep) = 2, Wep40 (NetworkEncryptionType_Wep40) = 3, Wep104 (NetworkEncryptionType_Wep104) = 4, Tkip (NetworkEncryptionType_Tkip) = 5, Ccmp (NetworkEncryptionType_Ccmp) = 6, WpaUseGroup (NetworkEncryptionType_WpaUseGroup) = 7, RsnUseGroup (NetworkEncryptionType_RsnUseGroup) = 8, Ihv (NetworkEncryptionType_Ihv) = 9,
+}}
+RT_CLASS!{static class NetworkInformation}
+impl RtActivatable<INetworkInformationStatics> for NetworkInformation {}
+impl RtActivatable<INetworkInformationStatics2> for NetworkInformation {}
+impl NetworkInformation {
+    #[inline] pub fn get_connection_profiles() -> Result<Option<ComPtr<foundation::collections::IVectorView<ConnectionProfile>>>> {
+        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_connection_profiles()
+    }
+    #[inline] pub fn get_internet_connection_profile() -> Result<Option<ComPtr<ConnectionProfile>>> {
+        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_internet_connection_profile()
+    }
+    #[inline] pub fn get_lan_identifiers() -> Result<Option<ComPtr<foundation::collections::IVectorView<LanIdentifier>>>> {
+        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_lan_identifiers()
+    }
+    #[inline] pub fn get_host_names() -> Result<Option<ComPtr<foundation::collections::IVectorView<super::HostName>>>> {
+        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_host_names()
+    }
+    #[inline] pub fn get_proxy_configuration_async(uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<ProxyConfiguration>>> {
+        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_proxy_configuration_async(uri)
+    }
+    #[inline] pub fn get_sorted_endpoint_pairs(destinationList: &foundation::collections::IIterable<super::EndpointPair>, sortOptions: super::HostNameSortOptions) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::EndpointPair>>>> {
+        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_sorted_endpoint_pairs(destinationList, sortOptions)
+    }
+    #[inline] pub fn add_network_status_changed(networkStatusHandler: &NetworkStatusChangedEventHandler) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().add_network_status_changed(networkStatusHandler)
+    }
+    #[inline] pub fn remove_network_status_changed(eventCookie: foundation::EventRegistrationToken) -> Result<()> {
+        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().remove_network_status_changed(eventCookie)
+    }
+    #[inline] pub fn find_connection_profiles_async(pProfileFilter: &ConnectionProfileFilter) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectionProfile>>>> {
+        <Self as RtActivatable<INetworkInformationStatics2>>::get_activation_factory().find_connection_profiles_async(pProfileFilter)
+    }
+}
+DEFINE_CLSID!(NetworkInformation(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,78,101,116,119,111,114,107,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_NetworkInformation]);
+DEFINE_IID!(IID_INetworkInformationStatics, 1349843025, 38157, 16741, 156, 21, 54, 86, 25, 72, 30, 234);
+RT_INTERFACE!{static interface INetworkInformationStatics(INetworkInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkInformationStatics] {
+    fn GetConnectionProfiles(&self, out: *mut *mut foundation::collections::IVectorView<ConnectionProfile>) -> HRESULT,
+    fn GetInternetConnectionProfile(&self, out: *mut *mut ConnectionProfile) -> HRESULT,
+    fn GetLanIdentifiers(&self, out: *mut *mut foundation::collections::IVectorView<LanIdentifier>) -> HRESULT,
+    fn GetHostNames(&self, out: *mut *mut foundation::collections::IVectorView<super::HostName>) -> HRESULT,
+    fn GetProxyConfigurationAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<ProxyConfiguration>) -> HRESULT,
+    fn GetSortedEndpointPairs(&self, destinationList: *mut foundation::collections::IIterable<super::EndpointPair>, sortOptions: super::HostNameSortOptions, out: *mut *mut foundation::collections::IVectorView<super::EndpointPair>) -> HRESULT,
+    fn add_NetworkStatusChanged(&self, networkStatusHandler: *mut NetworkStatusChangedEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_NetworkStatusChanged(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl INetworkInformationStatics {
+    #[inline] pub fn get_connection_profiles(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<ConnectionProfile>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetConnectionProfiles)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_internet_connection_profile(&self) -> Result<Option<ComPtr<ConnectionProfile>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetInternetConnectionProfile)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_lan_identifiers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<LanIdentifier>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetLanIdentifiers)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_host_names(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::HostName>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetHostNames)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_proxy_configuration_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<ProxyConfiguration>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetProxyConfigurationAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_sorted_endpoint_pairs(&self, destinationList: &foundation::collections::IIterable<super::EndpointPair>, sortOptions: super::HostNameSortOptions) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::EndpointPair>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetSortedEndpointPairs)(self as *const _ as *mut _, destinationList as *const _ as *mut _, sortOptions, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn add_network_status_changed(&self, networkStatusHandler: &NetworkStatusChangedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_NetworkStatusChanged)(self as *const _ as *mut _, networkStatusHandler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_network_status_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_NetworkStatusChanged)(self as *const _ as *mut _, eventCookie);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_INetworkInformationStatics2, 1167912212, 10290, 18870, 186, 110, 226, 101, 240, 71, 134, 168);
+RT_INTERFACE!{static interface INetworkInformationStatics2(INetworkInformationStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_INetworkInformationStatics2] {
+    fn FindConnectionProfilesAsync(&self, pProfileFilter: *mut ConnectionProfileFilter, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectionProfile>>) -> HRESULT
+}}
+impl INetworkInformationStatics2 {
+    #[inline] pub fn find_connection_profiles_async(&self, pProfileFilter: &ConnectionProfileFilter) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectionProfile>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).FindConnectionProfilesAsync)(self as *const _ as *mut _, pProfileFilter as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_INetworkItem, 29117753, 62944, 17767, 162, 140, 66, 8, 12, 131, 27, 43);
+RT_INTERFACE!{interface INetworkItem(INetworkItemVtbl): IInspectable(IInspectableVtbl) [IID_INetworkItem] {
+    fn get_NetworkId(&self, out: *mut Guid) -> HRESULT,
+    fn GetNetworkTypes(&self, out: *mut NetworkTypes) -> HRESULT
+}}
+impl INetworkItem {
+    #[inline] pub fn get_network_id(&self) -> Result<Guid> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_NetworkId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_network_types(&self) -> Result<NetworkTypes> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetNetworkTypes)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class NetworkItem: INetworkItem}
+DEFINE_IID!(IID_INetworkSecuritySettings, 2090892941, 37243, 19295, 184, 77, 40, 247, 165, 172, 84, 2);
+RT_INTERFACE!{interface INetworkSecuritySettings(INetworkSecuritySettingsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkSecuritySettings] {
+    fn get_NetworkAuthenticationType(&self, out: *mut NetworkAuthenticationType) -> HRESULT,
+    fn get_NetworkEncryptionType(&self, out: *mut NetworkEncryptionType) -> HRESULT
+}}
+impl INetworkSecuritySettings {
+    #[inline] pub fn get_network_authentication_type(&self) -> Result<NetworkAuthenticationType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_NetworkAuthenticationType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_network_encryption_type(&self) -> Result<NetworkEncryptionType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_NetworkEncryptionType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class NetworkSecuritySettings: INetworkSecuritySettings}
+DEFINE_IID!(IID_INetworkStateChangeEventDetails, 520942387, 55206, 17629, 164, 233, 104, 124, 71, 107, 144, 61);
+RT_INTERFACE!{interface INetworkStateChangeEventDetails(INetworkStateChangeEventDetailsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkStateChangeEventDetails] {
+    fn get_HasNewInternetConnectionProfile(&self, out: *mut bool) -> HRESULT,
+    fn get_HasNewConnectionCost(&self, out: *mut bool) -> HRESULT,
+    fn get_HasNewNetworkConnectivityLevel(&self, out: *mut bool) -> HRESULT,
+    fn get_HasNewDomainConnectivityLevel(&self, out: *mut bool) -> HRESULT,
+    fn get_HasNewHostNameList(&self, out: *mut bool) -> HRESULT,
+    fn get_HasNewWwanRegistrationState(&self, out: *mut bool) -> HRESULT
+}}
+impl INetworkStateChangeEventDetails {
+    #[inline] pub fn get_has_new_internet_connection_profile(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_HasNewInternetConnectionProfile)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_has_new_connection_cost(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_HasNewConnectionCost)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_has_new_network_connectivity_level(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_HasNewNetworkConnectivityLevel)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_has_new_domain_connectivity_level(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_HasNewDomainConnectivityLevel)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_has_new_host_name_list(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_HasNewHostNameList)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_has_new_wwan_registration_state(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_HasNewWwanRegistrationState)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class NetworkStateChangeEventDetails: INetworkStateChangeEventDetails}
+DEFINE_IID!(IID_INetworkStateChangeEventDetails2, 3594764520, 12499, 20330, 173, 71, 106, 24, 115, 206, 179, 193);
+RT_INTERFACE!{interface INetworkStateChangeEventDetails2(INetworkStateChangeEventDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_INetworkStateChangeEventDetails2] {
+    fn get_HasNewTetheringOperationalState(&self, out: *mut bool) -> HRESULT,
+    fn get_HasNewTetheringClientCount(&self, out: *mut bool) -> HRESULT
+}}
+impl INetworkStateChangeEventDetails2 {
+    #[inline] pub fn get_has_new_tethering_operational_state(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_HasNewTetheringOperationalState)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_has_new_tethering_client_count(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_HasNewTetheringClientCount)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_NetworkStatusChangedEventHandler, 1908020287, 22926, 18896, 132, 235, 143, 235, 174, 220, 193, 149);
+RT_DELEGATE!{delegate NetworkStatusChangedEventHandler(NetworkStatusChangedEventHandlerVtbl, NetworkStatusChangedEventHandlerImpl) [IID_NetworkStatusChangedEventHandler] {
+    fn Invoke(&self, sender: *mut IInspectable) -> HRESULT
+}}
+impl NetworkStatusChangedEventHandler {
+    #[inline] pub fn invoke(&self, sender: &IInspectable) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum NetworkTypes: u32 {
+    None (NetworkTypes_None) = 0, Internet (NetworkTypes_Internet) = 1, PrivateNetwork (NetworkTypes_PrivateNetwork) = 2,
+}}
+DEFINE_IID!(IID_INetworkUsage, 1239060430, 39301, 18727, 191, 91, 7, 43, 92, 101, 248, 217);
+RT_INTERFACE!{interface INetworkUsage(INetworkUsageVtbl): IInspectable(IInspectableVtbl) [IID_INetworkUsage] {
+    fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
+    fn get_BytesReceived(&self, out: *mut u64) -> HRESULT,
+    fn get_ConnectionDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT
+}}
+impl INetworkUsage {
+    #[inline] pub fn get_bytes_sent(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BytesSent)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_bytes_received(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BytesReceived)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_connection_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ConnectionDuration)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class NetworkUsage: INetworkUsage}
+RT_STRUCT! { struct NetworkUsageStates {
+    Roaming: TriStates, Shared: TriStates,
+}}
+RT_CLASS!{class IPInformation: IIPInformation}
+DEFINE_IID!(IID_IProviderNetworkUsage, 1590074884, 31025, 18632, 184, 243, 70, 48, 15, 164, 39, 40);
+RT_INTERFACE!{interface IProviderNetworkUsage(IProviderNetworkUsageVtbl): IInspectable(IInspectableVtbl) [IID_IProviderNetworkUsage] {
+    fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
+    fn get_BytesReceived(&self, out: *mut u64) -> HRESULT,
+    fn get_ProviderId(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IProviderNetworkUsage {
+    #[inline] pub fn get_bytes_sent(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BytesSent)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_bytes_received(&self) -> Result<u64> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_BytesReceived)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_provider_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProviderId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ProviderNetworkUsage: IProviderNetworkUsage}
+DEFINE_IID!(IID_IProxyConfiguration, 4013580468, 36868, 19926, 183, 216, 179, 229, 2, 244, 170, 208);
+RT_INTERFACE!{interface IProxyConfiguration(IProxyConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IProxyConfiguration] {
+    fn get_ProxyUris(&self, out: *mut *mut foundation::collections::IVectorView<foundation::Uri>) -> HRESULT,
+    fn get_CanConnectDirectly(&self, out: *mut bool) -> HRESULT
+}}
+impl IProxyConfiguration {
+    #[inline] pub fn get_proxy_uris(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<foundation::Uri>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ProxyUris)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_can_connect_directly(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_CanConnectDirectly)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class ProxyConfiguration: IProxyConfiguration}
+RT_ENUM! { enum RoamingStates: u32 {
+    None (RoamingStates_None) = 0, NotRoaming (RoamingStates_NotRoaming) = 1, Roaming (RoamingStates_Roaming) = 2,
+}}
+DEFINE_IID!(IID_IRoutePolicy, 296469676, 4039, 17124, 135, 66, 86, 153, 35, 177, 202, 17);
+RT_INTERFACE!{interface IRoutePolicy(IRoutePolicyVtbl): IInspectable(IInspectableVtbl) [IID_IRoutePolicy] {
+    fn get_ConnectionProfile(&self, out: *mut *mut ConnectionProfile) -> HRESULT,
+    fn get_HostName(&self, out: *mut *mut super::HostName) -> HRESULT,
+    fn get_HostNameType(&self, out: *mut super::DomainNameType) -> HRESULT
+}}
+impl IRoutePolicy {
+    #[inline] pub fn get_connection_profile(&self) -> Result<Option<ComPtr<ConnectionProfile>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ConnectionProfile)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_host_name(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_HostName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_host_name_type(&self) -> Result<super::DomainNameType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_HostNameType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class RoutePolicy: IRoutePolicy}
+impl RtActivatable<IRoutePolicyFactory> for RoutePolicy {}
+impl RoutePolicy {
+    #[inline] pub fn create_route_policy(connectionProfile: &ConnectionProfile, hostName: &super::HostName, type_: super::DomainNameType) -> Result<ComPtr<RoutePolicy>> {
+        <Self as RtActivatable<IRoutePolicyFactory>>::get_activation_factory().create_route_policy(connectionProfile, hostName, type_)
+    }
+}
+DEFINE_CLSID!(RoutePolicy(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,82,111,117,116,101,80,111,108,105,99,121,0]) [CLSID_RoutePolicy]);
+DEFINE_IID!(IID_IRoutePolicyFactory, 906131763, 41358, 19893, 166, 151, 245, 143, 167, 54, 78, 68);
+RT_INTERFACE!{static interface IRoutePolicyFactory(IRoutePolicyFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRoutePolicyFactory] {
+    fn CreateRoutePolicy(&self, connectionProfile: *mut ConnectionProfile, hostName: *mut super::HostName, type_: super::DomainNameType, out: *mut *mut RoutePolicy) -> HRESULT
+}}
+impl IRoutePolicyFactory {
+    #[inline] pub fn create_route_policy(&self, connectionProfile: &ConnectionProfile, hostName: &super::HostName, type_: super::DomainNameType) -> Result<ComPtr<RoutePolicy>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateRoutePolicy)(self as *const _ as *mut _, connectionProfile as *const _ as *mut _, hostName as *const _ as *mut _, type_, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum TriStates: i32 {
+    DoNotCare (TriStates_DoNotCare) = 0, No (TriStates_No) = 1, Yes (TriStates_Yes) = 2,
+}}
+DEFINE_IID!(IID_IWlanConnectionProfileDetails, 1444976843, 45914, 19441, 168, 132, 183, 85, 126, 136, 255, 134);
+RT_INTERFACE!{interface IWlanConnectionProfileDetails(IWlanConnectionProfileDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IWlanConnectionProfileDetails] {
+    fn GetConnectedSsid(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IWlanConnectionProfileDetails {
+    #[inline] pub fn get_connected_ssid(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetConnectedSsid)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WlanConnectionProfileDetails: IWlanConnectionProfileDetails}
+DEFINE_IID!(IID_IWwanConnectionProfileDetails, 239970558, 33631, 19955, 130, 253, 223, 85, 110, 188, 9, 239);
+RT_INTERFACE!{interface IWwanConnectionProfileDetails(IWwanConnectionProfileDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IWwanConnectionProfileDetails] {
+    fn get_HomeProviderId(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_AccessPointName(&self, out: *mut HSTRING) -> HRESULT,
+    fn GetNetworkRegistrationState(&self, out: *mut WwanNetworkRegistrationState) -> HRESULT,
+    fn GetCurrentDataClass(&self, out: *mut WwanDataClass) -> HRESULT
+}}
+impl IWwanConnectionProfileDetails {
+    #[inline] pub fn get_home_provider_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_HomeProviderId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_access_point_name(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_AccessPointName)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_network_registration_state(&self) -> Result<WwanNetworkRegistrationState> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetNetworkRegistrationState)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_current_data_class(&self) -> Result<WwanDataClass> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).GetCurrentDataClass)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class WwanConnectionProfileDetails: IWwanConnectionProfileDetails}
+DEFINE_IID!(IID_IWwanConnectionProfileDetails2, 2054508254, 41453, 18610, 142, 146, 180, 96, 3, 61, 82, 226);
+RT_INTERFACE!{interface IWwanConnectionProfileDetails2(IWwanConnectionProfileDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IWwanConnectionProfileDetails2] {
+    fn get_IPKind(&self, out: *mut WwanNetworkIPKind) -> HRESULT,
+    fn get_PurposeGuids(&self, out: *mut *mut foundation::collections::IVectorView<Guid>) -> HRESULT
+}}
+impl IWwanConnectionProfileDetails2 {
+    #[inline] pub fn get_ipkind(&self) -> Result<WwanNetworkIPKind> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_IPKind)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_purpose_guids(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<Guid>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_PurposeGuids)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_ENUM! { enum WwanDataClass: u32 {
+    None (WwanDataClass_None) = 0, Gprs (WwanDataClass_Gprs) = 1, Edge (WwanDataClass_Edge) = 2, Umts (WwanDataClass_Umts) = 4, Hsdpa (WwanDataClass_Hsdpa) = 8, Hsupa (WwanDataClass_Hsupa) = 16, LteAdvanced (WwanDataClass_LteAdvanced) = 32, Cdma1xRtt (WwanDataClass_Cdma1xRtt) = 65536, Cdma1xEvdo (WwanDataClass_Cdma1xEvdo) = 131072, Cdma1xEvdoRevA (WwanDataClass_Cdma1xEvdoRevA) = 262144, Cdma1xEvdv (WwanDataClass_Cdma1xEvdv) = 524288, Cdma3xRtt (WwanDataClass_Cdma3xRtt) = 1048576, Cdma1xEvdoRevB (WwanDataClass_Cdma1xEvdoRevB) = 2097152, CdmaUmb (WwanDataClass_CdmaUmb) = 4194304, Custom (WwanDataClass_Custom) = 2147483648,
+}}
+RT_ENUM! { enum WwanNetworkIPKind: i32 {
+    None (WwanNetworkIPKind_None) = 0, Ipv4 (WwanNetworkIPKind_Ipv4) = 1, Ipv6 (WwanNetworkIPKind_Ipv6) = 2, Ipv4v6 (WwanNetworkIPKind_Ipv4v6) = 3, Ipv4v6v4Xlat (WwanNetworkIPKind_Ipv4v6v4Xlat) = 4,
+}}
+RT_ENUM! { enum WwanNetworkRegistrationState: i32 {
+    None (WwanNetworkRegistrationState_None) = 0, Deregistered (WwanNetworkRegistrationState_Deregistered) = 1, Searching (WwanNetworkRegistrationState_Searching) = 2, Home (WwanNetworkRegistrationState_Home) = 3, Roaming (WwanNetworkRegistrationState_Roaming) = 4, Partner (WwanNetworkRegistrationState_Partner) = 5, Denied (WwanNetworkRegistrationState_Denied) = 6,
+}}
+} // Windows.Networking.Connectivity
 pub mod networkoperators { // Windows.Networking.NetworkOperators
 use ::prelude::*;
 RT_ENUM! { enum DataClasses: u32 {
@@ -324,7 +2386,7 @@ impl IESimOperationResult {
 }
 RT_CLASS!{class ESimOperationResult: IESimOperationResult}
 RT_ENUM! { enum ESimOperationStatus: i32 {
-    Success (ESimOperationStatus_Success) = 0, NotAuthorized (ESimOperationStatus_NotAuthorized) = 1, NotFound (ESimOperationStatus_NotFound) = 2, PolicyViolation (ESimOperationStatus_PolicyViolation) = 3, InsufficientSpaceOnCard (ESimOperationStatus_InsufficientSpaceOnCard) = 4, ServerFailure (ESimOperationStatus_ServerFailure) = 5, ServerNotReachable (ESimOperationStatus_ServerNotReachable) = 6, TimeoutWaitingForUserConsent (ESimOperationStatus_TimeoutWaitingForUserConsent) = 7, IncorrectConfirmationCode (ESimOperationStatus_IncorrectConfirmationCode) = 8, ConfirmationCodeMaxRetriesExceeded (ESimOperationStatus_ConfirmationCodeMaxRetriesExceeded) = 9, CardRemoved (ESimOperationStatus_CardRemoved) = 10, CardBusy (ESimOperationStatus_CardBusy) = 11, Other (ESimOperationStatus_Other) = 12,
+    Success (ESimOperationStatus_Success) = 0, NotAuthorized (ESimOperationStatus_NotAuthorized) = 1, NotFound (ESimOperationStatus_NotFound) = 2, PolicyViolation (ESimOperationStatus_PolicyViolation) = 3, InsufficientSpaceOnCard (ESimOperationStatus_InsufficientSpaceOnCard) = 4, ServerFailure (ESimOperationStatus_ServerFailure) = 5, ServerNotReachable (ESimOperationStatus_ServerNotReachable) = 6, TimeoutWaitingForUserConsent (ESimOperationStatus_TimeoutWaitingForUserConsent) = 7, IncorrectConfirmationCode (ESimOperationStatus_IncorrectConfirmationCode) = 8, ConfirmationCodeMaxRetriesExceeded (ESimOperationStatus_ConfirmationCodeMaxRetriesExceeded) = 9, CardRemoved (ESimOperationStatus_CardRemoved) = 10, CardBusy (ESimOperationStatus_CardBusy) = 11, Other (ESimOperationStatus_Other) = 12, CardGeneralFailure (ESimOperationStatus_CardGeneralFailure) = 13, ConfirmationCodeMissing (ESimOperationStatus_ConfirmationCodeMissing) = 14, InvalidMatchingId (ESimOperationStatus_InvalidMatchingId) = 15, NoEligibleProfileForThisDevice (ESimOperationStatus_NoEligibleProfileForThisDevice) = 16, OperationAborted (ESimOperationStatus_OperationAborted) = 17, EidMismatch (ESimOperationStatus_EidMismatch) = 18, ProfileNotAvailableForNewBinding (ESimOperationStatus_ProfileNotAvailableForNewBinding) = 19, ProfileNotReleasedByOperator (ESimOperationStatus_ProfileNotReleasedByOperator) = 20, OperationProhibitedByProfileClass (ESimOperationStatus_OperationProhibitedByProfileClass) = 21, ProfileNotPresent (ESimOperationStatus_ProfileNotPresent) = 22, NoCorrespondingRequest (ESimOperationStatus_NoCorrespondingRequest) = 23,
 }}
 DEFINE_IID!(IID_IESimPolicy, 1105312157, 53118, 17173, 136, 43, 111, 30, 116, 176, 211, 143);
 RT_INTERFACE!{interface IESimPolicy(IESimPolicyVtbl): IInspectable(IInspectableVtbl) [IID_IESimPolicy] {
@@ -3158,2048 +5220,6 @@ impl IUssdSessionStatics {
     }}
 }
 } // Windows.Networking.NetworkOperators
-pub mod connectivity { // Windows.Networking.Connectivity
-use ::prelude::*;
-DEFINE_IID!(IID_IAttributedNetworkUsage, 4150898745, 60578, 17899, 173, 225, 176, 54, 139, 117, 108, 73);
-RT_INTERFACE!{interface IAttributedNetworkUsage(IAttributedNetworkUsageVtbl): IInspectable(IInspectableVtbl) [IID_IAttributedNetworkUsage] {
-    fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
-    fn get_BytesReceived(&self, out: *mut u64) -> HRESULT,
-    fn get_AttributionId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_AttributionName(&self, out: *mut HSTRING) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_AttributionThumbnail(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStreamReference) -> HRESULT
-}}
-impl IAttributedNetworkUsage {
-    #[inline] pub fn get_bytes_sent(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_BytesSent)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_bytes_received(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_BytesReceived)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_attribution_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AttributionId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_attribution_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AttributionName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_attribution_thumbnail(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AttributionThumbnail)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class AttributedNetworkUsage: IAttributedNetworkUsage}
-RT_ENUM! { enum CellularApnAuthenticationType: i32 {
-    None (CellularApnAuthenticationType_None) = 0, Pap (CellularApnAuthenticationType_Pap) = 1, Chap (CellularApnAuthenticationType_Chap) = 2, Mschapv2 (CellularApnAuthenticationType_Mschapv2) = 3,
-}}
-DEFINE_IID!(IID_ICellularApnContext, 1873095156, 61437, 17730, 154, 178, 112, 91, 191, 148, 148, 58);
-RT_INTERFACE!{interface ICellularApnContext(ICellularApnContextVtbl): IInspectable(IInspectableVtbl) [IID_ICellularApnContext] {
-    fn get_ProviderId(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_ProviderId(&self, value: HSTRING) -> HRESULT,
-    fn get_AccessPointName(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_AccessPointName(&self, value: HSTRING) -> HRESULT,
-    fn get_UserName(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_UserName(&self, value: HSTRING) -> HRESULT,
-    fn get_Password(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Password(&self, value: HSTRING) -> HRESULT,
-    fn get_IsCompressionEnabled(&self, out: *mut bool) -> HRESULT,
-    fn put_IsCompressionEnabled(&self, value: bool) -> HRESULT,
-    fn get_AuthenticationType(&self, out: *mut CellularApnAuthenticationType) -> HRESULT,
-    fn put_AuthenticationType(&self, value: CellularApnAuthenticationType) -> HRESULT
-}}
-impl ICellularApnContext {
-    #[inline] pub fn get_provider_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProviderId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_provider_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ProviderId)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_access_point_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AccessPointName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_access_point_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AccessPointName)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_user_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UserName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_user_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_UserName)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_password(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Password)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_password(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Password)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_compression_enabled(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsCompressionEnabled)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_is_compression_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IsCompressionEnabled)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_authentication_type(&self) -> Result<CellularApnAuthenticationType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_AuthenticationType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_authentication_type(&self, value: CellularApnAuthenticationType) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AuthenticationType)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class CellularApnContext: ICellularApnContext}
-impl RtActivatable<IActivationFactory> for CellularApnContext {}
-DEFINE_CLSID!(CellularApnContext(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,101,108,108,117,108,97,114,65,112,110,67,111,110,116,101,120,116,0]) [CLSID_CellularApnContext]);
-DEFINE_IID!(IID_ICellularApnContext2, 1991306010, 44105, 17232, 177, 229, 220, 71, 99, 188, 105, 199);
-RT_INTERFACE!{interface ICellularApnContext2(ICellularApnContext2Vtbl): IInspectable(IInspectableVtbl) [IID_ICellularApnContext2] {
-    fn get_ProfileName(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_ProfileName(&self, value: HSTRING) -> HRESULT
-}}
-impl ICellularApnContext2 {
-    #[inline] pub fn get_profile_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProfileName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_profile_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ProfileName)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IConnectionCost, 3134707753, 13334, 19216, 162, 2, 186, 192, 176, 117, 189, 174);
-RT_INTERFACE!{interface IConnectionCost(IConnectionCostVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionCost] {
-    fn get_NetworkCostType(&self, out: *mut NetworkCostType) -> HRESULT,
-    fn get_Roaming(&self, out: *mut bool) -> HRESULT,
-    fn get_OverDataLimit(&self, out: *mut bool) -> HRESULT,
-    fn get_ApproachingDataLimit(&self, out: *mut bool) -> HRESULT
-}}
-impl IConnectionCost {
-    #[inline] pub fn get_network_cost_type(&self) -> Result<NetworkCostType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_NetworkCostType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_roaming(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Roaming)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_over_data_limit(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OverDataLimit)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_approaching_data_limit(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ApproachingDataLimit)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ConnectionCost: IConnectionCost}
-DEFINE_IID!(IID_IConnectionCost2, 2383493637, 57865, 17737, 187, 37, 94, 13, 182, 145, 203, 5);
-RT_INTERFACE!{interface IConnectionCost2(IConnectionCost2Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionCost2] {
-    fn get_BackgroundDataUsageRestricted(&self, out: *mut bool) -> HRESULT
-}}
-impl IConnectionCost2 {
-    #[inline] pub fn get_background_data_usage_restricted(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_BackgroundDataUsageRestricted)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IConnectionProfile, 1908020284, 22926, 18896, 132, 235, 143, 235, 174, 220, 193, 149);
-RT_INTERFACE!{interface IConnectionProfile(IConnectionProfileVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile] {
-    fn get_ProfileName(&self, out: *mut HSTRING) -> HRESULT,
-    fn GetNetworkConnectivityLevel(&self, out: *mut NetworkConnectivityLevel) -> HRESULT,
-    fn GetNetworkNames(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
-    fn GetConnectionCost(&self, out: *mut *mut ConnectionCost) -> HRESULT,
-    fn GetDataPlanStatus(&self, out: *mut *mut DataPlanStatus) -> HRESULT,
-    fn get_NetworkAdapter(&self, out: *mut *mut NetworkAdapter) -> HRESULT,
-    fn GetLocalUsage(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, out: *mut *mut DataUsage) -> HRESULT,
-    fn GetLocalUsagePerRoamingStates(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: RoamingStates, out: *mut *mut DataUsage) -> HRESULT,
-    fn get_NetworkSecuritySettings(&self, out: *mut *mut NetworkSecuritySettings) -> HRESULT
-}}
-impl IConnectionProfile {
-    #[inline] pub fn get_profile_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProfileName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_network_connectivity_level(&self) -> Result<NetworkConnectivityLevel> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetNetworkConnectivityLevel)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_network_names(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetNetworkNames)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_connection_cost(&self) -> Result<Option<ComPtr<ConnectionCost>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetConnectionCost)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_data_plan_status(&self) -> Result<Option<ComPtr<DataPlanStatus>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDataPlanStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_network_adapter(&self) -> Result<Option<ComPtr<NetworkAdapter>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_NetworkAdapter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_local_usage(&self, startTime: foundation::DateTime, endTime: foundation::DateTime) -> Result<Option<ComPtr<DataUsage>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetLocalUsage)(self as *const _ as *mut _, startTime, endTime, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_local_usage_per_roaming_states(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: RoamingStates) -> Result<Option<ComPtr<DataUsage>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetLocalUsagePerRoamingStates)(self as *const _ as *mut _, startTime, endTime, states, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_network_security_settings(&self) -> Result<Option<ComPtr<NetworkSecuritySettings>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_NetworkSecuritySettings)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ConnectionProfile: IConnectionProfile}
-DEFINE_IID!(IID_IConnectionProfile2, 3791933765, 19615, 16396, 145, 80, 126, 199, 214, 226, 136, 138);
-RT_INTERFACE!{interface IConnectionProfile2(IConnectionProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile2] {
-    fn get_IsWwanConnectionProfile(&self, out: *mut bool) -> HRESULT,
-    fn get_IsWlanConnectionProfile(&self, out: *mut bool) -> HRESULT,
-    fn get_WwanConnectionProfileDetails(&self, out: *mut *mut WwanConnectionProfileDetails) -> HRESULT,
-    fn get_WlanConnectionProfileDetails(&self, out: *mut *mut WlanConnectionProfileDetails) -> HRESULT,
-    fn get_ServiceProviderGuid(&self, out: *mut *mut foundation::IReference<Guid>) -> HRESULT,
-    fn GetSignalBars(&self, out: *mut *mut foundation::IReference<u8>) -> HRESULT,
-    fn GetDomainConnectivityLevel(&self, out: *mut DomainConnectivityLevel) -> HRESULT,
-    fn GetNetworkUsageAsync(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, granularity: DataUsageGranularity, states: NetworkUsageStates, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<NetworkUsage>>) -> HRESULT,
-    fn GetConnectivityIntervalsAsync(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectivityInterval>>) -> HRESULT
-}}
-impl IConnectionProfile2 {
-    #[inline] pub fn get_is_wwan_connection_profile(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsWwanConnectionProfile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_wlan_connection_profile(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsWlanConnectionProfile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_wwan_connection_profile_details(&self) -> Result<Option<ComPtr<WwanConnectionProfileDetails>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_WwanConnectionProfileDetails)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_wlan_connection_profile_details(&self) -> Result<Option<ComPtr<WlanConnectionProfileDetails>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_WlanConnectionProfileDetails)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_service_provider_guid(&self) -> Result<Option<ComPtr<foundation::IReference<Guid>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ServiceProviderGuid)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_signal_bars(&self) -> Result<Option<ComPtr<foundation::IReference<u8>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSignalBars)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_domain_connectivity_level(&self) -> Result<DomainConnectivityLevel> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetDomainConnectivityLevel)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_network_usage_async(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, granularity: DataUsageGranularity, states: NetworkUsageStates) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<NetworkUsage>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetNetworkUsageAsync)(self as *const _ as *mut _, startTime, endTime, granularity, states, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_connectivity_intervals_async(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectivityInterval>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetConnectivityIntervalsAsync)(self as *const _ as *mut _, startTime, endTime, states, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IConnectionProfile3, 1468802344, 19673, 16737, 128, 69, 32, 28, 253, 91, 17, 92);
-RT_INTERFACE!{interface IConnectionProfile3(IConnectionProfile3Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile3] {
-    fn GetAttributedNetworkUsageAsync(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AttributedNetworkUsage>>) -> HRESULT
-}}
-impl IConnectionProfile3 {
-    #[inline] pub fn get_attributed_network_usage_async(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AttributedNetworkUsage>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAttributedNetworkUsageAsync)(self as *const _ as *mut _, startTime, endTime, states, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IConnectionProfile4, 2049786573, 33248, 19174, 171, 237, 171, 156, 161, 62, 183, 20);
-RT_INTERFACE!{interface IConnectionProfile4(IConnectionProfile4Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile4] {
-    fn GetProviderNetworkUsageAsync(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<ProviderNetworkUsage>>) -> HRESULT
-}}
-impl IConnectionProfile4 {
-    #[inline] pub fn get_provider_network_usage_async(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ProviderNetworkUsage>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetProviderNetworkUsageAsync)(self as *const _ as *mut _, startTime, endTime, states, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IConnectionProfileFilter, 541883592, 48429, 20109, 164, 179, 69, 94, 195, 55, 56, 138);
-RT_INTERFACE!{interface IConnectionProfileFilter(IConnectionProfileFilterVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfileFilter] {
-    fn put_IsConnected(&self, value: bool) -> HRESULT,
-    fn get_IsConnected(&self, out: *mut bool) -> HRESULT,
-    fn put_IsWwanConnectionProfile(&self, value: bool) -> HRESULT,
-    fn get_IsWwanConnectionProfile(&self, out: *mut bool) -> HRESULT,
-    fn put_IsWlanConnectionProfile(&self, value: bool) -> HRESULT,
-    fn get_IsWlanConnectionProfile(&self, out: *mut bool) -> HRESULT,
-    fn put_NetworkCostType(&self, value: NetworkCostType) -> HRESULT,
-    fn get_NetworkCostType(&self, out: *mut NetworkCostType) -> HRESULT,
-    fn put_ServiceProviderGuid(&self, value: *mut foundation::IReference<Guid>) -> HRESULT,
-    fn get_ServiceProviderGuid(&self, out: *mut *mut foundation::IReference<Guid>) -> HRESULT
-}}
-impl IConnectionProfileFilter {
-    #[inline] pub fn set_is_connected(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IsConnected)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_connected(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsConnected)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_is_wwan_connection_profile(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IsWwanConnectionProfile)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_wwan_connection_profile(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsWwanConnectionProfile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_is_wlan_connection_profile(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IsWlanConnectionProfile)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_wlan_connection_profile(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsWlanConnectionProfile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_network_cost_type(&self, value: NetworkCostType) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_NetworkCostType)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_network_cost_type(&self) -> Result<NetworkCostType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_NetworkCostType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_service_provider_guid(&self, value: &foundation::IReference<Guid>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ServiceProviderGuid)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_service_provider_guid(&self) -> Result<Option<ComPtr<foundation::IReference<Guid>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ServiceProviderGuid)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ConnectionProfileFilter: IConnectionProfileFilter}
-impl RtActivatable<IActivationFactory> for ConnectionProfileFilter {}
-DEFINE_CLSID!(ConnectionProfileFilter(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,111,110,110,101,99,116,105,111,110,80,114,111,102,105,108,101,70,105,108,116,101,114,0]) [CLSID_ConnectionProfileFilter]);
-DEFINE_IID!(IID_IConnectionProfileFilter2, 3439759073, 50172, 20397, 157, 220, 89, 63, 170, 75, 120, 133);
-RT_INTERFACE!{interface IConnectionProfileFilter2(IConnectionProfileFilter2Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfileFilter2] {
-    fn put_IsRoaming(&self, value: *mut foundation::IReference<bool>) -> HRESULT,
-    fn get_IsRoaming(&self, out: *mut *mut foundation::IReference<bool>) -> HRESULT,
-    fn put_IsOverDataLimit(&self, value: *mut foundation::IReference<bool>) -> HRESULT,
-    fn get_IsOverDataLimit(&self, out: *mut *mut foundation::IReference<bool>) -> HRESULT,
-    fn put_IsBackgroundDataUsageRestricted(&self, value: *mut foundation::IReference<bool>) -> HRESULT,
-    fn get_IsBackgroundDataUsageRestricted(&self, out: *mut *mut foundation::IReference<bool>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_RawData(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
-}}
-impl IConnectionProfileFilter2 {
-    #[inline] pub fn set_is_roaming(&self, value: &foundation::IReference<bool>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IsRoaming)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_roaming(&self) -> Result<Option<ComPtr<foundation::IReference<bool>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_IsRoaming)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_is_over_data_limit(&self, value: &foundation::IReference<bool>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IsOverDataLimit)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_over_data_limit(&self) -> Result<Option<ComPtr<foundation::IReference<bool>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_IsOverDataLimit)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_is_background_data_usage_restricted(&self, value: &foundation::IReference<bool>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IsBackgroundDataUsageRestricted)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_background_data_usage_restricted(&self) -> Result<Option<ComPtr<foundation::IReference<bool>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_IsBackgroundDataUsageRestricted)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_raw_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RawData)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IConnectionProfileFilter3, 178915776, 20500, 17532, 136, 9, 174, 228, 203, 10, 249, 74);
-RT_INTERFACE!{interface IConnectionProfileFilter3(IConnectionProfileFilter3Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfileFilter3] {
-    fn put_PurposeGuid(&self, value: *mut foundation::IReference<Guid>) -> HRESULT,
-    fn get_PurposeGuid(&self, out: *mut *mut foundation::IReference<Guid>) -> HRESULT
-}}
-impl IConnectionProfileFilter3 {
-    #[inline] pub fn set_purpose_guid(&self, value: &foundation::IReference<Guid>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PurposeGuid)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_purpose_guid(&self) -> Result<Option<ComPtr<foundation::IReference<Guid>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PurposeGuid)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IConnectionSession, 4287651148, 63547, 16816, 138, 12, 20, 98, 217, 197, 107, 115);
-RT_INTERFACE!{interface IConnectionSession(IConnectionSessionVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionSession] {
-    fn get_ConnectionProfile(&self, out: *mut *mut ConnectionProfile) -> HRESULT
-}}
-impl IConnectionSession {
-    #[inline] pub fn get_connection_profile(&self) -> Result<Option<ComPtr<ConnectionProfile>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ConnectionProfile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ConnectionSession: IConnectionSession}
-DEFINE_IID!(IID_IConnectivityInterval, 1336557567, 26438, 18468, 169, 100, 238, 216, 232, 127, 135, 9);
-RT_INTERFACE!{interface IConnectivityInterval(IConnectivityIntervalVtbl): IInspectable(IInspectableVtbl) [IID_IConnectivityInterval] {
-    fn get_StartTime(&self, out: *mut foundation::DateTime) -> HRESULT,
-    fn get_ConnectionDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT
-}}
-impl IConnectivityInterval {
-    #[inline] pub fn get_start_time(&self) -> Result<foundation::DateTime> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_StartTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_connection_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ConnectionDuration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ConnectivityInterval: IConnectivityInterval}
-RT_CLASS!{static class ConnectivityManager}
-impl RtActivatable<IConnectivityManagerStatics> for ConnectivityManager {}
-impl ConnectivityManager {
-    #[inline] pub fn acquire_connection_async(cellularApnContext: &CellularApnContext) -> Result<ComPtr<foundation::IAsyncOperation<ConnectionSession>>> {
-        <Self as RtActivatable<IConnectivityManagerStatics>>::get_activation_factory().acquire_connection_async(cellularApnContext)
-    }
-    #[inline] pub fn add_http_route_policy(routePolicy: &RoutePolicy) -> Result<()> {
-        <Self as RtActivatable<IConnectivityManagerStatics>>::get_activation_factory().add_http_route_policy(routePolicy)
-    }
-    #[inline] pub fn remove_http_route_policy(routePolicy: &RoutePolicy) -> Result<()> {
-        <Self as RtActivatable<IConnectivityManagerStatics>>::get_activation_factory().remove_http_route_policy(routePolicy)
-    }
-}
-DEFINE_CLSID!(ConnectivityManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,111,110,110,101,99,116,105,118,105,116,121,77,97,110,97,103,101,114,0]) [CLSID_ConnectivityManager]);
-DEFINE_IID!(IID_IConnectivityManagerStatics, 1361106097, 20401, 18608, 175, 201, 66, 224, 9, 42, 129, 100);
-RT_INTERFACE!{static interface IConnectivityManagerStatics(IConnectivityManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IConnectivityManagerStatics] {
-    fn AcquireConnectionAsync(&self, cellularApnContext: *mut CellularApnContext, out: *mut *mut foundation::IAsyncOperation<ConnectionSession>) -> HRESULT,
-    fn AddHttpRoutePolicy(&self, routePolicy: *mut RoutePolicy) -> HRESULT,
-    fn RemoveHttpRoutePolicy(&self, routePolicy: *mut RoutePolicy) -> HRESULT
-}}
-impl IConnectivityManagerStatics {
-    #[inline] pub fn acquire_connection_async(&self, cellularApnContext: &CellularApnContext) -> Result<ComPtr<foundation::IAsyncOperation<ConnectionSession>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AcquireConnectionAsync)(self as *const _ as *mut _, cellularApnContext as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_http_route_policy(&self, routePolicy: &RoutePolicy) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddHttpRoutePolicy)(self as *const _ as *mut _, routePolicy as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_http_route_policy(&self, routePolicy: &RoutePolicy) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveHttpRoutePolicy)(self as *const _ as *mut _, routePolicy as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IDataPlanStatus, 2541390732, 14469, 16627, 136, 81, 66, 205, 43, 213, 104, 187);
-RT_INTERFACE!{interface IDataPlanStatus(IDataPlanStatusVtbl): IInspectable(IInspectableVtbl) [IID_IDataPlanStatus] {
-    fn get_DataPlanUsage(&self, out: *mut *mut DataPlanUsage) -> HRESULT,
-    fn get_DataLimitInMegabytes(&self, out: *mut *mut foundation::IReference<u32>) -> HRESULT,
-    fn get_InboundBitsPerSecond(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
-    fn get_OutboundBitsPerSecond(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
-    fn get_NextBillingCycle(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
-    fn get_MaxTransferSizeInMegabytes(&self, out: *mut *mut foundation::IReference<u32>) -> HRESULT
-}}
-impl IDataPlanStatus {
-    #[inline] pub fn get_data_plan_usage(&self) -> Result<Option<ComPtr<DataPlanUsage>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DataPlanUsage)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_data_limit_in_megabytes(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DataLimitInMegabytes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_inbound_bits_per_second(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_InboundBitsPerSecond)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_outbound_bits_per_second(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_OutboundBitsPerSecond)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_next_billing_cycle(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_NextBillingCycle)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_max_transfer_size_in_megabytes(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_MaxTransferSizeInMegabytes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class DataPlanStatus: IDataPlanStatus}
-DEFINE_IID!(IID_IDataPlanUsage, 3105966381, 15172, 18431, 179, 97, 190, 89, 230, 158, 209, 176);
-RT_INTERFACE!{interface IDataPlanUsage(IDataPlanUsageVtbl): IInspectable(IInspectableVtbl) [IID_IDataPlanUsage] {
-    fn get_MegabytesUsed(&self, out: *mut u32) -> HRESULT,
-    fn get_LastSyncTime(&self, out: *mut foundation::DateTime) -> HRESULT
-}}
-impl IDataPlanUsage {
-    #[inline] pub fn get_megabytes_used(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MegabytesUsed)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_last_sync_time(&self) -> Result<foundation::DateTime> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_LastSyncTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class DataPlanUsage: IDataPlanUsage}
-DEFINE_IID!(IID_IDataUsage, 3242401235, 45382, 19769, 185, 89, 12, 105, 176, 150, 197, 18);
-RT_INTERFACE!{interface IDataUsage(IDataUsageVtbl): IInspectable(IInspectableVtbl) [IID_IDataUsage] {
-    fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
-    fn get_BytesReceived(&self, out: *mut u64) -> HRESULT
-}}
-impl IDataUsage {
-    #[inline] pub fn get_bytes_sent(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_BytesSent)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_bytes_received(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_BytesReceived)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class DataUsage: IDataUsage}
-RT_ENUM! { enum DataUsageGranularity: i32 {
-    PerMinute (DataUsageGranularity_PerMinute) = 0, PerHour (DataUsageGranularity_PerHour) = 1, PerDay (DataUsageGranularity_PerDay) = 2, Total (DataUsageGranularity_Total) = 3,
-}}
-RT_ENUM! { enum DomainConnectivityLevel: i32 {
-    None (DomainConnectivityLevel_None) = 0, Unauthenticated (DomainConnectivityLevel_Unauthenticated) = 1, Authenticated (DomainConnectivityLevel_Authenticated) = 2,
-}}
-DEFINE_IID!(IID_IIPInformation, 3629204960, 5007, 18391, 155, 58, 54, 187, 72, 140, 239, 51);
-RT_INTERFACE!{interface IIPInformation(IIPInformationVtbl): IInspectable(IInspectableVtbl) [IID_IIPInformation] {
-    fn get_NetworkAdapter(&self, out: *mut *mut NetworkAdapter) -> HRESULT,
-    fn get_PrefixLength(&self, out: *mut *mut foundation::IReference<u8>) -> HRESULT
-}}
-impl IIPInformation {
-    #[inline] pub fn get_network_adapter(&self) -> Result<Option<ComPtr<NetworkAdapter>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_NetworkAdapter)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_prefix_length(&self) -> Result<Option<ComPtr<foundation::IReference<u8>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PrefixLength)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_ILanIdentifier, 1219122090, 4360, 17734, 166, 203, 154, 116, 218, 75, 123, 160);
-RT_INTERFACE!{interface ILanIdentifier(ILanIdentifierVtbl): IInspectable(IInspectableVtbl) [IID_ILanIdentifier] {
-    fn get_InfrastructureId(&self, out: *mut *mut LanIdentifierData) -> HRESULT,
-    fn get_PortId(&self, out: *mut *mut LanIdentifierData) -> HRESULT,
-    fn get_NetworkAdapterId(&self, out: *mut Guid) -> HRESULT
-}}
-impl ILanIdentifier {
-    #[inline] pub fn get_infrastructure_id(&self) -> Result<Option<ComPtr<LanIdentifierData>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_InfrastructureId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_port_id(&self) -> Result<Option<ComPtr<LanIdentifierData>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PortId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_network_adapter_id(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_NetworkAdapterId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class LanIdentifier: ILanIdentifier}
-DEFINE_IID!(IID_ILanIdentifierData, 2806940611, 54841, 17854, 163, 106, 196, 228, 174, 175, 109, 155);
-RT_INTERFACE!{interface ILanIdentifierData(ILanIdentifierDataVtbl): IInspectable(IInspectableVtbl) [IID_ILanIdentifierData] {
-    fn get_Type(&self, out: *mut u32) -> HRESULT,
-    fn get_Value(&self, out: *mut *mut foundation::collections::IVectorView<u8>) -> HRESULT
-}}
-impl ILanIdentifierData {
-    #[inline] pub fn get_type(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Type)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u8>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class LanIdentifierData: ILanIdentifierData}
-DEFINE_IID!(IID_INetworkAdapter, 995372547, 21384, 18796, 168, 163, 175, 253, 57, 174, 194, 230);
-RT_INTERFACE!{interface INetworkAdapter(INetworkAdapterVtbl): IInspectable(IInspectableVtbl) [IID_INetworkAdapter] {
-    fn get_OutboundMaxBitsPerSecond(&self, out: *mut u64) -> HRESULT,
-    fn get_InboundMaxBitsPerSecond(&self, out: *mut u64) -> HRESULT,
-    fn get_IanaInterfaceType(&self, out: *mut u32) -> HRESULT,
-    fn get_NetworkItem(&self, out: *mut *mut NetworkItem) -> HRESULT,
-    fn get_NetworkAdapterId(&self, out: *mut Guid) -> HRESULT,
-    fn GetConnectedProfileAsync(&self, out: *mut *mut foundation::IAsyncOperation<ConnectionProfile>) -> HRESULT
-}}
-impl INetworkAdapter {
-    #[inline] pub fn get_outbound_max_bits_per_second(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OutboundMaxBitsPerSecond)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_inbound_max_bits_per_second(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_InboundMaxBitsPerSecond)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_iana_interface_type(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IanaInterfaceType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_network_item(&self) -> Result<Option<ComPtr<NetworkItem>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_NetworkItem)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_network_adapter_id(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_NetworkAdapterId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_connected_profile_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ConnectionProfile>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetConnectedProfileAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class NetworkAdapter: INetworkAdapter}
-RT_ENUM! { enum NetworkAuthenticationType: i32 {
-    None (NetworkAuthenticationType_None) = 0, Unknown (NetworkAuthenticationType_Unknown) = 1, Open80211 (NetworkAuthenticationType_Open80211) = 2, SharedKey80211 (NetworkAuthenticationType_SharedKey80211) = 3, Wpa (NetworkAuthenticationType_Wpa) = 4, WpaPsk (NetworkAuthenticationType_WpaPsk) = 5, WpaNone (NetworkAuthenticationType_WpaNone) = 6, Rsna (NetworkAuthenticationType_Rsna) = 7, RsnaPsk (NetworkAuthenticationType_RsnaPsk) = 8, Ihv (NetworkAuthenticationType_Ihv) = 9,
-}}
-RT_ENUM! { enum NetworkConnectivityLevel: i32 {
-    None (NetworkConnectivityLevel_None) = 0, LocalAccess (NetworkConnectivityLevel_LocalAccess) = 1, ConstrainedInternetAccess (NetworkConnectivityLevel_ConstrainedInternetAccess) = 2, InternetAccess (NetworkConnectivityLevel_InternetAccess) = 3,
-}}
-RT_ENUM! { enum NetworkCostType: i32 {
-    Unknown (NetworkCostType_Unknown) = 0, Unrestricted (NetworkCostType_Unrestricted) = 1, Fixed (NetworkCostType_Fixed) = 2, Variable (NetworkCostType_Variable) = 3,
-}}
-RT_ENUM! { enum NetworkEncryptionType: i32 {
-    None (NetworkEncryptionType_None) = 0, Unknown (NetworkEncryptionType_Unknown) = 1, Wep (NetworkEncryptionType_Wep) = 2, Wep40 (NetworkEncryptionType_Wep40) = 3, Wep104 (NetworkEncryptionType_Wep104) = 4, Tkip (NetworkEncryptionType_Tkip) = 5, Ccmp (NetworkEncryptionType_Ccmp) = 6, WpaUseGroup (NetworkEncryptionType_WpaUseGroup) = 7, RsnUseGroup (NetworkEncryptionType_RsnUseGroup) = 8, Ihv (NetworkEncryptionType_Ihv) = 9,
-}}
-RT_CLASS!{static class NetworkInformation}
-impl RtActivatable<INetworkInformationStatics> for NetworkInformation {}
-impl RtActivatable<INetworkInformationStatics2> for NetworkInformation {}
-impl NetworkInformation {
-    #[inline] pub fn get_connection_profiles() -> Result<Option<ComPtr<foundation::collections::IVectorView<ConnectionProfile>>>> {
-        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_connection_profiles()
-    }
-    #[inline] pub fn get_internet_connection_profile() -> Result<Option<ComPtr<ConnectionProfile>>> {
-        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_internet_connection_profile()
-    }
-    #[inline] pub fn get_lan_identifiers() -> Result<Option<ComPtr<foundation::collections::IVectorView<LanIdentifier>>>> {
-        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_lan_identifiers()
-    }
-    #[inline] pub fn get_host_names() -> Result<Option<ComPtr<foundation::collections::IVectorView<super::HostName>>>> {
-        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_host_names()
-    }
-    #[inline] pub fn get_proxy_configuration_async(uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<ProxyConfiguration>>> {
-        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_proxy_configuration_async(uri)
-    }
-    #[inline] pub fn get_sorted_endpoint_pairs(destinationList: &foundation::collections::IIterable<super::EndpointPair>, sortOptions: super::HostNameSortOptions) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::EndpointPair>>>> {
-        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_sorted_endpoint_pairs(destinationList, sortOptions)
-    }
-    #[inline] pub fn add_network_status_changed(networkStatusHandler: &NetworkStatusChangedEventHandler) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().add_network_status_changed(networkStatusHandler)
-    }
-    #[inline] pub fn remove_network_status_changed(eventCookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().remove_network_status_changed(eventCookie)
-    }
-    #[inline] pub fn find_connection_profiles_async(pProfileFilter: &ConnectionProfileFilter) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectionProfile>>>> {
-        <Self as RtActivatable<INetworkInformationStatics2>>::get_activation_factory().find_connection_profiles_async(pProfileFilter)
-    }
-}
-DEFINE_CLSID!(NetworkInformation(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,78,101,116,119,111,114,107,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_NetworkInformation]);
-DEFINE_IID!(IID_INetworkInformationStatics, 1349843025, 38157, 16741, 156, 21, 54, 86, 25, 72, 30, 234);
-RT_INTERFACE!{static interface INetworkInformationStatics(INetworkInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkInformationStatics] {
-    fn GetConnectionProfiles(&self, out: *mut *mut foundation::collections::IVectorView<ConnectionProfile>) -> HRESULT,
-    fn GetInternetConnectionProfile(&self, out: *mut *mut ConnectionProfile) -> HRESULT,
-    fn GetLanIdentifiers(&self, out: *mut *mut foundation::collections::IVectorView<LanIdentifier>) -> HRESULT,
-    fn GetHostNames(&self, out: *mut *mut foundation::collections::IVectorView<super::HostName>) -> HRESULT,
-    fn GetProxyConfigurationAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<ProxyConfiguration>) -> HRESULT,
-    fn GetSortedEndpointPairs(&self, destinationList: *mut foundation::collections::IIterable<super::EndpointPair>, sortOptions: super::HostNameSortOptions, out: *mut *mut foundation::collections::IVectorView<super::EndpointPair>) -> HRESULT,
-    fn add_NetworkStatusChanged(&self, networkStatusHandler: *mut NetworkStatusChangedEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_NetworkStatusChanged(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
-}}
-impl INetworkInformationStatics {
-    #[inline] pub fn get_connection_profiles(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<ConnectionProfile>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetConnectionProfiles)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_internet_connection_profile(&self) -> Result<Option<ComPtr<ConnectionProfile>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetInternetConnectionProfile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_lan_identifiers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<LanIdentifier>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetLanIdentifiers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_host_names(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::HostName>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetHostNames)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_proxy_configuration_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<ProxyConfiguration>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetProxyConfigurationAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_sorted_endpoint_pairs(&self, destinationList: &foundation::collections::IIterable<super::EndpointPair>, sortOptions: super::HostNameSortOptions) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::EndpointPair>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSortedEndpointPairs)(self as *const _ as *mut _, destinationList as *const _ as *mut _, sortOptions, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_network_status_changed(&self, networkStatusHandler: &NetworkStatusChangedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_NetworkStatusChanged)(self as *const _ as *mut _, networkStatusHandler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_network_status_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_NetworkStatusChanged)(self as *const _ as *mut _, eventCookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_INetworkInformationStatics2, 1167912212, 10290, 18870, 186, 110, 226, 101, 240, 71, 134, 168);
-RT_INTERFACE!{static interface INetworkInformationStatics2(INetworkInformationStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_INetworkInformationStatics2] {
-    fn FindConnectionProfilesAsync(&self, pProfileFilter: *mut ConnectionProfileFilter, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectionProfile>>) -> HRESULT
-}}
-impl INetworkInformationStatics2 {
-    #[inline] pub fn find_connection_profiles_async(&self, pProfileFilter: &ConnectionProfileFilter) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectionProfile>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindConnectionProfilesAsync)(self as *const _ as *mut _, pProfileFilter as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_INetworkItem, 29117753, 62944, 17767, 162, 140, 66, 8, 12, 131, 27, 43);
-RT_INTERFACE!{interface INetworkItem(INetworkItemVtbl): IInspectable(IInspectableVtbl) [IID_INetworkItem] {
-    fn get_NetworkId(&self, out: *mut Guid) -> HRESULT,
-    fn GetNetworkTypes(&self, out: *mut NetworkTypes) -> HRESULT
-}}
-impl INetworkItem {
-    #[inline] pub fn get_network_id(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_NetworkId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_network_types(&self) -> Result<NetworkTypes> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetNetworkTypes)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class NetworkItem: INetworkItem}
-DEFINE_IID!(IID_INetworkSecuritySettings, 2090892941, 37243, 19295, 184, 77, 40, 247, 165, 172, 84, 2);
-RT_INTERFACE!{interface INetworkSecuritySettings(INetworkSecuritySettingsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkSecuritySettings] {
-    fn get_NetworkAuthenticationType(&self, out: *mut NetworkAuthenticationType) -> HRESULT,
-    fn get_NetworkEncryptionType(&self, out: *mut NetworkEncryptionType) -> HRESULT
-}}
-impl INetworkSecuritySettings {
-    #[inline] pub fn get_network_authentication_type(&self) -> Result<NetworkAuthenticationType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_NetworkAuthenticationType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_network_encryption_type(&self) -> Result<NetworkEncryptionType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_NetworkEncryptionType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class NetworkSecuritySettings: INetworkSecuritySettings}
-DEFINE_IID!(IID_INetworkStateChangeEventDetails, 520942387, 55206, 17629, 164, 233, 104, 124, 71, 107, 144, 61);
-RT_INTERFACE!{interface INetworkStateChangeEventDetails(INetworkStateChangeEventDetailsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkStateChangeEventDetails] {
-    fn get_HasNewInternetConnectionProfile(&self, out: *mut bool) -> HRESULT,
-    fn get_HasNewConnectionCost(&self, out: *mut bool) -> HRESULT,
-    fn get_HasNewNetworkConnectivityLevel(&self, out: *mut bool) -> HRESULT,
-    fn get_HasNewDomainConnectivityLevel(&self, out: *mut bool) -> HRESULT,
-    fn get_HasNewHostNameList(&self, out: *mut bool) -> HRESULT,
-    fn get_HasNewWwanRegistrationState(&self, out: *mut bool) -> HRESULT
-}}
-impl INetworkStateChangeEventDetails {
-    #[inline] pub fn get_has_new_internet_connection_profile(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_HasNewInternetConnectionProfile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_has_new_connection_cost(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_HasNewConnectionCost)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_has_new_network_connectivity_level(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_HasNewNetworkConnectivityLevel)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_has_new_domain_connectivity_level(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_HasNewDomainConnectivityLevel)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_has_new_host_name_list(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_HasNewHostNameList)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_has_new_wwan_registration_state(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_HasNewWwanRegistrationState)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class NetworkStateChangeEventDetails: INetworkStateChangeEventDetails}
-DEFINE_IID!(IID_INetworkStateChangeEventDetails2, 3594764520, 12499, 20330, 173, 71, 106, 24, 115, 206, 179, 193);
-RT_INTERFACE!{interface INetworkStateChangeEventDetails2(INetworkStateChangeEventDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_INetworkStateChangeEventDetails2] {
-    fn get_HasNewTetheringOperationalState(&self, out: *mut bool) -> HRESULT,
-    fn get_HasNewTetheringClientCount(&self, out: *mut bool) -> HRESULT
-}}
-impl INetworkStateChangeEventDetails2 {
-    #[inline] pub fn get_has_new_tethering_operational_state(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_HasNewTetheringOperationalState)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_has_new_tethering_client_count(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_HasNewTetheringClientCount)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_NetworkStatusChangedEventHandler, 1908020287, 22926, 18896, 132, 235, 143, 235, 174, 220, 193, 149);
-RT_DELEGATE!{delegate NetworkStatusChangedEventHandler(NetworkStatusChangedEventHandlerVtbl, NetworkStatusChangedEventHandlerImpl) [IID_NetworkStatusChangedEventHandler] {
-    fn Invoke(&self, sender: *mut IInspectable) -> HRESULT
-}}
-impl NetworkStatusChangedEventHandler {
-    #[inline] pub fn invoke(&self, sender: &IInspectable) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum NetworkTypes: u32 {
-    None (NetworkTypes_None) = 0, Internet (NetworkTypes_Internet) = 1, PrivateNetwork (NetworkTypes_PrivateNetwork) = 2,
-}}
-DEFINE_IID!(IID_INetworkUsage, 1239060430, 39301, 18727, 191, 91, 7, 43, 92, 101, 248, 217);
-RT_INTERFACE!{interface INetworkUsage(INetworkUsageVtbl): IInspectable(IInspectableVtbl) [IID_INetworkUsage] {
-    fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
-    fn get_BytesReceived(&self, out: *mut u64) -> HRESULT,
-    fn get_ConnectionDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT
-}}
-impl INetworkUsage {
-    #[inline] pub fn get_bytes_sent(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_BytesSent)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_bytes_received(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_BytesReceived)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_connection_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ConnectionDuration)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class NetworkUsage: INetworkUsage}
-RT_STRUCT! { struct NetworkUsageStates {
-    Roaming: TriStates, Shared: TriStates,
-}}
-RT_CLASS!{class IPInformation: IIPInformation}
-DEFINE_IID!(IID_IProviderNetworkUsage, 1590074884, 31025, 18632, 184, 243, 70, 48, 15, 164, 39, 40);
-RT_INTERFACE!{interface IProviderNetworkUsage(IProviderNetworkUsageVtbl): IInspectable(IInspectableVtbl) [IID_IProviderNetworkUsage] {
-    fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
-    fn get_BytesReceived(&self, out: *mut u64) -> HRESULT,
-    fn get_ProviderId(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl IProviderNetworkUsage {
-    #[inline] pub fn get_bytes_sent(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_BytesSent)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_bytes_received(&self) -> Result<u64> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_BytesReceived)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_provider_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProviderId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ProviderNetworkUsage: IProviderNetworkUsage}
-DEFINE_IID!(IID_IProxyConfiguration, 4013580468, 36868, 19926, 183, 216, 179, 229, 2, 244, 170, 208);
-RT_INTERFACE!{interface IProxyConfiguration(IProxyConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IProxyConfiguration] {
-    fn get_ProxyUris(&self, out: *mut *mut foundation::collections::IVectorView<foundation::Uri>) -> HRESULT,
-    fn get_CanConnectDirectly(&self, out: *mut bool) -> HRESULT
-}}
-impl IProxyConfiguration {
-    #[inline] pub fn get_proxy_uris(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<foundation::Uri>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProxyUris)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_can_connect_directly(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CanConnectDirectly)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ProxyConfiguration: IProxyConfiguration}
-RT_ENUM! { enum RoamingStates: u32 {
-    None (RoamingStates_None) = 0, NotRoaming (RoamingStates_NotRoaming) = 1, Roaming (RoamingStates_Roaming) = 2,
-}}
-DEFINE_IID!(IID_IRoutePolicy, 296469676, 4039, 17124, 135, 66, 86, 153, 35, 177, 202, 17);
-RT_INTERFACE!{interface IRoutePolicy(IRoutePolicyVtbl): IInspectable(IInspectableVtbl) [IID_IRoutePolicy] {
-    fn get_ConnectionProfile(&self, out: *mut *mut ConnectionProfile) -> HRESULT,
-    fn get_HostName(&self, out: *mut *mut super::HostName) -> HRESULT,
-    fn get_HostNameType(&self, out: *mut super::DomainNameType) -> HRESULT
-}}
-impl IRoutePolicy {
-    #[inline] pub fn get_connection_profile(&self) -> Result<Option<ComPtr<ConnectionProfile>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ConnectionProfile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_host_name(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_HostName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_host_name_type(&self) -> Result<super::DomainNameType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_HostNameType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class RoutePolicy: IRoutePolicy}
-impl RtActivatable<IRoutePolicyFactory> for RoutePolicy {}
-impl RoutePolicy {
-    #[inline] pub fn create_route_policy(connectionProfile: &ConnectionProfile, hostName: &super::HostName, type_: super::DomainNameType) -> Result<ComPtr<RoutePolicy>> {
-        <Self as RtActivatable<IRoutePolicyFactory>>::get_activation_factory().create_route_policy(connectionProfile, hostName, type_)
-    }
-}
-DEFINE_CLSID!(RoutePolicy(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,82,111,117,116,101,80,111,108,105,99,121,0]) [CLSID_RoutePolicy]);
-DEFINE_IID!(IID_IRoutePolicyFactory, 906131763, 41358, 19893, 166, 151, 245, 143, 167, 54, 78, 68);
-RT_INTERFACE!{static interface IRoutePolicyFactory(IRoutePolicyFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRoutePolicyFactory] {
-    fn CreateRoutePolicy(&self, connectionProfile: *mut ConnectionProfile, hostName: *mut super::HostName, type_: super::DomainNameType, out: *mut *mut RoutePolicy) -> HRESULT
-}}
-impl IRoutePolicyFactory {
-    #[inline] pub fn create_route_policy(&self, connectionProfile: &ConnectionProfile, hostName: &super::HostName, type_: super::DomainNameType) -> Result<ComPtr<RoutePolicy>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateRoutePolicy)(self as *const _ as *mut _, connectionProfile as *const _ as *mut _, hostName as *const _ as *mut _, type_, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum TriStates: i32 {
-    DoNotCare (TriStates_DoNotCare) = 0, No (TriStates_No) = 1, Yes (TriStates_Yes) = 2,
-}}
-DEFINE_IID!(IID_IWlanConnectionProfileDetails, 1444976843, 45914, 19441, 168, 132, 183, 85, 126, 136, 255, 134);
-RT_INTERFACE!{interface IWlanConnectionProfileDetails(IWlanConnectionProfileDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IWlanConnectionProfileDetails] {
-    fn GetConnectedSsid(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl IWlanConnectionProfileDetails {
-    #[inline] pub fn get_connected_ssid(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetConnectedSsid)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WlanConnectionProfileDetails: IWlanConnectionProfileDetails}
-DEFINE_IID!(IID_IWwanConnectionProfileDetails, 239970558, 33631, 19955, 130, 253, 223, 85, 110, 188, 9, 239);
-RT_INTERFACE!{interface IWwanConnectionProfileDetails(IWwanConnectionProfileDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IWwanConnectionProfileDetails] {
-    fn get_HomeProviderId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_AccessPointName(&self, out: *mut HSTRING) -> HRESULT,
-    fn GetNetworkRegistrationState(&self, out: *mut WwanNetworkRegistrationState) -> HRESULT,
-    fn GetCurrentDataClass(&self, out: *mut WwanDataClass) -> HRESULT
-}}
-impl IWwanConnectionProfileDetails {
-    #[inline] pub fn get_home_provider_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_HomeProviderId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_access_point_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AccessPointName)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_network_registration_state(&self) -> Result<WwanNetworkRegistrationState> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetNetworkRegistrationState)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_current_data_class(&self) -> Result<WwanDataClass> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetCurrentDataClass)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class WwanConnectionProfileDetails: IWwanConnectionProfileDetails}
-DEFINE_IID!(IID_IWwanConnectionProfileDetails2, 2054508254, 41453, 18610, 142, 146, 180, 96, 3, 61, 82, 226);
-RT_INTERFACE!{interface IWwanConnectionProfileDetails2(IWwanConnectionProfileDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IWwanConnectionProfileDetails2] {
-    fn get_IPKind(&self, out: *mut WwanNetworkIPKind) -> HRESULT,
-    fn get_PurposeGuids(&self, out: *mut *mut foundation::collections::IVectorView<Guid>) -> HRESULT
-}}
-impl IWwanConnectionProfileDetails2 {
-    #[inline] pub fn get_ipkind(&self) -> Result<WwanNetworkIPKind> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IPKind)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_purpose_guids(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<Guid>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PurposeGuids)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum WwanDataClass: u32 {
-    None (WwanDataClass_None) = 0, Gprs (WwanDataClass_Gprs) = 1, Edge (WwanDataClass_Edge) = 2, Umts (WwanDataClass_Umts) = 4, Hsdpa (WwanDataClass_Hsdpa) = 8, Hsupa (WwanDataClass_Hsupa) = 16, LteAdvanced (WwanDataClass_LteAdvanced) = 32, Cdma1xRtt (WwanDataClass_Cdma1xRtt) = 65536, Cdma1xEvdo (WwanDataClass_Cdma1xEvdo) = 131072, Cdma1xEvdoRevA (WwanDataClass_Cdma1xEvdoRevA) = 262144, Cdma1xEvdv (WwanDataClass_Cdma1xEvdv) = 524288, Cdma3xRtt (WwanDataClass_Cdma3xRtt) = 1048576, Cdma1xEvdoRevB (WwanDataClass_Cdma1xEvdoRevB) = 2097152, CdmaUmb (WwanDataClass_CdmaUmb) = 4194304, Custom (WwanDataClass_Custom) = 2147483648,
-}}
-RT_ENUM! { enum WwanNetworkIPKind: i32 {
-    None (WwanNetworkIPKind_None) = 0, Ipv4 (WwanNetworkIPKind_Ipv4) = 1, Ipv6 (WwanNetworkIPKind_Ipv6) = 2, Ipv4v6 (WwanNetworkIPKind_Ipv4v6) = 3, Ipv4v6v4Xlat (WwanNetworkIPKind_Ipv4v6v4Xlat) = 4,
-}}
-RT_ENUM! { enum WwanNetworkRegistrationState: i32 {
-    None (WwanNetworkRegistrationState_None) = 0, Deregistered (WwanNetworkRegistrationState_Deregistered) = 1, Searching (WwanNetworkRegistrationState_Searching) = 2, Home (WwanNetworkRegistrationState_Home) = 3, Roaming (WwanNetworkRegistrationState_Roaming) = 4, Partner (WwanNetworkRegistrationState_Partner) = 5, Denied (WwanNetworkRegistrationState_Denied) = 6,
-}}
-} // Windows.Networking.Connectivity
-pub mod backgroundtransfer { // Windows.Networking.BackgroundTransfer
-use ::prelude::*;
-DEFINE_IID!(IID_IBackgroundDownloader, 3251082035, 26185, 19229, 168, 38, 164, 179, 221, 35, 77, 11);
-RT_INTERFACE!{interface IBackgroundDownloader(IBackgroundDownloaderVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader] {
-    #[cfg(feature="windows-storage")] fn CreateDownload(&self, uri: *mut foundation::Uri, resultFile: *mut super::super::storage::IStorageFile, out: *mut *mut DownloadOperation) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn CreateDownloadFromFile(&self, uri: *mut foundation::Uri, resultFile: *mut super::super::storage::IStorageFile, requestBodyFile: *mut super::super::storage::IStorageFile, out: *mut *mut DownloadOperation) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn CreateDownloadAsync(&self, uri: *mut foundation::Uri, resultFile: *mut super::super::storage::IStorageFile, requestBodyStream: *mut super::super::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncOperation<DownloadOperation>) -> HRESULT
-}}
-impl IBackgroundDownloader {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_download(&self, uri: &foundation::Uri, resultFile: &super::super::storage::IStorageFile) -> Result<Option<ComPtr<DownloadOperation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDownload)(self as *const _ as *mut _, uri as *const _ as *mut _, resultFile as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_download_from_file(&self, uri: &foundation::Uri, resultFile: &super::super::storage::IStorageFile, requestBodyFile: &super::super::storage::IStorageFile) -> Result<Option<ComPtr<DownloadOperation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDownloadFromFile)(self as *const _ as *mut _, uri as *const _ as *mut _, resultFile as *const _ as *mut _, requestBodyFile as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_download_async(&self, uri: &foundation::Uri, resultFile: &super::super::storage::IStorageFile, requestBodyStream: &super::super::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncOperation<DownloadOperation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDownloadAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, resultFile as *const _ as *mut _, requestBodyStream as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BackgroundDownloader: IBackgroundDownloader}
-impl RtActivatable<IBackgroundDownloaderFactory> for BackgroundDownloader {}
-impl RtActivatable<IBackgroundDownloaderStaticMethods> for BackgroundDownloader {}
-impl RtActivatable<IBackgroundDownloaderStaticMethods2> for BackgroundDownloader {}
-impl RtActivatable<IBackgroundDownloaderUserConsent> for BackgroundDownloader {}
-impl RtActivatable<IActivationFactory> for BackgroundDownloader {}
-impl BackgroundDownloader {
-    #[inline] pub fn create_with_completion_group(completionGroup: &BackgroundTransferCompletionGroup) -> Result<ComPtr<BackgroundDownloader>> {
-        <Self as RtActivatable<IBackgroundDownloaderFactory>>::get_activation_factory().create_with_completion_group(completionGroup)
-    }
-    #[inline] pub fn get_current_downloads_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> {
-        <Self as RtActivatable<IBackgroundDownloaderStaticMethods>>::get_activation_factory().get_current_downloads_async()
-    }
-    #[inline] pub fn get_current_downloads_for_group_async(group: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> {
-        <Self as RtActivatable<IBackgroundDownloaderStaticMethods>>::get_activation_factory().get_current_downloads_for_group_async(group)
-    }
-    #[inline] pub fn get_current_downloads_for_transfer_group_async(group: &BackgroundTransferGroup) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> {
-        <Self as RtActivatable<IBackgroundDownloaderStaticMethods2>>::get_activation_factory().get_current_downloads_for_transfer_group_async(group)
-    }
-    #[inline] pub fn request_unconstrained_downloads_async(operations: &foundation::collections::IIterable<DownloadOperation>) -> Result<ComPtr<foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> {
-        <Self as RtActivatable<IBackgroundDownloaderUserConsent>>::get_activation_factory().request_unconstrained_downloads_async(operations)
-    }
-}
-DEFINE_CLSID!(BackgroundDownloader(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,68,111,119,110,108,111,97,100,101,114,0]) [CLSID_BackgroundDownloader]);
-DEFINE_IID!(IID_IBackgroundDownloader2, 2840221767, 13453, 18997, 137, 14, 138, 30, 243, 121, 132, 121);
-RT_INTERFACE!{interface IBackgroundDownloader2(IBackgroundDownloader2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader2] {
-    fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT,
-    fn put_TransferGroup(&self, value: *mut BackgroundTransferGroup) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_SuccessToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_SuccessToastNotification(&self, value: *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_FailureToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_FailureToastNotification(&self, value: *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_SuccessTileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_SuccessTileNotification(&self, value: *mut super::super::ui::notifications::TileNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_FailureTileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_FailureTileNotification(&self, value: *mut super::super::ui::notifications::TileNotification) -> HRESULT
-}}
-impl IBackgroundDownloader2 {
-    #[inline] pub fn get_transfer_group(&self) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TransferGroup)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_transfer_group(&self, value: &BackgroundTransferGroup) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TransferGroup)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SuccessToastNotification)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_toast_notification(&self, value: &super::super::ui::notifications::ToastNotification) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SuccessToastNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FailureToastNotification)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_toast_notification(&self, value: &super::super::ui::notifications::ToastNotification) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_FailureToastNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SuccessTileNotification)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_tile_notification(&self, value: &super::super::ui::notifications::TileNotification) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SuccessTileNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FailureTileNotification)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_tile_notification(&self, value: &super::super::ui::notifications::TileNotification) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_FailureTileNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundDownloader3, 3508177992, 34536, 18658, 182, 21, 105, 118, 170, 191, 134, 29);
-RT_INTERFACE!{interface IBackgroundDownloader3(IBackgroundDownloader3Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader3] {
-    fn get_CompletionGroup(&self, out: *mut *mut BackgroundTransferCompletionGroup) -> HRESULT
-}}
-impl IBackgroundDownloader3 {
-    #[inline] pub fn get_completion_group(&self) -> Result<Option<ComPtr<BackgroundTransferCompletionGroup>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CompletionGroup)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundDownloaderFactory, 646147108, 55454, 18164, 162, 154, 79, 77, 79, 20, 65, 85);
-RT_INTERFACE!{static interface IBackgroundDownloaderFactory(IBackgroundDownloaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderFactory] {
-    fn CreateWithCompletionGroup(&self, completionGroup: *mut BackgroundTransferCompletionGroup, out: *mut *mut BackgroundDownloader) -> HRESULT
-}}
-impl IBackgroundDownloaderFactory {
-    #[inline] pub fn create_with_completion_group(&self, completionGroup: &BackgroundTransferCompletionGroup) -> Result<ComPtr<BackgroundDownloader>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithCompletionGroup)(self as *const _ as *mut _, completionGroup as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundDownloaderStaticMethods, 1386633781, 50766, 17004, 153, 25, 84, 13, 13, 33, 166, 80);
-RT_INTERFACE!{static interface IBackgroundDownloaderStaticMethods(IBackgroundDownloaderStaticMethodsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderStaticMethods] {
-    fn GetCurrentDownloadsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>) -> HRESULT,
-    fn GetCurrentDownloadsForGroupAsync(&self, group: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>) -> HRESULT
-}}
-impl IBackgroundDownloaderStaticMethods {
-    #[inline] pub fn get_current_downloads_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCurrentDownloadsAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_current_downloads_for_group_async(&self, group: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCurrentDownloadsForGroupAsync)(self as *const _ as *mut _, group.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundDownloaderStaticMethods2, 799675175, 6868, 19621, 178, 205, 8, 219, 240, 116, 106, 254);
-RT_INTERFACE!{static interface IBackgroundDownloaderStaticMethods2(IBackgroundDownloaderStaticMethods2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderStaticMethods2] {
-    fn GetCurrentDownloadsForTransferGroupAsync(&self, group: *mut BackgroundTransferGroup, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>) -> HRESULT
-}}
-impl IBackgroundDownloaderStaticMethods2 {
-    #[inline] pub fn get_current_downloads_for_transfer_group_async(&self, group: &BackgroundTransferGroup) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCurrentDownloadsForTransferGroupAsync)(self as *const _ as *mut _, group as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundDownloaderUserConsent, 1561651462, 37478, 18440, 189, 113, 89, 37, 242, 163, 19, 10);
-RT_INTERFACE!{static interface IBackgroundDownloaderUserConsent(IBackgroundDownloaderUserConsentVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderUserConsent] {
-    fn RequestUnconstrainedDownloadsAsync(&self, operations: *mut foundation::collections::IIterable<DownloadOperation>, out: *mut *mut foundation::IAsyncOperation<UnconstrainedTransferRequestResult>) -> HRESULT
-}}
-impl IBackgroundDownloaderUserConsent {
-    #[inline] pub fn request_unconstrained_downloads_async(&self, operations: &foundation::collections::IIterable<DownloadOperation>) -> Result<ComPtr<foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestUnconstrainedDownloadsAsync)(self as *const _ as *mut _, operations as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_STRUCT! { struct BackgroundDownloadProgress {
-    BytesReceived: u64, TotalBytesToReceive: u64, Status: BackgroundTransferStatus, HasResponseChanged: bool, HasRestarted: bool,
-}}
-DEFINE_IID!(IID_IBackgroundTransferBase, 714973776, 51049, 17804, 175, 232, 254, 184, 212, 211, 178, 239);
-RT_INTERFACE!{interface IBackgroundTransferBase(IBackgroundTransferBaseVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferBase] {
-    fn SetRequestHeader(&self, headerName: HSTRING, headerValue: HSTRING) -> HRESULT,
-    #[cfg(not(feature="windows-security"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ServerCredential(&self, out: *mut *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
-    #[cfg(not(feature="windows-security"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-security")] fn put_ServerCredential(&self, credential: *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
-    #[cfg(not(feature="windows-security"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ProxyCredential(&self, out: *mut *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
-    #[cfg(not(feature="windows-security"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-security")] fn put_ProxyCredential(&self, credential: *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
-    fn get_Method(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Method(&self, value: HSTRING) -> HRESULT,
-    fn get_Group(&self, out: *mut HSTRING) -> HRESULT,
-    fn put_Group(&self, value: HSTRING) -> HRESULT,
-    fn get_CostPolicy(&self, out: *mut BackgroundTransferCostPolicy) -> HRESULT,
-    fn put_CostPolicy(&self, value: BackgroundTransferCostPolicy) -> HRESULT
-}}
-impl IBackgroundTransferBase {
-    #[inline] pub fn set_request_header(&self, headerName: &HStringArg, headerValue: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetRequestHeader)(self as *const _ as *mut _, headerName.get(), headerValue.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_server_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ServerCredential)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_server_credential(&self, credential: &super::super::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ServerCredential)(self as *const _ as *mut _, credential as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_proxy_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProxyCredential)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_proxy_credential(&self, credential: &super::super::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ProxyCredential)(self as *const _ as *mut _, credential as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_method(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Method)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_method(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Method)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_group(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Group)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_group(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Group)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_cost_policy(&self) -> Result<BackgroundTransferCostPolicy> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CostPolicy)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_cost_policy(&self, value: BackgroundTransferCostPolicy) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CostPolicy)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum BackgroundTransferBehavior: i32 {
-    Parallel (BackgroundTransferBehavior_Parallel) = 0, Serialized (BackgroundTransferBehavior_Serialized) = 1,
-}}
-DEFINE_IID!(IID_IBackgroundTransferCompletionGroup, 764609061, 39019, 22349, 121, 80, 10, 221, 71, 245, 215, 6);
-RT_INTERFACE!{interface IBackgroundTransferCompletionGroup(IBackgroundTransferCompletionGroupVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferCompletionGroup] {
-    #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-applicationmodel")] fn get_Trigger(&self, out: *mut *mut super::super::applicationmodel::background::IBackgroundTrigger) -> HRESULT,
-    fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
-    fn Enable(&self) -> HRESULT
-}}
-impl IBackgroundTransferCompletionGroup {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_trigger(&self) -> Result<Option<ComPtr<super::super::applicationmodel::background::IBackgroundTrigger>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Trigger)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_is_enabled(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsEnabled)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn enable(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Enable)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BackgroundTransferCompletionGroup: IBackgroundTransferCompletionGroup}
-impl RtActivatable<IActivationFactory> for BackgroundTransferCompletionGroup {}
-DEFINE_CLSID!(BackgroundTransferCompletionGroup(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,67,111,109,112,108,101,116,105,111,110,71,114,111,117,112,0]) [CLSID_BackgroundTransferCompletionGroup]);
-DEFINE_IID!(IID_IBackgroundTransferCompletionGroupTriggerDetails, 2070667910, 28231, 20790, 127, 203, 250, 67, 137, 244, 111, 91);
-RT_INTERFACE!{interface IBackgroundTransferCompletionGroupTriggerDetails(IBackgroundTransferCompletionGroupTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferCompletionGroupTriggerDetails] {
-    fn get_Downloads(&self, out: *mut *mut foundation::collections::IVectorView<DownloadOperation>) -> HRESULT,
-    fn get_Uploads(&self, out: *mut *mut foundation::collections::IVectorView<UploadOperation>) -> HRESULT
-}}
-impl IBackgroundTransferCompletionGroupTriggerDetails {
-    #[inline] pub fn get_downloads(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<DownloadOperation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Downloads)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_uploads(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<UploadOperation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Uploads)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BackgroundTransferCompletionGroupTriggerDetails: IBackgroundTransferCompletionGroupTriggerDetails}
-DEFINE_IID!(IID_IBackgroundTransferContentPart, 3907081815, 55249, 20184, 131, 142, 103, 74, 194, 23, 172, 230);
-RT_INTERFACE!{interface IBackgroundTransferContentPart(IBackgroundTransferContentPartVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferContentPart] {
-    fn SetHeader(&self, headerName: HSTRING, headerValue: HSTRING) -> HRESULT,
-    fn SetText(&self, value: HSTRING) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn SetFile(&self, value: *mut super::super::storage::IStorageFile) -> HRESULT
-}}
-impl IBackgroundTransferContentPart {
-    #[inline] pub fn set_header(&self, headerName: &HStringArg, headerValue: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetHeader)(self as *const _ as *mut _, headerName.get(), headerValue.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn set_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetText)(self as *const _ as *mut _, value.get());
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_file(&self, value: &super::super::storage::IStorageFile) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetFile)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BackgroundTransferContentPart: IBackgroundTransferContentPart}
-impl RtActivatable<IBackgroundTransferContentPartFactory> for BackgroundTransferContentPart {}
-impl RtActivatable<IActivationFactory> for BackgroundTransferContentPart {}
-impl BackgroundTransferContentPart {
-    #[inline] pub fn create_with_name(name: &HStringArg) -> Result<ComPtr<BackgroundTransferContentPart>> {
-        <Self as RtActivatable<IBackgroundTransferContentPartFactory>>::get_activation_factory().create_with_name(name)
-    }
-    #[inline] pub fn create_with_name_and_file_name(name: &HStringArg, fileName: &HStringArg) -> Result<ComPtr<BackgroundTransferContentPart>> {
-        <Self as RtActivatable<IBackgroundTransferContentPartFactory>>::get_activation_factory().create_with_name_and_file_name(name, fileName)
-    }
-}
-DEFINE_CLSID!(BackgroundTransferContentPart(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,67,111,110,116,101,110,116,80,97,114,116,0]) [CLSID_BackgroundTransferContentPart]);
-DEFINE_IID!(IID_IBackgroundTransferContentPartFactory, 2431621289, 31233, 18955, 159, 128, 160, 176, 187, 55, 15, 141);
-RT_INTERFACE!{static interface IBackgroundTransferContentPartFactory(IBackgroundTransferContentPartFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferContentPartFactory] {
-    fn CreateWithName(&self, name: HSTRING, out: *mut *mut BackgroundTransferContentPart) -> HRESULT,
-    fn CreateWithNameAndFileName(&self, name: HSTRING, fileName: HSTRING, out: *mut *mut BackgroundTransferContentPart) -> HRESULT
-}}
-impl IBackgroundTransferContentPartFactory {
-    #[inline] pub fn create_with_name(&self, name: &HStringArg) -> Result<ComPtr<BackgroundTransferContentPart>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithName)(self as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_with_name_and_file_name(&self, name: &HStringArg, fileName: &HStringArg) -> Result<ComPtr<BackgroundTransferContentPart>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithNameAndFileName)(self as *const _ as *mut _, name.get(), fileName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum BackgroundTransferCostPolicy: i32 {
-    Default (BackgroundTransferCostPolicy_Default) = 0, UnrestrictedOnly (BackgroundTransferCostPolicy_UnrestrictedOnly) = 1, Always (BackgroundTransferCostPolicy_Always) = 2,
-}}
-RT_CLASS!{static class BackgroundTransferError}
-impl RtActivatable<IBackgroundTransferErrorStaticMethods> for BackgroundTransferError {}
-impl BackgroundTransferError {
-    #[cfg(feature="windows-web")] #[inline] pub fn get_status(hresult: i32) -> Result<super::super::web::WebErrorStatus> {
-        <Self as RtActivatable<IBackgroundTransferErrorStaticMethods>>::get_activation_factory().get_status(hresult)
-    }
-}
-DEFINE_CLSID!(BackgroundTransferError(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,69,114,114,111,114,0]) [CLSID_BackgroundTransferError]);
-DEFINE_IID!(IID_IBackgroundTransferErrorStaticMethods, 2865969924, 4498, 19444, 139, 104, 57, 197, 173, 210, 68, 226);
-RT_INTERFACE!{static interface IBackgroundTransferErrorStaticMethods(IBackgroundTransferErrorStaticMethodsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferErrorStaticMethods] {
-    #[cfg(feature="windows-web")] fn GetStatus(&self, hresult: i32, out: *mut super::super::web::WebErrorStatus) -> HRESULT
-}}
-impl IBackgroundTransferErrorStaticMethods {
-    #[cfg(feature="windows-web")] #[inline] pub fn get_status(&self, hresult: i32) -> Result<super::super::web::WebErrorStatus> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetStatus)(self as *const _ as *mut _, hresult, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_STRUCT! { struct BackgroundTransferFileRange {
-    Offset: u64, Length: u64,
-}}
-DEFINE_IID!(IID_IBackgroundTransferGroup, 3636716516, 25689, 17728, 133, 235, 170, 161, 200, 144, 54, 119);
-RT_INTERFACE!{interface IBackgroundTransferGroup(IBackgroundTransferGroupVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferGroup] {
-    fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_TransferBehavior(&self, out: *mut BackgroundTransferBehavior) -> HRESULT,
-    fn put_TransferBehavior(&self, value: BackgroundTransferBehavior) -> HRESULT
-}}
-impl IBackgroundTransferGroup {
-    #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_transfer_behavior(&self) -> Result<BackgroundTransferBehavior> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TransferBehavior)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_transfer_behavior(&self, value: BackgroundTransferBehavior) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TransferBehavior)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BackgroundTransferGroup: IBackgroundTransferGroup}
-impl RtActivatable<IBackgroundTransferGroupStatics> for BackgroundTransferGroup {}
-impl BackgroundTransferGroup {
-    #[inline] pub fn create_group(name: &HStringArg) -> Result<Option<ComPtr<BackgroundTransferGroup>>> {
-        <Self as RtActivatable<IBackgroundTransferGroupStatics>>::get_activation_factory().create_group(name)
-    }
-}
-DEFINE_CLSID!(BackgroundTransferGroup(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,71,114,111,117,112,0]) [CLSID_BackgroundTransferGroup]);
-DEFINE_IID!(IID_IBackgroundTransferGroupStatics, 49041586, 32024, 18779, 170, 34, 50, 169, 125, 69, 211, 226);
-RT_INTERFACE!{static interface IBackgroundTransferGroupStatics(IBackgroundTransferGroupStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferGroupStatics] {
-    fn CreateGroup(&self, name: HSTRING, out: *mut *mut BackgroundTransferGroup) -> HRESULT
-}}
-impl IBackgroundTransferGroupStatics {
-    #[inline] pub fn create_group(&self, name: &HStringArg) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateGroup)(self as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTransferOperation, 3738200134, 37066, 17659, 143, 177, 18, 65, 84, 192, 213, 57);
-RT_INTERFACE!{interface IBackgroundTransferOperation(IBackgroundTransferOperationVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferOperation] {
-    fn get_Guid(&self, out: *mut Guid) -> HRESULT,
-    fn get_RequestedUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
-    fn get_Method(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Group(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_CostPolicy(&self, out: *mut BackgroundTransferCostPolicy) -> HRESULT,
-    fn put_CostPolicy(&self, value: BackgroundTransferCostPolicy) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy6(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetResultStreamAt(&self, position: u64, out: *mut *mut super::super::storage::streams::IInputStream) -> HRESULT,
-    fn GetResponseInformation(&self, out: *mut *mut ResponseInformation) -> HRESULT
-}}
-impl IBackgroundTransferOperation {
-    #[inline] pub fn get_guid(&self) -> Result<Guid> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Guid)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_requested_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RequestedUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_method(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Method)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_group(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Group)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_cost_policy(&self) -> Result<BackgroundTransferCostPolicy> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CostPolicy)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_cost_policy(&self, value: BackgroundTransferCostPolicy) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CostPolicy)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_result_stream_at(&self, position: u64) -> Result<Option<ComPtr<super::super::storage::streams::IInputStream>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetResultStreamAt)(self as *const _ as *mut _, position, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_response_information(&self) -> Result<Option<ComPtr<ResponseInformation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetResponseInformation)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundTransferOperationPriority, 75842343, 21076, 19258, 145, 94, 10, 164, 146, 117, 192, 249);
-RT_INTERFACE!{interface IBackgroundTransferOperationPriority(IBackgroundTransferOperationPriorityVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferOperationPriority] {
-    fn get_Priority(&self, out: *mut BackgroundTransferPriority) -> HRESULT,
-    fn put_Priority(&self, value: BackgroundTransferPriority) -> HRESULT
-}}
-impl IBackgroundTransferOperationPriority {
-    #[inline] pub fn get_priority(&self) -> Result<BackgroundTransferPriority> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Priority)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_priority(&self, value: BackgroundTransferPriority) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Priority)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_ENUM! { enum BackgroundTransferPriority: i32 {
-    Default (BackgroundTransferPriority_Default) = 0, High (BackgroundTransferPriority_High) = 1,
-}}
-DEFINE_IID!(IID_IBackgroundTransferRangesDownloadedEventArgs, 1052537939, 48968, 19080, 146, 72, 176, 193, 101, 24, 79, 92);
-RT_INTERFACE!{interface IBackgroundTransferRangesDownloadedEventArgs(IBackgroundTransferRangesDownloadedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferRangesDownloadedEventArgs] {
-    fn get_WasDownloadRestarted(&self, out: *mut bool) -> HRESULT,
-    fn get_AddedRanges(&self, out: *mut *mut foundation::collections::IVector<BackgroundTransferFileRange>) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
-}}
-impl IBackgroundTransferRangesDownloadedEventArgs {
-    #[inline] pub fn get_was_download_restarted(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_WasDownloadRestarted)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_added_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVector<BackgroundTransferFileRange>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AddedRanges)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BackgroundTransferRangesDownloadedEventArgs: IBackgroundTransferRangesDownloadedEventArgs}
-RT_ENUM! { enum BackgroundTransferStatus: i32 {
-    Idle (BackgroundTransferStatus_Idle) = 0, Running (BackgroundTransferStatus_Running) = 1, PausedByApplication (BackgroundTransferStatus_PausedByApplication) = 2, PausedCostedNetwork (BackgroundTransferStatus_PausedCostedNetwork) = 3, PausedNoNetwork (BackgroundTransferStatus_PausedNoNetwork) = 4, Completed (BackgroundTransferStatus_Completed) = 5, Canceled (BackgroundTransferStatus_Canceled) = 6, Error (BackgroundTransferStatus_Error) = 7, PausedRecoverableWebErrorStatus (BackgroundTransferStatus_PausedRecoverableWebErrorStatus) = 8, PausedSystemPolicy (BackgroundTransferStatus_PausedSystemPolicy) = 32,
-}}
-DEFINE_IID!(IID_IBackgroundUploader, 3314928046, 52909, 18011, 136, 1, 197, 90, 201, 10, 1, 206);
-RT_INTERFACE!{interface IBackgroundUploader(IBackgroundUploaderVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader] {
-    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn CreateUpload(&self, uri: *mut foundation::Uri, sourceFile: *mut super::super::storage::IStorageFile, out: *mut *mut UploadOperation) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn CreateUploadFromStreamAsync(&self, uri: *mut foundation::Uri, sourceStream: *mut super::super::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT,
-    fn CreateUploadWithFormDataAndAutoBoundaryAsync(&self, uri: *mut foundation::Uri, parts: *mut foundation::collections::IIterable<BackgroundTransferContentPart>, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT,
-    fn CreateUploadWithSubTypeAsync(&self, uri: *mut foundation::Uri, parts: *mut foundation::collections::IIterable<BackgroundTransferContentPart>, subType: HSTRING, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT,
-    fn CreateUploadWithSubTypeAndBoundaryAsync(&self, uri: *mut foundation::Uri, parts: *mut foundation::collections::IIterable<BackgroundTransferContentPart>, subType: HSTRING, boundary: HSTRING, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT
-}}
-impl IBackgroundUploader {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_upload(&self, uri: &foundation::Uri, sourceFile: &super::super::storage::IStorageFile) -> Result<Option<ComPtr<UploadOperation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUpload)(self as *const _ as *mut _, uri as *const _ as *mut _, sourceFile as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_upload_from_stream_async(&self, uri: &foundation::Uri, sourceStream: &super::super::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUploadFromStreamAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, sourceStream as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_upload_with_form_data_and_auto_boundary_async(&self, uri: &foundation::Uri, parts: &foundation::collections::IIterable<BackgroundTransferContentPart>) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUploadWithFormDataAndAutoBoundaryAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, parts as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_upload_with_sub_type_async(&self, uri: &foundation::Uri, parts: &foundation::collections::IIterable<BackgroundTransferContentPart>, subType: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUploadWithSubTypeAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, parts as *const _ as *mut _, subType.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_upload_with_sub_type_and_boundary_async(&self, uri: &foundation::Uri, parts: &foundation::collections::IIterable<BackgroundTransferContentPart>, subType: &HStringArg, boundary: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUploadWithSubTypeAndBoundaryAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, parts as *const _ as *mut _, subType.get(), boundary.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class BackgroundUploader: IBackgroundUploader}
-impl RtActivatable<IBackgroundUploaderFactory> for BackgroundUploader {}
-impl RtActivatable<IBackgroundUploaderStaticMethods> for BackgroundUploader {}
-impl RtActivatable<IBackgroundUploaderStaticMethods2> for BackgroundUploader {}
-impl RtActivatable<IBackgroundUploaderUserConsent> for BackgroundUploader {}
-impl RtActivatable<IActivationFactory> for BackgroundUploader {}
-impl BackgroundUploader {
-    #[inline] pub fn create_with_completion_group(completionGroup: &BackgroundTransferCompletionGroup) -> Result<ComPtr<BackgroundUploader>> {
-        <Self as RtActivatable<IBackgroundUploaderFactory>>::get_activation_factory().create_with_completion_group(completionGroup)
-    }
-    #[inline] pub fn get_current_uploads_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> {
-        <Self as RtActivatable<IBackgroundUploaderStaticMethods>>::get_activation_factory().get_current_uploads_async()
-    }
-    #[inline] pub fn get_current_uploads_for_group_async(group: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> {
-        <Self as RtActivatable<IBackgroundUploaderStaticMethods>>::get_activation_factory().get_current_uploads_for_group_async(group)
-    }
-    #[inline] pub fn get_current_uploads_for_transfer_group_async(group: &BackgroundTransferGroup) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> {
-        <Self as RtActivatable<IBackgroundUploaderStaticMethods2>>::get_activation_factory().get_current_uploads_for_transfer_group_async(group)
-    }
-    #[inline] pub fn request_unconstrained_uploads_async(operations: &foundation::collections::IIterable<UploadOperation>) -> Result<ComPtr<foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> {
-        <Self as RtActivatable<IBackgroundUploaderUserConsent>>::get_activation_factory().request_unconstrained_uploads_async(operations)
-    }
-}
-DEFINE_CLSID!(BackgroundUploader(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,85,112,108,111,97,100,101,114,0]) [CLSID_BackgroundUploader]);
-DEFINE_IID!(IID_IBackgroundUploader2, 2382762702, 3124, 17507, 128, 127, 25, 138, 27, 139, 212, 173);
-RT_INTERFACE!{interface IBackgroundUploader2(IBackgroundUploader2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader2] {
-    fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT,
-    fn put_TransferGroup(&self, value: *mut BackgroundTransferGroup) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_SuccessToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_SuccessToastNotification(&self, value: *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_FailureToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_FailureToastNotification(&self, value: *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_SuccessTileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_SuccessTileNotification(&self, value: *mut super::super::ui::notifications::TileNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_FailureTileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_FailureTileNotification(&self, value: *mut super::super::ui::notifications::TileNotification) -> HRESULT
-}}
-impl IBackgroundUploader2 {
-    #[inline] pub fn get_transfer_group(&self) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TransferGroup)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_transfer_group(&self, value: &BackgroundTransferGroup) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TransferGroup)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SuccessToastNotification)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_toast_notification(&self, value: &super::super::ui::notifications::ToastNotification) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SuccessToastNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FailureToastNotification)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_toast_notification(&self, value: &super::super::ui::notifications::ToastNotification) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_FailureToastNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SuccessTileNotification)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_tile_notification(&self, value: &super::super::ui::notifications::TileNotification) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SuccessTileNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FailureTileNotification)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_tile_notification(&self, value: &super::super::ui::notifications::TileNotification) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_FailureTileNotification)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundUploader3, 3109983289, 23536, 19258, 140, 71, 44, 97, 153, 168, 84, 185);
-RT_INTERFACE!{interface IBackgroundUploader3(IBackgroundUploader3Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader3] {
-    fn get_CompletionGroup(&self, out: *mut *mut BackgroundTransferCompletionGroup) -> HRESULT
-}}
-impl IBackgroundUploader3 {
-    #[inline] pub fn get_completion_group(&self) -> Result<Option<ComPtr<BackgroundTransferCompletionGroup>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CompletionGroup)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundUploaderFactory, 1935803335, 4327, 18592, 172, 60, 26, 199, 16, 149, 236, 87);
-RT_INTERFACE!{static interface IBackgroundUploaderFactory(IBackgroundUploaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderFactory] {
-    fn CreateWithCompletionGroup(&self, completionGroup: *mut BackgroundTransferCompletionGroup, out: *mut *mut BackgroundUploader) -> HRESULT
-}}
-impl IBackgroundUploaderFactory {
-    #[inline] pub fn create_with_completion_group(&self, completionGroup: &BackgroundTransferCompletionGroup) -> Result<ComPtr<BackgroundUploader>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithCompletionGroup)(self as *const _ as *mut _, completionGroup as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundUploaderStaticMethods, 4068957435, 39685, 18241, 145, 33, 116, 10, 131, 226, 71, 223);
-RT_INTERFACE!{static interface IBackgroundUploaderStaticMethods(IBackgroundUploaderStaticMethodsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderStaticMethods] {
-    fn GetCurrentUploadsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>) -> HRESULT,
-    fn GetCurrentUploadsForGroupAsync(&self, group: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>) -> HRESULT
-}}
-impl IBackgroundUploaderStaticMethods {
-    #[inline] pub fn get_current_uploads_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCurrentUploadsAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_current_uploads_for_group_async(&self, group: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCurrentUploadsForGroupAsync)(self as *const _ as *mut _, group.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundUploaderStaticMethods2, 3910773858, 59912, 17136, 162, 172, 7, 228, 103, 84, 144, 128);
-RT_INTERFACE!{static interface IBackgroundUploaderStaticMethods2(IBackgroundUploaderStaticMethods2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderStaticMethods2] {
-    fn GetCurrentUploadsForTransferGroupAsync(&self, group: *mut BackgroundTransferGroup, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>) -> HRESULT
-}}
-impl IBackgroundUploaderStaticMethods2 {
-    #[inline] pub fn get_current_uploads_for_transfer_group_async(&self, group: &BackgroundTransferGroup) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCurrentUploadsForTransferGroupAsync)(self as *const _ as *mut _, group as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IBackgroundUploaderUserConsent, 1001620683, 1888, 17949, 144, 127, 81, 56, 248, 77, 68, 193);
-RT_INTERFACE!{static interface IBackgroundUploaderUserConsent(IBackgroundUploaderUserConsentVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderUserConsent] {
-    fn RequestUnconstrainedUploadsAsync(&self, operations: *mut foundation::collections::IIterable<UploadOperation>, out: *mut *mut foundation::IAsyncOperation<UnconstrainedTransferRequestResult>) -> HRESULT
-}}
-impl IBackgroundUploaderUserConsent {
-    #[inline] pub fn request_unconstrained_uploads_async(&self, operations: &foundation::collections::IIterable<UploadOperation>) -> Result<ComPtr<foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestUnconstrainedUploadsAsync)(self as *const _ as *mut _, operations as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_STRUCT! { struct BackgroundUploadProgress {
-    BytesReceived: u64, BytesSent: u64, TotalBytesToReceive: u64, TotalBytesToSend: u64, Status: BackgroundTransferStatus, HasResponseChanged: bool, HasRestarted: bool,
-}}
-DEFINE_IID!(IID_IContentPrefetcher, 2832660308, 32193, 19673, 136, 16, 42, 106, 169, 65, 126, 17);
-RT_INTERFACE!{static interface IContentPrefetcher(IContentPrefetcherVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetcher] {
-    fn get_ContentUris(&self, out: *mut *mut foundation::collections::IVector<foundation::Uri>) -> HRESULT,
-    fn put_IndirectContentUri(&self, value: *mut foundation::Uri) -> HRESULT,
-    fn get_IndirectContentUri(&self, out: *mut *mut foundation::Uri) -> HRESULT
-}}
-impl IContentPrefetcher {
-    #[inline] pub fn get_content_uris(&self) -> Result<Option<ComPtr<foundation::collections::IVector<foundation::Uri>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ContentUris)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn set_indirect_content_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IndirectContentUri)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_indirect_content_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_IndirectContentUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{static class ContentPrefetcher}
-impl RtActivatable<IContentPrefetcher> for ContentPrefetcher {}
-impl RtActivatable<IContentPrefetcherTime> for ContentPrefetcher {}
-impl ContentPrefetcher {
-    #[inline] pub fn get_content_uris() -> Result<Option<ComPtr<foundation::collections::IVector<foundation::Uri>>>> {
-        <Self as RtActivatable<IContentPrefetcher>>::get_activation_factory().get_content_uris()
-    }
-    #[inline] pub fn set_indirect_content_uri(value: &foundation::Uri) -> Result<()> {
-        <Self as RtActivatable<IContentPrefetcher>>::get_activation_factory().set_indirect_content_uri(value)
-    }
-    #[inline] pub fn get_indirect_content_uri() -> Result<Option<ComPtr<foundation::Uri>>> {
-        <Self as RtActivatable<IContentPrefetcher>>::get_activation_factory().get_indirect_content_uri()
-    }
-    #[inline] pub fn get_last_successful_prefetch_time() -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
-        <Self as RtActivatable<IContentPrefetcherTime>>::get_activation_factory().get_last_successful_prefetch_time()
-    }
-}
-DEFINE_CLSID!(ContentPrefetcher(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,67,111,110,116,101,110,116,80,114,101,102,101,116,99,104,101,114,0]) [CLSID_ContentPrefetcher]);
-DEFINE_IID!(IID_IContentPrefetcherTime, 3814849800, 4906, 20446, 167, 204, 252, 176, 230, 101, 35, 175);
-RT_INTERFACE!{static interface IContentPrefetcherTime(IContentPrefetcherTimeVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetcherTime] {
-    fn get_LastSuccessfulPrefetchTime(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT
-}}
-impl IContentPrefetcherTime {
-    #[inline] pub fn get_last_successful_prefetch_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LastSuccessfulPrefetchTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IDownloadOperation, 3179801520, 22292, 19977, 186, 104, 190, 247, 57, 3, 176, 215);
-RT_INTERFACE!{interface IDownloadOperation(IDownloadOperationVtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation] {
-    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_ResultFile(&self, out: *mut *mut super::super::storage::IStorageFile) -> HRESULT,
-    fn get_Progress(&self, out: *mut BackgroundDownloadProgress) -> HRESULT,
-    fn StartAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<DownloadOperation, DownloadOperation>) -> HRESULT,
-    fn AttachAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<DownloadOperation, DownloadOperation>) -> HRESULT,
-    fn Pause(&self) -> HRESULT,
-    fn Resume(&self) -> HRESULT
-}}
-impl IDownloadOperation {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_result_file(&self) -> Result<Option<ComPtr<super::super::storage::IStorageFile>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ResultFile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_progress(&self) -> Result<BackgroundDownloadProgress> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn start_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DownloadOperation, DownloadOperation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn attach_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DownloadOperation, DownloadOperation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AttachAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn pause(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Pause)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn resume(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Resume)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class DownloadOperation: IDownloadOperation}
-DEFINE_IID!(IID_IDownloadOperation2, 2748116288, 36764, 17235, 156, 212, 41, 13, 238, 56, 124, 56);
-RT_INTERFACE!{interface IDownloadOperation2(IDownloadOperation2Vtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation2] {
-    fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT
-}}
-impl IDownloadOperation2 {
-    #[inline] pub fn get_transfer_group(&self) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TransferGroup)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IDownloadOperation3, 1344746780, 32094, 19164, 184, 211, 223, 92, 96, 49, 185, 204);
-RT_INTERFACE!{interface IDownloadOperation3(IDownloadOperation3Vtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation3] {
-    fn get_IsRandomAccessRequired(&self, out: *mut bool) -> HRESULT,
-    fn put_IsRandomAccessRequired(&self, value: bool) -> HRESULT,
-    #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetResultRandomAccessStreamReference(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStreamReference) -> HRESULT,
-    fn GetDownloadedRanges(&self, out: *mut *mut foundation::collections::IVector<BackgroundTransferFileRange>) -> HRESULT,
-    fn add_RangesDownloaded(&self, eventHandler: *mut foundation::TypedEventHandler<DownloadOperation, BackgroundTransferRangesDownloadedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_RangesDownloaded(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn put_RequestedUri(&self, value: *mut foundation::Uri) -> HRESULT,
-    #[cfg(feature="windows-web")] fn get_RecoverableWebErrorStatuses(&self, out: *mut *mut foundation::collections::IVector<super::super::web::WebErrorStatus>) -> HRESULT,
-    #[cfg(feature="windows-web")] fn get_CurrentWebErrorStatus(&self, out: *mut *mut foundation::IReference<super::super::web::WebErrorStatus>) -> HRESULT
-}}
-impl IDownloadOperation3 {
-    #[inline] pub fn get_is_random_access_required(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsRandomAccessRequired)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn set_is_random_access_required(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IsRandomAccessRequired)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_result_random_access_stream_reference(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetResultRandomAccessStreamReference)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_downloaded_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVector<BackgroundTransferFileRange>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDownloadedRanges)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn add_ranges_downloaded(&self, eventHandler: &foundation::TypedEventHandler<DownloadOperation, BackgroundTransferRangesDownloadedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RangesDownloaded)(self as *const _ as *mut _, eventHandler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_ranges_downloaded(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_RangesDownloaded)(self as *const _ as *mut _, eventCookie);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn set_requested_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_RequestedUri)(self as *const _ as *mut _, value as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-web")] #[inline] pub fn get_recoverable_web_error_statuses(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::web::WebErrorStatus>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RecoverableWebErrorStatuses)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-web")] #[inline] pub fn get_current_web_error_status(&self) -> Result<Option<ComPtr<foundation::IReference<super::super::web::WebErrorStatus>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CurrentWebErrorStatus)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IDownloadOperation4, 215658228, 36079, 16458, 150, 109, 240, 88, 64, 11, 237, 128);
-RT_INTERFACE!{interface IDownloadOperation4(IDownloadOperation4Vtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation4] {
-    fn MakeCurrentInTransferGroup(&self) -> HRESULT
-}}
-impl IDownloadOperation4 {
-    #[inline] pub fn make_current_in_transfer_group(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).MakeCurrentInTransferGroup)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IResponseInformation, 4173044242, 63251, 18322, 139, 104, 217, 210, 151, 249, 29, 46);
-RT_INTERFACE!{interface IResponseInformation(IResponseInformationVtbl): IInspectable(IInspectableVtbl) [IID_IResponseInformation] {
-    fn get_IsResumable(&self, out: *mut bool) -> HRESULT,
-    fn get_ActualUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
-    fn get_StatusCode(&self, out: *mut u32) -> HRESULT,
-    fn get_Headers(&self, out: *mut *mut foundation::collections::IMapView<HString, HString>) -> HRESULT
-}}
-impl IResponseInformation {
-    #[inline] pub fn get_is_resumable(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsResumable)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_actual_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ActualUri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_status_code(&self) -> Result<u32> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_StatusCode)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_headers(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Headers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class ResponseInformation: IResponseInformation}
-DEFINE_IID!(IID_IUnconstrainedTransferRequestResult, 1277474847, 55620, 16658, 169, 142, 106, 105, 82, 43, 126, 187);
-RT_INTERFACE!{interface IUnconstrainedTransferRequestResult(IUnconstrainedTransferRequestResultVtbl): IInspectable(IInspectableVtbl) [IID_IUnconstrainedTransferRequestResult] {
-    fn get_IsUnconstrained(&self, out: *mut bool) -> HRESULT
-}}
-impl IUnconstrainedTransferRequestResult {
-    #[inline] pub fn get_is_unconstrained(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsUnconstrained)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class UnconstrainedTransferRequestResult: IUnconstrainedTransferRequestResult}
-DEFINE_IID!(IID_IUploadOperation, 1045832928, 29577, 17228, 139, 53, 66, 127, 211, 107, 189, 174);
-RT_INTERFACE!{interface IUploadOperation(IUploadOperationVtbl): IInspectable(IInspectableVtbl) [IID_IUploadOperation] {
-    #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_SourceFile(&self, out: *mut *mut super::super::storage::IStorageFile) -> HRESULT,
-    fn get_Progress(&self, out: *mut BackgroundUploadProgress) -> HRESULT,
-    fn StartAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<UploadOperation, UploadOperation>) -> HRESULT,
-    fn AttachAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<UploadOperation, UploadOperation>) -> HRESULT
-}}
-impl IUploadOperation {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_source_file(&self) -> Result<Option<ComPtr<super::super::storage::IStorageFile>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SourceFile)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_progress(&self) -> Result<BackgroundUploadProgress> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn start_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<UploadOperation, UploadOperation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn attach_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<UploadOperation, UploadOperation>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AttachAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class UploadOperation: IUploadOperation}
-DEFINE_IID!(IID_IUploadOperation2, 1432455666, 10100, 19958, 159, 165, 32, 159, 43, 251, 18, 247);
-RT_INTERFACE!{interface IUploadOperation2(IUploadOperation2Vtbl): IInspectable(IInspectableVtbl) [IID_IUploadOperation2] {
-    fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT
-}}
-impl IUploadOperation2 {
-    #[inline] pub fn get_transfer_group(&self) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TransferGroup)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IUploadOperation3, 1120480419, 56889, 17734, 188, 98, 55, 116, 180, 41, 77, 227);
-RT_INTERFACE!{interface IUploadOperation3(IUploadOperation3Vtbl): IInspectable(IInspectableVtbl) [IID_IUploadOperation3] {
-    fn MakeCurrentInTransferGroup(&self) -> HRESULT
-}}
-impl IUploadOperation3 {
-    #[inline] pub fn make_current_in_transfer_group(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).MakeCurrentInTransferGroup)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-} // Windows.Networking.BackgroundTransfer
 pub mod proximity { // Windows.Networking.Proximity
 use ::prelude::*;
 DEFINE_IID!(IID_IConnectionRequestedEventArgs, 3949498798, 20254, 19558, 189, 13, 70, 146, 74, 148, 46, 8);
@@ -5804,6 +5824,239 @@ RT_ENUM! { enum TriggeredConnectState: i32 {
     PeerFound (TriggeredConnectState_PeerFound) = 0, Listening (TriggeredConnectState_Listening) = 1, Connecting (TriggeredConnectState_Connecting) = 2, Completed (TriggeredConnectState_Completed) = 3, Canceled (TriggeredConnectState_Canceled) = 4, Failed (TriggeredConnectState_Failed) = 5,
 }}
 } // Windows.Networking.Proximity
+pub mod pushnotifications { // Windows.Networking.PushNotifications
+use ::prelude::*;
+DEFINE_IID!(IID_IPushNotificationChannel, 724045870, 61195, 20281, 155, 138, 163, 193, 148, 222, 112, 129);
+RT_INTERFACE!{interface IPushNotificationChannel(IPushNotificationChannelVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannel] {
+    fn get_Uri(&self, out: *mut HSTRING) -> HRESULT,
+    fn get_ExpirationTime(&self, out: *mut foundation::DateTime) -> HRESULT,
+    fn Close(&self) -> HRESULT,
+    fn add_PushNotificationReceived(&self, handler: *mut foundation::TypedEventHandler<PushNotificationChannel, PushNotificationReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn remove_PushNotificationReceived(&self, token: foundation::EventRegistrationToken) -> HRESULT
+}}
+impl IPushNotificationChannel {
+    #[inline] pub fn get_uri(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_expiration_time(&self) -> Result<foundation::DateTime> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_ExpirationTime)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn close(&self) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Close)(self as *const _ as *mut _);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn add_push_notification_received(&self, handler: &foundation::TypedEventHandler<PushNotificationChannel, PushNotificationReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).add_PushNotificationReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn remove_push_notification_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).remove_PushNotificationReceived)(self as *const _ as *mut _, token);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PushNotificationChannel: IPushNotificationChannel}
+RT_CLASS!{static class PushNotificationChannelManager}
+impl RtActivatable<IPushNotificationChannelManagerStatics> for PushNotificationChannelManager {}
+impl RtActivatable<IPushNotificationChannelManagerStatics2> for PushNotificationChannelManager {}
+impl RtActivatable<IPushNotificationChannelManagerStatics3> for PushNotificationChannelManager {}
+impl PushNotificationChannelManager {
+    #[inline] pub fn create_push_notification_channel_for_application_async() -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> {
+        <Self as RtActivatable<IPushNotificationChannelManagerStatics>>::get_activation_factory().create_push_notification_channel_for_application_async()
+    }
+    #[inline] pub fn create_push_notification_channel_for_application_async_with_id(applicationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> {
+        <Self as RtActivatable<IPushNotificationChannelManagerStatics>>::get_activation_factory().create_push_notification_channel_for_application_async_with_id(applicationId)
+    }
+    #[inline] pub fn create_push_notification_channel_for_secondary_tile_async(tileId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> {
+        <Self as RtActivatable<IPushNotificationChannelManagerStatics>>::get_activation_factory().create_push_notification_channel_for_secondary_tile_async(tileId)
+    }
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<Option<ComPtr<PushNotificationChannelManagerForUser>>> {
+        <Self as RtActivatable<IPushNotificationChannelManagerStatics2>>::get_activation_factory().get_for_user(user)
+    }
+    #[inline] pub fn get_default() -> Result<Option<ComPtr<PushNotificationChannelManagerForUser>>> {
+        <Self as RtActivatable<IPushNotificationChannelManagerStatics3>>::get_activation_factory().get_default()
+    }
+}
+DEFINE_CLSID!(PushNotificationChannelManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,80,117,115,104,78,111,116,105,102,105,99,97,116,105,111,110,115,46,80,117,115,104,78,111,116,105,102,105,99,97,116,105,111,110,67,104,97,110,110,101,108,77,97,110,97,103,101,114,0]) [CLSID_PushNotificationChannelManager]);
+DEFINE_IID!(IID_IPushNotificationChannelManagerForUser, 2764330756, 4482, 17095, 136, 144, 245, 99, 196, 137, 13, 196);
+RT_INTERFACE!{interface IPushNotificationChannelManagerForUser(IPushNotificationChannelManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerForUser] {
+    fn CreatePushNotificationChannelForApplicationAsync(&self, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
+    fn CreatePushNotificationChannelForApplicationAsyncWithId(&self, applicationId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
+    fn CreatePushNotificationChannelForSecondaryTileAsync(&self, tileId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
+}}
+impl IPushNotificationChannelManagerForUser {
+    #[inline] pub fn create_push_notification_channel_for_application_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreatePushNotificationChannelForApplicationAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_push_notification_channel_for_application_async_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreatePushNotificationChannelForApplicationAsyncWithId)(self as *const _ as *mut _, applicationId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_push_notification_channel_for_secondary_tile_async(&self, tileId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreatePushNotificationChannelForSecondaryTileAsync)(self as *const _ as *mut _, tileId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PushNotificationChannelManagerForUser: IPushNotificationChannelManagerForUser}
+DEFINE_IID!(IID_IPushNotificationChannelManagerForUser2, 3280668266, 31937, 19884, 135, 253, 190, 110, 146, 4, 20, 164);
+RT_INTERFACE!{interface IPushNotificationChannelManagerForUser2(IPushNotificationChannelManagerForUser2Vtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerForUser2] {
+    #[cfg(feature="windows-storage")] fn CreateRawPushNotificationChannelWithAlternateKeyForApplicationAsync(&self, appServerKey: *mut super::super::storage::streams::IBuffer, channelId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn CreateRawPushNotificationChannelWithAlternateKeyForApplicationAsyncWithId(&self, appServerKey: *mut super::super::storage::streams::IBuffer, channelId: HSTRING, appId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT
+}}
+impl IPushNotificationChannelManagerForUser2 {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_raw_push_notification_channel_with_alternate_key_for_application_async(&self, appServerKey: &super::super::storage::streams::IBuffer, channelId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateRawPushNotificationChannelWithAlternateKeyForApplicationAsync)(self as *const _ as *mut _, appServerKey as *const _ as *mut _, channelId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_raw_push_notification_channel_with_alternate_key_for_application_async_with_id(&self, appServerKey: &super::super::storage::streams::IBuffer, channelId: &HStringArg, appId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreateRawPushNotificationChannelWithAlternateKeyForApplicationAsyncWithId)(self as *const _ as *mut _, appServerKey as *const _ as *mut _, channelId.get(), appId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPushNotificationChannelManagerStatics, 2343541605, 30625, 17800, 189, 25, 134, 21, 41, 169, 220, 240);
+RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics(IPushNotificationChannelManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerStatics] {
+    fn CreatePushNotificationChannelForApplicationAsync(&self, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
+    fn CreatePushNotificationChannelForApplicationAsyncWithId(&self, applicationId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
+    fn CreatePushNotificationChannelForSecondaryTileAsync(&self, tileId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT
+}}
+impl IPushNotificationChannelManagerStatics {
+    #[inline] pub fn create_push_notification_channel_for_application_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreatePushNotificationChannelForApplicationAsync)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_push_notification_channel_for_application_async_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreatePushNotificationChannelForApplicationAsyncWithId)(self as *const _ as *mut _, applicationId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn create_push_notification_channel_for_secondary_tile_async(&self, tileId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).CreatePushNotificationChannelForSecondaryTileAsync)(self as *const _ as *mut _, tileId.get(), &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPushNotificationChannelManagerStatics2, 3024397917, 42985, 19240, 149, 14, 243, 117, 169, 7, 249, 223);
+RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics2(IPushNotificationChannelManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerStatics2] {
+    #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut super::super::system::User, out: *mut *mut PushNotificationChannelManagerForUser) -> HRESULT
+}}
+impl IPushNotificationChannelManagerStatics2 {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &super::super::system::User) -> Result<Option<ComPtr<PushNotificationChannelManagerForUser>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPushNotificationChannelManagerStatics3, 1191313150, 3806, 19007, 174, 120, 191, 164, 113, 73, 105, 37);
+RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics3(IPushNotificationChannelManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerStatics3] {
+    fn GetDefault(&self, out: *mut *mut PushNotificationChannelManagerForUser) -> HRESULT
+}}
+impl IPushNotificationChannelManagerStatics3 {
+    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<PushNotificationChannelManagerForUser>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+DEFINE_IID!(IID_IPushNotificationReceivedEventArgs, 3506855436, 14029, 18508, 185, 53, 10, 153, 183, 83, 207, 0);
+RT_INTERFACE!{interface IPushNotificationReceivedEventArgs(IPushNotificationReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationReceivedEventArgs] {
+    fn put_Cancel(&self, value: bool) -> HRESULT,
+    fn get_Cancel(&self, out: *mut bool) -> HRESULT,
+    fn get_NotificationType(&self, out: *mut PushNotificationType) -> HRESULT,
+    #[cfg(not(feature="windows-ui"))] fn __Dummy3(&self) -> (),
+    #[cfg(feature="windows-ui")] fn get_ToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
+    #[cfg(not(feature="windows-ui"))] fn __Dummy4(&self) -> (),
+    #[cfg(feature="windows-ui")] fn get_TileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
+    #[cfg(not(feature="windows-ui"))] fn __Dummy5(&self) -> (),
+    #[cfg(feature="windows-ui")] fn get_BadgeNotification(&self, out: *mut *mut super::super::ui::notifications::BadgeNotification) -> HRESULT,
+    fn get_RawNotification(&self, out: *mut *mut RawNotification) -> HRESULT
+}}
+impl IPushNotificationReceivedEventArgs {
+    #[inline] pub fn set_cancel(&self, value: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Cancel)(self as *const _ as *mut _, value);
+        if hr == S_OK { Ok(()) } else { err(hr) }
+    }}
+    #[inline] pub fn get_cancel(&self) -> Result<bool> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_Cancel)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[inline] pub fn get_notification_type(&self) -> Result<PushNotificationType> { unsafe { 
+        let mut out = zeroed();
+        let hr = ((*self.lpVtbl).get_NotificationType)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(out) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ToastNotification)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_TileNotification)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_badge_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::BadgeNotification>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_BadgeNotification)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_raw_notification(&self) -> Result<Option<ComPtr<RawNotification>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_RawNotification)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class PushNotificationReceivedEventArgs: IPushNotificationReceivedEventArgs}
+RT_ENUM! { enum PushNotificationType: i32 {
+    Toast (PushNotificationType_Toast) = 0, Tile (PushNotificationType_Tile) = 1, Badge (PushNotificationType_Badge) = 2, Raw (PushNotificationType_Raw) = 3, TileFlyout (PushNotificationType_TileFlyout) = 4,
+}}
+DEFINE_IID!(IID_IRawNotification, 438465153, 15225, 17068, 153, 99, 34, 171, 0, 212, 240, 183);
+RT_INTERFACE!{interface IRawNotification(IRawNotificationVtbl): IInspectable(IInspectableVtbl) [IID_IRawNotification] {
+    fn get_Content(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IRawNotification {
+    #[inline] pub fn get_content(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Content)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+RT_CLASS!{class RawNotification: IRawNotification}
+DEFINE_IID!(IID_IRawNotification2, 3872444185, 3183, 19677, 148, 36, 238, 197, 190, 1, 77, 38);
+RT_INTERFACE!{interface IRawNotification2(IRawNotification2Vtbl): IInspectable(IInspectableVtbl) [IID_IRawNotification2] {
+    fn get_Headers(&self, out: *mut *mut foundation::collections::IMapView<HString, HString>) -> HRESULT,
+    fn get_ChannelId(&self, out: *mut HSTRING) -> HRESULT
+}}
+impl IRawNotification2 {
+    #[inline] pub fn get_headers(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, HString>>>> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_Headers)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+    }}
+    #[inline] pub fn get_channel_id(&self) -> Result<HString> { unsafe { 
+        let mut out = null_mut();
+        let hr = ((*self.lpVtbl).get_ChannelId)(self as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
+    }}
+}
+} // Windows.Networking.PushNotifications
 pub mod servicediscovery { // Windows.Networking.ServiceDiscovery
 pub mod dnssd { // Windows.Networking.ServiceDiscovery.Dnssd
 use ::prelude::*;
@@ -9431,239 +9684,6 @@ impl IVpnTrafficFilterFactory {
     }}
 }
 } // Windows.Networking.Vpn
-pub mod pushnotifications { // Windows.Networking.PushNotifications
-use ::prelude::*;
-DEFINE_IID!(IID_IPushNotificationChannel, 724045870, 61195, 20281, 155, 138, 163, 193, 148, 222, 112, 129);
-RT_INTERFACE!{interface IPushNotificationChannel(IPushNotificationChannelVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannel] {
-    fn get_Uri(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_ExpirationTime(&self, out: *mut foundation::DateTime) -> HRESULT,
-    fn Close(&self) -> HRESULT,
-    fn add_PushNotificationReceived(&self, handler: *mut foundation::TypedEventHandler<PushNotificationChannel, PushNotificationReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
-    fn remove_PushNotificationReceived(&self, token: foundation::EventRegistrationToken) -> HRESULT
-}}
-impl IPushNotificationChannel {
-    #[inline] pub fn get_uri(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_expiration_time(&self) -> Result<foundation::DateTime> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ExpirationTime)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn close(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Close)(self as *const _ as *mut _);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn add_push_notification_received(&self, handler: &foundation::TypedEventHandler<PushNotificationChannel, PushNotificationReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PushNotificationReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn remove_push_notification_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_PushNotificationReceived)(self as *const _ as *mut _, token);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class PushNotificationChannel: IPushNotificationChannel}
-RT_CLASS!{static class PushNotificationChannelManager}
-impl RtActivatable<IPushNotificationChannelManagerStatics> for PushNotificationChannelManager {}
-impl RtActivatable<IPushNotificationChannelManagerStatics2> for PushNotificationChannelManager {}
-impl RtActivatable<IPushNotificationChannelManagerStatics3> for PushNotificationChannelManager {}
-impl PushNotificationChannelManager {
-    #[inline] pub fn create_push_notification_channel_for_application_async() -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> {
-        <Self as RtActivatable<IPushNotificationChannelManagerStatics>>::get_activation_factory().create_push_notification_channel_for_application_async()
-    }
-    #[inline] pub fn create_push_notification_channel_for_application_async_with_id(applicationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> {
-        <Self as RtActivatable<IPushNotificationChannelManagerStatics>>::get_activation_factory().create_push_notification_channel_for_application_async_with_id(applicationId)
-    }
-    #[inline] pub fn create_push_notification_channel_for_secondary_tile_async(tileId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> {
-        <Self as RtActivatable<IPushNotificationChannelManagerStatics>>::get_activation_factory().create_push_notification_channel_for_secondary_tile_async(tileId)
-    }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<Option<ComPtr<PushNotificationChannelManagerForUser>>> {
-        <Self as RtActivatable<IPushNotificationChannelManagerStatics2>>::get_activation_factory().get_for_user(user)
-    }
-    #[inline] pub fn get_default() -> Result<Option<ComPtr<PushNotificationChannelManagerForUser>>> {
-        <Self as RtActivatable<IPushNotificationChannelManagerStatics3>>::get_activation_factory().get_default()
-    }
-}
-DEFINE_CLSID!(PushNotificationChannelManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,80,117,115,104,78,111,116,105,102,105,99,97,116,105,111,110,115,46,80,117,115,104,78,111,116,105,102,105,99,97,116,105,111,110,67,104,97,110,110,101,108,77,97,110,97,103,101,114,0]) [CLSID_PushNotificationChannelManager]);
-DEFINE_IID!(IID_IPushNotificationChannelManagerForUser, 2764330756, 4482, 17095, 136, 144, 245, 99, 196, 137, 13, 196);
-RT_INTERFACE!{interface IPushNotificationChannelManagerForUser(IPushNotificationChannelManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerForUser] {
-    fn CreatePushNotificationChannelForApplicationAsync(&self, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
-    fn CreatePushNotificationChannelForApplicationAsyncWithId(&self, applicationId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
-    fn CreatePushNotificationChannelForSecondaryTileAsync(&self, tileId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
-}}
-impl IPushNotificationChannelManagerForUser {
-    #[inline] pub fn create_push_notification_channel_for_application_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreatePushNotificationChannelForApplicationAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_push_notification_channel_for_application_async_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreatePushNotificationChannelForApplicationAsyncWithId)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_push_notification_channel_for_secondary_tile_async(&self, tileId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreatePushNotificationChannelForSecondaryTileAsync)(self as *const _ as *mut _, tileId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class PushNotificationChannelManagerForUser: IPushNotificationChannelManagerForUser}
-DEFINE_IID!(IID_IPushNotificationChannelManagerForUser2, 3280668266, 31937, 19884, 135, 253, 190, 110, 146, 4, 20, 164);
-RT_INTERFACE!{interface IPushNotificationChannelManagerForUser2(IPushNotificationChannelManagerForUser2Vtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerForUser2] {
-    #[cfg(feature="windows-storage")] fn CreateRawPushNotificationChannelWithAlternateKeyForApplicationAsync(&self, appServerKey: *mut super::super::storage::streams::IBuffer, channelId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn CreateRawPushNotificationChannelWithAlternateKeyForApplicationAsyncWithId(&self, appServerKey: *mut super::super::storage::streams::IBuffer, channelId: HSTRING, appId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT
-}}
-impl IPushNotificationChannelManagerForUser2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_raw_push_notification_channel_with_alternate_key_for_application_async(&self, appServerKey: &super::super::storage::streams::IBuffer, channelId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateRawPushNotificationChannelWithAlternateKeyForApplicationAsync)(self as *const _ as *mut _, appServerKey as *const _ as *mut _, channelId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_raw_push_notification_channel_with_alternate_key_for_application_async_with_id(&self, appServerKey: &super::super::storage::streams::IBuffer, channelId: &HStringArg, appId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateRawPushNotificationChannelWithAlternateKeyForApplicationAsyncWithId)(self as *const _ as *mut _, appServerKey as *const _ as *mut _, channelId.get(), appId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPushNotificationChannelManagerStatics, 2343541605, 30625, 17800, 189, 25, 134, 21, 41, 169, 220, 240);
-RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics(IPushNotificationChannelManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerStatics] {
-    fn CreatePushNotificationChannelForApplicationAsync(&self, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
-    fn CreatePushNotificationChannelForApplicationAsyncWithId(&self, applicationId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
-    fn CreatePushNotificationChannelForSecondaryTileAsync(&self, tileId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT
-}}
-impl IPushNotificationChannelManagerStatics {
-    #[inline] pub fn create_push_notification_channel_for_application_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreatePushNotificationChannelForApplicationAsync)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_push_notification_channel_for_application_async_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreatePushNotificationChannelForApplicationAsyncWithId)(self as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn create_push_notification_channel_for_secondary_tile_async(&self, tileId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreatePushNotificationChannelForSecondaryTileAsync)(self as *const _ as *mut _, tileId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPushNotificationChannelManagerStatics2, 3024397917, 42985, 19240, 149, 14, 243, 117, 169, 7, 249, 223);
-RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics2(IPushNotificationChannelManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerStatics2] {
-    #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut super::super::system::User, out: *mut *mut PushNotificationChannelManagerForUser) -> HRESULT
-}}
-impl IPushNotificationChannelManagerStatics2 {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &super::super::system::User) -> Result<Option<ComPtr<PushNotificationChannelManagerForUser>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPushNotificationChannelManagerStatics3, 1191313150, 3806, 19007, 174, 120, 191, 164, 113, 73, 105, 37);
-RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics3(IPushNotificationChannelManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerStatics3] {
-    fn GetDefault(&self, out: *mut *mut PushNotificationChannelManagerForUser) -> HRESULT
-}}
-impl IPushNotificationChannelManagerStatics3 {
-    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<PushNotificationChannelManagerForUser>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-DEFINE_IID!(IID_IPushNotificationReceivedEventArgs, 3506855436, 14029, 18508, 185, 53, 10, 153, 183, 83, 207, 0);
-RT_INTERFACE!{interface IPushNotificationReceivedEventArgs(IPushNotificationReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationReceivedEventArgs] {
-    fn put_Cancel(&self, value: bool) -> HRESULT,
-    fn get_Cancel(&self, out: *mut bool) -> HRESULT,
-    fn get_NotificationType(&self, out: *mut PushNotificationType) -> HRESULT,
-    #[cfg(not(feature="windows-ui"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_ToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(not(feature="windows-ui"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_TileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
-    #[cfg(not(feature="windows-ui"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_BadgeNotification(&self, out: *mut *mut super::super::ui::notifications::BadgeNotification) -> HRESULT,
-    fn get_RawNotification(&self, out: *mut *mut RawNotification) -> HRESULT
-}}
-impl IPushNotificationReceivedEventArgs {
-    #[inline] pub fn set_cancel(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Cancel)(self as *const _ as *mut _, value);
-        if hr == S_OK { Ok(()) } else { err(hr) }
-    }}
-    #[inline] pub fn get_cancel(&self) -> Result<bool> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Cancel)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[inline] pub fn get_notification_type(&self) -> Result<PushNotificationType> { unsafe { 
-        let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_NotificationType)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(out) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ToastNotification)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TileNotification)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_badge_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::BadgeNotification>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_BadgeNotification)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_raw_notification(&self) -> Result<Option<ComPtr<RawNotification>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RawNotification)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class PushNotificationReceivedEventArgs: IPushNotificationReceivedEventArgs}
-RT_ENUM! { enum PushNotificationType: i32 {
-    Toast (PushNotificationType_Toast) = 0, Tile (PushNotificationType_Tile) = 1, Badge (PushNotificationType_Badge) = 2, Raw (PushNotificationType_Raw) = 3, TileFlyout (PushNotificationType_TileFlyout) = 4,
-}}
-DEFINE_IID!(IID_IRawNotification, 438465153, 15225, 17068, 153, 99, 34, 171, 0, 212, 240, 183);
-RT_INTERFACE!{interface IRawNotification(IRawNotificationVtbl): IInspectable(IInspectableVtbl) [IID_IRawNotification] {
-    fn get_Content(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl IRawNotification {
-    #[inline] pub fn get_content(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Content)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-RT_CLASS!{class RawNotification: IRawNotification}
-DEFINE_IID!(IID_IRawNotification2, 3872444185, 3183, 19677, 148, 36, 238, 197, 190, 1, 77, 38);
-RT_INTERFACE!{interface IRawNotification2(IRawNotification2Vtbl): IInspectable(IInspectableVtbl) [IID_IRawNotification2] {
-    fn get_Headers(&self, out: *mut *mut foundation::collections::IMapView<HString, HString>) -> HRESULT,
-    fn get_ChannelId(&self, out: *mut HSTRING) -> HRESULT
-}}
-impl IRawNotification2 {
-    #[inline] pub fn get_headers(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, HString>>>> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Headers)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
-    }}
-    #[inline] pub fn get_channel_id(&self) -> Result<HString> { unsafe { 
-        let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ChannelId)(self as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
-    }}
-}
-} // Windows.Networking.PushNotifications
 pub mod xboxlive { // Windows.Networking.XboxLive
 use ::prelude::*;
 DEFINE_IID!(IID_IXboxLiveDeviceAddress, 4122727033, 15494, 19287, 163, 26, 185, 70, 36, 8, 253, 1);
