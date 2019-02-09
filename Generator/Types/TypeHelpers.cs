@@ -37,9 +37,35 @@ namespace Generator.Types
 
         // ---------------- The following should be split by types ---------------- //
 
-        public static string GetTypeName(Generator gen, ITypeRequestSource source, TypeReference t, TypeUsage usage)
+        public static string GetTypeName(Generator gen, ITypeRequestSource source, TypeReference t, TypeUsage usage, bool hasConstModifier = false)
         {
-            if (t.IsGenericParameter)
+            if (hasConstModifier && !t.IsByReference)
+            {
+                throw new NotSupportedException(); // we don't expect this case to happen
+            }
+            else if (t.IsByReference)
+            {
+                var ty = (ByReferenceType)t;
+                if (hasConstModifier)
+                {
+                    if (usage == TypeUsage.Raw)
+                        return $"*const { GetTypeName(gen, source, ty.ElementType, usage) }";
+                    else if (usage == TypeUsage.In)
+                        return $"&{ GetTypeName(gen, source, ty.ElementType, usage) }";
+                    else
+                        throw new NotSupportedException();
+                }
+                else
+                {
+                    if (usage == TypeUsage.Raw)
+                        return $"*mut { GetTypeName(gen, source, ty.ElementType, usage) }";
+                    else if (usage == TypeUsage.In) // currently never used
+                        return $"&mut { GetTypeName(gen, source, ty.ElementType, usage) }";
+                    else
+                        throw new NotSupportedException();
+                }
+            }
+            else if (t.IsGenericParameter)
             {
                 switch (usage)
                 {
@@ -50,11 +76,6 @@ namespace Generator.Types
                     case TypeUsage.GenericArg: return t.Name;
                     default: throw new NotSupportedException();
                 }
-            }
-            if (t.IsByReference)
-            {
-                var ty = (ByReferenceType)t;
-                return $"*mut { GetTypeName(gen, source, ty.ElementType, usage) }";
             }
             else if (t.IsArray)
             {
@@ -67,6 +88,23 @@ namespace Generator.Types
                 {
                     return $"*mut { GetTypeName(gen, source, ty.ElementType, usage) }";
                 }
+            }
+            else if (t.IsOptionalModifier)
+            {
+                var ty = (OptionalModifierType)t;
+                if (ty.ModifierType.FullName == "System.Runtime.CompilerServices.IsConst")
+                {
+                    return GetTypeName(gen, source, ty.ElementType, usage, true);
+                }
+                else
+                {
+                    // according to ECMA Partition II documentation, we can usually just ignore optional modifiers
+                    return GetTypeName(gen, source, ty.ElementType, usage, hasConstModifier);
+                }
+            }
+            else if (t.IsRequiredModifier)
+            {
+                throw new NotImplementedException($"Unexpected reqmod { ((RequiredModifierType)t).ModifierType.FullName } is not implemented");
             }
             else
             {
