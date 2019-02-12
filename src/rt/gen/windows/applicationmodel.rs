@@ -15248,12 +15248,12 @@ impl IDataPackagePropertySet2 {
         let hr = ((*self.lpVtbl).put_PackageFamilyName)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_square30x30_logo(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_square_30x30_logo(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square30x30Logo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_square30x30_logo(&self, value: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_square_30x30_logo(&self, value: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Square30x30Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -15367,7 +15367,7 @@ impl IDataPackagePropertySetView2 {
         let hr = ((*self.lpVtbl).get_ContentSourceApplicationLink)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_square30x30_logo(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_square_30x30_logo(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square30x30Logo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -15698,8 +15698,8 @@ impl DataTransferManager {
     #[inline] pub fn is_supported() -> Result<bool> {
         <Self as RtActivatable<IDataTransferManagerStatics2>>::get_activation_factory().is_supported()
     }
-    #[inline] pub fn show_share_uiwith_options(options: &ShareUIOptions) -> Result<()> {
-        <Self as RtActivatable<IDataTransferManagerStatics3>>::get_activation_factory().show_share_uiwith_options(options)
+    #[inline] pub fn show_share_ui_with_options(options: &ShareUIOptions) -> Result<()> {
+        <Self as RtActivatable<IDataTransferManagerStatics3>>::get_activation_factory().show_share_ui_with_options(options)
     }
 }
 DEFINE_CLSID!(DataTransferManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,68,97,116,97,84,114,97,110,115,102,101,114,77,97,110,97,103,101,114,0]) [CLSID_DataTransferManager]);
@@ -15751,7 +15751,7 @@ RT_INTERFACE!{static interface IDataTransferManagerStatics3(IDataTransferManager
     fn ShowShareUIWithOptions(&self, options: *mut ShareUIOptions) -> HRESULT
 }}
 impl IDataTransferManagerStatics3 {
-    #[inline] pub fn show_share_uiwith_options(&self, options: &ShareUIOptions) -> Result<()> { unsafe { 
+    #[inline] pub fn show_share_ui_with_options(&self, options: &ShareUIOptions) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ShowShareUIWithOptions)(self as *const _ as *mut _, options as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -16248,20 +16248,20 @@ impl ICoreDragOperation {
         let hr = ((*self.lpVtbl).SetPointerId)(self as *const _ as *mut _, pointerId);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_drag_uicontent_from_software_bitmap(&self, softwareBitmap: &::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_drag_ui_content_from_software_bitmap(&self, softwareBitmap: &::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetDragUIContentFromSoftwareBitmap)(self as *const _ as *mut _, softwareBitmap as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_drag_uicontent_from_software_bitmap_with_anchor_point(&self, softwareBitmap: &::rt::gen::windows::graphics::imaging::SoftwareBitmap, anchorPoint: foundation::Point) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_drag_ui_content_from_software_bitmap_with_anchor_point(&self, softwareBitmap: &::rt::gen::windows::graphics::imaging::SoftwareBitmap, anchorPoint: foundation::Point) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetDragUIContentFromSoftwareBitmapWithAnchorPoint)(self as *const _ as *mut _, softwareBitmap as *const _ as *mut _, anchorPoint);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_drag_uicontent_mode(&self) -> Result<CoreDragUIContentMode> { unsafe { 
+    #[inline] pub fn get_drag_ui_content_mode(&self) -> Result<CoreDragUIContentMode> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_DragUIContentMode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_drag_uicontent_mode(&self, value: CoreDragUIContentMode) -> Result<()> { unsafe { 
+    #[inline] pub fn set_drag_ui_content_mode(&self, value: CoreDragUIContentMode) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_DragUIContentMode)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -29197,30 +29197,30 @@ impl IWalletItem {
         let hr = ((*self.lpVtbl).put_ExpirationDate)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_logo159x159(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_logo_159x159(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Logo159x159)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_logo159x159(&self, value: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_logo_159x159(&self, value: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Logo159x159)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_logo336x336(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_logo_336x336(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Logo336x336)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_logo336x336(&self, value: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_logo_336x336(&self, value: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Logo336x336)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_logo99x99(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_logo_99x99(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Logo99x99)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_logo99x99(&self, value: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_logo_99x99(&self, value: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Logo99x99)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}

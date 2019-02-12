@@ -436,7 +436,7 @@ impl IAllJoynAboutDataView {
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_ajsoftware_version(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_aj_software_version(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AJSoftwareVersion)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -3219,23 +3219,23 @@ impl BluetoothLEAdvertisementDataTypes {
     #[inline] pub fn get_flags() -> Result<u8> {
         <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_flags()
     }
-    #[inline] pub fn get_incomplete_service16_bit_uuids() -> Result<u8> {
-        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_incomplete_service16_bit_uuids()
+    #[inline] pub fn get_incomplete_service_16_bit_uuids() -> Result<u8> {
+        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_incomplete_service_16_bit_uuids()
     }
-    #[inline] pub fn get_complete_service16_bit_uuids() -> Result<u8> {
-        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_complete_service16_bit_uuids()
+    #[inline] pub fn get_complete_service_16_bit_uuids() -> Result<u8> {
+        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_complete_service_16_bit_uuids()
     }
-    #[inline] pub fn get_incomplete_service32_bit_uuids() -> Result<u8> {
-        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_incomplete_service32_bit_uuids()
+    #[inline] pub fn get_incomplete_service_32_bit_uuids() -> Result<u8> {
+        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_incomplete_service_32_bit_uuids()
     }
-    #[inline] pub fn get_complete_service32_bit_uuids() -> Result<u8> {
-        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_complete_service32_bit_uuids()
+    #[inline] pub fn get_complete_service_32_bit_uuids() -> Result<u8> {
+        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_complete_service_32_bit_uuids()
     }
-    #[inline] pub fn get_incomplete_service128_bit_uuids() -> Result<u8> {
-        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_incomplete_service128_bit_uuids()
+    #[inline] pub fn get_incomplete_service_128_bit_uuids() -> Result<u8> {
+        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_incomplete_service_128_bit_uuids()
     }
-    #[inline] pub fn get_complete_service128_bit_uuids() -> Result<u8> {
-        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_complete_service128_bit_uuids()
+    #[inline] pub fn get_complete_service_128_bit_uuids() -> Result<u8> {
+        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_complete_service_128_bit_uuids()
     }
     #[inline] pub fn get_shortened_local_name() -> Result<u8> {
         <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_shortened_local_name()
@@ -3249,23 +3249,23 @@ impl BluetoothLEAdvertisementDataTypes {
     #[inline] pub fn get_slave_connection_interval_range() -> Result<u8> {
         <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_slave_connection_interval_range()
     }
-    #[inline] pub fn get_service_solicitation16_bit_uuids() -> Result<u8> {
-        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_service_solicitation16_bit_uuids()
+    #[inline] pub fn get_service_solicitation_16_bit_uuids() -> Result<u8> {
+        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_service_solicitation_16_bit_uuids()
     }
-    #[inline] pub fn get_service_solicitation32_bit_uuids() -> Result<u8> {
-        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_service_solicitation32_bit_uuids()
+    #[inline] pub fn get_service_solicitation_32_bit_uuids() -> Result<u8> {
+        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_service_solicitation_32_bit_uuids()
     }
-    #[inline] pub fn get_service_solicitation128_bit_uuids() -> Result<u8> {
-        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_service_solicitation128_bit_uuids()
+    #[inline] pub fn get_service_solicitation_128_bit_uuids() -> Result<u8> {
+        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_service_solicitation_128_bit_uuids()
     }
-    #[inline] pub fn get_service_data16_bit_uuids() -> Result<u8> {
-        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_service_data16_bit_uuids()
+    #[inline] pub fn get_service_data_16_bit_uuids() -> Result<u8> {
+        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_service_data_16_bit_uuids()
     }
-    #[inline] pub fn get_service_data32_bit_uuids() -> Result<u8> {
-        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_service_data32_bit_uuids()
+    #[inline] pub fn get_service_data_32_bit_uuids() -> Result<u8> {
+        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_service_data_32_bit_uuids()
     }
-    #[inline] pub fn get_service_data128_bit_uuids() -> Result<u8> {
-        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_service_data128_bit_uuids()
+    #[inline] pub fn get_service_data_128_bit_uuids() -> Result<u8> {
+        <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_service_data_128_bit_uuids()
     }
     #[inline] pub fn get_public_target_address() -> Result<u8> {
         <Self as RtActivatable<IBluetoothLEAdvertisementDataTypesStatics>>::get_activation_factory().get_public_target_address()
@@ -3315,32 +3315,32 @@ impl IBluetoothLEAdvertisementDataTypesStatics {
         let hr = ((*self.lpVtbl).get_Flags)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_incomplete_service16_bit_uuids(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_incomplete_service_16_bit_uuids(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IncompleteService16BitUuids)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_complete_service16_bit_uuids(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_complete_service_16_bit_uuids(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_CompleteService16BitUuids)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_incomplete_service32_bit_uuids(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_incomplete_service_32_bit_uuids(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IncompleteService32BitUuids)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_complete_service32_bit_uuids(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_complete_service_32_bit_uuids(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_CompleteService32BitUuids)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_incomplete_service128_bit_uuids(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_incomplete_service_128_bit_uuids(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IncompleteService128BitUuids)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_complete_service128_bit_uuids(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_complete_service_128_bit_uuids(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_CompleteService128BitUuids)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -3365,32 +3365,32 @@ impl IBluetoothLEAdvertisementDataTypesStatics {
         let hr = ((*self.lpVtbl).get_SlaveConnectionIntervalRange)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_service_solicitation16_bit_uuids(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_service_solicitation_16_bit_uuids(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ServiceSolicitation16BitUuids)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_service_solicitation32_bit_uuids(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_service_solicitation_32_bit_uuids(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ServiceSolicitation32BitUuids)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_service_solicitation128_bit_uuids(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_service_solicitation_128_bit_uuids(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ServiceSolicitation128BitUuids)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_service_data16_bit_uuids(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_service_data_16_bit_uuids(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ServiceData16BitUuids)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_service_data32_bit_uuids(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_service_data_32_bit_uuids(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ServiceData32BitUuids)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_service_data128_bit_uuids(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_service_data_128_bit_uuids(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ServiceData128BitUuids)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -4248,8 +4248,8 @@ impl GattCharacteristicUuids {
     #[inline] pub fn get_rsc_measurement() -> Result<Guid> {
         <Self as RtActivatable<IGattCharacteristicUuidsStatics>>::get_activation_factory().get_rsc_measurement()
     }
-    #[inline] pub fn get_sccontrol_point() -> Result<Guid> {
-        <Self as RtActivatable<IGattCharacteristicUuidsStatics>>::get_activation_factory().get_sccontrol_point()
+    #[inline] pub fn get_sc_control_point() -> Result<Guid> {
+        <Self as RtActivatable<IGattCharacteristicUuidsStatics>>::get_activation_factory().get_sc_control_point()
     }
     #[inline] pub fn get_sensor_location() -> Result<Guid> {
         <Self as RtActivatable<IGattCharacteristicUuidsStatics>>::get_activation_factory().get_sensor_location()
@@ -4317,8 +4317,8 @@ impl GattCharacteristicUuids {
     #[inline] pub fn get_dst_offset() -> Result<Guid> {
         <Self as RtActivatable<IGattCharacteristicUuidsStatics2>>::get_activation_factory().get_dst_offset()
     }
-    #[inline] pub fn get_exact_time256() -> Result<Guid> {
-        <Self as RtActivatable<IGattCharacteristicUuidsStatics2>>::get_activation_factory().get_exact_time256()
+    #[inline] pub fn get_exact_time_256() -> Result<Guid> {
+        <Self as RtActivatable<IGattCharacteristicUuidsStatics2>>::get_activation_factory().get_exact_time_256()
     }
     #[inline] pub fn get_firmware_revision_string() -> Result<Guid> {
         <Self as RtActivatable<IGattCharacteristicUuidsStatics2>>::get_activation_factory().get_firmware_revision_string()
@@ -4552,7 +4552,7 @@ impl IGattCharacteristicUuidsStatics {
         let hr = ((*self.lpVtbl).get_RscMeasurement)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_sccontrol_point(&self) -> Result<Guid> { unsafe { 
+    #[inline] pub fn get_sc_control_point(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_SCControlPoint)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -4732,7 +4732,7 @@ impl IGattCharacteristicUuidsStatics2 {
         let hr = ((*self.lpVtbl).get_DstOffset)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_exact_time256(&self) -> Result<Guid> { unsafe { 
+    #[inline] pub fn get_exact_time_256(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ExactTime256)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -7369,12 +7369,12 @@ impl ICustomDevice {
         let hr = ((*self.lpVtbl).get_OutputStream)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn send_iocontrol_async(&self, ioControlCode: &IIOControlCode, inputBuffer: &super::super::storage::streams::IBuffer, outputBuffer: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn send_io_control_async(&self, ioControlCode: &IIOControlCode, inputBuffer: &super::super::storage::streams::IBuffer, outputBuffer: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SendIOControlAsync)(self as *const _ as *mut _, ioControlCode as *const _ as *mut _, inputBuffer as *const _ as *mut _, outputBuffer as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn try_send_iocontrol_async(&self, ioControlCode: &IIOControlCode, inputBuffer: &super::super::storage::streams::IBuffer, outputBuffer: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn try_send_io_control_async(&self, ioControlCode: &IIOControlCode, inputBuffer: &super::super::storage::streams::IBuffer, outputBuffer: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TrySendIOControlAsync)(self as *const _ as *mut _, ioControlCode as *const _ as *mut _, inputBuffer as *const _ as *mut _, outputBuffer as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -7454,7 +7454,7 @@ RT_INTERFACE!{static interface IIOControlCodeFactory(IIOControlCodeFactoryVtbl):
     fn CreateIOControlCode(&self, deviceType: u16, function: u16, accessMode: IOControlAccessMode, bufferingMethod: IOControlBufferingMethod, out: *mut *mut IOControlCode) -> HRESULT
 }}
 impl IIOControlCodeFactory {
-    #[inline] pub fn create_iocontrol_code(&self, deviceType: u16, function: u16, accessMode: IOControlAccessMode, bufferingMethod: IOControlBufferingMethod) -> Result<ComPtr<IOControlCode>> { unsafe { 
+    #[inline] pub fn create_io_control_code(&self, deviceType: u16, function: u16, accessMode: IOControlAccessMode, bufferingMethod: IOControlBufferingMethod) -> Result<ComPtr<IOControlCode>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateIOControlCode)(self as *const _ as *mut _, deviceType, function, accessMode, bufferingMethod, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -7488,8 +7488,8 @@ RT_ENUM! { enum IOControlBufferingMethod: i32 {
 RT_CLASS!{class IOControlCode: IIOControlCode}
 impl RtActivatable<IIOControlCodeFactory> for IOControlCode {}
 impl IOControlCode {
-    #[inline] pub fn create_iocontrol_code(deviceType: u16, function: u16, accessMode: IOControlAccessMode, bufferingMethod: IOControlBufferingMethod) -> Result<ComPtr<IOControlCode>> {
-        <Self as RtActivatable<IIOControlCodeFactory>>::get_activation_factory().create_iocontrol_code(deviceType, function, accessMode, bufferingMethod)
+    #[inline] pub fn create_io_control_code(deviceType: u16, function: u16, accessMode: IOControlAccessMode, bufferingMethod: IOControlBufferingMethod) -> Result<ComPtr<IOControlCode>> {
+        <Self as RtActivatable<IIOControlCodeFactory>>::get_activation_factory().create_io_control_code(deviceType, function, accessMode, bufferingMethod)
     }
 }
 DEFINE_CLSID!(IOControlCode(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,67,117,115,116,111,109,46,73,79,67,111,110,116,114,111,108,67,111,100,101,0]) [CLSID_IOControlCode]);
@@ -7781,7 +7781,7 @@ impl IDisplayDevice {
         let hr = ((*self.lpVtbl).CreatePeriodicFence)(self as *const _ as *mut _, target as *const _ as *mut _, offsetFromVBlank, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn wait_for_vblank(&self, source: &DisplaySource) -> Result<()> { unsafe { 
+    #[inline] pub fn wait_for_v_blank(&self, source: &DisplaySource) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).WaitForVBlank)(self as *const _ as *mut _, source as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -12738,7 +12738,7 @@ RT_INTERFACE!{interface IPointerDevice2(IPointerDevice2Vtbl): IInspectable(IInsp
     fn get_MaxPointersWithZDistance(&self, out: *mut u32) -> HRESULT
 }}
 impl IPointerDevice2 {
-    #[inline] pub fn get_max_pointers_with_zdistance(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_max_pointers_with_z_distance(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_MaxPointersWithZDistance)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -13831,12 +13831,12 @@ RT_INTERFACE!{interface ILampArrayEffect(ILampArrayEffectVtbl): IInspectable(IIn
     fn put_ZIndex(&self, value: i32) -> HRESULT
 }}
 impl ILampArrayEffect {
-    #[inline] pub fn get_zindex(&self) -> Result<i32> { unsafe { 
+    #[inline] pub fn get_z_index(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ZIndex)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_zindex(&self, value: i32) -> Result<()> { unsafe { 
+    #[inline] pub fn set_z_index(&self, value: i32) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_ZIndex)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -13863,7 +13863,7 @@ impl ILampArrayEffectPlaylist {
         let hr = ((*self.lpVtbl).Append)(self as *const _ as *mut _, effect as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn override_zindex(&self, zIndex: i32) -> Result<()> { unsafe { 
+    #[inline] pub fn override_z_index(&self, zIndex: i32) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).OverrideZIndex)(self as *const _ as *mut _, zIndex);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -17284,29 +17284,29 @@ impl BarcodeSymbologies {
     #[inline] pub fn get_gs1_databar_type3() -> Result<u32> {
         <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_gs1_databar_type3()
     }
-    #[inline] pub fn get_code39() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code39()
+    #[inline] pub fn get_code_39() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code_39()
     }
-    #[inline] pub fn get_code39_ex() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code39_ex()
+    #[inline] pub fn get_code_39_ex() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code_39_ex()
     }
-    #[inline] pub fn get_trioptic39() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_trioptic39()
+    #[inline] pub fn get_trioptic_39() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_trioptic_39()
     }
-    #[inline] pub fn get_code32() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code32()
+    #[inline] pub fn get_code_32() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code_32()
     }
     #[inline] pub fn get_pzn() -> Result<u32> {
         <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_pzn()
     }
-    #[inline] pub fn get_code93() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code93()
+    #[inline] pub fn get_code_93() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code_93()
     }
-    #[inline] pub fn get_code93_ex() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code93_ex()
+    #[inline] pub fn get_code_93_ex() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code_93_ex()
     }
-    #[inline] pub fn get_code128() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code128()
+    #[inline] pub fn get_code_128() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code_128()
     }
     #[inline] pub fn get_gs1128() -> Result<u32> {
         <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_gs1128()
@@ -17326,8 +17326,8 @@ impl BarcodeSymbologies {
     #[inline] pub fn get_codabar() -> Result<u32> {
         <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_codabar()
     }
-    #[inline] pub fn get_code11() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code11()
+    #[inline] pub fn get_code_11() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code_11()
     }
     #[inline] pub fn get_msi() -> Result<u32> {
         <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_msi()
@@ -17338,8 +17338,8 @@ impl BarcodeSymbologies {
     #[inline] pub fn get_telepen() -> Result<u32> {
         <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_telepen()
     }
-    #[inline] pub fn get_code16k() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code16k()
+    #[inline] pub fn get_code_16k() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code_16k()
     }
     #[inline] pub fn get_codablock_a() -> Result<u32> {
         <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_codablock_a()
@@ -17347,11 +17347,11 @@ impl BarcodeSymbologies {
     #[inline] pub fn get_codablock_f() -> Result<u32> {
         <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_codablock_f()
     }
-    #[inline] pub fn get_codablock128() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_codablock128()
+    #[inline] pub fn get_codablock_128() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_codablock_128()
     }
-    #[inline] pub fn get_code49() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code49()
+    #[inline] pub fn get_code_49() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_code_49()
     }
     #[inline] pub fn get_aztec() -> Result<u32> {
         <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_aztec()
@@ -17407,11 +17407,11 @@ impl BarcodeSymbologies {
     #[inline] pub fn get_info_mail() -> Result<u32> {
         <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_info_mail()
     }
-    #[inline] pub fn get_italian_post25() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_italian_post25()
+    #[inline] pub fn get_italian_post_25() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_italian_post_25()
     }
-    #[inline] pub fn get_italian_post39() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_italian_post39()
+    #[inline] pub fn get_italian_post_39() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_italian_post_39()
     }
     #[inline] pub fn get_japan_post() -> Result<u32> {
         <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_japan_post()
@@ -17455,8 +17455,8 @@ impl BarcodeSymbologies {
     #[inline] pub fn get_name(scanDataType: u32) -> Result<HString> {
         <Self as RtActivatable<IBarcodeSymbologiesStatics>>::get_activation_factory().get_name(scanDataType)
     }
-    #[inline] pub fn get_gs1_dwcode() -> Result<u32> {
-        <Self as RtActivatable<IBarcodeSymbologiesStatics2>>::get_activation_factory().get_gs1_dwcode()
+    #[inline] pub fn get_gs1dw_code() -> Result<u32> {
+        <Self as RtActivatable<IBarcodeSymbologiesStatics2>>::get_activation_factory().get_gs1dw_code()
     }
 }
 DEFINE_CLSID!(BarcodeSymbologies(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,66,97,114,99,111,100,101,83,121,109,98,111,108,111,103,105,101,115,0]) [CLSID_BarcodeSymbologies]);
@@ -17743,22 +17743,22 @@ impl IBarcodeSymbologiesStatics {
         let hr = ((*self.lpVtbl).get_Gs1DatabarType3)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_code39(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_code_39(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Code39)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_code39_ex(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_code_39_ex(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Code39Ex)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_trioptic39(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_trioptic_39(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Trioptic39)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_code32(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_code_32(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Code32)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -17768,17 +17768,17 @@ impl IBarcodeSymbologiesStatics {
         let hr = ((*self.lpVtbl).get_Pzn)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_code93(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_code_93(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Code93)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_code93_ex(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_code_93_ex(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Code93Ex)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_code128(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_code_128(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Code128)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -17813,7 +17813,7 @@ impl IBarcodeSymbologiesStatics {
         let hr = ((*self.lpVtbl).get_Codabar)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_code11(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_code_11(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Code11)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -17833,7 +17833,7 @@ impl IBarcodeSymbologiesStatics {
         let hr = ((*self.lpVtbl).get_Telepen)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_code16k(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_code_16k(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Code16k)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -17848,12 +17848,12 @@ impl IBarcodeSymbologiesStatics {
         let hr = ((*self.lpVtbl).get_CodablockF)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_codablock128(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_codablock_128(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Codablock128)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_code49(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_code_49(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Code49)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -17948,12 +17948,12 @@ impl IBarcodeSymbologiesStatics {
         let hr = ((*self.lpVtbl).get_InfoMail)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_italian_post25(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_italian_post_25(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ItalianPost25)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_italian_post39(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_italian_post_39(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ItalianPost39)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -18034,7 +18034,7 @@ RT_INTERFACE!{static interface IBarcodeSymbologiesStatics2(IBarcodeSymbologiesSt
     fn get_Gs1DWCode(&self, out: *mut u32) -> HRESULT
 }}
 impl IBarcodeSymbologiesStatics2 {
-    #[inline] pub fn get_gs1_dwcode(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_gs1dw_code(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Gs1DWCode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -19687,17 +19687,17 @@ impl ICommonReceiptSlipCapabilities {
         let hr = ((*self.lpVtbl).get_IsBitmapSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_is_left90_rotation_supported(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_is_left_90_rotation_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsLeft90RotationSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_is_right90_rotation_supported(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_is_right_90_rotation_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsRight90RotationSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_is180_rotation_supported(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_is_180_rotation_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Is180RotationSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -21224,8 +21224,8 @@ RT_ENUM! { enum PosPrinterCartridgeSensors: u32 {
 RT_CLASS!{static class PosPrinterCharacterSetIds}
 impl RtActivatable<IPosPrinterCharacterSetIdsStatics> for PosPrinterCharacterSetIds {}
 impl PosPrinterCharacterSetIds {
-    #[inline] pub fn get_utf16_le() -> Result<u32> {
-        <Self as RtActivatable<IPosPrinterCharacterSetIdsStatics>>::get_activation_factory().get_utf16_le()
+    #[inline] pub fn get_utf16le() -> Result<u32> {
+        <Self as RtActivatable<IPosPrinterCharacterSetIdsStatics>>::get_activation_factory().get_utf16le()
     }
     #[inline] pub fn get_ascii() -> Result<u32> {
         <Self as RtActivatable<IPosPrinterCharacterSetIdsStatics>>::get_activation_factory().get_ascii()
@@ -21242,7 +21242,7 @@ RT_INTERFACE!{static interface IPosPrinterCharacterSetIdsStatics(IPosPrinterChar
     fn get_Ansi(&self, out: *mut u32) -> HRESULT
 }}
 impl IPosPrinterCharacterSetIdsStatics {
-    #[inline] pub fn get_utf16_le(&self) -> Result<u32> { unsafe { 
+    #[inline] pub fn get_utf16le(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Utf16LE)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }

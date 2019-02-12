@@ -3429,27 +3429,27 @@ RT_INTERFACE!{interface ILanguageFontGroup(ILanguageFontGroupVtbl): IInspectable
     fn get_DocumentAlternate2Font(&self, out: *mut *mut LanguageFont) -> HRESULT
 }}
 impl ILanguageFontGroup {
-    #[inline] pub fn get_uitext_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_ui_text_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UITextFont)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_uiheading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_ui_heading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UIHeadingFont)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_uititle_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_ui_title_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UITitleFont)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_uicaption_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_ui_caption_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UICaptionFont)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_uinotification_heading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_ui_notification_heading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UINotificationHeadingFont)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }

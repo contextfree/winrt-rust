@@ -607,8 +607,8 @@ impl KnownFolders {
     #[inline] pub fn get_media_server_devices() -> Result<Option<ComPtr<StorageFolder>>> {
         <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_media_server_devices()
     }
-    #[inline] pub fn get_objects3_d() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().get_objects3_d()
+    #[inline] pub fn get_objects_3d() -> Result<Option<ComPtr<StorageFolder>>> {
+        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().get_objects_3d()
     }
     #[inline] pub fn get_app_captures() -> Result<Option<ComPtr<StorageFolder>>> {
         <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().get_app_captures()
@@ -708,7 +708,7 @@ RT_INTERFACE!{static interface IKnownFoldersStatics2(IKnownFoldersStatics2Vtbl):
     fn get_RecordedCalls(&self, out: *mut *mut StorageFolder) -> HRESULT
 }}
 impl IKnownFoldersStatics2 {
-    #[inline] pub fn get_objects3_d(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
+    #[inline] pub fn get_objects_3d(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Objects3D)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3895,16 +3895,16 @@ impl ICachedFileUpdaterUI {
         let hr = ((*self.lpVtbl).remove_FileUpdateRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_uirequested(&self, handler: &foundation::TypedEventHandler<CachedFileUpdaterUI, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_ui_requested(&self, handler: &foundation::TypedEventHandler<CachedFileUpdaterUI, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_UIRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn remove_uirequested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+    #[inline] pub fn remove_ui_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_UIRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_uistatus(&self) -> Result<UIStatus> { unsafe { 
+    #[inline] pub fn get_ui_status(&self) -> Result<UIStatus> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_UIStatus)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }

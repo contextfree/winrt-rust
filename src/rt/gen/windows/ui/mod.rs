@@ -3232,11 +3232,11 @@ impl ICompositionObject {
 RT_CLASS!{class CompositionObject: ICompositionObject}
 impl RtActivatable<ICompositionObjectStatics> for CompositionObject {}
 impl CompositionObject {
-    #[inline] pub fn start_animation_with_ianimation_object(target: &IAnimationObject, propertyName: &HStringArg, animation: &CompositionAnimation) -> Result<()> {
-        <Self as RtActivatable<ICompositionObjectStatics>>::get_activation_factory().start_animation_with_ianimation_object(target, propertyName, animation)
+    #[inline] pub fn start_animation_with_ianimationobject(target: &IAnimationObject, propertyName: &HStringArg, animation: &CompositionAnimation) -> Result<()> {
+        <Self as RtActivatable<ICompositionObjectStatics>>::get_activation_factory().start_animation_with_ianimationobject(target, propertyName, animation)
     }
-    #[inline] pub fn start_animation_group_with_ianimation_object(target: &IAnimationObject, animation: &ICompositionAnimationBase) -> Result<()> {
-        <Self as RtActivatable<ICompositionObjectStatics>>::get_activation_factory().start_animation_group_with_ianimation_object(target, animation)
+    #[inline] pub fn start_animation_group_with_ianimationobject(target: &IAnimationObject, animation: &ICompositionAnimationBase) -> Result<()> {
+        <Self as RtActivatable<ICompositionObjectStatics>>::get_activation_factory().start_animation_group_with_ianimationobject(target, animation)
     }
 }
 DEFINE_CLSID!(CompositionObject(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,67,111,109,112,111,115,105,116,105,111,110,79,98,106,101,99,116,0]) [CLSID_CompositionObject]);
@@ -3309,11 +3309,11 @@ RT_INTERFACE!{static interface ICompositionObjectStatics(ICompositionObjectStati
     fn StartAnimationGroupWithIAnimationObject(&self, target: *mut IAnimationObject, animation: *mut ICompositionAnimationBase) -> HRESULT
 }}
 impl ICompositionObjectStatics {
-    #[inline] pub fn start_animation_with_ianimation_object(&self, target: &IAnimationObject, propertyName: &HStringArg, animation: &CompositionAnimation) -> Result<()> { unsafe { 
+    #[inline] pub fn start_animation_with_ianimationobject(&self, target: &IAnimationObject, propertyName: &HStringArg, animation: &CompositionAnimation) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).StartAnimationWithIAnimationObject)(self as *const _ as *mut _, target as *const _ as *mut _, propertyName.get(), animation as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn start_animation_group_with_ianimation_object(&self, target: &IAnimationObject, animation: &ICompositionAnimationBase) -> Result<()> { unsafe { 
+    #[inline] pub fn start_animation_group_with_ianimationobject(&self, target: &IAnimationObject, animation: &ICompositionAnimationBase) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).StartAnimationGroupWithIAnimationObject)(self as *const _ as *mut _, target as *const _ as *mut _, animation as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -6314,21 +6314,21 @@ RT_INTERFACE!{interface IInteractionSourceConfiguration(IInteractionSourceConfig
     fn put_ScaleSourceMode(&self, value: InteractionSourceRedirectionMode) -> HRESULT
 }}
 impl IInteractionSourceConfiguration {
-    #[inline] pub fn get_position_xsource_mode(&self) -> Result<InteractionSourceRedirectionMode> { unsafe { 
+    #[inline] pub fn get_position_x_source_mode(&self) -> Result<InteractionSourceRedirectionMode> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_PositionXSourceMode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_position_xsource_mode(&self, value: InteractionSourceRedirectionMode) -> Result<()> { unsafe { 
+    #[inline] pub fn set_position_x_source_mode(&self, value: InteractionSourceRedirectionMode) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_PositionXSourceMode)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_position_ysource_mode(&self) -> Result<InteractionSourceRedirectionMode> { unsafe { 
+    #[inline] pub fn get_position_y_source_mode(&self) -> Result<InteractionSourceRedirectionMode> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_PositionYSourceMode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_position_ysource_mode(&self, value: InteractionSourceRedirectionMode) -> Result<()> { unsafe { 
+    #[inline] pub fn set_position_y_source_mode(&self, value: InteractionSourceRedirectionMode) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_PositionYSourceMode)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -6485,19 +6485,19 @@ impl IInteractionTracker {
         let hr = ((*self.lpVtbl).get_ScaleVelocityInPercentPerSecond)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn adjust_position_xif_greater_than_threshold(&self, adjustment: f32, positionThreshold: f32) -> Result<()> { unsafe { 
+    #[inline] pub fn adjust_position_x_if_greater_than_threshold(&self, adjustment: f32, positionThreshold: f32) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).AdjustPositionXIfGreaterThanThreshold)(self as *const _ as *mut _, adjustment, positionThreshold);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn adjust_position_yif_greater_than_threshold(&self, adjustment: f32, positionThreshold: f32) -> Result<()> { unsafe { 
+    #[inline] pub fn adjust_position_y_if_greater_than_threshold(&self, adjustment: f32, positionThreshold: f32) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).AdjustPositionYIfGreaterThanThreshold)(self as *const _ as *mut _, adjustment, positionThreshold);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn configure_position_xinertia_modifiers(&self, modifiers: &foundation::collections::IIterable<InteractionTrackerInertiaModifier>) -> Result<()> { unsafe { 
+    #[inline] pub fn configure_position_x_inertia_modifiers(&self, modifiers: &foundation::collections::IIterable<InteractionTrackerInertiaModifier>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ConfigurePositionXInertiaModifiers)(self as *const _ as *mut _, modifiers as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn configure_position_yinertia_modifiers(&self, modifiers: &foundation::collections::IIterable<InteractionTrackerInertiaModifier>) -> Result<()> { unsafe { 
+    #[inline] pub fn configure_position_y_inertia_modifiers(&self, modifiers: &foundation::collections::IIterable<InteractionTrackerInertiaModifier>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ConfigurePositionYInertiaModifiers)(self as *const _ as *mut _, modifiers as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -6558,11 +6558,11 @@ RT_INTERFACE!{interface IInteractionTracker2(IInteractionTracker2Vtbl): IInspect
     fn ConfigureCenterPointYInertiaModifiers(&self, conditionalValues: *mut foundation::collections::IIterable<CompositionConditionalValue>) -> HRESULT
 }}
 impl IInteractionTracker2 {
-    #[inline] pub fn configure_center_point_xinertia_modifiers(&self, conditionalValues: &foundation::collections::IIterable<CompositionConditionalValue>) -> Result<()> { unsafe { 
+    #[inline] pub fn configure_center_point_x_inertia_modifiers(&self, conditionalValues: &foundation::collections::IIterable<CompositionConditionalValue>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ConfigureCenterPointXInertiaModifiers)(self as *const _ as *mut _, conditionalValues as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn configure_center_point_yinertia_modifiers(&self, conditionalValues: &foundation::collections::IIterable<CompositionConditionalValue>) -> Result<()> { unsafe { 
+    #[inline] pub fn configure_center_point_y_inertia_modifiers(&self, conditionalValues: &foundation::collections::IIterable<CompositionConditionalValue>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ConfigureCenterPointYInertiaModifiers)(self as *const _ as *mut _, conditionalValues as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -7012,21 +7012,21 @@ RT_INTERFACE!{interface IVisualInteractionSource(IVisualInteractionSourceVtbl): 
     fn TryRedirectForManipulation(&self, pointerPoint: *mut super::super::input::PointerPoint) -> HRESULT
 }}
 impl IVisualInteractionSource {
-    #[inline] pub fn get_is_position_xrails_enabled(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_is_position_x_rails_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsPositionXRailsEnabled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_is_position_xrails_enabled(&self, value: bool) -> Result<()> { unsafe { 
+    #[inline] pub fn set_is_position_x_rails_enabled(&self, value: bool) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_IsPositionXRailsEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_is_position_yrails_enabled(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_is_position_y_rails_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsPositionYRailsEnabled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_is_position_yrails_enabled(&self, value: bool) -> Result<()> { unsafe { 
+    #[inline] pub fn set_is_position_y_rails_enabled(&self, value: bool) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_IsPositionYRailsEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -7039,39 +7039,39 @@ impl IVisualInteractionSource {
         let hr = ((*self.lpVtbl).put_ManipulationRedirectionMode)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_position_xchaining_mode(&self) -> Result<InteractionChainingMode> { unsafe { 
+    #[inline] pub fn get_position_x_chaining_mode(&self) -> Result<InteractionChainingMode> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_PositionXChainingMode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_position_xchaining_mode(&self, value: InteractionChainingMode) -> Result<()> { unsafe { 
+    #[inline] pub fn set_position_x_chaining_mode(&self, value: InteractionChainingMode) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_PositionXChainingMode)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_position_xsource_mode(&self) -> Result<InteractionSourceMode> { unsafe { 
+    #[inline] pub fn get_position_x_source_mode(&self) -> Result<InteractionSourceMode> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_PositionXSourceMode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_position_xsource_mode(&self, value: InteractionSourceMode) -> Result<()> { unsafe { 
+    #[inline] pub fn set_position_x_source_mode(&self, value: InteractionSourceMode) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_PositionXSourceMode)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_position_ychaining_mode(&self) -> Result<InteractionChainingMode> { unsafe { 
+    #[inline] pub fn get_position_y_chaining_mode(&self) -> Result<InteractionChainingMode> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_PositionYChainingMode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_position_ychaining_mode(&self, value: InteractionChainingMode) -> Result<()> { unsafe { 
+    #[inline] pub fn set_position_y_chaining_mode(&self, value: InteractionChainingMode) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_PositionYChainingMode)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_position_ysource_mode(&self) -> Result<InteractionSourceMode> { unsafe { 
+    #[inline] pub fn get_position_y_source_mode(&self) -> Result<InteractionSourceMode> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_PositionYSourceMode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_position_ysource_mode(&self, value: InteractionSourceMode) -> Result<()> { unsafe { 
+    #[inline] pub fn set_position_y_source_mode(&self, value: InteractionSourceMode) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_PositionYSourceMode)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -7156,19 +7156,19 @@ impl IVisualInteractionSource2 {
         let hr = ((*self.lpVtbl).get_ScaleVelocity)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn configure_center_point_xmodifiers(&self, conditionalValues: &foundation::collections::IIterable<CompositionConditionalValue>) -> Result<()> { unsafe { 
+    #[inline] pub fn configure_center_point_x_modifiers(&self, conditionalValues: &foundation::collections::IIterable<CompositionConditionalValue>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ConfigureCenterPointXModifiers)(self as *const _ as *mut _, conditionalValues as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn configure_center_point_ymodifiers(&self, conditionalValues: &foundation::collections::IIterable<CompositionConditionalValue>) -> Result<()> { unsafe { 
+    #[inline] pub fn configure_center_point_y_modifiers(&self, conditionalValues: &foundation::collections::IIterable<CompositionConditionalValue>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ConfigureCenterPointYModifiers)(self as *const _ as *mut _, conditionalValues as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn configure_delta_position_xmodifiers(&self, conditionalValues: &foundation::collections::IIterable<CompositionConditionalValue>) -> Result<()> { unsafe { 
+    #[inline] pub fn configure_delta_position_x_modifiers(&self, conditionalValues: &foundation::collections::IIterable<CompositionConditionalValue>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ConfigureDeltaPositionXModifiers)(self as *const _ as *mut _, conditionalValues as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn configure_delta_position_ymodifiers(&self, conditionalValues: &foundation::collections::IIterable<CompositionConditionalValue>) -> Result<()> { unsafe { 
+    #[inline] pub fn configure_delta_position_y_modifiers(&self, conditionalValues: &foundation::collections::IIterable<CompositionConditionalValue>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ConfigureDeltaPositionYModifiers)(self as *const _ as *mut _, conditionalValues as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -8777,7 +8777,7 @@ impl IAnimationDescription {
         let hr = ((*self.lpVtbl).get_DelayLimit)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_zorder(&self) -> Result<i32> { unsafe { 
+    #[inline] pub fn get_z_order(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ZOrder)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -9817,12 +9817,12 @@ impl IPointerPointProperties {
         let hr = ((*self.lpVtbl).get_Orientation)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_xtilt(&self) -> Result<f32> { unsafe { 
+    #[inline] pub fn get_x_tilt(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_XTilt)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_ytilt(&self) -> Result<f32> { unsafe { 
+    #[inline] pub fn get_y_tilt(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_YTilt)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -9892,12 +9892,12 @@ impl IPointerPointProperties {
         let hr = ((*self.lpVtbl).get_IsBarrelButtonPressed)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_is_xbutton1_pressed(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_is_x_button1_pressed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsXButton1Pressed)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_is_xbutton2_pressed(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_is_x_button2_pressed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsXButton2Pressed)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -9924,7 +9924,7 @@ RT_INTERFACE!{interface IPointerPointProperties2(IPointerPointProperties2Vtbl): 
     fn get_ZDistance(&self, out: *mut *mut foundation::IReference<f32>) -> HRESULT
 }}
 impl IPointerPointProperties2 {
-    #[inline] pub fn get_zdistance(&self) -> Result<Option<ComPtr<foundation::IReference<f32>>>> { unsafe { 
+    #[inline] pub fn get_z_distance(&self) -> Result<Option<ComPtr<foundation::IReference<f32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ZDistance)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -15627,15 +15627,15 @@ RT_INTERFACE!{interface ITileUpdater2(ITileUpdater2Vtbl): IInspectable(IInspecta
     fn EnableNotificationQueueForSquare310x310(&self, enable: bool) -> HRESULT
 }}
 impl ITileUpdater2 {
-    #[inline] pub fn enable_notification_queue_for_square150x150(&self, enable: bool) -> Result<()> { unsafe { 
+    #[inline] pub fn enable_notification_queue_for_square_150x150(&self, enable: bool) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).EnableNotificationQueueForSquare150x150)(self as *const _ as *mut _, enable);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn enable_notification_queue_for_wide310x150(&self, enable: bool) -> Result<()> { unsafe { 
+    #[inline] pub fn enable_notification_queue_for_wide_310x150(&self, enable: bool) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).EnableNotificationQueueForWide310x150)(self as *const _ as *mut _, enable);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn enable_notification_queue_for_square310x310(&self, enable: bool) -> Result<()> { unsafe { 
+    #[inline] pub fn enable_notification_queue_for_square_310x310(&self, enable: bool) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).EnableNotificationQueueForSquare310x310)(self as *const _ as *mut _, enable);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -17310,47 +17310,47 @@ RT_INTERFACE!{interface ISecondaryTileVisualElements(ISecondaryTileVisualElement
     fn get_ShowNameOnSquare310x310Logo(&self, out: *mut bool) -> HRESULT
 }}
 impl ISecondaryTileVisualElements {
-    #[inline] pub fn set_square30x30_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
+    #[inline] pub fn set_square_30x30_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Square30x30Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_square30x30_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_square_30x30_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square30x30Logo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_square70x70_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
+    #[inline] pub fn set_square_70x70_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Square70x70Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_square70x70_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_square_70x70_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square70x70Logo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_square150x150_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
+    #[inline] pub fn set_square_150x150_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Square150x150Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_square150x150_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_square_150x150_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square150x150Logo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_wide310x150_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
+    #[inline] pub fn set_wide_310x150_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Wide310x150Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_wide310x150_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_wide_310x150_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Wide310x150Logo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_square310x310_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
+    #[inline] pub fn set_square_310x310_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Square310x310Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_square310x310_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_square_310x310_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square310x310Logo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -17373,29 +17373,29 @@ impl ISecondaryTileVisualElements {
         let hr = ((*self.lpVtbl).get_BackgroundColor)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_show_name_on_square150x150_logo(&self, value: bool) -> Result<()> { unsafe { 
+    #[inline] pub fn set_show_name_on_square_150x150_logo(&self, value: bool) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_ShowNameOnSquare150x150Logo)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_show_name_on_square150x150_logo(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_show_name_on_square_150x150_logo(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ShowNameOnSquare150x150Logo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_show_name_on_wide310x150_logo(&self, value: bool) -> Result<()> { unsafe { 
+    #[inline] pub fn set_show_name_on_wide_310x150_logo(&self, value: bool) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_ShowNameOnWide310x150Logo)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_show_name_on_wide310x150_logo(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_show_name_on_wide_310x150_logo(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ShowNameOnWide310x150Logo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_show_name_on_square310x310_logo(&self, value: bool) -> Result<()> { unsafe { 
+    #[inline] pub fn set_show_name_on_square_310x310_logo(&self, value: bool) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_ShowNameOnSquare310x310Logo)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_show_name_on_square310x310_logo(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_show_name_on_square_310x310_logo(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ShowNameOnSquare310x310Logo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -17408,11 +17408,11 @@ RT_INTERFACE!{interface ISecondaryTileVisualElements2(ISecondaryTileVisualElemen
     fn get_Square71x71Logo(&self, out: *mut *mut foundation::Uri) -> HRESULT
 }}
 impl ISecondaryTileVisualElements2 {
-    #[inline] pub fn set_square71x71_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
+    #[inline] pub fn set_square_71x71_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Square71x71Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_square71x71_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_square_71x71_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square71x71Logo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -17424,11 +17424,11 @@ RT_INTERFACE!{interface ISecondaryTileVisualElements3(ISecondaryTileVisualElemen
     fn get_Square44x44Logo(&self, out: *mut *mut foundation::Uri) -> HRESULT
 }}
 impl ISecondaryTileVisualElements3 {
-    #[inline] pub fn set_square44x44_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
+    #[inline] pub fn set_square_44x44_logo(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Square44x44Logo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_square44x44_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_square_44x44_logo(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Square44x44Logo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -21034,25 +21034,25 @@ RT_INTERFACE!{interface ICoreInputView2(ICoreInputView2Vtbl): IInspectable(IInsp
     fn TryTransferXYFocusToPrimaryView(&self, origin: foundation::Rect, direction: CoreInputViewXYFocusTransferDirection, out: *mut bool) -> HRESULT
 }}
 impl ICoreInputView2 {
-    #[inline] pub fn add_xyfocus_transferring_from_primary_view(&self, handler: &foundation::TypedEventHandler<CoreInputView, CoreInputViewTransferringXYFocusEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_xy_focus_transferring_from_primary_view(&self, handler: &foundation::TypedEventHandler<CoreInputView, CoreInputViewTransferringXYFocusEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_XYFocusTransferringFromPrimaryView)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn remove_xyfocus_transferring_from_primary_view(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+    #[inline] pub fn remove_xy_focus_transferring_from_primary_view(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_XYFocusTransferringFromPrimaryView)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_xyfocus_transferred_to_primary_view(&self, handler: &foundation::TypedEventHandler<CoreInputView, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_xy_focus_transferred_to_primary_view(&self, handler: &foundation::TypedEventHandler<CoreInputView, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_XYFocusTransferredToPrimaryView)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn remove_xyfocus_transferred_to_primary_view(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+    #[inline] pub fn remove_xy_focus_transferred_to_primary_view(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_XYFocusTransferredToPrimaryView)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn try_transfer_xyfocus_to_primary_view(&self, origin: foundation::Rect, direction: CoreInputViewXYFocusTransferDirection) -> Result<bool> { unsafe { 
+    #[inline] pub fn try_transfer_xy_focus_to_primary_view(&self, origin: foundation::Rect, direction: CoreInputViewXYFocusTransferDirection) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).TryTransferXYFocusToPrimaryView)(self as *const _ as *mut _, origin, direction, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -21391,7 +21391,7 @@ RT_INTERFACE!{interface INewWebUIViewCreatedEventArgs(INewWebUIViewCreatedEventA
     fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
 }}
 impl INewWebUIViewCreatedEventArgs {
-    #[inline] pub fn get_web_uiview(&self) -> Result<Option<ComPtr<WebUIView>>> { unsafe { 
+    #[inline] pub fn get_web_ui_view(&self) -> Result<Option<ComPtr<WebUIView>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_WebUIView)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -21549,12 +21549,12 @@ RT_INTERFACE!{static interface IWebUIActivationStatics4(IWebUIActivationStatics4
     fn remove_BackgroundActivated(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IWebUIActivationStatics4 {
-    #[inline] pub fn add_new_web_uiview_created(&self, handler: &foundation::EventHandler<NewWebUIViewCreatedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_new_web_ui_view_created(&self, handler: &foundation::EventHandler<NewWebUIViewCreatedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_NewWebUIViewCreated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn remove_new_web_uiview_created(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+    #[inline] pub fn remove_new_web_ui_view_created(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_NewWebUIViewCreated)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -21619,11 +21619,11 @@ impl WebUIApplication {
     #[cfg(all(feature="windows-applicationmodel",feature="windows-system"))] #[inline] pub fn request_restart_for_user_async(user: &super::super::system::User, launchArguments: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::applicationmodel::core::AppRestartFailureReason>>> {
         <Self as RtActivatable<IWebUIActivationStatics3>>::get_activation_factory().request_restart_for_user_async(user, launchArguments)
     }
-    #[inline] pub fn add_new_web_uiview_created(handler: &foundation::EventHandler<NewWebUIViewCreatedEventArgs>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IWebUIActivationStatics4>>::get_activation_factory().add_new_web_uiview_created(handler)
+    #[inline] pub fn add_new_web_ui_view_created(handler: &foundation::EventHandler<NewWebUIViewCreatedEventArgs>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IWebUIActivationStatics4>>::get_activation_factory().add_new_web_ui_view_created(handler)
     }
-    #[inline] pub fn remove_new_web_uiview_created(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IWebUIActivationStatics4>>::get_activation_factory().remove_new_web_uiview_created(token)
+    #[inline] pub fn remove_new_web_ui_view_created(token: foundation::EventRegistrationToken) -> Result<()> {
+        <Self as RtActivatable<IWebUIActivationStatics4>>::get_activation_factory().remove_new_web_ui_view_created(token)
     }
     #[inline] pub fn add_background_activated(handler: &BackgroundActivatedEventHandler) -> Result<foundation::EventRegistrationToken> {
         <Self as RtActivatable<IWebUIActivationStatics4>>::get_activation_factory().add_background_activated(handler)

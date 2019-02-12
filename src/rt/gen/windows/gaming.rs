@@ -691,20 +691,20 @@ RT_CLASS!{class UINavigationController: IUINavigationController}
 impl RtActivatable<IUINavigationControllerStatics> for UINavigationController {}
 impl RtActivatable<IUINavigationControllerStatics2> for UINavigationController {}
 impl UINavigationController {
-    #[inline] pub fn add_uinavigation_controller_added(value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().add_uinavigation_controller_added(value)
+    #[inline] pub fn add_ui_navigation_controller_added(value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().add_ui_navigation_controller_added(value)
     }
-    #[inline] pub fn remove_uinavigation_controller_added(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().remove_uinavigation_controller_added(token)
+    #[inline] pub fn remove_ui_navigation_controller_added(token: foundation::EventRegistrationToken) -> Result<()> {
+        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().remove_ui_navigation_controller_added(token)
     }
-    #[inline] pub fn add_uinavigation_controller_removed(value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().add_uinavigation_controller_removed(value)
+    #[inline] pub fn add_ui_navigation_controller_removed(value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().add_ui_navigation_controller_removed(value)
     }
-    #[inline] pub fn remove_uinavigation_controller_removed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().remove_uinavigation_controller_removed(token)
+    #[inline] pub fn remove_ui_navigation_controller_removed(token: foundation::EventRegistrationToken) -> Result<()> {
+        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().remove_ui_navigation_controller_removed(token)
     }
-    #[inline] pub fn get_uinavigation_controllers() -> Result<Option<ComPtr<foundation::collections::IVectorView<UINavigationController>>>> {
-        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().get_uinavigation_controllers()
+    #[inline] pub fn get_ui_navigation_controllers() -> Result<Option<ComPtr<foundation::collections::IVectorView<UINavigationController>>>> {
+        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().get_ui_navigation_controllers()
     }
     #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<Option<ComPtr<UINavigationController>>> {
         <Self as RtActivatable<IUINavigationControllerStatics2>>::get_activation_factory().from_game_controller(gameController)
@@ -720,25 +720,25 @@ RT_INTERFACE!{static interface IUINavigationControllerStatics(IUINavigationContr
     fn get_UINavigationControllers(&self, out: *mut *mut foundation::collections::IVectorView<UINavigationController>) -> HRESULT
 }}
 impl IUINavigationControllerStatics {
-    #[inline] pub fn add_uinavigation_controller_added(&self, value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_ui_navigation_controller_added(&self, value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_UINavigationControllerAdded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn remove_uinavigation_controller_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+    #[inline] pub fn remove_ui_navigation_controller_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_UINavigationControllerAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_uinavigation_controller_removed(&self, value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_ui_navigation_controller_removed(&self, value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_UINavigationControllerRemoved)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn remove_uinavigation_controller_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+    #[inline] pub fn remove_ui_navigation_controller_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_UINavigationControllerRemoved)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_uinavigation_controllers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<UINavigationController>>>> { unsafe { 
+    #[inline] pub fn get_ui_navigation_controllers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<UINavigationController>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UINavigationControllers)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1842,7 +1842,7 @@ RT_INTERFACE!{interface IGameUIProviderActivatedEventArgs(IGameUIProviderActivat
     fn ReportCompleted(&self, results: *mut foundation::collections::ValueSet) -> HRESULT
 }}
 impl IGameUIProviderActivatedEventArgs {
-    #[inline] pub fn get_game_uiargs(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> { unsafe { 
+    #[inline] pub fn get_game_ui_args(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_GameUIArgs)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }

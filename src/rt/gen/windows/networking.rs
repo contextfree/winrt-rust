@@ -80,7 +80,7 @@ RT_INTERFACE!{interface IHostName(IHostNameVtbl): IInspectable(IInspectableVtbl)
     fn IsEqual(&self, hostName: *mut HostName, out: *mut bool) -> HRESULT
 }}
 impl IHostName {
-    #[inline] pub fn get_ipinformation(&self) -> Result<Option<ComPtr<connectivity::IPInformation>>> { unsafe { 
+    #[inline] pub fn get_ip_information(&self) -> Result<Option<ComPtr<connectivity::IPInformation>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IPInformation)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -2192,7 +2192,7 @@ RT_INTERFACE!{interface IWwanConnectionProfileDetails2(IWwanConnectionProfileDet
     fn get_PurposeGuids(&self, out: *mut *mut foundation::collections::IVectorView<Guid>) -> HRESULT
 }}
 impl IWwanConnectionProfileDetails2 {
-    #[inline] pub fn get_ipkind(&self) -> Result<WwanNetworkIPKind> { unsafe { 
+    #[inline] pub fn get_ip_kind(&self) -> Result<WwanNetworkIPKind> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IPKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -3280,7 +3280,7 @@ impl IMobileBroadbandCellCdma {
         let hr = ((*self.lpVtbl).get_BaseStationId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_base_station_pncode(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
+    #[inline] pub fn get_base_station_pn_code(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BaseStationPNCode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -6072,7 +6072,7 @@ impl IDnssdRegistrationResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_ipaddress(&self) -> Result<Option<ComPtr<super::super::HostName>>> { unsafe { 
+    #[inline] pub fn get_ip_address(&self) -> Result<Option<ComPtr<super::super::HostName>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IPAddress)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -6526,7 +6526,7 @@ RT_INTERFACE!{interface IDatagramSocket3(IDatagramSocket3Vtbl): IInspectable(IIn
     fn TransferOwnershipWithContextAndKeepAliveTime(&self, socketId: HSTRING, data: *mut SocketActivityContext, keepAliveTime: foundation::TimeSpan) -> HRESULT
 }}
 impl IDatagramSocket3 {
-    #[inline] pub fn cancel_ioasync(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn cancel_io_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CancelIOAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -7294,7 +7294,7 @@ RT_INTERFACE!{interface IStreamSocket3(IStreamSocket3Vtbl): IInspectable(IInspec
     fn TransferOwnershipWithContextAndKeepAliveTime(&self, socketId: HSTRING, data: *mut SocketActivityContext, keepAliveTime: foundation::TimeSpan) -> HRESULT
 }}
 impl IStreamSocket3 {
-    #[inline] pub fn cancel_ioasync(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn cancel_io_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CancelIOAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -7599,7 +7599,7 @@ RT_INTERFACE!{interface IStreamSocketListener3(IStreamSocketListener3Vtbl): IIns
     fn TransferOwnershipWithContext(&self, socketId: HSTRING, data: *mut SocketActivityContext) -> HRESULT
 }}
 impl IStreamSocketListener3 {
-    #[inline] pub fn cancel_ioasync(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn cancel_io_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CancelIOAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }

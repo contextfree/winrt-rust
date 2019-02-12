@@ -1406,7 +1406,7 @@ impl IVideoFrame {
         let hr = ((*self.lpVtbl).CopyToAsync)(self as *const _ as *mut _, frame as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3_dsurface(&self) -> Result<Option<ComPtr<super::graphics::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3d_surface(&self) -> Result<Option<ComPtr<super::graphics::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Direct3DSurface)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1422,17 +1422,17 @@ impl VideoFrame {
     #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_alpha(format: super::graphics::imaging::BitmapPixelFormat, width: i32, height: i32, alpha: super::graphics::imaging::BitmapAlphaMode) -> Result<ComPtr<VideoFrame>> {
         <Self as RtActivatable<IVideoFrameFactory>>::get_activation_factory().create_with_alpha(format, width, height, alpha)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3_d11_surface_backed(format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32) -> Result<Option<ComPtr<VideoFrame>>> {
-        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_as_direct3_d11_surface_backed(format, width, height)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d_11_surface_backed(format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32) -> Result<Option<ComPtr<VideoFrame>>> {
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_as_direct3d_11_surface_backed(format, width, height)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3_d11_surface_backed_with_device(format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<VideoFrame>>> {
-        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_as_direct3_d11_surface_backed_with_device(format, width, height, device)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d_11_surface_backed_with_device(format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<VideoFrame>>> {
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_as_direct3d_11_surface_backed_with_device(format, width, height, device)
     }
     #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_software_bitmap(bitmap: &super::graphics::imaging::SoftwareBitmap) -> Result<Option<ComPtr<VideoFrame>>> {
         <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_with_software_bitmap(bitmap)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3_d11_surface(surface: &super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<VideoFrame>>> {
-        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_with_direct3_d11_surface(surface)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3d_11_surface(surface: &super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<VideoFrame>>> {
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_with_direct3d_11_surface(surface)
     }
 }
 DEFINE_CLSID!(VideoFrame(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,86,105,100,101,111,70,114,97,109,101,0]) [CLSID_VideoFrame]);
@@ -1472,12 +1472,12 @@ RT_INTERFACE!{static interface IVideoFrameStatics(IVideoFrameStaticsVtbl): IInsp
     #[cfg(feature="windows-graphics")] fn CreateWithDirect3D11Surface(&self, surface: *mut super::graphics::directx::direct3d11::IDirect3DSurface, out: *mut *mut VideoFrame) -> HRESULT
 }}
 impl IVideoFrameStatics {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3_d11_surface_backed(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d_11_surface_backed(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAsDirect3D11SurfaceBacked)(self as *const _ as *mut _, format, width, height, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3_d11_surface_backed_with_device(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d_11_surface_backed_with_device(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAsDirect3D11SurfaceBackedWithDevice)(self as *const _ as *mut _, format, width, height, device as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1487,7 +1487,7 @@ impl IVideoFrameStatics {
         let hr = ((*self.lpVtbl).CreateWithSoftwareBitmap)(self as *const _ as *mut _, bitmap as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3_d11_surface(&self, surface: &super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3d_11_surface(&self, surface: &super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateWithDirect3D11Surface)(self as *const _ as *mut _, surface as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3619,38 +3619,38 @@ impl IReverbEffectDefinition {
         let hr = ((*self.lpVtbl).get_LateDiffusion)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_low_eqgain(&self, value: u8) -> Result<()> { unsafe { 
+    #[inline] pub fn set_low_eq_gain(&self, value: u8) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_LowEQGain)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_low_eqgain(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_low_eq_gain(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_LowEQGain)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_low_eqcutoff(&self, value: u8) -> Result<()> { unsafe { 
+    #[inline] pub fn set_low_eq_cutoff(&self, value: u8) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_LowEQCutoff)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_low_eqcutoff(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_low_eq_cutoff(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_LowEQCutoff)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_high_eqgain(&self, value: u8) -> Result<()> { unsafe { 
+    #[inline] pub fn set_high_eq_gain(&self, value: u8) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_HighEQGain)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_high_eqgain(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_high_eq_gain(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_HighEQGain)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_high_eqcutoff(&self, value: u8) -> Result<()> { unsafe { 
+    #[inline] pub fn set_high_eq_cutoff(&self, value: u8) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_HighEQCutoff)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_high_eqcutoff(&self) -> Result<u8> { unsafe { 
+    #[inline] pub fn get_high_eq_cutoff(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_HighEQCutoff)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -3904,11 +3904,11 @@ impl SpatialAudioFormatSubtype {
     #[inline] pub fn get_dolby_atmos_for_speakers() -> Result<HString> {
         <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().get_dolby_atmos_for_speakers()
     }
-    #[inline] pub fn get_dtsheadphone_x() -> Result<HString> {
-        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().get_dtsheadphone_x()
+    #[inline] pub fn get_dts_headphone_x() -> Result<HString> {
+        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().get_dts_headphone_x()
     }
-    #[inline] pub fn get_dtsxultra() -> Result<HString> {
-        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().get_dtsxultra()
+    #[inline] pub fn get_dtsx_ultra() -> Result<HString> {
+        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().get_dtsx_ultra()
     }
 }
 DEFINE_CLSID!(SpatialAudioFormatSubtype(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,83,112,97,116,105,97,108,65,117,100,105,111,70,111,114,109,97,116,83,117,98,116,121,112,101,0]) [CLSID_SpatialAudioFormatSubtype]);
@@ -3942,12 +3942,12 @@ impl ISpatialAudioFormatSubtypeStatics {
         let hr = ((*self.lpVtbl).get_DolbyAtmosForSpeakers)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_dtsheadphone_x(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_dts_headphone_x(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DTSHeadphoneX)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_dtsxultra(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_dtsx_ultra(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DTSXUltra)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -7822,7 +7822,7 @@ impl IMediaCaptureSettings2 {
         let hr = ((*self.lpVtbl).get_CameraSoundRequiredForRegion)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_horizontal35mm_equivalent_focal_length(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
+    #[inline] pub fn get_horizontal_35mm_equivalent_focal_length(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Horizontal35mmEquivalentFocalLength)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -7832,7 +7832,7 @@ impl IMediaCaptureSettings2 {
         let hr = ((*self.lpVtbl).get_PitchOffsetDegrees)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_vertical35mm_equivalent_focal_length(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
+    #[inline] pub fn get_vertical_35mm_equivalent_focal_length(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Vertical35mmEquivalentFocalLength)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -7853,7 +7853,7 @@ RT_INTERFACE!{interface IMediaCaptureSettings3(IMediaCaptureSettings3Vtbl): IIns
     #[cfg(feature="windows-graphics")] fn get_Direct3D11Device(&self, out: *mut *mut super::super::graphics::directx::direct3d11::IDirect3DDevice) -> HRESULT
 }}
 impl IMediaCaptureSettings3 {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3_d11_device(&self) -> Result<Option<ComPtr<super::super::graphics::directx::direct3d11::IDirect3DDevice>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3d_11_device(&self) -> Result<Option<ComPtr<super::super::graphics::directx::direct3d11::IDirect3DDevice>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Direct3D11Device)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -8920,7 +8920,7 @@ impl IVideoMediaFrame {
         let hr = ((*self.lpVtbl).get_SoftwareBitmap)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3_dsurface(&self) -> Result<Option<ComPtr<::rt::gen::windows::graphics::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3d_surface(&self) -> Result<Option<ComPtr<::rt::gen::windows::graphics::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Direct3DSurface)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -10349,8 +10349,8 @@ impl CodecSubtypes {
     #[inline] pub fn get_video_format_h265() -> Result<HString> {
         <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_h265()
     }
-    #[inline] pub fn get_video_format_h264_es() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_h264_es()
+    #[inline] pub fn get_video_format_h264es() -> Result<HString> {
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_h264es()
     }
     #[inline] pub fn get_video_format_hevc() -> Result<HString> {
         <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_hevc()
@@ -10358,8 +10358,8 @@ impl CodecSubtypes {
     #[inline] pub fn get_video_format_hevc_es() -> Result<HString> {
         <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_hevc_es()
     }
-    #[inline] pub fn get_video_format_m4_s2() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_m4_s2()
+    #[inline] pub fn get_video_format_m4s2() -> Result<HString> {
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_m4s2()
     }
     #[inline] pub fn get_video_format_mjpg() -> Result<HString> {
         <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mjpg()
@@ -10367,11 +10367,11 @@ impl CodecSubtypes {
     #[inline] pub fn get_video_format_mp43() -> Result<HString> {
         <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mp43()
     }
-    #[inline] pub fn get_video_format_mp4_s() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mp4_s()
+    #[inline] pub fn get_video_format_mp4s() -> Result<HString> {
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mp4s()
     }
-    #[inline] pub fn get_video_format_mp4_v() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mp4_v()
+    #[inline] pub fn get_video_format_mp4v() -> Result<HString> {
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mp4v()
     }
     #[inline] pub fn get_video_format_mpeg2() -> Result<HString> {
         <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mpeg2()
@@ -10403,8 +10403,8 @@ impl CodecSubtypes {
     #[inline] pub fn get_video_format_wvc1() -> Result<HString> {
         <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_wvc1()
     }
-    #[inline] pub fn get_video_format420_o() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format420_o()
+    #[inline] pub fn get_video_format_420o() -> Result<HString> {
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_420o()
     }
     #[inline] pub fn get_audio_format_aac() -> Result<HString> {
         <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_aac()
@@ -10430,8 +10430,8 @@ impl CodecSubtypes {
     #[inline] pub fn get_audio_format_dolby_ac3_spdif() -> Result<HString> {
         <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_dolby_ac3_spdif()
     }
-    #[inline] pub fn get_audio_format_dolby_ddplus() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_dolby_ddplus()
+    #[inline] pub fn get_audio_format_dolby_dd_plus() -> Result<HString> {
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_dolby_dd_plus()
     }
     #[inline] pub fn get_audio_format_drm() -> Result<HString> {
         <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_drm()
@@ -10579,7 +10579,7 @@ impl ICodecSubtypesStatics {
         let hr = ((*self.lpVtbl).get_VideoFormatH265)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_video_format_h264_es(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_video_format_h264es(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoFormatH264ES)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -10594,7 +10594,7 @@ impl ICodecSubtypesStatics {
         let hr = ((*self.lpVtbl).get_VideoFormatHevcES)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_video_format_m4_s2(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_video_format_m4s2(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoFormatM4S2)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -10609,12 +10609,12 @@ impl ICodecSubtypesStatics {
         let hr = ((*self.lpVtbl).get_VideoFormatMP43)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_video_format_mp4_s(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_video_format_mp4s(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoFormatMP4S)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_video_format_mp4_v(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_video_format_mp4v(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoFormatMP4V)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -10669,7 +10669,7 @@ impl ICodecSubtypesStatics {
         let hr = ((*self.lpVtbl).get_VideoFormatWvc1)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_video_format420_o(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_video_format_420o(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_VideoFormat420O)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -10714,7 +10714,7 @@ impl ICodecSubtypesStatics {
         let hr = ((*self.lpVtbl).get_AudioFormatDolbyAC3Spdif)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_audio_format_dolby_ddplus(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_audio_format_dolby_dd_plus(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_AudioFormatDolbyDDPlus)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -11238,8 +11238,8 @@ impl MediaSource {
     #[inline] pub fn create_from_mse_stream_source(mediaSource: &MseStreamSource) -> Result<Option<ComPtr<MediaSource>>> {
         <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_mse_stream_source(mediaSource)
     }
-    #[inline] pub fn create_from_imedia_source(mediaSource: &IMediaSource) -> Result<Option<ComPtr<MediaSource>>> {
-        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_imedia_source(mediaSource)
+    #[inline] pub fn create_from_imediasource(mediaSource: &IMediaSource) -> Result<Option<ComPtr<MediaSource>>> {
+        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_imediasource(mediaSource)
     }
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_storage_file(file: &super::super::storage::IStorageFile) -> Result<Option<ComPtr<MediaSource>>> {
         <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_storage_file(file)
@@ -11498,7 +11498,7 @@ impl IMediaSourceStatics {
         let hr = ((*self.lpVtbl).CreateFromMseStreamSource)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_imedia_source(&self, mediaSource: &IMediaSource) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
+    #[inline] pub fn create_from_imediasource(&self, mediaSource: &IMediaSource) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromIMediaSource)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -11704,8 +11704,8 @@ impl MediaStreamSample {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(stream: &super::super::storage::streams::IInputStream, count: u32, timestamp: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<MediaStreamSample>>> {
         <Self as RtActivatable<IMediaStreamSampleStatics>>::get_activation_factory().create_from_stream_async(stream, count, timestamp)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3_d11_surface(surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> {
-        <Self as RtActivatable<IMediaStreamSampleStatics2>>::get_activation_factory().create_from_direct3_d11_surface(surface, timestamp)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d_11_surface(surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> {
+        <Self as RtActivatable<IMediaStreamSampleStatics2>>::get_activation_factory().create_from_direct3d_11_surface(surface, timestamp)
     }
 }
 DEFINE_CLSID!(MediaStreamSample(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,116,114,101,97,109,83,97,109,112,108,101,0]) [CLSID_MediaStreamSample]);
@@ -11714,7 +11714,7 @@ RT_INTERFACE!{interface IMediaStreamSample2(IMediaStreamSample2Vtbl): IInspectab
     #[cfg(feature="windows-graphics")] fn get_Direct3D11Surface(&self, out: *mut *mut super::super::graphics::directx::direct3d11::IDirect3DSurface) -> HRESULT
 }}
 impl IMediaStreamSample2 {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3_d11_surface(&self) -> Result<Option<ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3d_11_surface(&self) -> Result<Option<ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Direct3D11Surface)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -11782,7 +11782,7 @@ RT_INTERFACE!{static interface IMediaStreamSampleStatics2(IMediaStreamSampleStat
     #[cfg(feature="windows-graphics")] fn CreateFromDirect3D11Surface(&self, surface: *mut super::super::graphics::directx::direct3d11::IDirect3DSurface, timestamp: foundation::TimeSpan, out: *mut *mut MediaStreamSample) -> HRESULT
 }}
 impl IMediaStreamSampleStatics2 {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3_d11_surface(&self, surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d_11_surface(&self, surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromDirect3D11Surface)(self as *const _ as *mut _, surface as *const _ as *mut _, timestamp, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -13096,12 +13096,12 @@ impl ITimedTextRegion {
         let hr = ((*self.lpVtbl).put_TextWrapping)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_zindex(&self) -> Result<i32> { unsafe { 
+    #[inline] pub fn get_z_index(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ZIndex)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_zindex(&self, value: i32) -> Result<()> { unsafe { 
+    #[inline] pub fn set_z_index(&self, value: i32) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_ZIndex)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -19233,14 +19233,14 @@ impl H264ProfileIds {
     #[inline] pub fn get_high() -> Result<i32> {
         <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_high()
     }
-    #[inline] pub fn get_high10() -> Result<i32> {
-        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_high10()
+    #[inline] pub fn get_high_10() -> Result<i32> {
+        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_high_10()
     }
-    #[inline] pub fn get_high422() -> Result<i32> {
-        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_high422()
+    #[inline] pub fn get_high_422() -> Result<i32> {
+        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_high_422()
     }
-    #[inline] pub fn get_high444() -> Result<i32> {
-        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_high444()
+    #[inline] pub fn get_high_444() -> Result<i32> {
+        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_high_444()
     }
     #[inline] pub fn get_stereo_high() -> Result<i32> {
         <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_stereo_high()
@@ -19289,17 +19289,17 @@ impl IH264ProfileIdsStatics {
         let hr = ((*self.lpVtbl).get_High)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_high10(&self) -> Result<i32> { unsafe { 
+    #[inline] pub fn get_high_10(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_High10)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_high422(&self) -> Result<i32> { unsafe { 
+    #[inline] pub fn get_high_422(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_High422)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_high444(&self) -> Result<i32> { unsafe { 
+    #[inline] pub fn get_high_444(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_High444)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -24013,8 +24013,8 @@ impl IMediaProtectionPMPServer {
 RT_CLASS!{class MediaProtectionPMPServer: IMediaProtectionPMPServer}
 impl RtActivatable<IMediaProtectionPMPServerFactory> for MediaProtectionPMPServer {}
 impl MediaProtectionPMPServer {
-    #[inline] pub fn create_pmpserver(pProperties: &foundation::collections::IPropertySet) -> Result<ComPtr<MediaProtectionPMPServer>> {
-        <Self as RtActivatable<IMediaProtectionPMPServerFactory>>::get_activation_factory().create_pmpserver(pProperties)
+    #[inline] pub fn create_pmp_server(pProperties: &foundation::collections::IPropertySet) -> Result<ComPtr<MediaProtectionPMPServer>> {
+        <Self as RtActivatable<IMediaProtectionPMPServerFactory>>::get_activation_factory().create_pmp_server(pProperties)
     }
 }
 DEFINE_CLSID!(MediaProtectionPMPServer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,77,101,100,105,97,80,114,111,116,101,99,116,105,111,110,80,77,80,83,101,114,118,101,114,0]) [CLSID_MediaProtectionPMPServer]);
@@ -24023,7 +24023,7 @@ RT_INTERFACE!{static interface IMediaProtectionPMPServerFactory(IMediaProtection
     fn CreatePMPServer(&self, pProperties: *mut foundation::collections::IPropertySet, out: *mut *mut MediaProtectionPMPServer) -> HRESULT
 }}
 impl IMediaProtectionPMPServerFactory {
-    #[inline] pub fn create_pmpserver(&self, pProperties: &foundation::collections::IPropertySet) -> Result<ComPtr<MediaProtectionPMPServer>> { unsafe { 
+    #[inline] pub fn create_pmp_server(&self, pProperties: &foundation::collections::IPropertySet) -> Result<ComPtr<MediaProtectionPMPServer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreatePMPServer)(self as *const _ as *mut _, pProperties as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -24427,7 +24427,7 @@ impl INDDownloadEngineNotifier {
         let hr = ((*self.lpVtbl).OnPlayReadyObjectReceived)(self as *const _ as *mut _, dataBytes.len() as u32, dataBytes.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn on_content_idreceived(&self, licenseFetchDescriptor: &INDLicenseFetchDescriptor) -> Result<()> { unsafe { 
+    #[inline] pub fn on_content_id_received(&self, licenseFetchDescriptor: &INDLicenseFetchDescriptor) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).OnContentIDReceived)(self as *const _ as *mut _, licenseFetchDescriptor as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -24466,7 +24466,7 @@ RT_INTERFACE!{interface INDLicenseFetchDescriptor(INDLicenseFetchDescriptorVtbl)
     fn put_LicenseFetchChallengeCustomData(&self, licenseFetchChallengeCustomData: *mut INDCustomData) -> HRESULT
 }}
 impl INDLicenseFetchDescriptor {
-    #[inline] pub fn get_content_idtype(&self) -> Result<NDContentIDType> { unsafe { 
+    #[inline] pub fn get_content_id_type(&self) -> Result<NDContentIDType> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ContentIDType)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -24669,7 +24669,7 @@ RT_INTERFACE!{interface INDStreamParserNotifier(INDStreamParserNotifierVtbl): II
     fn OnBeginSetupDecryptor(&self, descriptor: *mut super::super::core::IMediaStreamDescriptor, keyID: Guid, proBytesSize: u32, proBytes: *mut u8) -> HRESULT
 }}
 impl INDStreamParserNotifier {
-    #[inline] pub fn on_content_idreceived(&self, licenseFetchDescriptor: &INDLicenseFetchDescriptor) -> Result<()> { unsafe { 
+    #[inline] pub fn on_content_id_received(&self, licenseFetchDescriptor: &INDLicenseFetchDescriptor) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).OnContentIDReceived)(self as *const _ as *mut _, licenseFetchDescriptor as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -25133,7 +25133,7 @@ impl IPlayReadyLicense {
         let hr = ((*self.lpVtbl).get_ChainDepth)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_kidat_chain_depth(&self, chainDepth: u32) -> Result<Guid> { unsafe { 
+    #[inline] pub fn get_kid_at_chain_depth(&self, chainDepth: u32) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).GetKIDAtChainDepth)(self as *const _ as *mut _, chainDepth, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -25267,7 +25267,7 @@ RT_INTERFACE!{interface IPlayReadyLicenseSession(IPlayReadyLicenseSessionVtbl): 
     fn ConfigureMediaProtectionManager(&self, mpm: *mut super::MediaProtectionManager) -> HRESULT
 }}
 impl IPlayReadyLicenseSession {
-    #[inline] pub fn create_laservice_request(&self) -> Result<Option<ComPtr<IPlayReadyLicenseAcquisitionServiceRequest>>> { unsafe { 
+    #[inline] pub fn create_la_service_request(&self) -> Result<Option<ComPtr<IPlayReadyLicenseAcquisitionServiceRequest>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateLAServiceRequest)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -25596,14 +25596,14 @@ impl PlayReadyStatics {
     #[inline] pub fn get_protection_system_id() -> Result<Guid> {
         <Self as RtActivatable<IPlayReadyStatics4>>::get_activation_factory().get_protection_system_id()
     }
-    #[inline] pub fn get_hardware_drmdisabled_at_time() -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
-        <Self as RtActivatable<IPlayReadyStatics5>>::get_activation_factory().get_hardware_drmdisabled_at_time()
+    #[inline] pub fn get_hardware_drm_disabled_at_time() -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
+        <Self as RtActivatable<IPlayReadyStatics5>>::get_activation_factory().get_hardware_drm_disabled_at_time()
     }
-    #[inline] pub fn get_hardware_drmdisabled_until_time() -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
-        <Self as RtActivatable<IPlayReadyStatics5>>::get_activation_factory().get_hardware_drmdisabled_until_time()
+    #[inline] pub fn get_hardware_drm_disabled_until_time() -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
+        <Self as RtActivatable<IPlayReadyStatics5>>::get_activation_factory().get_hardware_drm_disabled_until_time()
     }
-    #[inline] pub fn reset_hardware_drmdisabled() -> Result<()> {
-        <Self as RtActivatable<IPlayReadyStatics5>>::get_activation_factory().reset_hardware_drmdisabled()
+    #[inline] pub fn reset_hardware_drm_disabled() -> Result<()> {
+        <Self as RtActivatable<IPlayReadyStatics5>>::get_activation_factory().reset_hardware_drm_disabled()
     }
 }
 DEFINE_CLSID!(PlayReadyStatics(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,83,116,97,116,105,99,115,0]) [CLSID_PlayReadyStatics]);
@@ -25659,17 +25659,17 @@ RT_INTERFACE!{static interface IPlayReadyStatics5(IPlayReadyStatics5Vtbl): IInsp
     fn ResetHardwareDRMDisabled(&self) -> HRESULT
 }}
 impl IPlayReadyStatics5 {
-    #[inline] pub fn get_hardware_drmdisabled_at_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
+    #[inline] pub fn get_hardware_drm_disabled_at_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_HardwareDRMDisabledAtTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_hardware_drmdisabled_until_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
+    #[inline] pub fn get_hardware_drm_disabled_until_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_HardwareDRMDisabledUntilTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn reset_hardware_drmdisabled(&self) -> Result<()> { unsafe { 
+    #[inline] pub fn reset_hardware_drm_disabled(&self) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ResetHardwareDRMDisabled)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -26137,7 +26137,7 @@ impl ISpeechRecognizer {
         let hr = ((*self.lpVtbl).get_Timeouts)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_uioptions(&self) -> Result<Option<ComPtr<SpeechRecognizerUIOptions>>> { unsafe { 
+    #[inline] pub fn get_ui_options(&self) -> Result<Option<ComPtr<SpeechRecognizerUIOptions>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_UIOptions)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -26152,7 +26152,7 @@ impl ISpeechRecognizer {
         let hr = ((*self.lpVtbl).RecognizeAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn recognize_with_uiasync(&self) -> Result<ComPtr<foundation::IAsyncOperation<SpeechRecognitionResult>>> { unsafe { 
+    #[inline] pub fn recognize_with_ui_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SpeechRecognitionResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RecognizeWithUIAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }

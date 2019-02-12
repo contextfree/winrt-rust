@@ -4140,23 +4140,23 @@ impl KeyAlgorithmNames {
     #[inline] pub fn get_dsa() -> Result<HString> {
         <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_dsa()
     }
-    #[inline] pub fn get_ecdh256() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdh256()
+    #[inline] pub fn get_ecdh_256() -> Result<HString> {
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdh_256()
     }
-    #[inline] pub fn get_ecdh384() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdh384()
+    #[inline] pub fn get_ecdh_384() -> Result<HString> {
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdh_384()
     }
-    #[inline] pub fn get_ecdh521() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdh521()
+    #[inline] pub fn get_ecdh_521() -> Result<HString> {
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdh_521()
     }
-    #[inline] pub fn get_ecdsa256() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdsa256()
+    #[inline] pub fn get_ecdsa_256() -> Result<HString> {
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdsa_256()
     }
-    #[inline] pub fn get_ecdsa384() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdsa384()
+    #[inline] pub fn get_ecdsa_384() -> Result<HString> {
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdsa_384()
     }
-    #[inline] pub fn get_ecdsa521() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdsa521()
+    #[inline] pub fn get_ecdsa_521() -> Result<HString> {
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdsa_521()
     }
     #[inline] pub fn get_ecdsa() -> Result<HString> {
         <Self as RtActivatable<IKeyAlgorithmNamesStatics2>>::get_activation_factory().get_ecdsa()
@@ -4188,32 +4188,32 @@ impl IKeyAlgorithmNamesStatics {
         let hr = ((*self.lpVtbl).get_Dsa)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_ecdh256(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_ecdh_256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Ecdh256)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_ecdh384(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_ecdh_384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Ecdh384)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_ecdh521(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_ecdh_521(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Ecdh521)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_ecdsa256(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_ecdsa_256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Ecdsa256)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_ecdsa384(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_ecdsa_384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Ecdsa384)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_ecdsa521(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_ecdsa_521(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Ecdsa521)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -4477,7 +4477,7 @@ impl ISubjectAlternativeNameInfo {
         let hr = ((*self.lpVtbl).get_EmailName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_ipaddress(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+    #[inline] pub fn get_ip_address(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IPAddress)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -4522,7 +4522,7 @@ impl ISubjectAlternativeNameInfo2 {
         let hr = ((*self.lpVtbl).get_EmailNames)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_ipaddresses(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+    #[inline] pub fn get_ip_addresses(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IPAddresses)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -5121,8 +5121,8 @@ impl EccCurveNames {
     #[inline] pub fn get_brainpool_p512t1() -> Result<HString> {
         <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p512t1()
     }
-    #[inline] pub fn get_curve25519() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_curve25519()
+    #[inline] pub fn get_curve_25519() -> Result<HString> {
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_curve_25519()
     }
     #[inline] pub fn get_ec192wapi() -> Result<HString> {
         <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_ec192wapi()
@@ -5193,26 +5193,26 @@ impl EccCurveNames {
     #[inline] pub fn get_wtls12() -> Result<HString> {
         <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_wtls12()
     }
-    #[inline] pub fn get_x962_p192v1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962_p192v1()
+    #[inline] pub fn get_x962p192v1() -> Result<HString> {
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p192v1()
     }
-    #[inline] pub fn get_x962_p192v2() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962_p192v2()
+    #[inline] pub fn get_x962p192v2() -> Result<HString> {
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p192v2()
     }
-    #[inline] pub fn get_x962_p192v3() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962_p192v3()
+    #[inline] pub fn get_x962p192v3() -> Result<HString> {
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p192v3()
     }
-    #[inline] pub fn get_x962_p239v1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962_p239v1()
+    #[inline] pub fn get_x962p239v1() -> Result<HString> {
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p239v1()
     }
-    #[inline] pub fn get_x962_p239v2() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962_p239v2()
+    #[inline] pub fn get_x962p239v2() -> Result<HString> {
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p239v2()
     }
-    #[inline] pub fn get_x962_p239v3() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962_p239v3()
+    #[inline] pub fn get_x962p239v3() -> Result<HString> {
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p239v3()
     }
-    #[inline] pub fn get_x962_p256v1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962_p256v1()
+    #[inline] pub fn get_x962p256v1() -> Result<HString> {
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p256v1()
     }
     #[inline] pub fn get_all_ecc_curve_names() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
         <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_all_ecc_curve_names()
@@ -5339,7 +5339,7 @@ impl IEccCurveNamesStatics {
         let hr = ((*self.lpVtbl).get_BrainpoolP512t1)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_curve25519(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_curve_25519(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Curve25519)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -5459,37 +5459,37 @@ impl IEccCurveNamesStatics {
         let hr = ((*self.lpVtbl).get_Wtls12)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_x962_p192v1(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_x962p192v1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_X962P192v1)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_x962_p192v2(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_x962p192v2(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_X962P192v2)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_x962_p192v3(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_x962p192v3(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_X962P192v3)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_x962_p239v1(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_x962p239v1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_X962P239v1)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_x962_p239v2(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_x962p239v2(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_X962P239v2)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_x962_p239v3(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_x962p239v3(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_X962P239v3)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_x962_p256v1(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_x962p256v1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_X962P256v1)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -6962,11 +6962,11 @@ impl ProtectionPolicyManager {
     #[inline] pub fn is_identity_managed(identity: &HStringArg) -> Result<bool> {
         <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().is_identity_managed(identity)
     }
-    #[inline] pub fn try_apply_process_uipolicy(identity: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().try_apply_process_uipolicy(identity)
+    #[inline] pub fn try_apply_process_ui_policy(identity: &HStringArg) -> Result<bool> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().try_apply_process_ui_policy(identity)
     }
-    #[inline] pub fn clear_process_uipolicy() -> Result<()> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().clear_process_uipolicy()
+    #[inline] pub fn clear_process_ui_policy() -> Result<()> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().clear_process_ui_policy()
     }
     #[inline] pub fn create_current_thread_network_context(identity: &HStringArg) -> Result<Option<ComPtr<ThreadNetworkContext>>> {
         <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().create_current_thread_network_context(identity)
@@ -7122,12 +7122,12 @@ impl IProtectionPolicyManagerStatics {
         let hr = ((*self.lpVtbl).IsIdentityManaged)(self as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn try_apply_process_uipolicy(&self, identity: &HStringArg) -> Result<bool> { unsafe { 
+    #[inline] pub fn try_apply_process_ui_policy(&self, identity: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).TryApplyProcessUIPolicy)(self as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn clear_process_uipolicy(&self) -> Result<()> { unsafe { 
+    #[inline] pub fn clear_process_ui_policy(&self) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ClearProcessUIPolicy)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}

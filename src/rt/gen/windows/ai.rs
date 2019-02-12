@@ -194,7 +194,7 @@ impl ILearningModelDevice {
         let hr = ((*self.lpVtbl).get_AdapterId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3_d11_device(&self) -> Result<Option<ComPtr<super::super::graphics::directx::direct3d11::IDirect3DDevice>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3d_11_device(&self) -> Result<Option<ComPtr<super::super::graphics::directx::direct3d11::IDirect3DDevice>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Direct3D11Device)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -207,8 +207,8 @@ impl LearningModelDevice {
     #[inline] pub fn create(deviceKind: LearningModelDeviceKind) -> Result<ComPtr<LearningModelDevice>> {
         <Self as RtActivatable<ILearningModelDeviceFactory>>::get_activation_factory().create(deviceKind)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3_d11_device(device: &super::super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<LearningModelDevice>>> {
-        <Self as RtActivatable<ILearningModelDeviceStatics>>::get_activation_factory().create_from_direct3_d11_device(device)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d_11_device(device: &super::super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<LearningModelDevice>>> {
+        <Self as RtActivatable<ILearningModelDeviceStatics>>::get_activation_factory().create_from_direct3d_11_device(device)
     }
 }
 DEFINE_CLSID!(LearningModelDevice(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,76,101,97,114,110,105,110,103,77,111,100,101,108,68,101,118,105,99,101,0]) [CLSID_LearningModelDevice]);
@@ -231,7 +231,7 @@ RT_INTERFACE!{static interface ILearningModelDeviceStatics(ILearningModelDeviceS
     #[cfg(feature="windows-graphics")] fn CreateFromDirect3D11Device(&self, device: *mut super::super::graphics::directx::direct3d11::IDirect3DDevice, out: *mut *mut LearningModelDevice) -> HRESULT
 }}
 impl ILearningModelDeviceStatics {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3_d11_device(&self, device: &super::super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<LearningModelDevice>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d_11_device(&self, device: &super::super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<LearningModelDevice>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromDirect3D11Device)(self as *const _ as *mut _, device as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }

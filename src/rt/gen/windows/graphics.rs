@@ -1231,12 +1231,12 @@ impl IHdmiDisplayMode {
         let hr = ((*self.lpVtbl).get_IsSdrLuminanceSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_is_smpte2084_supported(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_is_smpte_2084_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsSmpte2084Supported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_is2086_metadata_supported(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_is_2086_metadata_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Is2086MetadataSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -1518,12 +1518,12 @@ impl IHolographicCameraRenderingParameters {
         let hr = ((*self.lpVtbl).SetFocusPointWithNormalLinearVelocity)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, position, normal, linearVelocity);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_direct3_d11_device(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DDevice>>> { unsafe { 
+    #[inline] pub fn get_direct3d_11_device(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DDevice>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Direct3D11Device)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_direct3_d11_back_buffer(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
+    #[inline] pub fn get_direct3d_11_back_buffer(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Direct3D11BackBuffer)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1546,7 +1546,7 @@ impl IHolographicCameraRenderingParameters2 {
         let hr = ((*self.lpVtbl).put_ReprojectionMode)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn commit_direct3_d11_depth_buffer(&self, value: &super::directx::direct3d11::IDirect3DSurface) -> Result<()> { unsafe { 
+    #[inline] pub fn commit_direct3d_11_depth_buffer(&self, value: &super::directx::direct3d11::IDirect3DSurface) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).CommitDirect3D11DepthBuffer)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -1916,7 +1916,7 @@ impl IHolographicSpace {
         let hr = ((*self.lpVtbl).get_PrimaryAdapterId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_direct3_d11_device(&self, value: &super::directx::direct3d11::IDirect3DDevice) -> Result<()> { unsafe { 
+    #[inline] pub fn set_direct3d_11_device(&self, value: &super::directx::direct3d11::IDirect3DDevice) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetDirect3D11Device)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -2207,8 +2207,8 @@ impl BitmapDecoder {
     #[inline] pub fn get_gif_decoder_id() -> Result<Guid> {
         <Self as RtActivatable<IBitmapDecoderStatics>>::get_activation_factory().get_gif_decoder_id()
     }
-    #[inline] pub fn get_jpeg_xrdecoder_id() -> Result<Guid> {
-        <Self as RtActivatable<IBitmapDecoderStatics>>::get_activation_factory().get_jpeg_xrdecoder_id()
+    #[inline] pub fn get_jpeg_xr_decoder_id() -> Result<Guid> {
+        <Self as RtActivatable<IBitmapDecoderStatics>>::get_activation_factory().get_jpeg_xr_decoder_id()
     }
     #[inline] pub fn get_ico_decoder_id() -> Result<Guid> {
         <Self as RtActivatable<IBitmapDecoderStatics>>::get_activation_factory().get_ico_decoder_id()
@@ -2269,7 +2269,7 @@ impl IBitmapDecoderStatics {
         let hr = ((*self.lpVtbl).get_GifDecoderId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_jpeg_xrdecoder_id(&self) -> Result<Guid> { unsafe { 
+    #[inline] pub fn get_jpeg_xr_decoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_JpegXRDecoderId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -2416,8 +2416,8 @@ impl BitmapEncoder {
     #[inline] pub fn get_gif_encoder_id() -> Result<Guid> {
         <Self as RtActivatable<IBitmapEncoderStatics>>::get_activation_factory().get_gif_encoder_id()
     }
-    #[inline] pub fn get_jpeg_xrencoder_id() -> Result<Guid> {
-        <Self as RtActivatable<IBitmapEncoderStatics>>::get_activation_factory().get_jpeg_xrencoder_id()
+    #[inline] pub fn get_jpeg_xr_encoder_id() -> Result<Guid> {
+        <Self as RtActivatable<IBitmapEncoderStatics>>::get_activation_factory().get_jpeg_xr_encoder_id()
     }
     #[inline] pub fn get_encoder_information_enumerator() -> Result<Option<ComPtr<foundation::collections::IVectorView<BitmapCodecInformation>>>> {
         <Self as RtActivatable<IBitmapEncoderStatics>>::get_activation_factory().get_encoder_information_enumerator()
@@ -2482,7 +2482,7 @@ impl IBitmapEncoderStatics {
         let hr = ((*self.lpVtbl).get_GifEncoderId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_jpeg_xrencoder_id(&self) -> Result<Guid> { unsafe { 
+    #[inline] pub fn get_jpeg_xr_encoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_JpegXREncoderId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -3052,8 +3052,8 @@ impl PrintManager {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<PrintManager>>> {
         <Self as RtActivatable<IPrintManagerStatic>>::get_activation_factory().get_for_current_view()
     }
-    #[inline] pub fn show_print_uiasync() -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<IPrintManagerStatic>>::get_activation_factory().show_print_uiasync()
+    #[inline] pub fn show_print_ui_async() -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<IPrintManagerStatic>>::get_activation_factory().show_print_ui_async()
     }
     #[inline] pub fn is_supported() -> Result<bool> {
         <Self as RtActivatable<IPrintManagerStatic2>>::get_activation_factory().is_supported()
@@ -3071,7 +3071,7 @@ impl IPrintManagerStatic {
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn show_print_uiasync(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn show_print_ui_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ShowPrintUIAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -3673,11 +3673,11 @@ impl IPrintTaskTargetDeviceSupport {
         let hr = ((*self.lpVtbl).get_IsPrinterTargetEnabled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_is3_dmanufacturing_target_enabled(&self, value: bool) -> Result<()> { unsafe { 
+    #[inline] pub fn set_is_3d_manufacturing_target_enabled(&self, value: bool) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Is3DManufacturingTargetEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_is3_dmanufacturing_target_enabled(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_is_3d_manufacturing_target_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Is3DManufacturingTargetEnabled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -3721,8 +3721,8 @@ impl StandardPrintTaskOptions {
     #[inline] pub fn get_copies() -> Result<HString> {
         <Self as RtActivatable<IStandardPrintTaskOptionsStatic>>::get_activation_factory().get_copies()
     }
-    #[inline] pub fn get_nup() -> Result<HString> {
-        <Self as RtActivatable<IStandardPrintTaskOptionsStatic>>::get_activation_factory().get_nup()
+    #[inline] pub fn get_n_up() -> Result<HString> {
+        <Self as RtActivatable<IStandardPrintTaskOptionsStatic>>::get_activation_factory().get_n_up()
     }
     #[inline] pub fn get_input_bin() -> Result<HString> {
         <Self as RtActivatable<IStandardPrintTaskOptionsStatic>>::get_activation_factory().get_input_bin()
@@ -3807,7 +3807,7 @@ impl IStandardPrintTaskOptionsStatic {
         let hr = ((*self.lpVtbl).get_Copies)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_nup(&self) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_n_up(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NUp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -4616,7 +4616,7 @@ impl IPrintTicketCapabilities {
         let hr = ((*self.lpVtbl).get_DocumentInputBinFeature)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_nup_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_n_up_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DocumentNUpFeature)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -4989,7 +4989,7 @@ impl IWorkflowPrintTicket {
         let hr = ((*self.lpVtbl).get_DocumentInputBinFeature)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_nup_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_n_up_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DocumentNUpFeature)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -5449,8 +5449,8 @@ impl Print3DManager {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<Print3DManager>>> {
         <Self as RtActivatable<IPrint3DManagerStatics>>::get_activation_factory().get_for_current_view()
     }
-    #[inline] pub fn show_print_uiasync() -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<IPrint3DManagerStatics>>::get_activation_factory().show_print_uiasync()
+    #[inline] pub fn show_print_ui_async() -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<IPrint3DManagerStatics>>::get_activation_factory().show_print_ui_async()
     }
 }
 DEFINE_CLSID!(Print3DManager(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,51,68,77,97,110,97,103,101,114,0]) [CLSID_Print3DManager]);
@@ -5465,7 +5465,7 @@ impl IPrint3DManagerStatics {
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn show_print_uiasync(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn show_print_ui_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ShowPrintUIAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }

@@ -4663,12 +4663,12 @@ impl IWebViewControl {
         let hr = ((*self.lpVtbl).remove_ContentLoading)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_domcontent_loaded(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlDOMContentLoadedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_dom_content_loaded(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlDOMContentLoadedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_DOMContentLoaded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn remove_domcontent_loaded(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+    #[inline] pub fn remove_dom_content_loaded(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_DOMContentLoaded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -4699,12 +4699,12 @@ impl IWebViewControl {
         let hr = ((*self.lpVtbl).remove_FrameContentLoading)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_frame_domcontent_loaded(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlDOMContentLoadedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_frame_dom_content_loaded(&self, handler: &foundation::TypedEventHandler<IWebViewControl, WebViewControlDOMContentLoadedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_FrameDOMContentLoaded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn remove_frame_domcontent_loaded(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
+    #[inline] pub fn remove_frame_dom_content_loaded(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_FrameDOMContentLoaded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -5079,20 +5079,20 @@ RT_INTERFACE!{interface IWebViewControlSettings(IWebViewControlSettingsVtbl): II
     fn get_IsScriptNotifyAllowed(&self, out: *mut bool) -> HRESULT
 }}
 impl IWebViewControlSettings {
-    #[inline] pub fn set_is_java_script_enabled(&self, value: bool) -> Result<()> { unsafe { 
+    #[inline] pub fn set_is_javascript_enabled(&self, value: bool) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_IsJavaScriptEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_is_java_script_enabled(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_is_javascript_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsJavaScriptEnabled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_is_indexed_dbenabled(&self, value: bool) -> Result<()> { unsafe { 
+    #[inline] pub fn set_is_indexeddb_enabled(&self, value: bool) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_IsIndexedDBEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_is_indexed_dbenabled(&self) -> Result<bool> { unsafe { 
+    #[inline] pub fn get_is_indexeddb_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_IsIndexedDBEnabled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
