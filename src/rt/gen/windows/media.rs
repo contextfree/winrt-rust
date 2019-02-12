@@ -1422,17 +1422,17 @@ impl VideoFrame {
     #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_alpha(format: super::graphics::imaging::BitmapPixelFormat, width: i32, height: i32, alpha: super::graphics::imaging::BitmapAlphaMode) -> Result<ComPtr<VideoFrame>> {
         <Self as RtActivatable<IVideoFrameFactory>>::get_activation_factory().create_with_alpha(format, width, height, alpha)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d_11_surface_backed(format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32) -> Result<Option<ComPtr<VideoFrame>>> {
-        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_as_direct3d_11_surface_backed(format, width, height)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d11_surface_backed(format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32) -> Result<Option<ComPtr<VideoFrame>>> {
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_as_direct3d11_surface_backed(format, width, height)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d_11_surface_backed_with_device(format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<VideoFrame>>> {
-        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_as_direct3d_11_surface_backed_with_device(format, width, height, device)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d11_surface_backed_with_device(format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<VideoFrame>>> {
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_as_direct3d11_surface_backed_with_device(format, width, height, device)
     }
     #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_software_bitmap(bitmap: &super::graphics::imaging::SoftwareBitmap) -> Result<Option<ComPtr<VideoFrame>>> {
         <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_with_software_bitmap(bitmap)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3d_11_surface(surface: &super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<VideoFrame>>> {
-        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_with_direct3d_11_surface(surface)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3d11_surface(surface: &super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<VideoFrame>>> {
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_with_direct3d11_surface(surface)
     }
 }
 DEFINE_CLSID!(VideoFrame(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,86,105,100,101,111,70,114,97,109,101,0]) [CLSID_VideoFrame]);
@@ -1472,12 +1472,12 @@ RT_INTERFACE!{static interface IVideoFrameStatics(IVideoFrameStaticsVtbl): IInsp
     #[cfg(feature="windows-graphics")] fn CreateWithDirect3D11Surface(&self, surface: *mut super::graphics::directx::direct3d11::IDirect3DSurface, out: *mut *mut VideoFrame) -> HRESULT
 }}
 impl IVideoFrameStatics {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d_11_surface_backed(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d11_surface_backed(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAsDirect3D11SurfaceBacked)(self as *const _ as *mut _, format, width, height, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d_11_surface_backed_with_device(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d11_surface_backed_with_device(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateAsDirect3D11SurfaceBackedWithDevice)(self as *const _ as *mut _, format, width, height, device as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1487,7 +1487,7 @@ impl IVideoFrameStatics {
         let hr = ((*self.lpVtbl).CreateWithSoftwareBitmap)(self as *const _ as *mut _, bitmap as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3d_11_surface(&self, surface: &super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3d11_surface(&self, surface: &super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateWithDirect3D11Surface)(self as *const _ as *mut _, surface as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -7853,7 +7853,7 @@ RT_INTERFACE!{interface IMediaCaptureSettings3(IMediaCaptureSettings3Vtbl): IIns
     #[cfg(feature="windows-graphics")] fn get_Direct3D11Device(&self, out: *mut *mut super::super::graphics::directx::direct3d11::IDirect3DDevice) -> HRESULT
 }}
 impl IMediaCaptureSettings3 {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3d_11_device(&self) -> Result<Option<ComPtr<super::super::graphics::directx::direct3d11::IDirect3DDevice>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3d11_device(&self) -> Result<Option<ComPtr<super::super::graphics::directx::direct3d11::IDirect3DDevice>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Direct3D11Device)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -11704,8 +11704,8 @@ impl MediaStreamSample {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(stream: &super::super::storage::streams::IInputStream, count: u32, timestamp: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<MediaStreamSample>>> {
         <Self as RtActivatable<IMediaStreamSampleStatics>>::get_activation_factory().create_from_stream_async(stream, count, timestamp)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d_11_surface(surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> {
-        <Self as RtActivatable<IMediaStreamSampleStatics2>>::get_activation_factory().create_from_direct3d_11_surface(surface, timestamp)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d11_surface(surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> {
+        <Self as RtActivatable<IMediaStreamSampleStatics2>>::get_activation_factory().create_from_direct3d11_surface(surface, timestamp)
     }
 }
 DEFINE_CLSID!(MediaStreamSample(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,116,114,101,97,109,83,97,109,112,108,101,0]) [CLSID_MediaStreamSample]);
@@ -11714,7 +11714,7 @@ RT_INTERFACE!{interface IMediaStreamSample2(IMediaStreamSample2Vtbl): IInspectab
     #[cfg(feature="windows-graphics")] fn get_Direct3D11Surface(&self, out: *mut *mut super::super::graphics::directx::direct3d11::IDirect3DSurface) -> HRESULT
 }}
 impl IMediaStreamSample2 {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3d_11_surface(&self) -> Result<Option<ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3d11_surface(&self) -> Result<Option<ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Direct3D11Surface)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -11782,7 +11782,7 @@ RT_INTERFACE!{static interface IMediaStreamSampleStatics2(IMediaStreamSampleStat
     #[cfg(feature="windows-graphics")] fn CreateFromDirect3D11Surface(&self, surface: *mut super::super::graphics::directx::direct3d11::IDirect3DSurface, timestamp: foundation::TimeSpan, out: *mut *mut MediaStreamSample) -> HRESULT
 }}
 impl IMediaStreamSampleStatics2 {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d_11_surface(&self, surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d11_surface(&self, surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromDirect3D11Surface)(self as *const _ as *mut _, surface as *const _ as *mut _, timestamp, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }

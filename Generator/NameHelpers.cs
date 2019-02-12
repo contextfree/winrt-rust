@@ -23,7 +23,7 @@ namespace Generator
         }
 
         static Regex CaseConversionExceptionsRegex = new Regex(
-            "(Base64|Float32|Float64|DBm|UInt|SInt|SFloat|Direct3D|VCard|OAuth|CData|ESim|MPeg|WMAudio|URLs|EFSpn|EFOns|EFOpl|EFPnn|ETag|IndexedDB|JavaScript|HResult|UIElement|IMediaSource|IAnimationObject|IBuffer)" +
+            "(Base64|Float32|Float64|DBm|UInt|SInt|SFloat|Direct3D11|Direct3D|VCard|OAuth|CData|ESim|MPeg|WMAudio|URLs|EFSpn|EFOns|EFOpl|EFPnn|ETag|IndexedDB|JavaScript|HResult|UIElement|IMediaSource|IAnimationObject|IBuffer)" +
             "([A-Z0-9_]|$)", RegexOptions.Compiled);
 
         public static string CamelToSnakeCase(string name)
